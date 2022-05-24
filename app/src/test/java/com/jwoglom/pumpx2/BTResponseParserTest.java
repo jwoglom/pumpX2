@@ -253,9 +253,5 @@ public class BTResponseParserTest {
             assertFalse(message.signed());
             assertFalse(message.getSuccess());
         }
-
-        {
-            byte[] pumpChallengeResponse = Hex.decodeHex("0001130103010000c9dc")
-        }
     }
 }

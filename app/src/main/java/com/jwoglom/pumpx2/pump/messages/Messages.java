@@ -1,9 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
@@ -17,7 +21,9 @@ import java.util.Map;
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
     CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class),
-    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class)
+    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class),
+    ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
+    ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),
 
     ;
 

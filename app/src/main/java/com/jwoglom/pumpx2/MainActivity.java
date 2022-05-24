@@ -5,6 +5,7 @@ import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_
 import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE4_INTENT;
 import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE5_INTENT;
+import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.UPDATE_TEXT_RECEIVER;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
+import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
@@ -59,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int ACCESS_LOCATION_REQUEST = 2;
 
     private TextView statusText;
+    private Button retryConnectButton;
+    private Button alarmStatusButton;
+    private Button alertStatusButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +73,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         statusText = findViewById(R.id.statusText);
-        Button retryConnectButton = findViewById(R.id.retryConnect);
+        retryConnectButton = findViewById(R.id.retryConnect);
         retryConnectButton.setOnClickListener((view) -> BluetoothHandler.getInstance(getApplicationContext()).startScan());
+
+        alarmStatusButton = findViewById(R.id.alarmStatusButton);
+        alertStatusButton = findViewById(R.id.alertStatusButton);
 
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
         registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT));
         registerReceiver(pumpConnectedStage4Receiver, new IntentFilter(PUMP_CONNECTED_STAGE4_INTENT));
         registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
+        registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
     }
 
     @Override
@@ -301,6 +312,54 @@ public class MainActivity extends AppCompatActivity {
 
             statusText.setText("Connected to pump!");
             statusText.postInvalidate();
+
+            alarmStatusButton.setVisibility(View.VISIBLE);
+            alarmStatusButton.setOnClickListener((z) -> {
+                writePumpMessage(new AlarmStatusRequest(), peripheral);
+                // AlarmStatusRequest
+            });
+            alarmStatusButton.postInvalidate();
+
+
+            alertStatusButton.setVisibility(View.VISIBLE);
+            alertStatusButton.setOnClickListener((z) -> {
+                writePumpMessage(new AlertStatusRequest(), peripheral);
+                // AlarmStatusRequest
+            });
+            alertStatusButton.postInvalidate();
+
+        }
+    };
+
+    private void writePumpMessage(Message message, BluetoothPeripheral peripheral) {
+        ArrayList<byte[]> authBytes = new ArrayList<>();
+        {
+            byte currentTxId = Packetize.txId.get();
+            PumpState.pushRequestMessage(message, currentTxId);
+            TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
+            Packetize.txId.increment();
+
+            for (Packet packet : wrapper.packets()) {
+                authBytes.add(packet.build());
+            }
+        }
+
+        for (byte[] b : authBytes) {
+            peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
+                    BluetoothHandler.PUMP_CURRENT_STATUS_CHARACTERISTICS,
+                    b,
+                    WriteType.WITH_RESPONSE);
+        }
+    }
+
+
+    private final BroadcastReceiver updateTextReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String text = intent.getStringExtra("text");
+            statusText.setText(text);
+            statusText.postInvalidate();
+
         }
     };
 

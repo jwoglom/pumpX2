@@ -2,18 +2,60 @@ package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.base.Preconditions;
 
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
 import kotlin.UByte;
+import kotlin.collections.ArraysKt;
 
 public class Bytes {
+
+    public static byte[] combine(byte[] ...items) {
+        int sum = 0;
+        for (byte[] item : items) {
+            sum += item.length;
+        }
+
+        byte[] ret = new byte[sum];
+        int i = 0;
+        for (byte[] item : items) {
+            for (byte b : item) {
+                ret[i] = b;
+                i++;
+            }
+        }
+
+        return ret;
+    }
 
     public static int readShort(byte[] raw, int i) {
         Preconditions.checkArgument(i >= 0 && i + 1 < raw.length);
         return ((andWithMaxValue(raw[i+1]) & 255) << 8) | (andWithMaxValue(raw[i]) & 255);
+    }
+
+    public static long readUint32(byte[] bArr, int i) {
+        if (i >= 0) {
+            int i2 = i + 3;
+            if (i2 < bArr.length) {
+                return ((long) (((bArr[i] & UByte.MAX_VALUE) & 255) | ((bArr[i2] & UByte.MAX_VALUE) << 24) | (((bArr[i + 2] & UByte.MAX_VALUE) & 255) << 16) | (((bArr[i + 1] & UByte.MAX_VALUE) & 255) << 8))) & 4294967295L;
+            }
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        throw new ArrayIndexOutOfBoundsException();
+    }
+
+    public static BigInteger readUint64(byte[] bArr, int i) {
+        if (i >= 0) {
+            int i2 = i + 7;
+            if (i2 < bArr.length) {
+                return new BigInteger(1, ArraysKt.reversedArray(Arrays.copyOfRange(bArr, i, i + 8)));
+            }
+            throw new ArrayIndexOutOfBoundsException(i2);
+        }
+        throw new ArrayIndexOutOfBoundsException(i);
     }
 
     private static int andWithMaxValue(byte b) {
@@ -24,6 +66,12 @@ public class Bytes {
         byte[] bArr = new byte[8];
         ByteBuffer.wrap(bArr).order(ByteOrder.LITTLE_ENDIAN).putLong(j);
         return Arrays.copyOfRange(bArr, 0, 4);
+    }
+
+    public static byte[] toUint64(long j) {
+        byte[] bArr = new byte[8];
+        ByteBuffer.wrap(bArr).order(ByteOrder.LITTLE_ENDIAN).putLong(j);
+        return bArr;
     }
 
     public static byte[] firstTwoBytesLittleEndian(int i) {

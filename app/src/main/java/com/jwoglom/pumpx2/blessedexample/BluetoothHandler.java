@@ -23,6 +23,8 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.TransactionId;
 import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
@@ -54,6 +56,7 @@ public class BluetoothHandler {
     public static final String PUMP_CONNECTED_STAGE3_INTENT = "jwoglom.pumpx2.pumpconnected.stage3";
     public static final String PUMP_CONNECTED_STAGE4_INTENT = "jwoglom.pumpx2.pumpconnected.stage4";
     public static final String PUMP_CONNECTED_STAGE5_INTENT = "jwoglom.pumpx2.pumpconnected.stage5";
+    public static final String UPDATE_TEXT_RECEIVER = "jwoglom.pumpx2.updatetextreceiver";
 
 
 
@@ -212,10 +215,20 @@ public class BluetoothHandler {
                     Intent intent = new Intent(PUMP_CONNECTED_STAGE5_INTENT);
                     intent.putExtra("address", peripheral.getAddress());
                     context.sendBroadcast(intent);
+                } else if (response.message().isPresent() && response.message().get() instanceof AlarmStatusResponse) {
+                    AlarmStatusResponse resp = (AlarmStatusResponse) response.message().get();
+                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                    intent.putExtra("text", "Alarms: "+resp.getAlarms().toString());
+                    context.sendBroadcast(intent);
+                } else if (response.message().isPresent() && response.message().get() instanceof AlertStatusResponse) {
+                    AlertStatusResponse resp = (AlertStatusResponse) response.message().get();
+                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                    intent.putExtra("text", "Alerts: "+resp.getAlerts().toString());
+                    context.sendBroadcast(intent);
                 }
 
 
-                } else {
+            } else {
                 Timber.i("Received response to UUID %s: %s", characteristicUUID, Hex.encodeHexString(parser.getValue()));
             }
         }
