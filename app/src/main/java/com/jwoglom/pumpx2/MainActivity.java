@@ -22,8 +22,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +45,8 @@ import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -64,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView statusText;
     private Button retryConnectButton;
-    private Button alarmStatusButton;
-    private Button alertStatusButton;
+    private Spinner requestMessageSpinner;
+    private Button requestSendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +80,13 @@ public class MainActivity extends AppCompatActivity {
         retryConnectButton = findViewById(R.id.retryConnect);
         retryConnectButton.setOnClickListener((view) -> BluetoothHandler.getInstance(getApplicationContext()).startScan());
 
-        alarmStatusButton = findViewById(R.id.alarmStatusButton);
-        alertStatusButton = findViewById(R.id.alertStatusButton);
+        requestMessageSpinner = findViewById(R.id.request_message_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        requestMessageSpinner.setAdapter(adapter);
+
+        requestSendButton = findViewById(R.id.request_message_send);
 
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
@@ -313,20 +322,31 @@ public class MainActivity extends AppCompatActivity {
             statusText.setText("Connected to pump!");
             statusText.postInvalidate();
 
-            alarmStatusButton.setVisibility(View.VISIBLE);
-            alarmStatusButton.setOnClickListener((z) -> {
-                writePumpMessage(new AlarmStatusRequest(), peripheral);
-                // AlarmStatusRequest
-            });
-            alarmStatusButton.postInvalidate();
+            requestMessageSpinner.setVisibility(View.VISIBLE);
+            requestMessageSpinner.postInvalidate();
 
 
-            alertStatusButton.setVisibility(View.VISIBLE);
-            alertStatusButton.setOnClickListener((z) -> {
-                writePumpMessage(new AlertStatusRequest(), peripheral);
-                // AlarmStatusRequest
+            requestSendButton.setVisibility(View.VISIBLE);
+            requestSendButton.setOnClickListener((z) -> {
+                switch (requestMessageSpinner.getSelectedItem().toString()) {
+                    case "AlarmStatusRequest":
+                        writePumpMessage(new AlarmStatusRequest(), peripheral);
+                        break;
+
+                    case "AlertStatusRequest":
+                        writePumpMessage(new AlertStatusRequest(), peripheral);
+                        break;
+
+                    case "CGMHardwareInfoRequest":
+                        writePumpMessage(new CGMHardwareInfoRequest(), peripheral);
+                        break;
+
+                    case "ControlIQIOBRequest":
+                        writePumpMessage(new ControlIQIOBRequest(), peripheral);
+                        break;
+                }
             });
-            alertStatusButton.postInvalidate();
+            requestSendButton.postInvalidate();
 
         }
     };

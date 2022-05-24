@@ -23,10 +23,13 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.TransactionId;
 import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.ControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
@@ -224,6 +227,16 @@ public class BluetoothHandler {
                     AlertStatusResponse resp = (AlertStatusResponse) response.message().get();
                     Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
                     intent.putExtra("text", "Alerts: "+resp.getAlerts().toString());
+                    context.sendBroadcast(intent);
+                } else if (response.message().isPresent() && response.message().get() instanceof CGMHardwareInfoResponse) {
+                    CGMHardwareInfoResponse resp = (CGMHardwareInfoResponse) response.message().get();
+                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                    intent.putExtra("text", "CGMHardware: "+resp.getHardwareInfoString());
+                    context.sendBroadcast(intent);
+                } else if (response.message().isPresent() && response.message().get() instanceof ControlIQIOBResponse) {
+                    ControlIQIOBResponse resp = (ControlIQIOBResponse) response.message().get();
+                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                    intent.putExtra("text", "ControlIQIOB: "+resp);
                     context.sendBroadcast(intent);
                 }
 

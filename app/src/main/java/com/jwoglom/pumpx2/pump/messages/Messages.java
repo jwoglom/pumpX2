@@ -4,11 +4,13 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
 import com.jwoglom.pumpx2.shared.L;
@@ -24,6 +26,7 @@ public enum Messages {
     PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class),
     ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
     ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),
+    CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),
 
     ;
 

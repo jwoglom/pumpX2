@@ -5,11 +5,13 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public abstract class Message {
@@ -72,10 +74,13 @@ public abstract class Message {
         return this.cargo;
     }
 
+    private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps");
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String toString() {
         return getClass().getName() + "(" + JavaHelpers.getProperties(this).entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getKey))
+                .filter(entry -> !IGNORED_PROPERTY_NAMES.contains(entry.getKey()))
                 .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
                 .collect(Collectors.joining(", "));
     }

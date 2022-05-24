@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import androidx.annotation.Nullable;
+
 import com.jwoglom.pumpx2.pump.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.bluetooth.TronMessageWrapper;
@@ -40,7 +42,7 @@ public class MessageTester {
         Message parsedMessage = resp.message().get();
         assertEquals(parsedMessage.getClass(), expected.getClass());
 
-        assertEquals(expectedPackets, tron.packets().size());
+        assertEquals("expected packet size", expectedPackets, tron.packets().size());
         byte[] mergedPackets = tron.mergeIntoSinglePacket().build();
         assertHexEquals(initialRead, mergedPackets);
 
