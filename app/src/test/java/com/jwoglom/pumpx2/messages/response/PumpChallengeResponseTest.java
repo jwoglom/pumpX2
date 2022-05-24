@@ -1,0 +1,28 @@
+package com.jwoglom.pumpx2.messages.response;
+
+import static org.junit.Assert.assertEquals;
+
+import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
+
+import org.apache.commons.codec.DecoderException;
+import org.junit.Test;
+
+public class PumpChallengeResponseTest {
+    @Test
+    public void testTconnectAppChallengeResponseMessage() throws DecoderException {
+        PumpChallengeResponse expected = new PumpChallengeResponse(1, true);
+
+        PumpChallengeResponse parsedRes = (PumpChallengeResponse) MessageTester.test(
+                "0001130103010001e8cc",
+                1,
+                1,
+                CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
+                expected
+        );
+
+        assertEquals(expected.getAppInstanceId(), parsedRes.getAppInstanceId());
+        assertEquals(expected.getSuccess(), parsedRes.getSuccess());
+    }
+}
