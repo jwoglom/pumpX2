@@ -8,6 +8,8 @@ import org.apache.commons.codec.binary.Hex;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
+import java.util.stream.Stream;
 
 
 public class JavaHelpers {
@@ -34,10 +36,17 @@ public class JavaHelpers {
             return "null";
         }
 
+        String out;
         if (obj.getClass() == byte[].class) {
-            return Hex.encodeHexString((byte[]) obj);
+            out = Hex.encodeHexString((byte[]) obj);
+        } else {
+            out = obj.toString();
         }
 
-        return obj.toString();
+        // Remove null byte
+        StringJoiner joiner = new StringJoiner("");
+        Stream.of(out.split("\0")).forEach(joiner::add);
+
+        return joiner.toString();
     }
 }

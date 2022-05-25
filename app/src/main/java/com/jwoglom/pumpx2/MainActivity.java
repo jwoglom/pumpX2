@@ -50,6 +50,7 @@ import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
+import com.jwoglom.pumpx2.pump.messages.request.PumpFeaturesRequest;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -353,6 +354,10 @@ public class MainActivity extends AppCompatActivity {
                     case "NonControlIQIOBRequest":
                         writePumpMessage(new NonControlIQIOBRequest(), peripheral);
                         break;
+
+                    case "PumpFeaturesRequest":
+                        writePumpMessage(new PumpFeaturesRequest(), peripheral);
+                        break;
                 }
             });
             requestSendButton.postInvalidate();
@@ -365,6 +370,8 @@ public class MainActivity extends AppCompatActivity {
             String address = intent.getStringExtra("address");
             BluetoothPeripheral peripheral = getPeripheral(address);
             Timber.d("Invalid challenge: %s", peripheral.getName());
+
+            PumpState.failedPumpConnectionAttempts++;
 
             new AlertDialog.Builder(context)
                     .setTitle("Pump Connection")
@@ -555,6 +562,11 @@ public class MainActivity extends AppCompatActivity {
         String savedPairingCode = PumpState.getPairingCode(getApplicationContext());
         if (!Strings.isNullOrEmpty(savedPairingCode)) {
             input.setText(savedPairingCode);
+
+            if (PumpState.failedPumpConnectionAttempts == 0) {
+                triggerImmediatePair(btAddress, savedPairingCode);
+                return;
+            }
         }
         builder.setView(input);
 
@@ -565,24 +577,7 @@ public class MainActivity extends AppCompatActivity {
                 String pairingCode = input.getText().toString();
                 Timber.i("pairing code inputted: %s", pairingCode);
 
-                Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
-                intent.putExtra("address", btAddress);
-                PumpState.setPairingCode(getApplicationContext(), pairingCode);
-                PumpState.authenticationKey = pairingCode;
-                intent.putExtra("pairingCode", pairingCode);
-                getApplicationContext().sendBroadcast(intent);
-//
-//                BluetoothPeripheral peripheral = getPeripheral(PumpConfig.pumpMAC);
-//                Timber.i("got peripheral for pair");
-//                try {
-//                    peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID, BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS, Hex.decodeHex("000010000a00000001020304050607361a"), WriteType.WITH_RESPONSE);
-//                    peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID, BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS, Hex.decodeHex("010112011600004dc561ac26081e7afa4f374196"), WriteType.WITH_RESPONSE);
-//                    peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID, BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS, Hex.decodeHex("000115687fa4cb337ac44c"), WriteType.WITH_RESPONSE);
-//
-//                } catch (DecoderException e) {
-//                    e.printStackTrace();
-//                }
-
+                triggerImmediatePair(btAddress, pairingCode);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -593,5 +588,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    private void triggerImmediatePair(String btAddress, String pairingCode) {
+        Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
+        intent.putExtra("address", btAddress);
+        PumpState.setPairingCode(getApplicationContext(), pairingCode);
+        PumpState.authenticationKey = pairingCode;
+        intent.putExtra("pairingCode", pairingCode);
+        getApplicationContext().sendBroadcast(intent);
     }
 }

@@ -39,6 +39,8 @@ public class PumpState {
         return authenticationKey;
     }
 
+    public static int failedPumpConnectionAttempts = 0;
+
 
     // The most recent Bluetooth MAC of the connected pump
     private static final String SAVED_BLUETOOTH_MAC_PREF = "savedBluetoothMAC";
