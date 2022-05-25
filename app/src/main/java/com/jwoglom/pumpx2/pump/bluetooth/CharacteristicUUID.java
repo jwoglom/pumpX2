@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
 import java.util.UUID;
 
 public class CharacteristicUUID {
-    // For others
+    // For reading pump state
     public static final UUID CURRENT_STATUS_CHARACTERISTICS = UUID.fromString("7B83FFF6-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID QUALIFYING_EVENTS_CHARACTERISTICS = UUID.fromString("7B83FFF7-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID HISTORY_LOG_CHARACTERISTICS = UUID.fromString("7B83FFF8-9F77-4E5C-8064-AAE2C24838B9");
@@ -23,6 +23,10 @@ public class CharacteristicUUID {
     public static final UUID CONTROL_STREAM_CHARACTERISTICS = UUID.fromString("7B83FFFD-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID SERVICE_CHANGED_CHARACTERISTICS = UUID.fromString("00002A05-0000-1000-8000-00805F9B34FB"); // FIXED: extra 0
     public static final UUID NOTIFICATION_CCCD = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB"); // FIXED: extra 0
+
+    // Generic Bluetooth characteristics
+    public static final UUID MANUFACTURER_NAME_CHARACTERISTIC_UUID = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
+    public static final UUID MODEL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
 
 
     public static UUID determine(Message message) {

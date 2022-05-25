@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2.pump.bluetooth;
+package com.jwoglom.pumpx2.pump.bluetooth.models;
 
 import kotlin.collections.ArraysKt;
 

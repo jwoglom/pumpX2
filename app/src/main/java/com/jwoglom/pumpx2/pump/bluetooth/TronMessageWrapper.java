@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.pump.bluetooth;
 
+import com.jwoglom.pumpx2.pump.PumpState;
+import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -17,7 +19,7 @@ public class TronMessageWrapper {
 
         String authKey = "";
         if (requestMessage.signed()) {
-            authKey = PumpState.authenticationKey;
+            authKey = com.jwoglom.pumpx2.pump.PumpState.getAuthenticationKey();
         }
         this.packets = Packetize.packetize(requestMessage, authKey, currentTxId);
     }
@@ -29,7 +31,7 @@ public class TronMessageWrapper {
 
         String authKey = "";
         if (requestMessage.signed()) {
-            authKey = PumpState.authenticationKey;
+            authKey = PumpState.getAuthenticationKey();
         }
         this.packets = Packetize.packetize(requestMessage, authKey, currentTxId, maxChunkSize);
     }

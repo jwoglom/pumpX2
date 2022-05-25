@@ -1,11 +1,12 @@
 package com.jwoglom.pumpx2;
 
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE1_INTENT;
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE4_INTENT;
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.PUMP_CONNECTED_STAGE5_INTENT;
-import static com.jwoglom.pumpx2.blessedexample.BluetoothHandler.UPDATE_TEXT_RECEIVER;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE1_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE4_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE5_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_INVALID_CHALLENGE_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.UPDATE_TEXT_RECEIVER;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -32,11 +33,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.jwoglom.pumpx2.blessedexample.BluetoothHandler;
-import com.jwoglom.pumpx2.pump.PumpConfig;
+import com.google.common.base.Strings;
+import com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.bluetooth.Packet;
+import com.jwoglom.pumpx2.pump.bluetooth.ServiceUUID;
+import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
@@ -47,6 +49,7 @@ import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
+import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -58,7 +61,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedStage4Receiver, new IntentFilter(PUMP_CONNECTED_STAGE4_INTENT));
         registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
+        registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
     }
 
     @Override
@@ -147,10 +150,12 @@ public class MainActivity extends AppCompatActivity {
             BluetoothPeripheral peripheral = getPeripheral(address);
             Timber.d("got peripheral object: %s", peripheral.getName());
 
-            statusText.setText("Stage1");
+            String name = intent.getStringExtra("name");
+
+            statusText.setText("Connecting to " + name);
             statusText.postInvalidate();
 
-            triggerPairDialog(address);
+            triggerPairDialog(name, address);
         }
     };
 
@@ -182,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-                        BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS,
+                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
+                        CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
                         b,
                         WriteType.WITH_RESPONSE);
             }
@@ -241,8 +246,8 @@ public class MainActivity extends AppCompatActivity {
 
 
             for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-                        BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS,
+                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
+                        CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
                         b,
                         WriteType.WITH_RESPONSE);
             }
@@ -301,8 +306,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-                        BluetoothHandler.PUMP_CURRENT_STATUS_CHARACTERISTICS,
+                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
+                        CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                         b,
                         WriteType.WITH_RESPONSE);
             }
@@ -344,13 +349,41 @@ public class MainActivity extends AppCompatActivity {
                     case "ControlIQIOBRequest":
                         writePumpMessage(new ControlIQIOBRequest(), peripheral);
                         break;
+
+                    case "NonControlIQIOBRequest":
+                        writePumpMessage(new NonControlIQIOBRequest(), peripheral);
+                        break;
                 }
             });
             requestSendButton.postInvalidate();
-
         }
     };
 
+    private final BroadcastReceiver pumpConnectedInvalidChallengeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+            Timber.d("Invalid challenge: %s", peripheral.getName());
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Pump Connection")
+                    .setMessage("The pump rejected the pairing code. You need to unpair and re-pair the device in Bluetooth Settings. Press OK to enter the new code.")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(PUMP_CONNECTED_STAGE1_INTENT);
+                            intent.putExtra("address", peripheral.getAddress());
+                            intent.putExtra("name", peripheral.getName());
+                            context.sendBroadcast(intent);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+    };
+
+    // Adds the given pump message to the BT device's characteristic write queue.
     private void writePumpMessage(Message message, BluetoothPeripheral peripheral) {
         ArrayList<byte[]> authBytes = new ArrayList<>();
         {
@@ -365,8 +398,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (byte[] b : authBytes) {
-            peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-                    BluetoothHandler.PUMP_CURRENT_STATUS_CHARACTERISTICS,
+            peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
+                    CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                     b,
                     WriteType.WITH_RESPONSE);
         }
@@ -383,9 +416,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private BluetoothCentralManager getCentral() {
+        return BluetoothHandler.getInstance(getApplicationContext()).central;
+    }
+
     private BluetoothPeripheral getPeripheral(String peripheralAddress) {
-        BluetoothCentralManager central = BluetoothHandler.getInstance(getApplicationContext()).central;
-        return central.getPeripheral(peripheralAddress);
+        return getCentral().getPeripheral(peripheralAddress);
     }
 
     private void checkPermissions() {
@@ -506,14 +542,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void triggerPairDialog(String btAddress) {
+    private void triggerPairDialog(String btName, String btAddress) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter pairing code (case-sensitive, without dashes)");
+        builder.setTitle("Enter pairing code (case-sensitive)");
+        builder.setMessage("Enter the pairing code from Bluetooth Settings > Pair Device to connect to:\n\n" + btName + " (" + btAddress + ")");
 
 // Set up the input
         final EditText input = new EditText(this);
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+
+        String savedPairingCode = PumpState.getPairingCode(getApplicationContext());
+        if (!Strings.isNullOrEmpty(savedPairingCode)) {
+            input.setText(savedPairingCode);
+        }
         builder.setView(input);
 
 // Set up the buttons
@@ -525,7 +567,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
                 intent.putExtra("address", btAddress);
-                PumpState.pairingCode = pairingCode;
+                PumpState.setPairingCode(getApplicationContext(), pairingCode);
+                PumpState.authenticationKey = pairingCode;
                 intent.putExtra("pairingCode", pairingCode);
                 getApplicationContext().sendBroadcast(intent);
 //

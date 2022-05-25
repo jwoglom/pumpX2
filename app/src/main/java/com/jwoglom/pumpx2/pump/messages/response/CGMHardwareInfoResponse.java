@@ -11,6 +11,9 @@ import java.nio.charset.StandardCharsets;
 
 import kotlin.collections.ArraysKt;
 
+/**
+ * Returns the CGM transmitter ID.
+ */
 @MessageProps(
         opCode=97,
         size=17,

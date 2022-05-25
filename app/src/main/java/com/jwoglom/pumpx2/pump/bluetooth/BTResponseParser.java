@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.bluetooth;
 
 import com.google.common.collect.ImmutableList;
+import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -29,7 +30,7 @@ public class BTResponseParser {
 
         packetArrayList.validatePacket(output);
         if (!packetArrayList.needsMorePacket()) {
-            if (packetArrayList.validate(message.signed() ? PumpState.authenticationKey : "")) {
+            if (packetArrayList.validate(message.signed() ? PumpState.getAuthenticationKey() : "")) {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();

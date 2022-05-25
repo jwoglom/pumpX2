@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.jwoglom.pumpx2.pump.bluetooth.*;
+import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.events.BTProcessGattOperationEvent;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.*;
