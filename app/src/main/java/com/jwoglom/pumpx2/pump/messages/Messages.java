@@ -10,6 +10,8 @@ import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpFeaturesRequest;
+import com.jwoglom.pumpx2.pump.messages.request.PumpGlobalsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.PumpSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
@@ -19,6 +21,8 @@ import com.jwoglom.pumpx2.pump.messages.response.ControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpFeaturesResponse;
+import com.jwoglom.pumpx2.pump.messages.response.PumpGlobalsResponse;
+import com.jwoglom.pumpx2.pump.messages.response.PumpSettingsResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.binary.Hex;
@@ -36,7 +40,8 @@ public enum Messages {
     CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),
     NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),
     PUMP_FEATURES(PumpFeaturesRequest.class, PumpFeaturesResponse.class),
-
+    PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),
+    PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),
     ;
 
     private static final String TAG = "X2-Messages";

@@ -51,6 +51,8 @@ import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpFeaturesRequest;
+import com.jwoglom.pumpx2.pump.messages.request.PumpGlobalsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.PumpSettingsRequest;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -357,6 +359,14 @@ public class MainActivity extends AppCompatActivity {
 
                     case "PumpFeaturesRequest":
                         writePumpMessage(new PumpFeaturesRequest(), peripheral);
+                        break;
+
+                    case "PumpGlobalsRequest":
+                        writePumpMessage(new PumpGlobalsRequest(), peripheral);
+                        break;
+
+                    case "PumpSettingsRequest":
+                        writePumpMessage(new PumpSettingsRequest(), peripheral);
                         break;
                 }
             });

@@ -15,21 +15,15 @@ import com.jwoglom.pumpx2.pump.messages.response.{{responseName}};
 )
 public class {{requestName}} extends Message {
     {% for arg in requestArgs %}
-    private {{ arg.type }} {{ arg.name }};
-    {% endfor %}
-
+    private {{ arg.type }} {{ arg.name }};{% endfor %}
     {% if requestSize > 0 %}
     public {{requestName}}() {}
     {% endif %}
     public {{requestName}}({% for arg in requestArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
-        {% if requestSize == 0 %}
-        this.cargo = EMPTY;
-        {% else %}
-        this.cargo = buildCargo({% for arg in requestArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
-        {% for arg in requestArgs %}
-        this.{{ arg.name }} = {{ arg.name }};
-        {% endfor %}
-        {% endif %}
+        {% if requestSize == 0 %}this.cargo = EMPTY;
+        {% else %}this.cargo = buildCargo({% for arg in requestArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
+        {% for arg in requestArgs %}this.{{ arg.name }} = {{ arg.name }};
+        {% endfor %}{% endif %}
     }
 
     public void parse(byte[] raw) {

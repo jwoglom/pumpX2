@@ -1,0 +1,29 @@
+package com.jwoglom.pumpx2.pump.messages.response;
+
+import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.response.{{responseName}};
+
+import org.apache.commons.codec.DecoderException;
+import org.junit.Test;
+
+public class {{responseName}}Test {
+    @Test
+    public void test{{responseName}}() throws DecoderException {
+        {{responseName}} expected = new {{responseName}}(
+            // {% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}
+        );
+
+        {{responseName}} parsedRes = ({{responseName}}) MessageTester.test(
+                "xxxx",
+                2,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+}

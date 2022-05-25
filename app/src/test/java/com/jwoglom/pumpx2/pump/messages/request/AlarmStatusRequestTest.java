@@ -1,12 +1,9 @@
-package com.jwoglom.pumpx2.messages.request;
+package com.jwoglom.pumpx2.pump.messages.request;
 
-import static com.jwoglom.pumpx2.messages.MessageTester.assertHexEquals;
+import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
-import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
-import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2.messages;
+package com.jwoglom.pumpx2.pump.messages;
 
 import static org.junit.Assert.assertEquals;
 

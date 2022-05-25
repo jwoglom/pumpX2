@@ -1,12 +1,9 @@
-package com.jwoglom.pumpx2.messages.request;
-
-import static com.jwoglom.pumpx2.messages.MessageTester.assertHexEquals;
+package com.jwoglom.pumpx2.pump.messages.request;
 
 import static org.junit.Assert.assertEquals;
 
-import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -25,7 +22,7 @@ public class CentralChallengeRequestTest {
         );
 
         assertEquals(expected.getAppInstanceId(), parsedReq.getAppInstanceId());
-        assertHexEquals(expected.getCentralChallenge(), parsedReq.getCentralChallenge());
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        MessageTester.assertHexEquals(expected.getCentralChallenge(), parsedReq.getCentralChallenge());
+        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 }

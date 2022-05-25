@@ -17,21 +17,21 @@ import java.math.BigInteger;
 )
 public class {{responseName}} extends Message {
     {% for arg in responseArgs %}
-    private {{ arg.type }} {{ arg.name }};
-    {% endfor %}
+    private {{ arg.type }} {{ arg.name }};{% endfor %}
     {% if responseSize > 0 %}
     public {{responseName}}() {}
     {% endif %}
     public {{responseName}}({% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
         {% if responseSize == 0 %}this.cargo = EMPTY;
         {% else %}this.cargo = buildCargo({% for arg in responseArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
-        {% for arg in responseArgs %}this.{{ arg.name }} = {{ arg.name }};{% endfor %}{% endif %}
+        {% for arg in responseArgs %}this.{{ arg.name }} = {{ arg.name }};
+        {% endfor %}{% endif %}
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
-        this.cargo = raw;{% for arg in responseArgs %}
-        this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}];
+        this.cargo = raw;
+        {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}];
         {% elif arg.size == 2 %}Bytes.readShort(raw, {{ arg.index }});
         {% elif arg.size == 4 %}Bytes.readUint32(raw, {{ arg.index }});
         {% elif arg.size == 8 %}Bytes.readUint64(raw, {{ arg.index }});
@@ -46,8 +46,7 @@ public class {{responseName}} extends Message {
             Bytes.toUint32({{ arg.name }}){% elif arg.size == 8 %}
             Bytes.toUint64({{ arg.name }}.longValue()){% else %}
             // {{ arg.size }} at {{ arg.index }}
-            {% endif %}{{ ", " if not loop.last else "" }}
-        {% endfor %});
+            {% endif %}{{ ", " if not loop.last else "" }}{% endfor %});
     }
     {% endif %}
     {% for arg in responseArgs %}public {{ arg.type }} get{{ arg.name[0]|upper }}{{ arg.name[1:] }}() {

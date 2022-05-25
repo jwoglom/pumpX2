@@ -1,11 +1,7 @@
-package com.jwoglom.pumpx2.messages.response;
+package com.jwoglom.pumpx2.pump.messages.response;
 
-import static com.jwoglom.pumpx2.messages.MessageTester.assertHexEquals;
-
-import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -26,7 +22,7 @@ public class AlertStatusResponseTest {
                 expected
         );
 
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 
     @Test
@@ -43,7 +39,7 @@ public class AlertStatusResponseTest {
                 expected
         );
 
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 
     @Test
@@ -60,6 +56,6 @@ public class AlertStatusResponseTest {
                 expected
         );
 
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 }

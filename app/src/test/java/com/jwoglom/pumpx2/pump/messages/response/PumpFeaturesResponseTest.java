@@ -1,11 +1,10 @@
-package com.jwoglom.pumpx2.messages.response;
+package com.jwoglom.pumpx2.pump.messages.response;
 
 import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableSet;
-import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.PumpFeaturesResponse;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;

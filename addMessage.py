@@ -3,12 +3,27 @@
 import jinja2
 from pprint import pprint
 import json
+import sys
 
-TEMPLATES = {
+MAIN_TEMPLATES = {
   "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
     "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{requestName}.java",
+
   "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
-    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{responseName}.java"
+    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{responseName}.java",
+}
+
+TEST_TEMPLATES = {
+  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
+    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{requestName}Test.java",
+
+  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
+    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{responseName}Test.java"
+}
+
+TEMPLATES = {
+  **MAIN_TEMPLATES,
+  **TEST_TEMPLATES
 }
 
 class Arg:
@@ -75,11 +90,19 @@ def build_ctx():
 
 
 def main():
+  templates = TEMPLATES
+  if "--only-tests" in sys.argv:
+    print("Only rendering tests")
+    templates = TEST_TEMPLATES
+
   ctx = build_ctx()
-  for tpl, out in TEMPLATES.items():
+
+  for tpl, out in templates.items():
     f = out.format(**ctx)
     open(f, "w").write(render(tpl, ctx))
     print(f"Wrote {f}")
 
 if __name__ == '__main__':
+  
+
   main()

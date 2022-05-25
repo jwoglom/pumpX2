@@ -1,13 +1,12 @@
-package com.jwoglom.pumpx2.messages.request;
+package com.jwoglom.pumpx2.pump.messages.request;
 
-import static com.jwoglom.pumpx2.messages.MessageTester.assertHexEquals;
+import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableList;
-import com.jwoglom.pumpx2.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
