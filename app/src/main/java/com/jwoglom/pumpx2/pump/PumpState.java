@@ -5,14 +5,10 @@ import android.content.SharedPreferences;
 import android.util.Pair;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.SynchronousQueue;
-
-import timber.log.Timber;
 
 public class PumpState {
 

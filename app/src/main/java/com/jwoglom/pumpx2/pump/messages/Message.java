@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -13,6 +14,8 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import timber.log.Timber;
 
 public abstract class Message {
     public static final byte[] EMPTY = new byte[]{};
@@ -78,11 +81,13 @@ public abstract class Message {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String toString() {
-        return getClass().getName() + "(" + JavaHelpers.getProperties(this).entrySet().stream()
+        Map<String, Object> properties = JavaHelpers.getProperties(this);
+        String propertiesStr = properties.entrySet().stream()
                 .sorted(Comparator.comparing(Map.Entry::getKey))
                 .filter(entry -> !IGNORED_PROPERTY_NAMES.contains(entry.getKey()))
                 .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
                 .collect(Collectors.joining(", "));
+        return getClass().getName() + "(" + propertiesStr + ")";
     }
 
 

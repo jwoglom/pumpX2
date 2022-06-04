@@ -2,39 +2,33 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 
 import static com.welie.blessed.BluetoothBytesParser.bytes2String;
 
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.ParcelUuid;
 import android.util.Pair;
 
-import com.jwoglom.pumpx2.pump.PumpConfig;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
-import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
-import com.jwoglom.pumpx2.pump.messages.response.CGMHardwareInfoResponse;
-import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.ControlIQIOBResponse;
-import com.jwoglom.pumpx2.pump.messages.response.NonControlIQIOBResponse;
-import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.PumpFeaturesResponse;
-import com.jwoglom.pumpx2.pump.messages.response.PumpGlobalsResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.BluetoothPeripheralCallback;
-import com.welie.blessed.BondState;
 import com.welie.blessed.ConnectionPriority;
 import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
@@ -43,7 +37,6 @@ import com.welie.blessed.ScanFailure;
 import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.UUID;
 
 import timber.log.Timber;

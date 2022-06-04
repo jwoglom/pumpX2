@@ -34,10 +34,13 @@ public class ErrorResponse extends Message {
         unknownByte0 = raw[0];
         errorCodeId = raw[1];
         errorCode = ErrorCode.fromByte(errorCodeId);
+        cargo = raw;
     }
 
     public static byte[] buildCargo(int unknownByte0, int errorCodeId) {
-        return ArraysKt.plus(Bytes.firstTwoBytesLittleEndian(unknownByte0), Bytes.firstTwoBytesLittleEndian(errorCodeId));
+        return Bytes.combine(
+                new byte[]{ (byte) unknownByte0 },
+                new byte[]{ (byte) errorCodeId });
     }
 
     public int getUnknownByte0() {

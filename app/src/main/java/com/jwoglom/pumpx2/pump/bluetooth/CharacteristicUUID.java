@@ -1,10 +1,10 @@
 package com.jwoglom.pumpx2.pump.bluetooth;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 
 import java.util.UUID;
 

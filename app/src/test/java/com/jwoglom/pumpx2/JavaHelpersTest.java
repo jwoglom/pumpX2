@@ -3,7 +3,7 @@ package com.jwoglom.pumpx2;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import org.junit.Test;

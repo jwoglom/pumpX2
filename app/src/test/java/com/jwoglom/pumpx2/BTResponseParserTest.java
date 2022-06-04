@@ -9,11 +9,11 @@ import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.events.BTProcessGattOperationEvent;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.*;
-import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
-import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;

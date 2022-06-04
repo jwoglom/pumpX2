@@ -1,12 +1,9 @@
 package com.jwoglom.pumpx2.shared;
 
-import androidx.annotation.VisibleForTesting;
-
 import com.google.common.reflect.ClassPath;
 import com.googlecode.openbeans.Introspector;
 import com.googlecode.openbeans.PropertyDescriptor;
 import com.jwoglom.pumpx2.pump.messages.Messages;
-import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -82,7 +79,14 @@ public class JavaHelpers {
         return Arrays.stream(Messages.values())
                 .map(message -> message.request().getClass().getName())
                 .filter(name -> name.startsWith(REQUEST_PACKAGE))
-                .map(name -> name.substring(1 + name.lastIndexOf(".")))
+                .filter(name -> !name.endsWith("Test"))
+                .map(JavaHelpers::lastTwoParts)
+                .sorted()
                 .collect(Collectors.toList());
+    }
+
+    private static String lastTwoParts(String name) {
+        String[] parts = name.split("\\.");
+        return parts[parts.length-2] + "." + parts[parts.length-1];
     }
 }

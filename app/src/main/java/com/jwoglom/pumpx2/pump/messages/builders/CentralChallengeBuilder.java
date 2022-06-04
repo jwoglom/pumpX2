@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
 import com.jwoglom.pumpx2.pump.messages.Bytes;
-import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 
 public class CentralChallengeBuilder {
     public static CentralChallengeRequest create(int appInstanceId) {

@@ -6,20 +6,22 @@ import json
 import sys
 import re
 
+CATEGORIES = ["authentication", "currentStatus"]
+
 MAIN_TEMPLATES = {
   "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
-    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{requestName}.java",
+    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}.java",
 
   "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
-    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{responseName}.java",
+    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}.java",
 }
 
 TEST_TEMPLATES = {
   "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
-    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{requestName}Test.java",
+    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}Test.java",
 
   "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
-    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{responseName}Test.java"
+    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}Test.java"
 }
 
 TEMPLATES = {
@@ -29,6 +31,7 @@ TEMPLATES = {
 
 MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
 
+REQUEST_MESSAGE_LIST_OPTIONS = "app/src/main/res/values/request_message_list_options.xml"
 class Arg:
   type = "int"
   name = "test"
@@ -79,12 +82,19 @@ def build_ctx():
     return json.loads(j)
 
   ctx = {}
-  ctx["requestName"] = input('Request name: ')
-  ctx["requestOpcode"] = int(input('Request opcode: '))
+  ctx["name"] = input('Message name: ')
+
+  cat = None
+  while cat not in CATEGORIES:
+    cat = input('Category: ')
+  ctx["cat"] = cat
+
+  ctx["requestName"] = ctx["name"] + 'Request'
+  ctx["requestOpcode"] = int(input(ctx["requestName"] + ' opcode: '))
   ctx = add_args(ctx, "request")
 
-  ctx["responseName"] = input('Response name: ')
-  ctx["responseOpcode"] = int(input('Response opcode: '))
+  ctx["responseName"] = ctx["name"] + 'Response'
+  ctx["responseOpcode"] = int(input(ctx["responseName"] + ' opcode: '))
   ctx = add_args(ctx, "response")  
 
   print(json.dumps(ctx))
@@ -104,16 +114,19 @@ def addToMessagesEnum(ctx):
   snake_name = camel_to_snake(base_name)
   requestName = ctx["requestName"]
   responseName = ctx["responseName"]
+  cat = ctx["cat"]
 
   importBefore, importAfter = before.split("// IMPORT_END")
 
-  before = importBefore + f"import com.jwoglom.pumpx2.pump.messages.request.{requestName};\nimport com.jwoglom.pumpx2.pump.messages.response.{responseName};\n// IMPORT_END" + importAfter
+  before = importBefore + f"import com.jwoglom.pumpx2.pump.messages.request.{cat}.{requestName};\nimport com.jwoglom.pumpx2.pump.messages.response.{cat}.{responseName};\n// IMPORT_END" + importAfter
 
   full = before + f"{snake_name}({requestName}.class, {responseName}.class),\n    // MESSAGES_END" + after
 
   with open(MESSAGES_ENUM, "w") as f:
     f.write(full)
 
+def addToMessageListOptions(ctx):
+  text = open(REQUEST_MESSAGE_LIST_OPTIONS)
 
 def main():
   templates = TEMPLATES

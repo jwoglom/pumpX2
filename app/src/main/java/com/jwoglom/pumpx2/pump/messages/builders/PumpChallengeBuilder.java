@@ -2,10 +2,9 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
-import com.jwoglom.pumpx2.pump.messages.request.PumpChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 public class PumpChallengeBuilder {
     public static PumpChallengeRequest create(int appInstanceId, String pairingCode, byte[] hmacKey) {

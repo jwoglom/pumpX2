@@ -30,13 +30,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.common.base.Strings;
-import com.google.common.reflect.ClassPath;
 import com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
@@ -48,15 +45,7 @@ import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
-import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
-import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
-import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
-import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
-import com.jwoglom.pumpx2.pump.messages.request.PumpFeaturesRequest;
-import com.jwoglom.pumpx2.pump.messages.request.PumpGlobalsRequest;
-import com.jwoglom.pumpx2.pump.messages.request.PumpSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
@@ -66,11 +55,9 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -350,9 +337,9 @@ public class MainActivity extends AppCompatActivity {
 
             requestSendButton.setVisibility(View.VISIBLE);
             requestSendButton.setOnClickListener((z) -> {
-                String requestName = requestMessageSpinner.getSelectedItem().toString();
+                String itemName = requestMessageSpinner.getSelectedItem().toString();
                 try {
-                    String className = JavaHelpers.REQUEST_PACKAGE + "." + requestName;
+                    String className = JavaHelpers.REQUEST_PACKAGE + "." + itemName;
                     Class clazz = Class.forName(className);
                     Timber.i("Instantiated %s: %s", className, clazz);
                     writePumpMessage((Message) clazz.newInstance(), peripheral);
