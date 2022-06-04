@@ -6,6 +6,8 @@ import com.googlecode.openbeans.PropertyDescriptor;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -93,12 +95,35 @@ public class JavaHelpers {
     }
 
     public static String autoToString(Object bean, Set<String> ignoredPropertyNames) {
-        Map<String, Object> properties = JavaHelpers.getProperties(bean);
-        String propertiesStr = properties.entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getKey))
-                .filter(entry -> ignoredPropertyNames == null || !ignoredPropertyNames.contains(entry.getKey()))
-                .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
-                .collect(Collectors.joining(", "));
-        return bean.getClass().getName() + "(" + propertiesStr + ")";
+        return new ReflectionToStringBuilder(bean, ToStringStyle.SHORT_PREFIX_STYLE)
+                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                .build();
+//        Map<String, Object> properties = getProperties(bean);
+//        String propertiesStr = properties.entrySet().stream()
+//                .sorted(Comparator.comparing(Map.Entry::getKey))
+//                .filter(entry -> ignoredPropertyNames == null || !ignoredPropertyNames.contains(entry.getKey()))
+//                .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
+//                .collect(Collectors.joining(", "));
+//        return bean.getClass().getName() + "(" + propertiesStr + ")";
+    }
+
+    public static String autoToStringVerbose(Object bean, Set<String> ignoredPropertyNames) {
+        return new ReflectionToStringBuilder(bean, new MultiLineNoHashcodeToStringStyle())
+                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                .build();
+    }
+
+    private static final class MultiLineNoHashcodeToStringStyle extends ToStringStyle {
+        MultiLineNoHashcodeToStringStyle() {
+            this.setContentStart("[");
+            this.setFieldSeparator(System.lineSeparator() + "  ");
+            this.setFieldSeparatorAtStart(true);
+            this.setUseIdentityHashCode(false);
+            this.setContentEnd(System.lineSeparator() + "]");
+        }
+        private Object readResolve() {
+            return MULTI_LINE_STYLE;
+        }
+
     }
 }

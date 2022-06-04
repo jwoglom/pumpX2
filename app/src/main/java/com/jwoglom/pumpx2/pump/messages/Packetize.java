@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages;
 import com.google.common.collect.Lists;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;

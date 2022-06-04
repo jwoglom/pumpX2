@@ -27,4 +27,22 @@ public class AlarmStatusResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
+    @Test
+    public void testAlarmStatusPumpReset() throws DecoderException {
+        AlarmStatusResponse expected = new AlarmStatusResponse(AlarmStatusResponse.AlarmResponseType.toBitmask(
+                AlarmStatusResponse.AlarmResponseType.PUMP_RESET_ALARM,
+                AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM2
+        ));
+
+        AlarmStatusResponse parsedReq = (AlarmStatusResponse) MessageTester.test(
+                "000c470c0808008000000000001cbd",
+                12,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }

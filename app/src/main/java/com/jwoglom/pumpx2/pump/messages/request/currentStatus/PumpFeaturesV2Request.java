@@ -4,23 +4,24 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV2Response;
 
 @MessageProps(
-    opCode=78,
+    opCode=-96,
     size=0,
     type=MessageType.REQUEST,
-    response=PumpFeaturesResponse.class
+    response=PumpFeaturesV2Response.class
 )
-public class PumpFeaturesRequest extends Message {
-    
-
-    public PumpFeaturesRequest() {
+public class PumpFeaturesV2Request extends Message {
+    public PumpFeaturesV2Request() {
         this.cargo = EMPTY;
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
+        
     }
+
+    
 }

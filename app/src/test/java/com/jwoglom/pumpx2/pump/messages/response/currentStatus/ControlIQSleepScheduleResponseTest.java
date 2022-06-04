@@ -4,9 +4,9 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.models.MinsTime;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse.SleepSchedule;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse.SleepSchedule.Day;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse.SleepSchedule.Time;
+import com.jwoglom.pumpx2.pump.messages.models.MultiDay;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -40,22 +40,22 @@ public class ControlIQSleepScheduleResponseTest {
         ControlIQSleepScheduleResponse expected = new ControlIQSleepScheduleResponse(
                 // M Tu W Th F from 10:30pm - 10am
                 new SleepSchedule(1,
-                        Day.toBitmask(Day.MONDAY, Day.TUESDAY, Day.WEDNESDAY, Day.THURSDAY, Day.FRIDAY),
-                        new Time(12+10, 30).encode(),
-                        new Time(10, 0).encode()),
+                        MultiDay.toBitmask(MultiDay.MONDAY, MultiDay.TUESDAY, MultiDay.WEDNESDAY, MultiDay.THURSDAY, MultiDay.FRIDAY),
+                        new MinsTime(12+10, 30).encode(),
+                        new MinsTime(10, 0).encode()),
                 // Sat from 11PM - 7am
                 new SleepSchedule(1,
-                        Day.toBitmask(Day.SATURDAY),
-                        new Time(12+11, 0).encode(),
-                        new Time(7, 0).encode()),
+                        MultiDay.toBitmask(MultiDay.SATURDAY),
+                        new MinsTime(12+11, 0).encode(),
+                        new MinsTime(7, 0).encode()),
                 // Not visible in UI
                 new SleepSchedule(0, 0,
-                        new Time(12+11, 0).encode(),
-                        new Time(7, 0).encode()),
+                        new MinsTime(12+11, 0).encode(),
+                        new MinsTime(7, 0).encode()),
                 // Not visible in UI
                 new SleepSchedule(0, 0,
-                        new Time(12+11, 0).encode(),
-                        new Time(7, 0).encode())
+                        new MinsTime(12+11, 0).encode(),
+                        new MinsTime(7, 0).encode())
         );
 
         ControlIQSleepScheduleResponse parsedRes = (ControlIQSleepScheduleResponse) MessageTester.test(

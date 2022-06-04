@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
 import com.google.common.base.Preconditions;
-import com.jwoglom.pumpx2.pump.messages.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -24,7 +24,7 @@ public class {{responseName}} extends Message {
     public {{responseName}}({% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
         {% if responseSize == 0 %}this.cargo = EMPTY;
         {% else %}this.cargo = buildCargo({% for arg in responseArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
-        {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.type == 'BigInteger' %}BigInteger.valueOf({{ arg.name }})){% else %}{{ arg.name }}{% endif %};
+        {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.type == 'BigInteger' %}BigInteger.valueOf({{ arg.name }}){% else %}{{ arg.name }}{% endif %};
         {% endfor %}{% endif %}
     }
 
@@ -32,20 +32,23 @@ public class {{responseName}} extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}]{% if arg.type == "boolean" %} != 0{% endif %};
+        {% elif arg.type == "String" %}Bytes.readString(raw, {{ arg.index }}, {{ arg.size }});
         {% elif arg.size == 2 %}Bytes.readShort(raw, {{ arg.index }});
         {% elif arg.size == 4 %}Bytes.readUint32(raw, {{ arg.index }});
         {% elif arg.size == 8 %}Bytes.readUint64(raw, {{ arg.index }});
-        {% else %}// {{ arg.size }} at {{ arg.index }}{% endif %}{% endfor %}
+        {% else %}null; // {{ arg.size }} at {{ arg.index }}
+        {% endif %}{% endfor %}
     }
 
     {% if responseSize > 0 %}
     public static byte[] buildCargo({% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
         return Bytes.combine({% for arg in responseArgs %}{% if arg.size == 1 %}
-            new byte[]{ (byte) {% if arg.type == "boolean" %}({{ arg.name }} ? 1 : 0){% else %}{{ arg.name }}{% endif %} }{% elif arg.size == 2 %}
+            new byte[]{ (byte) {% if arg.type == "boolean" %}({{ arg.name }} ? 1 : 0){% else %}{{ arg.name }}{% endif %} }{% elif arg.type == "String" %}
+            Bytes.writeString({{ arg.name }}, {{ arg.size }}){% elif arg.size == 2 %}
             Bytes.firstTwoBytesLittleEndian({{ arg.name }}){% elif arg.size == 4 %}
             Bytes.toUint32({{ arg.name }}){% elif arg.size == 8 %}
             Bytes.toUint64({{ arg.name }}.longValue()){% else %}
-            // {{ arg.size }} at {{ arg.index }}
+            null // {{ arg.size }} at {{ arg.index }}
             {% endif %}{{ ", " if not loop.last else "" }}{% endfor %});
     }
     {% endif %}

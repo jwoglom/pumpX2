@@ -84,6 +84,8 @@ public abstract class Message {
         return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);
     }
 
-
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String verboseToString() {
+        return JavaHelpers.autoToStringVerbose(this, IGNORED_PROPERTY_NAMES);
+    }
 }

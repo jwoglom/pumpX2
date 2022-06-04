@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
+import static com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse.ApiVersion.V2_API;
+
 import android.content.Context;
 
 import com.jwoglom.pumpx2.pump.PumpState;
@@ -16,7 +18,6 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionRespons
  * is sent with BAD_OPCODE.
  */
 public class CurrentBatteryBuilder {
-    private static final ApiVersion V2_API = new ApiVersion(2, 2);
     public static Message create(Context context) {
         if (PumpState.getPumpAPIVersion(context).greaterThanOrEqual(V2_API)) {
             return new CurrentBatteryV2Request();

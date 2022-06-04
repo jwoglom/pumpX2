@@ -75,6 +75,9 @@ def add_args(ctx, opt):
     elif typ == 'uint64' or typ == 'biginteger' or typ == '8':
       arg["size"] = 8
       arg["type"] = 'BigInteger'
+    elif typ == 'string' or typ == 'str':
+      arg["size"] = int(input("String length: "))
+      arg["type"] = 'String'
     else:
       arg["size"] = int(typ)
       arg["type"] = 'int'

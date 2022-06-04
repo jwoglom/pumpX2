@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2.pump.messages;
+package com.jwoglom.pumpx2.pump.messages.helpers;
 
 import com.google.common.base.Preconditions;
 

@@ -10,7 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeR
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.NonControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV1Request;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
@@ -23,7 +23,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBRespo
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Request;
@@ -58,6 +58,18 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSett
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GlobalMaxBolusSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalLimitSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV2Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV2Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -75,7 +87,7 @@ public enum Messages {
     CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),
     CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),
     NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),
-    PUMP_FEATURES(PumpFeaturesRequest.class, PumpFeaturesResponse.class),
+    PUMP_FEATURES(PumpFeaturesV1Request.class, PumpFeaturesV1Response.class),
     PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),
     PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),
     CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),
@@ -95,6 +107,12 @@ public enum Messages {
     CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),
     GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),
     BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),
+    PUMP_VERSION(PumpVersionRequest.class, PumpVersionResponse.class),
+    PUMP_SUPPORTED_FEATURES(PumpFeaturesV2Request.class, PumpFeaturesV2Response.class),
+    REMINDER_STATUS(ReminderStatusRequest.class, ReminderStatusResponse.class),
+    REMINDERS(RemindersRequest.class, RemindersResponse.class),
+    TEMP_RATE(TempRateRequest.class, TempRateResponse.class),
+    TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),
     // MESSAGES_END
     ;
 

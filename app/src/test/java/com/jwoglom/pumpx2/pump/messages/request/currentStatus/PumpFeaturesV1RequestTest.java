@@ -4,18 +4,17 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class PumpFeaturesRequestTest {
+public class PumpFeaturesV1RequestTest {
     @Test
     public void testPumpFeaturesRequest() throws DecoderException {
         // empty cargo
-        PumpFeaturesRequest expected = new PumpFeaturesRequest();
+        PumpFeaturesV1Request expected = new PumpFeaturesV1Request();
 
-        PumpFeaturesRequest parsedReq = (PumpFeaturesRequest) MessageTester.test(
+        PumpFeaturesV1Request parsedReq = (PumpFeaturesV1Request) MessageTester.test(
                 "00034e0300639f",
                 3,
                 1,

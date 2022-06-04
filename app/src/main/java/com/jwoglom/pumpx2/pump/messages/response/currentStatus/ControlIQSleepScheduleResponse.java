@@ -1,15 +1,15 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
-import com.jwoglom.pumpx2.pump.messages.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.MinsTime;
+import com.jwoglom.pumpx2.pump.messages.models.MultiDay;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
-import java.math.BigInteger;
-import java.util.HashSet;
 import java.util.Set;
 
 @MessageProps(
@@ -91,83 +91,16 @@ public class ControlIQSleepScheduleResponse extends Message {
             return enabled;
         }
 
-        public enum Day {
-            MONDAY(1),
-            TUESDAY(2),
-            WEDNESDAY(4),
-            THURSDAY(8),
-            FRIDAY(16),
-            SATURDAY(32),
-            SUNDAY(64),
-            ;
-
-            private final int id;
-            Day(int id) {
-                this.id = id;
-            }
-
-            public int id() {
-                return id;
-            }
-
-            public static Set<Day> fromBitmask(int bitmask) {
-                Set<Day> set = new HashSet<>();
-                for (Day day : values()) {
-                    if (bitmask % day.id() == 0) {
-                        set.add(day);
-                    }
-                }
-
-                return set;
-            }
-
-            public static int toBitmask(Day ...days) {
-                int mask = 0;
-                for (Day day : days) {
-                    mask += day.id();
-                }
-
-                return mask;
-            }
+        public Set<MultiDay> activeDays() {
+            return MultiDay.fromBitmask(activeDays);
         }
 
-        public Set<Day> activeDays() {
-            return Day.fromBitmask(activeDays);
+        public MinsTime startTime() {
+            return new MinsTime(startTime);
         }
 
-        public static class Time {
-            private final int hour;
-            private final int min;
-
-            public Time(int totalMins) {
-                this.hour = totalMins / 60;
-                this.min = totalMins % 60;
-            }
-
-            public Time(int hour, int min) {
-                this.hour = hour;
-                this.min = min;
-            }
-
-            public int hour() {
-                return hour;
-            }
-
-            public int min() {
-                return min;
-            }
-
-            public int encode() {
-                return hour*60 + min;
-            }
-        }
-
-        public Time startTime() {
-            return new Time(startTime);
-        }
-
-        public Time endTime() {
-            return new Time(endTime);
+        public MinsTime endTime() {
+            return new MinsTime(endTime);
         }
 
         public byte[] build() {
@@ -182,5 +115,4 @@ public class ControlIQSleepScheduleResponse extends Message {
             return JavaHelpers.autoToString(this, null);
         }
     }
-    
 }

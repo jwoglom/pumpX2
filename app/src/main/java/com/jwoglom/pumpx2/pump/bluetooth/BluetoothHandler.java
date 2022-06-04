@@ -22,7 +22,7 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallenge
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
@@ -195,8 +195,8 @@ public class BluetoothHandler {
                     Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
                     intent.putExtra("text", "NonControlIQIOB: "+resp);
                     context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof PumpFeaturesResponse) {
-                    PumpFeaturesResponse resp = (PumpFeaturesResponse) response.message().get();
+                } else if (response.message().isPresent() && response.message().get() instanceof PumpFeaturesV1Response) {
+                    PumpFeaturesV1Response resp = (PumpFeaturesV1Response) response.message().get();
                     Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
                     intent.putExtra("text", "Features: "+resp);
                     context.sendBroadcast(intent);

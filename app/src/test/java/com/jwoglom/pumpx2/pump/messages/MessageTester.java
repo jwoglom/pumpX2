@@ -40,13 +40,14 @@ public class MessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        assertEquals(parsedMessage.getClass(), expected.getClass());
+        L.w(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        assertEquals(expected.getClass(), parsedMessage.getClass());
+        assertEquals(expected.verboseToString(), parsedMessage.verboseToString());
 
         assertEquals("expected packet size", expectedPackets, tron.packets().size());
         byte[] mergedPackets = tron.mergeIntoSinglePacket().build();
         assertHexEquals(initialRead, mergedPackets);
 
-        L.w(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
 
         assertHexEquals(parsedMessage.getCargo(), expected.getCargo());
 

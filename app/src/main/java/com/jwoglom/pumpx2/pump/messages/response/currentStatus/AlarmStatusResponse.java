@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
-import com.jwoglom.pumpx2.pump.messages.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -118,19 +118,32 @@ public class AlarmStatusResponse extends Message {
             return bitmask;
         }
 
+        public static BigInteger toBitmask(AlarmResponseType ...types) {
+            BigInteger ret = BigInteger.ZERO;
+            for (AlarmResponseType type : types) {
+                ret = ret.setBit(type.bitmask());
+            }
+
+            return ret;
+        }
+
+        public static Set<AlarmResponseType> fromBitmask(BigInteger intMap) {
+            Set<AlarmResponseType> current = new HashSet<>();
+            for (AlarmResponseType type : AlarmResponseType.values()) {
+                if (intMap.testBit(type.bitmask())) {
+                    current.add(type);
+                }
+            }
+
+            return current;
+        }
+
         public String toString() {
             return name();
         }
     }
 
     public Set<AlarmResponseType> getAlarms() {
-        Set<AlarmResponseType> current = new HashSet<>();
-        for (AlarmResponseType type : AlarmResponseType.values()) {
-            if (intMap.testBit(type.bitmask())) {
-                current.add(type);
-            }
-        }
-
-        return current;
+        return AlarmResponseType.fromBitmask(getIntMap());
     }
 }
