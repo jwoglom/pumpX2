@@ -4,6 +4,7 @@ import jinja2
 from pprint import pprint
 import json
 import sys
+import re
 
 MAIN_TEMPLATES = {
   "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
@@ -25,6 +26,8 @@ TEMPLATES = {
   **MAIN_TEMPLATES,
   **TEST_TEMPLATES
 }
+
+MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
 
 class Arg:
   type = "int"
@@ -88,6 +91,29 @@ def build_ctx():
   
   return ctx
 
+def addToMessagesEnum(ctx):
+  text = open(MESSAGES_ENUM, "r").read()
+  before, after = text.split("// MESSAGES_END", 1)
+
+  def camel_to_snake(name):
+    name = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).upper()
+
+
+  base_name = ctx["requestName"].split("Request")[0]
+  snake_name = camel_to_snake(base_name)
+  requestName = ctx["requestName"]
+  responseName = ctx["responseName"]
+
+  importBefore, importAfter = before.split("// IMPORT_END")
+
+  before = importBefore + f"import com.jwoglom.pumpx2.pump.messages.request.{requestName};\nimport com.jwoglom.pumpx2.pump.messages.response.{responseName};\n// IMPORT_END" + importAfter
+
+  full = before + f"{snake_name}({requestName}.class, {responseName}.class),\n    // MESSAGES_END" + after
+
+  with open(MESSAGES_ENUM, "w") as f:
+    f.write(full)
+
 
 def main():
   templates = TEMPLATES
@@ -101,6 +127,8 @@ def main():
     f = out.format(**ctx)
     open(f, "w").write(render(tpl, ctx))
     print(f"Wrote {f}")
+  
+  addToMessagesEnum(ctx)
 
 if __name__ == '__main__':
   

@@ -34,6 +34,7 @@ public class BTResponseParser {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
+                L.w(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4);
                 L.w(TAG, "Parsed message: " + msg);
 

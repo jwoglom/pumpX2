@@ -16,7 +16,7 @@ public class PumpFeaturesRequestTest {
 
         PumpFeaturesRequest parsedReq = (PumpFeaturesRequest) MessageTester.test(
                 "00034e0300639f",
-                2,
+                3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

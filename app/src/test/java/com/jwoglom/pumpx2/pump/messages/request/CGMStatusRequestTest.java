@@ -4,20 +4,20 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.PumpSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.CGMStatusRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class PumpSettingsRequestTest {
+public class CGMStatusRequestTest {
     @Test
-    public void testPumpSettingsRequest() throws DecoderException {
+    public void testCGMStatusRequest() throws DecoderException {
         // empty cargo
-        PumpSettingsRequest expected = new PumpSettingsRequest();
+        CGMStatusRequest expected = new CGMStatusRequest();
 
-        PumpSettingsRequest parsedReq = (PumpSettingsRequest) MessageTester.test(
-                "0004520400f630",
-                4,
+        CGMStatusRequest parsedReq = (CGMStatusRequest) MessageTester.test(
+                "000350030001c7",
+                3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

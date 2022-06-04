@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,16 +16,17 @@ import kotlin.collections.ArraysKt;
     opCode=77,
     size=2,
     type=MessageType.RESPONSE,
-    request=ErrorResponse.class
+    request=UndefinedRequest.class
 )
 public class ErrorResponse extends Message {
     private int unknownByte0;
     private int errorCodeId;
     private ErrorCode errorCode;
 
+    public ErrorResponse() {}
+
     public ErrorResponse(int unknownByte0, int errorCodeId) {
         parse(buildCargo(unknownByte0, errorCodeId));
-
     }
 
     public void parse(byte[] raw) {

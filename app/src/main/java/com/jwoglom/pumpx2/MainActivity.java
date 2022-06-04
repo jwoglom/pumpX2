@@ -30,10 +30,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.common.base.Strings;
+import com.google.common.reflect.ClassPath;
 import com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
@@ -43,6 +46,7 @@ import com.jwoglom.pumpx2.pump.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
@@ -53,6 +57,7 @@ import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpFeaturesRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpGlobalsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.PumpSettingsRequest;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -61,9 +66,11 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -75,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private Button retryConnectButton;
     private Spinner requestMessageSpinner;
     private Button requestSendButton;
+    private Button batteryRequestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +94,18 @@ public class MainActivity extends AppCompatActivity {
         retryConnectButton.setOnClickListener((view) -> BluetoothHandler.getInstance(getApplicationContext()).startScan());
 
         requestMessageSpinner = findViewById(R.id.request_message_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
+
+        List<String> requestMessages = JavaHelpers.getAllPumpRequestMessages();
+        Timber.i("requestMessages: %s", requestMessages);
+        ArrayAdapter<String> adapter  = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_item, requestMessages);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         requestMessageSpinner.setAdapter(adapter);
 
         requestSendButton = findViewById(R.id.request_message_send);
+        batteryRequestButton = findViewById(R.id.battery_request_button);
 
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
@@ -336,41 +350,23 @@ public class MainActivity extends AppCompatActivity {
 
             requestSendButton.setVisibility(View.VISIBLE);
             requestSendButton.setOnClickListener((z) -> {
-                switch (requestMessageSpinner.getSelectedItem().toString()) {
-                    case "AlarmStatusRequest":
-                        writePumpMessage(new AlarmStatusRequest(), peripheral);
-                        break;
-
-                    case "AlertStatusRequest":
-                        writePumpMessage(new AlertStatusRequest(), peripheral);
-                        break;
-
-                    case "CGMHardwareInfoRequest":
-                        writePumpMessage(new CGMHardwareInfoRequest(), peripheral);
-                        break;
-
-                    case "ControlIQIOBRequest":
-                        writePumpMessage(new ControlIQIOBRequest(), peripheral);
-                        break;
-
-                    case "NonControlIQIOBRequest":
-                        writePumpMessage(new NonControlIQIOBRequest(), peripheral);
-                        break;
-
-                    case "PumpFeaturesRequest":
-                        writePumpMessage(new PumpFeaturesRequest(), peripheral);
-                        break;
-
-                    case "PumpGlobalsRequest":
-                        writePumpMessage(new PumpGlobalsRequest(), peripheral);
-                        break;
-
-                    case "PumpSettingsRequest":
-                        writePumpMessage(new PumpSettingsRequest(), peripheral);
-                        break;
+                String requestName = requestMessageSpinner.getSelectedItem().toString();
+                try {
+                    String className = JavaHelpers.REQUEST_PACKAGE + "." + requestName;
+                    Class clazz = Class.forName(className);
+                    Timber.i("Instantiated %s: %s", className, clazz);
+                    writePumpMessage((Message) clazz.newInstance(), peripheral);
+                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                    Timber.e(e);
+                    e.printStackTrace();
                 }
             });
             requestSendButton.postInvalidate();
+
+            batteryRequestButton.setVisibility(View.VISIBLE);
+            batteryRequestButton.setOnClickListener((z) -> {
+                writePumpMessage(CurrentBatteryBuilder.create(context), peripheral);
+            });
         }
     };
 

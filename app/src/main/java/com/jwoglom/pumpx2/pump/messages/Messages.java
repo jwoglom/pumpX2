@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.request.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CGMHardwareInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.request.CGMStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.ControlIQIOBRequest;
 import com.jwoglom.pumpx2.pump.messages.request.NonControlIQIOBRequest;
@@ -16,13 +17,20 @@ import com.jwoglom.pumpx2.pump.messages.response.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CGMHardwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.response.CGMStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.ControlIQIOBResponse;
+import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpFeaturesResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpGlobalsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.PumpSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.CurrentBatteryV1Request;
+import com.jwoglom.pumpx2.pump.messages.response.CurrentBatteryV1Response;
+import com.jwoglom.pumpx2.pump.messages.request.CurrentBatteryV2Request;
+import com.jwoglom.pumpx2.pump.messages.response.CurrentBatteryV2Response;
+// IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.binary.Hex;
@@ -42,6 +50,10 @@ public enum Messages {
     PUMP_FEATURES(PumpFeaturesRequest.class, PumpFeaturesResponse.class),
     PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),
     PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),
+    CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),
+    CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),
+    CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),
+    // MESSAGES_END
     ;
 
     private static final String TAG = "X2-Messages";
@@ -58,11 +70,18 @@ public enum Messages {
             OPCODES.put(m.responseOpCode, m.responseClass);
             RESPONSES.put(m.responseOpCode, m);
         }
+
+        OPCODES.put(new ErrorResponse().opCode(), ErrorResponse.class);
     }
 
     public static Message parse(byte[] data, int opCode) {
         try {
-            Message msg = OPCODES.get(opCode).newInstance();
+            Class<? extends Message> clazz = OPCODES.get(opCode);
+            if (clazz == null) {
+                L.w(TAG, "Unable to find message for opCode: " + opCode +" with data: " + Hex.encodeHexString(data));
+                return null;
+            }
+            Message msg = clazz.newInstance();
             msg.parse(data);
             return msg;
         } catch (Exception e) {

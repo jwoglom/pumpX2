@@ -13,23 +13,20 @@ import com.jwoglom.pumpx2.pump.messages.response.{{responseName}};
     type=MessageType.REQUEST,
     response={{responseName}}.class
 )
-public class {{requestName}} extends Message {
-    {% for arg in requestArgs %}
+public class {{requestName}} extends Message { {% for arg in requestArgs %}
     private {{ arg.type }} {{ arg.name }};{% endfor %}
     {% if requestSize > 0 %}
     public {{requestName}}() {}
-    {% endif %}
-    public {{requestName}}({% for arg in requestArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
-        {% if requestSize == 0 %}this.cargo = EMPTY;
-        {% else %}this.cargo = buildCargo({% for arg in requestArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
+
+    {% endif %}public {{requestName}}({% for arg in requestArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
+        {% if requestSize == 0 %}this.cargo = EMPTY;{% else %}this.cargo = buildCargo({% for arg in requestArgs %}{{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %});
         {% for arg in requestArgs %}this.{{ arg.name }} = {{ arg.name }};
         {% endfor %}{% endif %}
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
-        this.cargo = raw;
-        {% for arg in requestArgs %}
+        this.cargo = raw;{% for arg in requestArgs %}
         this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}];
         {% elif arg.size == 2 %}Bytes.readShort(raw, {{ arg.index }});
         {% elif arg.size == 4 %}Bytes.readUint32(raw, {{ arg.index }});
@@ -52,9 +49,9 @@ public class {{requestName}} extends Message {
             {% endif %}{{ ", " if not loop.last else "" }}
         {% endfor %});
     }
-    {% endif %}
     {% for arg in requestArgs %}public {{ arg.type }} get{{ arg.name[0]|upper }}{{ arg.name[1:] }}() {
         return {{ arg.name }};
     }
     {% endfor %}
+    {% endif %}
 }

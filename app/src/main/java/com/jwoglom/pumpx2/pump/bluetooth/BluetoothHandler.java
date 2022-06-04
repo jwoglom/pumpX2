@@ -173,6 +173,7 @@ public class BluetoothHandler {
                 } else if (response.message().isPresent() && response.message().get() instanceof ApiVersionResponse) {
                     ApiVersionResponse resp = (ApiVersionResponse) response.message().get();
                     Timber.i("Got ApiVersionRequest: %s", resp);
+                    PumpState.setPumpAPIVersion(context, resp.getApiVersion());
                     Intent intent = new Intent(PUMP_CONNECTED_STAGE5_INTENT);
                     intent.putExtra("address", peripheral.getAddress());
                     context.sendBroadcast(intent);
