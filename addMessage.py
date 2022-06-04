@@ -77,9 +77,10 @@ def add_args(ctx, opt):
   return ctx
 
 def build_ctx():
-  j = input('Enter JSON? ')
-  if j and len(j) > 4:
-    return json.loads(j)
+  if "--json" in sys.argv:
+    j = input('Enter JSON? ')
+    if j and len(j) > 4:
+      return json.loads(j)
 
   ctx = {}
   ctx["name"] = input('Message name: ')

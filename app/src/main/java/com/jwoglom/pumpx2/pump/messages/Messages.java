@@ -30,6 +30,12 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Re
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV1Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -53,6 +59,8 @@ public enum Messages {
     CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),
     CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),
     CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),
+    INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),
+    LAST_BG(LastBGRequest.class, LastBGResponse.class),
     // MESSAGES_END
     ;
 

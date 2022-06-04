@@ -1,23 +1,23 @@
-package com.jwoglom.pumpx2.pump.messages.request.{{cat}};
+package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class {{requestName}}Test {
+public class InsulinStatusRequestTest {
     @Test
-    public void test{{requestName}}() throws DecoderException {
+    public void testInsulinStatusRequest() throws DecoderException {
         // empty cargo
-        {{requestName}} expected = new {{requestName}}();
+        InsulinStatusRequest expected = new InsulinStatusRequest();
 
-        {{requestName}} parsedReq = ({{requestName}}) MessageTester.test(
-                "xxxx",
-                2,
+        InsulinStatusRequest parsedReq = (InsulinStatusRequest) MessageTester.test(
+                "00042404005e5a",
+                4,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

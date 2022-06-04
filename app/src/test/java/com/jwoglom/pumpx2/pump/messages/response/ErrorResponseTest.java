@@ -12,9 +12,9 @@ import org.junit.Test;
 
 public class ErrorResponseTest {
     @Test
-    public void testErrorResponse() throws DecoderException {
+    public void testErrorResponseBadOpcode() throws DecoderException {
         ErrorResponse expected = new ErrorResponse(
-                0, ErrorResponse.ErrorCode.BAD_OPCODE.id()
+                -112, ErrorResponse.ErrorCode.BAD_OPCODE.id()
         );
 
         ErrorResponse parsedRes = (ErrorResponse) MessageTester.test(
