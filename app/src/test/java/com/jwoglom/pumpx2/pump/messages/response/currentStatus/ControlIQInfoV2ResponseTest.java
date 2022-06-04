@@ -4,24 +4,23 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV2Response;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.lang3.NotImplementedException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class CurrentBatteryV2ResponseTest {
+public class ControlIQInfoV2ResponseTest {
     @Test
     @Ignore("needs to be run on a V2 pump")
-    public void testCurrentBatteryV2Response() throws DecoderException {
-        CurrentBatteryV2Response expected = new CurrentBatteryV2Response(
-            // int currentBatteryAbc, int currentBatteryIbc, int chargingStatus, int unknown1, int unknown2, int unknown3, int unknown4
+    public void testControlIQInfoV2Response() throws DecoderException {
+        ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
+            // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration
         );
 
-        CurrentBatteryV2Response parsedRes = (CurrentBatteryV2Response) MessageTester.test(
+        ControlIQInfoV2Response parsedRes = (ControlIQInfoV2Response) MessageTester.test(
                 "xxxx",
-                2,
+                3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

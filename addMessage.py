@@ -54,17 +54,25 @@ def render(file, ctx):
 def add_args(ctx, opt):
   ctx[opt + "Args"] = []
   ctx[opt + "Size"] = 0
-  while input(f"Add {opt} argument? (y/n)") in ('y', 'Y'):
+
+  while True:
     arg = {}
-    arg["name"] = input('Arg name: ')
+    name = input('Arg name: ')
+    if not name or len(name) < 2:
+      print('No more arguments')
+      break
+    arg["name"] = name
     typ = input('Type or size? ').lower()
-    if typ == 'short' or typ == 'int':
+    if typ == 'bool' or typ == 'boolean':
+      arg["size"] = 1
+      arg["type"] = 'boolean'
+    elif typ == 'short' or typ == 'int':
       arg["size"] = 2
       arg["type"] = 'int'
     elif typ == 'uint32' or typ == 'long':
       arg["type"] = 'long'
       arg["size"] = 4
-    elif typ == 'uint64' or typ == 'biginteger':
+    elif typ == 'uint64' or typ == 'biginteger' or typ == '8':
       arg["size"] = 8
       arg["type"] = 'BigInteger'
     else:
@@ -83,7 +91,10 @@ def build_ctx():
       return json.loads(j)
 
   ctx = {}
-  ctx["name"] = input('Message name: ')
+  mname = None
+  while not mname or mname.lower().endswith("request") or mname.lower().endswith("response"):
+    mname = input('Message name: ')
+  ctx["name"] = mname
 
   cat = None
   while cat not in CATEGORIES:
@@ -120,6 +131,10 @@ def addToMessagesEnum(ctx):
   importBefore, importAfter = before.split("// IMPORT_END")
 
   before = importBefore + f"import com.jwoglom.pumpx2.pump.messages.request.{cat}.{requestName};\nimport com.jwoglom.pumpx2.pump.messages.response.{cat}.{responseName};\n// IMPORT_END" + importAfter
+
+  if f"{snake_name}({requestName}.class, {responseName}.class)" in text:
+    print("Message enum already exists, skipping")
+    return
 
   full = before + f"{snake_name}({requestName}.class, {responseName}.class),\n    // MESSAGES_END" + after
 

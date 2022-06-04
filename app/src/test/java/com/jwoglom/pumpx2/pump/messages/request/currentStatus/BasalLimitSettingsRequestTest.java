@@ -1,23 +1,22 @@
-package com.jwoglom.pumpx2.pump.messages.request.{{cat}};
+package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class {{requestName}}Test {
+public class BasalLimitSettingsRequestTest {
     @Test
-    public void test{{requestName}}() throws DecoderException {
+    public void testBasalLimitSettingsRequest() throws DecoderException {
         // empty cargo
-        {{requestName}} expected = new {{requestName}}();
+        BasalLimitSettingsRequest expected = new BasalLimitSettingsRequest();
 
-        {{requestName}} parsedReq = ({{requestName}}) MessageTester.test(
-                "xxxx",
-                3,
+        BasalLimitSettingsRequest parsedReq = (BasalLimitSettingsRequest) MessageTester.test(
+                "00048a0400c3fc",
+                4,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

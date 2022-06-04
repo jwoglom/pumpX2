@@ -1,22 +1,22 @@
-package com.jwoglom.pumpx2.pump.messages.request.{{cat}};
+package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class {{requestName}}Test {
+public class ControlIQSleepScheduleRequestTest {
     @Test
-    public void test{{requestName}}() throws DecoderException {
+    public void testControlIQSleepScheduleRequest() throws DecoderException {
         // empty cargo
-        {{requestName}} expected = new {{requestName}}();
+        ControlIQSleepScheduleRequest expected = new ControlIQSleepScheduleRequest();
 
-        {{requestName}} parsedReq = ({{requestName}}) MessageTester.test(
-                "xxxx",
+        ControlIQSleepScheduleRequest parsedReq = (ControlIQSleepScheduleRequest) MessageTester.test(
+                "00036a030065c5",
                 3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,

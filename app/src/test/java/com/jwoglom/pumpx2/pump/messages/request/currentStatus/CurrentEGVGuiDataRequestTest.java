@@ -1,22 +1,22 @@
-package com.jwoglom.pumpx2.pump.messages.request.{{cat}};
+package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class {{requestName}}Test {
+public class CurrentEGVGuiDataRequestTest {
     @Test
-    public void test{{requestName}}() throws DecoderException {
+    public void testCurrentEGVGuiDataRequest() throws DecoderException {
         // empty cargo
-        {{requestName}} expected = new {{requestName}}();
+        CurrentEGVGuiDataRequest expected = new CurrentEGVGuiDataRequest();
 
-        {{requestName}} parsedReq = ({{requestName}}) MessageTester.test(
-                "xxxx",
+        CurrentEGVGuiDataRequest parsedReq = (CurrentEGVGuiDataRequest) MessageTester.test(
+                "00032203006971",
                 3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,

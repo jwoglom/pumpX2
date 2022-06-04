@@ -81,13 +81,7 @@ public abstract class Message {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String toString() {
-        Map<String, Object> properties = JavaHelpers.getProperties(this);
-        String propertiesStr = properties.entrySet().stream()
-                .sorted(Comparator.comparing(Map.Entry::getKey))
-                .filter(entry -> !IGNORED_PROPERTY_NAMES.contains(entry.getKey()))
-                .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
-                .collect(Collectors.joining(", "));
-        return getClass().getName() + "(" + propertiesStr + ")";
+        return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);
     }
 
 

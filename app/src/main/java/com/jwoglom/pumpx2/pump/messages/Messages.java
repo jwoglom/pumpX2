@@ -32,10 +32,32 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Re
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBasalStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV1Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV1Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV2Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV2Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMGlucoseAlertSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMGlucoseAlertSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMOORAlertSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMOORAlertSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMRateAlertSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMRateAlertSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEGVGuiDataResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GlobalMaxBolusSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalLimitSettingsResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -61,6 +83,18 @@ public enum Messages {
     CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),
     INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),
     LAST_BG(LastBGRequest.class, LastBGResponse.class),
+    CURRENT_BOLUS_STATUS(CurrentBolusStatusRequest.class, CurrentBolusStatusResponse.class),
+    CURRENT_BASAL_STATUS(CurrentBasalStatusRequest.class, CurrentBasalStatusResponse.class),
+    CONTROL_IQ_SLEEP_SCHEDULE(ControlIQSleepScheduleRequest.class, ControlIQSleepScheduleResponse.class),
+    CONTROL_IQ_INFO_V1(ControlIQInfoV1Request.class, ControlIQInfoV1Response.class),
+    CONTROL_IQ_INFO_V2(ControlIQInfoV2Request.class, ControlIQInfoV2Response.class),
+    CGM_ALERT_STATUS(CGMAlertStatusRequest.class, CGMAlertStatusResponse.class),
+    CGM_GLUCOSE_ALERT_SETTINGS(CGMGlucoseAlertSettingsRequest.class, CGMGlucoseAlertSettingsResponse.class),
+    CGMOOR_ALERT_SETTINGS(CGMOORAlertSettingsRequest.class, CGMOORAlertSettingsResponse.class),
+    CGM_RATE_ALERT_SETTINGS(CGMRateAlertSettingsRequest.class, CGMRateAlertSettingsResponse.class),
+    CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),
+    GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),
+    BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),
     // MESSAGES_END
     ;
 

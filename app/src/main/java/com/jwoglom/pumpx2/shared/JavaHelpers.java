@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -88,5 +90,15 @@ public class JavaHelpers {
     private static String lastTwoParts(String name) {
         String[] parts = name.split("\\.");
         return parts[parts.length-2] + "." + parts[parts.length-1];
+    }
+
+    public static String autoToString(Object bean, Set<String> ignoredPropertyNames) {
+        Map<String, Object> properties = JavaHelpers.getProperties(bean);
+        String propertiesStr = properties.entrySet().stream()
+                .sorted(Comparator.comparing(Map.Entry::getKey))
+                .filter(entry -> ignoredPropertyNames == null || !ignoredPropertyNames.contains(entry.getKey()))
+                .map(entry -> entry.getKey() + "=" + JavaHelpers.display(entry.getValue()))
+                .collect(Collectors.joining(", "));
+        return bean.getClass().getName() + "(" + propertiesStr + ")";
     }
 }

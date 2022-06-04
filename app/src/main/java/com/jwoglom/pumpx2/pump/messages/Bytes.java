@@ -34,6 +34,14 @@ public class Bytes {
         return ret;
     }
 
+    public static byte[] emptyBytes(int size) {
+        byte[] ret = new byte[size];
+        for (int i=0; i<size; i++) {
+            ret[i] = 0;
+        }
+        return ret;
+    }
+
     public static int readShort(byte[] raw, int i) {
         Preconditions.checkArgument(i >= 0 && i + 1 < raw.length);
         return ((andWithMaxValue(raw[i+1]) & 255) << 8) | (andWithMaxValue(raw[i]) & 255);
