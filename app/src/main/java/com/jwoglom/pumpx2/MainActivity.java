@@ -46,6 +46,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
@@ -340,7 +341,14 @@ public class MainActivity extends AppCompatActivity {
                 String itemName = requestMessageSpinner.getSelectedItem().toString();
                 try {
                     String className = JavaHelpers.REQUEST_PACKAGE + "." + itemName;
-                    Class clazz = Class.forName(className);
+
+                    // Custom processing for arguments
+                    if (className.equals(IDPSegmentRequest.class.getName())) {
+                        triggerIDPSegmentDialog(peripheral);
+                        return;
+                    }
+
+                    Class<?> clazz = Class.forName(className);
                     Timber.i("Instantiated %s: %s", className, clazz);
                     writePumpMessage((Message) clazz.newInstance(), peripheral);
                 } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
@@ -540,6 +548,60 @@ public class MainActivity extends AppCompatActivity {
                     .create()
                     .show();
         }
+    }
+
+    private void triggerIDPSegmentDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter IDP ID");
+        builder.setMessage("Enter the ID for the Insulin Delivery Profile");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String idpId = input1.getText().toString();
+                Timber.i("idp id: %s", idpId);
+
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                builder2.setTitle("Enter segment index");
+                builder2.setMessage("Enter the index for the Insulin Delivery Profile segment");
+
+                final EditText input2 = new EditText(context);
+                input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+                builder2.setView(input2);
+
+                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String idpSegment = input2.getText().toString();
+                        Timber.i("idp segment: %s", idpSegment);
+
+                        writePumpMessage(new IDPSegmentRequest(Integer.parseInt(idpId), Integer.parseInt(idpSegment)), peripheral);
+                    }
+                });
+                builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder2.show();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     private void triggerPairDialog(String btName, String btAddress) {

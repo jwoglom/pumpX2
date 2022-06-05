@@ -10,6 +10,9 @@ import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * With an ErorrCode of INVALID_PARAMETER, requestCodeId contains the request opcode which failed
+ */
 @MessageProps(
     opCode=77,
     size=2,
@@ -17,19 +20,19 @@ import java.util.Map;
     request=UndefinedRequest.class
 )
 public class ErrorResponse extends Message {
-    private int unknownByte0;
+    private int requestCodeId;
     private int errorCodeId;
     private ErrorCode errorCode;
 
     public ErrorResponse() {}
 
-    public ErrorResponse(int unknownByte0, int errorCodeId) {
-        parse(buildCargo(unknownByte0, errorCodeId));
+    public ErrorResponse(int requestCodeId, int errorCodeId) {
+        parse(buildCargo(requestCodeId, errorCodeId));
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
-        unknownByte0 = raw[0];
+        requestCodeId = raw[0];
         errorCodeId = raw[1];
         errorCode = ErrorCode.fromByte(errorCodeId);
         cargo = raw;
@@ -41,8 +44,8 @@ public class ErrorResponse extends Message {
                 new byte[]{ (byte) errorCodeId });
     }
 
-    public int getUnknownByte0() {
-        return unknownByte0;
+    public int getRequestCodeId() {
+        return requestCodeId;
     }
 
     public ErrorCode getErrorCode() {

@@ -70,6 +70,20 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HomeScreenMirrorResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ExtendedBolusStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQAlertInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQStatusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -113,6 +127,13 @@ public enum Messages {
     REMINDERS(RemindersRequest.class, RemindersResponse.class),
     TEMP_RATE(TempRateRequest.class, TempRateResponse.class),
     TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),
+    HOME_SCREEN_MIRROR(HomeScreenMirrorRequest.class, HomeScreenMirrorResponse.class),
+    PROFILE_STATUS(ProfileStatusRequest.class, ProfileStatusResponse.class),
+    IDP_SEGMENT(IDPSegmentRequest.class, IDPSegmentResponse.class),
+    EXTENDED_BOLUS_STATUS(ExtendedBolusStatusRequest.class, ExtendedBolusStatusResponse.class),
+    BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),
+    BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),
+    BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),
     // MESSAGES_END
     ;
 

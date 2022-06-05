@@ -27,4 +27,21 @@ public class ErrorResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+    @Test
+    public void testErrorResponseInvalidParameter() throws DecoderException {
+        ErrorResponse expected = new ErrorResponse(
+                66, ErrorResponse.ErrorCode.INVALID_REQUIRED_PARAMETER.id()
+        );
+
+        ErrorResponse parsedRes = (ErrorResponse) MessageTester.test(
+                "00084d08024207f4d1",
+                8,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }
