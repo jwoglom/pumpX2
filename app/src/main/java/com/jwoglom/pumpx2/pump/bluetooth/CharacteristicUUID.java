@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeR
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -49,6 +50,10 @@ public class CharacteristicUUID {
             message instanceof PumpChallengeRequest ||
             message instanceof PumpChallengeResponse) {
             return AUTHORIZATION_CHARACTERISTICS;
+        }
+
+        if (message instanceof HistoryLogStreamResponse) {
+            return HISTORY_LOG_CHARACTERISTICS;
         }
 
         if (message.signed()) {

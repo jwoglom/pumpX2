@@ -77,7 +77,7 @@ public abstract class Message {
         return this.cargo;
     }
 
-    private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps");
+    private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes");
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String toString() {

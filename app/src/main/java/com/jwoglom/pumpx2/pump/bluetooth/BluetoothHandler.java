@@ -14,7 +14,8 @@ import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
-import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
+import com.jwoglom.pumpx2.pump.messages.request.NonexistentErrorRequest;
+import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -133,7 +134,7 @@ public class BluetoothHandler {
 
                 // Parse
                 Pair<Message, Byte> pair = PumpState.popRequestMessage();
-                Message requestMessage = new UndefinedRequest();
+                Message requestMessage = new NonexistentHistoryLogStreamRequest();
                 Byte txId = (byte) 0;
                 if (pair != null) {
                     requestMessage = pair.first;

@@ -62,7 +62,7 @@ public class BTResponseParser {
             throw new NotImplementedException("Qualifying event characteristic: " + Hex.encodeHexString(output));
         } else if (CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS.equals(uuid)) {
             // stream write
-            throw new NotImplementedException("History log characteristic: " + Hex.encodeHexString(output));
+            //throw new NotImplementedException("History log characteristic: " + Hex.encodeHexString(output));
         } else if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
             // onServiceCharacteristicsChanged
             throw new NotImplementedException("Service changed characteristic: " + Hex.encodeHexString(output));

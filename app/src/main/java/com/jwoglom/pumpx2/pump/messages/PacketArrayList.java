@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.binary.Hex;
@@ -11,6 +12,7 @@ import kotlin.collections.ArraysKt;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Charsets;
+import timber.log.Timber;
 
 public class PacketArrayList {
     private static final String TAG = "X2-PacketArrayList";
@@ -107,7 +109,12 @@ public class PacketArrayList {
             if (txId != this.expectedTxId) {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
             } else if (cargoSize != this.expectedCargoSize) {
-                throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
+                if (opCode == Messages.HISTORY_LOG_STREAM.responseOpCode()) {
+                    // ignore
+                    Timber.i("For HistoryLogStreamResponse, ignoring cargo size %d instead of expected %d", cargoSize, expectedCargoSize);
+                } else {
+                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
+                }
             } else if (cargoSize <= 255) {
                 this.fullCargo = CollectionsKt.toByteArray(ArraysKt.drop(bArr, 5));
             } else {

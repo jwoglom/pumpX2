@@ -5,15 +5,19 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 
+/**
+ * This message is used as a paired request message for responses which can occur
+ * either in response to any request message (e.g. ErrorResponse).
+ */
 @MessageProps(
         opCode=-99999999,
         size=0,
         type=MessageType.REQUEST,
-        response= ErrorResponse.class
+        response=ErrorResponse.class
 )
-public class UndefinedRequest extends Message {
+public class NonexistentErrorRequest extends Message {
 
-    public UndefinedRequest() {
+    public NonexistentErrorRequest() {
         this.cargo = EMPTY;
     }
 

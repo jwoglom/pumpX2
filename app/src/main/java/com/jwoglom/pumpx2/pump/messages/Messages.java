@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
+import com.jwoglom.pumpx2.pump.messages.request.NonexistentErrorRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -14,6 +14,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequ
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV1Request;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -87,7 +88,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusReque
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
 // IMPORT_END
@@ -141,7 +142,7 @@ public enum Messages {
     BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),
     BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),
     HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),
-    HISTORY_LOG_STREAM(UndefinedRequest.class, HistoryLogStreamResponse.class),
+    HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),
     HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),
     // MESSAGES_END
     ;

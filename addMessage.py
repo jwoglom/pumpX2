@@ -5,22 +5,23 @@ from pprint import pprint
 import json
 import sys
 import re
+import os
 
-CATEGORIES = ["authentication", "currentStatus"]
+CATEGORIES = ["authentication", "currentStatus", "historyLog"]
 
 MAIN_TEMPLATES = {
-  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
+  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
     "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}.java",
 
-  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
+  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
     "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}.java",
 }
 
 TEST_TEMPLATES = {
-  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/template.j2": \
+  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
     "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}Test.java",
 
-  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/template.j2": \
+  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
     "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}Test.java"
 }
 
@@ -105,10 +106,16 @@ def build_ctx():
   ctx["cat"] = cat
 
   ctx["requestName"] = ctx["name"] + 'Request'
-  ctx["requestOpcode"] = int(input(ctx["requestName"] + ' opcode: '))
-  ctx = add_args(ctx, "request")
+  if cat != "historyLog":
+    ctx["requestOpcode"] = int(input(ctx["requestName"] + ' opcode: '))
+    ctx = add_args(ctx, "request")
+  else:
+    ctx["requestOpcode"] = 0
 
-  ctx["responseName"] = ctx["name"] + 'Response'
+  if cat != "historyLog":
+    ctx["responseName"] = ctx["name"] + 'Response'
+  else:
+    ctx["responseName"] = ctx["name"] + 'HistoryLog'
   ctx["responseOpcode"] = int(input(ctx["responseName"] + ' opcode: '))
   ctx = add_args(ctx, "response")  
 
@@ -156,13 +163,18 @@ def main():
   ctx = build_ctx()
 
   for tpl, out in templates.items():
+    if ctx["cat"] == "historyLog" and "request" in tpl:
+      continue
     f = out.format(**ctx)
-    open(f, "w").write(render(tpl, ctx))
+    tplName = tpl.format(prefix=f'{ctx["cat"]}/')
+    if not os.path.exists(tplName):
+      tplName = tpl.format(prefix='')
+    print(f'{tplName=}')
+    open(f, "w").write(render(tplName, ctx))
     print(f"Wrote {f}")
   
-  addToMessagesEnum(ctx)
+  if ctx["cat"] != "historyLog":
+    addToMessagesEnum(ctx)
 
 if __name__ == '__main__':
-  
-
   main()

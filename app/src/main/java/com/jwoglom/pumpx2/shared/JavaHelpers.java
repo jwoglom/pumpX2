@@ -6,6 +6,7 @@ import com.googlecode.openbeans.PropertyDescriptor;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.builder.RecursiveToStringStyle;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -113,7 +114,7 @@ public class JavaHelpers {
                 .build();
     }
 
-    private static final class MultiLineNoHashcodeToStringStyle extends ToStringStyle {
+    private static final class MultiLineNoHashcodeToStringStyle extends RecursiveToStringStyle {
         MultiLineNoHashcodeToStringStyle() {
             this.setContentStart("[");
             this.setFieldSeparator(System.lineSeparator() + "  ");
