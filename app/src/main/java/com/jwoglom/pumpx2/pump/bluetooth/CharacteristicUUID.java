@@ -1,11 +1,13 @@
 package com.jwoglom.pumpx2.pump.bluetooth;
 
+import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 
+import java.util.List;
 import java.util.UUID;
 
 public class CharacteristicUUID {
@@ -28,6 +30,18 @@ public class CharacteristicUUID {
     public static final UUID MANUFACTURER_NAME_CHARACTERISTIC_UUID = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
     public static final UUID MODEL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
 
+    public static final List<UUID> ENABLED_NOTIFICATIONS = ImmutableList.of(
+            CURRENT_STATUS_CHARACTERISTICS,
+            QUALIFYING_EVENTS_CHARACTERISTICS,
+            HISTORY_LOG_CHARACTERISTICS,
+
+            AUTHORIZATION_CHARACTERISTICS,
+
+            CONTROL_CHARACTERISTICS,
+            CONTROL_STREAM_CHARACTERISTICS,
+            SERVICE_CHANGED_CHARACTERISTICS,
+            NOTIFICATION_CCCD
+    );
 
     public static UUID determine(Message message) {
         if (message instanceof CentralChallengeRequest ||

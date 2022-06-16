@@ -8,6 +8,8 @@ import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_INVALID_CHALLENGE_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.UPDATE_TEXT_RECEIVER;
 
+import static java.util.stream.Collectors.toList;
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -46,6 +48,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.welie.blessed.BluetoothCentralManager;
@@ -59,6 +62,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -85,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 //                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
 
-        List<String> requestMessages = JavaHelpers.getAllPumpRequestMessages();
+        List<String> requestMessages = JavaHelpers.getAllPumpRequestMessages()
+                .stream().filter(m -> !m.startsWith("authentication.")).collect(toList());
         Timber.i("requestMessages: %s", requestMessages);
         ArrayAdapter<String> adapter  = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, requestMessages);
@@ -346,6 +351,9 @@ public class MainActivity extends AppCompatActivity {
                     if (className.equals(IDPSegmentRequest.class.getName())) {
                         triggerIDPSegmentDialog(peripheral);
                         return;
+                    } else if (className.equals(HistoryLogRequest.class.getName())) {
+                        triggerHistoryLogRequestDialog(peripheral);
+                        return;
                     }
 
                     Class<?> clazz = Class.forName(className);
@@ -581,6 +589,60 @@ public class MainActivity extends AppCompatActivity {
                         Timber.i("idp segment: %s", idpSegment);
 
                         writePumpMessage(new IDPSegmentRequest(Integer.parseInt(idpId), Integer.parseInt(idpSegment)), peripheral);
+                    }
+                });
+                builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder2.show();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void triggerHistoryLogRequestDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter start log ID");
+        builder.setMessage("Enter the ID of the first history log item to return from");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String startLog = input1.getText().toString();
+                Timber.i("startLog id: %s", startLog);
+
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                builder2.setTitle("Enter number of logs ");
+                builder2.setMessage("Enter the max number of logs to return");
+
+                final EditText input2 = new EditText(context);
+                input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+                builder2.setView(input2);
+
+                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String maxLogs = input2.getText().toString();
+                        Timber.i("idp segment: %s", maxLogs);
+
+                        writePumpMessage(new HistoryLogRequest(Integer.parseInt(startLog), Integer.parseInt(maxLogs)), peripheral);
                     }
                 });
                 builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -14,6 +14,7 @@ import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -73,9 +74,9 @@ public class BluetoothHandler {
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
             // Try to turn on notifications for other characteristics
-
-            peripheral.setNotify(ServiceUUID.PUMP_SERVICE_UUID, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS, true);
-            peripheral.setNotify(ServiceUUID.PUMP_SERVICE_UUID, CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS, true);
+            CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
+                peripheral.setNotify(ServiceUUID.PUMP_SERVICE_UUID, uuid, true);
+            });
 
             Timber.i("Connected to pump");
 
@@ -118,17 +119,29 @@ public class BluetoothHandler {
             } else if (characteristicUUID.equals(CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID)) {
                 String modelNumber = parser.getStringValue(0);
                 Timber.i("Received modelnumber: %s", modelNumber);
-            } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) || characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS)) {
+            } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
+                    characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
+                    characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS))
+            {
                 if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS)) {
-                    Timber.i("Received PUMP_AUTH_CHARACTERISTIC response: %s", Hex.encodeHexString(parser.getValue()));
+                    Timber.i("Received response with PUMP_AUTH_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
                 } else if (characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS)) {
-                    Timber.i("Received CURRENT_STATUS_CHARACTERISTIC response: %s", Hex.encodeHexString(parser.getValue()));
+                    Timber.i("Received response with CURRENT_STATUS_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
+                } else if (characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
+                    Timber.i("Received response with HISTORY_LOG_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
                 }
 
                 // Parse
                 Pair<Message, Byte> pair = PumpState.popRequestMessage();
-                Message requestMessage = pair.first;
-                Byte txId = pair.second;
+                Message requestMessage = new UndefinedRequest();
+                Byte txId = (byte) 0;
+                if (pair != null) {
+                    requestMessage = pair.first;
+                    txId = pair.second;
+                } else if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
+                    Timber.e("There was no request message to pop from PumpState");
+                }
+
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
                 PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
 

@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.request.UndefinedRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -84,6 +85,11 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsReq
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -134,6 +140,9 @@ public enum Messages {
     BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),
     BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),
     BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),
+    HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),
+    HISTORY_LOG_STREAM(UndefinedRequest.class, HistoryLogStreamResponse.class),
+    HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),
     // MESSAGES_END
     ;
 

@@ -14,6 +14,7 @@ import java.lang.annotation.Target;
 public @interface MessageProps {
     int opCode();
     int size() default 0;
+    boolean variableSize() default false;
     boolean signed() default false;
     MessageType type();
     Class<? extends Message> response() default UndefinedMessage.class;
