@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
     opCode=-127,
     size=28,
     variableSize=true,
+    stream=true,
     type=MessageType.RESPONSE,
     request=NonexistentHistoryLogStreamRequest.class
 )
@@ -46,7 +47,8 @@ public class HistoryLogStreamResponse extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        // We do NOT want this check, the size is variable!
+        //Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.numberOfHistoryLogs = raw[0];
         this.streamId = raw[1];

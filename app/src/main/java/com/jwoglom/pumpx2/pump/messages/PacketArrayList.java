@@ -15,30 +15,43 @@ import kotlin.text.Charsets;
 import timber.log.Timber;
 
 public class PacketArrayList {
-    private static final String TAG = "X2-PacketArrayList";
+    protected static final String TAG = "X2-PacketArrayList";
 
-    private byte expectedOpCode;
-    private byte expectedCargoSize;
-    private byte expectedTxId;
-    private boolean isSigned;
-    private byte[] fullCargo;
-    private byte[] messageData;
+    protected byte expectedOpCode;
+    protected byte expectedCargoSize;
+    protected byte expectedTxId;
+    protected boolean isSigned;
+    protected byte[] fullCargo;
+    protected byte[] messageData;
 
-    // Saved original messageData for history log request
-    private byte[] originalMessageData;
+    protected byte firstByteMod15;
+    protected byte opCode;
+    protected boolean empty = true;
+    protected final byte[] expectedCrc = {0, 0};
 
-    private byte firstByteMod15;
-    private byte opCode;
-    private boolean empty = true;
-    private final byte[] expectedCrc = {0, 0};
-
-    public PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
+    protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         this.expectedOpCode = expectedopCode;
         this.expectedCargoSize = expectedCargoSize;
         this.expectedTxId = expectedTxId;
         this.isSigned = isSigned;
         this.fullCargo = new byte[(expectedCargoSize + 2)];
         this.messageData = new byte[3];
+    }
+
+    // Returns either PacketArrayList or StreamPacketArrayList depending on the opcode
+    public static PacketArrayList build(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
+        Class<? extends Message> messageClass = Messages.OPCODES.get((int) expectedopCode);
+        try {
+            Timber.i("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass);
+            if (messageClass.newInstance().stream()) {
+                return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
+            }
+        } catch (IllegalAccessException|InstantiationException e) {
+            Timber.e(e);
+            e.printStackTrace();
+        }
+
+        return new PacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
     }
 
     public byte[] messageData() {
@@ -49,22 +62,15 @@ public class PacketArrayList {
         return opCode;
     }
 
-    private boolean isStream() {
-        return expectedOpCode == Messages.HISTORY_LOG_STREAM.responseOpCode();
-    }
-
     public final boolean needsMorePacket() {
         byte b = this.firstByteMod15;
         return b >= 0;
     }
 
-    public final boolean validate(String str) {
+    public boolean validate(String str) {
         Intrinsics.checkParameterIsNotNull(str, "ak");
         if (needsMorePacket()) {
             return false;
-        }
-        if (isStream()) {
-            expectedTxId = 0;
         }
         createMessageData();
         if (this.fullCargo.length >= 2) {
@@ -92,7 +98,7 @@ public class PacketArrayList {
         return ok;
     }
 
-    private void createMessageData() {
+    protected void createMessageData() {
         byte[] bArr = this.messageData;
         bArr[0] = this.expectedOpCode;
         bArr[1] = this.expectedTxId;
@@ -100,7 +106,7 @@ public class PacketArrayList {
         this.messageData = ArraysKt.plus(bArr, CollectionsKt.toByteArray(ArraysKt.dropLast(this.fullCargo, 2)));
     }
 
-    private void parse(byte[] bArr) {
+    protected void parse(byte[] bArr) {
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
         if (77 == opCode && 2 == cargoSize) {
@@ -116,18 +122,10 @@ public class PacketArrayList {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];
             byte txId = bArr[3];
-            if (opCode == Messages.HISTORY_LOG_STREAM.responseOpCode() && cargoSize != this.expectedCargoSize) {
-                expectedCargoSize = bArr[4];
-            }
             if (txId != this.expectedTxId) {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
             } else if (cargoSize != this.expectedCargoSize) {
-                if (opCode == Messages.HISTORY_LOG_STREAM.responseOpCode()) {
-                    // ignore
-                    Timber.i("For HistoryLogStreamResponse, ignoring cargo size %d instead of expected %d", cargoSize, expectedCargoSize);
-                } else {
-                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
-                }
+                throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
             } else if (cargoSize <= 255) {
                 this.fullCargo = CollectionsKt.toByteArray(ArraysKt.drop(bArr, 5));
             } else {
@@ -138,7 +136,7 @@ public class PacketArrayList {
         }
     }
 
-    public final void validatePacket(byte[] packetData) {
+    public void validatePacket(byte[] packetData) {
         Intrinsics.checkParameterIsNotNull(packetData, "packetData");
         if (packetData.length == 0) {
             throw new IllegalArgumentException("Empty data");
@@ -165,13 +163,7 @@ public class PacketArrayList {
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }
-                if (isStream()) {
-                    if (moreHistoryLogsRemaining()) {
-                        empty = true;
-                    }
-                } else {
-                    this.empty = false;
-                }
+                this.empty = false;
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
                 return;
             }
@@ -179,33 +171,5 @@ public class PacketArrayList {
         } else {
             throw new IllegalArgumentException("Invalid data size: " + packetData.length);
         }
-    }
-
-    private boolean moreHistoryLogsRemaining() {
-        if (firstByteMod15 == 0) {
-            return !checkHistoryLogCRC();
-        }
-        return firstByteMod15 > 0;
-    }
-
-    private boolean checkHistoryLogCRC() {
-        originalMessageData = messageData;
-        messageData = Bytes.combine(
-                new byte[]{ (byte) Messages.HISTORY_LOG_STREAM.responseOpCode() },
-                new byte[]{ 0 },
-                new byte[]{ expectedCargoSize },
-                CollectionsKt.toByteArray(ArraysKt.dropLast(messageData, 2))
-        );
-
-        if (this.fullCargo.length >= 2) {
-            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
-        }
-        byte[] crcOut = Bytes.calculateCRC16(messageData);
-        if (crcOut[0] == expectedCrc[0] && crcOut[1] == expectedCrc[1]) {
-            return true;
-        }
-
-        throw new IllegalArgumentException("CRC error with history log: originalMessageData: "+Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));
-
     }
 }

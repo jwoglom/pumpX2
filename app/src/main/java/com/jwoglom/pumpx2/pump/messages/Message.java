@@ -35,6 +35,10 @@ public abstract class Message {
         return props().signed();
     }
 
+    public boolean stream() {
+        return props().stream();
+    }
+
     public MessageType type() {
         return props().type();
     }

@@ -67,7 +67,7 @@ public class TronMessageWrapper {
             opCode = message.opCode();
             size = message.props().size();
         }
-        return new PacketArrayList(
+        return PacketArrayList.build(
                 (byte) opCode,
                 (byte) size,
                 packets.get(0).transactionId(),
