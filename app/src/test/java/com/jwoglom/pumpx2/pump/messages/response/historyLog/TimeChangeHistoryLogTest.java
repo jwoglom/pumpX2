@@ -14,8 +14,8 @@ public class TimeChangeHistoryLogTest {
     @Test
     public void testTimeChangeHistoryLog() throws DecoderException {
         TimeChangeHistoryLog expected = new TimeChangeHistoryLog(
-            // long timePrior, long timeAfter, long rawRTC
                 new byte[]{13,0,28,-54,-77,26,59,11},
+                // long timePrior, long timeAfter, long rawRTC
                 1114832896L, 559939677L, 2667905120L,
                 new byte[]{96, 50, 0, 0, 0, 0}
         );

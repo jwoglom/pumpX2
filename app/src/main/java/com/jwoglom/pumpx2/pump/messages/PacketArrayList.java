@@ -24,10 +24,13 @@ public class PacketArrayList {
     private byte[] fullCargo;
     private byte[] messageData;
 
+    // Saved original messageData for history log request
+    private byte[] originalMessageData;
+
     private byte firstByteMod15;
     private byte opCode;
     private boolean empty = true;
-    private final byte[] emptyZeroes = {0, 0};
+    private final byte[] expectedCrc = {0, 0};
 
     public PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         this.expectedOpCode = expectedopCode;
@@ -46,6 +49,10 @@ public class PacketArrayList {
         return opCode;
     }
 
+    private boolean isStream() {
+        return expectedOpCode == Messages.HISTORY_LOG_STREAM.responseOpCode();
+    }
+
     public final boolean needsMorePacket() {
         byte b = this.firstByteMod15;
         return b >= 0;
@@ -56,12 +63,15 @@ public class PacketArrayList {
         if (needsMorePacket()) {
             return false;
         }
+        if (isStream()) {
+            expectedTxId = 0;
+        }
         createMessageData();
         if (this.fullCargo.length >= 2) {
-            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.emptyZeroes, 0, 2);
+            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
         }
         byte[] a = Bytes.calculateCRC16(this.messageData);
-        byte[] lastTwoB = this.emptyZeroes;
+        byte[] lastTwoB = this.expectedCrc;
         boolean ok = true;
         if (!(a[0] == lastTwoB[0] && a[1] == lastTwoB[1])) {
             ok = false;
@@ -106,6 +116,9 @@ public class PacketArrayList {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];
             byte txId = bArr[3];
+            if (opCode == Messages.HISTORY_LOG_STREAM.responseOpCode() && cargoSize != this.expectedCargoSize) {
+                expectedCargoSize = bArr[4];
+            }
             if (txId != this.expectedTxId) {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
             } else if (cargoSize != this.expectedCargoSize) {
@@ -152,13 +165,47 @@ public class PacketArrayList {
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }
+                if (isStream()) {
+                    if (moreHistoryLogsRemaining()) {
+                        empty = true;
+                    }
+                } else {
+                    this.empty = false;
+                }
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
-                this.empty = false;
                 return;
             }
             throw new IllegalArgumentException("Unexpected transaction ID 1: " + ((int) secondByte) + ", expecting " + ((int) this.expectedTxId) + ", opCode: " + ((int) this.expectedOpCode));
         } else {
             throw new IllegalArgumentException("Invalid data size: " + packetData.length);
         }
+    }
+
+    private boolean moreHistoryLogsRemaining() {
+        if (firstByteMod15 == 0) {
+            return !checkHistoryLogCRC();
+        }
+        return firstByteMod15 > 0;
+    }
+
+    private boolean checkHistoryLogCRC() {
+        originalMessageData = messageData;
+        messageData = Bytes.combine(
+                new byte[]{ (byte) Messages.HISTORY_LOG_STREAM.responseOpCode() },
+                new byte[]{ 0 },
+                new byte[]{ expectedCargoSize },
+                CollectionsKt.toByteArray(ArraysKt.dropLast(messageData, 2))
+        );
+
+        if (this.fullCargo.length >= 2) {
+            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
+        }
+        byte[] crcOut = Bytes.calculateCRC16(messageData);
+        if (crcOut[0] == expectedCrc[0] && crcOut[1] == expectedCrc[1]) {
+            return true;
+        }
+
+        throw new IllegalArgumentException("CRC error with history log: originalMessageData: "+Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));
+
     }
 }

@@ -22,10 +22,12 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionRespons
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
@@ -52,6 +54,7 @@ public class BluetoothHandler {
     public static final String PUMP_CONNECTED_STAGE4_INTENT = "jwoglom.pumpx2.pumpconnected.stage4";
     public static final String PUMP_CONNECTED_STAGE5_INTENT = "jwoglom.pumpx2.pumpconnected.stage5";
     public static final String UPDATE_TEXT_RECEIVER = "jwoglom.pumpx2.updatetextreceiver";
+    public static final String GOT_HISTORY_LOG_STATUS_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStatus";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
 
 
@@ -184,45 +187,57 @@ public class BluetoothHandler {
                     Intent intent = new Intent(PUMP_CONNECTED_STAGE5_INTENT);
                     intent.putExtra("address", peripheral.getAddress());
                     context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof AlarmStatusResponse) {
-                    AlarmStatusResponse resp = (AlarmStatusResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "Alarms: "+resp.getAlarms().toString());
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof AlertStatusResponse) {
-                    AlertStatusResponse resp = (AlertStatusResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "Alerts: "+resp.getAlerts().toString());
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof CGMHardwareInfoResponse) {
-                    CGMHardwareInfoResponse resp = (CGMHardwareInfoResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "CGMHardware: "+resp.getHardwareInfoString());
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof ControlIQIOBResponse) {
-                    ControlIQIOBResponse resp = (ControlIQIOBResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "ControlIQIOB: "+resp);
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof NonControlIQIOBResponse) {
-                    NonControlIQIOBResponse resp = (NonControlIQIOBResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "NonControlIQIOB: "+resp);
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof PumpFeaturesV1Response) {
-                    PumpFeaturesV1Response resp = (PumpFeaturesV1Response) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "Features: "+resp);
-                    context.sendBroadcast(intent);
-                } else if (response.message().isPresent() && response.message().get() instanceof PumpGlobalsResponse) {
-                    PumpGlobalsResponse resp = (PumpGlobalsResponse) response.message().get();
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", "Globals: "+resp);
-                    context.sendBroadcast(intent);
                 } else {
-                    Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
-                    intent.putExtra("text", response.message().get().toString());
-                    context.sendBroadcast(intent);
+                    if (response.message().isPresent() && response.message().get() instanceof HistoryLogStatusResponse) {
+                        HistoryLogStatusResponse resp = (HistoryLogStatusResponse) response.message().get();
+                        Intent intent = new Intent(GOT_HISTORY_LOG_STATUS_RECEIVER);
+                        intent.putExtra("address", peripheral.getAddress());
+                        intent.putExtra("numEntries", resp.getNumEntries());
+                        intent.putExtra("firstSequenceNum", resp.getFirstSequenceNum());
+                        intent.putExtra("lastSequenceNum", resp.getLastSequenceNum());
+                        context.sendBroadcast(intent);
+                    }
+
+                    if (response.message().isPresent() && response.message().get() instanceof AlarmStatusResponse) {
+                        AlarmStatusResponse resp = (AlarmStatusResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "Alarms: "+resp.getAlarms().toString());
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof AlertStatusResponse) {
+                        AlertStatusResponse resp = (AlertStatusResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "Alerts: "+resp.getAlerts().toString());
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof CGMHardwareInfoResponse) {
+                        CGMHardwareInfoResponse resp = (CGMHardwareInfoResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "CGMHardware: "+resp.getHardwareInfoString());
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof ControlIQIOBResponse) {
+                        ControlIQIOBResponse resp = (ControlIQIOBResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "ControlIQIOB: "+resp);
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof NonControlIQIOBResponse) {
+                        NonControlIQIOBResponse resp = (NonControlIQIOBResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "NonControlIQIOB: "+resp);
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof PumpFeaturesV1Response) {
+                        PumpFeaturesV1Response resp = (PumpFeaturesV1Response) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "Features: "+resp);
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof PumpGlobalsResponse) {
+                        PumpGlobalsResponse resp = (PumpGlobalsResponse) response.message().get();
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", "Globals: "+resp);
+                        context.sendBroadcast(intent);
+                    } else {
+                        Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                        intent.putExtra("text", response.message().get().toString());
+                        context.sendBroadcast(intent);
+                    }
                 }
             } else {
                 Timber.i("Received response to UUID %s: %s", characteristicUUID, Hex.encodeHexString(parser.getValue()));

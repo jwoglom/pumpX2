@@ -1,5 +1,6 @@
 package com.jwoglom.pumpx2;
 
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STATUS_RECEIVER;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE1_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
@@ -49,6 +50,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.welie.blessed.BluetoothCentralManager;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner requestMessageSpinner;
     private Button requestSendButton;
     private Button batteryRequestButton;
+    private Button recentHistoryLogsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestSendButton = findViewById(R.id.request_message_send);
         batteryRequestButton = findViewById(R.id.battery_request_button);
+        recentHistoryLogsButton = findViewById(R.id.recent_history_logs);
 
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedStage4Receiver, new IntentFilter(PUMP_CONNECTED_STAGE4_INTENT));
         registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
+        registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
     }
 
@@ -326,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private boolean waitingOnHistoryLogStatus = false;
     private final BroadcastReceiver pumpConnectedStage5Receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -370,6 +376,34 @@ public class MainActivity extends AppCompatActivity {
             batteryRequestButton.setOnClickListener((z) -> {
                 writePumpMessage(CurrentBatteryBuilder.create(context), peripheral);
             });
+
+
+            recentHistoryLogsButton.setVisibility(View.VISIBLE);
+            recentHistoryLogsButton.setOnClickListener((z) -> {
+                waitingOnHistoryLogStatus = true;
+                writePumpMessage(new HistoryLogStatusRequest(), peripheral);
+            });
+        }
+    };
+
+    private final BroadcastReceiver gotHistoryLogStatusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            long numEntries = intent.getLongExtra("numEntries", 0L);
+            long firstSequenceNum = intent.getLongExtra("firstSequenceNum", 0L);
+            long lastSequenceNum = intent.getLongExtra("lastSequenceNum", 0L);
+
+            Timber.d("Received HistoryLogStatus: %d count, %d - %d", numEntries, firstSequenceNum, lastSequenceNum);
+            if (waitingOnHistoryLogStatus) {
+                int count = 10;
+
+                HistoryLogRequest req = new HistoryLogRequest(lastSequenceNum - count, count);
+                Timber.d("Writing HistoryLogRequest: %s", req);
+                writePumpMessage(req, peripheral);
+            }
         }
     };
 
