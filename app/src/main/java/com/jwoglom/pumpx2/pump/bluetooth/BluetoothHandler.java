@@ -136,7 +136,10 @@ public class BluetoothHandler {
                 }
 
                 // Parse
-                Pair<Message, Byte> pair = PumpState.popRequestMessage();
+                Pair<Message, Byte> pair = null;
+                if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
+                    pair = PumpState.popRequestMessage();
+                }
                 Message requestMessage = new NonexistentHistoryLogStreamRequest();
                 Byte txId = (byte) 0;
                 if (pair != null) {

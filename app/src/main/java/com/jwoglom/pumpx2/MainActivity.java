@@ -398,11 +398,49 @@ public class MainActivity extends AppCompatActivity {
 
             Timber.d("Received HistoryLogStatus: %d count, %d - %d", numEntries, firstSequenceNum, lastSequenceNum);
             if (waitingOnHistoryLogStatus) {
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+
+                builder2.setTitle("History Logs");
+                builder2.setMessage("How many history logs should be retrieved from the pump? Enter the # of most recent entries to receive. " +
+                        "Total count: "+numEntries+" from "+firstSequenceNum+" - "+lastSequenceNum);
+
+                final EditText input2 = new EditText(context);
+                input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                builder2.setView(input2);
+
+                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int count = Integer.parseInt(input2.getText().toString());
+                        Timber.i("requested count: %d", count);
+
+                        do {
+                            HistoryLogRequest req = new HistoryLogRequest(lastSequenceNum + 1 - count, Math.min(count, 254));
+                            Timber.d("Writing HistoryLogRequest: %s", req);
+                            writePumpMessage(req, peripheral);
+                            count -= 254;
+
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        while(count > 254 && count > 0);
+                    }
+                });
+                builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder2.show();
+
                 int count = 10;
 
-                HistoryLogRequest req = new HistoryLogRequest(lastSequenceNum - count, count);
-                Timber.d("Writing HistoryLogRequest: %s", req);
-                writePumpMessage(req, peripheral);
             }
         }
     };

@@ -25,4 +25,20 @@ public class HistoryLogRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
+
+    @Test
+    public void testHistoryLogRequest10Messages() throws DecoderException {
+        HistoryLogRequest expected = new HistoryLogRequest(3950, 10);
+
+        HistoryLogRequest parsedReq = (HistoryLogRequest) MessageTester.test(
+                "00043c04056e0f00000a4247",
+                4,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }

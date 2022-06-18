@@ -37,7 +37,7 @@ public class HistoryLogParser {
         int typeId = Bytes.readShort(rawStream, 0);
 
         if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
-            L.w(TAG, "could not find HistoryLog object for typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
             return null;
         }
 
@@ -50,6 +50,8 @@ public class HistoryLogParser {
             e.printStackTrace();
             return null;
         }
+
+        L.w(TAG, "found matching "+historyLog.getClass().getName()+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
         historyLog.parse(rawStream);
         return historyLog;
     }
