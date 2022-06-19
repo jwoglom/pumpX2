@@ -34,7 +34,7 @@ public class {{responseName}} extends Message {
         {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}]{% if arg.type == "boolean" %} != 0{% endif %};
         {% elif arg.type == "String" %}Bytes.readString(raw, {{ arg.index }}, {{ arg.size }});
         {% elif arg.size == 2 %}Bytes.readShort(raw, {{ arg.index }});
-        {% elif arg.size == 4 %}Bytes.readUint32(raw, {{ arg.index }});
+        {% elif arg.size == 4 %}{% if arg.type == "float" %}Bytes.readFloat(raw, {{ arg.index }});{% else %}Bytes.readUint32(raw, {{ arg.index }});{% endif %}
         {% elif arg.size == 8 %}Bytes.readUint64(raw, {{ arg.index }});
         {% else %}null; // {{ arg.size }} at {{ arg.index }}
         {% endif %}{% endfor %}
@@ -46,7 +46,7 @@ public class {{responseName}} extends Message {
             new byte[]{ (byte) {% if arg.type == "boolean" %}({{ arg.name }} ? 1 : 0){% else %}{{ arg.name }}{% endif %} }{% elif arg.type == "String" %}
             Bytes.writeString({{ arg.name }}, {{ arg.size }}){% elif arg.size == 2 %}
             Bytes.firstTwoBytesLittleEndian({{ arg.name }}){% elif arg.size == 4 %}
-            Bytes.toUint32({{ arg.name }}){% elif arg.size == 8 %}
+            {% if arg.type == "float" %}Bytes.toFloat({{ arg.name }}){% else %}Bytes.toUint32({{ arg.name }}){% endif %}{% elif arg.size == 8 %}
             Bytes.toUint64({{ arg.name }}.longValue()){% else %}
             null // {{ arg.size }} at {{ arg.index }}
             {% endif %}{{ ", " if not loop.last else "" }}{% endfor %});

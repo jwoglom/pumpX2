@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2;
 
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STATUS_RECEIVER;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STREAM_RECEIVER;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE1_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
@@ -62,8 +63,13 @@ import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import timber.log.Timber;
@@ -111,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
+        registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
     }
 
@@ -386,6 +393,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private Queue<Integer> remainingSequenceNums = new LinkedList<>();
+    private int remainingSequenceNumsInBatch = 0;
+
+    private static int sequenceNumBatchSize = 3;
+
     private final BroadcastReceiver gotHistoryLogStatusReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -398,50 +410,113 @@ public class MainActivity extends AppCompatActivity {
 
             Timber.d("Received HistoryLogStatus: %d count, %d - %d", numEntries, firstSequenceNum, lastSequenceNum);
             if (waitingOnHistoryLogStatus) {
-                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                builder2.setTitle("History Logs");
-                builder2.setMessage("How many history logs should be retrieved from the pump? Enter the # of most recent entries to receive. " +
+                builder.setTitle("History Logs");
+                builder.setMessage("Start number. " +
                         "Total count: "+numEntries+" from "+firstSequenceNum+" - "+lastSequenceNum);
 
-                final EditText input2 = new EditText(context);
-                input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-                builder2.setView(input2);
+                final EditText input = new EditText(context);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                builder.setView(input);
 
-                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int count = Integer.parseInt(input2.getText().toString());
-                        Timber.i("requested count: %d", count);
+                        int start = Integer.parseInt(input.getText().toString());
+                        Timber.i("requested start: %d", start);
 
-                        do {
-                            HistoryLogRequest req = new HistoryLogRequest(lastSequenceNum + 1 - count, Math.min(count, 254));
-                            Timber.d("Writing HistoryLogRequest: %s", req);
-                            writePumpMessage(req, peripheral);
-                            count -= 254;
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
 
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        builder2.setTitle("History Logs");
+                        builder2.setMessage("End number. " +
+                                "Total count: "+numEntries+" from "+firstSequenceNum+" - "+lastSequenceNum);
+
+                        final EditText input2 = new EditText(context);
+                        input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                        builder2.setView(input2);
+
+                        builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int end = Integer.parseInt(input2.getText().toString());
+                                Timber.i("requested end: %d", end);
+
+                                remainingSequenceNums = sequenceNumberList(start, end);
+                                remainingSequenceNumsInBatch = sequenceNumBatchSize;
+
+                                HistoryLogRequest req = new HistoryLogRequest(start, sequenceNumBatchSize);
+                                Timber.d("Writing HistoryLogRequest: %s", req);
+                                writePumpMessage(req, peripheral);
+
                             }
+                        });
+                        builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
 
-                        }
-                        while(count > 254 && count > 0);
+                        builder2.show();
+
+                        HistoryLogRequest req = new HistoryLogRequest(start, 50);
+                        Timber.d("Writing HistoryLogRequest: %s", req);
+                        writePumpMessage(req, peripheral);
+
                     }
                 });
-                builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
 
-                builder2.show();
-
-                int count = 10;
-
+                builder.show();
             }
+        }
+    };
+
+    private Queue<Integer> sequenceNumberList(int start, int end) {
+        Queue<Integer> ret = new LinkedList<>();
+        for (int i=start; i<=end; i++) {
+            ret.add(i);
+        }
+        return ret;
+    }
+
+    private final BroadcastReceiver gotHistoryLogStreamReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int numHistoryLogs = intent.getIntExtra("numberOfHistoryLogs", 0);
+            Timber.d("Got history logs count: %d", numHistoryLogs);
+            for (int i=0; i<numHistoryLogs; i++) {
+                remainingSequenceNums.poll();
+                remainingSequenceNumsInBatch--;
+            }
+
+            if (remainingSequenceNumsInBatch > 0) {
+                Timber.i("Missed %d sequence nums (peek: %d)", remainingSequenceNumsInBatch, remainingSequenceNums.peek());
+                for (int i=0; i<remainingSequenceNumsInBatch; i++) {
+                    Timber.i("MISSED SEQUENCE NUMBER %d", remainingSequenceNums.poll());
+                    remainingSequenceNumsInBatch--;
+                }
+            }
+
+            if (remainingSequenceNums.isEmpty()) {
+                Timber.i("No sequence numbers remaining!");
+                return;
+            }
+
+            int count = Math.min(remainingSequenceNums.size(), sequenceNumBatchSize);
+            remainingSequenceNumsInBatch = sequenceNumBatchSize;
+            HistoryLogRequest req = new HistoryLogRequest(remainingSequenceNums.peek(), count);
+            Timber.d("Writing HistoryLogRequest: %s", req);
+            writePumpMessage(req, peripheral);
         }
     };
 

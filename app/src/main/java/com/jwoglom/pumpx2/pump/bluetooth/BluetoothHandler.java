@@ -55,6 +55,7 @@ public class BluetoothHandler {
     public static final String PUMP_CONNECTED_STAGE5_INTENT = "jwoglom.pumpx2.pumpconnected.stage5";
     public static final String UPDATE_TEXT_RECEIVER = "jwoglom.pumpx2.updatetextreceiver";
     public static final String GOT_HISTORY_LOG_STATUS_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStatus";
+    public static final String GOT_HISTORY_LOG_STREAM_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStream";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
 
 
@@ -198,6 +199,12 @@ public class BluetoothHandler {
                         intent.putExtra("numEntries", resp.getNumEntries());
                         intent.putExtra("firstSequenceNum", resp.getFirstSequenceNum());
                         intent.putExtra("lastSequenceNum", resp.getLastSequenceNum());
+                        context.sendBroadcast(intent);
+                    } else if (response.message().isPresent() && response.message().get() instanceof HistoryLogStreamResponse) {
+                        HistoryLogStreamResponse resp = (HistoryLogStreamResponse) response.message().get();
+                        Intent intent = new Intent(GOT_HISTORY_LOG_STREAM_RECEIVER);
+                        intent.putExtra("address", peripheral.getAddress());
+                        intent.putExtra("numberOfHistoryLogs", resp.getNumberOfHistoryLogs());
                         context.sendBroadcast(intent);
                     }
 

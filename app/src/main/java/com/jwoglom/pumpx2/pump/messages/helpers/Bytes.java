@@ -47,6 +47,40 @@ public class Bytes {
         return ((andWithMaxValue(raw[i+1]) & 255) << 8) | (andWithMaxValue(raw[i]) & 255);
     }
 
+    public static float readFloat(byte[] raw, int i) {
+        Preconditions.checkArgument(i >= 0 && i + 3 < raw.length);;
+        int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
+        return Float.intBitsToFloat(intValue);
+    }
+
+    // TODO: this is probably incorrect, ensure the two are reciprocal
+    public static byte[] toFloat(float f) {
+//        int intValue = Float.floatToRawIntBits(f);
+//
+//        return new byte[]{
+//                (byte) (intValue & UByte.MAX_VALUE),
+//                (byte) ((intValue >> 8) & UByte.MAX_VALUE),
+//                (byte) ((intValue >> 16) & UByte.MAX_VALUE),
+//                (byte) ((intValue >> 24) & UByte.MAX_VALUE)
+//        };
+        // form stackoverflow
+        assert !Float.isNaN(f);
+        // see also JavaDoc of Float.intBitsToFloat(int)
+        int bits = Float.floatToIntBits(f);
+        int s = (bits >> 31) == 0 ? 1 : -1;
+        int e = (bits >> 23) & 0xFF;
+        int m = (e == 0) ? (bits & 0x7FFFFF) << 1 : (bits&  0x7FFFFF) | 0x800000;
+
+        int exp = (e - 150) / 4 + 6;
+        int mant;
+        int mantissaShift = (e - 150) % 4;  // compensate for base 16
+        if (mantissaShift >= 0) mant = m << mantissaShift;
+        else { mant = m << (mantissaShift + 4); exp--;  }
+        if (mant > 0xFFFFFFF) { mant >>= 4; exp++; }  // loose of precision
+        byte a = (byte) ((1 - s) << 6 | (exp + 64));
+        return new byte[]{ a, (byte) (mant >> 16), (byte) (mant >> 8), (byte) mant };
+    }
+
     public static long readUint32(byte[] bArr, int i) {
         if (i >= 0) {
             int i2 = i + 3;

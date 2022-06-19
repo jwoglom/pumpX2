@@ -31,6 +31,8 @@ TEMPLATES = {
 }
 
 MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
+HISTORY_LOG_MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogParser.java"
+
 
 REQUEST_MESSAGE_LIST_OPTIONS = "app/src/main/res/values/request_message_list_options.xml"
 class Arg:
@@ -72,6 +74,9 @@ def add_args(ctx, opt):
       arg["type"] = 'int'
     elif typ == 'uint32' or typ == 'long':
       arg["type"] = 'long'
+      arg["size"] = 4
+    elif typ == 'float':
+      arg["type"] = 'float'
       arg["size"] = 4
     elif typ == 'uint64' or typ == 'biginteger' or typ == '8':
       arg["size"] = 8
@@ -150,9 +155,19 @@ def addToMessagesEnum(ctx):
 
   with open(MESSAGES_ENUM, "w") as f:
     f.write(full)
+  
 
-def addToMessageListOptions(ctx):
-  text = open(REQUEST_MESSAGE_LIST_OPTIONS)
+def addToHistoryLogMessagesEnum(ctx):
+  text = open(HISTORY_LOG_MESSAGES_ENUM, "r").read()
+  sentinel = "\n        // MESSAGES_END"
+  before, after = text.split(sentinel, 1)
+
+  className = ctx["responseName"]
+
+  full = before + f",\n        {className}.class" + sentinel + after
+
+  with open(HISTORY_LOG_MESSAGES_ENUM, "w") as f:
+    f.write(full)
 
 def main():
   templates = TEMPLATES
@@ -173,7 +188,9 @@ def main():
     open(f, "w").write(render(tplName, ctx))
     print(f"Wrote {f}")
   
-  if ctx["cat"] != "historyLog":
+  if ctx["cat"] == "historyLog":
+    addToHistoryLogMessagesEnum(ctx)
+  else:
     addToMessagesEnum(ctx)
 
 if __name__ == '__main__':

@@ -85,6 +85,10 @@ public class HistoryLogStreamResponse extends Message {
                 .map(HistoryLogParser::parse)
                 .collect(Collectors.toList());
     }
+
+    public int getStreamId() {
+        return streamId;
+    }
     
     public int getNumberOfHistoryLogs() {
         return numberOfHistoryLogs;

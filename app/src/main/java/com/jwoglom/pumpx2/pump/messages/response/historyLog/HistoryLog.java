@@ -4,6 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.util.HashSet;
@@ -26,6 +27,6 @@ public abstract class HistoryLog {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String verboseToString() {
-        return JavaHelpers.autoToStringVerbose(this, new HashSet<>());
+        return JavaHelpers.autoToStringVerbose(this, ImmutableSet.of("cargo"));
     }
 }

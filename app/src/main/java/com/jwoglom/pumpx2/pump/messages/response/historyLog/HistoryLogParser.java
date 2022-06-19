@@ -17,7 +17,11 @@ public class HistoryLogParser {
 
     public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = ImmutableSet.of(
         TimeChangeHistoryLog.class,
-        DateChangeHistoryLog.class
+        DateChangeHistoryLog.class,
+        BGHistoryLog.class,
+        CGMHistoryLog.class,
+        BolusDeliveryHistoryLog.class
+        // MESSAGES_END
     );
 
     public static Map<Integer, Class<? extends HistoryLog>> LOG_MESSAGE_IDS = new HashMap<>();

@@ -66,6 +66,15 @@ public class HistoryLogMessageTester {
         List<byte[]> expectedBytes = expected.stream().map(HistoryLog::getCargo).collect(Collectors.toList());
         HistoryLogStreamResponse expectedResp = new HistoryLogStreamResponse(1, streamId, expectedBytes);
         return (HistoryLogStreamResponse) MessageTester.test(rawHex, 0, 2, CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS, expectedResp);
+    }
 
+    // Tests just the historylog parsing without the HistoryLogStreamResponse wrapper
+    public static HistoryLog testSingle(String rawHex, HistoryLog expected) throws DecoderException {
+        HistoryLog parsed = HistoryLogParser.parse(Hex.decodeHex(rawHex));
+
+        assertEquals(expected.typeId(), parsed.typeId());
+        assertEquals(expected.verboseToString(), parsed.verboseToString());
+
+        return parsed;
     }
 }
