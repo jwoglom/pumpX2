@@ -16,7 +16,7 @@ import org.junit.Test;
 
 public class BolusDeliveryHistoryLogTest {
     @Test
-    public void testBolusDeliveryHistoryLog() throws DecoderException {
+    public void testBolusDeliveryHistoryLog1() throws DecoderException {
         BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
             // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
                 1044,
@@ -33,6 +33,50 @@ public class BolusDeliveryHistoryLogTest {
 
         BolusDeliveryHistoryLog parsedRes = (BolusDeliveryHistoryLog) HistoryLogMessageTester.testSingle(
                 "1801db6d961a87cd0200140400090714e9030000e9030000e903",
+                expected
+        );
+    }
+
+    @Test
+    public void testBolusDeliveryHistoryLog2() throws DecoderException {
+        BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
+                // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                1063,
+                0,
+                ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
+                BolusSource.GUI,
+                39,
+                210,
+                0,
+                210,
+                0,
+                210
+        );
+
+        BolusDeliveryHistoryLog parsedRes = (BolusDeliveryHistoryLog) HistoryLogMessageTester.testSingle(
+                "1801e219981a97da0200270400090127d2000000d2000000d200",
+                expected
+        );
+    }
+
+    @Test
+    public void testBolusDeliveryHistoryLog3() throws DecoderException {
+        BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
+                // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                1062,
+                1,
+                ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
+                BolusSource.GUI,
+                38,
+                920,
+                0,
+                920,
+                0,
+                0
+        );
+
+        BolusDeliveryHistoryLog parsedRes = (BolusDeliveryHistoryLog) HistoryLogMessageTester.testSingle(
+                "18019618981a71da020026040109012698030000980300000000",
                 expected
         );
     }

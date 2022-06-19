@@ -1,6 +1,11 @@
 package com.jwoglom.pumpx2.pump.messages.helpers;
 
+import android.util.Log;
+
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.shared.L;
+
+import org.apache.commons.codec.binary.Hex;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -13,6 +18,7 @@ import kotlin.UByte;
 import kotlin.collections.ArraysKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Charsets;
+import timber.log.Timber;
 
 public class Bytes {
 
@@ -50,6 +56,7 @@ public class Bytes {
     public static float readFloat(byte[] raw, int i) {
         Preconditions.checkArgument(i >= 0 && i + 3 < raw.length);;
         int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
+        L.w("ReadFloat", "bytes: " + Hex.encodeHexString(Arrays.copyOfRange(raw, i, i + 4)) + " intValue: " + intValue);
         return Float.intBitsToFloat(intValue);
     }
 
@@ -64,6 +71,10 @@ public class Bytes {
 //                (byte) ((intValue >> 24) & UByte.MAX_VALUE)
 //        };
         // form stackoverflow
+        if (Float.isNaN(f)) {
+            // TODO: fix
+            return new byte[]{-1, -1, -1, -1};
+        }
         assert !Float.isNaN(f);
         // see also JavaDoc of Float.intBitsToFloat(int)
         int bits = Float.floatToIntBits(f);

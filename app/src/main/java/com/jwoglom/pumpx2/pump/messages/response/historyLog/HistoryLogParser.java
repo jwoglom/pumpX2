@@ -20,7 +20,12 @@ public class HistoryLogParser {
         DateChangeHistoryLog.class,
         BGHistoryLog.class,
         CGMHistoryLog.class,
-        BolusDeliveryHistoryLog.class
+        BolusDeliveryHistoryLog.class,
+        BolusCompletedHistoryLog.class,
+        BolusRequestedMsg1HistoryLog.class,
+        BolusRequestedMsg2HistoryLog.class,
+        BolusRequestedMsg3HistoryLog.class,
+        BolexCompletedHistoryLog.class
         // MESSAGES_END
     );
 
