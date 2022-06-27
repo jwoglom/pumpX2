@@ -22,7 +22,7 @@ public class IDPSegmentResponseTest {
         IDPSegmentResponse parsedRes = (IDPSegmentResponse) MessageTester.test(
                 "000443040f0000000020037017000078001e000f3078",
                 4,
-                1,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );
@@ -42,7 +42,7 @@ public class IDPSegmentResponseTest {
         IDPSegmentResponse parsedRes = (IDPSegmentResponse) MessageTester.test(
                 "000543050f00016801e2047017000078001e000f121d",
                 5,
-                1,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );
@@ -62,7 +62,7 @@ public class IDPSegmentResponseTest {
         IDPSegmentResponse parsedRes = (IDPSegmentResponse) MessageTester.test(
                 "000643060f00029402e8037017000078001e000f9460",
                 6,
-                1,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );
@@ -82,7 +82,7 @@ public class IDPSegmentResponseTest {
         IDPSegmentResponse parsedRes = (IDPSegmentResponse) MessageTester.test(
                 "000743070f0003d00220037017000078001e000f9b3b",
                 7,
-                1,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );

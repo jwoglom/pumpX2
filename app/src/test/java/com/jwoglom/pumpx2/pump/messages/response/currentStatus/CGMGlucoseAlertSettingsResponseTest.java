@@ -61,7 +61,7 @@ public class CGMGlucoseAlertSettingsResponseTest {
 
         CGMGlucoseAlertSettingsResponse parsedRes = (CGMGlucoseAlertSettingsResponse) MessageTester.test(
                 "00055b050cc800010000015000011e000599d3",
-                4,
+                5,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
@@ -81,7 +81,7 @@ public class CGMGlucoseAlertSettingsResponseTest {
 
         CGMGlucoseAlertSettingsResponse parsedRes = (CGMGlucoseAlertSettingsResponse) MessageTester.test(
                 "00065b060cfa00012c01005000011e00057eec",
-                5,
+                6,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
@@ -101,7 +101,7 @@ public class CGMGlucoseAlertSettingsResponseTest {
 
         CGMGlucoseAlertSettingsResponse parsedRes = (CGMGlucoseAlertSettingsResponse) MessageTester.test(
                 "00075b070c7800012c01005000011e0005543b",
-                6,
+                7,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

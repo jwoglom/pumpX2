@@ -13,11 +13,10 @@ import org.junit.Test;
 
 public class BolusRequestedMsg1HistoryLogTest {
     @Test
-    @Ignore("iob float wrong")
     public void testBolusRequestedMsg1HistoryLog1() throws DecoderException {
         BolusRequestedMsg1HistoryLog expected = new BolusRequestedMsg1HistoryLog(
             // int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio
-                1036, 2, true, 0, 0, Float.NaN, 0
+                1036, 2, true, 0, 0, 2.1372654F, 0
         );
 
         BolusRequestedMsg1HistoryLog parsedRes = (BolusRequestedMsg1HistoryLog) HistoryLogMessageTester.testSingle(
@@ -28,11 +27,10 @@ public class BolusRequestedMsg1HistoryLogTest {
     }
 
     @Test
-    @Ignore("iob float wrong")
     public void testBolusRequestedMsg1HistoryLog2() throws DecoderException {
         BolusRequestedMsg1HistoryLog expected = new BolusRequestedMsg1HistoryLog(
                 // int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio
-                1057, 2, true, 0, 0, Float.NaN, 0
+                1057, 2, true, 0, 0, 1.8658969F, 0
         );
 
         BolusRequestedMsg1HistoryLog parsedRes = (BolusRequestedMsg1HistoryLog) HistoryLogMessageTester.testSingle(
@@ -43,11 +41,10 @@ public class BolusRequestedMsg1HistoryLogTest {
     }
 
     @Test
-    //@Ignore("iob float wrong")
     public void testBolusRequestedMsg1HistoryLog3() throws DecoderException {
         BolusRequestedMsg1HistoryLog expected = new BolusRequestedMsg1HistoryLog(
                 // int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio
-                1040, 1, false, 0, 0, Float.NaN, 6000
+                1040, 1, false, 0, 0, 1.7629877F, 6000
         );
 
         BolusRequestedMsg1HistoryLog parsedRes = (BolusRequestedMsg1HistoryLog) HistoryLogMessageTester.testSingle(

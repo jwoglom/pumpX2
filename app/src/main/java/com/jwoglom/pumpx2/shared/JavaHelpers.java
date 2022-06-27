@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -96,6 +97,9 @@ public class JavaHelpers {
     }
 
     public static String autoToString(Object bean, Set<String> ignoredPropertyNames) {
+        if (ignoredPropertyNames == null) {
+            ignoredPropertyNames = new HashSet<>();
+        }
         return new ReflectionToStringBuilder(bean, ToStringStyle.SHORT_PREFIX_STYLE)
                 .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
                 .build();

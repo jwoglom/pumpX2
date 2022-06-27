@@ -57,7 +57,8 @@ public class ExtendedBolusStatusResponse extends Message {
             Bytes.toUint32(timestamp), 
             Bytes.toUint32(requestedVolume), 
             Bytes.toUint32(duration), 
-            new byte[]{ (byte) bolusSource });
+            new byte[]{ (byte) bolusSource },
+            new byte[]{ 0, 0});
     }
     
     public int getBolusStatus() {

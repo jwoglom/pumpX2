@@ -7,10 +7,12 @@ import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV2Request;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ControlIQInfoV2RequestTest {
     @Test
+    @Ignore("need test input")
     public void testControlIQInfoV2Request() throws DecoderException {
         // empty cargo
         ControlIQInfoV2Request expected = new ControlIQInfoV2Request();

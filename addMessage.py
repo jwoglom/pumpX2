@@ -69,13 +69,16 @@ def add_args(ctx, opt):
     if typ == 'bool' or typ == 'boolean':
       arg["size"] = 1
       arg["type"] = 'boolean'
-    elif typ == 'short' or typ == 'int':
+    elif typ in ('b'):
+      arg["size"] = 1
+      arg["type"] = 'int'
+    elif typ in ('short', 'int', 'h'):
       arg["size"] = 2
       arg["type"] = 'int'
-    elif typ == 'uint32' or typ == 'long':
+    elif typ in ('uint32', 'long', 'i'):
       arg["type"] = 'long'
       arg["size"] = 4
-    elif typ == 'float':
+    elif typ in ('float', 'f'):
       arg["type"] = 'float'
       arg["size"] = 4
     elif typ == 'uint64' or typ == 'biginteger' or typ == '8':

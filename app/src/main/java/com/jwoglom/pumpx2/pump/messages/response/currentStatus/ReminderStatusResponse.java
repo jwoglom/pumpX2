@@ -19,20 +19,20 @@ import java.util.Set;
 )
 public class ReminderStatusResponse extends Message {
     
-    private BigInteger reminderBitmask;
+    private BigInteger intMap;
     
     public ReminderStatusResponse() {}
     
     public ReminderStatusResponse(BigInteger reminderBitmask) {
         this.cargo = buildCargo(reminderBitmask);
-        this.reminderBitmask = reminderBitmask;
+        this.intMap = reminderBitmask;
         
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.reminderBitmask = Bytes.readUint64(raw, 0);
+        this.intMap = Bytes.readUint64(raw, 0);
         
     }
 
@@ -42,13 +42,16 @@ public class ReminderStatusResponse extends Message {
             Bytes.toUint64(reminderBitmask.longValue()));
     }
     
-    public BigInteger getReminderBitmask() {
-        return reminderBitmask;
+    public BigInteger getIntMap() {
+        return intMap;
+    }
+    public long getBitMap() {
+        return intMap.longValue();
     }
 
 
     public Set<ReminderType> getReminders() {
-        return ReminderType.fromBitmask(getReminderBitmask());
+        return ReminderType.fromBitmask(getIntMap());
     }
 
     public enum ReminderType {

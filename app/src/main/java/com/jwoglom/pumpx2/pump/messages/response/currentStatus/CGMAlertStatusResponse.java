@@ -19,20 +19,20 @@ import java.util.Set;
 )
 public class CGMAlertStatusResponse extends Message {
     
-    private BigInteger cgmAlertBitmask;
+    private BigInteger intMap;
     
     public CGMAlertStatusResponse() {}
     
     public CGMAlertStatusResponse(long cgmAlertBitmask) {
         this.cargo = buildCargo(cgmAlertBitmask);
-        this.cgmAlertBitmask = BigInteger.valueOf(cgmAlertBitmask);
+        this.intMap = BigInteger.valueOf(cgmAlertBitmask);
         
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.cgmAlertBitmask = Bytes.readUint64(raw, 0);
+        this.intMap = Bytes.readUint64(raw, 0);
         
     }
 
@@ -42,12 +42,15 @@ public class CGMAlertStatusResponse extends Message {
             Bytes.toUint64(cgmAlertBitmask));
     }
     
-    public BigInteger getCgmAlertBitmask() {
-        return cgmAlertBitmask;
+    public BigInteger getIntMap() {
+        return intMap;
+    }
+    public long getBitMap() {
+        return intMap.longValue();
     }
 
     public Set<CGMAlert> getCgmAlerts() {
-        return CGMAlert.fromBitmask(cgmAlertBitmask);
+        return CGMAlert.fromBitmask(intMap);
     }
 
     public enum CGMAlert {

@@ -54,42 +54,15 @@ public class Bytes {
     }
 
     public static float readFloat(byte[] raw, int i) {
-        Preconditions.checkArgument(i >= 0 && i + 3 < raw.length);;
-        int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
-        L.w("ReadFloat", "bytes: " + Hex.encodeHexString(Arrays.copyOfRange(raw, i, i + 4)) + " intValue: " + intValue);
-        return Float.intBitsToFloat(intValue);
+        Preconditions.checkArgument(i >= 0 && i + 3 < raw.length);
+        return ByteBuffer.wrap(Arrays.copyOfRange(raw, i, i+4)).order(ByteOrder.LITTLE_ENDIAN).getFloat();
+//        int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
+//        L.w("ReadFloat", "bytes: " + Hex.encodeHexString(Arrays.copyOfRange(raw, i, i + 4)) + " intValue: " + intValue);
+//        return Float.intBitsToFloat(intValue);
     }
 
-    // TODO: this is probably incorrect, ensure the two are reciprocal
     public static byte[] toFloat(float f) {
-//        int intValue = Float.floatToRawIntBits(f);
-//
-//        return new byte[]{
-//                (byte) (intValue & UByte.MAX_VALUE),
-//                (byte) ((intValue >> 8) & UByte.MAX_VALUE),
-//                (byte) ((intValue >> 16) & UByte.MAX_VALUE),
-//                (byte) ((intValue >> 24) & UByte.MAX_VALUE)
-//        };
-        // form stackoverflow
-        if (Float.isNaN(f)) {
-            // TODO: fix
-            return new byte[]{-1, -1, -1, -1};
-        }
-        assert !Float.isNaN(f);
-        // see also JavaDoc of Float.intBitsToFloat(int)
-        int bits = Float.floatToIntBits(f);
-        int s = (bits >> 31) == 0 ? 1 : -1;
-        int e = (bits >> 23) & 0xFF;
-        int m = (e == 0) ? (bits & 0x7FFFFF) << 1 : (bits&  0x7FFFFF) | 0x800000;
-
-        int exp = (e - 150) / 4 + 6;
-        int mant;
-        int mantissaShift = (e - 150) % 4;  // compensate for base 16
-        if (mantissaShift >= 0) mant = m << mantissaShift;
-        else { mant = m << (mantissaShift + 4); exp--;  }
-        if (mant > 0xFFFFFFF) { mant >>= 4; exp++; }  // loose of precision
-        byte a = (byte) ((1 - s) << 6 | (exp + 64));
-        return new byte[]{ a, (byte) (mant >> 16), (byte) (mant >> 8), (byte) mant };
+        return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(f).array();
     }
 
     public static long readUint32(byte[] bArr, int i) {

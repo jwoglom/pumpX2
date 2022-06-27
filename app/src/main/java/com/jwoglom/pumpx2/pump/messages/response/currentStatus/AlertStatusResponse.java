@@ -40,6 +40,9 @@ public class AlertStatusResponse extends Message {
     public BigInteger getIntMap() {
         return intMap;
     }
+    public long getBitMap() {
+        return intMap.longValue();
+    }
 
     public enum AlertResponseType {
         LOW_INSULIN_ALERT(0),

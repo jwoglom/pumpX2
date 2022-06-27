@@ -20,7 +20,7 @@ public class ExtendedBolusStatusResponseTest {
         ExtendedBolusStatusResponse parsedRes = (ExtendedBolusStatusResponse) MessageTester.test(
                 "00062f06120000000000000000000000000000000000007cdd",
                 6,
-                1,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );

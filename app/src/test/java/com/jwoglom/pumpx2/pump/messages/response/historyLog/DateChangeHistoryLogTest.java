@@ -8,10 +8,12 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.DateChangeHistoryLog
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class DateChangeHistoryLogTest {
     @Test
+    @Ignore("needs hex input")
     public void testDateChangeHistoryLog() throws DecoderException {
         DateChangeHistoryLog expected = new DateChangeHistoryLog(
             // long datePrior, long dateAfter, long rawRTCTime

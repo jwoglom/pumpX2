@@ -11,23 +11,6 @@ import org.junit.Test;
 
 public class HistoryLogRequestTest {
     @Test
-    public void testHistoryLogRequest() throws DecoderException {
-        // empty cargo
-        HistoryLogRequest expected = new HistoryLogRequest();
-
-        HistoryLogRequest parsedReq = (HistoryLogRequest) MessageTester.test(
-                "00033c030500000000fa83b3",
-                3,
-                1,
-                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
-                expected
-        );
-
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-    }
-
-
-    @Test
     public void testHistoryLogRequest10Messages() throws DecoderException {
         HistoryLogRequest expected = new HistoryLogRequest(3950, 10);
 
