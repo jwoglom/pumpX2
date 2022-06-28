@@ -26,3 +26,14 @@ jobs:
       run: ./gradlew build
     - name: List Files
       run: find .
+    - name: Upload debug APK
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk 
+    - name: Upload release (unsigned) APK
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: app-release-unsigned.apk
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
+
