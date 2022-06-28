@@ -37,3 +37,10 @@ jobs:
         name: app-release-unsigned.apk
         path: app/build/outputs/apk/release/app-release-unsigned.apk
 
+    - name: Unit Test
+      run: ./gradlew testDebugUnitTest
+
+    - name: Android Test Report
+      uses: asadmansr/android-test-report-action@v1.2.0
+      if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+
