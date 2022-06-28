@@ -2,156 +2,25 @@
 
 Reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
 
-## Request messages
-```
-$ grep -lr "extends Message implements Request" java_src/com/tandemdiabetes/|xargs basename|sed 's/\.java//g'|sort
-AlarmStatusRequest
-AlertStatusRequest
-ApiVersionRequest
-BasalIQAlertInfoRequest
-BasalIQSettingsRequest
-BasalIQStatusRequest
-BasalLimitSettingsRequest
-CGMAlertStatusRequest
-CGMGlucoseAlertSettingsRequest
-CGMRateAlertSettingsRequest
-CGMStatusRequest
-CentralChallenge
-CgmHardwareInfoRequest
-CgmOorAlertSettingsRequest
-ControlIQIOBRequest
-ControlIQInfoRequestB
-ControlIqInfoRequest
-ControlIqSleepScheduleRequest
-CurrentBasalStatusRequest
-CurrentBatteryRequest
-CurrentBatteryRequestB
-CurrentBolusStatusRequest
-CurrentEgvGuiDataRequest
-ExtendedBolusStatusRequest
-GlobalMaxBolusSettingsRequest
-HistoryLogRequest
-HistoryLogStatusRequest
-HomeScreenMirrorRequest
-IDPSegmentRequest
-IDPSettingsRequest
-IOBRequest
-InsulinStatusRequest
-LastBGRequest
-LastBolusStatusRequest
-LastBolusStatusRequestB
-ProfileStatusRequest
-PumpChallengeRequest
-PumpFeaturesRequest
-PumpGlobalsRequest
-PumpSettingsRequest
-PumpSupportedFeaturesRequest
-PumpVersionRequest
-ReminderStatusRequest
-RemindersRequest
-TempRateRequest
-TimeSinceResetRequest
-```
+Currently functions as a basic Android application which pairs to the pump
+and allows sending read-only message requests and receiving responses about
+the pump's status and history.
 
-## Response messages
-```
-$ grep -lr "extends Message implements Response" java_src/com/tandemdiabetes/|xargs basename|sed 's/\.java//g'|sort
-AcknowledgeAamResponse
-ActivateIdpResponse
-ActivateShelfModeResponse
-AddNewIdpResponse
-AlarmStatusResponse
-AlertStatusResponse
-ApiVersionResponse
-AuthenticationStatusResponse
-BasalIQAlertInfoResponse
-BasalIQSettingsResponse
-BasalIQStatusResponse
-BasalLimitSettingsResponse
-BolusCalcDataSnapshotResponse
-BolusPermissionChangeReasonResponse
-BolusPermissionReleaseResponse
-BolusPermissionResponse
-CGMAlertStatusResponse
-CGMGlucoseAlertSettingsResponse
-CGMRateAlertSettingsResponse
-CGMStatusResponse
-CancelBolusResponse
-CancelTemporaryBasalRateResponse
-CentralChallengeResponse
-CgmHardwareInfoResponse
-CgmOorAlertSettingsResponse
-ChangeCartridgeResponse
-ChangeCartridgeStreamResponse
-CommonSoftwareInfoResponse
-ControlIQIOBResponse
-ControlIQInfoResponseB
-ControlIQSettingsResponse
-ControlIqInfoResponse
-ControlIqSleepScheduleResponse
-ControlStreamCharacteristicsBitTwoResponse
-CurrentBasalStatusResponse
-CurrentBatteryResponse
-CurrentBatteryResponseB
-CurrentBolusStatusResponse
-CurrentEgvGuiDataResponse
-DeleteIdpResponse
-ErrorResponse
-ErrorResponseControl
-ExtendedBolusStatusResponse
-GlobalMaxBolusSettingsResponse
-HistoryLogResponse
-HistoryLogStatusResponse
-HistoryLogStreamResponse
-HomeScreenMirrorResponse
-IDPSegmentResponse
-IDPSettingsResponse
-IOBResponse
-InitiateBolusResponse
-InsulinStatusResponse
-LastBGResponse
-LastBolusResponse
-LastBolusStatusResponseB
-LoadCartridgeResponse
-LoadCartridgeStreamResponse
-LocalizationResponse
-PrimeCannulaResponse
-PrimeCannulaStreamResponse
-PrimeTubingCompleteResponse
-PrimeTubingResponse
-PrimeTubingStreamResponse
-ProfileStatusResponse
-PumpFeaturesResponse
-PumpGlobalsResponse
-PumpSettingsResponse
-PumpSupportedFeaturesResponse
-PumpSystemInfoResponse
-PumpVersionResponse
-PumpingStateStreamMessage
-ReminderStatusResponse
-RemindersResponse
-RemoteBgEntryResponse
-RemoteCarbEntryResponse
-ResumePumpingResponse
-SetAutoOffResponse
-SetBGReminderResponse
-SetCGMHighLowAlertResponse
-SetCGMOutOfRangeAlertResponse
-SetCGMRiseFallAlertResponse
-SetCGMSensorCodeResponse
-SetCGMTransmitterIdResponse
-SetIdpBolusSettingsResponse
-SetIdpNameResponse
-SetIdpTimeDependentSegmentResponse
-SetLowInsulinAlertResponse
-SetMissedMealBolusReminderResponse
-SetPumpTimeResponse
-SetSiteChangeReminderResponse
-SetTemporaryBasalRateResponse
-SleepScheduleResponse
-StartCGMSessionResponse
-StopCGMSessionResponse
-SuspendPumpingResponse
-TempRateResponse
-TimeSinceResetResponse
-```
+[View supported request/response/history log messages][sheet]
+
+**Currently supported:**
+
+* Bluetooth connection
+* Pump authentication and pairing
+* currentStatus characteristic request messages
+
+**Partially supported:**
+
+* History Log parsing
+
+**Not supported:**
+
+* "V2" pump request/response messages (self-reported API version >= 2.2)
+* Control features
+
+[sheet]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTDnXBbJfiwVh-5PDK78RZqgI7C7ymOl-aEw5JLCV8rl7AiYZdoTwx_gBkWUZoducIxh7JXlOJJd9p6/pubhtml?gid=1917691101&single=true
