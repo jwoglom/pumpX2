@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2;
+package com.jwoglom.pumpx2.example;
 
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STATUS_RECEIVER;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STREAM_RECEIVER;
