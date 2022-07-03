@@ -26,6 +26,7 @@ jobs:
       run: ./gradlew build
     - name: List Files
       run: find .
+
     - name: Upload debug APK
       uses: actions/upload-artifact@v3.1.0
       with:
@@ -37,6 +38,18 @@ jobs:
         name: app-release-unsigned.apk
         path: app/build/outputs/apk/release/app-release-unsigned.apk
 
+    - name: Upload debug AAR library
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: lib-debug.aar
+        path: lib/build/outputs/aar/lib-debug.aar
+
+    - name: Upload release AAR library
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: lib-release.aar
+        path: lib/build/outputs/aar/lib-release.aar
+
     - name: Unit Test
       run: ./gradlew testDebugUnitTest
 
@@ -44,3 +57,14 @@ jobs:
       uses: asadmansr/android-test-report-action@v1.2.0
       if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
 
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+
+    - name: Publish package
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: publish
+      env:
+        #MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        #MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

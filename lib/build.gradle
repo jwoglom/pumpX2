@@ -31,6 +31,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -65,7 +72,25 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.jwoglom'
                 artifactId = 'pumpx2'
-                version = '1.0'
+                version = android.defaultConfig.versionName
+            }
+        }
+        repositories {
+//        maven {
+//            name = "OSSRH"
+//            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+//            credentials {
+//                username = System.getenv("MAVEN_USERNAME")
+//                password = System.getenv("MAVEN_PASSWORD")
+//            }
+//        }
+            maven {
+                name = "GitHubPackages"
+                url = "https://maven.pkg.github.com/jwoglom/pumpx2"
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
             }
         }
     }
