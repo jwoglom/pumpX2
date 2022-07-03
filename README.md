@@ -4,7 +4,8 @@ Reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
 
 Currently functions as a basic Android application which pairs to the pump
 and allows sending read-only message requests and receiving responses about
-the pump's status and history.
+the pump's status and history. The Bluetooth protocol parsing code is exported
+as a library which can be used by other projects.
 
 [View supported request/response/history log messages][sheet]
 
