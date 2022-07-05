@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.jwoglom.pumpx2", appContext.getPackageName());
+        assertEquals("com.jwoglom.pumpx2.test", appContext.getPackageName());
     }
 }
