@@ -7,6 +7,7 @@
  */
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'com.dicedmelon.gradle.jacoco-android'
 
 android {
     compileSdk 31
@@ -23,6 +24,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        buildTypes {
+            debug {
+                testCoverageEnabled true
+            }
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -38,6 +44,20 @@ android {
             withJavadocJar()
         }
     }
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
 }
 
 dependencies {
