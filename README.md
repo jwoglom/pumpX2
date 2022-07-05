@@ -1,3 +1,9 @@
+
+<a href="https://github.com/jwoglom/pumpX2/actions/workflows/android.yml">
+<img src="https://github.com/jwoglom/pumpx2/actions/workflows/android.yml/badge.svg" />
+</a>
+
+
 # PumpX2
 
 Reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
