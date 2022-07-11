@@ -13,7 +13,7 @@ public class PumpVersionResponseTest {
     public void testPumpVersionResponse() throws DecoderException {
         PumpVersionResponse expected = new PumpVersionResponse(
             // long armSwVer, long mspSwVer, long configABits, long configBBits, long serialNum, long partNum, String pumpRev, long pcbaSN, String pcbaRev, long modelNum
-                105900L, 105900L, 0L, 0L, ***REMOVED***L, 1005279L, "0", 1088111696L, "A", 1000354L
+                105900L, 105900L, 0L, 0L, 90556643L, 1005279L, "0", 1088111696L, "A", 1000354L
         );
 
         PumpVersionResponse parsedRes = (PumpVersionResponse) MessageTester.test(
