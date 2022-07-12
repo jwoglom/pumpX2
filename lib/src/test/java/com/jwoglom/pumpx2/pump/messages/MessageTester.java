@@ -4,15 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import androidx.annotation.Nullable;
-
-import com.jwoglom.pumpx2.pump.bluetooth.BTResponseParser;
-import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.bluetooth.TronMessageWrapper;
-import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
-import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.MessageType;
-import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
@@ -21,8 +16,6 @@ import org.apache.commons.codec.binary.Hex;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import timber.log.Timber;
 
 public class MessageTester {
     private static final String TAG = "X2-MessageTester";
@@ -55,7 +48,7 @@ public class MessageTester {
     }
 
 
-    public static Message testMultiplePackets(List<String> rawHex, int txId, UUID expectedCharacteristic, Message expected) throws DecoderException {
+    public static Message testMultiplePackets(List<String> rawHex, int txId, UUID expectedCharacteristic, Message expected) {
         List<byte[]> initialReads = rawHex.stream().map(i -> {
             try {
                 return Hex.decodeHex(i);

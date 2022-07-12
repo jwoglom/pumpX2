@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import timber.log.Timber;
-
 public class HistoryLogParser {
     private static final String TAG = "X2-HistoryLogParser";
 
@@ -36,7 +34,7 @@ public class HistoryLogParser {
             try {
                 LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);
             } catch (IllegalAccessException|InstantiationException e) {
-                Timber.e("could not instantiate %s: %s", clazz, e);
+                L.e(TAG, String.format("could not instantiate %s", clazz), e);
                 e.printStackTrace();
             }
         }
@@ -54,8 +52,7 @@ public class HistoryLogParser {
         try {
             historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();
         } catch (IllegalAccessException|InstantiationException e) {
-            L.w(TAG, "could not instantiate "+typeId+" "+e);
-            Timber.e("could not instantiate %s: %s", typeId, e);
+            L.e(TAG, "could not instantiate "+typeId+" "+e);
             e.printStackTrace();
             return null;
         }

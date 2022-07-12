@@ -26,6 +26,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,10 +41,10 @@ import androidx.core.app.ActivityCompat;
 import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler;
 import com.jwoglom.pumpx2.pump.PumpState;
-import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.bluetooth.ServiceUUID;
-import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
@@ -53,7 +54,9 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
+import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
+import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
@@ -75,6 +78,12 @@ import java.util.stream.Collectors;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
+    static {
+        L.getAndroidLogW = Log::w;
+        L.getAndroidLogWThrowable = Log::w;
+        L.getAndroidLogE = Log::e;
+        L.getAndroidLogEThrowable = Log::e;
+    }
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_LOCATION_REQUEST = 2;
 
@@ -98,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
 //                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
 
-        List<String> requestMessages = JavaHelpers.getAllPumpRequestMessages()
+        List<String> requestMessages = MessageHelpers.getAllPumpRequestMessages()
                 .stream().filter(m -> !m.startsWith("authentication.")).collect(toList());
         Timber.i("requestMessages: %s", requestMessages);
         ArrayAdapter<String> adapter  = new ArrayAdapter(this,
@@ -358,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
             requestSendButton.setOnClickListener((z) -> {
                 String itemName = requestMessageSpinner.getSelectedItem().toString();
                 try {
-                    String className = JavaHelpers.REQUEST_PACKAGE + "." + itemName;
+                    String className = MessageHelpers.REQUEST_PACKAGE + "." + itemName;
 
                     // Custom processing for arguments
                     if (className.equals(IDPSegmentRequest.class.getName())) {
@@ -381,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
 
             batteryRequestButton.setVisibility(View.VISIBLE);
             batteryRequestButton.setOnClickListener((z) -> {
-                writePumpMessage(CurrentBatteryBuilder.create(context), peripheral);
+                writePumpMessage(CurrentBatteryBuilder.create(PumpState.getPumpAPIVersion(context)), peripheral);
             });
 
 

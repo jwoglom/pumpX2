@@ -1,8 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.collect.Lists;
-import com.jwoglom.pumpx2.pump.PumpState;
-import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import org.apache.commons.codec.digest.HmacAlgorithms;
@@ -34,9 +33,11 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
+        // TODO: fill in actual time since reset
         if (message.signed()) {
             byte[] hmacShaData = new byte[length - 20];
-            byte[] timeSinceReset = Bytes.toUint32(PumpState.timeSinceReset);
+            int pumpStateTimeSinceReset = 0; // unused
+            byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
             // packet[0 .. N-20] unchanged
             System.arraycopy(packet, 0, hmacShaData, 0, length - 20);
             // packet[N-24 .. N-20] filled with time since reset

@@ -4,10 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.jwoglom.pumpx2.pump.bluetooth.*;
-import com.jwoglom.pumpx2.pump.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.events.BTProcessGattOperationEvent;
-import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.BTProcessGattOperationEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.*;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;

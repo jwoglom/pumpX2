@@ -19,12 +19,4 @@ public class JavaHelpersTest {
         List<String> requestMessages = JavaHelpers.getClassNamesWithPackage("com.jwoglom.pumpx2.pump.messages.request");
         assertFalse(requestMessages.isEmpty());
     }
-
-    @Test
-    public void testGetAllPumpRequestMessages() {
-        // Ensure loaded
-        ApiVersionRequest foo;
-        List<String> requestMessages = JavaHelpers.getAllPumpRequestMessages();
-        assertFalse(requestMessages.isEmpty());
-    }
 }

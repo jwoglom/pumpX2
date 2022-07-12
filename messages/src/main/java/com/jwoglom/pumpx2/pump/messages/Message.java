@@ -1,9 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -77,12 +73,10 @@ public abstract class Message {
 
     private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public String toString() {
         return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public String verboseToString() {
         return JavaHelpers.autoToStringVerbose(this, IGNORED_PROPERTY_NAMES);
     }

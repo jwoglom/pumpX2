@@ -1,19 +1,17 @@
 package com.jwoglom.pumpx2.pump.messages.request.authentication;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
-
 import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
-import com.jwoglom.pumpx2.pump.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
-import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 public class PumpChallengeRequestTest {
     @Test
-    public void testTconnectAppPumpChallengeRequest() throws DecoderException {
+    public void testTconnectAppPumpChallengeRequest() {
         PumpChallengeRequest expected = new PumpChallengeRequest(1, new byte[]{
             1, -108, -88, -7, -116, -92, -100, -35, -9, 12, 44, 19, 49, 115, 2, -112, -68, -93, -33, 7
         });

@@ -11,7 +11,6 @@ import kotlin.collections.ArraysKt;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Charsets;
-import timber.log.Timber;
 
 public class PacketArrayList {
     protected static final String TAG = "X2-PacketArrayList";
@@ -41,12 +40,12 @@ public class PacketArrayList {
     public static PacketArrayList build(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Class<? extends Message> messageClass = Messages.OPCODES.get((int) expectedopCode);
         try {
-            Timber.i("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass);
+            L.w(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
             if (messageClass.newInstance().stream()) {
                 return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
             }
         } catch (IllegalAccessException|InstantiationException e) {
-            Timber.e(e);
+            L.e(TAG, e);
             e.printStackTrace();
         }
 

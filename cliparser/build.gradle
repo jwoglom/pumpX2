@@ -1,0 +1,28 @@
+plugins {
+    id "application"
+}
+apply plugin : "java"
+ext {
+    javaMainClass = "com.jwoglom.pumpx2.cliparser.Main"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
+dependencies {
+    implementation project(':messages')
+}
+
+task cliparser(type: JavaExec) {
+    group = "Execution"
+    description = "Run CLIParser"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass
+}

@@ -8,7 +8,6 @@ import org.apache.commons.codec.binary.Hex;
 import kotlin.collections.ArraysKt;
 import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
-import timber.log.Timber;
 
 public class StreamPacketArrayList extends PacketArrayList {
     protected static final String TAG = "X2-StreamPacketArrayList";
@@ -49,7 +48,7 @@ public class StreamPacketArrayList extends PacketArrayList {
                 }
                 //if (!moreHistoryLogsRemaining()) {
                 if (!needsMorePacket()) {
-                    Timber.i("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData));
+                    L.w(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));
                     this.empty = true;
                 }
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
@@ -62,7 +61,7 @@ public class StreamPacketArrayList extends PacketArrayList {
     }
 
     protected void parse(byte[] bArr) {
-        Timber.i("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr));
+        L.w(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
         if (opCode == this.expectedOpCode) {

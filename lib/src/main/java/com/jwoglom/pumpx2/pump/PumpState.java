@@ -5,12 +5,17 @@ import android.content.SharedPreferences;
 import android.util.Pair;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class PumpState {
+
+    static {
+        PumpStateSupplier.authenticationKey = PumpState::getAuthenticationKey;
+    }
 
     private static SharedPreferences prefs(Context context) {
         return context.getSharedPreferences("PumpState", Context.MODE_PRIVATE);

@@ -11,10 +11,13 @@ import android.os.Handler;
 import android.util.Pair;
 
 import com.jwoglom.pumpx2.pump.PumpState;
-import com.jwoglom.pumpx2.pump.events.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
-import com.jwoglom.pumpx2.pump.messages.request.NonexistentErrorRequest;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
