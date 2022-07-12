@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.shared;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class L {
 
@@ -10,8 +11,10 @@ public class L {
     public static BiConsumer<String, String> getAndroidLogE = null;
     public static TriConsumer<String, String, Throwable> getAndroidLogEThrowable = null;
 
+    public static Consumer<String> getPrintln = System.out::println;
+
     public static void w(String tag, String out) {
-        System.out.println("WARN: " + tag + ": " + out);
+        getPrintln.accept("WARN: " + tag + ": " + out);
         try {
             getAndroidLogW.accept(tag, out);
         } catch (RuntimeException e) {
@@ -20,7 +23,7 @@ public class L {
     }
 
     public static void w(String tag, Throwable out) {
-        System.out.println("WARN: " + tag + ": " + out);
+        getPrintln.accept("WARN: " + tag + ": " + out);
         try {
             getAndroidLogWThrowable.accept(tag, out.toString(), out);
         } catch (RuntimeException e) {
@@ -28,7 +31,7 @@ public class L {
     }
 
     public static void w(String tag, String out, Throwable thrw) {
-        System.out.println("WARN: " + tag + ": " + out + ": " + thrw);
+        getPrintln.accept("WARN: " + tag + ": " + out + ": " + thrw);
         try {
             getAndroidLogWThrowable.accept(tag, out, thrw);
         } catch (RuntimeException e) {
@@ -36,7 +39,7 @@ public class L {
     }
 
     public static void e(String tag, String out) {
-        System.out.println("ERROR: " + tag + ": " + out);
+        getPrintln.accept("ERROR: " + tag + ": " + out);
         try {
             getAndroidLogE.accept(tag, out);
         } catch (RuntimeException e) {
@@ -44,7 +47,7 @@ public class L {
     }
 
     public static void e(String tag, Throwable out) {
-        System.out.println("ERROR: " + tag + ": " + out);
+        getPrintln.accept("ERROR: " + tag + ": " + out);
         try {
             getAndroidLogEThrowable.accept(tag, out.toString(), out);
         } catch (RuntimeException e) {
@@ -52,7 +55,7 @@ public class L {
     }
 
     public static void e(String tag, String out, Throwable thrw) {
-        System.out.println("ERROR: " + tag + ": " + out + ": " + thrw);
+        getPrintln.accept("ERROR: " + tag + ": " + out + ": " + thrw);
         try {
             getAndroidLogEThrowable.accept(tag, out, thrw);
         } catch (RuntimeException e) {

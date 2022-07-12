@@ -71,6 +71,10 @@ public abstract class Message {
         return this.cargo;
     }
 
+    public void fillWithEmptyCargo() {
+        this.cargo = EMPTY;
+    }
+
     private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");
 
     public String toString() {

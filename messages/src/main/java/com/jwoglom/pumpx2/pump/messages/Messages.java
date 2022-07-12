@@ -180,6 +180,10 @@ public enum Messages {
         }
     }
 
+    public static Class<? extends Message> fromOpcode(int opCode) {
+        return OPCODES.get(opCode);
+    }
+
     private final int requestOpCode;
     private final Class<? extends Message> requestClass;
     private final int responseOpCode;
