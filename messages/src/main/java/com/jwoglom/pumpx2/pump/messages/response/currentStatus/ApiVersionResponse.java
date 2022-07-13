@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 
 import kotlin.collections.ArraysKt;
@@ -51,31 +52,7 @@ public class ApiVersionResponse extends Message {
         return minorVersion;
     }
 
-    public static class ApiVersion {
-        // v2.1 is the API version used by software v7.1 and v7.4
-        public static final ApiVersion V21 = new ApiVersion(2, 1);
-        // v2.5 is the API version used by software v7.6 and includes remote bolus
-        public static final ApiVersion V25 = new ApiVersion(2, 5);
 
-        private final int major;
-        private final int minor;
-        public ApiVersion(int major, int minor) {
-            this.major = major;
-            this.minor = minor;
-        }
-
-        public int getMajor() {
-            return major;
-        }
-
-        public int getMinor() {
-            return minor;
-        }
-
-        public boolean greaterThan(ApiVersion other) {
-            return getMajor() > other.getMajor() || (getMajor() == other.getMajor() && getMinor() > other.getMinor());
-        }
-    }
 
     public ApiVersion getApiVersion() {
         return new ApiVersion(getMajorVersion(), getMinorVersion());

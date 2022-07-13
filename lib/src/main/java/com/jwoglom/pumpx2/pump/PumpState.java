@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
+import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
 import java.util.LinkedList;
@@ -58,17 +59,17 @@ public class PumpState {
     // The (major, minor) pump version returned from ApiVersionResponse
     private static final String PUMP_MAJOR_API_VERSION_PREF = "pumpMajorApiVersion";
     private static final String PUMP_MINOR_API_VERSION_PREF = "pumpMinorApiVersion";
-    public static void setPumpAPIVersion(Context context, ApiVersionResponse.ApiVersion apiVersion) {
+    public static void setPumpAPIVersion(Context context, ApiVersion apiVersion) {
         prefs(context).edit()
                 .putInt(PUMP_MAJOR_API_VERSION_PREF, apiVersion.getMajor())
                 .putInt(PUMP_MINOR_API_VERSION_PREF, apiVersion.getMinor())
                 .apply();
     }
 
-    public static ApiVersionResponse.ApiVersion getPumpAPIVersion(Context context) {
+    public static ApiVersion getPumpAPIVersion(Context context) {
         int major = prefs(context).getInt(PUMP_MAJOR_API_VERSION_PREF, 0);
         int minor = prefs(context).getInt(PUMP_MINOR_API_VERSION_PREF, 0);
-        return new ApiVersionResponse.ApiVersion(major, minor);
+        return new ApiVersion(major, minor);
     }
 
     // The state of recent messages sent to the pump paired with the transaction id.

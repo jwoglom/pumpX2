@@ -90,6 +90,9 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnapshotRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
+// IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.binary.Hex;
@@ -142,6 +145,7 @@ public enum Messages {
     HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),
     HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),
     HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),
+    BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),
     // MESSAGES_END
     ;
 
