@@ -10,19 +10,19 @@ import os
 CATEGORIES = ["authentication", "currentStatus", "historyLog"]
 
 MAIN_TEMPLATES = {
-  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
-    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}.java",
+  "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
+    "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}.java",
 
-  "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
-    "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}.java",
+  "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
+    "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}.java",
 }
 
 TEST_TEMPLATES = {
-  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
-    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}Test.java",
+  "messages/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
+    "messages/src/test/java/com/jwoglom/pumpx2/pump/messages/request/{cat}/{requestName}Test.java",
 
-  "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
-    "app/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}Test.java"
+  "messages/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{prefix}template.j2": \
+    "messages/src/test/java/com/jwoglom/pumpx2/pump/messages/response/{cat}/{responseName}Test.java"
 }
 
 TEMPLATES = {
@@ -30,24 +30,8 @@ TEMPLATES = {
   **TEST_TEMPLATES
 }
 
-MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
-HISTORY_LOG_MESSAGES_ENUM = "app/src/main/java/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogParser.java"
-
-
-REQUEST_MESSAGE_LIST_OPTIONS = "app/src/main/res/values/request_message_list_options.xml"
-class Arg:
-  type = "int"
-  name = "test"
-  index = 0
-  size = 2
-
-
-class Context:
-  opcode = 0
-  size = 0
-  requestName = "Request"
-  responseName = "Response"
-  args = [Arg()]
+MESSAGES_ENUM = "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
+HISTORY_LOG_MESSAGES_ENUM = "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogParser.java"
 
 
 def render(file, ctx):
