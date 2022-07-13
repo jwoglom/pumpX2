@@ -48,15 +48,15 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
     }
 
     public enum PumpFeatureType {
-        DEXCOM_G5_SUPPORTED(1),
-        DEXCOM_G6_SUPPORTED(2),
-        BASAL_IQ_SUPPORTED(4),
-        CONTROL_IQ_SUPPORTED(1024),
-        WOMBAT_SUPPORTED(65536),
-        AUTO_POP_SUPPORTED(33554432),
-        BASAL_LIMIT_SUPPORTED(262144),
-        BLE_PUMP_CONTROL_SUPPORTED(268435456),
-        PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED(536870912),
+        DEXCOM_G5_SUPPORTED(1),                        // position: 0
+        DEXCOM_G6_SUPPORTED(2),                        // position: 1
+        BASAL_IQ_SUPPORTED(4),                         // position: 2
+        CONTROL_IQ_SUPPORTED(1024),                    // position: 10
+        WOMBAT_SUPPORTED(65536),                       // position: 16
+        BASAL_LIMIT_SUPPORTED(262144),                 // position: 18
+        AUTO_POP_SUPPORTED(33554432),                  // position: 25
+        BLE_PUMP_CONTROL_SUPPORTED(268435456),         // position: 28
+        PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED(536870912), // position: 29
 
         ;
 
