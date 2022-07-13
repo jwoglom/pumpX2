@@ -10,13 +10,29 @@ import org.junit.Test;
 
 public class ApiVersionResponseTest {
     @Test
-    public void testApiVersionResponse() throws DecoderException {
+    public void testApiVersionResponseSW71() throws DecoderException {
         // Control-IQ pump v7.3.1
         ApiVersionResponse expected = new ApiVersionResponse(2, 0);
 
         ApiVersionResponse parsedRes = (ApiVersionResponse) MessageTester.test(
                 "00022102040200000077c8",
                 2,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertEquals(expected.getMajorVersion(), parsedRes.getMajorVersion());
+        assertEquals(expected.getMinorVersion(), parsedRes.getMinorVersion());
+    }
+    @Test
+    public void testApiVersionResponseSW74() throws DecoderException {
+        // Control-IQ pump v7.4
+        ApiVersionResponse expected = new ApiVersionResponse(2, 1);
+
+        ApiVersionResponse parsedRes = (ApiVersionResponse) MessageTester.test(
+                "00072107040200010047b8",
+                7,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

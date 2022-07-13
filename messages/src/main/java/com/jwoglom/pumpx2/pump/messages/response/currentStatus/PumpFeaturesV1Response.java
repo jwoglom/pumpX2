@@ -19,18 +19,21 @@ import java.util.Set;
 public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
     
     private BigInteger intMap;
+    private Set<PumpFeatureType> features;
 
     public PumpFeaturesV1Response() {}
 
     public PumpFeaturesV1Response(BigInteger intMap) {
         this.cargo = buildCargo(intMap);
         this.intMap = intMap;
+        this.features = PumpFeatureType.fromBitmask(intMap);
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.intMap = Bytes.readUint64(raw, 0);
+        this.features = PumpFeatureType.fromBitmask(intMap);
     }
 
     
@@ -73,7 +76,7 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
         public static BigInteger build(PumpFeatureType ...types) {
             BigInteger ret = BigInteger.ZERO;
             for (PumpFeatureType type : types) {
-                ret.setBit(type.bitmask().getLowestSetBit());
+                ret = ret.setBit(type.bitmask().getLowestSetBit());
             }
 
             return ret;
@@ -92,6 +95,6 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
     }
 
     public Set<PumpFeatureType> getFeatures() {
-        return PumpFeatureType.fromBitmask(getIntMap());
+        return features;
     }
 }

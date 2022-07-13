@@ -36,4 +36,28 @@ public class PumpFeaturesV1ResponseTest {
             PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED
         ), parsedRes.getFeatures());
     }
+
+
+    @Test
+    public void testPumpFeaturesResponsePumpSW74() throws DecoderException {
+        PumpFeaturesV1Response expected = new PumpFeaturesV1Response(
+                        BigInteger.valueOf(639950234L));
+
+        PumpFeaturesV1Response parsedRes = (PumpFeaturesV1Response) MessageTester.test(
+                "00044f04089add2426000000009693",
+                4,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        // The only parsed values.
+        assertEquals(ImmutableSet.of(
+                PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED,
+                PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED,
+                PumpFeaturesV1Response.PumpFeatureType.PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED,
+                PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED,
+                PumpFeaturesV1Response.PumpFeatureType.BASAL_LIMIT_SUPPORTED
+        ), parsedRes.getFeatures());
+    }
 }
