@@ -10,17 +10,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class ControlIQInfoV2ResponseTest {
+    /** v2.5 API */
     @Test
-    @Ignore("pump api ver v2.1 gives unexpected opcode")
     public void testControlIQInfoV2Response() throws DecoderException {
         ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
             // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration
+                true, 150, 1, 75, 1, 0, 1, 1, 3, 0, 0
         );
 
         ControlIQInfoV2Response parsedRes = (ControlIQInfoV2Response) MessageTester.test(
-                "xxxx",
-                3,
-                1,
+                "000cb30c13019600014b01000101030000000000000000002d45",
+                12,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );

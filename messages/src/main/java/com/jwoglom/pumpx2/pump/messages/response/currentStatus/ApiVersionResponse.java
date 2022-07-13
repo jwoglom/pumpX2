@@ -52,7 +52,10 @@ public class ApiVersionResponse extends Message {
     }
 
     public static class ApiVersion {
-        public static final ApiVersion V2_API = new ApiVersion(2, 2);
+        // v2.1 is the API version used by software v7.1 and v7.4
+        public static final ApiVersion V21 = new ApiVersion(2, 1);
+        // v2.5 is the API version used by software v7.6 and includes remote bolus
+        public static final ApiVersion V25 = new ApiVersion(2, 5);
 
         private final int major;
         private final int minor;
@@ -69,8 +72,8 @@ public class ApiVersionResponse extends Message {
             return minor;
         }
 
-        public boolean greaterThanOrEqual(ApiVersion other) {
-            return getMajor() > other.getMajor() || (getMajor() == other.getMajor() && getMinor() >= other.getMinor());
+        public boolean greaterThan(ApiVersion other) {
+            return getMajor() > other.getMajor() || (getMajor() == other.getMajor() && getMinor() > other.getMinor());
         }
     }
 
