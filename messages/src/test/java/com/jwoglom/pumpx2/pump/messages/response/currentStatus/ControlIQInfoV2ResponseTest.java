@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class ControlIQInfoV2ResponseTest {
     @Test
-    @Ignore("needs to be run on a V2 pump")
+    @Ignore("pump api ver v2.1 gives unexpected opcode")
     public void testControlIQInfoV2Response() throws DecoderException {
         ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
             // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration

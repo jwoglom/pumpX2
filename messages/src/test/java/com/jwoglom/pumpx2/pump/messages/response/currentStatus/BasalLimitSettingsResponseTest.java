@@ -11,14 +11,14 @@ import org.junit.Test;
 
 public class BasalLimitSettingsResponseTest {
     @Test
-    @Ignore("needs to be run on a V2 pump")
     public void testBasalLimitSettingsRequestResponse() throws DecoderException {
         BasalLimitSettingsResponse expected = new BasalLimitSettingsResponse(
             // long basalLimit, long basalLimitDefault
+            5000L, 3000L
         );
 
         BasalLimitSettingsResponse parsedRes = (BasalLimitSettingsResponse) MessageTester.test(
-                "xxxx",
+                "00038b030888130000b80b0000a097",
                 3,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,

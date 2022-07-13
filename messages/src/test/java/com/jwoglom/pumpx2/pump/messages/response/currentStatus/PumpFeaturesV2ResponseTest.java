@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class PumpFeaturesV2ResponseTest {
     @Test
-    @Ignore("needs to be run on a V2 pump")
+    @Ignore("pump api ver v2.1 gives unexpected opcode")
     public void testPumpSupportedFeaturesResponse() throws DecoderException {
         PumpFeaturesV2Response expected = new PumpFeaturesV2Response(
             // int status, int supportedFeaturesIndex, long pumpFeaturesBitmask

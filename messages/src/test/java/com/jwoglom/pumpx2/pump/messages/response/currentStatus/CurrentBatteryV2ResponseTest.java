@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class CurrentBatteryV2ResponseTest {
     @Test
-    @Ignore("needs to be run on a V2 pump")
+    @Ignore("pump api ver v2.1 gives unexpected opcode")
     public void testCurrentBatteryV2Response() throws DecoderException {
         CurrentBatteryV2Response expected = new CurrentBatteryV2Response(
             // int currentBatteryAbc, int currentBatteryIbc, int chargingStatus, int unknown1, int unknown2, int unknown3, int unknown4

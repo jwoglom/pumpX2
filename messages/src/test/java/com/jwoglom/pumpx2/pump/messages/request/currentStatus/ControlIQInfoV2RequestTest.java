@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class ControlIQInfoV2RequestTest {
     @Test
-    @Ignore("need test input")
+    @Ignore("pump api ver v2.1 gives unexpected opcode")
     public void testControlIQInfoV2Request() throws DecoderException {
         // empty cargo
         ControlIQInfoV2Request expected = new ControlIQInfoV2Request();

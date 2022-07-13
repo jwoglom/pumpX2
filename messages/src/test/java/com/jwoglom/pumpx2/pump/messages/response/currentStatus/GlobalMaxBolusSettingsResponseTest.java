@@ -11,15 +11,15 @@ import org.junit.Test;
 
 public class GlobalMaxBolusSettingsResponseTest {
     @Test
-    @Ignore("needs to be run on a V2 pump")
     public void testGlobalMaxBolusSettingsResponse() throws DecoderException {
         GlobalMaxBolusSettingsResponse expected = new GlobalMaxBolusSettingsResponse(
             // int maxBolus, int maxBolusDefault
+            25000, 10000
         );
 
         GlobalMaxBolusSettingsResponse parsedRes = (GlobalMaxBolusSettingsResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "00188d1804a8611027e5ba",
+                24,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
