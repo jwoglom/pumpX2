@@ -5,4 +5,5 @@ import java.util.function.Supplier;
 public class PumpStateSupplier {
 
     public static Supplier<String> authenticationKey = null;
+    public static Supplier<Long> pumpTimeSinceReset = null;
 }

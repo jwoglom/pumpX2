@@ -16,6 +16,7 @@ public class PumpState {
 
     static {
         PumpStateSupplier.authenticationKey = PumpState::getAuthenticationKey;
+        PumpStateSupplier.pumpTimeSinceReset = PumpState::getPumpTimeSinceReset;
     }
 
     private static SharedPreferences prefs(Context context) {
@@ -40,6 +41,16 @@ public class PumpState {
     public static String authenticationKey = "";
     public static String getAuthenticationKey() {
         return authenticationKey;
+    }
+
+    // This is used during packet generation for signed messages,
+    // and is filled by calling TimeSinceResetRequest
+    public static Long pumpTimeSinceReset = null;
+    public static Long getPumpTimeSinceReset() {
+        return pumpTimeSinceReset;
+    }
+    public static void setPumpTimeSinceReset(long time) {
+        pumpTimeSinceReset = time;
     }
 
     public static int failedPumpConnectionAttempts = 0;

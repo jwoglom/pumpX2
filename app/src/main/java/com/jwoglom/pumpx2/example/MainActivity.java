@@ -6,6 +6,7 @@ import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE4_INTENT;
+import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_COMPLETE_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE5_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_INVALID_CHALLENGE_INTENT;
 import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.UPDATE_TEXT_RECEIVER;
@@ -54,8 +55,9 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
-import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
@@ -66,14 +68,10 @@ import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -124,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT));
         registerReceiver(pumpConnectedStage4Receiver, new IntentFilter(PUMP_CONNECTED_STAGE4_INTENT));
         registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
+        registerReceiver(pumpConnectedCompleteReceiver, new IntentFilter(PUMP_CONNECTED_COMPLETE_INTENT));
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
         registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
@@ -347,8 +346,25 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private boolean waitingOnHistoryLogStatus = false;
     private final BroadcastReceiver pumpConnectedStage5Receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            Timber.d("PUMP STAGE5: sending timesincereset with address: %s", address);
+            BluetoothPeripheral peripheral = getPeripheral(address);
+            Timber.d("got peripheral object: %s", peripheral.getName());
+
+            statusText.setText("Stage5");
+            statusText.postInvalidate();
+
+            writePumpMessage((Message) new TimeSinceResetRequest(), peripheral);
+
+            Timber.i("Waiting for timesincereset response");
+        }
+    };
+
+    private boolean waitingOnHistoryLogStatus = false;
+    private final BroadcastReceiver pumpConnectedCompleteReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String address = intent.getStringExtra("address");
@@ -372,6 +388,9 @@ public class MainActivity extends AppCompatActivity {
                     // Custom processing for arguments
                     if (className.equals(IDPSegmentRequest.class.getName())) {
                         triggerIDPSegmentDialog(peripheral);
+                        return;
+                    } else if (className.equals(IDPSettingsRequest.class.getName())) {
+                        triggerIDPSettingsDialog(peripheral);
                         return;
                     } else if (className.equals(HistoryLogRequest.class.getName())) {
                         triggerHistoryLogRequestDialog(peripheral);
@@ -756,6 +775,35 @@ public class MainActivity extends AppCompatActivity {
 
                 builder2.show();
 
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void triggerIDPSettingsDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter IDP ID");
+        builder.setMessage("Enter the ID for the Insulin Delivery Profile");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String idpId = input1.getText().toString();
+                Timber.i("idp id: %s", idpId);
+
+                writePumpMessage(new IDPSettingsRequest(Integer.parseInt(idpId)), peripheral);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

@@ -94,7 +94,7 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
         }
     }
 
-    public Set<PumpFeatureType> getFeatures() {
+    public Set<PumpFeatureType> getPrimaryFeatures() {
         return features;
     }
 }

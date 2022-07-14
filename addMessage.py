@@ -7,7 +7,7 @@ import sys
 import re
 import os
 
-CATEGORIES = ["authentication", "currentStatus", "historyLog"]
+CATEGORIES = ["authentication", "currentStatus", "historyLog", "control"]
 
 MAIN_TEMPLATES = {
   "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \

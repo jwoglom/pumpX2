@@ -30,6 +30,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBRe
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
@@ -56,6 +57,7 @@ public class BluetoothHandler {
     public static final String PUMP_CONNECTED_STAGE3_INTENT = "jwoglom.pumpx2.pumpconnected.stage3";
     public static final String PUMP_CONNECTED_STAGE4_INTENT = "jwoglom.pumpx2.pumpconnected.stage4";
     public static final String PUMP_CONNECTED_STAGE5_INTENT = "jwoglom.pumpx2.pumpconnected.stage5";
+    public static final String PUMP_CONNECTED_COMPLETE_INTENT = "jwoglom.pumpx2.pumpconnected.complete";
     public static final String UPDATE_TEXT_RECEIVER = "jwoglom.pumpx2.updatetextreceiver";
     public static final String GOT_HISTORY_LOG_STATUS_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStatus";
     public static final String GOT_HISTORY_LOG_STREAM_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStream";
@@ -192,6 +194,13 @@ public class BluetoothHandler {
                     Timber.i("Got ApiVersionRequest: %s", resp);
                     PumpState.setPumpAPIVersion(context, resp.getApiVersion());
                     Intent intent = new Intent(PUMP_CONNECTED_STAGE5_INTENT);
+                    intent.putExtra("address", peripheral.getAddress());
+                    context.sendBroadcast(intent);
+                } else if (response.message().isPresent() && response.message().get() instanceof TimeSinceResetResponse) {
+                    TimeSinceResetResponse resp = (TimeSinceResetResponse) response.message().get();
+                    Timber.i("Got TimeSinceResetResponse: %s", resp);
+                    PumpState.setPumpTimeSinceReset(resp.getTimeSinceResetRaw());
+                    Intent intent = new Intent(PUMP_CONNECTED_COMPLETE_INTENT);
                     intent.putExtra("address", peripheral.getAddress());
                     context.sendBroadcast(intent);
                 } else {

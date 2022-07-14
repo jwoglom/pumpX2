@@ -10,13 +10,29 @@ import org.junit.Test;
 
 public class PumpFeaturesV2RequestTest {
     @Test
-    public void testPumpSupportedFeaturesRequest() throws DecoderException {
-        // empty cargo
-        PumpFeaturesV2Request expected = new PumpFeaturesV2Request();
+    public void testPumpSupportedFeaturesRequestZero() throws DecoderException {
+        //
+        PumpFeaturesV2Request expected = new PumpFeaturesV2Request(0);
 
         PumpFeaturesV2Request parsedReq = (PumpFeaturesV2Request) MessageTester.test(
-                "0003a003005324",
-                3,
+                "0006a006010027ef",
+                6,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+    @Test
+    public void testPumpSupportedFeaturesRequestOne() throws DecoderException {
+        //
+        PumpFeaturesV2Request expected = new PumpFeaturesV2Request(1);
+
+        PumpFeaturesV2Request parsedReq = (PumpFeaturesV2Request) MessageTester.test(
+                "0004a00401016691",
+                4,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

@@ -102,6 +102,12 @@ public class Bytes {
         return Arrays.copyOfRange(bytes, 0, 2);
     }
 
+    public static byte[] firstByteLittleEndian(int i) {
+        byte[] bytes = new byte[4];
+        ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).putInt(i & 255);
+        return Arrays.copyOfRange(bytes, 0, 1);
+    }
+
     public static String readString(byte[] raw, int i, int length) {
         if (i >= 0 && i < raw.length) {
             byte[] strBytes = new byte[0];

@@ -94,6 +94,10 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnaps
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionChangeReasonResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -149,6 +153,8 @@ public enum Messages {
     HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),
     BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),
     BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),
+    LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),
+    IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),
     // MESSAGES_END
     ;
 

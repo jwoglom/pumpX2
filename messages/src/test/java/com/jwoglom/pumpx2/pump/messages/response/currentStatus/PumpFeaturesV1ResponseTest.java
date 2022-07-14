@@ -37,7 +37,7 @@ public class PumpFeaturesV1ResponseTest {
             PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED,
             PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED,
             PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED
-        ), parsedRes.getFeatures());
+        ), parsedRes.getPrimaryFeatures());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PumpFeaturesV1ResponseTest {
                 PumpFeaturesV1Response.PumpFeatureType.BASAL_LIMIT_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED
-        ), parsedRes.getFeatures());
+        ), parsedRes.getPrimaryFeatures());
     }
 
     @Test
@@ -92,6 +92,6 @@ public class PumpFeaturesV1ResponseTest {
                 PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.BLE_PUMP_CONTROL_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED
-        ), parsedRes.getFeatures());
+        ), parsedRes.getPrimaryFeatures());
     }
 }
