@@ -65,6 +65,8 @@ jobs:
       with:
         arguments: publish
       env:
-        #MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-        #MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish package to Sonatype
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: publishToSonatype
