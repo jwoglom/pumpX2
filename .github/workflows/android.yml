@@ -75,7 +75,7 @@ jobs:
         ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
       run: |
-        echo "signing.keyId='$ORG_GRADLE_PROJECT_SIGNINGKEYID'" >> gradle.properties
+        echo "signing.keyId=$ORG_GRADLE_PROJECT_SIGNINGKEYID" >> gradle.properties
         echo "signing.password=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
         echo "ossrhUsername=$ORG_GRADLE_PROJECT_SONATYPEUSERNAME" >> gradle.properties
         echo "ossrhPassword=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
