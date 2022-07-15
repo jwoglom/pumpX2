@@ -67,27 +67,12 @@ jobs:
       with:
         gpg_private_key: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
         passphrase: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-    - name: Set Gradle Secrets
+    - name: Run Gradle Publish
       env:
         ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
         ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID }}
         ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-        ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
+        ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
       run: |
-        echo "signing.keyId=$ORG_GRADLE_PROJECT_SIGNINGKEYID" >> gradle.properties
-        echo "signing.password=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
-        echo "ossrhUsername=$ORG_GRADLE_PROJECT_SONATYPEUSERNAME" >> gradle.properties
-        echo "ossrhPassword=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
-
-    - name: Publish package
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
-        ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID }}
-        ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-        ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-        ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
+        ./gradlew publish -PsigningKeyId="$ORG_GRADLE_PROJECT_SIGNINGKEYID" -PsigningKeyPassword="$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" -PsonatypeUsername="$ORG_GRADLE_PROJECT_SONATYPEUSERNAME" -PsonatypePassword="$ORG_GRADLE_PROJECT_SONATYPEPASSWORD"
