@@ -60,6 +60,26 @@ jobs:
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
+
+    - name: Import GPG key
+      id: import_gpg
+      uses: crazy-max/ghaction-import-gpg@v5
+      with:
+        gpg_private_key: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+        passphrase: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+    - name: Set Gradle Secrets
+      env:
+        ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+        ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID }}
+        ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+        ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+        ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
+      run: |
+        echo "signing.keyId='$ORG_GRADLE_PROJECT_SIGNINGKEYID'" >> gradle.properties
+        echo "signing.password=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
+        echo "ossrhUsername=$ORG_GRADLE_PROJECT_SONATYPEUSERNAME" >> gradle.properties
+        echo "ossrhPassword=$ORG_GRADLE_PROJECT_SIGNINGPASSWORD" >> gradle.properties
+
     - name: Publish package
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
@@ -67,6 +87,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+        ORG_GRADLE_PROJECT_SIGNINGKEYID: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEYID }}
         ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         ORG_GRADLE_PROJECT_SONATYPEUSERNAME: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEUSERNAME }}
