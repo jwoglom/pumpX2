@@ -62,4 +62,29 @@ public class CharacteristicUUID {
 
         return CURRENT_STATUS_CHARACTERISTICS;
     }
+
+    public static String which(UUID uuid) {
+        if (CURRENT_STATUS_CHARACTERISTICS.equals(uuid)) {
+            return "CURRENT_STATUS";
+        } else if (QUALIFYING_EVENTS_CHARACTERISTICS.equals(uuid)) {
+            return "QUALIFYING_EVENTS";
+        } else if (HISTORY_LOG_CHARACTERISTICS.equals(uuid)) {
+            return "HISTORY_LOG";
+        } else if (AUTHORIZATION_CHARACTERISTICS.equals(uuid)) {
+            return "AUTHORIZATION";
+        } else if (CONTROL_CHARACTERISTICS.equals(uuid)) {
+            return "CONTROL";
+        } else if (CONTROL_STREAM_CHARACTERISTICS.equals(uuid)) {
+            return "CONTROL_STREAM";
+        } else if (SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
+            return "SERVICE_CHANGED";
+        } else if (NOTIFICATION_CCCD.equals(uuid)) {
+            return "NOTIFICATION";
+        } else if (MANUFACTURER_NAME_CHARACTERISTIC_UUID.equals(uuid)) {
+            return "MANUFACTURER_NAME";
+        } else if (MODEL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {
+            return "MODEL_NUMBER";
+        }
+        return null;
+    }
 }
