@@ -6,7 +6,6 @@
  * User Manual available at https://docs.gradle.org/7.4.2/userguide/building_java_projects.html
  */
 apply plugin: 'com.android.library'
-apply plugin: 'maven-publish'
 apply plugin: 'com.dicedmelon.gradle.jacoco-android'
 
 android {
@@ -86,36 +85,4 @@ dependencies {
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
     implementation "com.google.guava:guava:31.0.1-android"
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            // Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.release
-                groupId = 'com.jwoglom'
-                artifactId = 'pumpx2'
-                version = android.defaultConfig.versionName
-            }
-        }
-        repositories {
-//        maven {
-//            name = "OSSRH"
-//            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-//            credentials {
-//                username = System.getenv("MAVEN_USERNAME")
-//                password = System.getenv("MAVEN_PASSWORD")
-//            }
-//        }
-            // maven {
-            //     name = "GitHubPackages"
-            //     url = "https://maven.pkg.github.com/jwoglom/pumpx2"
-            //     credentials {
-            //         username = System.getenv("GITHUB_ACTOR")
-            //         password = System.getenv("GITHUB_TOKEN")
-            //     }
-            // }
-        }
-    }
 }
