@@ -208,7 +208,7 @@ public class LastBolusStatusV2ResponseTest {
 
         LastBolusStatusV2Response parsedRes = (LastBolusStatusV2Response) MessageTester.test(
                 "0004a5041801ca0c0000cd32581b310600000307020000000031060000a8ca",
-                25,
+                4,
                 2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
@@ -216,7 +216,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
 
-        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.CONTROL_IQ_AUTO_BOLUS, parsedRes.getBolusSource());
         assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
