@@ -177,9 +177,7 @@ public class LastBolusStatusV2ResponseTest {
 
     @Test
     public void testLastBolusStatusV2ResponseQuickBolusCancelled() throws DecoderException {
-        // 2 units, 75% deliver now, 25% later, 2 hours
-        // Extended bolus was stopped at 0.02u / 0.5u
-        // The first component of the delivered bolus doesn't appear here, and it has the same bolus ID (?)
+        // Quick bolus which was cancelled after delivering the entire bolus
         LastBolusStatusV2Response expected = new LastBolusStatusV2Response(
                 // int bit0, int short1, long uint5, long uint9, int bit13, int bit14, int bit15, long uint16, long uint20
                 1, 3251, 458597185, 500, 0, 0, 1, 0, 500
@@ -198,5 +196,28 @@ public class LastBolusStatusV2ResponseTest {
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.QUICK_BOLUS, parsedRes.getBolusSource());
         assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
+    }
+
+
+    @Test
+    public void testLastBolusStatusV2ResponseControlIQAutoBolus() throws DecoderException {
+        LastBolusStatusV2Response expected = new LastBolusStatusV2Response(
+                // int bit0, int short1, long uint5, long uint9, int bit13, int bit14, int bit15, long uint16, long uint20
+                1, 3274, 458765005, 1585, 3, 7, 2, 0, 1585
+        );
+
+        LastBolusStatusV2Response parsedRes = (LastBolusStatusV2Response) MessageTester.test(
+                "0004a5041801ca0c0000cd32581b310600000307020000000031060000a8ca",
+                25,
+                2,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+
+        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(BolusDeliveryHistoryLog.BolusSource.CONTROL_IQ_AUTO_BOLUS, parsedRes.getBolusSource());
+        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 }

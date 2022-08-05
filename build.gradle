@@ -12,14 +12,6 @@ plugins {
 group = "com.jwoglom.pumpx2"
 version = "1.0.0"
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
-
 java {
     withJavadocJar()
     withSourcesJar()
@@ -43,6 +35,7 @@ void sign(Project project) {
             useInMemoryPgpKeys(signingKey, signingPassword)
         }
         sign publishing.publications.maven
+        sign configurations.archives
     }
 }
 

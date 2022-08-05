@@ -45,6 +45,17 @@ android {
     }
 }
 
+publishing {
+    publications {
+        "$project.name"(MavenPublication) {
+            artifactId project.name
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
+}
+
 jacoco {
     toolVersion = "0.8.4"
 }
@@ -62,7 +73,7 @@ jacocoAndroidUnitTestReport {
 
 dependencies {
     implementation project(':shared')
-    implementation project(':messages')
+    api project(':messages')
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'

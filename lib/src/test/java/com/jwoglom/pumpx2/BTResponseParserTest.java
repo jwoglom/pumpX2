@@ -47,9 +47,9 @@ public class BTResponseParserTest {
         L.w(TAG, "CentralChallengeResponse: "+message);
 
         assertFalse(message.signed());
-        assertEquals(1, message.getByte0short());
-        assertEquals("8c212d7a8fbda85f83a3440254488dfb561264ec", Hex.encodeHexString(message.getBytes2to22()));
-        assertEquals("840c4e16873046bc", Hex.encodeHexString(message.getBytes22to30()));
+        assertEquals(1, message.getAppInstanceId());
+        assertEquals("8c212d7a8fbda85f83a3440254488dfb561264ec", Hex.encodeHexString(message.getCentralChallengeHash()));
+        assertEquals("840c4e16873046bc", Hex.encodeHexString(message.getHmacKey()));
 
     }
 
@@ -96,9 +96,9 @@ public class BTResponseParserTest {
         L.w(TAG, "CentralChallengeResponse: "+message);
 
         assertFalse(message.signed());
-        assertEquals(1, message.getByte0short());
-        assertEquals("1f80d667645fe56c0d64575b9d07bb5f28392cab", Hex.encodeHexString(message.getBytes2to22()));
-        assertEquals("6079f224bf1aa8fd", Hex.encodeHexString(message.getBytes22to30()));
+        assertEquals(1, message.getAppInstanceId());
+        assertEquals("1f80d667645fe56c0d64575b9d07bb5f28392cab", Hex.encodeHexString(message.getCentralChallengeHash()));
+        assertEquals("6079f224bf1aa8fd", Hex.encodeHexString(message.getHmacKey()));
     }
 
     @Test
@@ -229,9 +229,9 @@ public class BTResponseParserTest {
             L.w(TAG, "CentralChallengeResponse: " + message);
 
             assertFalse(message.signed());
-            assertEquals(1, message.getByte0short());
-            assertEquals("6b3ace31b3f24b8d424e13ebf9c344b31e44d26d", Hex.encodeHexString(message.getBytes2to22()));
-            assertEquals("37a5efcde10e7ec6", Hex.encodeHexString(message.getBytes22to30()));
+            assertEquals(1, message.getAppInstanceId());
+            assertEquals("6b3ace31b3f24b8d424e13ebf9c344b31e44d26d", Hex.encodeHexString(message.getCentralChallengeHash()));
+            assertEquals("37a5efcde10e7ec6", Hex.encodeHexString(message.getHmacKey()));
         }
 
         {

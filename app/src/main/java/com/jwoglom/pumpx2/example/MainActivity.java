@@ -1,16 +1,13 @@
 package com.jwoglom.pumpx2.example;
 
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STATUS_RECEIVER;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.GOT_HISTORY_LOG_STREAM_RECEIVER;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE1_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE2_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE3_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE4_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_COMPLETE_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_CONNECTED_STAGE5_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.PUMP_INVALID_CHALLENGE_INTENT;
-import static com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler.UPDATE_TEXT_RECEIVER;
-
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STATUS_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STREAM_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_COMPLETE_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE3_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE2_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_INVALID_CHALLENGE_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.UPDATE_TEXT_RECEIVER;
 import static java.util.stream.Collectors.toList;
 
 import android.Manifest;
@@ -40,23 +37,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.common.base.Strings;
-import com.jwoglom.pumpx2.pump.bluetooth.BluetoothHandler;
 import com.jwoglom.pumpx2.pump.PumpState;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.bluetooth.TandemBluetoothHandler;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
-import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
-import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
@@ -91,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
     private Button requestSendButton;
     private Button batteryRequestButton;
     private Button recentHistoryLogsButton;
+    private PumpX2TandemPump tandemEventCallback;
+    private TandemBluetoothHandler bluetoothHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,11 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
         statusText = findViewById(R.id.statusText);
         retryConnectButton = findViewById(R.id.retryConnect);
-        retryConnectButton.setOnClickListener((view) -> BluetoothHandler.getInstance(getApplicationContext()).startScan());
+        retryConnectButton.setOnClickListener((view) -> resetBluetoothHandler().startScan());
 
         requestMessageSpinner = findViewById(R.id.request_message_spinner);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                R.array.request_message_list_options, android.R.layout.simple_spinner_item);
 
         List<String> requestMessages = MessageHelpers.getAllPumpRequestMessages()
                 .stream().filter(m -> !m.startsWith("authentication.")).collect(toList());
@@ -120,8 +114,6 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
         registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT));
-        registerReceiver(pumpConnectedStage4Receiver, new IntentFilter(PUMP_CONNECTED_STAGE4_INTENT));
-        registerReceiver(pumpConnectedStage5Receiver, new IntentFilter(PUMP_CONNECTED_STAGE5_INTENT));
         registerReceiver(pumpConnectedCompleteReceiver, new IntentFilter(PUMP_CONNECTED_COMPLETE_INTENT));
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
@@ -155,9 +147,19 @@ public class MainActivity extends AppCompatActivity {
         return bluetoothAdapter.isEnabled();
     }
 
-    private void initBluetoothHandler()
-    {
-        BluetoothHandler.getInstance(getApplicationContext());
+    private TandemBluetoothHandler getBluetoothHandler() {
+        if (bluetoothHandler != null) {
+            return bluetoothHandler;
+        }
+        tandemEventCallback = new PumpX2TandemPump(getApplicationContext());
+        bluetoothHandler = TandemBluetoothHandler.getInstance(getApplicationContext(), tandemEventCallback);
+        return bluetoothHandler;
+    }
+
+    private TandemBluetoothHandler resetBluetoothHandler() {
+        bluetoothHandler.stop();
+        bluetoothHandler = null;
+        return getBluetoothHandler();
     }
 
     @NotNull
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String address = intent.getStringExtra("address");
-            Timber.d("PUMP STAGE1: triggering pair dialog with address: %s", address);
+            Timber.d("PUMP STAGE1: BT connection initiated with address: %s", address);
             BluetoothPeripheral peripheral = getPeripheral(address);
             Timber.d("got peripheral object: %s", peripheral.getName());
 
@@ -184,8 +186,6 @@ public class MainActivity extends AppCompatActivity {
 
             statusText.setText("Connecting to " + name);
             statusText.postInvalidate();
-
-            triggerPairDialog(name, address);
         }
     };
 
@@ -193,39 +193,27 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String address = intent.getStringExtra("address");
-            Timber.d("PUMP STAGE2: looking for pump peripheral with address: %s", address);
+            Timber.d("PUMP STAGE2: waiting for pairing code with address: %s", address);
             BluetoothPeripheral peripheral = getPeripheral(address);
             Timber.d("got peripheral object: %s", peripheral.getName());
-            ArrayList<byte[]> authBytes = new ArrayList<>();
+            String cargoHex = intent.getStringExtra("centralChallengeCargo");
 
-            statusText.setText("Stage2");
+            byte[] centralChallengeCargo = new byte[0];
+            try {
+                centralChallengeCargo = Hex.decodeHex(cargoHex);
+            } catch (DecoderException e) {
+                Timber.e(e);
+                e.printStackTrace();
+            }
+
+            statusText.setText("Stage2: Waiting for pairing code");
             statusText.postInvalidate();
-
-
-            // Central challenge request
-            {
-                Message message = CentralChallengeBuilder.create(0);
-                byte currentTxId = Packetize.txId.get();
-                PumpState.pushRequestMessage(message, currentTxId);
-                TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
-                Packetize.txId.increment();
-                Timber.d("Central challenge packets: %s", wrapper.packets());
-
-                for (Packet packet : wrapper.packets()) {
-                    authBytes.add(packet.build());
-                }
-            }
-
-            for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                        CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
-                        b,
-                        WriteType.WITH_RESPONSE);
-            }
+            
+            CentralChallengeResponse challenge = new CentralChallengeResponse();
+            challenge.parse(centralChallengeCargo);
 
             Timber.d("Waiting for central challenge response w appInstanceId");
-
-
+            triggerPairDialog(peripheral, address, challenge);
         }
     };
 
@@ -233,133 +221,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String address = intent.getStringExtra("address");
-            Timber.d("PUMP STAGE3: looking for pump peripheral with address: %s", address);
-            BluetoothPeripheral peripheral = getPeripheral(address);
-            Timber.d("got peripheral object: %s", peripheral.getName());
-            ArrayList<byte[]> authBytes = new ArrayList<>();
-
-            statusText.setText("Stage3");
-            statusText.postInvalidate();
-
-            String pairingCode = intent.getStringExtra("pairingCode");
-            Timber.i("got pairing code: %s", pairingCode);
-
-            int appInstanceId = intent.getIntExtra("appInstanceId", -1);
-            Timber.i("got appInstanceId: %s", appInstanceId);
-
-
-            String hmacKeyHex = intent.getStringExtra("hmacKey");
-            Timber.i("got hmacKey: %s", hmacKeyHex);
-
-            byte[] hmacKey = null;
-            try {
-                hmacKey = Hex.decodeHex(hmacKeyHex);
-            } catch (DecoderException e) {
-                Timber.e(e);
-                e.printStackTrace();
-            }
-
-
-            // PumpChallengeRequest (2 packets)
-            {
-                Message message = PumpChallengeBuilder.create(appInstanceId, pairingCode, hmacKey);
-                byte currentTxId = Packetize.txId.get();
-                PumpState.pushRequestMessage(message, currentTxId);
-                TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
-                Packetize.txId.increment();
-                Timber.d("Pump challenge packets: %s", wrapper.packets());
-
-                for (Packet packet : wrapper.packets()) {
-                    authBytes.add(packet.build());
-                }
-            }
-
-
-            for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                        CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
-                        b,
-                        WriteType.WITH_RESPONSE);
-            }
-
-            Timber.i("Waiting for pump challenge response");
-
-
-//                // Central challenge
-//                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-//                        BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS,
-//                        Hex.decodeHex("000010000a00000001020304050607361a"),
-//                        WriteType.WITH_RESPONSE);
-//
-//                // 2x auth code
-//                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-//                        BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS,
-//                        Hex.decodeHex("010212021600009a6cf6348337f61a47217d6d1d"),
-//                        WriteType.WITH_RESPONSE);
-//                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-//                        BluetoothHandler.PUMP_AUTHORIZATION_CHARACTERISTICS,
-//                        Hex.decodeHex("00023c0d74a78f44531dc9"),
-//                        WriteType.WITH_RESPONSE);
-//                // Api version
-//                peripheral.writeCharacteristic(BluetoothHandler.PUMP_SERVICE_UUID,
-//                        BluetoothHandler.PUMP_CURRENT_STATUS_CHARACTERISTICS,
-//                        Hex.decodeHex("0003200300091f"),
-//                        WriteType.WITH_RESPONSE);
-        }
-    };
-
-    private final BroadcastReceiver pumpConnectedStage4Receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String address = intent.getStringExtra("address");
-            Timber.d("PUMP STAGE4: sending version with address: %s", address);
+            Timber.d("PUMP STAGE3: waiting for initial messages: %s", address);
             BluetoothPeripheral peripheral = getPeripheral(address);
             Timber.d("got peripheral object: %s", peripheral.getName());
 
-            statusText.setText("Stage4");
+            statusText.setText("Stage3: Waiting for response");
             statusText.postInvalidate();
 
-            ArrayList<byte[]> authBytes = new ArrayList<>();
-
-            // ApiVersionRequest
-            {
-                Message message = new ApiVersionRequest();
-                byte currentTxId = Packetize.txId.get();
-                PumpState.pushRequestMessage(message, currentTxId);
-                TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
-                Packetize.txId.increment();
-                Timber.d("ApiVersion packets: %s", wrapper.packets());
-
-                for (Packet packet : wrapper.packets()) {
-                    authBytes.add(packet.build());
-                }
-            }
-
-            for (byte[] b : authBytes) {
-                peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                        CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
-                        b,
-                        WriteType.WITH_RESPONSE);
-            }
-
-            Timber.i("Waiting for version response");
-        }
-    };
-
-    private final BroadcastReceiver pumpConnectedStage5Receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String address = intent.getStringExtra("address");
-            Timber.d("PUMP STAGE5: sending timesincereset with address: %s", address);
-            BluetoothPeripheral peripheral = getPeripheral(address);
-            Timber.d("got peripheral object: %s", peripheral.getName());
-
-            statusText.setText("Stage5");
-            statusText.postInvalidate();
-
-            writePumpMessage((Message) new TimeSinceResetRequest(), peripheral);
-
-            Timber.i("Waiting for timesincereset response");
         }
     };
 
@@ -608,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private BluetoothCentralManager getCentral() {
-        return BluetoothHandler.getInstance(getApplicationContext()).central;
+        return getBluetoothHandler().central;
     }
 
     private BluetoothPeripheral getPeripheral(String peripheralAddress) {
@@ -652,10 +520,10 @@ public class MainActivity extends AppCompatActivity {
         int targetSdkVersion = getApplicationInfo().targetSdkVersion;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && targetSdkVersion < Build.VERSION_CODES.S) {
             if (checkLocationServices()) {
-                initBluetoothHandler();
+                getBluetoothHandler().startScan();
             }
         } else {
-            initBluetoothHandler();
+            getBluetoothHandler().startScan();
         }
     }
 
@@ -870,7 +738,9 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void triggerPairDialog(String btName, String btAddress) {
+    private void triggerPairDialog(BluetoothPeripheral peripheral, String btAddress, CentralChallengeResponse challenge) {
+        String btName = peripheral.getName();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter pairing code (case-sensitive)");
         builder.setMessage("Enter the pairing code from Bluetooth Settings > Pair Device to connect to:\n\n" + btName + " (" + btAddress + ")");
@@ -885,7 +755,7 @@ public class MainActivity extends AppCompatActivity {
             input.setText(savedPairingCode);
 
             if (PumpState.failedPumpConnectionAttempts == 0) {
-                triggerImmediatePair(btAddress, savedPairingCode);
+                triggerImmediatePair(peripheral, savedPairingCode, challenge);
                 return;
             }
         }
@@ -898,7 +768,7 @@ public class MainActivity extends AppCompatActivity {
                 String pairingCode = input.getText().toString();
                 Timber.i("pairing code inputted: %s", pairingCode);
 
-                triggerImmediatePair(btAddress, pairingCode);
+                triggerImmediatePair(peripheral, pairingCode, challenge);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -911,12 +781,10 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 
-    private void triggerImmediatePair(String btAddress, String pairingCode) {
-        Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
-        intent.putExtra("address", btAddress);
+    private void triggerImmediatePair(BluetoothPeripheral peripheral, String pairingCode, CentralChallengeResponse challenge) {
         PumpState.setPairingCode(getApplicationContext(), pairingCode);
         PumpState.authenticationKey = pairingCode;
-        intent.putExtra("pairingCode", pairingCode);
-        getApplicationContext().sendBroadcast(intent);
+
+        tandemEventCallback.pair(peripheral, challenge, pairingCode);
     }
 }

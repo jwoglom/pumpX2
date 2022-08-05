@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class PumpState {
+    // TODO: Refactor this class to be less hacky.
 
     static {
         PumpStateSupplier.authenticationKey = PumpState::getAuthenticationKey;

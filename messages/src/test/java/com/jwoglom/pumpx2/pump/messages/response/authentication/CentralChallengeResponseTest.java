@@ -27,8 +27,8 @@ public class CentralChallengeResponseTest {
                 expected
         );
 
-        assertEquals(expected.getByte0short(), parsedRes.getByte0short());
-        assertHexEquals(expected.getBytes2to22(), parsedRes.getBytes2to22());
-        assertHexEquals(expected.getBytes22to30(), parsedRes.getBytes22to30());
+        assertEquals(expected.getAppInstanceId(), parsedRes.getAppInstanceId());
+        assertHexEquals(expected.getCentralChallengeHash(), parsedRes.getCentralChallengeHash());
+        assertHexEquals(expected.getHmacKey(), parsedRes.getHmacKey());
     }
 }

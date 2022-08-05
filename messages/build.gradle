@@ -1,11 +1,9 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
+apply plugin: 'java-library'
 
 dependencies {
     implementation project(':shared')
@@ -15,4 +13,20 @@ dependencies {
     implementation "com.google.guava:guava:31.0.1-android"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
     implementation 'junit:junit:4.12'
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+publishing {
+    publications {
+        "$project.name"(MavenPublication) {
+            artifactId project.name
+            from components.java
+        }
+    }
 }
