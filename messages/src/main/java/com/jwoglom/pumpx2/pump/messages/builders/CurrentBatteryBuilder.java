@@ -7,7 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Re
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Request;
 
 /**
- * On a <V2_API pump, if a CurrentBatteryV2Request is sent and a CurrentBatteryV1Request
+ * On an earlier than V2_API pump, if CurrentBatteryV2Request is sent and a CurrentBatteryV1Request
  * has never been sent to the pump, a CurrentBatteryV1Response is returned -- presumably the
  * pump assumes that the client is a "new" client not aware of the legacy behavior. If a
  * CurrentBatteryV1Request is sent after a CurrentBatteryV2Request, then an ErrorResponse
