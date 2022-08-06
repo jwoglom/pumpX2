@@ -10,18 +10,25 @@ import com.jwoglom.pumpx2.pump.messages.request.NonexistentErrorRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import kotlin.collections.ArraysKt;
+import kotlin.collections.CollectionsKt;
+
 /**
  * With an ErorrCode of INVALID_PARAMETER, requestCodeId contains the request opcode which failed
+ *
+ * There are really two different ErrorResponse's -- one with a size of 2, (for currentStatus)
+ * and one with a size of 26 (for control / signed messages, called ErrorResponseControl by tandem)
  */
 @MessageProps(
     opCode=77,
-    size=2,
+    size=2, // or 26
     type=MessageType.RESPONSE,
     request= NonexistentErrorRequest.class
 )
 public class ErrorResponse extends Message {
     private int requestCodeId;
     private int errorCodeId;
+    private byte[] remainingBytes;
     private ErrorCode errorCode;
 
     public ErrorResponse() {}
@@ -31,10 +38,14 @@ public class ErrorResponse extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        // disabled for ErrorResponse since it can be of size 2 or 26
+        //Preconditions.checkArgument(raw.length == props().size());
         requestCodeId = raw[0];
         errorCodeId = raw[1];
         errorCode = ErrorCode.fromByte(errorCodeId);
+        if (raw.length > 2) {
+            remainingBytes = CollectionsKt.toByteArray(ArraysKt.drop(raw, 2));
+        }
         cargo = raw;
     }
 
@@ -50,6 +61,10 @@ public class ErrorResponse extends Message {
 
     public ErrorCode getErrorCode() {
         return errorCode;
+    }
+
+    public byte[] getRemainingBytes() {
+        return remainingBytes;
     }
 
     public enum ErrorCode {

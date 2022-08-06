@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
         registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
+
+        L.w("X2", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
     }
 
     @Override
@@ -459,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (byte[] b : authBytes) {
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                    CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                    CharacteristicUUID.determine(message),
                     b,
                     WriteType.WITH_RESPONSE);
         }

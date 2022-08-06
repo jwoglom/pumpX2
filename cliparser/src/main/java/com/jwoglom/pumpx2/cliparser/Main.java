@@ -14,6 +14,11 @@ import com.jwoglom.pumpx2.shared.L;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class Main {
@@ -21,7 +26,7 @@ public class Main {
     static {
         L.getPrintln = System.err::println;
     }
-    public static void main(String[] args) throws DecoderException {
+    public static void main(String[] args) throws DecoderException, IOException {
         if (args.length == 0) {
             System.out.println("Specify a command.");
             return;
@@ -37,22 +42,71 @@ public class Main {
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         }
 
-        Message output = null;
-        switch (args[0]) {
-            case "READ":
-            case "WRITE":
-                output = parse(args[1]);
+        String filename;
+        List<String> lines;
+        switch (args[0].toLowerCase(Locale.ROOT)) {
+            case "opcode":
+                System.out.println(parseOpcode(args[1]));
                 break;
-        }
-
-        if (output != null) {
-            System.out.println(output);
+            case "parse":
+                System.out.println(parseFull(args[1]));
+                break;
+            case "bulkopcode":
+                filename = args[1];
+                lines = Files.readAllLines(Path.of(filename));
+                for (String line : lines) {
+                    System.out.println(line+"\t"+parseOpcode(line));
+                }
+                break;
+            case "bulkparse":
+                filename = args[1];
+                lines = Files.readAllLines(Path.of(filename));
+                for (String line : lines) {
+                    System.out.println(line+"\t"+parseFull(line));
+                }
+                break;
+            case "read":
+            case "write":
+                System.out.println(parse(args[1]));
+                break;
         }
     }
 
     private static void assertTrue(String msg, boolean ok) {
         if (!ok) {
             L.w(TAG, "FAIL: " + msg);
+        }
+    }
+
+    public static String parseOpcode(String rawHex) throws DecoderException {
+        byte[] initialRead;
+        try {
+            initialRead = Hex.decodeHex(rawHex);
+        } catch (Exception e) {
+            return "Unable to parse: " + e;
+        }
+        int txId = initialRead[1];
+        int opCode = initialRead[2];
+        Message message = null;
+        try {
+            message = Messages.fromOpcode(opCode).newInstance();
+            message.fillWithEmptyCargo();
+        } catch (NullPointerException e) {
+            return "Unknown opcode "+opCode;
+        } catch (InstantiationException|IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return opCode+"\t"+message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
+    }
+
+    public static String parseFull(String rawHex) throws DecoderException {
+        String ret = parseOpcode(rawHex);
+        try {
+            Message message = parse(rawHex);
+            return ret+"\t"+message.toString();
+        } catch (Exception e) {
+            return ret+"\t"+e.toString();
         }
     }
 
@@ -66,7 +120,7 @@ public class Main {
             message = Messages.fromOpcode(opCode).newInstance();
             message.fillWithEmptyCargo();
         } catch (NullPointerException e) {
-            System.out.print("Unknown opcode "+opCode);
+            System.err.print("Unknown opcode "+opCode);
             return null;
         } catch (InstantiationException|IllegalAccessException e) {
             e.printStackTrace();
@@ -74,7 +128,7 @@ public class Main {
         try {
             return testRequest(rawHex, txId, message);
         } catch (IllegalStateException e) {
-            System.out.println("Needs more packets for "+opCode+": "+e.getMessage());
+            System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
         }
     }
@@ -90,7 +144,7 @@ public class Main {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         if (!resp.message().isPresent()) {
-            System.out.print("Message not fully formed");
+            System.err.print("Message not fully formed");
             return null;
         }
         Message parsedMessage = resp.message().get();

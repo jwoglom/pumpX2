@@ -20,7 +20,10 @@ import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.util.ArrayList;
+import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -65,8 +68,10 @@ public abstract class TandemPump {
         }
 
         for (byte[] b : authBytes) {
+            UUID uuid = CharacteristicUUID.determine(message);
+            Timber.i("sendCommand to %s: %s", uuid, Hex.encodeHexString(b));
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                    CharacteristicUUID.determine(message),
+                    uuid,
                     b,
                     WriteType.WITH_RESPONSE);
         }

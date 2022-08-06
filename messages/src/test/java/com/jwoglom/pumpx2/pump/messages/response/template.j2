@@ -1,7 +1,8 @@
 package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
-
+{% if cat == 'control' %}import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
+{% endif %}
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 

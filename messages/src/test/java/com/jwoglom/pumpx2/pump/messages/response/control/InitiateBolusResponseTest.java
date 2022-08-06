@@ -5,29 +5,28 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class ChangeCartridgeResponseTest {
-    /**
-     * with no message signing on request or response, returns cargo of 100 100 followed by 0s TO CURRENT_STATUS
-     *
-     * with message signing on request and response, returns:
+public class InitiateBolusResponseTest {
+    /*
+     * without signed request and response over current_status_characteristics:
      * ErrorResponse[errorCode=UNDEFINED_ERROR,errorCodeId=0,requestCodeId=0,cargo={0,0}]
-     * (invalid message signing?)
+     * with signed request and response over control:
+     * 0000f919721b69bed65c347359b5b7697039a76055ee189a8e9d
      */
     @Test
-    public void testChangeCartridgeResponseNoSignature() throws DecoderException {
-        ChangeCartridgeResponse expected = new ChangeCartridgeResponse(
-            // int status, int unknown1
-            100, 100
+    public void testInitiateBolusResponse() throws DecoderException { 
+        initPumpState("authenticationKey", 0L);
+        
+        InitiateBolusResponse expected = new InitiateBolusResponse(
+            // int status, int bolusId, int statusType
         );
 
-        ChangeCartridgeResponse parsedRes = (ChangeCartridgeResponse) MessageTester.test(
-                "000491040b6464000000000000000000d201",
-                4,
+        InitiateBolusResponse parsedRes = (InitiateBolusResponse) MessageTester.test(
+                "xxxx",
+                3,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

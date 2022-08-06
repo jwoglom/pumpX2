@@ -3,15 +3,16 @@ import sys
 import csv
 import subprocess
 import os, os.path
+import tempfile
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
 headers = next(reader)
 
-def parse(type, value):
+def parseBulk(path):
     cwd = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
     try:
-        return subprocess.check_output(['./gradlew', 'cliparser', '-q', f'--args=opcode {value}'], cwd=cwd).decode().strip()
+        return subprocess.check_output(['./gradlew', 'cliparser', '-q', f'--args=bulkparse {path}'], cwd=cwd).decode().strip()
     except Exception:
         return 'ERROR'
 
@@ -44,9 +45,14 @@ for rline in reader:
             packets.append(['WRITE', [value] + currentWrite])
             currentWrite = []
 
+f = tempfile.NamedTemporaryFile(delete=False)
 for packet in packets:
     type, group = packet
-    print(f'{type}\t{group}\t', end='')
-    print(parse(type, "".join(group)))
-    sys.stdout.flush()
+    f.write(("".join(group) + "\n").encode())
+    # print(f'{type}\t{group}\t', end='')
+    #print(parse(type, ))
+    # sys.stdout.flush()
+f.close()
+print(f.name, file=sys.stderr)
+print(parseBulk(f.name))
 
