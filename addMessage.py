@@ -8,6 +8,12 @@ import re
 import os
 
 CATEGORIES = ["authentication", "currentStatus", "historyLog", "control"]
+CATEGORY_UUID = {
+    "authentication": "AUTHENTICATION",
+    "currentStatus": "CURRENT_STATUS",
+    "historyLog": "HISTORY_LOG",
+    "control": "CONTROL"
+}
 
 MAIN_TEMPLATES = {
   "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
@@ -96,6 +102,7 @@ def build_ctx():
   while cat not in CATEGORIES:
     cat = input('Category: ')
   ctx["cat"] = cat
+  ctx["catUuid"] = CATEGORY_UUID[cat]
 
   ctx["requestName"] = ctx["name"] + 'Request'
   if cat != "historyLog":

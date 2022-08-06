@@ -7,7 +7,6 @@ import android.util.Pair;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -26,32 +25,34 @@ public class PumpState {
 
     // The pairing code is also called the authentication key
     private static final String PAIRING_CODE_PREF = "pairingCode";
+    public static String savedAuthenticationKey = null;
     public static void setPairingCode(Context context, String pairingCode) {
         prefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).apply();
+        savedAuthenticationKey = pairingCode;
     }
 
     public static String getPairingCode(Context context) {
         return prefs(context).getString(PAIRING_CODE_PREF, null);
     }
 
-    public static long timeSinceReset = 0;
-
-    // This is filled on app start by the result of getPairingCode()
-    // and is used within bluetooth internals which don't have a
-    // Context passed to them
-    public static String authenticationKey = "";
     public static String getAuthenticationKey() {
-        return authenticationKey;
+        return savedAuthenticationKey;
     }
+
+    public static long timeSinceReset = 0;
 
     // This is used during packet generation for signed messages,
     // and is filled by calling TimeSinceResetRequest
     public static Long pumpTimeSinceReset = null;
+    // This is the time at which pumpTimeSinceReset was fetched
+    public static Long selfTimeSinceReset = null;
+
     public static Long getPumpTimeSinceReset() {
         return pumpTimeSinceReset;
     }
     public static void setPumpTimeSinceReset(long time) {
         pumpTimeSinceReset = time;
+        selfTimeSinceReset = System.currentTimeMillis();
     }
 
     public static int failedPumpConnectionAttempts = 0;

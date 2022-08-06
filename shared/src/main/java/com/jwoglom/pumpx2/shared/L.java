@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 public class L {
 
     // Giant hack to allow this logging class to be used across Android and non-Android code
+    public static BiConsumer<String, String> getAndroidLogD = null;
     public static BiConsumer<String, String> getAndroidLogW = null;
     public static TriConsumer<String, String, Throwable> getAndroidLogWThrowable = null;
     public static BiConsumer<String, String> getAndroidLogE = null;
@@ -13,6 +14,16 @@ public class L {
 
     public static Consumer<String> getPrintln = System.out::println;
 
+    // Debug
+    public static void d(String tag, String out) {
+        getPrintln.accept("DEBUG: " + tag + ": " + out);
+        try {
+            getAndroidLogD.accept(tag, out);
+        } catch (RuntimeException e) {
+
+        }
+    }
+    // Warning
     public static void w(String tag, String out) {
         getPrintln.accept("WARN: " + tag + ": " + out);
         try {

@@ -1,8 +1,10 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.collect.Lists;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
@@ -15,6 +17,7 @@ import java.util.List;
 import kotlin.text.Charsets;
 
 public class Packetize {
+    public static final String TAG = "X2-Packetize";
     public static TransactionId txId = new TransactionId();
 
     public static List<Packet> packetize(Message message, String authenticationKey, byte currentTxId) {
@@ -33,10 +36,11 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
-        // TODO: fill in actual time since reset
+        L.w(TAG, "packetize signed "+message.signed()+" authenticationKey=" + authenticationKey);
         if (message.signed()) {
+            long pumpStateTimeSinceReset = PumpStateSupplier.pumpTimeSinceReset.get();
+            L.w(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
             byte[] hmacShaData = new byte[length - 20];
-            int pumpStateTimeSinceReset = 0; // unused
             byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
             // packet[0 .. N-20] unchanged
             System.arraycopy(packet, 0, hmacShaData, 0, length - 20);

@@ -71,6 +71,7 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     static {
+        L.getAndroidLogD = Log::d;
         L.getAndroidLogW = Log::w;
         L.getAndroidLogWThrowable = Log::w;
         L.getAndroidLogE = Log::e;
@@ -783,7 +784,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void triggerImmediatePair(BluetoothPeripheral peripheral, String pairingCode, CentralChallengeResponse challenge) {
         PumpState.setPairingCode(getApplicationContext(), pairingCode);
-        PumpState.authenticationKey = pairingCode;
 
         tandemEventCallback.pair(peripheral, challenge, pairingCode);
     }

@@ -32,6 +32,8 @@ public abstract class TandemPump {
     public final Context context;
     public TandemPump(Context context) {
         this.context = context;
+
+        PumpState.savedAuthenticationKey = PumpState.getPairingCode(context);
     }
 
     /**

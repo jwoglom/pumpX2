@@ -4,14 +4,15 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.{{cat}}.{{responseName}};
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 public class {{responseName}}Test {
     @Test
-    public void test{{responseName}}() throws DecoderException {
+    public void test{{responseName}}() throws DecoderException { {% if cat == 'control' %}
+        initPumpState("authenticationKey", 0L);
+        {% endif %}
         {{responseName}} expected = new {{responseName}}(
             // {% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}
         );
@@ -20,7 +21,7 @@ public class {{responseName}}Test {
                 "xxxx",
                 3,
                 1,
-                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                CharacteristicUUID.{{catUuid}}_CHARACTERISTICS,
                 expected
         );
 

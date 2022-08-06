@@ -1,10 +1,12 @@
 package com.jwoglom.pumpx2.cliparser;
 
+import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.shared.L;
@@ -23,6 +25,16 @@ public class Main {
         if (args.length == 0) {
             System.out.println("Specify a command.");
             return;
+        }
+
+        String pumpAuthenticationKey = System.getenv("PUMP_AUTHENTICATION_KEY");
+        if (!Strings.isNullOrEmpty(pumpAuthenticationKey)) {
+            PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
+        }
+
+        String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");
+        if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){
+            PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         }
 
         Message output = null;

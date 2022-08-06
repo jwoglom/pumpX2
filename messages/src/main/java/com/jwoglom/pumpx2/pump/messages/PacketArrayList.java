@@ -1,5 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages;
 
+import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -28,6 +29,8 @@ public class PacketArrayList {
     protected final byte[] expectedCrc = {0, 0};
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
+        Preconditions.checkArgument(expectedopCode != 0);
+        Preconditions.checkArgument(expectedCargoSize > 0);
         this.expectedOpCode = expectedopCode;
         this.expectedCargoSize = expectedCargoSize;
         this.expectedTxId = expectedTxId;
@@ -83,6 +86,7 @@ public class PacketArrayList {
         if (!ok) {
             throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode));
         } else if (this.isSigned) {
+            L.w(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = CollectionsKt.toByteArray(ArraysKt.dropLast(this.messageData, 20));
             byte[] bArr2 = this.messageData;
             byte[] byteArray2 = CollectionsKt.toByteArray(ArraysKt.drop(bArr2, bArr2.length - 20));

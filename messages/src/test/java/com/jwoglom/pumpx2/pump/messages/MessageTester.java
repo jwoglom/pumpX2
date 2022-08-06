@@ -9,6 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
 import com.jwoglom.pumpx2.shared.L;
@@ -22,6 +23,11 @@ import java.util.stream.Collectors;
 
 public class MessageTester {
     private static final String TAG = "X2-MessageTester";
+
+    public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
+        PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
+        PumpStateSupplier.pumpTimeSinceReset = () -> timeSinceReset;
+    }
 
     public static Message test(String rawHex, int txId, int expectedPackets, UUID expectedCharacteristic, Message expected) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);

@@ -98,6 +98,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2R
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ChangeCartridgeResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -155,6 +157,7 @@ public enum Messages {
     BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),
     LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),
     IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),
+    CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),
     // MESSAGES_END
     ;
 

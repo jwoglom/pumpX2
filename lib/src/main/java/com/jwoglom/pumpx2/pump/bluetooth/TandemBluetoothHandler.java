@@ -99,9 +99,9 @@ public class TandemBluetoothHandler {
         @Override
         public void onCharacteristicWrite(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
-                Timber.i("SUCCESS: Writing <%s> to <%s>", bytes2String(value), characteristic.getUuid());
+                Timber.i("SUCCESS: Writing <%s> to %s", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()));
             } else {
-                Timber.e("ERROR: Failed writing <%s> to <%s> (%s)", bytes2String(value), characteristic.getUuid(), status);
+                Timber.e("ERROR: Failed writing <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()), status);
             }
         }
 
@@ -120,15 +120,11 @@ public class TandemBluetoothHandler {
                 Timber.i("Received modelnumber: %s", modelNumber);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
-                    characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS))
+                    characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) ||
+                    characteristicUUID.equals(CharacteristicUUID.CONTROL_CHARACTERISTICS))
             {
-                if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS)) {
-                    Timber.i("Received response with PUMP_AUTH_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
-                } else if (characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS)) {
-                    Timber.i("Received response with CURRENT_STATUS_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
-                } else if (characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
-                    Timber.i("Received response with HISTORY_LOG_CHARACTERISTIC: %s", Hex.encodeHexString(parser.getValue()));
-                }
+                String uuidName = CharacteristicUUID.which(characteristicUUID);
+                Timber.i("Received response with %s: %s", uuidName, Hex.encodeHexString(parser.getValue()));
 
                 // Parse
                 Pair<Message, Byte> pair = null;
@@ -145,7 +141,13 @@ public class TandemBluetoothHandler {
                 }
 
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
-                PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
+                PumpResponseMessageEvent response;
+                try {
+                    response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
+                } catch (Exception e) {
+                    Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
+                    throw e;
+                }
 
                 Timber.i("Parsed response for %s: %s", Hex.encodeHexString(parser.getValue()), response.message());
 
