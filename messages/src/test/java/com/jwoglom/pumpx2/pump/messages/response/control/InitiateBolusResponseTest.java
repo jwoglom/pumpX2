@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class InitiateBolusResponseTest {
@@ -17,6 +18,7 @@ public class InitiateBolusResponseTest {
      * 0000f919721b69bed65c347359b5b7697039a76055ee189a8e9d
      */
     @Test
+    @Ignore("WIP")
     public void testInitiateBolusResponse() throws DecoderException { 
         initPumpState("authenticationKey", 0L);
         

@@ -30,7 +30,7 @@ public class PacketArrayList {
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Preconditions.checkArgument(expectedopCode != 0);
-        Preconditions.checkArgument(expectedCargoSize > 0);
+        Preconditions.checkArgument(expectedCargoSize >= 0);
         this.expectedOpCode = expectedopCode;
         this.expectedCargoSize = expectedCargoSize;
         this.expectedTxId = expectedTxId;

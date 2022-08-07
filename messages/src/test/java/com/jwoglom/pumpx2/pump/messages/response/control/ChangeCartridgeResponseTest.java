@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ChangeCartridgeResponseTest {
@@ -19,6 +20,7 @@ public class ChangeCartridgeResponseTest {
      * (invalid message signing?)
      */
     @Test
+    @Ignore("WIP; need to fix duplicate UUID across UUIDs: https://github.com/jwoglom/pumpX2/issues/2")
     public void testChangeCartridgeResponseNoSignature() throws DecoderException {
         ChangeCartridgeResponse expected = new ChangeCartridgeResponse(
             // int status, int unknown1
