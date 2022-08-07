@@ -256,8 +256,14 @@ public class TandemBluetoothHandler {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Timber.i("TandemBluetoothHandler: Scanning for peripherals");
-                central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
+                if (tandemPump.filterToBluetoothMac.isPresent()) {
+                    String macAddress = tandemPump.filterToBluetoothMac.get();
+                    Timber.i("TandemBluetoothHandler: Scanning for Tandem peripheral with MAC: " + macAddress);
+                    central.scanForPeripheralsWithAddresses(new String[]{macAddress});
+                } else {
+                    Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
+                    central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
+                }
             }
         },1000);
     }

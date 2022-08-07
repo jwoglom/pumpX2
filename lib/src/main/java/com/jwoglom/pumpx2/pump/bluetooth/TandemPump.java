@@ -23,6 +23,7 @@ import com.welie.blessed.WriteType;
 import org.apache.commons.codec.binary.Hex;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -33,10 +34,16 @@ import timber.log.Timber;
  */
 public abstract class TandemPump {
     public final Context context;
-    public TandemPump(Context context) {
+    final Optional<String> filterToBluetoothMac;
+    public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
         this.context = context;
+        this.filterToBluetoothMac = filterToBluetoothMac;
 
         PumpState.savedAuthenticationKey = PumpState.getPairingCode(context);
+    }
+
+    public TandemPump(Context context) {
+        this(context, Optional.empty());
     }
 
     /**
@@ -114,6 +121,9 @@ public abstract class TandemPump {
      */
     public boolean onPumpDiscovered(BluetoothPeripheral peripheral, ScanResult scanResult) {
         Timber.i("TandemPump: onPumpDiscovered(" + scanResult + ")");
+        if (filterToBluetoothMac.isPresent()) {
+            return (filterToBluetoothMac.get().equals(peripheral.getAddress()));
+        }
         return true;
     }
 
