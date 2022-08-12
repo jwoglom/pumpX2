@@ -31,7 +31,7 @@ parsing messages which has no Android-specific dependencies.
 **Not supported:**
 
 * "V2" pump request/response messages (self-reported API version >= 2.2)
-* Control features
+* Control features (remote bolus support is in progress)
 
 [sheet]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTDnXBbJfiwVh-5PDK78RZqgI7C7ymOl-aEw5JLCV8rl7AiYZdoTwx_gBkWUZoducIxh7JXlOJJd9p6/pubhtml?gid=1917691101&single=true
 [discord]: https://discord.gg/4fQUWHZ4Mw
@@ -64,8 +64,7 @@ To build the project, generating AAR (Android library) and JAR (Java library/exe
 The generated files will be created in `~/.m2/repository/com/jwoglom/pumpx2/`.
 You can alternatively download the most recent versions from the "Android CI" Github Action.
 
-To integrate the PumpX2 Android library into your project, use the `androidLib.aar` file.
-
-To integrate the PumpX2 Java message-parsing library into your project, use the `messages.jar` file.
+To integrate the PumpX2 Android library into your project, use the `androidLib.aar` file to import Android dependencies combined with the `messages.jar` file which contains the message-parsing code.
+If Android-specific Bluetooth code is not needed, just use `messages.jar`.
 
 To utilize the command-line message-parsing tool, execute the `cliparser-all.jar` file using `java -jar`.
