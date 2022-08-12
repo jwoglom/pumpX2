@@ -27,31 +27,31 @@ jobs:
     - name: List Files
       run: find .
 
-    - name: List Files in m2
-      run: find ~/.m2
 
     - name: Upload debug APK
       uses: actions/upload-artifact@v3.1.0
       with:
         name: app-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk 
+        path: app/build/outputs/apk/debug/app-debug.apk
+
     - name: Upload release (unsigned) APK
       uses: actions/upload-artifact@v3.1.0
       with:
         name: app-release-unsigned.apk
         path: app/build/outputs/apk/release/app-release-unsigned.apk
 
-    - name: Upload debug AAR library
-      uses: actions/upload-artifact@v3.1.0
-      with:
-        name: lib-debug.aar
-        path: lib/build/outputs/aar/lib-debug.aar
+    - name: Publish artifacts with Gradle
+      run: ./gradlew publishToMavenLocal
 
-    - name: Upload release AAR library
+    - name: List Files in m2
+      run: find ~/.m2
+
+    - name: Upload m2 published artifacts
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: lib-release.aar
-        path: lib/build/outputs/aar/lib-release.aar
+        name: library-artifacts
+        path: |
+          ~/.m2/repository/com/jwoglom/pumpx2/
 
     - name: Unit Test
       run: ./gradlew testDebugUnitTest
