@@ -1,4 +1,5 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id "application"
 }
 apply plugin : "java"
@@ -11,12 +12,31 @@ application {
 }
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
+publishing {
+    publications {
+        "$project.name"(MavenPublication) {
+            artifactId "cliparser" // the full group name is already inferred in this case
+            version rootProject.version
+            from components.java
+        }
+    }
+}
+
+// ensure built JAR is executable
+tasks.jar {
+    manifest.attributes["Main-Class"] = javaMainClass
 }
 
 
 dependencies {
     implementation project(':shared')
     implementation project(':messages')
+
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
     implementation "com.google.guava:guava:31.0.1-android"

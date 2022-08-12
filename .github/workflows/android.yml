@@ -46,12 +46,42 @@ jobs:
     - name: List Files in m2
       run: find ~/.m2
 
-    - name: Upload m2 published artifacts
+    - name: Upload m2 androidLib AAR
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: library-artifacts
+        name: androidLib.aar
+        path: ~/.m2/repository/com/jwoglom/pumpx2/androidLib/*/androidLib-[0-9.]*.aar
+
+    - name: Upload m2 androidLib source JAR
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: androidLib.aar
+        path: ~/.m2/repository/com/jwoglom/pumpx2/androidLib/*/androidLib-[0-9.]*-sources.jar
+
+    - name: Upload m2 messages JAR
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: messages.jar
+        path: ~/.m2/repository/com/jwoglom/pumpx2/messages/*/messages-[0-9.]*.jar
+
+    - name: Upload m2 messages source JAR
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: messages.jar
+        path: ~/.m2/repository/com/jwoglom/pumpx2/messages/*/messages-[0-9.]*-sources.jar
+
+    - name: Upload m2 cliparser JAR
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: messages.jar
+        path: ~/.m2/repository/com/jwoglom/pumpx2/cliparser/*/cliparser-[0-9.]*-all.jar
+
+    - name: Upload generated m2 repository
+      uses: actions/upload-artifact@v3.1.0
+      with:
+        name: maven-repository
         path: |
-          ~/.m2/repository/com/jwoglom/pumpx2/
+          ~/.m2/repository/
 
     - name: Unit Test
       run: ./gradlew testDebugUnitTest

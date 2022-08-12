@@ -25,7 +25,8 @@ java {
 publishing {
     publications {
         "$project.name"(MavenPublication) {
-            artifactId project.name
+            artifactId rootProject.group
+            version rootProject.version
             from components.java
         }
     }
