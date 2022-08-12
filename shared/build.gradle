@@ -13,3 +13,14 @@ dependencies {
     implementation "org.apache.commons:commons-lang3:3.12.0"
     implementation "com.google.guava:guava:31.0.1-android"
 }
+
+publishing {
+    publications {
+        "$project.name"(MavenPublication) {
+            artifactId "shared"
+            groupId rootProject.group
+            version rootProject.version
+            from components.java
+        }
+    }
+}
