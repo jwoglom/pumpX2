@@ -1,9 +1,10 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth.models;
 
-import com.google.common.base.Optional;
 import com.jwoglom.pumpx2.pump.messages.Message;
 
 import org.apache.commons.codec.binary.Hex;
+
+import java.util.Optional;
 
 public class PumpResponseMessageEvent {
     private final byte[] data;
@@ -11,7 +12,7 @@ public class PumpResponseMessageEvent {
 
     public PumpResponseMessageEvent(byte[] data) {
         this.data = data;
-        this.message = Optional.absent();
+        this.message = Optional.empty();
     }
     public PumpResponseMessageEvent(byte[] data, Message message) {
         this.data = data;
