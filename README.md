@@ -64,7 +64,45 @@ To build the project, generating AAR (Android library) and JAR (Java library/exe
 The generated files will be created in `~/.m2/repository/com/jwoglom/pumpx2/`.
 You can alternatively download the most recent versions from the "Android CI" Github Action.
 
-To integrate the PumpX2 Android library into your project, use the `androidLib.aar` file to import Android dependencies combined with the `messages.jar` file which contains the message-parsing code.
-If Android-specific Bluetooth code is not needed, just use `messages.jar`.
+To integrate the PumpX2 Android library into your project, import the following dependencies into your project:
+
+* `pumpx2-androidLib.aar`, the Android Bluetooth library
+* `pumpx2-messages.jar`, the common message-parsing code.
+* `pumpx2-shared.jar`, a common shared module.
+
+If Android-specific Bluetooth code is not needed, then `messages` and `shared` can be used in a standard, non-Android Java project.
+
+Other Gradle dependencies are currently required by PumpX2 but not included in the JAR/AAR.
+For an Android project:
+
+```
+dependencies {
+    implementation files('androidLib-1.0.0.arr');
+    implementation files('messages-1.0.0.jar');
+    implementation files('shared-1.0.0.jar');
+
+    implementation "commons-codec:commons-codec:1.15"
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+    implementation "com.google.guava:guava:31.0.1-android"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+}
+```
+
+For a non-Android Java project:
+
+```
+dependencies {
+    implementation files('messages-1.0.0.jar');
+    implementation files('shared-1.0.0.jar');
+
+    implementation "commons-codec:commons-codec:1.15"
+    implementation "org.apache.commons:commons-lang3:3.12.0"
+    implementation "com.google.guava:guava:31.0.1-android"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
+}
+```
+
+A `messages-all.jar` is also available on Github Actions as a fat JAR which contains all dependencies.
+This may or may not work with your project depending on if there are any conflicting dependencies.
 
 To utilize the command-line message-parsing tool, execute the `cliparser-all.jar` file using `java -jar`.
