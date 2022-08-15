@@ -6,6 +6,10 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse;
 
+/**
+ * Gets general information on insulin profiles.
+ * @see com.jwoglom.pumpx2.pump.messages.builders.InsulinDeliveryProfileRequestBuilder
+ */
 @MessageProps(
     opCode=62,
     size=0,

@@ -1,15 +1,22 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;
 
+import java.util.List;
+
 /**
  * The returned idp (insulin delivery profile) slots have a value of -1 if the slot is not present.
  * Otherwise, an IDPSettingsRequest with that IDP id will return the details of that slot.
+ * The IDP slot 0 ALWAYS contains the currently selected insulin delivery profile, unless it is
+ * -1 in which case no delivery profiles exist.
+ *
+ * @see com.jwoglom.pumpx2.pump.messages.builders.InsulinDeliveryProfileRequestBuilder
  */
 @MessageProps(
     opCode=63,
@@ -93,6 +100,27 @@ public class ProfileStatusResponse extends Message {
     }
     public int getActiveSegmentIndex() {
         return activeSegmentIndex;
+    }
+
+    /**
+     * @return the active insulin delivery profile ID, which is always slot 0
+     */
+    public int getActiveIdpSlotId() {
+        return getIdpSlot0Id();
+    }
+
+    /**
+     * @return all IDP slots in order restricted to the total number of profiles.
+     */
+    public List<Integer> getIdpSlotIds() {
+        return ImmutableList.of(
+                getIdpSlot0Id(),
+                getIdpSlot1Id(),
+                getIdpSlot2Id(),
+                getIdpSlot3Id(),
+                getIdpSlot4Id(),
+                getIdpSlot5Id()
+        ).subList(0, getNumberOfProfiles());
     }
     
 }

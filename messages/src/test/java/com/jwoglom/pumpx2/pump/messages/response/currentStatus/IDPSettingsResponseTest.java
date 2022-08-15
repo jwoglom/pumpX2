@@ -27,4 +27,29 @@ public class IDPSettingsResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+
+    @Test
+    public void testIDPSettingsResponse2() throws DecoderException {
+        // insulin duration: 8 hrs
+        // carbs: on
+        // name: "Na"
+        // max bolus: 25u
+        IDPSettingsResponse expected = new IDPSettingsResponse(
+                // int idp, int name, int tDependentNum, int insulinDuration, int maxBolus, boolean carbEntry
+                1, "Na", 1, 480, 25000, true
+        );
+
+        IDPSettingsResponse parsedRes = (IDPSettingsResponse) MessageTester.test(
+                "0005410517014e61000000000000000000000000000001e001a861015ef2",
+                5,
+                2,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+
 }

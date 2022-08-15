@@ -7,8 +7,12 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
 
-import java.math.BigInteger;
-
+/**
+ * Contains information about a given insulin delivery profile.
+ * Some information is specific to a time segment on the profile.
+ *
+ * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse
+ */
 @MessageProps(
     opCode=65,
     size=23,
@@ -17,20 +21,20 @@ import java.math.BigInteger;
 )
 public class IDPSettingsResponse extends Message {
     
-    private int idp;
+    private int idpId;
     private String name;
-    private int tDependentNum;
+    private int numberOfProfileSegments;
     private int insulinDuration;
     private int maxBolus;
     private boolean carbEntry;
     
     public IDPSettingsResponse() {}
     
-    public IDPSettingsResponse(int idp, String name, int tDependentNum, int insulinDuration, int maxBolus, boolean carbEntry) {
-        this.cargo = buildCargo(idp, name, tDependentNum, insulinDuration, maxBolus, carbEntry);
-        this.idp = idp;
+    public IDPSettingsResponse(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {
+        this.cargo = buildCargo(idpId, name, numberOfProfileSegments, insulinDuration, maxBolus, carbEntry);
+        this.idpId = idpId;
         this.name = name;
-        this.tDependentNum = tDependentNum;
+        this.numberOfProfileSegments = numberOfProfileSegments;
         this.insulinDuration = insulinDuration;
         this.maxBolus = maxBolus;
         this.carbEntry = carbEntry;
@@ -40,9 +44,9 @@ public class IDPSettingsResponse extends Message {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.idp = raw[0];
+        this.idpId = raw[0];
         this.name = Bytes.readString(raw, 1, 16);
-        this.tDependentNum = raw[17];
+        this.numberOfProfileSegments = raw[17];
         this.insulinDuration = Bytes.readShort(raw, 18);
         this.maxBolus = Bytes.readShort(raw, 20);
         this.carbEntry = raw[22] != 0;
@@ -50,24 +54,24 @@ public class IDPSettingsResponse extends Message {
     }
 
     
-    public static byte[] buildCargo(int idp, String name, int tDependentNum, int insulinDuration, int maxBolus, boolean carbEntry) {
+    public static byte[] buildCargo(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {
         return Bytes.combine(
-            new byte[]{ (byte) idp }, 
+            new byte[]{ (byte) idpId },
             Bytes.writeString(name, 16),
-            new byte[]{ (byte) tDependentNum }, 
+            new byte[]{ (byte) numberOfProfileSegments },
             Bytes.firstTwoBytesLittleEndian(insulinDuration), 
             Bytes.firstTwoBytesLittleEndian(maxBolus), 
             new byte[]{ (byte) (carbEntry ? 1 : 0) });
     }
     
-    public int getIdp() {
-        return idp;
+    public int getIdpId() {
+        return idpId;
     }
     public String getName() {
         return name;
     }
-    public int getTDependentNum() {
-        return tDependentNum;
+    public int getNumberOfProfileSegments() {
+        return numberOfProfileSegments;
     }
     public int getInsulinDuration() {
         return insulinDuration;

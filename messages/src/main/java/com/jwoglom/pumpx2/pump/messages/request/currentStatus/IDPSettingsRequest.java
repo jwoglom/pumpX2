@@ -7,6 +7,10 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
 
+/**
+ * Given an insulin delivery profile ID -- NOT the slot index -- makes a request for the settings
+ * (including number of profile segments) for that profile.
+ */
 @MessageProps(
     opCode=64,
     size=1,
