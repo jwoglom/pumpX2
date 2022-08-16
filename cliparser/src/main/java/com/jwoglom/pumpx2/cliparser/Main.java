@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -99,37 +100,30 @@ public class Main {
         }
         int txId = initialRead[1];
         int opCode = initialRead[2];
-        Message message = null;
+        Set<Message> messages = new HashSet<>();
+        String messageStr = "";
         try {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
-            if (possibilities.size() > 1) {
-                System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
-                if (possibilities.contains(Characteristic.CONTROL)) {
-                    System.err.print("Using CONTROL");
-                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
-                } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
-                    System.err.print("Using CURRENT_STATUS");
-                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
-                } else {
-                    return "Multiple possibilities "+opCode+" "+possibilities;
-                }
-            }
             if (possibilities.size() == 0) {
                 return "Unknown opcode "+opCode;
             }
             Characteristic characteristic = null;
             for (Characteristic c : possibilities) {
-                characteristic = c;
+                Message message = Messages.fromOpcode(opCode, c).newInstance();
+                message.fillWithEmptyCargo();
+                messages.add(message);
+                if (messageStr.length() > 0) {
+                    messageStr += " <OR> ";
+                }
+                messageStr += message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
             }
-            message = Messages.fromOpcode(opCode, characteristic).newInstance();
-            message.fillWithEmptyCargo();
         } catch (NullPointerException e) {
             return "Unknown opcode "+opCode;
         } catch (InstantiationException|IllegalAccessException e) {
             e.printStackTrace();
         }
 
-        return opCode+"\t"+message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
+        return opCode+"\t"+messageStr;
     }
 
     public static String parseFull(String rawHex, String ...extra) throws DecoderException {

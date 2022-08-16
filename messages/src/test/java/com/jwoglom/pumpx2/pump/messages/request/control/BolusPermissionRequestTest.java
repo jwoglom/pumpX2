@@ -40,4 +40,31 @@ public class BolusPermissionRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
+    @Test
+    public void testBolusPermissionRequest2() throws DecoderException {
+        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461457713
+        // ./scripts/get-single-opcode.py '0134a234181d47811bc64bcd072fc978e4842046 003426b62ba72612b4f04978ac'
+
+        initPumpState("6VeDeRAL5DCigGw2", 461510606);
+        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
+                29,71,-127,27,-58,75,-51,7,47,-55,120,-28,-124,32,70,38,-74,43,-89,38,18,-76,-16,73
+        });
+
+
+        String[] messages = new String[]{
+                "01efa2ef18bc17821b4e1e731847b9d3b2d45332",
+                "00ef7f6110aca98e7a3ee69079"
+        };
+        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
+                messages[0],
+                52,
+                2,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                messages[1]
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }

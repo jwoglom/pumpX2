@@ -21,23 +21,28 @@ packets = []
 currentRead = []
 currentWrite = []
 
+lastSeqNum = None
+
 for rline in reader:
-    line = {headers[i]: rline[i] for i in range(len(headers))}
     type = ''
-    if line['Info'].startswith('Rcvd'):
+
+    btId, btOp, value = rline
+
+    if btOp == '0x1b':
         type = 'READ'
-    elif line['Info'].startswith('Sent Write'):
+    elif btOp == '0x52':
         type = 'WRITE'
 
-    value = line['Value']
-    
-    #print(f"{type}\t{value}\t", end='\n')
-    # BUG: this is incorrectly merging some messages.
-    if value.endswith("¦"):
+    value = value.split("â")[0]
+
+    remainingPackets = int(value[0:2], 16)
+    seqNum = int(value[2:4], 16)
+
+    if remainingPackets > 0:
         if type == 'READ':
-            currentRead.append(value.split("â")[0])
+            currentRead.append(value)
         elif type == 'WRITE':
-            currentWrite.append(value.split("â")[0])
+            currentWrite.append(value)
     else:
         if type == 'READ':
             packets.append(['READ', [value] + currentRead])

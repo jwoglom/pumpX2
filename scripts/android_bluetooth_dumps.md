@@ -3,10 +3,6 @@ su
 cp /data/misc/bluetooth/logs/btsnoop_hci.log /sdcard/btsnoop_hci.log
 adb pull /sdcard/btsnoop_hci.log ~/btsnoops/
 
-Open the .log file in Wireshark
-Filter to `btatt.opcode == 0x1b || btatt.opcode == 0x52`
-
-cmd+A
-File > Export packet dissections > to CSV, Selected packets only
+tshark -r ~/btsnoops/btsnoop_hci_1u_override_bolus.log -T fields -E separator=, -E quote=d -e frame.number -e btatt.opcode -e btatt.value 'btatt.value'
 
 ./scripts/get-btsnoop-opcodes.py ~/btsnoops/btsnoop_unavailable_deliveries_stopped.csv > ~/btsnoops/btsnoop_unavailable_deliveries_stopped.tsv
