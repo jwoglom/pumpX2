@@ -1,4 +1,26 @@
-History log types:
+# Making a History Log Request
+
+Via the currentStatus characteristic, a HistoryLogRequest is sent to the pump, with a startLog ID
+and a number of logs to receive. The pump stores all history log messages sequentially with an ID
+and history logs can only be fetched by asking for data from a specific ID range.
+
+After a HistoryLogRequest is sent, a HistoryLogResponse will be received containing a stream ID.
+Concurrently, on the separate historyLog Bluetooth characteristic, a series of HistoryLogStreamResponse's
+are sent, each with the stream ID. Each message in the stream contains a packed representation of
+individual history log events. The HistoryLogStreamResponse contains a count of the number of packed history
+log entries which are in that specific stream message, and the size of the response is variable based on
+the number of entries -- each entry is 26 bytes.
+
+Each entry inside the HistoryLogStreamResponse is parsed with HistoryLogParser, and contains a
+message type ID, all of which are listed below. To add processing for a new history log type,
+a HistoryLog class is added inside `com.jwoglom.pumpx2.pump.messages.response.historyLog`.
+
+There is, to my knowledge, no consistent timestamp representation in each message. Some contain a
+timestamp (such as CGMHistoryLog) while some do not. There may be a way of identifying the timestamp
+for each history log message more abstractly but this requires further investigation.
+
+
+## History Log Types
 
 ```
     LID_TEMP_RATE_ACTIVATED(2),
