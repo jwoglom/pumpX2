@@ -22,6 +22,10 @@ public class InitiateBolusRequest extends Message {
         this.cargo = new byte[props().size()];
     }
 
+    public InitiateBolusRequest(byte[] raw) {
+        this.cargo = raw;
+    }
+
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;

@@ -18,9 +18,10 @@ public class BGHistoryLog extends HistoryLog {
     
     public BGHistoryLog() {}
     
-    public BGHistoryLog(byte[] first8Bytes, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
-        this.cargo = buildCargo(first8Bytes, bg, cgmCalibration, bgSource, iob, targetBG, isf, spare);
-        this.first8Bytes = first8Bytes;
+    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSource, iob, targetBG, isf, spare);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.bg = bg;
         this.cgmCalibration = cgmCalibration;
         this.bgSource = bgSource;
@@ -37,8 +38,8 @@ public class BGHistoryLog extends HistoryLog {
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
+        parseBase(raw);
         this.cargo = raw;
-        this.first8Bytes = Arrays.copyOfRange(raw, 2, 10);
         this.bg = Bytes.readShort(raw, 10);
         this.cgmCalibration = raw[12];
         this.bgSource = raw[13];
@@ -50,10 +51,11 @@ public class BGHistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(byte[] first8Bytes, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
         return Bytes.combine(
             new byte[]{ 16, 0 },
-            first8Bytes,
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bg), 
             new byte[]{ (byte) cgmCalibration }, 
             new byte[]{ (byte) bgSource }, 

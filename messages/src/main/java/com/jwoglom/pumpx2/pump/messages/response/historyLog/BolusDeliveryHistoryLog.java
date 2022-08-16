@@ -21,8 +21,10 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     
     public BolusDeliveryHistoryLog() {}
     
-    public BolusDeliveryHistoryLog(int bolusID, int bolusDeliveryStatus, Set<BolusType> bolusTypes, BolusSource bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
-        this.cargo = buildCargo(bolusID, bolusDeliveryStatus, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), reserved, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
+    public BolusDeliveryHistoryLog(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, Set<BolusType> bolusTypes, BolusSource bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusID, bolusDeliveryStatus, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), reserved, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.bolusID = bolusID;
         this.bolusDeliveryStatus = bolusDeliveryStatus;
         this.bolusTypeBitmask = BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{}));
@@ -43,6 +45,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
+        parseBase(raw);
         this.bolusID = Bytes.readShort(raw, 10);
         this.bolusDeliveryStatus = raw[12];
         this.bolusTypeBitmask = raw[13];
@@ -53,12 +56,14 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         this.correction = Bytes.readShort(raw, 20);
         this.extendedDurationRequested = Bytes.readShort(raw, 22);
         this.deliveredTotal = Bytes.readShort(raw, 24);
-        
     }
 
     
-    public static byte[] buildCargo(int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
         return Bytes.combine(
+            new byte[]{24, 1}, // 280 across 2 bytes
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusID), 
             new byte[]{ (byte) bolusDeliveryStatus }, 
             new byte[]{ (byte) bolusType }, 

@@ -13,8 +13,10 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     
     public BolusRequestedMsg3HistoryLog() {}
     
-    public BolusRequestedMsg3HistoryLog(int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
-        this.cargo = buildCargo(bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize);
+    public BolusRequestedMsg3HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
         this.spare = spare;
         this.foodBolusSize = foodBolusSize;
@@ -30,6 +32,7 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
+        parseBase(raw);
         this.bolusId = Bytes.readShort(raw, 10);
         this.spare = Bytes.readShort(raw, 12);
         this.foodBolusSize = Bytes.readFloat(raw, 14);
@@ -39,9 +42,11 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
         return Bytes.combine(
-            new byte[] { (byte) 66, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            new byte[] { (byte) 66, 0},
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
             Bytes.firstTwoBytesLittleEndian(spare), 
             Bytes.toFloat(foodBolusSize), 

@@ -19,8 +19,10 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     
     public BolusRequestedMsg2HistoryLog() {}
     
-    public BolusRequestedMsg2HistoryLog(int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
-        this.cargo = buildCargo(bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);
+    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
         this.options = options;
         this.standardPercent = standardPercent;
@@ -42,6 +44,7 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
+        parseBase(raw);
         this.bolusId = Bytes.readShort(raw, 10);
         this.options = raw[12];
         this.standardPercent = raw[13];
@@ -57,9 +60,11 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
         return Bytes.combine(
-            new byte[] { (byte) 65, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+            new byte[] { (byte) 65, 0},
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
             new byte[]{ (byte) options }, 
             new byte[]{ (byte) standardPercent }, 

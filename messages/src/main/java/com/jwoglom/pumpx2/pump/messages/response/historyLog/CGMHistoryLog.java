@@ -17,8 +17,10 @@ public class CGMHistoryLog extends HistoryLog {
     
     public CGMHistoryLog() {}
     
-    public CGMHistoryLog(int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
-        this.cargo = buildCargo(glucoseValueStatus, cgmDataType, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
+    public CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatus, cgmDataType, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.glucoseValueStatus = glucoseValueStatus;
         this.cgmDataType = cgmDataType;
         this.rate = rate;
@@ -38,6 +40,7 @@ public class CGMHistoryLog extends HistoryLog {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
+        parseBase(raw);
         this.glucoseValueStatus = Bytes.readShort(raw, 10);
         this.cgmDataType = raw[12];
         this.rate = raw[13];
@@ -51,8 +54,11 @@ public class CGMHistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
         return Bytes.combine(
+            new byte[]{0, 1},
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(glucoseValueStatus), 
             new byte[]{ (byte) cgmDataType }, 
             new byte[]{ (byte) rate }, 

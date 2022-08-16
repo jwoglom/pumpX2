@@ -15,8 +15,10 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     
     public BolusRequestedMsg1HistoryLog() {}
     
-    public BolusRequestedMsg1HistoryLog(int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
-        this.cargo = buildCargo(bolusId, bolusType, correctionBolusIncluded, carbAmount, bg, iob, carbRatio);
+    public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusType, correctionBolusIncluded, carbAmount, bg, iob, carbRatio);
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
         this.bolusType = bolusType; // probably the same bolusType enum as BolusDeliveryHistoryLog
         this.correctionBolusIncluded = correctionBolusIncluded;
@@ -34,6 +36,7 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
+        parseBase(raw);
         this.bolusId = Bytes.readShort(raw, 10);
         this.bolusType = raw[12];
         this.correctionBolusIncluded = raw[13] != 0;
@@ -45,9 +48,11 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
         return Bytes.combine(
-            new byte[]{64, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            new byte[]{64, 0},
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
             new byte[]{ (byte) bolusType }, 
             new byte[]{ (byte) (correctionBolusIncluded ? 1 : 0) }, 

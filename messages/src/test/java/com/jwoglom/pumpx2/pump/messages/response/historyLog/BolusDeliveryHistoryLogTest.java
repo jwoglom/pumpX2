@@ -16,7 +16,8 @@ public class BolusDeliveryHistoryLogTest {
     @Test
     public void testBolusDeliveryHistoryLog1() throws DecoderException {
         BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
-            // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+            // long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                446066139L, 183687L,
                 1044,
                 0,
                 ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
@@ -33,12 +34,15 @@ public class BolusDeliveryHistoryLogTest {
                 "1801db6d961a87cd0200140400090714e9030000e9030000e903",
                 expected
         );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
 
     @Test
     public void testBolusDeliveryHistoryLog2() throws DecoderException {
         BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
-                // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                // long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                446175714L, 187031L,
                 1063,
                 0,
                 ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
@@ -55,12 +59,15 @@ public class BolusDeliveryHistoryLogTest {
                 "1801e219981a97da0200270400090127d2000000d2000000d200",
                 expected
         );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
 
     @Test
     public void testBolusDeliveryHistoryLog3() throws DecoderException {
         BolusDeliveryHistoryLog expected = new BolusDeliveryHistoryLog(
-                // int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                // long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                446175382L, 186993L,
                 1062,
                 1,
                 ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
@@ -77,5 +84,7 @@ public class BolusDeliveryHistoryLogTest {
                 "18019618981a71da020026040109012698030000980300000000",
                 expected
         );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
 }
