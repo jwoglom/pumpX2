@@ -32,6 +32,7 @@ for rline in reader:
     value = line['Value']
     
     #print(f"{type}\t{value}\t", end='\n')
+    # BUG: this is incorrectly merging some messages.
     if value.endswith("¦"):
         if type == 'READ':
             currentRead.append(value.split("â")[0])

@@ -79,16 +79,13 @@ public class PacketArrayList {
         byte[] lastTwoB = this.expectedCrc;
         boolean ok = true;
 
-//        if (1 == 1) {
-//            return ok; // TODO: REMOVE
-//        }
-
-
         if (!(a[0] == lastTwoB[0] && a[1] == lastTwoB[1])) {
             ok = false;
         }
+        // the fullCargo size is 2 + the message length.
+        L.d(TAG, "validate fullCargo size="+fullCargo.length);
         if (!ok) {
-            throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB));
+            throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
         } else if (this.isSigned) {
             L.w(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = CollectionsKt.toByteArray(ArraysKt.dropLast(this.messageData, 20));
