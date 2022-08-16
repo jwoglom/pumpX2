@@ -10,6 +10,10 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequ
 
 import java.time.Instant;
 
+/**
+ * Returns information on the pump's current internal time. Different from the human-visible
+ * time and date which is stored in the history log.
+ */
 @MessageProps(
     opCode=55,
     size=8,
@@ -48,9 +52,17 @@ public class TimeSinceResetResponse extends Message {
     public long getTimeSinceResetRaw() {
         return timeSinceReset;
     }
+
+    /**
+     * @return the evaluation of timeSinceReset against the epoch
+     */
     public Instant getTimeSinceReset() {
         return Dates.fromJan12008EpochSecondsToDate(timeSinceReset);
     }
+
+    /**
+     * @return the number of seconds the pump has been on since it was last reset
+     */
     public long getPumpTimeSeconds() {
         return pumpTime;
     }

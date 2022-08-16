@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.cliparser;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
@@ -92,11 +93,26 @@ public class Main {
         int opCode = initialRead[2];
         Message message = null;
         try {
-            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
-            if (possibilities.size() > 1) {
-                return "Multiple characteristics possible for opCode: "+opCode+": "+possibilities;
+            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);            if (possibilities.size() > 1) {
+                System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
+                if (possibilities.contains(Characteristic.CONTROL)) {
+                    System.err.print("Using CONTROL");
+                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
+                    System.err.print("Using CURRENT_STATUS");
+                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                } else {
+                    return "Multiple possibilities "+opCode+" "+possibilities;
+                }
             }
-            message = Messages.fromOpcode(opCode, possibilities.stream().iterator().next()).newInstance();
+            if (possibilities.size() == 0) {
+                return "Unknown opcode "+opCode;
+            }
+            Characteristic characteristic = null;
+            for (Characteristic c : possibilities) {
+                characteristic = c;
+            }
+            message = Messages.fromOpcode(opCode, characteristic).newInstance();
             message.fillWithEmptyCargo();
         } catch (NullPointerException e) {
             return "Unknown opcode "+opCode;
@@ -127,12 +143,28 @@ public class Main {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
+                if (possibilities.contains(Characteristic.CONTROL)) {
+                    System.err.print("Using CONTROL");
+                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
+                    System.err.print("Using CURRENT_STATUS");
+                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                } else {
+                    return null;
+                }
+            }
+            if (possibilities.size() == 0) {
+                System.err.print("Unknown opcode "+opCode);
                 return null;
             }
-            message = Messages.fromOpcode(opCode, possibilities.stream().iterator().next()).newInstance();
+            Characteristic characteristic = null;
+            for (Characteristic c : possibilities) {
+                characteristic = c;
+            }
+            message = Messages.fromOpcode(opCode, characteristic).newInstance();
             message.fillWithEmptyCargo();
         } catch (NullPointerException e) {
-            System.err.print("Unknown opcode "+opCode);
+            System.err.print("NPE for opcode "+opCode);
             return null;
         } catch (InstantiationException|IllegalAccessException e) {
             e.printStackTrace();
