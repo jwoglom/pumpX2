@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -16,6 +17,7 @@ import java.util.Set;
     type=MessageType.RESPONSE,
     request=LastBolusStatusV2Request.class
 )
+@ApiVersionDependent
 public class LastBolusStatusV2Response extends Message {
     
     private int bit0;

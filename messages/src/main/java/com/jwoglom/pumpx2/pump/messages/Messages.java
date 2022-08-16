@@ -1,5 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages;
 
+import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
@@ -182,6 +183,8 @@ public enum Messages {
 
             OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);
             RESPONSES.put(m.responseOpCode, m);
+
+            Preconditions.checkArgument(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);
         }
 
         for (Characteristic c : Characteristic.values()) {

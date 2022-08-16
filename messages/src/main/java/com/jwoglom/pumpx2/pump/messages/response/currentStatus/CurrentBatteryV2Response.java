@@ -2,16 +2,29 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Request;
 
+/**
+ * Battery information from the pump. The additional data from the V2 API is not known, and it
+ * always seems to have value 0.
+ * For API_V2_5
+ *
+ * To get the standard battery percent use getCurrentBatteryIbc() or getBatteryPercent() as a convenience
+ *
+ * Use {@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryAbstractResponse}
+ */
 @MessageProps(
     opCode=-111,
     size=11,
     type=MessageType.RESPONSE,
-    request=CurrentBatteryV2Request.class
+    request=CurrentBatteryV2Request.class,
+    minApi=KnownApiVersion.API_V2_5
 )
+@ApiVersionDependent
 public class CurrentBatteryV2Response extends CurrentBatteryAbstractResponse {
     
     private int currentBatteryAbc;
@@ -82,5 +95,4 @@ public class CurrentBatteryV2Response extends CurrentBatteryAbstractResponse {
     public int getUnknown4() {
         return unknown4;
     }
-    
 }

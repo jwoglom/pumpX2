@@ -15,7 +15,7 @@ import java.math.BigInteger;
     size=5,
     type=MessageType.RESPONSE,
     request=BolusPermissionChangeReasonRequest.class,
-    minApi=KnownApiVersion.API_V2_5
+    minApi=KnownApiVersion.API_FUTURE
 )
 public class BolusPermissionChangeReasonResponse extends Message {
     

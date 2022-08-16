@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -13,6 +14,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2
     type=MessageType.REQUEST,
     response=LastBolusStatusV2Response.class
 )
+@ApiVersionDependent
 public class LastBolusStatusV2Request extends Message { 
     public LastBolusStatusV2Request() {
         this.cargo = EMPTY;

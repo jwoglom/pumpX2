@@ -2,8 +2,10 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV2Request;
 
 import java.math.BigInteger;
@@ -13,8 +15,10 @@ import java.util.Set;
     opCode=-95,
     size=6,
     type=MessageType.RESPONSE,
-    request=PumpFeaturesV2Request.class
+    request=PumpFeaturesV2Request.class,
+    minApi=KnownApiVersion.API_V2_5
 )
+@ApiVersionDependent
 public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
     
     private int status;

@@ -1,7 +1,8 @@
 package com.jwoglom.pumpx2.pump.messages.models;
 
 public enum KnownApiVersion {
-    // v2.1 is the API version used by software v7.1 and v7.4
+    // v2.1 is the API version used by software v7.1 and v7.4. It is the earliest known API version,
+    // previous pump firmware did not have Bluetooth connection compatibility.
     API_V2_1(2, 1),
     // v2.5 is the API version used by software v7.6 and includes remote bolus
     API_V2_5(2, 5),
