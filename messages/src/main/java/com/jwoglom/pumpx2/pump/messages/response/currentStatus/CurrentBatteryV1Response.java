@@ -2,16 +2,24 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Request;
 
+/**
+ * Pump API version dependent request, do NOT invoke directly.
+ * For API_V2_1
+ *
+ * @see com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder
+ */
 @MessageProps(
     opCode=53,
     size=2,
     type=MessageType.RESPONSE,
     request=CurrentBatteryV1Request.class
 )
+@ApiVersionDependent
 public class CurrentBatteryV1Response extends CurrentBatteryAbstractResponse {
     
     private int currentBatteryAbc;

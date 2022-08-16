@@ -5,15 +5,17 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -39,7 +41,12 @@ public class ArbitraryMessageParser {
         int opCode = initialRead[2];
         Message message = null;
         try {
-            message = Messages.fromOpcode(opCode).newInstance();
+            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
+            if (possibilities.size() > 1) {
+                System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
+                return Optional.empty();
+            }
+            message = Messages.fromOpcode(opCode, possibilities.stream().iterator().next()).newInstance();
             message.fillWithEmptyCargo();
         } catch (NullPointerException e) {
             System.err.print("Unknown opcode "+opCode);
@@ -62,7 +69,7 @@ public class ArbitraryMessageParser {
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) txId);
-        PumpResponseMessageEvent resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
+        PumpResponseMessage resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
         return resp.message();
     }
 }

@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.control;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -13,6 +14,7 @@ import java.math.BigInteger;
     opCode=-111,
     size=11,
     type=MessageType.RESPONSE,
+    characteristic=Characteristic.CONTROL,
     request=ChangeCartridgeRequest.class
 )
 public class ChangeCartridgeResponse extends Message {

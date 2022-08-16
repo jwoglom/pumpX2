@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
@@ -106,9 +107,13 @@ import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
@@ -166,41 +171,57 @@ public enum Messages {
 
     private static final String TAG = "X2-Messages";
 
-    public static Map<Integer, Class<? extends Message>> OPCODES = new HashMap<>();
+    public static Map<Pair<Characteristic, Integer>, Class<? extends Message>> OPCODES = new HashMap<>();
     public static Map<Integer, Messages> REQUESTS = new HashMap<>();
     public static Map<Integer, Messages> RESPONSES = new HashMap<>();
 
     static {
         for (Messages m : Messages.values()) {
-            OPCODES.put(m.requestOpCode, m.requestClass);
+            OPCODES.put(Pair.of(m.requestProps().characteristic(), m.requestOpCode), m.requestClass);
             REQUESTS.put(m.requestOpCode, m);
 
-            OPCODES.put(m.responseOpCode, m.responseClass);
+            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);
             RESPONSES.put(m.responseOpCode, m);
         }
 
-        OPCODES.put(new ErrorResponse().opCode(), ErrorResponse.class);
+        for (Characteristic c : Characteristic.values()) {
+            int errorOpcode = new ErrorResponse().opCode();
+            if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {
+                OPCODES.put(Pair.of(c, errorOpcode), ErrorResponse.class);
+            }
+        }
     }
 
-    public static Message parse(byte[] data, int opCode) {
+    public static Message parse(byte[] data, int opCode, Characteristic characteristic) {
         try {
-            Class<? extends Message> clazz = OPCODES.get(opCode);
+            Class<? extends Message> clazz = OPCODES.get(Pair.of(characteristic, opCode));
             if (clazz == null) {
-                L.w(TAG, "Unable to find message for opCode: " + opCode +" with data: " + Hex.encodeHexString(data));
+                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));
                 return null;
             }
             Message msg = clazz.newInstance();
             msg.parse(data);
             return msg;
         } catch (Exception e) {
-            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode);
+            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic);
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Class<? extends Message> fromOpcode(int opCode) {
-        return OPCODES.get(opCode);
+    public static Set<Characteristic> findPossibleCharacteristicsForOpcode(int opCode) {
+        Set<Characteristic> items = new HashSet<>();
+        for (Pair<Characteristic, Integer> entry : OPCODES.keySet()) {
+            if (entry.getRight().equals(opCode)) {
+                items.add(entry.getLeft());
+            }
+        }
+
+        return items;
+    }
+
+    public static Class<? extends Message> fromOpcode(int opCode, Characteristic characteristic) {
+        return OPCODES.get(Pair.of(characteristic, opCode));
     }
 
     private final int requestOpCode;
@@ -208,10 +229,10 @@ public enum Messages {
     private final int responseOpCode;
     private final Class<? extends Message> responseClass;
     Messages(Class<? extends Message> requestClass, Class<? extends Message> responseClass) {
-        this.requestOpCode = requestClass.getAnnotation(MessageProps.class).opCode();
         this.requestClass = requestClass;
-        this.responseOpCode = responseClass.getAnnotation(MessageProps.class).opCode();
+        this.requestOpCode = requestProps().opCode();
         this.responseClass = responseClass;
+        this.responseOpCode = responseProps().opCode();
     }
 
     public int requestOpCode() {
@@ -220,12 +241,18 @@ public enum Messages {
     public Class<? extends Message> requestClass() {
         return requestClass;
     }
+    public MessageProps requestProps() {
+        return requestClass.getAnnotation(MessageProps.class);
+    }
 
     public int responseOpCode() {
         return responseOpCode;
     }
     public Class<? extends Message> responseClass() {
         return responseClass;
+    }
+    public MessageProps responseProps() {
+        return responseClass.getAnnotation(MessageProps.class);
     }
 
     public Message request() {

@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.util.Set;
@@ -65,6 +66,10 @@ public abstract class Message {
     public MessageProps getRequestProps() {
         Preconditions.checkState(type() == MessageType.RESPONSE);
         return props().request().getAnnotation(MessageProps.class);
+    }
+
+    public Characteristic getCharacteristic() {
+        return props().characteristic();
     }
 
     public byte[] getCargo() {

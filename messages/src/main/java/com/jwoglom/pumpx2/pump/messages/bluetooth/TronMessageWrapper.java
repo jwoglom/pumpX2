@@ -68,6 +68,7 @@ public class TronMessageWrapper {
         }
         return PacketArrayList.build(
                 (byte) opCode,
+                message.getCharacteristic(),
                 (byte) size,
                 packets.get(0).transactionId(),
                 message.signed()

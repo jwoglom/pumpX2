@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.request.authentication;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 
@@ -14,6 +15,7 @@ import kotlin.collections.ArraysKt;
     opCode=16,
     size=10,
     type=MessageType.REQUEST,
+    characteristic=Characteristic.AUTHORIZATION,
     response=CentralChallengeResponse.class
 )
 public class CentralChallengeRequest extends Message {

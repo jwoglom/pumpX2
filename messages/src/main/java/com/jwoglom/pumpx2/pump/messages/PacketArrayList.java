@@ -1,6 +1,8 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -40,16 +42,12 @@ public class PacketArrayList {
     }
 
     // Returns either PacketArrayList or StreamPacketArrayList depending on the opcode
-    public static PacketArrayList build(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
-        Class<? extends Message> messageClass = Messages.OPCODES.get((int) expectedopCode);
-        try {
-            L.w(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
-            if (messageClass.newInstance().stream()) {
-                return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
-            }
-        } catch (IllegalAccessException|InstantiationException e) {
-            L.e(TAG, e);
-            e.printStackTrace();
+    public static PacketArrayList build(byte expectedopCode, Characteristic characteristic, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
+        Class<? extends Message> messageClass = Messages.fromOpcode(expectedopCode, characteristic);
+        L.w(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
+        MessageProps messageProps = messageClass.getAnnotation(MessageProps.class);
+        if (messageProps.stream()) {
+            return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
         }
 
         return new PacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);

@@ -10,7 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
@@ -34,7 +34,7 @@ public class HistoryLogMessageTester {
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) 0);
-        PumpResponseMessageEvent resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
+        PumpResponseMessage resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();

@@ -4,14 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.MessageType;
-import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
@@ -38,7 +35,7 @@ public class MessageTester {
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) txId);
-        PumpResponseMessageEvent resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
+        PumpResponseMessage resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
@@ -73,7 +70,7 @@ public class MessageTester {
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) txId);
-        PumpResponseMessageEvent resp = null;
+        PumpResponseMessage resp = null;
         PacketArrayList packetArrayList = null;
         for (byte[] read : initialReads) {
             // Use the same PacketArrayList between packets

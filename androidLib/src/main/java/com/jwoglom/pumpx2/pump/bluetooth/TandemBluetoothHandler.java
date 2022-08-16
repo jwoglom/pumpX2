@@ -14,7 +14,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
@@ -141,7 +141,7 @@ public class TandemBluetoothHandler {
                 }
 
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
-                PumpResponseMessageEvent response;
+                PumpResponseMessage response;
                 try {
                     response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
                 } catch (Exception e) {

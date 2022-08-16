@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
     variableSize=true,
     stream=true,
     type=MessageType.RESPONSE,
+    characteristic=Characteristic.HISTORY_LOG,
     request=NonexistentHistoryLogStreamRequest.class
 )
 public class HistoryLogStreamResponse extends Message {

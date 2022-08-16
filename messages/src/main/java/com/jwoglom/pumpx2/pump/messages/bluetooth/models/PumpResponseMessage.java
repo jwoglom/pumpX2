@@ -6,15 +6,15 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.util.Optional;
 
-public class PumpResponseMessageEvent {
+public class PumpResponseMessage {
     private final byte[] data;
     private final Optional<Message> message;
 
-    public PumpResponseMessageEvent(byte[] data) {
+    public PumpResponseMessage(byte[] data) {
         this.data = data;
         this.message = Optional.empty();
     }
-    public PumpResponseMessageEvent(byte[] data, Message message) {
+    public PumpResponseMessage(byte[] data, Message message) {
         this.data = data;
         this.message = Optional.of(message);
     }
@@ -28,6 +28,6 @@ public class PumpResponseMessageEvent {
     }
 
     public String toString() {
-        return "PumpResponseMessageEvent(data=" + Hex.encodeHexString(data) + ", message=" + message + ")";
+        return "PumpResponseMessage(data=" + Hex.encodeHexString(data) + ", message=" + message + ")";
     }
 }

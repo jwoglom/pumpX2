@@ -11,6 +11,9 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResp
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * TODO: refactor uses to {@link Characteristic}
+ */
 public class CharacteristicUUID {
     // For reading pump state
     public static final UUID CURRENT_STATUS_CHARACTERISTICS = UUID.fromString("7B83FFF6-9F77-4E5C-8064-AAE2C24838B9");

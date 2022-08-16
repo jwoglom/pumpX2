@@ -13,7 +13,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.BTProcessGattOperationEvent;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessageEvent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -41,7 +41,7 @@ public class BTResponseParserTest {
         byte[] initialResponse = Hex.decodeHex("000011001e01008c212d7a8fbda85f83a3440254488dfb561264ec840c4e16873046bc2c1a");
 
         TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0,1,2,3,4,5,6,7,8,9}), (byte) 0);
-        PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, initialResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
+        PumpResponseMessage response = BTResponseParser.parse(wrapper, initialResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
         L.w(TAG, "PumpResponseMessageEvent: "+response);
 
         assertTrue(response.message().isPresent());
@@ -90,7 +90,7 @@ public class BTResponseParserTest {
         byte[] read = Hex.decodeHex("000011001e01001f80d667645fe56c0d64575b9d07bb5f28392cab6079f224bf1aa8fd4359");
 
         TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0,1,2,3,4,5,6,7,8,9}), (byte) 0);
-        PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, read, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
+        PumpResponseMessage response = BTResponseParser.parse(wrapper, read, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
         L.w(TAG, "PumpResponseMessageEvent: "+response);
 
         assertTrue(response.message().isPresent());
@@ -223,7 +223,7 @@ public class BTResponseParserTest {
             byte[] centralChallengeResponse = Hex.decodeHex("000011001e01006b3ace31b3f24b8d424e13ebf9c344b31e44d26d37a5efcde10e7ec671cb");
 
             TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), (byte) 0);
-            PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, centralChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
+            PumpResponseMessage response = BTResponseParser.parse(wrapper, centralChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
             L.w(TAG, "PumpResponseMessageEvent: " + response);
 
             assertTrue(response.message().isPresent());
@@ -242,7 +242,7 @@ public class BTResponseParserTest {
             byte[] pumpChallengeResponse = Hex.decodeHex("0001130103010000c9dc");
 
             TronMessageWrapper wrapper = new TronMessageWrapper(new PumpChallengeRequest(0, new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), (byte) 1);
-            PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, pumpChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
+            PumpResponseMessage response = BTResponseParser.parse(wrapper, pumpChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
             L.w(TAG, "PumpResponseMessageEvent: " + response);
 
             assertTrue(response.message().isPresent());

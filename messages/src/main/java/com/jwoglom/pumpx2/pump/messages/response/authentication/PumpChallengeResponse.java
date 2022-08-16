@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 
@@ -13,6 +14,7 @@ import kotlin.collections.ArraysKt;
     opCode=19,
     size=3,
     type=MessageType.RESPONSE,
+    characteristic=Characteristic.AUTHORIZATION,
     request=PumpChallengeRequest.class
 )
 // aka AuthenticationStatusResponse
