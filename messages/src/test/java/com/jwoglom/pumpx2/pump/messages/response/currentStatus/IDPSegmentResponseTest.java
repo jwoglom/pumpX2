@@ -163,38 +163,16 @@ public class IDPSegmentResponseTest {
         assertEquals(ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
     }
 
-    @Test
-    public void testIDPSegmentResponse_Profile1_Noon_All() throws DecoderException {
-        // Response to IDPSegmentRequest(1, 1)
-        // second IDP profile, second index
-        // 12pm: 0.40u/hr Basal, 1:66 correct, 1:66 carb, 140 target BG
-        IDPSegmentResponse expected = new IDPSegmentResponse(
-                // int idpId, int segmentIndex, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int status
-                1, 1, 720, 400, 66000, 140, 66, 15
-        );
-
-        IDPSegmentResponse parsedRes = (IDPSegmentResponse) MessageTester.test(
-                "000843080f01000000c800b8820100820063000fcf7c",
-                8,
-                2,
-                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
-                expected
-        );
-
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
-    }
-
     // Response to IDPSegmentRequest(1, 2) when there are only 2 IDP segments (e.g. an invalid entry)
     // is ErrorResponse[errorCode=UNDEFINED_ERROR,errorCodeId=0]
 
 
     @Test
     public void testIDPSegmentStatus() {
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.BASAL_RATE) & 1) != 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CARB_RATIO) & 2) != 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.TARGET_BG) & 4) != 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CORRECTION_FACTOR) & 8) != 0);
+        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.BASAL_RATE) & 1) == 0);
+        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CARB_RATIO) & 2) == 0);
+        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.TARGET_BG) & 4) == 0);
+        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CORRECTION_FACTOR) & 8) == 0);
 
         assertEquals(IDPSegmentStatus.fromBitmask(1), ImmutableSet.of(IDPSegmentStatus.BASAL_RATE));
         assertEquals(IDPSegmentStatus.fromBitmask(2), ImmutableSet.of(IDPSegmentStatus.CARB_RATIO));

@@ -78,19 +78,26 @@ public class PacketArrayList {
         byte[] a = Bytes.calculateCRC16(this.messageData);
         byte[] lastTwoB = this.expectedCrc;
         boolean ok = true;
+
+//        if (1 == 1) {
+//            return ok; // TODO: REMOVE
+//        }
+
+
         if (!(a[0] == lastTwoB[0] && a[1] == lastTwoB[1])) {
             ok = false;
         }
         if (!ok) {
-            throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode));
+            throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB));
         } else if (this.isSigned) {
             L.w(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = CollectionsKt.toByteArray(ArraysKt.dropLast(this.messageData, 20));
             byte[] bArr2 = this.messageData;
-            byte[] byteArray2 = CollectionsKt.toByteArray(ArraysKt.drop(bArr2, bArr2.length - 20));
+            byte[] expectedHmac = CollectionsKt.toByteArray(ArraysKt.drop(bArr2, bArr2.length - 20));
             byte[] bytes = str.getBytes(Charsets.UTF_8);
             Intrinsics.checkExpressionValueIsNotNull(bytes, "(this as java.lang.String).getBytes(charset)");
-            if (!Arrays.equals(byteArray2, Packetize.doHmacSha1(byteArray, bytes))) {
+            byte[] hmacSha = Packetize.doHmacSha1(byteArray, bytes);
+            if (!Arrays.equals(expectedHmac, hmacSha)) {
                 throw new RuntimeException("Pump response invalid: SIGNATURE");
                 //return false;
             }
@@ -109,6 +116,7 @@ public class PacketArrayList {
     protected void parse(byte[] bArr) {
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
+        // ErrorResponse handling. Can have a dynamic cargo size in different situations.
         if (77 == opCode && 2 == cargoSize) {
             this.expectedOpCode = 77;
             this.expectedCargoSize = 2;
@@ -134,6 +142,7 @@ public class PacketArrayList {
         } else {
             throw new IllegalArgumentException("Unexpected opCode: " + ((int) opCode) + ", expecting " + ((int) this.expectedOpCode));
         }
+        L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
     }
 
     public void validatePacket(byte[] packetData) {
@@ -165,6 +174,7 @@ public class PacketArrayList {
                 }
                 this.empty = false;
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
+                L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);
                 return;
             }
             throw new IllegalArgumentException("Unexpected transaction ID 1: " + ((int) secondByte) + ", expecting " + ((int) this.expectedTxId) + ", opCode: " + ((int) this.expectedOpCode));

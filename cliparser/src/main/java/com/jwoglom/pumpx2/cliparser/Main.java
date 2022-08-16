@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -19,11 +20,13 @@ import org.apache.commons.codec.binary.Hex;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Main {
     private static final String TAG = "CLIParser";
@@ -48,12 +51,17 @@ public class Main {
 
         String filename;
         List<String> lines;
+        String[] extra = new String[0];
+        if (args.length >= 2) {
+            extra = Arrays.copyOfRange(args, 2, args.length);
+        }
+
         switch (args[0].toLowerCase(Locale.ROOT)) {
             case "opcode":
                 System.out.println(parseOpcode(args[1]));
                 break;
             case "parse":
-                System.out.println(parseFull(args[1]));
+                System.out.println(parseFull(args[1], extra));
                 break;
             case "bulkopcode":
                 filename = args[1];
@@ -71,7 +79,7 @@ public class Main {
                 break;
             case "read":
             case "write":
-                System.out.println(parse(args[1]));
+                System.out.println(parse(args[1], extra));
                 break;
         }
     }
@@ -93,7 +101,8 @@ public class Main {
         int opCode = initialRead[2];
         Message message = null;
         try {
-            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);            if (possibilities.size() > 1) {
+            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
+            if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
@@ -123,10 +132,11 @@ public class Main {
         return opCode+"\t"+message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
     }
 
-    public static String parseFull(String rawHex) throws DecoderException {
+    public static String parseFull(String rawHex, String ...extra) throws DecoderException {
         String ret = parseOpcode(rawHex);
+        System.err.println("parse with "+rawHex+" "+ String.join(",", extra));
         try {
-            Message message = parse(rawHex);
+            Message message = parse(rawHex, extra);
             return ret+"\t"+message.toString();
         } catch (Exception e) {
             return ret+"\t"+e.toString();
@@ -134,7 +144,7 @@ public class Main {
     }
 
     @SuppressWarnings("deprecation")
-    public static Message parse(String rawHex) throws DecoderException {
+    public static Message parse(String rawHex, String ...extra) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
         int txId = initialRead[1];
         int opCode = initialRead[2];
@@ -170,21 +180,29 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            return testRequest(rawHex, txId, message);
+            return testRequest(rawHex, txId, message, extra);
         } catch (IllegalStateException e) {
             System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
         }
     }
 
-    public static Message testRequest(String rawHex, int txId, Message expected) throws DecoderException {
+    public static Message testRequest(String rawHex, int txId, Message expected, String ...extraRawHex) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
 
         UUID uuid = CharacteristicUUID.determine(expected);
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) txId);
-        PumpResponseMessage resp = BTResponseParser.parse(tron, initialRead, messageType, uuid);
+        PacketArrayList packetArrayList = tron.buildPacketArrayList(messageType);
+        PumpResponseMessage resp = BTResponseParser.parse(tron.message(), packetArrayList, initialRead, uuid);
+
+        for (String exRawHex : extraRawHex) {
+            System.err.print("extraRawHex: "+exRawHex);
+            byte[] nextRead = Hex.decodeHex(exRawHex);
+            resp = BTResponseParser.parse(tron.message(), packetArrayList, nextRead, uuid);
+        }
+
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         if (!resp.message().isPresent()) {

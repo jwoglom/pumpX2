@@ -104,6 +104,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ChangeCartridgeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -167,6 +169,7 @@ public enum Messages {
     IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),
     CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),
     INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),
+    BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),
     // MESSAGES_END
     ;
 

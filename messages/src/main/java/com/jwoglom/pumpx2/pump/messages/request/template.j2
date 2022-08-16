@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.request.{{cat}};
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -11,6 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.response.{{cat}}.{{responseName}};
     opCode={{requestOpcode}},
     size={{requestSize}},
     type=MessageType.REQUEST,
+    characteristic=Characteristic.{{catUuid}},
     response={{responseName}}.class
 )
 public class {{requestName}} extends Message { {% for arg in requestArgs %}

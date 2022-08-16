@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.collect.Lists;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -20,8 +21,20 @@ public class Packetize {
     public static final String TAG = "X2-Packetize";
     public static TransactionId txId = new TransactionId();
 
+    public static final int DEFAULT_MAX_CHUNK_SIZE = 18; // This was observed for currentStatus. It may be 40 for control.
+    public static final int CONTROL_MAX_CHUNK_SIZE = 40; // this is a guess, it works for control.BolusPermissionResponse. maybe it should actually be 20?
+
+    private static int determineMaxChunkSize(Message message) {
+        if (message.getCharacteristic().equals(Characteristic.CONTROL) && message.type().equals(MessageType.REQUEST)) {
+            L.d(TAG, "using maxChunkSize="+CONTROL_MAX_CHUNK_SIZE+" for control request characteristic");
+            return CONTROL_MAX_CHUNK_SIZE;
+        }
+
+        return DEFAULT_MAX_CHUNK_SIZE;
+    }
+
     public static List<Packet> packetize(Message message, String authenticationKey, byte currentTxId) {
-        return packetize(message, authenticationKey, currentTxId, 18);
+        return packetize(message, authenticationKey, currentTxId, determineMaxChunkSize(message));
     }
 
     public static List<Packet> packetize(Message message, String authenticationKey, byte currentTxId, int maxChunkSize) {
@@ -36,7 +49,7 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
-        L.w(TAG, "packetize signed "+message.signed()+" authenticationKey=" + authenticationKey);
+        L.w(TAG, "packetize signed "+message.signed());
         if (message.signed()) {
             long pumpStateTimeSinceReset = PumpStateSupplier.pumpTimeSinceReset.get();
             L.w(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);

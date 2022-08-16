@@ -8,6 +8,8 @@ import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE2_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_INVALID_CHALLENGE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.UPDATE_TEXT_RECEIVER;
+import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.authenticationKey;
+import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.pumpTimeSinceReset;
 import static java.util.stream.Collectors.toList;
 
 import android.Manifest;
@@ -245,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
 
             statusText.setText("Connected to pump!");
             statusText.postInvalidate();
+
+            Timber.i("CONNECTED: PUMP_AUTHENTICATION_KEY=" + authenticationKey.get() + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
 
             requestMessageSpinner.setVisibility(View.VISIBLE);
             requestMessageSpinner.postInvalidate();

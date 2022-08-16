@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Creates Java files for request, response messages and unit tests based on templates
+
 import jinja2
 from pprint import pprint
 import json

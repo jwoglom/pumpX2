@@ -45,6 +45,13 @@ for rline in reader:
             packets.append(['WRITE', [value] + currentWrite])
             currentWrite = []
 
+if currentRead:
+    packets.append(['READ', currentRead])
+if currentWrite:
+    packets.append(['WRITE', currentWrite])
+
+
+
 f = tempfile.NamedTemporaryFile(delete=False)
 for packet in packets:
     type, group = packet
