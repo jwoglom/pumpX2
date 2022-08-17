@@ -58,8 +58,9 @@ public class MessageTester {
 
         assertEquals("expected packet size", expectedPackets, tron.packets().size());
 
-        // BUG: for control signed requests this fails
-        //
+        // BUG: for control signed requests this fails.
+        // we are expecting 01TXOP??18 (0x18 = 24, the size of the request)
+        // but is 00TXOP??30 (0x30 = 48, double) with a much longer length
         if (!(parsedMessage instanceof BolusPermissionRequest) && !(parsedMessage instanceof InitiateBolusRequest)) {
             Packet mergedPackets = tron.mergeIntoSinglePacket();
             byte[] mergedPacketsBytes = mergedPackets.build();
@@ -118,5 +119,17 @@ public class MessageTester {
         assertNotNull("first byte[] is null", a);
         assertNotNull("second byte[] is null", b);
         assertEquals(Hex.encodeHexString(a), Hex.encodeHexString(b));
+    }
+
+    public static void guessCargo(Message message) {
+        byte[] cargo = message.getCargo();
+        int max = message.props().size();
+        for (int i=0; i<max; i++) {
+            System.out.print(i+" "+cargo[i]+"\t");
+            if (i+4 <= max) {System.out.print("uint32: "+Bytes.readUint32(cargo, i)+"\t");}
+            if (i+2 <= max) {System.out.print("short: "+Bytes.readShort(cargo,i)+"\t");}
+            if (i+4 <= max) {System.out.print("float: "+Bytes.readFloat(cargo, i)+"\t");}
+            System.out.println();
+        }
     }
 }

@@ -9,8 +9,6 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 
-import java.math.BigInteger;
-
 @MessageProps(
     opCode=-93,
     size=30,
@@ -24,15 +22,15 @@ public class BolusPermissionResponse extends Message {
     
     private int status;
     private int bolusId;
-    private int nackReason;
+    private int nackReasonId;
     
     public BolusPermissionResponse() {}
     
-    public BolusPermissionResponse(int status, int bolusId, int nackReason) {
-        this.cargo = buildCargo(status, bolusId, nackReason);
+    public BolusPermissionResponse(int status, int bolusId, int nackReasonId) {
+        this.cargo = buildCargo(status, bolusId, nackReasonId);
         this.status = status;
         this.bolusId = bolusId;
-        this.nackReason = nackReason;
+        this.nackReasonId = nackReasonId;
         
     }
 
@@ -41,7 +39,7 @@ public class BolusPermissionResponse extends Message {
         this.cargo = raw;
         this.status = raw[0];
         this.bolusId = Bytes.readShort(raw, 1);
-        this.nackReason = raw[5];
+        this.nackReasonId = raw[5];
         
     }
 
@@ -60,8 +58,35 @@ public class BolusPermissionResponse extends Message {
     public int getBolusId() {
         return bolusId;
     }
-    public int getNackReason() {
-        return nackReason;
+    public int getNackReasonId() {
+        return nackReasonId;
+    }
+
+    public NackReason getNackReason() {
+        return NackReason.fromId(nackReasonId);
+    }
+
+    public enum NackReason {
+        PERMISSION_GRANTED(0),
+        INVALID_PUMPING_STATE(1),
+        PUMP_HAS_PERMISSION(3),
+        MPP_STATE_WAITING_FOR_RESPONSE(-1),
+        MPP_STATE_UNKNOWN_NACK_REASON(-3),
+
+        ;
+        private int id;
+        NackReason(int id) {
+            this.id = id;
+        }
+
+        public static NackReason fromId(int id) {
+            for (NackReason r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
     }
     
 }

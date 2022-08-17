@@ -50,6 +50,16 @@ public class PumpState {
     public static Long getPumpTimeSinceReset() {
         return pumpTimeSinceReset;
     }
+
+
+    /**
+     * @return the pumpTimeSinceReset we would expect the pump to have right now
+     * given when it was last fetched
+     */
+    public static Long getAdjustedPumpTimeSinceReset() {
+        return pumpTimeSinceReset + (System.currentTimeMillis() - selfTimeSinceReset)/1000;
+    }
+
     public static void setPumpTimeSinceReset(long time) {
         pumpTimeSinceReset = time;
         selfTimeSinceReset = System.currentTimeMillis();

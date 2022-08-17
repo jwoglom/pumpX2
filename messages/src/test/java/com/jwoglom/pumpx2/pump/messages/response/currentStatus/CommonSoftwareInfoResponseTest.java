@@ -6,10 +6,12 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CommonSoftwareInfoResponseTest {
     @Test
+    @Ignore("needs example")
     public void testCommonSoftwareInfoResponse() throws DecoderException { 
         CommonSoftwareInfoResponse expected = new CommonSoftwareInfoResponse(
             // int appSoftwareVersion, long appSoftwarePartNumber, long appSoftwareDashNumber, long appSoftwarePartRevisionNumber, int bootloaderVersion, long bootloaderPartNumber, long bootloaderPartDashNumber, long bootloaderPartRevisionNumber

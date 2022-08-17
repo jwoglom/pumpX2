@@ -36,7 +36,7 @@ public class PumpChallengeResponse extends Message {
     }
 
     public static byte[] buildCargo(int appInstanceId, boolean success) {
-        return ArraysKt.plus(Bytes.firstTwoBytesLittleEndian(appInstanceId), new byte[]{(byte)(success ? 1 : 0)});
+        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), new byte[]{(byte)(success ? 1 : 0)});
     }
 
     public int getAppInstanceId() {

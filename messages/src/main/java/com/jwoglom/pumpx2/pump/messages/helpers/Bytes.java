@@ -7,13 +7,39 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import kotlin.UByte;
 import kotlin.collections.ArraysKt;
 import kotlin.text.Charsets;
 
 public class Bytes {
+
+    public static byte[] dropFirstN(byte[] bytes, int n) {
+        byte[] ret = new byte[bytes.length - n];
+        for (int i=0; i < bytes.length - n; i++) {
+            ret[i] = bytes[i+n];
+        }
+        return ret;
+    }
+
+    public static byte[] dropLastN(byte[] bytes, int n) {
+        byte[] ret = new byte[bytes.length - n];
+        for (int i=0; i < bytes.length - n; i++) {
+            ret[i] = bytes[i];
+        }
+        return ret;
+    }
+
+    public static byte[] reverse(byte[] bytes) {
+        byte[] ret = new byte[bytes.length];
+        for (int i=0; i<bytes.length; i++) {
+            ret[i] = bytes[bytes.length - 1 - i];
+        }
+        return ret;
+    }
 
     public static byte[] combine(byte[] ...items) {
         int sum = 0;
@@ -73,7 +99,7 @@ public class Bytes {
         if (i >= 0) {
             int i2 = i + 7;
             if (i2 < bArr.length) {
-                return new BigInteger(1, ArraysKt.reversedArray(Arrays.copyOfRange(bArr, i, i + 8)));
+                return new BigInteger(1, Bytes.reverse(Arrays.copyOfRange(bArr, i, i + 8)));
             }
             throw new ArrayIndexOutOfBoundsException(i2);
         }

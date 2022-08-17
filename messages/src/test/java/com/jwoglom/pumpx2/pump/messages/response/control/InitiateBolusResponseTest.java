@@ -52,7 +52,7 @@ public class InitiateBolusResponseTest {
 
         InitiateBolusResponse parsedRes = (InitiateBolusResponse) MessageTester.test(
                 "003e9f3e1e009c29000000e64a831b494e667a54ee8b35042d93ad4af8c612963d76b86f60",
-                57,
+                62,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

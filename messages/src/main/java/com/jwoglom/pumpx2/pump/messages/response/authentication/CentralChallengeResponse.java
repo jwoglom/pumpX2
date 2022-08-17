@@ -42,7 +42,7 @@ public class CentralChallengeResponse extends Message {
     }
 
     public static byte[] buildCargo(int byte0short, byte[] bytes2to22, byte[] bytes22to30) {
-        return ArraysKt.plus(Bytes.firstTwoBytesLittleEndian(byte0short), ArraysKt.plus(bytes2to22, bytes22to30));
+        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), Bytes.combine(bytes2to22, bytes22to30));
     }
 
     public int getAppInstanceId() {

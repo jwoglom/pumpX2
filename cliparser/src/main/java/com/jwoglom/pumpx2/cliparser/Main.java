@@ -12,6 +12,8 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
@@ -20,6 +22,7 @@ import org.apache.commons.codec.binary.Hex;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -63,6 +66,9 @@ public class Main {
                 break;
             case "parse":
                 System.out.println(parseFull(args[1], extra));
+                break;
+            case "guesscargo":
+                System.out.println(parseGuessCargo(args[1], extra));
                 break;
             case "bulkopcode":
                 filename = args[1];
@@ -137,6 +143,31 @@ public class Main {
         }
     }
 
+    public static String parseGuessCargo(String rawHex, String ...extra) throws DecoderException {
+        String ret = parseOpcode(rawHex);
+        System.err.println("parse with "+rawHex+" "+ String.join(",", extra));
+        try {
+            Message message = parse(rawHex, extra);
+            return guessCargo(message);
+        } catch (Exception e) {
+            return ret+"\t"+e.toString();
+        }
+    }
+
+    public static String guessCargo(Message message) {
+        byte[] cargo = message.getCargo();
+        int max = message.props().size();
+        String ret = "";
+        for (int i=0; i<max; i++) {
+            ret += (i+" "+cargo[i]+"\t");
+            if (i+4 <= max) {ret += ("uint32: "+ Bytes.readUint32(cargo, i)+"\t");}
+            if (i+2 <= max) {ret += ("short: "+Bytes.readShort(cargo,i)+"\t");}
+            if (i+4 <= max) {ret += ("float: "+Bytes.readFloat(cargo, i)+"\t");}
+            ret += "\n";
+        }
+        return ret;
+    }
+
     @SuppressWarnings("deprecation")
     public static Message parse(String rawHex, String ...extra) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
@@ -201,6 +232,38 @@ public class Main {
 
         if (!resp.message().isPresent()) {
             System.err.print("Message not fully formed");
+
+            // Hack to split messages which contain two packets into individual packets for parsing
+            if (!rawHex.substring(0, 2).equals("00") && extraRawHex.length == 0) {
+                String op = rawHex.substring(2, 4);
+                int num = Integer.parseInt(rawHex.substring(0, 2), 16);
+                List<String> messages = new ArrayList<>();
+                String remainder = rawHex;
+                System.err.println("rawHex: "+remainder);
+                for (int i=num-1; i>=0; i--) {
+                    System.err.println("i="+i+" num="+num);
+                    String spl = Integer.toHexString(i) + op;
+                    if (spl.length() == 3) {
+                        spl = "0"+spl;
+                    }
+                    System.err.println("spl:"+spl);
+                    String[] split = remainder.split(spl);
+                    messages.add(split[0]);
+                    System.err.println("messages:"+messages);
+                    if (split.length > 1) {
+                        remainder = spl + split[1];
+                    } else {
+                        remainder = "";
+                    }
+                    System.err.println("remainder: "+remainder);
+                }
+                if (!remainder.isEmpty()) {
+                    messages.add(remainder);
+                }
+                String firstRawHex = messages.remove(0);
+                String[] newExtra = messages.toArray(new String[0]);
+                return testRequest(firstRawHex, txId, expected, newExtra);
+            }
             return null;
         }
         Message parsedMessage = resp.message().get();
@@ -209,6 +272,11 @@ public class Main {
 
         int numPackets = tron.packets().size();
         byte[] mergedPackets = tron.mergeIntoSinglePacket().build();
+
+        if (parsedMessage instanceof TimeSinceResetResponse) {
+            TimeSinceResetResponse tsr = (TimeSinceResetResponse) parsedMessage;
+            PumpStateSupplier.pumpTimeSinceReset = tsr::getPumpTimeSeconds;
+        }
 
         return parsedMessage;
     }

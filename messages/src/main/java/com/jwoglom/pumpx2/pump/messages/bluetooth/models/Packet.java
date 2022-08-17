@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth.models;
 
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+
 import kotlin.collections.ArraysKt;
 
 public class Packet {
@@ -30,7 +32,7 @@ public class Packet {
     }
 
     public Packet merge(Packet newPacket) {
-        return new Packet(newPacket.packetsRemaining, transactionId, ArraysKt.plus(this.internalCargo, newPacket.internalCargo));
+        return new Packet(newPacket.packetsRemaining, transactionId, Bytes.combine(this.internalCargo, newPacket.internalCargo));
     }
 
 }

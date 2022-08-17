@@ -35,13 +35,13 @@ public class StreamPacketArrayList extends PacketArrayList {
                 } else if (((byte) 0) == firstByteMod15) {
                     L.w(TAG, "firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
-                        this.fullCargo = ArraysKt.plus(this.fullCargo, CollectionsKt.toByteArray(ArraysKt.drop(packetData, 2)));
+                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
                         L.w(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
-                    this.fullCargo = ArraysKt.plus(this.fullCargo, CollectionsKt.toByteArray(ArraysKt.drop(packetData, 2)));
+                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
                     L.w(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
@@ -76,7 +76,7 @@ public class StreamPacketArrayList extends PacketArrayList {
             } else if (cargoSize <= 255) {
                 byte numHistoryLogs = bArr[5];
                 if (cargoSize == (numHistoryLogs*26) + 2) {
-                    this.fullCargo = CollectionsKt.toByteArray(ArraysKt.drop(bArr, 5));
+                    this.fullCargo = Bytes.dropFirstN(bArr, 5);
                     this.empty = false;
                     return;
                 }

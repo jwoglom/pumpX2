@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 
-import java.math.BigInteger;
-
 @MessageProps(
     opCode=-87,
     size=5,
@@ -21,16 +19,16 @@ public class BolusPermissionChangeReasonResponse extends Message {
     
     private int bolusId;
     private boolean isAcked;
-    private int lastChangeReason;
+    private int lastChangeReasonId;
     private boolean currentPermissionHolder;
     
     public BolusPermissionChangeReasonResponse() {}
     
-    public BolusPermissionChangeReasonResponse(int bolusId, boolean isAcked, int lastChangeReason, boolean currentPermissionHolder) {
-        this.cargo = buildCargo(bolusId, isAcked, lastChangeReason, currentPermissionHolder);
+    public BolusPermissionChangeReasonResponse(int bolusId, boolean isAcked, int lastChangeReasonId, boolean currentPermissionHolder) {
+        this.cargo = buildCargo(bolusId, isAcked, lastChangeReasonId, currentPermissionHolder);
         this.bolusId = bolusId;
         this.isAcked = isAcked;
-        this.lastChangeReason = lastChangeReason;
+        this.lastChangeReasonId = lastChangeReasonId;
         this.currentPermissionHolder = currentPermissionHolder;
         
     }
@@ -40,7 +38,7 @@ public class BolusPermissionChangeReasonResponse extends Message {
         this.cargo = raw;
         this.bolusId = Bytes.readShort(raw, 0);
         this.isAcked = raw[2] != 0;
-        this.lastChangeReason = raw[3];
+        this.lastChangeReasonId = raw[3];
         this.currentPermissionHolder = raw[4] != 0;
         
     }
@@ -60,11 +58,40 @@ public class BolusPermissionChangeReasonResponse extends Message {
     public boolean getIsAcked() {
         return isAcked;
     }
-    public int getLastChangeReason() {
-        return lastChangeReason;
+    public int getLastChangeReasonId() {
+        return lastChangeReasonId;
+    }
+    public ChangeReason getLastChangeReason() {
+        return ChangeReason.fromId(lastChangeReasonId);
     }
     public boolean getCurrentPermissionHolder() {
         return currentPermissionHolder;
     }
-    
+
+    public enum ChangeReason {
+        GRANTED(0),
+        RELEASED(1),
+        REVOKED_PRIORITY(2),
+        REVOKED_TIMEOUT(3),
+        REVOKED_SETTINGS_CHANGED(4),
+        REVOKED_PUMP_SUSPEND(5),
+        REVOKED_INVALID_REQUEST(6),
+        UNKNOWN(7),
+        ;
+        private final int id;
+        ChangeReason(int id) {
+            this.id = id;
+        }
+
+        public int getId() { return id; }
+
+        public static ChangeReason fromId(int id) {
+            for (ChangeReason r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
+    }
 }

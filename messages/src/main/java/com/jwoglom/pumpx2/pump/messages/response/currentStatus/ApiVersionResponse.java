@@ -30,7 +30,7 @@ public class ApiVersionResponse extends Message {
 
     private static byte[] buildCargo(int majorVersion, int minorVersion) {
         byte[] cargo = new byte[4];
-        System.arraycopy(ArraysKt.plus(
+        System.arraycopy(Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(majorVersion),
                 Bytes.firstTwoBytesLittleEndian(minorVersion)), 0, cargo, 0, 4);
 

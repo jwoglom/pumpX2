@@ -7,10 +7,12 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CommonSoftwareInfoRequestTest {
     @Test
+    @Ignore("needs example")
     public void testCommonSoftwareInfoRequest() throws DecoderException {
         // empty cargo
         CommonSoftwareInfoRequest expected = new CommonSoftwareInfoRequest();

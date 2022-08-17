@@ -44,7 +44,7 @@ public class ErrorResponse extends Message {
         errorCodeId = raw[1];
         errorCode = ErrorCode.fromByte(errorCodeId);
         if (raw.length > 2) {
-            remainingBytes = CollectionsKt.toByteArray(ArraysKt.drop(raw, 2));
+            remainingBytes = Bytes.dropFirstN(raw, 2);
         }
         cargo = raw;
     }

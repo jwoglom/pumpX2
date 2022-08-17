@@ -48,6 +48,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
+import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
@@ -70,6 +71,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -275,6 +277,11 @@ public class MainActivity extends AppCompatActivity {
                     } else if (className.equals(InitiateBolusRequest.class.getName())) {
                         triggerInitiateBolusRequestDialog(peripheral);
                         return;
+                    } else if (className.equals(BolusPermissionRequest.class.getName())) {
+                        //writePumpMessage(new BolusPermissionRequest(PumpState.getAdjustedPumpTimeSinceReset(), new byte[20]), peripheral);
+                        writePumpMessage(new BolusPermissionRequest(PumpState.getAdjustedPumpTimeSinceReset(), new byte[]{
+                                -26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35}), peripheral);
+                        return;
                     }
 
                     Class<?> clazz = Class.forName(className);
@@ -456,7 +463,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Adds the given pump message to the BT device's characteristic write queue.
     private void writePumpMessage(Message message, BluetoothPeripheral peripheral) {
-        ArrayList<byte[]> authBytes = new ArrayList<>();
+        ArrayList<byte[]> bytes = new ArrayList<>();
         {
             byte currentTxId = Packetize.txId.get();
             PumpState.pushRequestMessage(message, currentTxId);
@@ -464,15 +471,19 @@ public class MainActivity extends AppCompatActivity {
             Packetize.txId.increment();
 
             for (Packet packet : wrapper.packets()) {
-                authBytes.add(packet.build());
+                bytes.add(packet.build());
             }
         }
 
-        for (byte[] b : authBytes) {
+        int c = 1;
+        for (byte[] b : bytes) {
+            UUID uuid = CharacteristicUUID.determine(message);
+            Timber.d("Writing "+c+"/"+bytes.size()+" characteristics to " + CharacteristicUUID.which(uuid) + ": " + Hex.encodeHexString(b));
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
-                    CharacteristicUUID.determine(message),
+                    uuid,
                     b,
                     WriteType.WITH_RESPONSE);
+            c++;
         }
     }
 

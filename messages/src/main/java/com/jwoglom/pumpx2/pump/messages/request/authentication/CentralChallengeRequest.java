@@ -40,7 +40,7 @@ public class CentralChallengeRequest extends Message {
 
     private static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {
         byte[] cargo = new byte[10];
-        System.arraycopy(ArraysKt.plus(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge), 0, cargo, 0, 10);
+        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge), 0, cargo, 0, 10);
 
         return cargo;
     }

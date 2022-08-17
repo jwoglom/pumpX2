@@ -88,9 +88,9 @@ public class PacketArrayList {
             throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
         } else if (this.isSigned) {
             L.w(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
-            byte[] byteArray = CollectionsKt.toByteArray(ArraysKt.dropLast(this.messageData, 20));
+            byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
             byte[] bArr2 = this.messageData;
-            byte[] expectedHmac = CollectionsKt.toByteArray(ArraysKt.drop(bArr2, bArr2.length - 20));
+            byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
             byte[] bytes = str.getBytes(Charsets.UTF_8);
             Intrinsics.checkExpressionValueIsNotNull(bytes, "(this as java.lang.String).getBytes(charset)");
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, bytes);
@@ -107,7 +107,7 @@ public class PacketArrayList {
         bArr[0] = this.expectedOpCode;
         bArr[1] = this.expectedTxId;
         bArr[2] = this.expectedCargoSize;
-        this.messageData = ArraysKt.plus(bArr, CollectionsKt.toByteArray(ArraysKt.dropLast(this.fullCargo, 2)));
+        this.messageData = Bytes.combine(bArr, Bytes.dropLastN(this.fullCargo, 2));
     }
 
     protected void parse(byte[] bArr) {
@@ -132,7 +132,7 @@ public class PacketArrayList {
             } else if (cargoSize != this.expectedCargoSize) {
                 throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
             } else if (cargoSize <= 255) {
-                this.fullCargo = CollectionsKt.toByteArray(ArraysKt.drop(bArr, 5));
+                this.fullCargo = Bytes.dropFirstN(bArr, 5);
             } else {
                 throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
             }
@@ -158,13 +158,13 @@ public class PacketArrayList {
                 } else if (((byte) 0) == firstByteMod15) {
                     L.w(TAG, "firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
-                        this.fullCargo = ArraysKt.plus(this.fullCargo, CollectionsKt.toByteArray(ArraysKt.drop(packetData, 2)));
+                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
                         L.w(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
-                    this.fullCargo = ArraysKt.plus(this.fullCargo, CollectionsKt.toByteArray(ArraysKt.drop(packetData, 2)));
+                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
                     L.w(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));

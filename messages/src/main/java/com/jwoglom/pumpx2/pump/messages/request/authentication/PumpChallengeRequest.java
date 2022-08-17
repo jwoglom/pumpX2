@@ -41,7 +41,7 @@ public class PumpChallengeRequest extends Message {
 
     private static byte[] buildCargo(int appInstanceId, byte[] pumpChallengeHash) {
         byte[] cargo = new byte[22];
-        System.arraycopy(ArraysKt.plus(Bytes.firstTwoBytesLittleEndian(appInstanceId), pumpChallengeHash), 0, cargo, 0, 22);
+        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), pumpChallengeHash), 0, cargo, 0, 22);
 
         return cargo;
     }

@@ -67,7 +67,8 @@ public class CGMHistoryLog extends HistoryLog {
             Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue), 
             Bytes.toUint32(timeStampSeconds), 
             Bytes.firstTwoBytesLittleEndian(egvInfoBitmask), 
-            new byte[]{ (byte) interval });
+            new byte[]{ (byte) interval },
+            new byte[]{ 1 }); // missing param?
     }
     
     public int getGlucoseValueStatus() {
