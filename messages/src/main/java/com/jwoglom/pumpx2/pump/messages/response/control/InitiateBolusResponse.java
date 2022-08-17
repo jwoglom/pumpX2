@@ -59,6 +59,6 @@ public class InitiateBolusResponse extends Message {
     }
     public int getStatusType() {
         return statusType;
-    }
+    } // 0 = successBolusIsPending
     
 }

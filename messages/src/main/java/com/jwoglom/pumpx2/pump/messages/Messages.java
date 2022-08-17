@@ -106,6 +106,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CommonSoftwareInfoResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -170,6 +172,7 @@ public enum Messages {
     CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),
     INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),
     BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),
+    COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),
     // MESSAGES_END
     ;
 

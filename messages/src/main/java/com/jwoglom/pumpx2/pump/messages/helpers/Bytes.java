@@ -96,6 +96,9 @@ public class Bytes {
         return bArr;
     }
 
+    /**
+     * The corollary of readShort()
+     */
     public static byte[] firstTwoBytesLittleEndian(int i) {
         byte[] bytes = new byte[4];
         ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).putInt(i & 0x0000ffff);

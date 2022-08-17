@@ -48,11 +48,13 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
+import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
@@ -269,6 +271,9 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     } else if (className.equals(HistoryLogRequest.class.getName())) {
                         triggerHistoryLogRequestDialog(peripheral);
+                        return;
+                    } else if (className.equals(InitiateBolusRequest.class.getName())) {
+                        triggerInitiateBolusRequestDialog(peripheral);
                         return;
                     }
 
@@ -722,6 +727,85 @@ public class MainActivity extends AppCompatActivity {
                         Timber.i("idp segment: %s", maxLogs);
 
                         writePumpMessage(new HistoryLogRequest(Integer.parseInt(startLog), Integer.parseInt(maxLogs)), peripheral);
+                    }
+                });
+                builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder2.show();
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void triggerInitiateBolusRequestDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter units to deliver bolus");
+        builder.setMessage("Enter the number of units in INTEGER FORM: 1000 = 1 unit, 100 = 0.1 unit, 10 = 0.01 unit. Minimum value is 50 (0.05 unit)");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String numUnitsStr = input1.getText().toString();
+                Timber.i("numUnits: %s", numUnitsStr);
+
+                if ("".equals(numUnitsStr)) {
+                    Timber.e("Not delivering bolus because no units entered.");
+                    return;
+                }
+
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+                builder2.setTitle("CONFIRM BOLUS!!");
+                builder2.setMessage("Enter the current IOB of the pump in INTEGER FORM from ControlIQIOBRequest. THIS WILL ACTUALLY DELIVER THE BOLUS. Enter a blank value to cancel.");
+
+                final EditText input2 = new EditText(context);
+                input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+                builder2.setView(input2);
+
+                builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String currentIobStr = input2.getText().toString();
+                        Timber.i("currentIob: %s", currentIobStr);
+
+                        if ("".equals(currentIobStr)) {
+                            Timber.e("Not delivering bolus because no IOB entered.");
+                            return;
+                        }
+
+                        int numUnits = Integer.parseInt(currentIobStr);
+                        long currentIob = Long.parseLong(currentIobStr);
+
+                        // InitiateBolusRequest(long totalVolume, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB)
+                        // Needs existing bolusId, timestamp
+                        writePumpMessage(new InitiateBolusRequest(
+                                numUnits,
+                                0,
+                                BolusDeliveryHistoryLog.BolusType.toBitmask(BolusDeliveryHistoryLog.BolusType.FOOD2),
+                                0L,
+                                0L,
+                                0,
+                                0,
+                                currentIob,
+                                0
+                        ), peripheral);
                     }
                 });
                 builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

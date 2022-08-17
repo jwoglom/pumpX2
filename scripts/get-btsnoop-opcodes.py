@@ -21,7 +21,7 @@ packets = []
 currentRead = []
 currentWrite = []
 
-lastSeqNum = None
+lastSeqNum = {'READ': None, 'WRITE': None}
 
 for rline in reader:
     type = ''
@@ -32,24 +32,31 @@ for rline in reader:
         type = 'READ'
     elif btOp == '0x52':
         type = 'WRITE'
+    
+    if not type:
+        continue
 
     value = value.split("â")[0]
 
     remainingPackets = int(value[0:2], 16)
     seqNum = int(value[2:4], 16)
+    if seqNum == 0:
+        # SKIP stream messages
+        continue
 
-    if remainingPackets > 0:
+    if lastSeqNum[type] is None or lastSeqNum[type] == seqNum:
         if type == 'READ':
             currentRead.append(value)
         elif type == 'WRITE':
             currentWrite.append(value)
     else:
         if type == 'READ':
-            packets.append(['READ', [value] + currentRead])
-            currentRead = []
+            packets.append(['READ', currentRead])
+            currentRead = [value]
         elif type == 'WRITE':
-            packets.append(['WRITE', [value] + currentWrite])
-            currentWrite = []
+            packets.append(['WRITE', currentWrite])
+            currentWrite = [value]
+    lastSeqNum[type] = seqNum
 
 if currentRead:
     packets.append(['READ', currentRead])

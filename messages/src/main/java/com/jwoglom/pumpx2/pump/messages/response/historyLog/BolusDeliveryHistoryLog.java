@@ -136,10 +136,10 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     }
 
     public enum BolusType {
-        FOOD1(1),
-        CORRECTION(2),
+        FOOD1(1), // used when there is carbs
+        CORRECTION(2), // used when there is a correction amount
         EXTENDED(4),
-        FOOD2(8),
+        FOOD2(8), // used when there is no carbs and just a distinct bolus amount
         ;
         private int mask;
         BolusType(int mask) {

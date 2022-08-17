@@ -19,6 +19,7 @@ public class BolusPermissionRequestTest {
         // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461457713
         // ./scripts/get-single-opcode.py '0134a234181d47811bc64bcd072fc978e4842046 003426b62ba72612b4f04978ac'
 
+        // runs BEFORE the bolus prompt
         initPumpState("6VeDeRAL5DCigGw2", 461457713);
         BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
                 29,71,-127,27,-58,75,-51,7,47,-55,120,-28,-124,32,70,38,-74,43,-89,38,18,-76,-16,73
