@@ -64,17 +64,17 @@ public abstract class TandemPump {
      */
     public void sendCommand(BluetoothPeripheral peripheral, Message message) {
         Timber.i("TandemPump: sendCommand(" + message + ")");
-        ArrayList<byte[]> authBytes = new ArrayList<>();
+        ArrayList<byte[]> bytes = new ArrayList<>();
         byte currentTxId = Packetize.txId.get();
         PumpState.pushRequestMessage(message, currentTxId);
         TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
         Packetize.txId.increment();
 
         for (Packet packet : wrapper.packets()) {
-            authBytes.add(packet.build());
+            bytes.add(packet.build());
         }
 
-        for (byte[] b : authBytes) {
+        for (byte[] b : bytes) {
             UUID uuid = CharacteristicUUID.determine(message);
             Timber.i("sendCommand to %s: %s", uuid, Hex.encodeHexString(b));
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,

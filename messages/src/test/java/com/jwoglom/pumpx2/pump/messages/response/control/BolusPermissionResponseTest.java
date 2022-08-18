@@ -3,6 +3,8 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
+import static org.junit.Assert.assertEquals;
+
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -13,7 +15,6 @@ import org.junit.Test;
 public class BolusPermissionResponseTest {
 
     @Test
-    @Ignore("hmac sha trailer needs to be stripped inside MessageTester")
     public void testBolusPermissionResponse() throws DecoderException {
         // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461510588
         // ./scripts/get-single-opcode.py '00efa3ef1e009a29000000c317821b8a7f9a9bd41e220a20856446e2ff9c69df60ab62987c'
@@ -39,30 +40,44 @@ public class BolusPermissionResponseTest {
     }
 
     @Test
-    @Ignore("skip")
-    public void testBolusPermissionResponse_Skip() throws DecoderException {
-        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461457713
-        // ./scripts/get-single-opcode.py '0034a3341e0100000000012f47811b5de43c94c520010c0203bff27993ffcf441f955c40'
-
-        initPumpState("6VeDeRAL5DCigGw2", 461457713);
-        // 461457713
-        // 461457181
+    public void testBolusPermissionResponse_disallowed_openOnPump() throws DecoderException {
+        initPumpState("6VeDeRAL5DCigGw2", 461634498);
         
         BolusPermissionResponse expected = new BolusPermissionResponse(
             // int status, int bolusId, int nackReason
-                0, 0, 0
+            1, 0, 1
         );
 
         BolusPermissionResponse parsedRes = (BolusPermissionResponse) MessageTester.test(
-                // 0034a3341e0100000000012f47811b5de43c94c520010c0203bff27993ffcf441f955c40
-                "0034a3341e0100000000012f47811b5de43c",
-                52,
+                "0004a3041e010000000003dcfb831b6decc93831b2a85debe64b35493ac44a60652af9e0a7",
+                4,
                 2,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
-                expected,
-                "94c520010c0203bff27993ffcf441f955c40"
+                expected
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(BolusPermissionResponse.NackReason.PUMP_HAS_PERMISSION, parsedRes.getNackReason());
+    }
+
+    @Test
+    public void testBolusPermissionResponse_disallowed_deliveriesStopped() throws DecoderException {
+        initPumpState("6VeDeRAL5DCigGw2", 461634831);
+
+        BolusPermissionResponse expected = new BolusPermissionResponse(
+                // int status, int bolusId, int nackReason
+                1, 0, 1
+        );
+
+        BolusPermissionResponse parsedRes = (BolusPermissionResponse) MessageTester.test(
+                "0004a3041e01000000000115fd831ba02d482bc5e45a7aab99f79ce1fd55f57b6828467fce",
+                4,
+                2,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(BolusPermissionResponse.NackReason.INVALID_PUMPING_STATE, parsedRes.getNackReason());
     }
 }

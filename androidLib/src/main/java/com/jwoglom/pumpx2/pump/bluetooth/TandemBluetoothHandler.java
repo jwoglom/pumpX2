@@ -4,6 +4,7 @@ import static com.welie.blessed.BluetoothBytesParser.bytes2String;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
@@ -230,7 +231,6 @@ public class TandemBluetoothHandler {
             if (state == BluetoothAdapter.STATE_ON) {
                 // Bluetooth is on now, start scanning again
                 // Scan for peripherals with a certain service UUIDs
-                central.startPairingPopupHack();
                 startScan();
             }
         }
@@ -249,7 +249,7 @@ public class TandemBluetoothHandler {
     }
 
     public void startScan() {
-        Timber.i("TandemBluetoothHandler: startScan");;
+        Timber.i("TandemBluetoothHandler: startScan");
         // Scan for peripherals with a certain service UUIDs
         central.startPairingPopupHack();
 
@@ -258,7 +258,7 @@ public class TandemBluetoothHandler {
             public void run() {
                 if (tandemPump.filterToBluetoothMac.isPresent()) {
                     String macAddress = tandemPump.filterToBluetoothMac.get();
-                    Timber.i("TandemBluetoothHandler: Scanning for Tandem peripheral with MAC: " + macAddress);
+                    Timber.i("TandemBluetoothHandler: Scanning for Tandem peripheral with MAC: %s", macAddress);
                     central.scanForPeripheralsWithAddresses(new String[]{macAddress});
                 } else {
                     Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");

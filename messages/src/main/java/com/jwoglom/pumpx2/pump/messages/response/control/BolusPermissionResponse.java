@@ -48,9 +48,10 @@ public class BolusPermissionResponse extends Message {
     public static byte[] buildCargo(int status, int bolusId, int nackReason) {
         return Bytes.combine(
             new byte[]{ (byte) status }, 
-            Bytes.firstTwoBytesLittleEndian(bolusId), 
-            new byte[]{ (byte) nackReason },
-            new byte[]{0, 0});
+            Bytes.firstTwoBytesLittleEndian(bolusId),
+            new byte[]{0, 0},
+            new byte[]{ (byte) nackReason }
+        );
     }
     
     public int getStatus() {
