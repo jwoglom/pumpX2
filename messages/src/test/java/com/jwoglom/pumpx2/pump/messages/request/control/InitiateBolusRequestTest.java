@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
 import org.apache.commons.codec.DecoderException;
@@ -21,7 +22,8 @@ public class InitiateBolusRequestTest {
         // InitiateBolusRequest[bolusBG=0,bolusCarbs=0,bolusID=10650,bolusIOB=0.0,bolusTypeId=8,correctionVolume=0,empty1=0,empty2=0,empty3=0,foodVolume=0,totalVolume=1000,cargo={-24,3,0,0,-102,41,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-14,23,-126,27,104,-7,76,-21,-26,113,122,93,21,81,39,20,127,-20,-102,-39,121,-110,106,-84}]
 
         initPumpState("6VeDeRAL5DCigGw2", 461510642L);
-        InitiateBolusRequest expected = new InitiateBolusRequest(new byte[]{-24,3,0,0,-102,41,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-14,23,-126,27,104,-7,76,-21,-26,113,122,93,21,81,39,20,127,-20,-102,-39,121,-110,106,-84});
+        InitiateBolusRequest expected = new InitiateBolusRequest(
+                stripHmacCargo(new byte[]{-24,3,0,0,-102,41,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-14,23,-126,27,104,-7,76,-21,-26,113,122,93,21,81,39,20,127,-20,-102,-39,121,-110,106,-84}));
 
         InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
                 "03399e393de80300009a29000008000000000000",
@@ -53,7 +55,8 @@ public class InitiateBolusRequestTest {
 
         // TimeSinceResetResponse[pumpTime=1079274,timeSinceReset=461589180]
         initPumpState("6VeDeRAL5DCigGw2", 461589180L);
-        InitiateBolusRequest expected = new InitiateBolusRequest(new byte[]{-126, 0, 0, 0, -100, 41, 0, 0, 1, -126, 0, 0, 0, 0, 0, 0, 0, 13, 0, -114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -68, 74, -125, 27, -100, -65, 25, -1, -72, 86, 40, -118, -118, -6, -113, 36, -92, 99, -32, 12, -13, -69, -27, -45});
+        InitiateBolusRequest expected = new InitiateBolusRequest(
+                stripHmacCargo(new byte[]{-126, 0, 0, 0, -100, 41, 0, 0, 1, -126, 0, 0, 0, 0, 0, 0, 0, 13, 0, -114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -68, 74, -125, 27, -100, -65, 25, -1, -72, 86, 40, -118, -118, -6, -113, 36, -92, 99, -32, 12, -13, -69, -27, -45}));
 
         InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
                 "033e9e3e3d820000009c29000001820000000000",
@@ -85,7 +88,8 @@ public class InitiateBolusRequestTest {
 
         // TimeSinceResetResponse[pumpTime=1079514,timeSinceReset=461589420]
         initPumpState("6VeDeRAL5DCigGw2", 461589420L);
-        InitiateBolusRequest expected = new InitiateBolusRequest(new byte[]{110,0,0,0,-99,41,0,0,1,110,0,0,0,0,0,0,0,11,0,-95,0,-126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-84,75,-125,27,122,11,124,-4,20,-93,11,-100,57,-107,-36,-117,-69,-33,-94,-50,44,-23,-107,114});
+        InitiateBolusRequest expected = new InitiateBolusRequest(
+                stripHmacCargo(new byte[]{110,0,0,0,-99,41,0,0,1,110,0,0,0,0,0,0,0,11,0,-95,0,-126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-84,75,-125,27,122,11,124,-4,20,-93,11,-100,57,-107,-36,-117,-69,-33,-94,-50,44,-23,-107,114}));
 
         InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
                 "03399e393d6e0000009d290000016e0000000000",
@@ -109,5 +113,9 @@ public class InitiateBolusRequestTest {
         assertEquals(161, parsedReq.getBolusBG());
         assertEquals(130, parsedReq.getBolusIOB()); // 0.13u
 
+    }
+
+    private byte[] stripHmacCargo(byte[] cargo) {
+        return Bytes.dropLastN(cargo, 24);
     }
 }

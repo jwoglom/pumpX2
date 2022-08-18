@@ -130,12 +130,14 @@ public class PacketArrayList {
             if (txId != this.expectedTxId) {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
             } else if (cargoSize != this.expectedCargoSize) {
-                throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
-            } else if (cargoSize <= 255) {
-                this.fullCargo = Bytes.dropFirstN(bArr, 5);
-            } else {
-                throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
+                if (cargoSize == this.expectedCargoSize + 24 && isSigned) {
+                    L.w(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    expectedCargoSize += 24;
+                } else {
+                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
+                }
             }
+            this.fullCargo = Bytes.dropFirstN(bArr, 5);
         } else {
             throw new IllegalArgumentException("Unexpected opCode: " + ((int) opCode) + ", expecting " + ((int) this.expectedOpCode));
         }

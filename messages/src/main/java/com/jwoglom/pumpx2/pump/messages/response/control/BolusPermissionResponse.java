@@ -11,7 +11,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 
 @MessageProps(
     opCode=-93,
-    size=30,
+    size=6, // 30 with 24 byte hmac padding
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     request=BolusPermissionRequest.class,
@@ -35,6 +35,7 @@ public class BolusPermissionResponse extends Message {
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
@@ -49,7 +50,7 @@ public class BolusPermissionResponse extends Message {
             new byte[]{ (byte) status }, 
             Bytes.firstTwoBytesLittleEndian(bolusId), 
             new byte[]{ (byte) nackReason },
-            new byte[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
+            new byte[]{0, 0});
     }
     
     public int getStatus() {

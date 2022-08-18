@@ -12,7 +12,7 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-97,
-    size=30,
+    size=6, // 30 with 24 byte hmac padding
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     request=InitiateBolusRequest.class,
@@ -35,6 +35,7 @@ public class InitiateBolusResponse extends Message {
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
@@ -47,7 +48,8 @@ public class InitiateBolusResponse extends Message {
     public static byte[] buildCargo(int status, int bolusId, int statusType) {
         return Bytes.combine(
             new byte[]{ (byte) status }, 
-            Bytes.firstTwoBytesLittleEndian(bolusId), 
+            Bytes.firstTwoBytesLittleEndian(bolusId),
+            new byte[]{ 0, 0},
             new byte[]{ (byte) statusType });
     }
     

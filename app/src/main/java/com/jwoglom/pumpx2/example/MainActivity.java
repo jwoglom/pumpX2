@@ -808,7 +808,6 @@ public class MainActivity extends AppCompatActivity {
                         int bolusId = Integer.parseInt(bolusIdStr);
 
                         // InitiateBolusRequest(long totalVolume, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB)
-                        // Needs existing bolusId, timestamp
                         writePumpMessage(new InitiateBolusRequest(
                                 numUnits,
                                 bolusId,
