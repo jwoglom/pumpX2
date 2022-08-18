@@ -45,7 +45,7 @@ public class BolusPermissionResponseTest {
         
         BolusPermissionResponse expected = new BolusPermissionResponse(
             // int status, int bolusId, int nackReason
-            1, 0, 1
+            1, 0, 3
         );
 
         BolusPermissionResponse parsedRes = (BolusPermissionResponse) MessageTester.test(
