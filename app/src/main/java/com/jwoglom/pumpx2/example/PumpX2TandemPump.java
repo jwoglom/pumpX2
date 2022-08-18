@@ -1,6 +1,5 @@
 package com.jwoglom.pumpx2.example;
 
-import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 
@@ -9,6 +8,8 @@ import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -34,10 +35,14 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String UPDATE_TEXT_RECEIVER = "jwoglom.pumpx2.updatetextreceiver";
     public static final String GOT_HISTORY_LOG_STATUS_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStatus";
     public static final String GOT_HISTORY_LOG_STREAM_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStream";
+    public static final String GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusPermissionResponse";
+    public static final String GOT_INITIATE_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotInitiateBolusResponse";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
 
     private ApiVersionResponse apiVersion;
     private TimeSinceResetResponse timeSinceReset;
+
+    boolean bolusInProgress = false;
 
     public PumpX2TandemPump(Context context) {
         super(context);
@@ -90,6 +95,26 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("numberOfHistoryLogs", resp.getNumberOfHistoryLogs());
                 context.sendBroadcast(intent);
+            }
+
+            if (message instanceof BolusPermissionResponse && bolusInProgress) {
+                BolusPermissionResponse resp = (BolusPermissionResponse) message;
+                Intent intent = new Intent(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("bolusId", resp.getBolusId());
+                intent.putExtra("status", resp.getStatus());
+                intent.putExtra("nackReasonId", resp.getNackReasonId());
+                context.sendBroadcast(intent);
+                return;
+            } else if (message instanceof InitiateBolusResponse && bolusInProgress) {
+                InitiateBolusResponse resp = (InitiateBolusResponse) message;
+                Intent intent = new Intent(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("bolusId", resp.getBolusId());
+                intent.putExtra("status", resp.getStatus());
+                intent.putExtra("statusType", resp.getStatusType());
+                context.sendBroadcast(intent);
+                return;
             }
 
             if (message instanceof AlarmStatusResponse) {

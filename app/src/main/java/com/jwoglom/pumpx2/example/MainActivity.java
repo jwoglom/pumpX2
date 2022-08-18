@@ -1,7 +1,9 @@
 package com.jwoglom.pumpx2.example;
 
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STATUS_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STREAM_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_INITIATE_BOLUS_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_COMPLETE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_INTENT;
@@ -31,6 +33,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -59,6 +62,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
@@ -98,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
     private Button recentHistoryLogsButton;
     private PumpX2TandemPump tandemEventCallback;
     private TandemBluetoothHandler bluetoothHandler;
+    private LinearLayout basicLinearLayout;
+    private LinearLayout advancedLinearLayout;
+    private Button showMoreButton;
+    private Button bolusButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +129,20 @@ public class MainActivity extends AppCompatActivity {
         requestSendButton = findViewById(R.id.request_message_send);
         batteryRequestButton = findViewById(R.id.battery_request_button);
         recentHistoryLogsButton = findViewById(R.id.recent_history_logs);
+        bolusButton = findViewById(R.id.bolusButton);
+
+        basicLinearLayout = findViewById(R.id.basicLinearLayout);
+        advancedLinearLayout = findViewById(R.id.advancedLinearLayout);
+        showMoreButton = findViewById(R.id.show_more);
+        showMoreButton.setOnClickListener((view) -> {
+            if (advancedLinearLayout.getVisibility() == View.INVISIBLE) {
+                advancedLinearLayout.setVisibility(View.VISIBLE);
+                advancedLinearLayout.postInvalidate();
+            } else {
+                advancedLinearLayout.setVisibility(View.INVISIBLE);
+                advancedLinearLayout.postInvalidate();
+            }
+        });
 
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
@@ -129,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
         registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
+        registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER));
+        registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
 
         L.w("X2", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
@@ -258,9 +282,16 @@ public class MainActivity extends AppCompatActivity {
 
             Timber.i("CONNECTED: PUMP_AUTHENTICATION_KEY=" + authenticationKey.get() + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
 
+            basicLinearLayout.setVisibility(View.VISIBLE);
+
             requestMessageSpinner.setVisibility(View.VISIBLE);
             requestMessageSpinner.postInvalidate();
 
+            bolusButton.setVisibility(View.VISIBLE);
+            bolusButton.setOnClickListener((z) -> startBolusProcess(peripheral));
+
+            showMoreButton.setVisibility(View.VISIBLE);
+            showMoreButton.postInvalidate();
 
             requestSendButton.setVisibility(View.VISIBLE);
             requestSendButton.setOnClickListener((z) -> {
@@ -850,9 +881,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle("Enter pairing code (case-sensitive)");
         builder.setMessage("Enter the pairing code from Bluetooth Settings > Pair Device to connect to:\n\n" + btName + " (" + btAddress + ")");
 
-// Set up the input
         final EditText input = new EditText(this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
 
         String savedPairingCode = PumpState.getPairingCode(getApplicationContext());
@@ -866,7 +895,6 @@ public class MainActivity extends AppCompatActivity {
         }
         builder.setView(input);
 
-// Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -885,6 +913,123 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
     }
+
+    //
+    // bolus
+    //
+
+    private Double bolusProcessUnits = null;
+    private void startBolusProcess(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter bolus amount");
+        builder.setMessage("Enter the number of units to bolus");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        builder.setView(input);
+
+        final MainActivity mainAct = this;
+        builder.setPositiveButton("Bolus", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String bolusUnitsNumber = input.getText().toString();
+                Timber.i("bolusUnitsNumber: %s", bolusUnitsNumber);
+                double bolusUnits = Double.parseDouble(bolusUnitsNumber);
+                mainAct.bolusProcessUnits = bolusUnits;
+                dialog.cancel();
+
+                tandemEventCallback.bolusInProgress = true;
+                writePumpMessage(new BolusPermissionRequest(), peripheral);
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+
+    private final BroadcastReceiver gotBolusPermissionResponseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int bolusId = intent.getIntExtra("bolusId", -1);
+            int status = intent.getIntExtra("status", -1);
+            int nackReasonId = intent.getIntExtra("nackReasonId", -1);
+
+            if (status != 0 || nackReasonId != 0) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Bolus")
+                        .setMessage("Unable to deliver bolus due to: " + BolusPermissionResponse.NackReason.fromId(nackReasonId) + " (status: " + status + ")")
+                        .setNegativeButton(android.R.string.ok, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                tandemEventCallback.bolusInProgress = false;
+                return;
+            }
+
+            long bolusUnits = (long)(bolusProcessUnits * 1000);
+            new AlertDialog.Builder(context)
+                    .setTitle("Bolus")
+                    .setMessage("Confirm delivery of the >> " + bolusProcessUnits + " unit << bolus. (" + bolusUnits + ")")
+                    .setPositiveButton("Deliver Bolus", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            writePumpMessage(new InitiateBolusRequest(
+                                    bolusUnits,
+                                    bolusId,
+                                    BolusDeliveryHistoryLog.BolusType.FOOD2.mask(),
+                                    0,
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                            ), peripheral);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    };
+
+    private final BroadcastReceiver gotInitiateBolusResponseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int bolusId = intent.getIntExtra("bolusId", -1);
+            int status = intent.getIntExtra("status", -1);
+            int statusType = intent.getIntExtra("statusType", -1);
+
+            if (status != 0 || statusType != 0) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Bolus")
+                        .setMessage("Bolus ID: " + bolusId + " returned status " + status +" and statusType " + statusType)
+                        .setNegativeButton(android.R.string.ok, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                tandemEventCallback.bolusInProgress = false;
+                return;
+            }
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Bolus")
+                    .setMessage("Bolus is being delivered.\n\nBolus ID: " + bolusId)
+                    .setNegativeButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+
+            tandemEventCallback.bolusInProgress = false;
+        }
+    };
 
     private void triggerImmediatePair(BluetoothPeripheral peripheral, String pairingCode, CentralChallengeResponse challenge) {
         PumpState.setPairingCode(getApplicationContext(), pairingCode);

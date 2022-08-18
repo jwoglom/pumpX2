@@ -6,23 +6,90 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/statusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Looking for Bluetooth.."
         android:textAlignment="center"
+        android:paddingTop="100dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
+        android:id="@+id/basicLinearLayout"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="fill_horizontal">
+
+            <Button
+                android:id="@+id/bolusButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible"
+
+                android:text="Bolus"/>
+
+
+            <Button
+                android:id="@+id/show_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="..."
+                android:padding="2dp"
+                android:visibility="invisible"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="fill_horizontal">
+            <Spinner
+                android:id="@+id/request_message_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:visibility="invisible"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/request_message_send"/>
+
+            <Button
+                android:id="@+id/request_message_send"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Send"
+                android:visibility="invisible"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/advancedLinearLayout"
         android:layout_width="400dp"
         android:layout_height="250dp"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
@@ -32,21 +99,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Retry Connection"
-            android:textAlignment="center"
-            />
-
-        <Spinner
-            android:id="@+id/request_message_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/request_message_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send Request"
-            android:visibility="invisible"
             android:textAlignment="center"
             />
 
