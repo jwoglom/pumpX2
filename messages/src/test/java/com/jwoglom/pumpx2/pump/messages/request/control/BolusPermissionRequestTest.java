@@ -25,9 +25,7 @@ public class BolusPermissionRequestTest {
 
         // runs BEFORE the bolus prompt
         initPumpState("6VeDeRAL5DCigGw2", 461457713);
-        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
-                29,71,-127,27,-58,75,-51,7,47,-55,120,-28,-124,32,70,38,-74,43,-89,38,18,-76,-16,73
-        });
+        BolusPermissionRequest expected = new BolusPermissionRequest();
 
 
         String[] messages = new String[]{
@@ -45,117 +43,117 @@ public class BolusPermissionRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
-
-    @Test
-    public void testBolusPermissionRequest2_unknown2() throws DecoderException {
-        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461510606
-        // ./scripts/get-single-opcode.py '01efa2ef18bc17821b4e1e731847b9d3b2d45332 00ef7f6110aca98e7a3ee69079'
-
-        // thought: 461510606 but changed to 461510588 which is embedded in the request and still works
-        initPumpState("6VeDeRAL5DCigGw2", 461510588);
-        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
-                -68,23,-126,27,78,30,115,24,71,-71,-45,-78,-44,83,50,127,97,16,-84,-87,-114,122,62,-26
-        });
-
-
-        String[] messages = new String[]{
-                "01efa2ef18bc17821b4e1e731847b9d3b2d45332",
-                "00ef7f6110aca98e7a3ee69079"
-        };
-        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
-                messages[0],
-                -17, // TODO: wraparound txId
-                2,
-                CharacteristicUUID.CONTROL_CHARACTERISTICS,
-                expected,
-                messages[1]
-        );
-
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        // does not match the TimeSinceReset??? (gap of 18)
-        // this is probably just because the timeSinceReset is one off.
-        // assertEquals(461510606, parsedReq.getTimeSinceReset());
-        assertEquals(461510588, parsedReq.getTimeSinceReset());
-    }
-
-    /*
-    0134a23418a64a831b602d09daa68d0806fe4ce80034637bc976656f915150f887	-94	request.control.BolusPermissionRequest
-    0034a3341e009c29000000b14a831bdb9371a74b2eb73cb125be67bc82397ebccbb96e7d66	-93	response.control.BolusPermissionResponse
-     */
-    @Test
-    public void testBolusPermissionRequest2_ID10652() throws DecoderException {
-        // from much earlier: TimeSinceResetResponse[pumpTime=1079252,timeSinceReset=461589158]
-        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589158
-        // ./scripts/get-single-opcode.py '0134a23418a64a831b602d09daa68d0806fe4ce8 0034637bc976656f915150f887'
-
-        initPumpState("6VeDeRAL5DCigGw2", 461510606);
-        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
-                -90,74,-125,27,96,45,9,-38,-90,-115,8,6,-2,76,-24,99,123,-55,118,101,111,-111,81,80
-        });
-        // 0-3: uint32 timeSinceReset = 461589158
-        // 4-24: ???
-
-
-        String[] messages = new String[]{
-                "0134a23418a64a831b602d09daa68d0806fe4ce8",
-                "0034637bc976656f915150f887"
-        };
-        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
-                messages[0],
-                52,
-                2,
-                CharacteristicUUID.CONTROL_CHARACTERISTICS,
-                expected,
-                messages[1]
-        );
-
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertEquals(461589158, parsedReq.getTimeSinceReset());
-
-        MessageTester.guessCargo(parsedReq);
-    }
-
-    // with empty other cargo: errors returned with additional context:
-    // {77,111,-125,27,-70,23,115,84,94,56,40,-107,-22,54,86,99,63,35,77,94,-57,65,61,-120}
-    // {-53,86,-125,27,17,122,-97,-77,102,26,73,-80,3,-59,-40,42,90,-34,49,-19,64,-71,-79,123}
-
-
-    // 0134a23418804b831be6cc73100202962bfbd2e900342a95c2ce3671e84ddd09c9	-94	request.control.BolusPermissionRequest
-    //0034a3341e009d290000008b4b831be1fc317efeef79d29d48968bfac0ce1419a6ef9fe205	-93	response.control.BolusPermissionResponse
-    @Test
-    public void testBolusPermissionRequest3_ID10653() throws DecoderException {
-        // from much earlier: TimeSinceResetResponse[pumpTime=1079469,timeSinceReset=461589376]
-        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589376
-        // ./scripts/get-single-opcode.py '0134a23418804b831be6cc73100202962bfbd2e9 00342a95c2ce3671e84ddd09c9'
-
-        initPumpState("6VeDeRAL5DCigGw2", 461589376);
-        // BolusPermissionRequest[timeSinceReset=0,cargo={-128,75,-125,27,-26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35}]
-        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
-                -128,75,-125,27,-26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35
-        // response: {0,-99,41,0,0,0,-117,75,-125,27,-31,-4,49,126,-2,-17,121,-46,-99,72,-106,-117,-6,-64,-50,20,25,-90,-17,-97}
-        });
-        // 0-3: uint32 timeSinceReset = 461589376
-        // 4-24: ???
-
-
-        String[] messages = new String[]{
-                "0134a23418804b831be6cc73100202962bfbd2e9",
-                "00342a95c2ce3671e84ddd09c9"
-        };
-        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
-                messages[0],
-                52,
-                2,
-                CharacteristicUUID.CONTROL_CHARACTERISTICS,
-                expected,
-                messages[1]
-        );
-
-        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertEquals(461589376, parsedReq.getTimeSinceReset());
-
-        MessageTester.guessCargo(parsedReq);
-    }
+//
+//    @Test
+//    public void testBolusPermissionRequest2_unknown2() throws DecoderException {
+//        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461510606
+//        // ./scripts/get-single-opcode.py '01efa2ef18bc17821b4e1e731847b9d3b2d45332 00ef7f6110aca98e7a3ee69079'
+//
+//        // thought: 461510606 but changed to 461510588 which is embedded in the request and still works
+//        initPumpState("6VeDeRAL5DCigGw2", 461510588);
+//        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
+//                -68,23,-126,27,78,30,115,24,71,-71,-45,-78,-44,83,50,127,97,16,-84,-87,-114,122,62,-26
+//        });
+//
+//
+//        String[] messages = new String[]{
+//                "01efa2ef18bc17821b4e1e731847b9d3b2d45332",
+//                "00ef7f6110aca98e7a3ee69079"
+//        };
+//        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
+//                messages[0],
+//                -17, // TODO: wraparound txId
+//                2,
+//                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+//                expected,
+//                messages[1]
+//        );
+//
+//        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+//        // does not match the TimeSinceReset??? (gap of 18)
+//        // this is probably just because the timeSinceReset is one off.
+//        // assertEquals(461510606, parsedReq.getTimeSinceReset());
+//        assertEquals(461510588, parsedReq.getTimeSinceReset());
+//    }
+//
+//    /*
+//    0134a23418a64a831b602d09daa68d0806fe4ce80034637bc976656f915150f887	-94	request.control.BolusPermissionRequest
+//    0034a3341e009c29000000b14a831bdb9371a74b2eb73cb125be67bc82397ebccbb96e7d66	-93	response.control.BolusPermissionResponse
+//     */
+//    @Test
+//    public void testBolusPermissionRequest2_ID10652() throws DecoderException {
+//        // from much earlier: TimeSinceResetResponse[pumpTime=1079252,timeSinceReset=461589158]
+//        // PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589158
+//        // ./scripts/get-single-opcode.py '0134a23418a64a831b602d09daa68d0806fe4ce8 0034637bc976656f915150f887'
+//
+//        initPumpState("6VeDeRAL5DCigGw2", 461510606);
+//        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
+//                -90,74,-125,27,96,45,9,-38,-90,-115,8,6,-2,76,-24,99,123,-55,118,101,111,-111,81,80
+//        });
+//        // 0-3: uint32 timeSinceReset = 461589158
+//        // 4-24: ???
+//
+//
+//        String[] messages = new String[]{
+//                "0134a23418a64a831b602d09daa68d0806fe4ce8",
+//                "0034637bc976656f915150f887"
+//        };
+//        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
+//                messages[0],
+//                52,
+//                2,
+//                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+//                expected,
+//                messages[1]
+//        );
+//
+//        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+//        assertEquals(461589158, parsedReq.getTimeSinceReset());
+//
+//        MessageTester.guessCargo(parsedReq);
+//    }
+//
+//    // with empty other cargo: errors returned with additional context:
+//    // {77,111,-125,27,-70,23,115,84,94,56,40,-107,-22,54,86,99,63,35,77,94,-57,65,61,-120}
+//    // {-53,86,-125,27,17,122,-97,-77,102,26,73,-80,3,-59,-40,42,90,-34,49,-19,64,-71,-79,123}
+//
+//
+//    // 0134a23418804b831be6cc73100202962bfbd2e900342a95c2ce3671e84ddd09c9	-94	request.control.BolusPermissionRequest
+//    //0034a3341e009d290000008b4b831be1fc317efeef79d29d48968bfac0ce1419a6ef9fe205	-93	response.control.BolusPermissionResponse
+//    @Test
+//    public void testBolusPermissionRequest3_ID10653() throws DecoderException {
+//        // from much earlier: TimeSinceResetResponse[pumpTime=1079469,timeSinceReset=461589376]
+//        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589376
+//        // ./scripts/get-single-opcode.py '0134a23418804b831be6cc73100202962bfbd2e9 00342a95c2ce3671e84ddd09c9'
+//
+//        initPumpState("6VeDeRAL5DCigGw2", 461589376);
+//        // BolusPermissionRequest[timeSinceReset=0,cargo={-128,75,-125,27,-26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35}]
+//        BolusPermissionRequest expected = new BolusPermissionRequest(new byte[]{
+//                -128,75,-125,27,-26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35
+//        // response: {0,-99,41,0,0,0,-117,75,-125,27,-31,-4,49,126,-2,-17,121,-46,-99,72,-106,-117,-6,-64,-50,20,25,-90,-17,-97}
+//        });
+//        // 0-3: uint32 timeSinceReset = 461589376
+//        // 4-24: ???
+//
+//
+//        String[] messages = new String[]{
+//                "0134a23418804b831be6cc73100202962bfbd2e9",
+//                "00342a95c2ce3671e84ddd09c9"
+//        };
+//        BolusPermissionRequest parsedReq = (BolusPermissionRequest) MessageTester.test(
+//                messages[0],
+//                52,
+//                2,
+//                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+//                expected,
+//                messages[1]
+//        );
+//
+//        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+//        assertEquals(461589376, parsedReq.getTimeSinceReset());
+//
+//        MessageTester.guessCargo(parsedReq);
+//    }
 
     /*
     $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461606135 ./scripts/get-single-opcode.py '0134a23418f78c831b2eb357be0238299d11d238 003464a37654dbe85a75ee127b' guesscargo 2>/dev/null

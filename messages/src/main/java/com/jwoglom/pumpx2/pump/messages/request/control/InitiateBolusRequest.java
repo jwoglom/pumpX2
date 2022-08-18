@@ -13,7 +13,7 @@ import java.util.Set;
 
 @MessageProps(
     opCode=-98,
-    size=61,
+    size=37, // 61 with 24 byte padding
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     response=InitiateBolusResponse.class,
@@ -28,7 +28,6 @@ public class InitiateBolusRequest extends Message {
     private int bolusCarbs;
     private int bolusBG;
     private long bolusIOB;
-    private long timestamp;
 
     public InitiateBolusRequest() {}
 
@@ -39,8 +38,8 @@ public class InitiateBolusRequest extends Message {
     // all parameters:
     // (C49011.this.bolusId, MobileBolusModel.mobileBolusModel.bolusType(), BolusConfirmFragment.this.bolusTotalVol(), BolusConfirmFragment.this.bolusFoodVol(), C49011.this.bolusCorrectionVol, BolusConfirmFragment.this.bolusCarbs(), BolusConfirmFragment.this.bolusBG(), BolusConfirmFragment.this.bolusIOB(), 0L, 0L, 0L)
     // There is one additional parameter used by Tandem which we do not know (the final long), except that it is 0
-    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long timestamp) {
-        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, timestamp);
+    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {
+        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB);
         this.totalVolume = totalVolume; //
         this.bolusID = bolusID;
         this.bolusTypeBitmask = bolusTypeBitmask; //
@@ -49,7 +48,6 @@ public class InitiateBolusRequest extends Message {
         this.bolusCarbs = bolusCarbs; //
         this.bolusBG = bolusBG; //
         this.bolusIOB = bolusIOB; //
-        this.timestamp = timestamp;
     }
 
     public void parse(byte[] raw) {
@@ -100,12 +98,13 @@ public class InitiateBolusRequest extends Message {
         this.bolusBG = Bytes.readShort(raw, 19); // correct
         this.bolusIOB = Bytes.readUint32(raw, 21);  // correct
         // 25 - 36 inclusive are 0s
-        this.timestamp = Bytes.readUint32(raw, 37); // equal to pumpTimeSinceReset
+        // 24 byte hmac padding
+        // this.timestamp = Bytes.readUint32(raw, 37); // equal to pumpTimeSinceReset
         // 41 - 61 unknown
     }
 
 
-    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long timestamp) {
+    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {
         return Bytes.combine(
                 Bytes.toUint32(totalVolume),
                 Bytes.firstTwoBytesLittleEndian(bolusID),
@@ -116,9 +115,10 @@ public class InitiateBolusRequest extends Message {
                 Bytes.firstTwoBytesLittleEndian(bolusCarbs),
                 Bytes.firstTwoBytesLittleEndian(bolusBG),
                 Bytes.toUint32(bolusIOB),
-                new byte[12],
-                Bytes.toUint32(timestamp),
-                new byte[20]
+                new byte[12]
+                // 24 byte signed padding with hmac
+//                Bytes.toUint32(timestamp),
+//                new byte[20]
         );
     }
 
@@ -156,9 +156,5 @@ public class InitiateBolusRequest extends Message {
 
     public long getBolusIOB() {
         return bolusIOB;
-    }
-
-    public long getTimestamp() {
-        return timestamp;
     }
 }

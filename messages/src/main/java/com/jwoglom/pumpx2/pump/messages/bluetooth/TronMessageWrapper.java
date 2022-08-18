@@ -65,6 +65,11 @@ public class TronMessageWrapper {
         if (type == MessageType.REQUEST) {
             opCode = message.opCode();
             size = message.props().size();
+
+            // This reflects the size += 24 in Packetize.java which adds a hmacsha1
+            if (message.signed()) {
+                size += 24;
+            }
         }
         return PacketArrayList.build(
                 (byte) opCode,

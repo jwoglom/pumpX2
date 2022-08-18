@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -49,26 +50,26 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
-        L.w(TAG, "packetize signed "+message.signed());
+        L.w(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
         if (message.signed()) {
+            int i = length - 20;
+            byte[] bArr2 = new byte[i];
             long pumpStateTimeSinceReset = PumpStateSupplier.pumpTimeSinceReset.get();
-            L.w(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
-            byte[] hmacShaData = new byte[length - 20];
             byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
-            // packet[0 .. N-20] unchanged
-            System.arraycopy(packet, 0, hmacShaData, 0, length - 20);
-            // packet[N-24 .. N-20] filled with time since reset
-            System.arraycopy(timeSinceReset, 0, hmacShaData, length - 24, 4);
+            L.w(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
+            System.arraycopy(packet, 0, bArr2, 0, i);
+            System.arraycopy(timeSinceReset, 0, bArr2, length - 24, 4);
             byte[] hmacByteKey = authenticationKey.getBytes(Charsets.UTF_8);
-            byte[] hmacSha1Output = doHmacSha1(hmacShaData, hmacByteKey);
-
-            // packet[N-20 ... N] filled with hmac sha1 output
-            System.arraycopy(hmacSha1Output, 0, packet, length - 20, hmacSha1Output.length);
+            byte[] hmacSha1Output = doHmacSha1(bArr2, hmacByteKey);
+            System.arraycopy(bArr2, 0, packet, 0, i);
+            System.arraycopy(hmacSha1Output, 0, packet, i, hmacSha1Output.length);
         }
+        L.w(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));
 
         // Append CRC to packet
         byte[] crc = Bytes.calculateCRC16(packet);
         byte[] packetWithCRC = ArrayUtils.addAll(packet, crc);
+        L.w(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
 
         // Fill Packet list with chunks of size 18 (maxChunkSize)
         List<Packet> packets = new ArrayList<>();

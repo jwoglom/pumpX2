@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.util.Set;
@@ -78,6 +79,13 @@ public abstract class Message {
 
     public void fillWithEmptyCargo() {
         this.cargo = EMPTY;
+    }
+
+    protected byte[] removeSignedRequestHmacBytes(byte[] raw) {
+        if (signed() && raw.length == props().size() + 24) {
+            return Bytes.dropLastN(raw, 24);
+        }
+        return raw;
     }
 
     private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");

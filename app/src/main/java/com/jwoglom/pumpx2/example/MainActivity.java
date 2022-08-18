@@ -48,12 +48,14 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
@@ -279,8 +281,9 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     } else if (className.equals(BolusPermissionRequest.class.getName())) {
                         //writePumpMessage(new BolusPermissionRequest(PumpState.getAdjustedPumpTimeSinceReset(), new byte[20]), peripheral);
-                        writePumpMessage(new BolusPermissionRequest(PumpState.getAdjustedPumpTimeSinceReset(), new byte[]{
-                                -26,-52,115,16,2,2,-106,43,-5,-46,-23,42,-107,-62,-50,54,113,-24,77,-35}), peripheral);
+//                        writePumpMessage(new TimeSinceResetRequest(), peripheral);
+//                        try{Thread.sleep(500);}catch(InterruptedException e){};
+                        writePumpMessage(new BolusPermissionRequest(), peripheral);
                         return;
                     }
 
@@ -784,7 +787,7 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
                 builder2.setTitle("CONFIRM BOLUS!!");
-                builder2.setMessage("Enter the current IOB of the pump in INTEGER FORM from ControlIQIOBRequest. THIS WILL ACTUALLY DELIVER THE BOLUS. Enter a blank value to cancel.");
+                builder2.setMessage("Enter the bolus ID from BolusPermissionRequest. THIS WILL ACTUALLY DELIVER THE BOLUS. Enter a blank value to cancel.");
 
                 final EditText input2 = new EditText(context);
                 input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
@@ -793,28 +796,27 @@ public class MainActivity extends AppCompatActivity {
                 builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String currentIobStr = input2.getText().toString();
-                        Timber.i("currentIob: %s", currentIobStr);
+                        String bolusIdStr = input2.getText().toString();
+                        Timber.i("currentIob: %s", bolusIdStr);
 
-                        if ("".equals(currentIobStr)) {
-                            Timber.e("Not delivering bolus because no IOB entered.");
+                        if ("".equals(bolusIdStr)) {
+                            Timber.e("Not delivering bolus because no bolus ID entered.");
                             return;
                         }
 
-                        int numUnits = Integer.parseInt(currentIobStr);
-                        long currentIob = Long.parseLong(currentIobStr);
+                        int numUnits = Integer.parseInt(numUnitsStr);
+                        int bolusId = Integer.parseInt(bolusIdStr);
 
                         // InitiateBolusRequest(long totalVolume, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB)
                         // Needs existing bolusId, timestamp
                         writePumpMessage(new InitiateBolusRequest(
                                 numUnits,
-                                0,
+                                bolusId,
                                 BolusDeliveryHistoryLog.BolusType.toBitmask(BolusDeliveryHistoryLog.BolusType.FOOD2),
                                 0L,
                                 0L,
                                 0,
                                 0,
-                                currentIob,
                                 0
                         ), peripheral);
                     }
