@@ -77,9 +77,9 @@ For an Android project:
 
 ```
 dependencies {
-    implementation files('androidLib-1.0.0.arr');
-    implementation files('messages-1.0.0.jar');
-    implementation files('shared-1.0.0.jar');
+    implementation files('androidLib-1.1.0.arr');
+    implementation files('messages-1.1.0.jar');
+    implementation files('shared-1.1.0.jar');
 
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
@@ -92,8 +92,8 @@ For a non-Android Java project:
 
 ```
 dependencies {
-    implementation files('messages-1.0.0.jar');
-    implementation files('shared-1.0.0.jar');
+    implementation files('messages-1.1.0.jar');
+    implementation files('shared-1.1.0.jar');
 
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
