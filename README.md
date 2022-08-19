@@ -66,7 +66,7 @@ You can alternatively download the most recent versions from the "Android CI" Gi
 
 To integrate the PumpX2 Android library into your project, import the following dependencies into your project:
 
-* `pumpx2-androidLib.aar`, the Android Bluetooth library
+* `pumpx2-android.aar`, the Android Bluetooth library
 * `pumpx2-messages.jar`, the common message-parsing code.
 * `pumpx2-shared.jar`, a common shared module.
 
@@ -77,9 +77,9 @@ For an Android project:
 
 ```
 dependencies {
-    implementation files('androidLib-1.1.0.arr');
-    implementation files('messages-1.1.0.jar');
-    implementation files('shared-1.1.0.jar');
+    implementation files('pumpx2-android-1.1.0.arr');
+    implementation files('pumpx2-messages-1.1.0.jar');
+    implementation files('pumpx2-shared-1.1.0.jar');
 
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
@@ -92,8 +92,8 @@ For a non-Android Java project:
 
 ```
 dependencies {
-    implementation files('messages-1.1.0.jar');
-    implementation files('shared-1.1.0.jar');
+    implementation files('pumpx2-messages-1.1.0.jar');
+    implementation files('pumpx2-shared-1.1.0.jar');
 
     implementation "commons-codec:commons-codec:1.15"
     implementation "org.apache.commons:commons-lang3:3.12.0"
@@ -102,7 +102,7 @@ dependencies {
 }
 ```
 
-A `messages-all.jar` is also available on Github Actions as a fat JAR which contains all dependencies.
+A `pumpx2-messages-all.jar` is also available on Github Actions as a fat JAR which contains all dependencies.
 This may or may not work with your project depending on if there are any conflicting dependencies.
 
-To utilize the command-line message-parsing tool, execute the `cliparser-all.jar` file using `java -jar`.
+To utilize the command-line message-parsing tool, execute the `pumpx2-cliparser-all.jar` file using `java -jar`.
