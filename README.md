@@ -8,6 +8,8 @@
 
 Reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
 
+> :warning: **This project is still in heavy testing and development. For safety reasons, please do NOT use on anything but a backup pump or one not connected to active insulin delivery.**
+
 Currently functions as a basic Android application which pairs to the pump
 and allows sending read-only message requests and receiving responses about
 the pump's status and history. An Android library is exported which can be used
