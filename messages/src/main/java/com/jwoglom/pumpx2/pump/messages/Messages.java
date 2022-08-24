@@ -108,6 +108,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CommonSoftwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SuspendPumpingRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SuspendPumpingResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -173,6 +177,8 @@ public enum Messages {
     INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),
     BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),
     COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),
+    SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),
+    CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),
     // MESSAGES_END
     ;
 
