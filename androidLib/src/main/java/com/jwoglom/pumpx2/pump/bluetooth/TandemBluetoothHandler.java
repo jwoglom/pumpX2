@@ -43,16 +43,22 @@ public class TandemBluetoothHandler {
 
     private final Context context;
     private TandemPump tandemPump;
-    private TandemBluetoothHandler(Context context, TandemPump tandemPump) {
+    private TandemBluetoothHandler(Context context, TandemPump tandemPump, boolean initializeTimber) {
         this.context = context;
         this.tandemPump = tandemPump;
 
-        // Plant a tree
-        Timber.Tree tree = Timber.Tree.class.cast(new DebugTree());
-        Timber.plant(tree);
+        if (initializeTimber) {
+            // Plant a tree
+            Timber.Tree tree = Timber.Tree.class.cast(new DebugTree());
+            Timber.plant(tree);
+        }
 
         // Create BluetoothCentral
         central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler());
+    }
+
+    private TandemBluetoothHandler(Context context, TandemPump tandemPump) {
+        this(context, tandemPump, true);
     }
 
 
