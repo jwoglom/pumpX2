@@ -14,7 +14,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.List;
 import java.util.UUID;

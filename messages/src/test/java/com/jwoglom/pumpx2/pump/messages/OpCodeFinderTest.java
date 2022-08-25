@@ -3,7 +3,7 @@ package com.jwoglom.pumpx2.pump.messages;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.junit.Test;
 
 public class OpCodeFinderTest {

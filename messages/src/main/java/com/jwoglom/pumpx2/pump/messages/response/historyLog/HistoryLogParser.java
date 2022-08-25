@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.HashMap;
 import java.util.Map;

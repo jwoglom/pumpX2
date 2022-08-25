@@ -50,17 +50,13 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
-import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
@@ -71,7 +67,7 @@ import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.WriteType;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -85,11 +81,11 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     static {
-        L.getAndroidLogD = Log::d;
-        L.getAndroidLogW = Log::w;
-        L.getAndroidLogWThrowable = Log::w;
-        L.getAndroidLogE = Log::e;
-        L.getAndroidLogEThrowable = Log::e;
+        L.getAndroidDebug = Log::d;
+        L.getAndroidWarning = Log::w;
+        L.getAndroidWarningThrowable = Log::w;
+        L.getAndroidLogError = Log::e;
+        L.getAndroidLogErrorThrowable = Log::e;
     }
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_LOCATION_REQUEST = 2;

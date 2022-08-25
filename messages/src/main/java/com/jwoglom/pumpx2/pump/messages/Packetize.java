@@ -7,7 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.ArrayUtils;

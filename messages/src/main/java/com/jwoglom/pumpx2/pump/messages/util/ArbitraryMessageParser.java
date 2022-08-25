@@ -12,7 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.Optional;
 import java.util.Set;

@@ -115,7 +115,7 @@ import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;

@@ -20,7 +20,7 @@ import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.ArrayList;
 import java.util.Optional;

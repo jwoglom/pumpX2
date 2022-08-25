@@ -23,7 +23,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetRes
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.welie.blessed.BluetoothPeripheral;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import timber.log.Timber;
 

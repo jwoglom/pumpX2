@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth.models;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.UUID;
 

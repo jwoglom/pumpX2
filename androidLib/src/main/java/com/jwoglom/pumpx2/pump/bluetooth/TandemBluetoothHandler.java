@@ -31,7 +31,7 @@ import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
 
-import org.apache.commons.codec.binary.Hex;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
