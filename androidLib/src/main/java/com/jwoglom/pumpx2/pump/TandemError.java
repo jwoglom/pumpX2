@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump;
 
 public enum TandemError {
     NOTIFICATION_STATE_FAILED("Changing notification state"),
+    PAIRING_CANNOT_BEGIN("Pairing cannot begin because the pump has not generated a pairing code.\n\nPlease open Options > Device Settings > Bluetooth Settings > Pair Device and hit OK to display the pairing code"),
     CHARACTERISTIC_WRITE_FAILED("Writing characteristic"),
     CONNECTION_UPDATE_FAILED("Updating connection"),
     BT_CONNECTION_FAILED("Bluetooth connection failed"),
@@ -16,10 +17,11 @@ public enum TandemError {
     }
 
     public String getMessage() {
-        if (extra.isEmpty()) {
-            return message;
-        }
-        return message + ": " + extra;
+        return message;
+    }
+
+    public String getExtra() {
+        return extra;
     }
 
     public TandemError withExtra(String extra) {

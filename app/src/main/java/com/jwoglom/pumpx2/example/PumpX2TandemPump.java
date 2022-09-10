@@ -196,6 +196,7 @@ public class PumpX2TandemPump extends TandemPump {
         Intent intent = new Intent(PUMP_ERROR_INTENT);
         intent.putExtra("reason", reason.name());
         intent.putExtra("message", reason.getMessage());
+        intent.putExtra("extra", reason.getExtra());
         context.sendBroadcast(intent);
     }
 }

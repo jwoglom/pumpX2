@@ -7,14 +7,10 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Pair;
-
-import androidx.core.util.Preconditions;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
-import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -106,9 +102,14 @@ public class TandemBluetoothHandler {
                 Timber.i("SUCCESS: Notify set to '%s' for %s", isNotifying, characteristic.getUuid());
 
             } else {
-                Timber.e("ERROR: Changing notification state failed for %s (%s)", characteristic.getUuid(), status);
+                Timber.e("ERROR: Changing notification state failed for %s (%s)", CharacteristicUUID.which(characteristic.getUuid()), status);
+                if (CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.equals(characteristic.getUuid())) {
+                    tandemPump.onPumpCriticalError(peripheral,
+                            TandemError.PAIRING_CANNOT_BEGIN.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status));
+                    return;
+                }
                 tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + characteristic.getUuid() + ", status: " + status));
+                        TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status));
             }
         }
 
@@ -119,7 +120,7 @@ public class TandemBluetoothHandler {
             } else {
                 Timber.e("ERROR: Failed writing <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()), status);
                 tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + characteristic.getUuid() + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
+                        TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
             }
         }
 

@@ -88,6 +88,6 @@ public class CharacteristicUUID {
         } else if (MODEL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {
             return "MODEL_NUMBER";
         }
-        return null;
+        return "unknown (" + uuid + ")";
     }
 }

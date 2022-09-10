@@ -500,9 +500,13 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String reason = intent.getStringExtra("reason");
             String message = intent.getStringExtra("message");
+            String extra = intent.getStringExtra("extra");
+            if (Strings.isNullOrEmpty(extra)) {
+                extra = "The pump is not responding as expected.";
+            }
             new AlertDialog.Builder(context)
                     .setTitle("Error connecting to pump: " + reason)
-                    .setMessage(message + "\n\nThe pump is not responding as expected. You may have to reset the pump.")
+                    .setMessage(message + "\n\n" + extra)
                     .setNegativeButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
