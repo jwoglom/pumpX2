@@ -1,11 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
@@ -29,8 +31,6 @@ public class PacketArrayList {
     protected byte opCode;
     protected boolean empty = true;
     protected final byte[] expectedCrc = {0, 0};
-
-    protected boolean initialTxIdFix = true;
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Preconditions.checkArgument(expectedopCode != 0);
@@ -182,5 +182,9 @@ public class PacketArrayList {
         } else {
             throw new IllegalArgumentException("Invalid data size: " + packetData.length);
         }
+    }
+
+    public String toString() {
+        return JavaHelpers.autoToString(this, ImmutableSet.of());
     }
 }

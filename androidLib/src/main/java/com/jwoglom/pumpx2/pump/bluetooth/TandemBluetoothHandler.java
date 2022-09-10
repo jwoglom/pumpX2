@@ -9,10 +9,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Pair;
 
+import androidx.core.util.Preconditions;
+
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
@@ -36,6 +40,7 @@ import com.welie.blessed.ScanFailure;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -119,10 +124,10 @@ public class TandemBluetoothHandler {
         }
 
         @Override
-        public void onCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
+        public void onCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic btCharacteristic, @NotNull GattStatus status) {
             if (status != GattStatus.SUCCESS) return;
 
-            UUID characteristicUUID = characteristic.getUuid();
+            UUID characteristicUUID = btCharacteristic.getUuid();
             BluetoothBytesParser parser = new BluetoothBytesParser(value);
 
             if (characteristicUUID.equals(CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID)) {
@@ -137,26 +142,31 @@ public class TandemBluetoothHandler {
                     characteristicUUID.equals(CharacteristicUUID.CONTROL_CHARACTERISTICS))
             {
                 String uuidName = CharacteristicUUID.which(characteristicUUID);
-                Timber.i("Received response with %s: %s", uuidName, Hex.encodeHexString(parser.getValue()));
+                Characteristic characteristic = Characteristic.of(characteristicUUID);
+
+                Byte txId = BTResponseParser.parseTxId(value);
+                Timber.i("Received response with %s and txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
 
                 // Parse
-                Pair<Message, Byte> pair = null;
+                Optional<Message> optRequestMessage = Optional.empty();
                 if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
-                    pair = PumpState.peekRequestMessage();
+                    optRequestMessage = PumpState.readRequestMessage(characteristic, txId);
                 }
                 Message requestMessage = new NonexistentHistoryLogStreamRequest();
-                Byte txId = (byte) 0;
-                if (pair != null) {
-                    requestMessage = pair.first;
-                    txId = pair.second;
+                if (optRequestMessage.isPresent()) {
+                    requestMessage = optRequestMessage.get();
                 } else if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
                     Timber.e("There was no request message to pop from PumpState");
+                    return;
                 }
 
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
+                // For multi-packet messages, use the saved packet array list so we have existing state of the previous BT packets.
+                PacketArrayList packetArrayList = PumpState.checkForSavedPacketArrayList(characteristic, txId)
+                        .orElse(wrapper.buildPacketArrayList(MessageType.RESPONSE));
                 PumpResponseMessage response;
                 try {
-                    response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
+                    response = BTResponseParser.parse(wrapper.message(), packetArrayList, parser.getValue(), characteristicUUID);
                 } catch (UnexpectedTransactionIdException e) {
                     Timber.w(e, "Unexpected transaction id in '%s'", Hex.encodeHexString(parser.getValue()));
                     if (txId == 0 && e.foundTxId > 0) {
@@ -175,12 +185,7 @@ public class TandemBluetoothHandler {
                 } catch (UnexpectedOpCodeException e) {
                     Timber.i("Unexpected opcode %d, expected %d: ignoring queue", e.foundOpcode, requestMessage.getResponseOpCode());
                     Timber.i("Ignoring message %s", Hex.encodeHexString(parser.getValue()));
-                    if (pair!= null) {
-                        Timber.i("Re-sending last message in queue: %s", requestMessage);
-                        PumpState.popRequestMessage();
-                        PumpState.pushRequestMessage(requestMessage, txId);
-                    }
-                    return;
+                    throw e;
                 } catch (Exception e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
                     throw e;
@@ -189,11 +194,10 @@ public class TandemBluetoothHandler {
                 Timber.i("Parsed response for %s: %s", Hex.encodeHexString(parser.getValue()), response.message());
 
                 if (response.message().isPresent()) {
-                    PumpState.popRequestMessage();
+                    PumpState.finishRequestMessage(characteristic, txId);
                 } else {
-                    Timber.i("Since we couldn't process the message, re-sending message");
-                    Packetize.txId.set((int) txId);
-                    tandemPump.sendCommand(peripheral, requestMessage);
+                    Timber.w("Couldn't process the response message for '%s' -- we likely need more packets. This should resolve when fetching the next BT packet.", Hex.encodeHexString(parser.getValue()));
+                    PumpState.savePacketArrayList(characteristic, txId, packetArrayList);
                     return;
                 }
 

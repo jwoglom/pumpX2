@@ -4,11 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
+import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 
 public class PumpState {
@@ -96,16 +104,39 @@ public class PumpState {
     }
 
     // The state of recent messages sent to the pump paired with the transaction id.
-    private static Queue<Pair<Message, Byte>> requestMessages = new LinkedList<>();
+    private static final Map<Pair<Characteristic, Byte>, Pair<Boolean, Message>> requestMessages = new HashMap<>();
     public static synchronized void pushRequestMessage(Message m, byte txId) {
-        requestMessages.add(Pair.create(m, txId));
+        Characteristic c = Characteristic.of(CharacteristicUUID.determine(m));
+        Pair<Characteristic, Byte> key = Pair.create(c, txId);
+        Preconditions.checkState(!requestMessages.containsKey(key));
+        requestMessages.put(key, Pair.create(false, m));
     }
 
-    public static synchronized Pair<Message, Byte> peekRequestMessage() {
-        return requestMessages.peek();
+    public static synchronized Optional<Message> readRequestMessage(Characteristic c, byte txId) {
+        Pair<Boolean, Message> pair = requestMessages.get(Pair.create(c, txId));
+        if (pair == null) {
+            return Optional.empty();
+        }
+        return Optional.of(pair.second);
     }
 
-    public static synchronized Pair<Message, Byte> popRequestMessage() {
-        return requestMessages.poll();
+    public static synchronized void finishRequestMessage(Characteristic c, byte txId) {
+        Pair<Characteristic, Byte> key = Pair.create(c, txId);
+        Pair<Boolean, Message> pair = requestMessages.get(key);
+        Preconditions.checkState(pair != null, "could not find requestMessage for txId "+txId+" and char "+c);
+        Preconditions.checkState(!pair.first, "txId "+txId+" was already processed for char "+c);
+        requestMessages.put(key, Pair.create(true, pair.second));
+    }
+
+    private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
+    public static synchronized void savePacketArrayList(Characteristic c, byte txId, PacketArrayList l) {
+        Pair<Characteristic, Byte> key = Pair.create(c, txId);
+        Preconditions.checkState(!savedPacketArrayList.containsKey(key));
+        savedPacketArrayList.put(key, l);
+    }
+
+    public static synchronized Optional<PacketArrayList> checkForSavedPacketArrayList(Characteristic c, byte txId) {
+        return Optional.ofNullable(savedPacketArrayList.get(Pair.create(c, txId)));
     }
 }
+

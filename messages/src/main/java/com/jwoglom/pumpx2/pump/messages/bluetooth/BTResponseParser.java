@@ -1,5 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -47,6 +48,16 @@ public class BTResponseParser {
         }
 
         return new PumpResponseMessage(output);
+    }
+
+    public static Byte parseTxId(byte[] output) {
+        Preconditions.checkState(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
+        /*
+        output[0] = packet index mod 15
+        output[1] = transaction ID
+        output[2] = opcode
+         */
+        return output[1];
     }
 
     private static void checkCharacteristicUuid(UUID uuid, byte[] output) {
