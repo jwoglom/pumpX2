@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jwoglom.pumpx2.pump.PumpState;
+import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
@@ -38,6 +39,7 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusPermissionResponse";
     public static final String GOT_INITIATE_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotInitiateBolusResponse";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
+    public static final String PUMP_ERROR_INTENT = "jwoglom.pumpx2.error";
 
     private ApiVersionResponse apiVersion;
     private TimeSinceResetResponse timeSinceReset;
@@ -186,6 +188,14 @@ public class PumpX2TandemPump extends TandemPump {
 
         Intent intent = new Intent(PUMP_CONNECTED_COMPLETE_INTENT);
         intent.putExtra("address", peripheral.getAddress());
+        context.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
+        Intent intent = new Intent(PUMP_ERROR_INTENT);
+        intent.putExtra("reason", reason.name());
+        intent.putExtra("message", reason.getMessage());
         context.sendBroadcast(intent);
     }
 }

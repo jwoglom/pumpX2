@@ -4,6 +4,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 
 import com.jwoglom.pumpx2.pump.PumpState;
+import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -158,5 +159,9 @@ public abstract class TandemPump {
         Timber.i("TandemPump: pair(" + pairingCode + ")");
         Message message = PumpChallengeBuilder.create(centralChallenge.getAppInstanceId(), pairingCode, centralChallenge.getHmacKey());
         sendCommand(peripheral, message);
+    }
+
+    public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
+        Timber.e("Unable to connect to pump %s: %s", peripheral, reason);
     }
 }

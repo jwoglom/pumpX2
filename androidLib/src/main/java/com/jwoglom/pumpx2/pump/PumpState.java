@@ -101,6 +101,10 @@ public class PumpState {
         requestMessages.add(Pair.create(m, txId));
     }
 
+    public static synchronized Pair<Message, Byte> peekRequestMessage() {
+        return requestMessages.peek();
+    }
+
     public static synchronized Pair<Message, Byte> popRequestMessage() {
         return requestMessages.poll();
     }

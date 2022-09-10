@@ -1,12 +1,12 @@
 package com.jwoglom.pumpx2.pump.messages;
 
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
-import kotlin.collections.ArraysKt;
-import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 
 public class StreamPacketArrayList extends PacketArrayList {
@@ -72,7 +72,7 @@ public class StreamPacketArrayList extends PacketArrayList {
             // Replace cargo size
             expectedCargoSize = cargoSize;
             if (txId != this.expectedTxId) {
-                throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
+                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
             } else if (cargoSize <= 255) {
                 byte numHistoryLogs = bArr[5];
                 if (cargoSize == (numHistoryLogs*26) + 2) {
@@ -85,7 +85,7 @@ public class StreamPacketArrayList extends PacketArrayList {
                 throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
             }
         } else {
-            throw new IllegalArgumentException("Unexpected opCode: " + ((int) opCode) + ", expecting " + ((int) this.expectedOpCode));
+            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);
         }
     }
 

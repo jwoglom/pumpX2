@@ -4,14 +4,14 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.Arrays;
 
-import kotlin.collections.ArraysKt;
-import kotlin.collections.CollectionsKt;
 import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Charsets;
 
@@ -29,6 +29,8 @@ public class PacketArrayList {
     protected byte opCode;
     protected boolean empty = true;
     protected final byte[] expectedCrc = {0, 0};
+
+    protected boolean initialTxIdFix = true;
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Preconditions.checkArgument(expectedopCode != 0);
@@ -139,7 +141,7 @@ public class PacketArrayList {
             }
             this.fullCargo = Bytes.dropFirstN(bArr, 5);
         } else {
-            throw new IllegalArgumentException("Unexpected opCode: " + ((int) opCode) + ", expecting " + ((int) this.expectedOpCode));
+            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);
         }
         L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
     }
@@ -176,7 +178,7 @@ public class PacketArrayList {
                 L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);
                 return;
             }
-            throw new IllegalArgumentException("Unexpected transaction ID 1: " + ((int) secondByte) + ", expecting " + ((int) this.expectedTxId) + ", opCode: " + ((int) this.expectedOpCode));
+            throw new UnexpectedTransactionIdException(secondByte, this.expectedTxId, this.expectedOpCode);
         } else {
             throw new IllegalArgumentException("Invalid data size: " + packetData.length);
         }

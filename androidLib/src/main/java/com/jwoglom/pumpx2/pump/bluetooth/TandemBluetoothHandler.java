@@ -4,13 +4,14 @@ import static com.welie.blessed.BluetoothBytesParser.bytes2String;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Pair;
 
 import com.jwoglom.pumpx2.pump.PumpState;
+import com.jwoglom.pumpx2.pump.TandemError;
+import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
@@ -18,6 +19,8 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
+import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
@@ -26,7 +29,6 @@ import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.BluetoothPeripheralCallback;
-import com.welie.blessed.ConnectionPriority;
 import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
@@ -72,16 +74,16 @@ public class TandemBluetoothHandler {
         public void onServicesDiscovered(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: services discovered, updating BT state");
             // Request a higher MTU, iOS always asks for 185
-            peripheral.requestMtu(185);
+//            peripheral.requestMtu(185);
 
             // Request a new connection priority
-            peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+//            peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
 
             Timber.i("TandemBluetoothHandler: services discovered, configuring characteristics");
 
             // Read manufacturer and model number from the Device Information Service
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID);
-            peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
+            //peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
             // Try to turn on notifications for other characteristics
             CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
@@ -100,6 +102,8 @@ public class TandemBluetoothHandler {
 
             } else {
                 Timber.e("ERROR: Changing notification state failed for %s (%s)", characteristic.getUuid(), status);
+                tandemPump.onPumpCriticalError(peripheral,
+                        TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + characteristic.getUuid() + ", status: " + status));
             }
         }
 
@@ -109,6 +113,8 @@ public class TandemBluetoothHandler {
                 Timber.i("SUCCESS: Writing <%s> to %s", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()));
             } else {
                 Timber.e("ERROR: Failed writing <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()), status);
+                tandemPump.onPumpCriticalError(peripheral,
+                        TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + characteristic.getUuid() + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
             }
         }
 
@@ -136,7 +142,7 @@ public class TandemBluetoothHandler {
                 // Parse
                 Pair<Message, Byte> pair = null;
                 if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
-                    pair = PumpState.popRequestMessage();
+                    pair = PumpState.peekRequestMessage();
                 }
                 Message requestMessage = new NonexistentHistoryLogStreamRequest();
                 Byte txId = (byte) 0;
@@ -151,12 +157,45 @@ public class TandemBluetoothHandler {
                 PumpResponseMessage response;
                 try {
                     response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
+                } catch (UnexpectedTransactionIdException e) {
+                    Timber.w(e, "Unexpected transaction id in '%s'", Hex.encodeHexString(parser.getValue()));
+                    if (txId == 0 && e.foundTxId > 0) {
+                        Timber.i("Ignoring txId %d since current txId is 0", e.foundTxId);
+                        return;
+//                        Timber.i("Setting txId from %d to %d, since initial txId was not 0", txId, e.foundTxId);
+//                        Packetize.txId.set(e.foundTxId);
+//                        Timber.i("Re-evaluating message with expected txId");
+//                        wrapper = new TronMessageWrapper(requestMessage, txId);
+//                        response = BTResponseParser.parse(wrapper, parser.getValue(), MessageType.RESPONSE, characteristicUUID);
+                    } else {
+                        tandemPump.onPumpCriticalError(peripheral,
+                                TandemError.UNEXPECTED_TRANSACTION_ID.withExtra("found TxID: " + e.foundTxId + ", expecting: " + txId));
+                        throw e;
+                    }
+                } catch (UnexpectedOpCodeException e) {
+                    Timber.i("Unexpected opcode %d, expected %d: ignoring queue", e.foundOpcode, requestMessage.getResponseOpCode());
+                    Timber.i("Ignoring message %s", Hex.encodeHexString(parser.getValue()));
+                    if (pair!= null) {
+                        Timber.i("Re-sending last message in queue: %s", requestMessage);
+                        PumpState.popRequestMessage();
+                        PumpState.pushRequestMessage(requestMessage, txId);
+                    }
+                    return;
                 } catch (Exception e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
                     throw e;
                 }
 
                 Timber.i("Parsed response for %s: %s", Hex.encodeHexString(parser.getValue()), response.message());
+
+                if (response.message().isPresent()) {
+                    PumpState.popRequestMessage();
+                } else {
+                    Timber.i("Since we couldn't process the message, re-sending message");
+                    Packetize.txId.set((int) txId);
+                    tandemPump.sendCommand(peripheral, requestMessage);
+                    return;
+                }
 
                 if (response.message().isPresent() && response.message().get() instanceof CentralChallengeResponse) {
                     CentralChallengeResponse resp = (CentralChallengeResponse) response.message().get();
@@ -183,6 +222,17 @@ public class TandemBluetoothHandler {
         public void onMtuChanged(@NotNull BluetoothPeripheral peripheral, int mtu, @NotNull GattStatus status) {
             Timber.i("new MTU set: %d", mtu);
         }
+
+        @Override
+        public void onConnectionUpdated(@NotNull BluetoothPeripheral peripheral, int interval, int latency, int timeout, @NotNull GattStatus status) {
+            if (status != GattStatus.SUCCESS) {
+                Timber.e("onConnectionUpdated %s", status);
+                tandemPump.onPumpCriticalError(peripheral,
+                        TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status));
+            } else {
+                Timber.i("onConnectionUpdated %s", status);
+            }
+        }
     };
 
     // Callback for central
@@ -196,6 +246,9 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectionFailed(@NotNull BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
             Timber.e("TandemBluetoothHandler: connection '%s' failed with status %s", peripheral.getName(), status);
+
+            tandemPump.onPumpCriticalError(peripheral,
+                    TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
         }
 
         @Override

@@ -8,6 +8,7 @@ import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_COMPLET
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE2_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_ERROR_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_INVALID_CHALLENGE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.UPDATE_TEXT_RECEIVER;
 import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.authenticationKey;
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER));
         registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
+        registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT));
 
         L.w("X2", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
     }
@@ -488,6 +490,20 @@ public class MainActivity extends AppCompatActivity {
                         }
                     })
                     .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+    };
+
+    private final BroadcastReceiver pumpErrorReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String reason = intent.getStringExtra("reason");
+            String message = intent.getStringExtra("message");
+            new AlertDialog.Builder(context)
+                    .setTitle("Error connecting to pump: " + reason)
+                    .setMessage(message + "\n\nThe pump is not responding as expected. You may have to reset the pump.")
+                    .setNegativeButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }
