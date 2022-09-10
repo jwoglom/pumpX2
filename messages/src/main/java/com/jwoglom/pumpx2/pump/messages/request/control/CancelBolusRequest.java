@@ -14,7 +14,7 @@ import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
  */
 @MessageProps(
     opCode=-96,
-    size=4,
+    size=4, // 28 with 24 byte padding
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     response=CancelBolusResponse.class,

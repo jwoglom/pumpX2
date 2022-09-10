@@ -118,6 +118,12 @@ public class Main {
                 Message message = Messages.fromOpcode(opCode, c).newInstance();
                 message.fillWithEmptyCargo();
                 messages.add(message);
+
+                // Auto-update pumpTimeSinceReset
+                if (message instanceof TimeSinceResetResponse) {
+                    PumpStateSupplier.pumpTimeSinceReset = ((TimeSinceResetResponse) message)::getTimeSinceResetRaw;
+                }
+
                 if (messageStr.length() > 0) {
                     messageStr += " <OR> ";
                 }

@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
@@ -17,6 +18,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionRespons
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
@@ -38,6 +40,8 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String GOT_HISTORY_LOG_STREAM_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStream";
     public static final String GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusPermissionResponse";
     public static final String GOT_INITIATE_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotInitiateBolusResponse";
+    public static final String GOT_CANCEL_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotCancelBolusResponse";
+    public static final String GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER = "jwoglom.pumpx2.gotLastBolusResponseAfterCancel";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
     public static final String PUMP_ERROR_INTENT = "jwoglom.pumpx2.error";
 
@@ -45,6 +49,7 @@ public class PumpX2TandemPump extends TandemPump {
     private TimeSinceResetResponse timeSinceReset;
 
     boolean bolusInProgress = false;
+    int lastBolusId = -1;
 
     public PumpX2TandemPump(Context context) {
         super(context);
@@ -114,7 +119,30 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("status", resp.getStatus());
-                intent.putExtra("statusType", resp.getStatusType());
+                intent.putExtra("statusTypeId", resp.getStatusTypeId());
+                intent.putExtra("statusType", String.valueOf(resp.getStatusType()));
+                context.sendBroadcast(intent);
+                return;
+            } else if (message instanceof CancelBolusResponse && bolusInProgress) {
+                CancelBolusResponse resp = (CancelBolusResponse) message;
+                Intent intent = new Intent(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("bolusId", resp.getBolusId());
+                intent.putExtra("status", resp.getStatusId());
+                intent.putExtra("reason", resp.getReasonId());
+                context.sendBroadcast(intent);
+                return;
+            } else if (message instanceof LastBolusStatusV2Response && bolusInProgress) {
+                LastBolusStatusV2Response resp = (LastBolusStatusV2Response) message;
+                Intent intent = new Intent(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("bolusId", resp.getBolusId());
+                intent.putExtra("status", String.valueOf(resp.getBolusStatus()));
+                intent.putExtra("statusId", resp.getBolusStatusId());
+                intent.putExtra("deliveredVolume", resp.getDeliveredVolume());
+                intent.putExtra("requestedVolume", resp.getRequestedVolume());
+                intent.putExtra("source", String.valueOf(resp.getBolusSource()));
+                intent.putExtra("sourceId", resp.getBolusSourceId());
                 context.sendBroadcast(intent);
                 return;
             }

@@ -1,9 +1,11 @@
 package com.jwoglom.pumpx2.example;
 
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_CANCEL_BOLUS_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STATUS_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STREAM_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_INITIATE_BOLUS_RESPONSE_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_COMPLETE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_INTENT;
@@ -52,12 +54,15 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
+import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
@@ -150,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
         registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER));
         registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER));
+        registerReceiver(gotCancelBolusResponseReceiver, new IntentFilter(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER));
+        registerReceiver(gotLastBolusStatusResponseAfterCancelReceiver, new IntentFilter(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
         registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT));
 
@@ -310,10 +317,10 @@ public class MainActivity extends AppCompatActivity {
                     } else if (className.equals(InitiateBolusRequest.class.getName())) {
                         triggerInitiateBolusRequestDialog(peripheral);
                         return;
+                    } else if (className.equals(CancelBolusRequest.class.getName())) {
+                        triggerCancelBolusRequestDialog(peripheral);
+                        return;
                     } else if (className.equals(BolusPermissionRequest.class.getName())) {
-                        //writePumpMessage(new BolusPermissionRequest(PumpState.getAdjustedPumpTimeSinceReset(), new byte[20]), peripheral);
-//                        writePumpMessage(new TimeSinceResetRequest(), peripheral);
-//                        try{Thread.sleep(500);}catch(InterruptedException e){};
                         writePumpMessage(new BolusPermissionRequest(), peripheral);
                         return;
                     }
@@ -345,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
     private Queue<Integer> remainingSequenceNums = new LinkedList<>();
     private int remainingSequenceNumsInBatch = 0;
 
-    private static int sequenceNumBatchSize = 3;
+    private static final int sequenceNumBatchSize = 3;
 
     private final BroadcastReceiver gotHistoryLogStatusReceiver = new BroadcastReceiver() {
         @Override
@@ -856,6 +863,7 @@ public class MainActivity extends AppCompatActivity {
                         int numUnits = Integer.parseInt(numUnitsStr);
                         int bolusId = Integer.parseInt(bolusIdStr);
 
+                        tandemEventCallback.lastBolusId = bolusId;
                         // InitiateBolusRequest(long totalVolume, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB)
                         writePumpMessage(new InitiateBolusRequest(
                                 numUnits,
@@ -878,6 +886,44 @@ public class MainActivity extends AppCompatActivity {
 
                 builder2.show();
 
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void triggerCancelBolusRequestDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("CancelBolusRequest");
+        builder.setMessage("Enter the bolus ID (this can be received from currentStatus.LastBolusStatusV2)");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        if (tandemEventCallback.lastBolusId > 0) {
+            input1.setText(String.valueOf(tandemEventCallback.lastBolusId));
+        }
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String bolusIdStr = input1.getText().toString();
+                Timber.i("bolusId: %s", bolusIdStr);
+
+                if ("".equals(bolusIdStr)) {
+                    Timber.e("Not cancelling bolus because no units entered.");
+                    return;
+                }
+
+                int bolusId = Integer.parseInt(bolusIdStr);
+                writePumpMessage(new CancelBolusRequest(bolusId), peripheral);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -982,7 +1028,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (status != 0 || nackReasonId != 0) {
                 new AlertDialog.Builder(context)
-                        .setTitle("Bolus")
+                        .setTitle("Bolus Error")
                         .setMessage("Unable to deliver bolus due to: " + BolusPermissionResponse.NackReason.fromId(nackReasonId) + " (status: " + status + ")")
                         .setNegativeButton(android.R.string.ok, null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -991,12 +1037,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            long bolusUnits = (long)(bolusProcessUnits * 1000);
+            long bolusUnits = InsulinUnit.from1To1000(bolusProcessUnits);
             new AlertDialog.Builder(context)
-                    .setTitle("Bolus")
+                    .setTitle("Bolus Confirm")
                     .setMessage("Confirm delivery of the >> " + bolusProcessUnits + " unit << bolus. (" + bolusUnits + ")")
                     .setPositiveButton("Deliver Bolus", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            tandemEventCallback.lastBolusId = bolusId;
                             writePumpMessage(new InitiateBolusRequest(
                                     bolusUnits,
                                     bolusId,
@@ -1023,12 +1070,13 @@ public class MainActivity extends AppCompatActivity {
 
             int bolusId = intent.getIntExtra("bolusId", -1);
             int status = intent.getIntExtra("status", -1);
-            int statusType = intent.getIntExtra("statusType", -1);
+            int statusTypeId = intent.getIntExtra("statusTypeId", -1);
+            String statusType = intent.getStringExtra("statusType");
 
-            if (status != 0 || statusType != 0) {
+            if (status != 0 || statusTypeId != 0) {
                 new AlertDialog.Builder(context)
-                        .setTitle("Bolus")
-                        .setMessage("Bolus ID: " + bolusId + " returned status " + status +" and statusType " + statusType)
+                        .setTitle("Bolus Error")
+                        .setMessage("Bolus ID: " + bolusId + " returned status " + status +" and statusType " + statusType + " (" + statusTypeId + ")")
                         .setNegativeButton(android.R.string.ok, null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
@@ -1037,8 +1085,67 @@ public class MainActivity extends AppCompatActivity {
             }
 
             new AlertDialog.Builder(context)
-                    .setTitle("Bolus")
+                    .setTitle("Bolus Delivered")
                     .setMessage("Bolus is being delivered.\n\nBolus ID: " + bolusId)
+                    .setPositiveButton("CANCEL DELIVERY", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            writePumpMessage(new CancelBolusRequest(bolusId), peripheral);
+                        }
+                    })
+                    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            tandemEventCallback.bolusInProgress = false;
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    };
+
+    private final BroadcastReceiver gotCancelBolusResponseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int bolusId = intent.getIntExtra("bolusId", -1);
+            int status = intent.getIntExtra("status", -1);
+            int reason = intent.getIntExtra("reason", -1);
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Bolus Cancelled")
+                    .setMessage("Bolus ID " + bolusId + " was cancelled.\n\nStatus: " + status + "\nReason: " + reason)
+                    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            writePumpMessage(new LastBolusStatusV2Request(), peripheral);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+        }
+    };
+
+    private final BroadcastReceiver gotLastBolusStatusResponseAfterCancelReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int bolusId = intent.getIntExtra("bolusId", -1);
+            String status = intent.getStringExtra("status");
+            int statusId = intent.getIntExtra("statusId", -1);
+            long deliveredVolume = intent.getLongExtra("deliveredVolume", -1);
+            long requestedVolume = intent.getLongExtra("requestedVolume", -1);
+            String source = intent.getStringExtra("source");
+            int sourceId = intent.getIntExtra("sourceId", -1);
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Bolus Status")
+                    .setMessage("Bolus ID " + bolusId + " delivered " + InsulinUnit.from1000To1(deliveredVolume) + " / " + InsulinUnit.from1000To1(requestedVolume) + " units:\n\n" +
+                            "Status: " + status + " (" + statusId + ")\n" +
+                            "Delivered: " + InsulinUnit.from1000To1(deliveredVolume) + "u\n" +
+                            "Requested: " + InsulinUnit.from1000To1(requestedVolume) + "u\n" +
+                            "Source: " + source + " ( " + sourceId + ")")
                     .setNegativeButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .show();

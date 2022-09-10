@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 
-import java.math.BigInteger;
-
 @MessageProps(
     opCode=-97,
     size=6, // 30 with 24 byte hmac padding
@@ -22,15 +20,15 @@ public class InitiateBolusResponse extends Message {
     
     private int status;
     private int bolusId;
-    private int statusType;
+    private int statusTypeId;
     
     public InitiateBolusResponse() {}
     
-    public InitiateBolusResponse(int status, int bolusId, int statusType) {
-        this.cargo = buildCargo(status, bolusId, statusType);
+    public InitiateBolusResponse(int status, int bolusId, int statusTypeId) {
+        this.cargo = buildCargo(status, bolusId, statusTypeId);
         this.status = status;
         this.bolusId = bolusId;
-        this.statusType = statusType;
+        this.statusTypeId = statusTypeId;
         
     }
 
@@ -40,7 +38,7 @@ public class InitiateBolusResponse extends Message {
         this.cargo = raw;
         this.status = raw[0];
         this.bolusId = Bytes.readShort(raw, 1);
-        this.statusType = raw[5];
+        this.statusTypeId = raw[5];
         
     }
 
@@ -59,8 +57,31 @@ public class InitiateBolusResponse extends Message {
     public int getBolusId() {
         return bolusId;
     }
-    public int getStatusType() {
-        return statusType;
-    } // 0 = successBolusIsPending
-    
+    public int getStatusTypeId() {
+        return statusTypeId;
+    }
+    public BolusResponseStatus getStatusType() {
+        return BolusResponseStatus.fromId(statusTypeId);
+    }
+
+
+    public enum BolusResponseStatus {
+        SUCCESS(0), // 0 = successBolusIsPending
+
+        ;
+
+        private final int id;
+        BolusResponseStatus(int id) {
+            this.id = id;
+        }
+
+        public static BolusResponseStatus fromId(int id) {
+            for (BolusResponseStatus s : values()) {
+                if (s.id == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+    }
 }

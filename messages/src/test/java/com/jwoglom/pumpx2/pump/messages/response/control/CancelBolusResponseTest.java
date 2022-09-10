@@ -3,6 +3,8 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
+import static org.junit.Assert.assertEquals;
+
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -28,6 +30,8 @@ public class CancelBolusResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.SUCCESS);
+        assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.NO_ERROR);
     }
 
     @Test
@@ -48,5 +52,53 @@ public class CancelBolusResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.SUCCESS);
+        assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.NO_ERROR);
+    }
+
+    @Test
+    public void testCancelBolusResponse_ID10688_cancelledAfterCompletedDelivery() throws DecoderException {
+        // authenticationKey=bJVYJq9jdtjxPcYa pumpTimeSinceReset=463692320
+        initPumpState("bJVYJq9jdtjxPcYa", 463692320L);
+
+        // CancelBolusResponse[bolusId=10688,reason=2,status=1,cargo={1,-64,41,2,0}]
+        CancelBolusResponse expected = new CancelBolusResponse(
+                1, 10688, 2
+        );
+
+        CancelBolusResponse parsedRes = (CancelBolusResponse) MessageTester.test(
+                "0006a1061d01c02902004e62a31b93f40e8ae917aa40df366dd04d0cdb19d1c0fdd3b4f9",
+                6,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.FAILED);
+        assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.INVALID_OR_ALREADY_DELIVERED);
+    }
+
+    @Test
+    public void testCancelBolusResponse_invalidId() throws DecoderException {
+        // authenticationKey=bJVYJq9jdtjxPcYa pumpTimeSinceReset=463693031
+        initPumpState("bJVYJq9jdtjxPcYa", 463693031L);
+
+        // CancelBolusResponse[bolusId=34463,reasonId=2,statusId=1,cargo={1,-97,-122,2,0}]
+        CancelBolusResponse expected = new CancelBolusResponse(
+                1, 34463, 2
+        );
+
+        CancelBolusResponse parsedRes = (CancelBolusResponse) MessageTester.test(
+                "0004a1041d019f8602000f65a31ba24ec318b5b102d56ee0db9463eb4d645ed2b2560905",
+                4,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.FAILED);
+        assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.INVALID_OR_ALREADY_DELIVERED);
     }
 }

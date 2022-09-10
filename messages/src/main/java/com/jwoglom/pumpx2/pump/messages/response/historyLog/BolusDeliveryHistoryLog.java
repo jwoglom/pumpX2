@@ -115,6 +115,8 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         QUICK_BOLUS(0),
         GUI(1),
         CONTROL_IQ_AUTO_BOLUS(7),
+        BLUETOOTH_REMOTE_BOLUS(8),
+
         ;
         private int id;
         BolusSource(int id) {

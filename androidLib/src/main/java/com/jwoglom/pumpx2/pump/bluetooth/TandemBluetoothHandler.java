@@ -29,6 +29,7 @@ import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.BluetoothPeripheralCallback;
+import com.welie.blessed.ConnectionPriority;
 import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
@@ -75,10 +76,14 @@ public class TandemBluetoothHandler {
         public void onServicesDiscovered(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: services discovered, updating BT state");
             // Request a higher MTU, iOS always asks for 185
-//            peripheral.requestMtu(185);
+            // NOTE: If this is removed or lowered, then pump request messages cannot be over a certain length
+            // or they may not be able to be received. More pump response messages will also split over multiple packets.
+            // If setting the MTU returns an error, the pump is likely not accepting connections and needs to be open
+            // to the pairing menu.
+            peripheral.requestMtu(185);
 
             // Request a new connection priority
-//            peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+            peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
 
             Timber.i("TandemBluetoothHandler: services discovered, configuring characteristics");
 
