@@ -7,38 +7,39 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.request.control.RemoteCarbEntryRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.OpcodeNegative16Request;
+
+import java.math.BigInteger;
 
 @MessageProps(
-    opCode=-13,
+    opCode=-15,
     size=1,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
-    request= RemoteCarbEntryRequest.class,
+    request=OpcodeNegative16Request.class,
     signed=true,
     minApi=KnownApiVersion.API_V2_5
 )
-public class RemoteCarbEntryResponse extends Message {
+public class OpcodeNegative16Response extends Message {
     private int status;
     
-    public RemoteCarbEntryResponse() {}
+    public OpcodeNegative16Response() {}
 
-    public RemoteCarbEntryResponse(int status) {
+    public OpcodeNegative16Response(int status) {
         this.cargo = buildCargo(status);
         this.status = status;
     }
 
     public static byte[] buildCargo(int status) {
         return Bytes.combine(
-                new byte[]{(byte) status}
+                Bytes.firstByteLittleEndian(status)
         );
     }
 
     public void parse(byte[] raw) {
         raw = removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size(), "size " + raw.length);
+        Preconditions.checkArgument(raw.length == props().size(), "length: " + raw.length);
         this.cargo = raw;
-        this.status = raw[0];
     }
 
     public int getStatus() {

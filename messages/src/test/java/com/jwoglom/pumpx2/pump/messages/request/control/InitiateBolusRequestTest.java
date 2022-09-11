@@ -112,7 +112,46 @@ public class InitiateBolusRequestTest {
         assertEquals(11, parsedReq.getBolusCarbs());
         assertEquals(161, parsedReq.getBolusBG());
         assertEquals(130, parsedReq.getBolusIOB()); // 0.13u
+    }
 
+    @Test
+    public void testInitiateBolusRequest_ID10677() throws DecoderException {
+        // TimeSinceResetResponse[pumpTime=1200239,timeSinceReset=461710145]
+        initPumpState("6VeDeRAL5DCigGw2", 461710145L);
+        InitiateBolusRequest expected = new InitiateBolusRequest(770, 10677, 3, 50, 720, 5, 185, 0);
+
+        InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
+                "03ab9eab3d02030000b52900000332000000d002",
+                -85,
+                3,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "02ab00000500b900000000000000000000000000",
+                "01ab000000004123851bd5302d47de4038f56320",
+                "00abce9113be8ce2a1e1b82126c5"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+    @Test
+    public void testInitiateBolusRequest_ID10678() throws DecoderException {
+        // TimeSinceResetResponse[pumpTime=1200296,timeSinceReset=461710202]
+        initPumpState("6VeDeRAL5DCigGw2", 461710202L);
+        InitiateBolusRequest expected = new InitiateBolusRequest(760, 10678, 3, 30, 730, 3, 186, 0);
+
+        InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
+                "03d09ed03df8020000b6290000031e000000da02",
+                -48,
+                3,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "02d000000300ba00000000000000000000000000",
+                "01d0000000007a23851bcd0708af0ac0a24f2ee7",
+                "00d0fa056febc1e4710541765047"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 
     private byte[] stripHmacCargo(byte[] cargo) {

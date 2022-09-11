@@ -10,59 +10,61 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;
 
 /**
- * untested
+ * occurs before InitiateBolusRequest
  */
 @MessageProps(
-    opCode=242,
+    opCode=-14,
     size=9,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     response=RemoteCarbEntryResponse.class,
-    minApi=KnownApiVersion.API_V2_5,
-    signed=true
+    signed=true,
+    minApi=KnownApiVersion.API_V2_5
 )
-public class RemoteCarbEntryRequest extends Message { 
+public class RemoteCarbEntryRequest extends Message {
     private int carbs;
+    private int unknown;
     private long pumpTime;
     private int bolusId;
-    
+
     public RemoteCarbEntryRequest() {}
 
-    public RemoteCarbEntryRequest(int carbs, long pumpTime, int bolusId) {
-        this.cargo = buildCargo(carbs, pumpTime, bolusId);
+    public RemoteCarbEntryRequest(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {
+        this.cargo = buildCargo(carbs, unknown, pumpTimeSecondsSinceBoot, bolusId);
         this.carbs = carbs;
-        this.pumpTime = pumpTime;
+        this.unknown = unknown;
+        this.pumpTime = pumpTimeSecondsSinceBoot;
         this.bolusId = bolusId;
-        
+    }
+
+    public static byte[] buildCargo(int carbs, int unknown, long pumpTime, int bolusId) {
+        return Bytes.combine(
+                Bytes.firstTwoBytesLittleEndian(carbs),
+                new byte[]{(byte) unknown},
+                Bytes.toUint32(pumpTime),
+                Bytes.firstTwoBytesLittleEndian(bolusId)
+        );
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        raw = removeSignedRequestHmacBytes(raw);
+        Preconditions.checkArgument(raw.length == props().size(), "size " + raw.length);
         this.cargo = raw;
         this.carbs = Bytes.readShort(raw, 0);
-        this.pumpTime = Bytes.readUint32(raw, 4);
-        this.bolusId = Bytes.readShort(raw, 6);
-        
+        this.unknown = raw[2];
+        this.pumpTime = Bytes.readUint32(raw, 3);
+        this.bolusId = Bytes.readShort(raw, 7);
     }
 
-    
-    public static byte[] buildCargo(int carbs, long pumpTime, int bolusId) {
-        return Bytes.combine(
-            Bytes.toUint32(carbs),
-            new byte[]{0, 0},
-            Bytes.toUint32(pumpTime),
-            Bytes.firstTwoBytesLittleEndian(bolusId)
-        );
-    }
     public int getCarbs() {
         return carbs;
     }
+
     public long getPumpTime() {
         return pumpTime;
     }
+
     public int getBolusId() {
         return bolusId;
     }
-    
-    
 }
