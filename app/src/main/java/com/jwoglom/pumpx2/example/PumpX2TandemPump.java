@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.example;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
@@ -27,6 +28,7 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResp
 import com.welie.blessed.BluetoothPeripheral;
 
 import com.jwoglom.pumpx2.shared.Hex;
+import com.welie.blessed.HciStatus;
 
 import timber.log.Timber;
 
@@ -207,6 +209,13 @@ public class PumpX2TandemPump extends TandemPump {
         Intent intent = new Intent(PUMP_CONNECTED_STAGE3_INTENT);
         intent.putExtra("address", peripheral.getAddress());
         context.sendBroadcast(intent);
+    }
+
+
+    @Override
+    public boolean onPumpDisconnected(BluetoothPeripheral peripheral, HciStatus status) {
+        Toast.makeText(context, "Pump disconnected: " + status, Toast.LENGTH_SHORT).show();
+        return super.onPumpDisconnected(peripheral, status);
     }
 
     public void checkPumpInitMessagesReceived(BluetoothPeripheral peripheral) {

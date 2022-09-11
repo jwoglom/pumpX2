@@ -109,7 +109,7 @@ public abstract class TandemPump {
      * @return true if we should attempt to re-connect to the device, false otherwise
      */
     public boolean onPumpDisconnected(BluetoothPeripheral peripheral, HciStatus status) {
-        Timber.i("TandemPump: onPumpDisconnected");
+        Timber.i("TandemPump: onPumpDisconnected with status '%s'", status);
         return true;
     }
 

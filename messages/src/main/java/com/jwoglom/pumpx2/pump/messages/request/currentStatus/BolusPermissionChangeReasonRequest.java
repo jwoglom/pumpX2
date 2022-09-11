@@ -13,7 +13,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionCh
  */
 @MessageProps(
     opCode=-88,
-    size=0,
+    size=2,
     type=MessageType.REQUEST,
     response=BolusPermissionChangeReasonResponse.class,
     minApi=KnownApiVersion.API_FUTURE
@@ -23,10 +23,21 @@ public class BolusPermissionChangeReasonRequest extends Message {
         this.cargo = EMPTY;
     }
 
+    private int bolusId;
+    public BolusPermissionChangeReasonRequest(int bolusId) {
+        this.cargo = buildCargo(bolusId);
+        this.bolusId = bolusId;
+    }
+
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        
+        this.bolusId = Bytes.readShort(raw, 0);
+    }
+
+    public static byte[] buildCargo(int bolusId) {
+        return Bytes.combine(
+                Bytes.firstTwoBytesLittleEndian(bolusId));
     }
 
     

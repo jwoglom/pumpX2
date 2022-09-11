@@ -9,13 +9,16 @@ import sys
 import re
 import os
 
-CATEGORIES = ["authentication", "currentStatus", "historyLog", "control"]
+CATEGORIES = ["authentication", "currentStatus", "historyLog", "control", "controlStream"]
 CATEGORY_UUID = {
     "authentication": "AUTHENTICATION",
     "currentStatus": "CURRENT_STATUS",
     "historyLog": "HISTORY_LOG",
-    "control": "CONTROL"
+    "control": "CONTROL",
+    "controlStream": "CONTROL_STREAM"
 }
+
+RESPONSE_ONLY_CATEGORIES = ["historyLog", "controlStream"]
 
 MAIN_TEMPLATES = {
   "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/request/{prefix}template.j2": \
@@ -107,7 +110,7 @@ def build_ctx():
   ctx["catUuid"] = CATEGORY_UUID[cat]
 
   ctx["requestName"] = ctx["name"] + 'Request'
-  if cat != "historyLog":
+  if not cat in RESPONSE_ONLY_CATEGORIES:
     ctx["requestOpcode"] = int(input(ctx["requestName"] + ' opcode: '))
     ctx = add_args(ctx, "request")
   else:
@@ -174,7 +177,7 @@ def main():
   ctx = build_ctx()
 
   for tpl, out in templates.items():
-    if ctx["cat"] == "historyLog" and "request" in tpl:
+    if ctx["cat"] in RESPONSE_ONLY_CATEGORIES and "request" in tpl:
       continue
     f = out.format(**ctx)
     tplName = tpl.format(prefix=f'{ctx["cat"]}/')

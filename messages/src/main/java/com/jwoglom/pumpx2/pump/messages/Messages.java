@@ -112,6 +112,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SuspendPumpingRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SuspendPumpingResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -122,7 +124,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
@@ -179,6 +180,7 @@ public enum Messages {
     COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),
     SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),
     CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),
+    PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),
     // MESSAGES_END
     ;
 

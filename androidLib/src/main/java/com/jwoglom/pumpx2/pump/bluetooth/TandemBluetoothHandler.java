@@ -8,6 +8,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 
+import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -37,7 +38,9 @@ import com.welie.blessed.ScanFailure;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -59,6 +62,7 @@ public class TandemBluetoothHandler {
 
         // Create BluetoothCentral
         central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler());
+        resetRemainingConnectionInitializationSteps();
     }
 
     private TandemBluetoothHandler(Context context, TandemPump tandemPump) {
@@ -69,6 +73,23 @@ public class TandemBluetoothHandler {
     public BluetoothCentralManager central;
     private static TandemBluetoothHandler instance = null;
     private final Handler handler = new Handler();
+
+    private enum ConnectionInitializationStep {
+        SERVICES_DISCOVERED,
+        MTU_UPDATED,
+        CONNECTION_UPDATED,
+        CHARACTERISTIC_NOTIFICATIONS,
+
+        ALREADY_INITIALIZED,
+    }
+
+    private final Set<ConnectionInitializationStep> remainingConnectionInitializationSteps = new HashSet<>();
+    private final Set<UUID> remainingCharacteristicNotificationsInit = new HashSet<>();
+    private synchronized void resetRemainingConnectionInitializationSteps() {
+        remainingConnectionInitializationSteps.addAll(ImmutableList.copyOf(ConnectionInitializationStep.values()));
+        remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.ALREADY_INITIALIZED);
+        remainingCharacteristicNotificationsInit.addAll(CharacteristicUUID.ENABLED_NOTIFICATIONS);
+    }
 
     // Callback for peripherals
     private final BluetoothPeripheralCallback peripheralCallback = new BluetoothPeripheralCallback() {
@@ -96,15 +117,34 @@ public class TandemBluetoothHandler {
                 peripheral.setNotify(ServiceUUID.PUMP_SERVICE_UUID, uuid, true);
             });
 
-            Timber.i("TandemBluetoothHandler: Initial pump connection established");
-            tandemPump.onInitialPumpConnection(peripheral);
+            Timber.i("TandemBluetoothHandler: waiting for Bluetooth initialization callback");
+            remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.SERVICES_DISCOVERED);
+            checkIfInitialPumpConnectionEstablished(peripheral);
+        }
+
+        private synchronized void checkIfInitialPumpConnectionEstablished(BluetoothPeripheral peripheral) {
+            if (remainingConnectionInitializationSteps.isEmpty()) {
+                Timber.i("TandemBluetoothHandler: initial pump connection established");
+                tandemPump.onInitialPumpConnection(peripheral);
+                remainingConnectionInitializationSteps.add(ConnectionInitializationStep.ALREADY_INITIALIZED);
+            } else if (!remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
+                Timber.i("TandemBluetoothHandler: initial pump connection is waiting for: %s", remainingConnectionInitializationSteps);
+            }
         }
 
         @Override
         public void onNotificationStateUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
                 final boolean isNotifying = peripheral.isNotifying(characteristic);
-                Timber.i("SUCCESS: Notify set to '%s' for %s", isNotifying, characteristic.getUuid());
+                Timber.i("SUCCESS: Notify set to '%s' for %s (%s)", isNotifying, characteristic.getUuid(), CharacteristicUUID.which(characteristic.getUuid()));
+
+                synchronized (remainingCharacteristicNotificationsInit) {
+                    remainingCharacteristicNotificationsInit.remove(characteristic.getUuid());
+                    if (remainingCharacteristicNotificationsInit.isEmpty()) {
+                        remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CHARACTERISTIC_NOTIFICATIONS);
+                    }
+                }
+                checkIfInitialPumpConnectionEstablished(peripheral);
 
             } else {
                 Timber.e("ERROR: Changing notification state failed for %s (%s)", CharacteristicUUID.which(characteristic.getUuid()), status);
@@ -143,7 +183,8 @@ public class TandemBluetoothHandler {
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) ||
-                    characteristicUUID.equals(CharacteristicUUID.CONTROL_CHARACTERISTICS))
+                    characteristicUUID.equals(CharacteristicUUID.CONTROL_CHARACTERISTICS) ||
+                    characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS))
             {
                 String uuidName = CharacteristicUUID.which(characteristicUUID);
                 Characteristic characteristic = Characteristic.of(characteristicUUID);
@@ -151,17 +192,20 @@ public class TandemBluetoothHandler {
                 Byte txId = BTResponseParser.parseTxId(value);
                 Timber.i("Received response with %s and txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
 
-                // Parse
-                Optional<Message> optRequestMessage = Optional.empty();
-                if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
-                    optRequestMessage = PumpState.readRequestMessage(characteristic, txId);
-                }
-                Message requestMessage = new NonexistentHistoryLogStreamRequest();
-                if (optRequestMessage.isPresent()) {
-                    requestMessage = optRequestMessage.get();
-                } else if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
-                    Timber.e("There was no request message to pop from PumpState");
-                    return;
+
+                Message requestMessage = null;
+                if (characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
+                    requestMessage = new NonexistentHistoryLogStreamRequest();
+                } else if (characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
+
+                } else {
+                    Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
+                    if (opt.isPresent()) {
+                        requestMessage = opt.get();
+                    } else {
+                        Timber.e("There was no request message to pop from PumpState (characteristic: %s, txId: %d)", characteristic, txId);
+                        return;
+                    }
                 }
 
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
@@ -229,19 +273,24 @@ public class TandemBluetoothHandler {
         @Override
         public void onMtuChanged(@NotNull BluetoothPeripheral peripheral, int mtu, @NotNull GattStatus status) {
             Timber.i("new MTU set: %d", mtu);
+            remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.MTU_UPDATED);
+            checkIfInitialPumpConnectionEstablished(peripheral);
         }
 
         @Override
         public void onConnectionUpdated(@NotNull BluetoothPeripheral peripheral, int interval, int latency, int timeout, @NotNull GattStatus status) {
-            if (status != GattStatus.SUCCESS) {
+            if (status == GattStatus.SUCCESS) {
+                Timber.i("onConnectionUpdated %s", status);
+
+                remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CONNECTION_UPDATED);
+                checkIfInitialPumpConnectionEstablished(peripheral);
+            } else {
                 Timber.e("onConnectionUpdated %s", status);
                 TandemError error = TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status);
                 if (status == GattStatus.VALUE_NOT_ALLOWED) {
                     error = TandemError.PAIRING_CANNOT_BEGIN.withCause(error);
                 }
                 tandemPump.onPumpCriticalError(peripheral, error);
-            } else {
-                Timber.i("onConnectionUpdated %s", status);
             }
         }
     };
@@ -252,6 +301,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectedPeripheral(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
+            this.reconnectDelay = 5000;
         }
 
         @Override
@@ -262,10 +312,11 @@ public class TandemBluetoothHandler {
                     TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
         }
 
-        private int reconnectDelay = 5000;
+        private int reconnectDelay = 2500;
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
+            resetRemainingConnectionInitializationSteps();
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 // Reconnect to this device when it becomes available again
                 handler.postDelayed(new Runnable() {

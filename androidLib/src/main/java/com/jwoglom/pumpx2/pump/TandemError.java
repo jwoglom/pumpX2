@@ -1,7 +1,5 @@
 package com.jwoglom.pumpx2.pump;
 
-import com.google.common.base.Strings;
-
 public enum TandemError {
     PAIRING_CANNOT_BEGIN("Pairing cannot begin because the pump has not generated a pairing code.\n\nPlease open Options > Device Settings > Bluetooth Settings > Pair Device and hit OK to display the pairing code"),
 
