@@ -22,9 +22,11 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
@@ -206,7 +208,13 @@ public class TandemBluetoothHandler {
                 if (characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
                     requestMessage = new NonexistentHistoryLogStreamRequest();
                 } else if (characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
-
+                    try {
+                        requestMessage = ControlStreamMessages.determineRequestMessage(value);
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        Timber.e("Could not handle control stream message: '%s'", Hex.encodeHexString(value));
+                        Timber.e(e);
+                        return;
+                    }
                 } else {
                     Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
                     if (opt.isPresent()) {

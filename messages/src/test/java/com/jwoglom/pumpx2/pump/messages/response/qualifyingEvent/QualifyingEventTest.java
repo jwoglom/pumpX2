@@ -74,4 +74,11 @@ public class QualifyingEventTest {
         assertEquals(events, ImmutableSet.of(IOB_CHANGE));
         System.out.println(events);
     }
+
+    @Test
+    public void testQualifyingEvent_10() throws DecoderException {
+        Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(Hex.decodeHex("e34e4100"));
+        assertEquals(events, ImmutableSet.of(PUMP_RESUME, BATTERY, ALERT, ALARM, PUMP_SUSPEND, BASAL_CHANGE, BOLUS_CHANGE, HOME_SCREEN_CHANGE, IOB_CHANGE, CONTROL_IQ_INFO, BG));
+        System.out.println(events);
+    }
 }

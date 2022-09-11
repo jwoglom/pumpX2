@@ -166,7 +166,6 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
             }
             return bitmask;
         }
-
     }
     
 }
