@@ -118,6 +118,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusReq
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.RemoteBgEntryRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.RemoteCarbEntryRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -187,6 +189,7 @@ public enum Messages {
     PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),
     LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),
     REMOTE_BG_ENTRY(RemoteBgEntryRequest.class, RemoteBgEntryResponse.class),
+    REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),
     // MESSAGES_END
     ;
 

@@ -10,6 +10,15 @@ TimeSinceResetRequest
 RemoteBgEntryRequest (opcode -74)
 >RemoteBgEntryResponse (opcode -73)
 
+optionally:
+    RemoteCarbEntryRequest
+    >RemoteCarbEntryResponse
+
+somewhere:
+    BolusPermissionChangeReasonRequest (opcode ??, in currentStatus)
+    >BolusPermissionChangeReasonResponse (opcode ??, in currentStatus)
+
+
 in one case:
     ? opcode -14
     >? opcode -13
