@@ -1,0 +1,55 @@
+package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
+
+import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
+
+import java.util.Set;
+
+/**
+ * Contains everything shared between {@link LastBolusStatusResponse} and {@link LastBolusStatusV2Response}
+ * except that the latter contains requestedVolume
+ */
+public abstract class LastBolusStatusAbstractResponse extends Message {
+    public abstract int getStatus();
+    public abstract int getBolusId();
+    public abstract long getTimestamp();
+    public abstract long getDeliveredVolume();
+    public abstract int getBolusStatusId();
+    public enum BolusStatus {
+        // TODO: this is guesswork and is incomplete
+        STOPPED(0),
+        COMPLETE(3),
+        ;
+
+        private final int id;
+        BolusStatus(int id) {
+            this.id = id;
+        }
+
+        public int id() {
+            return id;
+        }
+
+        public static BolusStatus fromId(int id) {
+            for (BolusStatus s : values()) {
+                if (s.id() == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+    }
+
+    public BolusStatus getBolusStatus() {
+        return BolusStatus.fromId(getBolusStatusId());
+    }
+    public abstract int getBolusSourceId();
+    public BolusDeliveryHistoryLog.BolusSource getBolusSource() {
+        return BolusDeliveryHistoryLog.BolusSource.fromId(getBolusSourceId());
+    }
+    public abstract int getBolusTypeBitmask();
+    public Set<BolusDeliveryHistoryLog.BolusType> getBolusType() {
+        return BolusDeliveryHistoryLog.BolusType.fromBitmask(getBolusTypeBitmask());
+    }
+    public abstract long getExtendedBolusDuration();
+}

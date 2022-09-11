@@ -4,13 +4,14 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;
 
 /**
  * API Version dependent. Do NOT invoke directly.
  *
- * @see com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder
+ * @see CurrentBatteryRequestBuilder
  */
 @MessageProps(
     opCode=-112,

@@ -114,6 +114,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -181,6 +183,7 @@ public enum Messages {
     SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),
     CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),
     PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),
+    LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),
     // MESSAGES_END
     ;
 

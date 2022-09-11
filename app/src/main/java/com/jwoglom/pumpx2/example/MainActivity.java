@@ -53,7 +53,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
 
             batteryRequestButton.setVisibility(View.VISIBLE);
             batteryRequestButton.setOnClickListener((z) -> {
-                writePumpMessage(CurrentBatteryBuilder.create(PumpState.getPumpAPIVersion(context)), peripheral);
+                writePumpMessage(CurrentBatteryRequestBuilder.create(PumpState.getPumpAPIVersion()), peripheral);
             });
 
 

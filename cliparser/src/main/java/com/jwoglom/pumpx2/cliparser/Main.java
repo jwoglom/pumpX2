@@ -27,10 +27,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class Main {
     private static final String TAG = "CLIParser";
@@ -121,7 +119,7 @@ public class Main {
 
                 // Auto-update pumpTimeSinceReset
                 if (message instanceof TimeSinceResetResponse) {
-                    PumpStateSupplier.pumpTimeSinceReset = ((TimeSinceResetResponse) message)::getTimeSinceResetRaw;
+                    PumpStateSupplier.pumpTimeSinceReset = ((TimeSinceResetResponse) message)::getTimeSinceReset;
                 }
 
                 if (messageStr.length() > 0) {

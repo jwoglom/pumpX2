@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequ
 
 import java.nio.charset.Charset;
 
-public class PumpChallengeBuilder {
+public class PumpChallengeRequestBuilder {
     public static PumpChallengeRequest create(int appInstanceId, String pairingCode, byte[] hmacKey) {
         String pairingChars = processPairingCode(pairingCode);
         Preconditions.checkArgument(pairingChars.length() == 16);

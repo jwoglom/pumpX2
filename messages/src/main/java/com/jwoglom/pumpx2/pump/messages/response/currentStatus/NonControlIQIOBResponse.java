@@ -11,7 +11,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.NonControlIQIOBReq
         opCode=39,
         size=12,
         type=MessageType.RESPONSE,
-        request= NonControlIQIOBRequest.class
+        request=NonControlIQIOBRequest.class
 )
 public class NonControlIQIOBResponse extends Message {
     private long iob;

@@ -11,12 +11,13 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
-import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeBuilder;
-import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
@@ -25,6 +26,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -55,13 +57,15 @@ public abstract class TandemPump {
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
         Timber.i("TandemPump: onInitialPumpConnection");
-        sendCommand(peripheral, CentralChallengeBuilder.create(0));
+        sendCommand(peripheral, CentralChallengeRequestBuilder.create(0));
     }
 
     /**
-     *
-     * @param peripheral
-     * @param message
+     * Sends a request message to the pump. Most requests have no arguments and can be initialized
+     * with their no-arg constructor. The pump will send a response message to every request,
+     * which you can retrieve the result of asynchronously via the onReceiveMessage() callback.
+     * @param peripheral the BluetoothPeripheral representing the pump
+     * @param message a request message from {@link com.jwoglom.pumpx2.pump.messages.request}
      */
     public void sendCommand(BluetoothPeripheral peripheral, Message message) {
         Timber.i("TandemPump: sendCommand(" + message + ")");
@@ -96,11 +100,23 @@ public abstract class TandemPump {
 
     /**
      * Callback invoked when we receive the response to a command sent to the pump.
+     * Note that authentication responses are not returned here, they are handled inside of
+     * {@link TandemBluetoothHandler} and considered an implementation detail of the PumpX2 library.
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param message the parsed message which extends the Message class. To identify what type of
      *                message was found, check with `if (message instanceof ApiVersionResponse) ..`
      */
     public abstract void onReceiveMessage(BluetoothPeripheral peripheral, Message message);
+
+    /**
+     * Callback invoked when we receive a qualifying event from the pump. When an event is received,
+     * a bitmask of different parameters is received over the Bluetooth connection.
+     * @param peripheral the BluetoothPeripheral representing the pump
+     * @param events a set of QualifyingEvent enums representing the event(s) which occurred. Note
+     *               that some of these enum values represent metadata about the event, rather than
+     *               specifying that distinct events occurred.
+     */
+    public abstract void onReceiveQualifyingEvent(BluetoothPeripheral peripheral, Set<QualifyingEvent> events);
 
     /**
      * Callback invoked when a pump which we were connected to over Bluetooth is disconnected.
@@ -139,6 +155,16 @@ public abstract class TandemPump {
     }
 
     /**
+     * Called when the pump model number is returned from the Bluetooth DIS
+     * @param peripheral the BluetoothPeripheral representing the pump which is connected
+     * @param modelNumber the model number of the pump. Expected value is "X2" for the t:slim X2;
+     *                    may be different in the future, e.g. for Mobi)
+     */
+    public void onPumpModel(BluetoothPeripheral peripheral, String modelNumber) {
+        Timber.i("TandemPump: onPumpModel: %s", modelNumber);
+    }
+
+    /**
      * Callback invoked when the CentralChallengeResponse is received, and pair() can be invoked
      * with a pairing code displayed on the pump to instantiate the pump-to-device connection.
      * @param peripheral the BluetoothPeripheral representing the pump
@@ -157,7 +183,7 @@ public abstract class TandemPump {
      */
     public void pair(BluetoothPeripheral peripheral, CentralChallengeResponse centralChallenge, String pairingCode) {
         Timber.i("TandemPump: pair(" + pairingCode + ")");
-        Message message = PumpChallengeBuilder.create(centralChallenge.getAppInstanceId(), pairingCode, centralChallenge.getHmacKey());
+        Message message = PumpChallengeRequestBuilder.create(centralChallenge.getAppInstanceId(), pairingCode, centralChallenge.getHmacKey());
         sendCommand(peripheral, message);
     }
 

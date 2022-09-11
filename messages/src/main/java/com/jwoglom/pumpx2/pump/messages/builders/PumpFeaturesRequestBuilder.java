@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV2Requ
 /**
  * On an earlier than V2_API pump, PumpFeaturesV2Request returns a bad opcode ErrorResponse
  */
-public class PumpFeaturesBuilder {
+public class PumpFeaturesRequestBuilder {
     public static Message create(ApiVersion apiVersion) {
         if (apiVersion.greaterThan(KnownApiVersion.API_V2_1)) {
             return new PumpFeaturesV2Request();

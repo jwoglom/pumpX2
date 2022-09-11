@@ -27,8 +27,8 @@ public class CharacteristicUUID {
     // For signed messages
     public static final UUID CONTROL_CHARACTERISTICS = UUID.fromString("7B83FFFC-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID CONTROL_STREAM_CHARACTERISTICS = UUID.fromString("7B83FFFD-9F77-4E5C-8064-AAE2C24838B9");
-    public static final UUID SERVICE_CHANGED_CHARACTERISTICS = UUID.fromString("000002A05-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem
-    public static final UUID NOTIFICATION_CCCD = UUID.fromString("000002902-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem
+    public static final UUID SERVICE_CHANGED_CHARACTERISTICS = UUID.fromString("00002A05-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem (000002A05-0000-1000-8000-00805F9B34FB)
+    public static final UUID NOTIFICATION_CCCD = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem (000002902-0000-1000-8000-00805F9B34FB)
 
     // Generic Bluetooth characteristics
     public static final UUID MANUFACTURER_NAME_CHARACTERISTIC_UUID = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");

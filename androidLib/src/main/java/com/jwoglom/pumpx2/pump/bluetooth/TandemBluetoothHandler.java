@@ -25,6 +25,9 @@ import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
@@ -38,6 +41,7 @@ import com.welie.blessed.ScanFailure;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.ByteOrder;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -110,7 +114,7 @@ public class TandemBluetoothHandler {
 
             // Read manufacturer and model number from the Device Information Service
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID);
-            //peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
+            peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
             // Try to turn on notifications for other characteristics
             CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
@@ -179,7 +183,12 @@ public class TandemBluetoothHandler {
                 Timber.i("Received manufacturer: %s", manufacturer);
             } else if (characteristicUUID.equals(CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID)) {
                 String modelNumber = parser.getStringValue(0);
-                Timber.i("Received modelnumber: %s", modelNumber);
+                Timber.i("Received modelNumber: %s", modelNumber);
+                tandemPump.onPumpModel(peripheral, modelNumber);
+            } else if (characteristicUUID.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS)) {
+                // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
+                // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);
+                tandemPump.onReceiveQualifyingEvent(peripheral, QualifyingEvent.fromRawBtBytes(value));
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) ||
@@ -249,10 +258,12 @@ public class TandemBluetoothHandler {
                     return;
                 }
 
-                if (response.message().isPresent() && response.message().get() instanceof CentralChallengeResponse) {
+                Message msg = response.message().get();
+
+                if (msg instanceof CentralChallengeResponse) {
                     CentralChallengeResponse resp = (CentralChallengeResponse) response.message().get();
                     tandemPump.onWaitingForPairingCode(peripheral, resp);
-                } else if (response.message().isPresent() && response.message().get() instanceof PumpChallengeResponse) {
+                } else if (msg instanceof PumpChallengeResponse) {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {
                         Timber.i("Response was SUCCESSFUL");
@@ -262,8 +273,13 @@ public class TandemBluetoothHandler {
                         Timber.i("Response was UNSUCCESSFUL");
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
-                } else if (response.message().isPresent()) {
-                    tandemPump.onReceiveMessage(peripheral, response.message().get());
+                } else {
+                    if (msg instanceof ApiVersionResponse) {
+                        PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());
+                    } else if (msg instanceof TimeSinceResetResponse) {
+                        PumpState.setPumpTimeSinceReset(((TimeSinceResetResponse) msg).getTimeSinceReset());
+                    }
+                    tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
                 Timber.i("Received response to UUID %s: %s", characteristicUUID, Hex.encodeHexString(parser.getValue()));

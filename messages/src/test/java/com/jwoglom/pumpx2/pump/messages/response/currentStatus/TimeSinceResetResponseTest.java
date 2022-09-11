@@ -30,7 +30,7 @@ public class TimeSinceResetResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Instant.parse("2022-02-28T17:50:49.00Z"), parsedRes.getTimeSinceReset());
+        assertEquals(Instant.parse("2022-02-28T17:50:49.00Z"), parsedRes.getTimeSinceResetInstant());
     }
 
     @Test

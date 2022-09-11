@@ -25,10 +25,13 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Res
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
 
 import com.jwoglom.pumpx2.shared.Hex;
 import com.welie.blessed.HciStatus;
+
+import java.util.Set;
 
 import timber.log.Timber;
 
@@ -46,9 +49,6 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER = "jwoglom.pumpx2.gotLastBolusResponseAfterCancel";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
     public static final String PUMP_ERROR_INTENT = "jwoglom.pumpx2.error";
-
-    private ApiVersionResponse apiVersion;
-    private TimeSinceResetResponse timeSinceReset;
 
     boolean bolusInProgress = false;
     int lastBolusId = -1;
@@ -80,14 +80,10 @@ public class PumpX2TandemPump extends TandemPump {
         if (message instanceof ApiVersionResponse) {
             ApiVersionResponse resp = (ApiVersionResponse) message;
             Timber.i("Got ApiVersionRequest: %s", resp);
-            PumpState.setPumpAPIVersion(context, resp.getApiVersion());
-            apiVersion = resp;
             checkPumpInitMessagesReceived(peripheral);
         } else if (message instanceof TimeSinceResetResponse) {
             TimeSinceResetResponse resp = (TimeSinceResetResponse) message;
             Timber.i("Got TimeSinceResetResponse: %s", resp);
-            PumpState.setPumpTimeSinceReset(resp.getTimeSinceResetRaw());
-            timeSinceReset = resp;
             checkPumpInitMessagesReceived(peripheral);
         } else {
             if (message instanceof HistoryLogStatusResponse) {
@@ -193,6 +189,12 @@ public class PumpX2TandemPump extends TandemPump {
     }
 
     @Override
+    public void onReceiveQualifyingEvent(BluetoothPeripheral peripheral, Set<QualifyingEvent> events) {
+        Timber.i("Received QualifyingEvents: %s", events);
+        Toast.makeText(context, "Received QualifyingEvents: " + events, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     public void onWaitingForPairingCode(BluetoothPeripheral peripheral, CentralChallengeResponse centralChallenge) {
         // checkHmac(authKey, centralChallenge we sent, new byte[0])
         // doHmacSha1(10 bytes from central challenge request, bytes from authKey/pairing code) == 2-22 of response
@@ -219,7 +221,7 @@ public class PumpX2TandemPump extends TandemPump {
     }
 
     public void checkPumpInitMessagesReceived(BluetoothPeripheral peripheral) {
-        if (apiVersion == null || timeSinceReset == null) {
+        if (PumpState.getPumpAPIVersion() == null || PumpState.getPumpTimeSinceReset() == null) {
             return;
         }
 

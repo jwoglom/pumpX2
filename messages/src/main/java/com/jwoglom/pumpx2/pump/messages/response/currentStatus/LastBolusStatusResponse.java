@@ -1,29 +1,27 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
-import com.jwoglom.pumpx2.pump.messages.annotations.ApiVersionDependent;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
-import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;
 
-import java.util.Set;
+import java.math.BigInteger;
 
 /**
- * Contains requestedVolume which {@link LastBolusStatusResponse} does not have
+ * Does not contain requestedVolume which {@link LastBolusStatusV2Response} has
  */
 @MessageProps(
-    opCode=-91,
-    size=24,
+    opCode=49,
+    size=18,
     type=MessageType.RESPONSE,
-    request=LastBolusStatusV2Request.class,
-    minApi=KnownApiVersion.API_V2_5
+    characteristic=Characteristic.CURRENT_STATUS,
+    request=LastBolusStatusRequest.class
 )
-@ApiVersionDependent
-public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
+public class LastBolusStatusResponse extends LastBolusStatusAbstractResponse {
+    
     private int status;
     private int bolusId;
     private long timestamp;
@@ -32,12 +30,11 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
     private int bolusSourceId;
     private int bolusTypeBitmask;
     private long extendedBolusDuration;
-    private long requestedVolume;
     
-    public LastBolusStatusV2Response() {}
+    public LastBolusStatusResponse() {}
     
-    public LastBolusStatusV2Response(int status, int bolusId, long timestamp, long deliveredVolume, int bolusStatusId, int bolusSourceId, int bolusTypeBitmask, long extendedBolusDuration, long requestedVolume) {
-        this.cargo = buildCargo(status, bolusId, timestamp, deliveredVolume, bolusStatusId, bolusSourceId, bolusTypeBitmask, extendedBolusDuration, requestedVolume);
+    public LastBolusStatusResponse(int status, int bolusId, long timestamp, long deliveredVolume, int bolusStatusId, int bolusSourceId, int bolusTypeBitmask, long extendedBolusDuration) {
+        this.cargo = buildCargo(status, bolusId, timestamp, deliveredVolume, bolusStatusId, bolusSourceId, bolusTypeBitmask, extendedBolusDuration);
         this.status = status;
         this.bolusId = bolusId;
         this.timestamp = timestamp;
@@ -46,7 +43,6 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
         this.bolusSourceId = bolusSourceId;
         this.bolusTypeBitmask = bolusTypeBitmask;
         this.extendedBolusDuration = extendedBolusDuration;
-        this.requestedVolume = requestedVolume;
         
     }
 
@@ -61,23 +57,20 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
         this.bolusSourceId = raw[14];
         this.bolusTypeBitmask = raw[15];
         this.extendedBolusDuration = Bytes.readUint32(raw, 16);
-        this.requestedVolume = Bytes.readUint32(raw, 20);
         
     }
 
-
-    public static byte[] buildCargo(int status, int bolusId, long timestamp, long deliveredVolume, int bit13, int bit14, int bit15, long extendedBolusDuration, long requestedVolume) {
+    
+    public static byte[] buildCargo(int status, int bolusId, long timestamp, long deliveredVolume, int bolusStatusId, int bolusSourceId, int bolusTypeBitmask, long extendedBolusDuration) {
         return Bytes.combine(
-            new byte[]{ (byte) status },
-            Bytes.firstTwoBytesLittleEndian(bolusId),
-            new byte[]{ 0, 0 },
-            Bytes.toUint32(timestamp),
-            Bytes.toUint32(deliveredVolume),
-            new byte[]{ (byte) bit13 }, 
-            new byte[]{ (byte) bit14 }, 
-            new byte[]{ (byte) bit15 }, 
-            Bytes.toUint32(extendedBolusDuration),
-            Bytes.toUint32(requestedVolume));
+            new byte[]{ (byte) status }, 
+            Bytes.firstTwoBytesLittleEndian(bolusId), 
+            Bytes.toUint32(timestamp), 
+            Bytes.toUint32(deliveredVolume), 
+            new byte[]{ (byte) bolusStatusId }, 
+            new byte[]{ (byte) bolusSourceId }, 
+            new byte[]{ (byte) bolusTypeBitmask }, 
+            Bytes.toUint32(extendedBolusDuration));
     }
     
     public int getStatus() {
@@ -103,9 +96,6 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
     }
     public long getExtendedBolusDuration() {
         return extendedBolusDuration;
-    }
-    public long getRequestedVolume() {
-        return requestedVolume;
     }
     
 }

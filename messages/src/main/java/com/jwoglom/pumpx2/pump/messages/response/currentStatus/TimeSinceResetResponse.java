@@ -48,15 +48,20 @@ public class TimeSinceResetResponse extends Message {
             Bytes.toUint32(timeSinceReset), 
             Bytes.toUint32(pumpTime));
     }
-    
-    public long getTimeSinceResetRaw() {
+
+    /**
+     * IMPORTANT NOTE: These names are actually switched: this returns the pump's internal
+     * realtime clock which is an actual date, instead of the internal epoch time... yes, it's
+     * confusing.
+     */
+    public long getTimeSinceReset() {
         return timeSinceReset;
     }
 
     /**
      * @return the evaluation of timeSinceReset against the epoch
      */
-    public Instant getTimeSinceReset() {
+    public Instant getTimeSinceResetInstant() {
         return Dates.fromJan12008EpochSecondsToDate(timeSinceReset);
     }
 

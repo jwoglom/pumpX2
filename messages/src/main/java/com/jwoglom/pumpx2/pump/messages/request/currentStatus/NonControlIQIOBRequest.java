@@ -12,7 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBRe
         opCode=38,
         size=0,
         type=MessageType.REQUEST,
-        response= NonControlIQIOBResponse.class
+        response=NonControlIQIOBResponse.class
 )
 public class NonControlIQIOBRequest extends Message {
     public NonControlIQIOBRequest() {
