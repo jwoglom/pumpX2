@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;
 
 /**
@@ -13,10 +14,12 @@ import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse
  */
 @MessageProps(
     opCode=242,
-    size=10,
+    size=9,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
-    response=RemoteCarbEntryResponse.class
+    response=RemoteCarbEntryResponse.class,
+    minApi=KnownApiVersion.API_V2_5,
+    signed=true
 )
 public class RemoteCarbEntryRequest extends Message { 
     private int carbs;
