@@ -108,13 +108,11 @@ public class TandemBluetoothHandler {
 
             } else {
                 Timber.e("ERROR: Changing notification state failed for %s (%s)", CharacteristicUUID.which(characteristic.getUuid()), status);
+                TandemError error = TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status);
                 if (CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.equals(characteristic.getUuid())) {
-                    tandemPump.onPumpCriticalError(peripheral,
-                            TandemError.PAIRING_CANNOT_BEGIN.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status));
-                    return;
+                    error = TandemError.PAIRING_CANNOT_BEGIN.withCause(error);
                 }
-                tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status));
+                tandemPump.onPumpCriticalError(peripheral, error);
             }
         }
 
@@ -237,8 +235,11 @@ public class TandemBluetoothHandler {
         public void onConnectionUpdated(@NotNull BluetoothPeripheral peripheral, int interval, int latency, int timeout, @NotNull GattStatus status) {
             if (status != GattStatus.SUCCESS) {
                 Timber.e("onConnectionUpdated %s", status);
-                tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status));
+                TandemError error = TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status);
+                if (status == GattStatus.VALUE_NOT_ALLOWED) {
+                    error = TandemError.PAIRING_CANNOT_BEGIN.withCause(error);
+                }
+                tandemPump.onPumpCriticalError(peripheral, error);
             } else {
                 Timber.i("onConnectionUpdated %s", status);
             }
@@ -261,9 +262,10 @@ public class TandemBluetoothHandler {
                     TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
         }
 
+        private int reconnectDelay = 5000;
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
-            Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s", peripheral.getName(), status);
+            Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 // Reconnect to this device when it becomes available again
                 handler.postDelayed(new Runnable() {
@@ -271,7 +273,8 @@ public class TandemBluetoothHandler {
                     public void run() {
                         central.autoConnectPeripheral(peripheral, peripheralCallback);
                     }
-                }, 5000);
+                }, reconnectDelay);
+                reconnectDelay *= 1.5;
             }
         }
 
