@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 /**
  * A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request
  * messages which can be sent (via `sendPumpCommand`) to receive more information about the event
- * which just occurred, in logic matching the Tandem mobile app, is included. To invoke these
- * request messages, you can invoke:
- *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents).forEach(
- *          message -> tandemPump.sendPumpCommand(peripheral, message));
+ * which just occurred, in logic matching the Tandem mobile app, is included. To get these
+ * instantiated request messages, you can invoke:
+ *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)
+ *
  */
 public enum QualifyingEvent {
     ALERT(1, ImmutableSet.of(
