@@ -43,12 +43,16 @@ public class HistoryLogParser {
     public static HistoryLog parse(byte[] rawStream) {
         int typeId = Bytes.readShort(rawStream, 0);
 
-        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
-            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
-            return null;
-        }
 
         HistoryLog historyLog = null;
+        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
+            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+            historyLog = new UnknownHistoryLog();
+            historyLog.parse(rawStream);
+
+            return historyLog;
+        }
+
         try {
             historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();
         } catch (IllegalAccessException|InstantiationException e) {

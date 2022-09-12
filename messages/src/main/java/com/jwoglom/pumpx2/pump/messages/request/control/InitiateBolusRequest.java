@@ -11,15 +11,23 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistory
 
 import java.util.Set;
 
+/**
+ * Initiates a bolus. Must be done following a BolusPermissionRequest, which returns a bolusID
+ * that is used for completing the bolus.
+ */
 @MessageProps(
     opCode=-98,
     size=37, // 61 with 24 byte padding
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     response=InitiateBolusResponse.class,
-    signed=true
+    signed=true,
+    modifiesInsulinDelivery=true
 )
 public class InitiateBolusRequest extends Message {
+    public static long MIN_BOLUS_MILLIUNITS = 50; // 0.05 u
+    public static long MIN_EXTENDED_BOLUS_MILLIUNITS = 400; // 0.40 u
+
     private long totalVolume;
     private int bolusID;
     private int bolusTypeBitmask;
@@ -28,6 +36,9 @@ public class InitiateBolusRequest extends Message {
     private int bolusCarbs;
     private int bolusBG;
     private long bolusIOB;
+    private long unknown1;
+    private long unknown2;
+    private long unknown3;
 
     public InitiateBolusRequest() {}
 
@@ -37,9 +48,18 @@ public class InitiateBolusRequest extends Message {
 
     // all parameters:
     // (C49011.this.bolusId, MobileBolusModel.mobileBolusModel.bolusType(), BolusConfirmFragment.this.bolusTotalVol(), BolusConfirmFragment.this.bolusFoodVol(), C49011.this.bolusCorrectionVol, BolusConfirmFragment.this.bolusCarbs(), BolusConfirmFragment.this.bolusBG(), BolusConfirmFragment.this.bolusIOB(), 0L, 0L, 0L)
-    // There is one additional parameter used by Tandem which we do not know (the final long), except that it is 0
     public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {
-        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB);
+        this(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, 0, 0, 0);
+    }
+    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long unknown1, long unknown2, long unknown3) {
+        Preconditions.checkArgument(totalVolume >= MIN_BOLUS_MILLIUNITS);
+        Preconditions.checkArgument(bolusID > 0);
+        Preconditions.checkArgument(foodVolume >= 0);
+        Preconditions.checkArgument(correctionVolume >= 0);
+        Preconditions.checkArgument(bolusCarbs >= 0);
+        Preconditions.checkArgument(bolusBG >= 0);
+        Preconditions.checkArgument(bolusIOB >= 0);
+        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, unknown1, unknown2, unknown3);
         this.totalVolume = totalVolume; //
         this.bolusID = bolusID;
         this.bolusTypeBitmask = bolusTypeBitmask; //
@@ -48,6 +68,9 @@ public class InitiateBolusRequest extends Message {
         this.bolusCarbs = bolusCarbs; //
         this.bolusBG = bolusBG; //
         this.bolusIOB = bolusIOB; //
+        this.unknown1 = unknown1;
+        this.unknown2 = unknown2;
+        this.unknown3 = unknown3;
     }
 
     public void parse(byte[] raw) {
@@ -105,7 +128,7 @@ public class InitiateBolusRequest extends Message {
     }
 
 
-    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {
+    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long unknown1, long unknown2, long unknown3) {
         return Bytes.combine(
                 Bytes.toUint32(totalVolume),
                 Bytes.firstTwoBytesLittleEndian(bolusID),
@@ -116,7 +139,9 @@ public class InitiateBolusRequest extends Message {
                 Bytes.firstTwoBytesLittleEndian(bolusCarbs),
                 Bytes.firstTwoBytesLittleEndian(bolusBG),
                 Bytes.toUint32(bolusIOB),
-                new byte[12]
+                Bytes.toUint32(unknown1),
+                Bytes.toUint32(unknown2),
+                Bytes.toUint32(unknown3)
                 // 24 byte signed padding with hmac
 //                Bytes.toUint32(timestamp),
 //                new byte[20]

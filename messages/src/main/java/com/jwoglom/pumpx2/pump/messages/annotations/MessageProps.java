@@ -26,4 +26,5 @@ public @interface MessageProps {
     Class<? extends Message> request() default UndefinedMessage.class;
     KnownApiVersion minApi() default KnownApiVersion.API_V2_1;
     Characteristic characteristic() default Characteristic.CURRENT_STATUS;
+    boolean modifiesInsulinDelivery() default false;
 }

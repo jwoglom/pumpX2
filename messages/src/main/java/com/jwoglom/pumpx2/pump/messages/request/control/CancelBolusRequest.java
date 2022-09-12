@@ -10,7 +10,9 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
 
 /**
- * also known as BolusTerminationRequest
+ * also known as BolusTerminationRequest.
+ * Can be used on boluses which are initiated from the phone as well as the pump.
+ * Works for extended boluses.
  */
 @MessageProps(
     opCode=-96,

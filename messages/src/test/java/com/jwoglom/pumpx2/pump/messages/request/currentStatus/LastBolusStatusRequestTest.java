@@ -16,8 +16,8 @@ public class LastBolusStatusRequestTest {
         LastBolusStatusRequest expected = new LastBolusStatusRequest();
 
         LastBolusStatusRequest parsedReq = (LastBolusStatusRequest) MessageTester.test(
-                "xxxx",
-                3,
+                "0005300500ccf6",
+                5,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

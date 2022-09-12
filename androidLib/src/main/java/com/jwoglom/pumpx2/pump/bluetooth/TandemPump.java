@@ -67,7 +67,7 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param message a request message from {@link com.jwoglom.pumpx2.pump.messages.request}
      */
-    public void sendCommand(BluetoothPeripheral peripheral, Message message) {
+    public final void sendCommand(BluetoothPeripheral peripheral, Message message) {
         Timber.i("TandemPump: sendCommand(" + message + ")");
         ArrayList<byte[]> bytes = new ArrayList<>();
         byte currentTxId = Packetize.txId.get();
@@ -187,6 +187,11 @@ public abstract class TandemPump {
         sendCommand(peripheral, message);
     }
 
+    /**
+     * Invoked when an error occurs within PumpX2.
+     * @param peripheral the BluetoothPeripheral representing the pump
+     * @param reason a value from the {@link TandemError} enum representing the error which occurred
+     */
     public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
         Timber.e("Unable to connect to pump %s: %s", peripheral, reason);
     }

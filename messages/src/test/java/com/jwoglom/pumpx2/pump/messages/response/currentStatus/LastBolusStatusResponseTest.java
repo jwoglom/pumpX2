@@ -13,12 +13,13 @@ public class LastBolusStatusResponseTest {
     public void testLastBolusStatusResponse() throws DecoderException { 
         LastBolusStatusResponse expected = new LastBolusStatusResponse(
             // int status, int bolusId, long timestamp, long deliveredVolume, int bolusStatusId, int bolusSourceId, int bolusTypeBitmask, long extendedBolusDuration
+                1, 10690, 463703230, 200, 3, 8, 8, 0, new byte[2]
         );
 
         LastBolusStatusResponse parsedRes = (LastBolusStatusResponse) MessageTester.test(
-                "xxxx",
-                3,
-                1,
+                "000531051401c2290000be8ca31bc800000003080800000000bc1f",
+                5,
+                2,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );

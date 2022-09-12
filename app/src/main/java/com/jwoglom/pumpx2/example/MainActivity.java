@@ -980,24 +980,58 @@ public class MainActivity extends AppCompatActivity {
     // bolus
     //
 
-    private Double bolusProcessUnits = null;
+    static class BolusParameters {
+        double units;
+        int carbsGrams;
+        int glucoseMgdl;
+        BolusParameters(double units, int carbsGrams, int glucoseMgdl) {
+            this.units = units;
+            this.carbsGrams = carbsGrams;
+            this.glucoseMgdl = glucoseMgdl;
+        }
+    }
+
+    private BolusParameters bolusParameters = null;
     private void startBolusProcess(BluetoothPeripheral peripheral) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter bolus amount");
         builder.setMessage("Enter the number of units to bolus");
 
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        builder.setView(input);
+//        final EditText input = new EditText(this);
+//        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+//        builder.setView(input);
+        final View bolusWindow = getLayoutInflater().inflate(R.layout.bolus_window, null);
+        builder.setView(bolusWindow);
+
+        EditText bolusUnitsView = bolusWindow.findViewById(R.id.bolusUnits);
+        EditText carbsGramsView = bolusWindow.findViewById(R.id.carbsGrams);
+        EditText glucoseMgdlView = bolusWindow.findViewById(R.id.glucoseMgdl);
 
         final MainActivity mainAct = this;
         builder.setPositiveButton("Bolus", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String bolusUnitsNumber = input.getText().toString();
-                Timber.i("bolusUnitsNumber: %s", bolusUnitsNumber);
-                double bolusUnits = Double.parseDouble(bolusUnitsNumber);
-                mainAct.bolusProcessUnits = bolusUnits;
+
+                String bolusUnitsStr = bolusUnitsView.getText().toString();
+                if (Strings.isNullOrEmpty(bolusUnitsStr)) {
+                    bolusUnitsStr = "0.0";
+                }
+                double bolusUnits = Double.parseDouble(bolusUnitsStr);
+
+                String carbsGramsStr = carbsGramsView.getText().toString();
+                if (Strings.isNullOrEmpty(carbsGramsStr)) {
+                    carbsGramsStr = "0";
+                }
+                int carbsGrams = Integer.parseInt(carbsGramsStr);
+
+                String glucoseMgdlStr = glucoseMgdlView.getText().toString();
+                if (Strings.isNullOrEmpty(glucoseMgdlStr)) {
+                    glucoseMgdlStr = "0";
+                }
+                int glucoseMgdl = Integer.parseInt(glucoseMgdlStr);
+                Timber.i("bolusUnits: %f carbsGrams: %d glucoseMgdl: %d", bolusUnits, carbsGrams, glucoseMgdl);
+
+                mainAct.bolusParameters = new BolusParameters(bolusUnits, carbsGrams, glucoseMgdl);
                 dialog.cancel();
 
                 tandemEventCallback.bolusInProgress = true;
@@ -1037,21 +1071,23 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            long bolusUnits = InsulinUnit.from1To1000(bolusProcessUnits);
+            long bolusMilliunits = InsulinUnit.from1To1000(bolusParameters.units);
             new AlertDialog.Builder(context)
                     .setTitle("Bolus Confirm")
-                    .setMessage("Confirm delivery of the >> " + bolusProcessUnits + " unit << bolus. (" + bolusUnits + ")")
+                    .setMessage("Carbs: " + bolusParameters.carbsGrams + "g\n" +
+                                "BG: " + (bolusParameters.glucoseMgdl == 0 ? "n/a" : bolusParameters.glucoseMgdl + "mg/dL") + "\n" +
+                                "Units to deliver: " + bolusParameters.units + "u")
                     .setPositiveButton("Deliver Bolus", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             tandemEventCallback.lastBolusId = bolusId;
                             writePumpMessage(new InitiateBolusRequest(
-                                    bolusUnits,
+                                    bolusMilliunits,
                                     bolusId,
                                     BolusDeliveryHistoryLog.BolusType.FOOD2.mask(),
                                     0,
                                     0,
-                                    0,
-                                    0,
+                                    bolusParameters.carbsGrams,
+                                    bolusParameters.glucoseMgdl,
                                     0
                             ), peripheral);
                         }

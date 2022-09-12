@@ -9,6 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import java.util.List;
 
 public class TronMessageWrapper {
+    boolean actionsAffectingInsulinDeliveryEnabled = false;
 
     private final Message message;
     private final List<Packet> packets;
@@ -71,6 +72,11 @@ public class TronMessageWrapper {
                 size += 24;
             }
         }
+
+        if (message.props().modifiesInsulinDelivery() && !actionsAffectingInsulinDeliveryEnabled) {
+            throw new ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception();
+        }
+
         return PacketArrayList.build(
                 (byte) opCode,
                 message.getCharacteristic(),
@@ -78,5 +84,11 @@ public class TronMessageWrapper {
                 packets.get(0).transactionId(),
                 message.signed()
         );
+    }
+
+    static class ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception extends RuntimeException {
+        ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception() {
+            super("The developer of this application has not enabled actions which affect insulin delivery");
+        }
     }
 }

@@ -16,8 +16,8 @@ public class LocalizationRequestTest {
         LocalizationRequest expected = new LocalizationRequest();
 
         LocalizationRequest parsedReq = (LocalizationRequest) MessageTester.test(
-                "xxxx",
-                3,
+                "0004a60400640f",
+                4,
                 1,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected

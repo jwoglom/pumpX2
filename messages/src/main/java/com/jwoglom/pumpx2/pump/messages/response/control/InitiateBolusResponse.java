@@ -14,7 +14,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     request=InitiateBolusRequest.class,
-    signed=true
+    signed=true,
+    modifiesInsulinDelivery=true
 )
 public class InitiateBolusResponse extends Message {
     
