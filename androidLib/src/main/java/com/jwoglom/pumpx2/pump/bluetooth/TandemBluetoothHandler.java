@@ -271,7 +271,7 @@ public class TandemBluetoothHandler {
                     throw e;
                 }
 
-                Timber.i("%s response (%d): %s (%s)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()));
+                Timber.i("Processed %s response (%d): %s (%s)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()));
 
                 if (response.message().isPresent()) {
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&

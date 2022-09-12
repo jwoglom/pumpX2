@@ -19,7 +19,7 @@ public class MessageHelpers {
                 .collect(Collectors.toList());
     }
 
-    private static String lastTwoParts(String name) {
+    public static String lastTwoParts(String name) {
         String[] parts = name.split("\\.");
         return parts[parts.length-2] + "." + parts[parts.length-1];
     }

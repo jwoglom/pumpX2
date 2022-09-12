@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
@@ -49,7 +50,7 @@ public class HistoryLogParser {
             L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
             historyLog = new UnknownHistoryLog();
             historyLog.parse(rawStream);
-
+            L.i(TAG, String.format("Processed embedded HistoryLog: UnknownHistoryLog (%d): %s", typeId, Hex.encodeHexString(rawStream)));
             return historyLog;
         }
 
@@ -61,8 +62,10 @@ public class HistoryLogParser {
             return null;
         }
 
-        L.d(TAG, "found matching "+historyLog.getClass().getName()+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());
+        L.d(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
         historyLog.parse(rawStream);
+        L.i(TAG, String.format("Processed embedded HistoryLog: %s (%d): %s", name, typeId, Hex.encodeHexString(rawStream)));
         return historyLog;
     }
 }

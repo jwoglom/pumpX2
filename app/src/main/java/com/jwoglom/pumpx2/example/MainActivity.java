@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         requestMessageSpinner = findViewById(R.id.request_message_spinner);
 
         List<String> requestMessages = MessageHelpers.getAllPumpRequestMessages()
-                .stream().filter(m -> !m.startsWith("authentication.")).collect(toList());
+                .stream().filter(m -> !m.startsWith("authentication.") && !m.startsWith("historyLog.")).collect(toList());
         Timber.i("requestMessages: %s", requestMessages);
         ArrayAdapter<String> adapter  = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, requestMessages);
@@ -363,11 +363,12 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 builder.setTitle("History Logs");
-                builder.setMessage("Start number. " +
+                builder.setMessage("Start number.\n" +
                         "Total count: "+numEntries+" from "+firstSequenceNum+" - "+lastSequenceNum);
 
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                input.setText(String.valueOf(Math.max(0, numEntries - 250)));
                 builder.setView(input);
 
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -379,11 +380,12 @@ public class MainActivity extends AppCompatActivity {
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
 
                         builder2.setTitle("History Logs");
-                        builder2.setMessage("End number. " +
+                        builder2.setMessage("End number.\n" +
                                 "Total count: "+numEntries+" from "+firstSequenceNum+" - "+lastSequenceNum);
 
                         final EditText input2 = new EditText(context);
                         input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
+                        input2.setText(String.valueOf(Math.min(lastSequenceNum, start + 250)));
                         builder2.setView(input2);
 
                         builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -395,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
                                 remainingSequenceNums = sequenceNumberList(start, end);
                                 remainingSequenceNumsInBatch = Math.min(end - start, sequenceNumBatchSize);
 
-                                HistoryLogRequest req = new HistoryLogRequest(start, sequenceNumBatchSize);
+                                HistoryLogRequest req = new HistoryLogRequest(start, remainingSequenceNumsInBatch);
                                 Timber.d("Writing HistoryLogRequest: %s", req);
                                 writePumpMessage(req, peripheral);
 
