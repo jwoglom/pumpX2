@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 
 public class JavaHelpers {
-    private static final String TAG = "X2-JavaHelpers";
+    private static final String TAG = "JavaHelpers";
 
     public static Map<String, Object> getProperties(final Object bean) {
         final Map<String, Object> result = new HashMap<>();

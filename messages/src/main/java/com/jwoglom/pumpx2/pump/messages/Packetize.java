@@ -19,7 +19,7 @@ import java.util.List;
 import kotlin.text.Charsets;
 
 public class Packetize {
-    public static final String TAG = "X2-Packetize";
+    public static final String TAG = "Packetize";
     public static TransactionId txId = new TransactionId();
 
     public static final int DEFAULT_MAX_CHUNK_SIZE = 18; // This was observed for currentStatus. It may be 40 for control.
@@ -50,13 +50,13 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
-        L.w(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
+        L.d(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
         if (message.signed()) {
             int i = length - 20;
             byte[] bArr2 = new byte[i];
             long pumpStateTimeSinceReset = PumpStateSupplier.pumpTimeSinceReset.get();
             byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
-            L.w(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
+            L.d(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
             System.arraycopy(packet, 0, bArr2, 0, i);
             System.arraycopy(timeSinceReset, 0, bArr2, length - 24, 4);
             byte[] hmacByteKey = authenticationKey.getBytes(Charsets.UTF_8);
@@ -64,12 +64,12 @@ public class Packetize {
             System.arraycopy(bArr2, 0, packet, 0, i);
             System.arraycopy(hmacSha1Output, 0, packet, i, hmacSha1Output.length);
         }
-        L.w(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));
+        L.d(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));
 
         // Append CRC to packet
         byte[] crc = Bytes.calculateCRC16(packet);
         byte[] packetWithCRC = ArrayUtils.addAll(packet, crc);
-        L.w(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
+        L.d(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
 
         // Fill Packet list with chunks of size 18 (maxChunkSize)
         List<Packet> packets = new ArrayList<>();

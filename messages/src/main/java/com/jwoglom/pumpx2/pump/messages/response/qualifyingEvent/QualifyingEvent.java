@@ -37,10 +37,8 @@ import java.util.stream.Collectors;
  * messages which can be sent (via `sendPumpCommand`) to receive more information about the event
  * which just occurred, in logic matching the Tandem mobile app, is included. To invoke these
  * request messages, you can invoke:
- * <pre>
  *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents).forEach(
  *          message -> tandemPump.sendPumpCommand(peripheral, message));
- * </pre>
  */
 public enum QualifyingEvent {
     ALERT(1, ImmutableSet.of(

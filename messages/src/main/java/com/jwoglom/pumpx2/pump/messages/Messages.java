@@ -199,7 +199,7 @@ public enum Messages {
     // MESSAGES_END
     ;
 
-    private static final String TAG = "X2-Messages";
+    private static final String TAG = "Messages";
 
     public static Map<Pair<Characteristic, Integer>, Class<? extends Message>> OPCODES = new HashMap<>();
     public static Map<Integer, Messages> REQUESTS = new HashMap<>();
@@ -235,7 +235,7 @@ public enum Messages {
             msg.parse(data);
             return msg;
         } catch (Exception e) {
-            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic);
+            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);
             e.printStackTrace();
             return null;
         }

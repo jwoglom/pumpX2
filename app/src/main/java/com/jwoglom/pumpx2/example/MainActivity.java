@@ -86,13 +86,6 @@ import java.util.UUID;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
-    static {
-        L.getAndroidDebug = Log::d;
-        L.getAndroidWarning = Log::w;
-        L.getAndroidWarningThrowable = Log::w;
-        L.getAndroidLogError = Log::e;
-        L.getAndroidLogErrorThrowable = Log::e;
-    }
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_LOCATION_REQUEST = 2;
 
@@ -160,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
         registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT));
 
-        L.w("X2", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
+        L.i("MainActivity", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
     }
 
     @Override

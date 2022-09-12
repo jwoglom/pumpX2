@@ -271,7 +271,7 @@ public class Main {
             return null;
         }
         Message parsedMessage = resp.message().get();
-        L.w(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertTrue("classes match", expected.getClass().equals(parsedMessage.getClass()));
 
         int numPackets = tron.packets().size();

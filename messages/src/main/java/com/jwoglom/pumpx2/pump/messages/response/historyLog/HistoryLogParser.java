@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class HistoryLogParser {
-    private static final String TAG = "X2-HistoryLogParser";
+    private static final String TAG = "HistoryLogParser";
 
     public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = ImmutableSet.of(
         TimeChangeHistoryLog.class,
@@ -56,12 +56,12 @@ public class HistoryLogParser {
         try {
             historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();
         } catch (IllegalAccessException|InstantiationException e) {
-            L.e(TAG, "could not instantiate "+typeId+" "+e);
+            L.e(TAG, "could not instantiate "+typeId, e);
             e.printStackTrace();
             return null;
         }
 
-        L.w(TAG, "found matching "+historyLog.getClass().getName()+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+        L.d(TAG, "found matching "+historyLog.getClass().getName()+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
         historyLog.parse(rawStream);
         return historyLog;
     }

@@ -10,7 +10,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import kotlin.jvm.internal.Intrinsics;
 
 public class StreamPacketArrayList extends PacketArrayList {
-    protected static final String TAG = "X2-StreamPacketArrayList";
+    protected static final String TAG = "StreamPacketArrayList";
 
     private byte[] originalMessageData = new byte[0];
 
@@ -26,29 +26,29 @@ public class StreamPacketArrayList extends PacketArrayList {
         } else if (packetData.length >= 3) {
             byte firstByteMod15 = (byte) (packetData[0] & 15);
             byte secondByte = packetData[1];
-            L.w(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
+            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
             if (secondByte == this.expectedTxId) {
                 if (this.empty) {
                     this.firstByteMod15 = firstByteMod15;
-                    L.w(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
+                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
                     parse(packetData);
                 } else if (((byte) 0) == firstByteMod15) {
-                    L.w(TAG, "firstByteMod15=0");
+                    L.d(TAG, "firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
                         this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                        L.w(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
+                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
                     this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                    L.w(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
+                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }
                 //if (!moreHistoryLogsRemaining()) {
                 if (!needsMorePacket()) {
-                    L.w(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));
+                    L.d(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));
                     this.empty = true;
                 }
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
@@ -61,7 +61,7 @@ public class StreamPacketArrayList extends PacketArrayList {
     }
 
     protected void parse(byte[] bArr) {
-        L.w(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));
+        L.d(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
         if (opCode == this.expectedOpCode) {

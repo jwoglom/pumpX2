@@ -23,7 +23,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MessageTester {
-    private static final String TAG = "X2-MessageTester";
+    private static final String TAG = "MessageTester";
 
     public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
         PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
@@ -53,7 +53,7 @@ public class MessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        L.w(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertEquals(expected.getClass(), parsedMessage.getClass());
         assertEquals(expected.verboseToString(), parsedMessage.verboseToString());
 

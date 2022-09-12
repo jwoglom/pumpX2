@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class BTResponseParser {
-    private static final String TAG = "X2-BTResponseParser";
+    private static final String TAG = "BTResponseParser";
 
     public static PumpResponseMessage parse(TronMessageWrapper wrapper, byte[] output, MessageType outputType, UUID uuid) {
         PacketArrayList packetArrayList = wrapper.buildPacketArrayList(outputType);
@@ -25,7 +25,7 @@ public class BTResponseParser {
     }
 
     public static PumpResponseMessage parse(Message message, PacketArrayList packetArrayList, byte[] output, UUID uuid) {
-        L.w(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
+        L.d(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
         checkCharacteristicUuid(uuid, output);
 
         packetArrayList.validatePacket(output);
@@ -34,16 +34,16 @@ public class BTResponseParser {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
-                L.w(TAG, "Parsing message with opcode "+b4);
+                L.d(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
-                L.w(TAG, "Parsed message: " + msg);
+                L.d(TAG, "Parsed message: " + msg);
 
                 return new PumpResponseMessage(output, msg);
             } else {
-                L.w(TAG, "PacketArrayList could not validate");
+                L.d(TAG, "PacketArrayList could not validate");
             }
         } else {
-            L.w(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
+            L.d(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
             return new PumpResponseMessage(output);
         }
 

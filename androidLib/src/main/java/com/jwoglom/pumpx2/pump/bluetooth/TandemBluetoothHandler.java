@@ -22,7 +22,6 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
-import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
@@ -30,6 +29,7 @@ import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMess
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
+import com.jwoglom.pumpx2.util.timber.LConfigurator;
 import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
@@ -43,7 +43,6 @@ import com.welie.blessed.ScanFailure;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
-import java.nio.ByteOrder;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -52,10 +51,20 @@ import java.util.UUID;
 import timber.log.Timber;
 import com.jwoglom.pumpx2.util.timber.DebugTree;
 
+/**
+ * Handles the Bluetooth connection to a Tandem pump.
+ * The back-of-house which allows {@link TandemPump}, the client-accessible frontend, to work.
+ */
 public class TandemBluetoothHandler {
-
     private final Context context;
     private TandemPump tandemPump;
+
+    /**
+     * Initializes PumpX2.
+     * @param context Android context
+     * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
+     * @param initializeTimber whether to configure PumpX2 with Timber for logging
+     */
     private TandemBluetoothHandler(Context context, TandemPump tandemPump, boolean initializeTimber) {
         this.context = context;
         this.tandemPump = tandemPump;
@@ -64,13 +73,18 @@ public class TandemBluetoothHandler {
             // Plant a tree
             Timber.Tree tree = Timber.Tree.class.cast(new DebugTree());
             Timber.plant(tree);
+            LConfigurator.enableTimber();
         }
 
         // Create BluetoothCentral
         central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler());
         resetRemainingConnectionInitializationSteps();
     }
-
+    /**
+     * Initializes PumpX2.
+     * @param context Android context
+     * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
+     */
     private TandemBluetoothHandler(Context context, TandemPump tandemPump) {
         this(context, tandemPump, true);
     }
@@ -190,7 +204,9 @@ public class TandemBluetoothHandler {
             } else if (characteristicUUID.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS)) {
                 // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
                 // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);
-                tandemPump.onReceiveQualifyingEvent(peripheral, QualifyingEvent.fromRawBtBytes(value));
+                Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(value);
+                Timber.i("QualifyingEvent response: %s", events);
+                tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) ||
@@ -201,7 +217,7 @@ public class TandemBluetoothHandler {
                 Characteristic characteristic = Characteristic.of(characteristicUUID);
 
                 Byte txId = BTResponseParser.parseTxId(value);
-                Timber.i("Received response with %s and txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
+                Timber.d("Received %s response, txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
 
 
                 Message requestMessage = null;
@@ -211,8 +227,7 @@ public class TandemBluetoothHandler {
                     try {
                         requestMessage = ControlStreamMessages.determineRequestMessage(value);
                     } catch (InstantiationException | IllegalAccessException e) {
-                        Timber.e("Could not handle control stream message: '%s'", Hex.encodeHexString(value));
-                        Timber.e(e);
+                        Timber.e(e, "Could not handle control stream message: '%s'", Hex.encodeHexString(value));
                         return;
                     }
                 } else {
@@ -256,7 +271,7 @@ public class TandemBluetoothHandler {
                     throw e;
                 }
 
-                Timber.i("Parsed response for %s: %s", Hex.encodeHexString(parser.getValue()), response.message());
+                Timber.i("%s response (%d): %s (%s)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()));
 
                 if (response.message().isPresent()) {
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
@@ -278,11 +293,10 @@ public class TandemBluetoothHandler {
                 } else if (msg instanceof PumpChallengeResponse) {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {
-                        Timber.i("Response was SUCCESSFUL");
                         PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                         tandemPump.onPumpConnected(peripheral);
                     } else {
-                        Timber.i("Response was UNSUCCESSFUL");
+                        Timber.w("Invalid pairing code: %s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
                 } else {
@@ -294,7 +308,7 @@ public class TandemBluetoothHandler {
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
-                Timber.i("Received response to UUID %s: %s", characteristicUUID, Hex.encodeHexString(parser.getValue()));
+                Timber.i("unhandled response to %s: %s", CharacteristicUUID.which(characteristicUUID), Hex.encodeHexString(parser.getValue()));
             }
         }
 

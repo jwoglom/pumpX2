@@ -34,6 +34,7 @@ import timber.log.Timber;
 /**
  * An abstract class containing callback methods which are invoked when various Bluetooth events
  * occur related to the pump, as well as methods to manipulate the pump and receive responses.
+ * For more under-the-hood details into the Bluetooth connection, see {@link TandemBluetoothHandler}
  */
 public abstract class TandemPump {
     public final Context context;

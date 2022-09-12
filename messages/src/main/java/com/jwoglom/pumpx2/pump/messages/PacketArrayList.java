@@ -18,7 +18,7 @@ import kotlin.jvm.internal.Intrinsics;
 import kotlin.text.Charsets;
 
 public class PacketArrayList {
-    protected static final String TAG = "X2-PacketArrayList";
+    protected static final String TAG = "PacketArrayList";
 
     protected byte expectedOpCode;
     protected byte expectedCargoSize;
@@ -46,7 +46,7 @@ public class PacketArrayList {
     // Returns either PacketArrayList or StreamPacketArrayList depending on the opcode
     public static PacketArrayList build(byte expectedopCode, Characteristic characteristic, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Class<? extends Message> messageClass = Messages.fromOpcode(expectedopCode, characteristic);
-        L.w(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
+        L.d(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
         MessageProps messageProps = messageClass.getAnnotation(MessageProps.class);
         if (messageProps.stream()) {
             return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
@@ -89,7 +89,7 @@ public class PacketArrayList {
         if (!ok) {
             throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
         } else if (this.isSigned) {
-            L.w(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
+            L.d(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
             byte[] bArr2 = this.messageData;
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
@@ -133,7 +133,7 @@ public class PacketArrayList {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
             } else if (cargoSize != this.expectedCargoSize) {
                 if (cargoSize == this.expectedCargoSize + 24 && isSigned) {
-                    L.w(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     expectedCargoSize += 24;
                 } else {
                     throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
@@ -153,23 +153,23 @@ public class PacketArrayList {
         } else if (packetData.length >= 3) {
             byte firstByteMod15 = (byte) (packetData[0] & 15);
             byte secondByte = packetData[1];
-            L.w(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
+            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
             if (secondByte == this.expectedTxId) {
                 if (this.empty) {
                     this.firstByteMod15 = firstByteMod15;
-                    L.w(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
+                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
                     parse(packetData);
                 } else if (((byte) 0) == firstByteMod15) {
-                    L.w(TAG, "firstByteMod15=0");
+                    L.d(TAG, "firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
                         this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                        L.w(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
+                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
                     this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                    L.w(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
+                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }

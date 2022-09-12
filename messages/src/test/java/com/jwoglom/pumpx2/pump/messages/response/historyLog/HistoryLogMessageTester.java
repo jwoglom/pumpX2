@@ -21,7 +21,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class HistoryLogMessageTester {
-    private static final String TAG = "X2-HistoryLogMessageTester";
+    private static final String TAG = "HistoryLogMessageTester";
 
     public static HistoryLogStreamResponse test(String rawHex, int streamId, List<HistoryLog> expectedLogs) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
@@ -38,11 +38,11 @@ public class HistoryLogMessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        L.w(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertEquals(expected.getClass(), parsedMessage.getClass());
 
         HistoryLogStreamResponse streamResp = (HistoryLogStreamResponse) parsedMessage;
-        L.w(TAG, "historyLogstoString: " +streamResp.getHistoryLogsToString());
+        L.d(TAG, "historyLogstoString: " +streamResp.getHistoryLogsToString());
         List<HistoryLog> parsedLogs = streamResp.getHistoryLogs();
         assertNotNull(parsedLogs);
 

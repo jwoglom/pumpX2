@@ -4,13 +4,15 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class L {
+    public static final String LOG_PREFIX = "PumpX2";
 
     // Giant hack to allow this logging class to be used across Android and non-Android code
-    public static BiConsumer<String, String> getAndroidDebug = null;
-    public static BiConsumer<String, String> getAndroidWarning = null;
-    public static TriConsumer<String, String, Throwable> getAndroidWarningThrowable = null;
-    public static BiConsumer<String, String> getAndroidLogError = null;
-    public static TriConsumer<String, String, Throwable> getAndroidLogErrorThrowable = null;
+    public static BiConsumer<String, String> getTimberDebug = (a, b) -> {};
+    public static BiConsumer<String, String> getTimberInfo = (a, b) -> {};
+    public static BiConsumer<String, String> getTimberWarning = (a, b) -> {};
+    public static TriConsumer<Throwable, String, String> getTimberWarningThrowable = (a, b, c) -> {};
+    public static BiConsumer<String, String> getTimberError = (a, b) -> {};
+    public static TriConsumer<Throwable, String, String> getTimberErrorThrowable = (a, b, c) -> {};
 
     public static Consumer<String> getPrintln = System.out::println;
 
@@ -18,7 +20,17 @@ public class L {
     public static void d(String tag, String out) {
         getPrintln.accept("DEBUG: " + tag + ": " + out);
         try {
-            getAndroidDebug.accept(tag, out);
+            getTimberDebug.accept(tag + ": %s", out);
+        } catch (RuntimeException e) {
+
+        }
+    }
+
+    // Info
+    public static void i(String tag, String out) {
+        getPrintln.accept("INFO: " + tag + ": " + out);
+        try {
+            getTimberInfo.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
 
         }
@@ -27,16 +39,16 @@ public class L {
     public static void w(String tag, String out) {
         getPrintln.accept("WARN: " + tag + ": " + out);
         try {
-            getAndroidWarning.accept(tag, out);
+            getTimberWarning.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
 
         }
     }
 
-    public static void w(String tag, Throwable out) {
-        getPrintln.accept("WARN: " + tag + ": " + out);
+    public static void w(String tag, Throwable thrw) {
+        getPrintln.accept("WARN: " + tag + ": " + thrw);
         try {
-            getAndroidWarningThrowable.accept(tag, out.toString(), out);
+            getTimberWarningThrowable.accept(thrw, tag + ": %s", thrw.toString());
         } catch (RuntimeException e) {
         }
     }
@@ -44,7 +56,7 @@ public class L {
     public static void w(String tag, String out, Throwable thrw) {
         getPrintln.accept("WARN: " + tag + ": " + out + ": " + thrw);
         try {
-            getAndroidWarningThrowable.accept(tag, out, thrw);
+            getTimberWarningThrowable.accept(thrw, tag + ": %s", out);
         } catch (RuntimeException e) {
         }
     }
@@ -52,15 +64,15 @@ public class L {
     public static void e(String tag, String out) {
         getPrintln.accept("ERROR: " + tag + ": " + out);
         try {
-            getAndroidLogError.accept(tag, out);
+            getTimberError.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
         }
     }
 
-    public static void e(String tag, Throwable out) {
-        getPrintln.accept("ERROR: " + tag + ": " + out);
+    public static void e(String tag, Throwable thrw) {
+        getPrintln.accept("ERROR: " + tag + ": " + thrw);
         try {
-            getAndroidLogErrorThrowable.accept(tag, out.toString(), out);
+            getTimberErrorThrowable.accept(thrw, tag + ": %s", thrw.toString());
         } catch (RuntimeException e) {
         }
     }
@@ -68,17 +80,8 @@ public class L {
     public static void e(String tag, String out, Throwable thrw) {
         getPrintln.accept("ERROR: " + tag + ": " + out + ": " + thrw);
         try {
-            getAndroidLogErrorThrowable.accept(tag, out, thrw);
+            getTimberErrorThrowable.accept(thrw, tag + ": %s", out);
         } catch (RuntimeException e) {
         }
-    }
-
-    private static boolean isJUnitTest() {
-        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
-            if (element.getClassName().startsWith("org.junit.")) {
-                return true;
-            }
-        }
-        return false;
     }
 }
