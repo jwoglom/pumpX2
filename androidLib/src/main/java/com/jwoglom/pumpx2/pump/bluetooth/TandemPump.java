@@ -195,4 +195,11 @@ public abstract class TandemPump {
     public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
         Timber.e("Unable to connect to pump %s: %s", peripheral, reason);
     }
+
+    /**
+     * Enables actions which affect insulin delivery, e.g. remote bolus.
+     */
+    public final void enableActionsAffectingInsulinDelivery() {
+        PumpState.enableActionsAffectingInsulinDelivery();
+    }
 }

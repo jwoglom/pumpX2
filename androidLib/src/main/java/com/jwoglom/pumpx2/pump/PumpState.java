@@ -23,6 +23,7 @@ public class PumpState {
         PumpStateSupplier.authenticationKey = PumpState::getAuthenticationKey;
         PumpStateSupplier.pumpTimeSinceReset = PumpState::getPumpTimeSinceReset;
         PumpStateSupplier.pumpApiVersion = PumpState::getPumpAPIVersion;
+        PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = PumpState::actionsAffectingInsulinDeliveryEnabled;
     }
 
     private static SharedPreferences prefs(Context context) {
@@ -118,6 +119,15 @@ public class PumpState {
 
     public static synchronized Optional<PacketArrayList> checkForSavedPacketArrayList(Characteristic c, byte txId) {
         return Optional.ofNullable(savedPacketArrayList.get(Pair.create(c, txId)));
+    }
+
+    private static boolean actionsAffectingInsulinDeliveryEnabled = false;
+    public static boolean actionsAffectingInsulinDeliveryEnabled() {
+        return actionsAffectingInsulinDeliveryEnabled;
+    }
+
+    public static void enableActionsAffectingInsulinDelivery() {
+        actionsAffectingInsulinDeliveryEnabled = true;
     }
 }
 

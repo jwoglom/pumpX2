@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             return bluetoothHandler;
         }
         tandemEventCallback = new PumpX2TandemPump(getApplicationContext());
+        tandemEventCallback.enableActionsAffectingInsulinDelivery();
         bluetoothHandler = TandemBluetoothHandler.getInstance(getApplicationContext(), tandemEventCallback);
         return bluetoothHandler;
     }
@@ -352,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
     private Queue<Integer> remainingSequenceNums = new LinkedList<>();
     private int remainingSequenceNumsInBatch = 0;
 
-    private static final int sequenceNumBatchSize = 3;
+    private static final int sequenceNumBatchSize = 250;
 
     private final BroadcastReceiver gotHistoryLogStatusReceiver = new BroadcastReceiver() {
         @Override
@@ -399,7 +400,7 @@ public class MainActivity extends AppCompatActivity {
                                 Timber.i("requested end: %d", end);
 
                                 remainingSequenceNums = sequenceNumberList(start, end);
-                                remainingSequenceNumsInBatch = sequenceNumBatchSize;
+                                remainingSequenceNumsInBatch = Math.min(end - start, sequenceNumBatchSize);
 
                                 HistoryLogRequest req = new HistoryLogRequest(start, sequenceNumBatchSize);
                                 Timber.d("Writing HistoryLogRequest: %s", req);
@@ -415,11 +416,6 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                         builder2.show();
-
-                        HistoryLogRequest req = new HistoryLogRequest(start, 50);
-                        Timber.d("Writing HistoryLogRequest: %s", req);
-                        writePumpMessage(req, peripheral);
-
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -994,8 +990,10 @@ public class MainActivity extends AppCompatActivity {
     private BolusParameters bolusParameters = null;
     private void startBolusProcess(BluetoothPeripheral peripheral) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter bolus amount");
-        builder.setMessage("Enter the number of units to bolus");
+        builder.setTitle("Enter bolus");
+        builder.setMessage("Enter bolus information (THIS IS NOT FINAL)");
+
+        // TODO: automatically adjust insulin based on carbs, and send RemoteBgEntry/RemoteCarbEntry
 
 //        final EditText input = new EditText(this);
 //        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);

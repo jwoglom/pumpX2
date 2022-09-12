@@ -259,7 +259,11 @@ public class TandemBluetoothHandler {
                 Timber.i("Parsed response for %s: %s", Hex.encodeHexString(parser.getValue()), response.message());
 
                 if (response.message().isPresent()) {
-                    PumpState.finishRequestMessage(characteristic, txId);
+                    if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
+                        !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS))
+                    {
+                        PumpState.finishRequestMessage(characteristic, txId);
+                    }
                 } else {
                     Timber.w("Couldn't process the response message for '%s' -- we likely need more packets. This should resolve when fetching the next BT packet.", Hex.encodeHexString(parser.getValue()));
                     PumpState.savePacketArrayList(characteristic, txId, packetArrayList);

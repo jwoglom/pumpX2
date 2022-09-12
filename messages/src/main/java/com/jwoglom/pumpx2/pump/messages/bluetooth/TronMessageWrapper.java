@@ -9,7 +9,6 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import java.util.List;
 
 public class TronMessageWrapper {
-    boolean actionsAffectingInsulinDeliveryEnabled = false;
 
     private final Message message;
     private final List<Packet> packets;
@@ -73,7 +72,7 @@ public class TronMessageWrapper {
             }
         }
 
-        if (message.props().modifiesInsulinDelivery() && !actionsAffectingInsulinDeliveryEnabled) {
+        if (message.props().modifiesInsulinDelivery() && !PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled.get()) {
             throw new ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception();
         }
 

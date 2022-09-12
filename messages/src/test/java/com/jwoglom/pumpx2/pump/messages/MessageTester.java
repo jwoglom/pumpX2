@@ -28,6 +28,7 @@ public class MessageTester {
     public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
         PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
         PumpStateSupplier.pumpTimeSinceReset = () -> timeSinceReset;
+        PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
     }
 
     public static Message test(String rawHex, int txId, int expectedPackets, UUID expectedCharacteristic, Message expected, String ...extraHexBtPackets) throws DecoderException {
