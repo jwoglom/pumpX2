@@ -8,6 +8,8 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 
+import androidx.annotation.Nullable;
+
 import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
@@ -63,17 +65,19 @@ public class TandemBluetoothHandler {
      * Initializes PumpX2.
      * @param context Android context
      * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
-     * @param initializeTimber whether to configure PumpX2 with Timber for logging
+     * @param timberTree the {@link Timber.Tree} which is initialied for logging with Timber.
+     *                   Timber initialization is skipped if null. See {@link LConfigurator}
      */
-    private TandemBluetoothHandler(Context context, TandemPump tandemPump, boolean initializeTimber) {
+    public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree) {
         this.context = context;
         this.tandemPump = tandemPump;
 
-        if (initializeTimber) {
+        if (timberTree != null) {
             // Plant a tree
-            Timber.Tree tree = Timber.Tree.class.cast(new DebugTree());
-            Timber.plant(tree);
+            Timber.plant(timberTree);
             LConfigurator.enableTimber();
+        } else {
+            Timber.i("Skipped Timber tree initialization");
         }
 
         // Create BluetoothCentral
@@ -85,8 +89,8 @@ public class TandemBluetoothHandler {
      * @param context Android context
      * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
      */
-    private TandemBluetoothHandler(Context context, TandemPump tandemPump) {
-        this(context, tandemPump, true);
+    public TandemBluetoothHandler(Context context, TandemPump tandemPump) {
+        this(context, tandemPump, Timber.Tree.class.cast(new DebugTree()));
     }
 
 
@@ -413,6 +417,13 @@ public class TandemBluetoothHandler {
         return instance;
     }
 
+    public static synchronized TandemBluetoothHandler getInstance(Context context, TandemPump tandemPump, @Nullable Timber.Tree logTree) {
+        if (instance == null) {
+            instance = new TandemBluetoothHandler(context.getApplicationContext(), tandemPump, logTree);
+        }
+        return instance;
+    }
+
     public void startScan() {
         Timber.i("TandemBluetoothHandler: startScan");
         // Scan for peripherals with a certain service UUIDs
@@ -421,14 +432,8 @@ public class TandemBluetoothHandler {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (tandemPump.filterToBluetoothMac.isPresent()) {
-                    String macAddress = tandemPump.filterToBluetoothMac.get();
-                    Timber.i("TandemBluetoothHandler: Scanning for Tandem peripheral with MAC: %s", macAddress);
-                    central.scanForPeripheralsWithAddresses(new String[]{macAddress});
-                } else {
-                    Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
-                    central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
-                }
+                Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
+                central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
             }
         },1000);
     }

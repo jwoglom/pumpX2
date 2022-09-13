@@ -18,7 +18,7 @@ public class L {
 
     // Debug
     public static void d(String tag, String out) {
-        getPrintln.accept("DEBUG: " + tag + ": " + out);
+        getPrintln.accept(LOG_PREFIX + ":DEBUG: " + tag + ": " + out);
         try {
             getTimberDebug.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
@@ -28,7 +28,7 @@ public class L {
 
     // Info
     public static void i(String tag, String out) {
-        getPrintln.accept("INFO: " + tag + ": " + out);
+        getPrintln.accept(LOG_PREFIX + ":INFO: " + tag + ": " + out);
         try {
             getTimberInfo.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
@@ -37,7 +37,7 @@ public class L {
     }
     // Warning
     public static void w(String tag, String out) {
-        getPrintln.accept("WARN: " + tag + ": " + out);
+        getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + out);
         try {
             getTimberWarning.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
@@ -46,7 +46,7 @@ public class L {
     }
 
     public static void w(String tag, Throwable thrw) {
-        getPrintln.accept("WARN: " + tag + ": " + thrw);
+        getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + thrw);
         try {
             getTimberWarningThrowable.accept(thrw, tag + ": %s", thrw.toString());
         } catch (RuntimeException e) {
@@ -54,7 +54,7 @@ public class L {
     }
 
     public static void w(String tag, String out, Throwable thrw) {
-        getPrintln.accept("WARN: " + tag + ": " + out + ": " + thrw);
+        getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + out + ": " + thrw);
         try {
             getTimberWarningThrowable.accept(thrw, tag + ": %s", out);
         } catch (RuntimeException e) {
@@ -62,7 +62,7 @@ public class L {
     }
 
     public static void e(String tag, String out) {
-        getPrintln.accept("ERROR: " + tag + ": " + out);
+        getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + out);
         try {
             getTimberError.accept(tag + ": %s", out);
         } catch (RuntimeException e) {
@@ -70,7 +70,7 @@ public class L {
     }
 
     public static void e(String tag, Throwable thrw) {
-        getPrintln.accept("ERROR: " + tag + ": " + thrw);
+        getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + thrw);
         try {
             getTimberErrorThrowable.accept(thrw, tag + ": %s", thrw.toString());
         } catch (RuntimeException e) {
@@ -78,7 +78,7 @@ public class L {
     }
 
     public static void e(String tag, String out, Throwable thrw) {
-        getPrintln.accept("ERROR: " + tag + ": " + out + ": " + thrw);
+        getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + out + ": " + thrw);
         try {
             getTimberErrorThrowable.accept(thrw, tag + ": %s", out);
         } catch (RuntimeException e) {

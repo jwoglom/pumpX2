@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.shared.L;
 import timber.log.Timber;
 
 public class LConfigurator {
+    private static boolean enabled = false;
     private static boolean disabled = false;
 
     /**
@@ -14,7 +15,7 @@ public class LConfigurator {
      * has been called.
      */
     public static void enableTimber() {
-        if (disabled) {
+        if (disabled || enabled) {
             return;
         }
 
@@ -26,12 +27,18 @@ public class LConfigurator {
         L.getTimberErrorThrowable = Timber::e;
 
         L.getPrintln = (ignored) -> {};
+        enabled = true;
+        L.d("PumpX2", "Timber enabled for internal PumpX2 logging");
+        Timber.i("PumpX2 Timber initialized");
     }
 
     /**
      * Disables Timber use and prints all log messages to System.out (the default)
      */
     public static void disableTimber() {
+        if (disabled || enabled) {
+            return;
+        }
         L.getTimberDebug = (a, b) -> {};
         L.getTimberInfo = (a, b) -> {};
         L.getTimberWarning = (a, b) -> {};
@@ -41,5 +48,6 @@ public class LConfigurator {
 
         L.getPrintln = System.out::println;
         disabled = true;
+        L.d("PumpX2", "Timber disabled");
     }
 }

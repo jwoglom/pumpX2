@@ -140,7 +140,13 @@ public abstract class TandemPump {
     public boolean onPumpDiscovered(BluetoothPeripheral peripheral, ScanResult scanResult) {
         Timber.i("TandemPump: onPumpDiscovered(" + scanResult + ")");
         if (filterToBluetoothMac.isPresent()) {
-            return (filterToBluetoothMac.get().equals(peripheral.getAddress()));
+            if (filterToBluetoothMac.get().equals(peripheral.getAddress())) {
+                Timber.i("TandemPump: found matching MAC (%s)", peripheral.getAddress());
+                return true;
+            } else {
+                Timber.i("TandemPump: Ignoring peripheral with mismatching MAC (found %s, expected %s)", peripheral.getAddress(), filterToBluetoothMac.get());
+                return false;
+            }
         }
         return true;
     }
@@ -194,7 +200,7 @@ public abstract class TandemPump {
      * @param reason a value from the {@link TandemError} enum representing the error which occurred
      */
     public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
-        Timber.e("Unable to connect to pump %s: %s", peripheral, reason);
+        Timber.e("onPumpCriticalError: %s: %s", peripheral, reason);
     }
 
     /**
