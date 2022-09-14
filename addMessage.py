@@ -8,6 +8,7 @@ import json
 import sys
 import re
 import os
+import subprocess
 
 CATEGORIES = ["authentication", "currentStatus", "historyLog", "control", "controlStream"]
 CATEGORY_UUID = {
@@ -43,7 +44,7 @@ TEMPLATES = {
 
 MESSAGES_ENUM = "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/Messages.java"
 HISTORY_LOG_MESSAGES_ENUM = "messages/src/main/java/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogParser.java"
-
+BASE_MSG_FOLDER = "messages/src/main/java/com/jwoglom/pumpx2/pump/messages"
 
 def render(file, ctx):
   return jinja2.Environment(loader=jinja2.BaseLoader()).from_string(open(file, 'r').read()).render(**ctx)
@@ -53,9 +54,25 @@ def add_args(ctx, opt):
   ctx[opt + "Args"] = []
   ctx[opt + "Size"] = 0
 
+  if ctx["cat"] == "historyLog":
+    ctx[opt + "Size"] = 10
+
+  if ctx["cat"] == "historyLog":
+    ctx["historyLogDisplayName"] = input('Display name: ')
+
   while True:
     arg = {}
     name = input('Arg name: ')
+    if name and name[0] == '+':
+      n = int(name[1:])
+      ctx[opt + "Size"] += n
+      print("Advanced %d index to %d" % (n, ctx[opt + "Size"]))
+      continue
+    elif name and name[0] == '.':
+      n = 1
+      ctx[opt + "Size"] += n
+      print("Advanced %d index to %d" % (n, ctx[opt + "Size"]))
+      continue
     if not name or len(name) < 2:
       print('No more arguments')
       break
@@ -67,10 +84,10 @@ def add_args(ctx, opt):
     elif typ in ('b'):
       arg["size"] = 1
       arg["type"] = 'int'
-    elif typ in ('short', 'int', 'h'):
+    elif typ in ('short', 'int', 'h', 's'):
       arg["size"] = 2
       arg["type"] = 'int'
-    elif typ in ('uint32', 'long', 'i'):
+    elif typ in ('uint32', 'long', 'i', 'l', 'L'):
       arg["type"] = 'long'
       arg["size"] = 4
     elif typ in ('float', 'f'):
@@ -85,11 +102,40 @@ def add_args(ctx, opt):
     else:
       arg["size"] = int(typ)
       arg["type"] = 'int'
-    arg["index"] = int(input('Index into sequence: '))
+    inp = None
+    if not "--skipIndex" in sys.argv:
+      inp = input('Index into sequence (%d?): ' % int(ctx[opt + "Size"]))
+    if not inp:
+      arg["index"] = int(ctx[opt + "Size"])
+      print('Index: %d' % arg["index"])
+    else:
+      arg["index"] = int(inp)
     ctx[opt + "Args"].append(arg)
     ctx[opt + "Size"] += arg["size"]
-  
+
+    for i in ["UsedByTidepool", "UsedByAndroid", "ReferencedInAndroid"]:
+      ctx["historyLog" + i] = ("--historyLog" + i) in sys.argv
+
+  if ctx["cat"] == "historyLog":
+    ctx[opt + "Size"] -= 10
+
   return ctx
+
+def parseOp(op):
+  if op[:2] == '0x':
+    n = int(op[2:], 16)
+    print('Opcode %s = %d' % (op, n))
+  else:
+    n = int(op)
+
+  chk = subprocess.run(['grep', '-r', 'opCode = %d' % n, BASE_MSG_FOLDER], capture_output=True)
+  if chk.returncode == 0:
+    print('Found another message with this opcode:')
+    print(chk.stdout.decode())
+    i = ''
+    while not i.lower() == 'y':
+      i = input("Continue? (y)")
+  return n
 
 def build_ctx():
   if "--json" in sys.argv:
@@ -104,6 +150,10 @@ def build_ctx():
   ctx["name"] = mname
 
   cat = None
+  for c in CATEGORIES:
+    if ("--%s" % c) in sys.argv:
+      print('Category:', c)
+      cat = c
   while cat not in CATEGORIES:
     cat = input('Category: ')
   ctx["cat"] = cat
@@ -111,7 +161,7 @@ def build_ctx():
 
   ctx["requestName"] = ctx["name"] + 'Request'
   if not cat in RESPONSE_ONLY_CATEGORIES:
-    ctx["requestOpcode"] = int(input(ctx["requestName"] + ' opcode: '))
+    ctx["requestOpcode"] = parseOp(input(ctx["requestName"] + ' opcode: '))
     ctx = add_args(ctx, "request")
   else:
     ctx["requestOpcode"] = 0
@@ -120,7 +170,7 @@ def build_ctx():
     ctx["responseName"] = ctx["name"] + 'Response'
   else:
     ctx["responseName"] = ctx["name"] + 'HistoryLog'
-  ctx["responseOpcode"] = int(input(ctx["responseName"] + ' opcode: '))
+  ctx["responseOpcode"] = parseOp(input(ctx["responseName"] + ' opcode: '))
   ctx = add_args(ctx, "response")  
 
   print(json.dumps(ctx))

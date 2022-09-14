@@ -1,11 +1,18 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 
 import java.time.Instant;
 
+@HistoryLogProps(
+    opCode = 14,
+    displayName = "Date Change",
+    usedByAndroid = true,
+    usedByTidepool = true
+)
 public class DateChangeHistoryLog extends HistoryLog {
     
     private long datePrior;

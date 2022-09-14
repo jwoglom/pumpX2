@@ -1,8 +1,14 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
+@HistoryLogProps(
+    opCode = 21,
+    displayName = "Extended Bolus Portion Complete",
+    usedByAndroid = true
+)
 public class BolexCompletedHistoryLog extends HistoryLog {
     
     private int completionStatus;

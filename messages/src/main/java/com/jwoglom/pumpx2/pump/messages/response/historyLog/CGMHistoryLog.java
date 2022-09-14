@@ -1,8 +1,14 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
+@HistoryLogProps(
+    opCode = 256,
+    usedByAndroid = true,
+    usedByTidepool = true // LID_CGM_DATA_GXB
+)
 public class CGMHistoryLog extends HistoryLog {
     
     private int glucoseValueStatus;

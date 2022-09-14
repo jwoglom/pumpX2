@@ -1,12 +1,19 @@
 package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import java.math.BigInteger;
 
+@HistoryLogProps(
+    opCode = {{responseOpcode}},
+    displayName = "{{ historyLogDisplayName }}"{% if historyLogUsedByAndroid %},
+    usedByAndroid = true{% endif %}{% if historyLogReferencedInAndroid %},
+    referencedInAndroid = true{% endif %}{% if historyLogUsedByTidepool %},
+    usedByTidepool = true{% endif %}
+)
 public class {{responseName}} extends HistoryLog {
-    public static int ID = {{responseOpcode}};
     {% for arg in responseArgs %}
     private {{ arg.type }} {{ arg.name }};{% endfor %}
     {% if responseSize > 0 %}
@@ -24,7 +31,7 @@ public class {{responseName}} extends HistoryLog {
     }
 
     public int typeId() {
-        return ID;
+        return {{responseOpcode}};
     }
 
     public void parse(byte[] raw) {
@@ -41,8 +48,8 @@ public class {{responseName}} extends HistoryLog {
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum{% if responseSize > 0 %}, {% endif %}{% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}) {
-        return Bytes.combine(
-            new byte[]{(byte) ID, 0},
+        return HistoryLog.fillCargo(Bytes.combine(
+            new byte[]{{'{'}}(byte) {{responseOpcode}}, 0},
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum){% if responseSize > 0 %},{% endif %}{% for arg in responseArgs %}{% if arg.size == 1 %}
             new byte[]{ (byte) {% if arg.type == "boolean" %}({{ arg.name }} ? 1 : 0){% else %}{{ arg.name }}{% endif %} }{% elif arg.type == "String" %}
@@ -51,7 +58,7 @@ public class {{responseName}} extends HistoryLog {
             {% if arg.type == "float" %}Bytes.toFloat({{ arg.name }}){% else %}Bytes.toUint32({{ arg.name }}){% endif %}{% elif arg.size == 8 %}
             Bytes.toUint64({{ arg.name }}.longValue()){% else %}
             null // {{ arg.size }} at {{ arg.index }}
-            {% endif %}{{ ", " if not loop.last else "" }}{% endfor %});
+            {% endif %}{{ ", " if not loop.last else "" }}{% endfor %}));
     }
     {% for arg in responseArgs %}public {{ arg.type }} get{{ arg.name[0]|upper }}{{ arg.name[1:] }}() {
         return {{ arg.name }};

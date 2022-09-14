@@ -11,7 +11,7 @@ public class MessageHelpers {
     public static final String REQUEST_PACKAGE = "com.jwoglom.pumpx2.pump.messages.request";
     public static List<String> getAllPumpRequestMessages() {
         return Arrays.stream(Messages.values())
-                .map(message -> message.request().getClass().getName())
+                .map(messages -> messages.requestClass().getName())
                 .filter(name -> name.startsWith(REQUEST_PACKAGE))
                 .filter(name -> !name.endsWith("Test"))
                 .map(MessageHelpers::lastTwoParts)

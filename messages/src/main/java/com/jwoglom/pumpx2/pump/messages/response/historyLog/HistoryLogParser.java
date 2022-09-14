@@ -15,7 +15,6 @@ public class HistoryLogParser {
     private static final String TAG = "HistoryLogParser";
 
     public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = ImmutableSet.of(
-        TimeChangeHistoryLog.class,
         DateChangeHistoryLog.class,
         BGHistoryLog.class,
         CGMHistoryLog.class,
@@ -25,7 +24,49 @@ public class HistoryLogParser {
         BolusRequestedMsg2HistoryLog.class,
         BolusRequestedMsg3HistoryLog.class,
         BolexCompletedHistoryLog.class,
-        TempRateActivatedHistoryLog.class
+        BasalRateChangeHistoryLog.class,
+        BolexActivatedHistoryLog.class,
+        BolusActivatedHistoryLog.class,
+        CannulaFilledHistoryLog.class,
+        CarbEnteredHistoryLog.class,
+        CartridgeFilledHistoryLog.class,
+        CorrectionDeclinedHistoryLog.class,
+        DailyBasalHistoryLog.class,
+        DataLogCorruptionHistoryLog.class,
+        IdpActionHistoryLog.class,
+        IdpBolusHistoryLog.class,
+        IdpListHistoryLog.class,
+        FactoryResetHistoryLog.class,
+        IdpActionMsg2HistoryLog.class,
+        IdpTimeDependentSegmentHistoryLog.class,
+        LogErasedHistoryLog.class,
+        NewDayHistoryLog.class,
+        ParamChangeGlobalSettingsHistoryLog.class,
+        ParamChangePumpSettingsHistoryLog.class,
+        ParamChangePumpSettingsHistoryLog.class,
+        ParamChangeRemSettingsHistoryLog.class,
+        ParamChangeReminderHistoryLog.class,
+        PumpingResumedHistoryLog.class,
+        PumpingSuspendedHistoryLog.class,
+        TempRateActivatedHistoryLog.class,
+        TempRateCompletedHistoryLog.class,
+        TimeChangedHistoryLog.class,
+        TubingFilledHistoryLog.class,
+        UsbConnectedHistoryLog.class,
+        UsbConnectedHistoryLog.class,
+        UsbDisconnectedHistoryLog.class,
+        UsbEnumeratedHistoryLog.class,
+        AlarmActivatedHistoryLog.class,
+        AlertActivatedHistoryLog.class,
+        CgmDataSampleHistoryLog.class,
+        CgmCalibrationHistoryLog.class,
+        CgmDataGxHistoryLog.class,
+        CgmCalibrationGxHistoryLog.class,
+        HypoMinimizerSuspendHistoryLog.class,
+        HypoMinimizerResumeHistoryLog.class,
+        BasalDeliveryHistoryLog.class,
+        ControlIQPcmChangeHistoryLog.class,
+        ControlIQUserModeChangeHistoryLog.class
         // MESSAGES_END
     );
 
@@ -43,9 +84,24 @@ public class HistoryLogParser {
     }
 
     public static HistoryLog parse(byte[] rawStream) {
-        int typeId = Bytes.readShort(rawStream, 0);
+        int typeId = Bytes.readShort(rawStream, 0) & 4095;
+//        if (typeId % 256 != typeId) {
+//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
+//            typeId = typeId % 256;
+//        }
+        HistoryLog ret = parseWithTypeId(rawStream, typeId);
+        if (ret instanceof UnknownHistoryLog) {
+            L.w(TAG, "retry HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
+            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);
+            if (two instanceof UnknownHistoryLog) {
+                return ret;
+            }
+            return two;
+        }
+        return ret;
+    }
 
-
+    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {
         HistoryLog historyLog = null;
         if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
             L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));

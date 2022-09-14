@@ -14,7 +14,7 @@ public class TempRateActivatedHistoryLogTest {
     @Test
     public void testTempRateActivatedHistoryLog() throws DecoderException {
         TempRateActivatedHistoryLog expected = new TempRateActivatedHistoryLog(
-            // 
+            // float percent, float duration, int tempRateId
         );
 
         TempRateActivatedHistoryLog parsedRes = (TempRateActivatedHistoryLog) HistoryLogMessageTester.testSingle(

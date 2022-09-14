@@ -13,7 +13,7 @@ import java.util.HashSet;
 public abstract class HistoryLog {
     protected byte[] cargo = null;
 
-    HistoryLog() {}
+    public HistoryLog() {}
 
     HistoryLog(long pumpTimeSec, long sequenceNum) {
         this.pumpTimeSec = pumpTimeSec;
@@ -44,7 +44,8 @@ public abstract class HistoryLog {
      */
     void parseBase(byte[] raw) {
         int typeId = Bytes.readShort(raw, 0) & 4095;
-        Preconditions.checkState(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());
+        // skipping due to inconsistencies around signed v unsigned
+        // Preconditions.checkState(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());
 
         this.pumpTimeSec = Bytes.readUint32(raw, 2);
         this.sequenceNum = Bytes.readUint32(raw, 6);
@@ -60,5 +61,14 @@ public abstract class HistoryLog {
 
     public String verboseToString() {
         return JavaHelpers.autoToStringVerbose(this, ImmutableSet.of("cargo"));
+    }
+
+    public static byte[] fillCargo(byte[] cargo) {
+        if (cargo.length == 26) {
+            return cargo;
+        }
+        byte[] ret = new byte[26];
+        System.arraycopy(cargo, 0, ret, 0, cargo.length);
+        return ret;
     }
 }

@@ -1,8 +1,15 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
+@HistoryLogProps(
+    opCode = 65,
+    displayName = "Bolus Requested 2/3",
+    usedByAndroid = true,
+    usedByTidepool = true
+)
 public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     
     private int bolusId;
