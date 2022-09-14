@@ -18,12 +18,14 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusRespon
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
@@ -31,7 +33,10 @@ import com.welie.blessed.BluetoothPeripheral;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.welie.blessed.HciStatus;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import timber.log.Timber;
 
@@ -52,6 +57,8 @@ public class PumpX2TandemPump extends TandemPump {
 
     boolean bolusInProgress = false;
     int lastBolusId = -1;
+    int requestedHistoryLogStartId = -1;
+    Map<Integer, Integer> historyLogStreamIdToLastEventId = new ConcurrentHashMap<>();
 
     public PumpX2TandemPump(Context context) {
         super(context);
@@ -94,8 +101,21 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("firstSequenceNum", resp.getFirstSequenceNum());
                 intent.putExtra("lastSequenceNum", resp.getLastSequenceNum());
                 context.sendBroadcast(intent);
+            } else if (message instanceof HistoryLogResponse) {
+                HistoryLogResponse resp = (HistoryLogResponse) message;
+                if (requestedHistoryLogStartId > 0) {
+                    historyLogStreamIdToLastEventId.put(resp.getStreamId(), requestedHistoryLogStartId);
+                    requestedHistoryLogStartId = -1;
+                }
             } else if (message instanceof HistoryLogStreamResponse) {
                 HistoryLogStreamResponse resp = (HistoryLogStreamResponse) message;
+                int lastEventId = historyLogStreamIdToLastEventId.getOrDefault(resp.getStreamId(), 0);
+                for (HistoryLog log : resp.getHistoryLogs()) {
+                    Timber.i("HistoryLog event %d: type %d: %s", lastEventId, log.typeId(), log);
+                    lastEventId++;
+                }
+                historyLogStreamIdToLastEventId.put(resp.getStreamId(), lastEventId);
+
                 Intent intent = new Intent(GOT_HISTORY_LOG_STREAM_RECEIVER);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("numberOfHistoryLogs", resp.getNumberOfHistoryLogs());

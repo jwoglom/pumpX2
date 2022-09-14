@@ -24,7 +24,8 @@ public class HistoryLogParser {
         BolusRequestedMsg1HistoryLog.class,
         BolusRequestedMsg2HistoryLog.class,
         BolusRequestedMsg3HistoryLog.class,
-        BolexCompletedHistoryLog.class
+        BolexCompletedHistoryLog.class,
+        TempRateActivatedHistoryLog.class
         // MESSAGES_END
     );
 

@@ -16,9 +16,8 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     public BolusRequestedMsg1HistoryLog() {}
     
     public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
+        super(pumpTimeSec, sequenceNum);
         this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusType, correctionBolusIncluded, carbAmount, bg, iob, carbRatio);
-        this.pumpTimeSec = pumpTimeSec;
-        this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
         this.bolusType = bolusType; // probably the same bolusType enum as BolusDeliveryHistoryLog
         this.correctionBolusIncluded = correctionBolusIncluded;

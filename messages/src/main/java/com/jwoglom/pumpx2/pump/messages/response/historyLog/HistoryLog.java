@@ -13,6 +13,13 @@ import java.util.HashSet;
 public abstract class HistoryLog {
     protected byte[] cargo = null;
 
+    HistoryLog() {}
+
+    HistoryLog(long pumpTimeSec, long sequenceNum) {
+        this.pumpTimeSec = pumpTimeSec;
+        this.sequenceNum = sequenceNum;
+    }
+
     public abstract int typeId();
 
     long pumpTimeSec = -1;

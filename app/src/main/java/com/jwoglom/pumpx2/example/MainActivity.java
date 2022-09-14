@@ -31,7 +31,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -94,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner requestMessageSpinner;
     private Button requestSendButton;
     private Button batteryRequestButton;
+    private Button fetchHistoryLogsButton;
     private Button recentHistoryLogsButton;
     private PumpX2TandemPump tandemEventCallback;
     private TandemBluetoothHandler bluetoothHandler;
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
         requestSendButton = findViewById(R.id.request_message_send);
         batteryRequestButton = findViewById(R.id.battery_request_button);
+        fetchHistoryLogsButton = findViewById(R.id.fetch_history_logs);
         recentHistoryLogsButton = findViewById(R.id.recent_history_logs);
         bolusButton = findViewById(R.id.bolusButton);
 
@@ -268,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private boolean waitingOnHistoryLogStatus = false;
+    private int onHistoryLogStatusFetchN = 0;
     private final BroadcastReceiver pumpConnectedCompleteReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -335,16 +337,25 @@ public class MainActivity extends AppCompatActivity {
             });
 
 
+            fetchHistoryLogsButton.setVisibility(View.VISIBLE);
+            fetchHistoryLogsButton.setOnClickListener((z) -> {
+                waitingOnHistoryLogStatus = true;
+                writePumpMessage(new HistoryLogStatusRequest(), peripheral);
+            });
+
             recentHistoryLogsButton.setVisibility(View.VISIBLE);
             recentHistoryLogsButton.setOnClickListener((z) -> {
                 waitingOnHistoryLogStatus = true;
+                onHistoryLogStatusFetchN = 50;
                 writePumpMessage(new HistoryLogStatusRequest(), peripheral);
             });
         }
     };
 
     private Queue<Integer> remainingSequenceNums = new LinkedList<>();
+    private int lastRemainingSequenceNum = -1;
     private int remainingSequenceNumsInBatch = 0;
+    private int lastFetchedHistoryLogSequenceNum = -1;
 
     private static final int sequenceNumBatchSize = 250;
 
@@ -360,6 +371,27 @@ public class MainActivity extends AppCompatActivity {
 
             Timber.d("Received HistoryLogStatus: %d count, %d - %d", numEntries, firstSequenceNum, lastSequenceNum);
             if (waitingOnHistoryLogStatus) {
+                if (onHistoryLogStatusFetchN > 0) {
+                    int start = (int)(lastSequenceNum) - onHistoryLogStatusFetchN;
+                    if (lastFetchedHistoryLogSequenceNum > -1) {
+                        if (lastFetchedHistoryLogSequenceNum == lastSequenceNum) {
+                            Timber.i("No more HistoryLog events to fetch");
+                            return;
+                        }
+                        Timber.d("lastFetchedSequenceNum=%d", lastFetchedHistoryLogSequenceNum);
+                        start = lastFetchedHistoryLogSequenceNum+1;
+                    }
+                    remainingSequenceNums = sequenceNumberList(start, (int)(lastSequenceNum));
+                    remainingSequenceNumsInBatch = Math.min((int)(lastSequenceNum) - start + 1, sequenceNumBatchSize);
+                    Timber.i("Fetching HistoryLog events from %d - %d", start, (int)(lastSequenceNum));
+
+                    HistoryLogRequest req = new HistoryLogRequest(start, remainingSequenceNumsInBatch);
+                    Timber.d("Writing HistoryLogRequest: %s", req);
+                    tandemEventCallback.requestedHistoryLogStartId = start;
+                    writePumpMessage(req, peripheral);
+                    onHistoryLogStatusFetchN = 0;
+                    return;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                 builder.setTitle("History Logs");
@@ -395,10 +427,12 @@ public class MainActivity extends AppCompatActivity {
                                 Timber.i("requested end: %d", end);
 
                                 remainingSequenceNums = sequenceNumberList(start, end);
+                                lastRemainingSequenceNum = end;
                                 remainingSequenceNumsInBatch = Math.min(end - start, sequenceNumBatchSize);
 
                                 HistoryLogRequest req = new HistoryLogRequest(start, remainingSequenceNumsInBatch);
                                 Timber.d("Writing HistoryLogRequest: %s", req);
+                                tandemEventCallback.requestedHistoryLogStartId = start;
                                 writePumpMessage(req, peripheral);
 
                             }
@@ -440,18 +474,30 @@ public class MainActivity extends AppCompatActivity {
             BluetoothPeripheral peripheral = getPeripheral(address);
 
             int numHistoryLogs = intent.getIntExtra("numberOfHistoryLogs", 0);
-            Timber.d("Got history logs count: %d", numHistoryLogs);
+            int firstSequenceNum = intent.getIntExtra("firstSequenceNum", 0);
+            Timber.d("Got history logs count for request: %d", numHistoryLogs);
+            int sequenceNum = firstSequenceNum;
             for (int i=0; i<numHistoryLogs; i++) {
-                remainingSequenceNums.poll();
+                lastFetchedHistoryLogSequenceNum = remainingSequenceNums.poll();
+                if (lastFetchedHistoryLogSequenceNum < sequenceNum) {
+                    Timber.i("MISSED SEQUENCE NUMBER %d, got %d", lastFetchedHistoryLogSequenceNum, sequenceNum);
+                    for (int j=0; j<(sequenceNum-lastFetchedHistoryLogSequenceNum); j++) {
+                        remainingSequenceNums.poll();
+                    }
+                    lastFetchedHistoryLogSequenceNum = sequenceNum;
+                }
                 remainingSequenceNumsInBatch--;
+                sequenceNum++;
             }
 
             if (remainingSequenceNumsInBatch > 0) {
-                Timber.i("Missed %d sequence nums (peek: %d)", remainingSequenceNumsInBatch, remainingSequenceNums.peek());
-                for (int i=0; i<remainingSequenceNumsInBatch; i++) {
-                    Timber.i("MISSED SEQUENCE NUMBER %d", remainingSequenceNums.poll());
-                    remainingSequenceNumsInBatch--;
-                }
+                Timber.d("Sequence nums remaining in batch: %d", remainingSequenceNumsInBatch);
+                return;
+//                Timber.i("Missed %d sequence nums (peek: %d)", remainingSequenceNumsInBatch, remainingSequenceNums.peek());
+//                for (int i=0; i<remainingSequenceNumsInBatch; i++) {
+//                    Timber.i("MISSED SEQUENCE NUMBER %d", remainingSequenceNums.poll());
+//                    remainingSequenceNumsInBatch--;
+//                }
             }
 
             if (remainingSequenceNums.isEmpty()) {
@@ -459,10 +505,15 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            Timber.i("Done with batch ending with %d", sequenceNum);
             int count = Math.min(remainingSequenceNums.size(), sequenceNumBatchSize);
             remainingSequenceNumsInBatch = sequenceNumBatchSize;
+            if (sequenceNum+remainingSequenceNumsInBatch > lastRemainingSequenceNum) {
+                remainingSequenceNumsInBatch = lastRemainingSequenceNum-sequenceNum;
+            }
             HistoryLogRequest req = new HistoryLogRequest(remainingSequenceNums.peek(), count);
             Timber.d("Writing HistoryLogRequest: %s", req);
+            tandemEventCallback.requestedHistoryLogStartId = remainingSequenceNums.peek();
             writePumpMessage(req, peripheral);
         }
     };
@@ -788,6 +839,7 @@ public class MainActivity extends AppCompatActivity {
                         Timber.i("idp segment: %s", maxLogs);
 
                         writePumpMessage(new HistoryLogRequest(Integer.parseInt(startLog), Integer.parseInt(maxLogs)), peripheral);
+                        tandemEventCallback.requestedHistoryLogStartId = Integer.parseInt(startLog);
                     }
                 });
                 builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
