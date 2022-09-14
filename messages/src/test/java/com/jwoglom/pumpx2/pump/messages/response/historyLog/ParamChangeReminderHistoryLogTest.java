@@ -8,8 +8,9 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.ParamChangeReminderH
 
 import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
-
+@Ignore("needs historyLog sample")
 public class ParamChangeReminderHistoryLogTest {
     @Test
     public void testParamChangeReminderHistoryLog() throws DecoderException {

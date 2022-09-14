@@ -3,8 +3,9 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
-
+@Ignore("needs historyLog sample")
 public class ParamChangePumpSettingsHistoryLogTest {
     @Test
     public void testPumpSettingsParameterChangeHistoryLog() throws DecoderException {

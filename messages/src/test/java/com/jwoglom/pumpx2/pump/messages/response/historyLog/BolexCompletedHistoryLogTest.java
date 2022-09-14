@@ -8,7 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
-
+@Ignore("needs historyLog sample")
 public class BolexCompletedHistoryLogTest {
     @Test
     @Ignore("no samples to test")
