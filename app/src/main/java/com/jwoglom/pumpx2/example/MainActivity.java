@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -161,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        healthAndSafetyWarning();
+
         if (getBluetoothManager().getAdapter() != null) {
             if (!isBluetoothEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -173,6 +176,31 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Timber.e("This device has no Bluetooth hardware");
+        }
+    }
+
+    private void healthAndSafetyWarning() {
+        SharedPreferences prefs = getSharedPreferences("com.jwoglom.pumpx2.example", MODE_PRIVATE);
+        if (prefs.getBoolean("firstrun", true)) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("HEALTH AND SAFETY WARNING")
+                    .setMessage("This application is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.\n\n" +
+                            "There is NO WARRANTY IMPLIED OR EXPRESSED DUE TO USE OF THIS SOFTWARE. YOU ASSUME ALL RISK FOR ANY MALFUNCTIONS, BUGS, OR INSULIN DELIVERY ACTIONS.")
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                            prefs.edit().putBoolean("firstrun", false).apply();
+                        }
+                    })
+                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .create()
+                    .show();
         }
     }
 

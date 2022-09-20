@@ -24,16 +24,18 @@ parsing messages which has no Android-specific dependencies.
 
 * Bluetooth connection
 * Pump authentication and pairing
-* currentStatus characteristic request messages
+* Read-only view of the pump's current status (currentStatus characteristic)
+* Pump event notifications: alerts, alarms, etc. (QualifyingEvent)
+* **Remote bolus** (insulin unit amounts only; carbs / auto-corrections not yet supported)
 
 **Partially supported:**
 
-* History Log parsing
+* History Log parsing (testing still needed to decode all messages)
 
 **Not supported:**
 
-* "V2" pump request/response messages (self-reported API version >= 2.2)
-* Control features (remote bolus support is in progress)
+* Non-bolus control features: these are not supported in current t:slim X2 firmware
+* Bolus wizard with automatic unit calculation from carbs / BG
 
 [sheet]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTDnXBbJfiwVh-5PDK78RZqgI7C7ymOl-aEw5JLCV8rl7AiYZdoTwx_gBkWUZoducIxh7JXlOJJd9p6/pubhtml?gid=1917691101&single=true
 [discord]: https://discord.gg/4fQUWHZ4Mw
