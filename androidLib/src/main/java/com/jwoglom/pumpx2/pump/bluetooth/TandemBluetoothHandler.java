@@ -423,6 +423,8 @@ public class TandemBluetoothHandler {
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
+            PumpState.clearRequestMessages();
+            Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 // Reconnect to this device when it becomes available again

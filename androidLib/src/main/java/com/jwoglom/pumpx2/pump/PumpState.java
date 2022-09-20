@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import timber.log.Timber;
+
 public class PumpState {
     // TODO: Refactor this class to be less hacky.
 
@@ -108,6 +110,11 @@ public class PumpState {
         Preconditions.checkState(pair != null, "could not find requestMessage for txId "+txId+" and char "+c);
         Preconditions.checkState(!pair.first, "txId "+txId+" was already processed for char "+c);
         requestMessages.put(key, Pair.create(true, pair.second));
+    }
+
+    public static synchronized void clearRequestMessages() {
+        Timber.d("requestMessages clear: %s", requestMessages);
+        requestMessages.clear();
     }
 
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();

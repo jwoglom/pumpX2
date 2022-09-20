@@ -24,6 +24,10 @@ public class TransactionId {
         set(txId + 1);
     }
 
+    public void reset() {
+        set(0);
+    }
+
     public byte get() {
         return (byte) txId;
     }
