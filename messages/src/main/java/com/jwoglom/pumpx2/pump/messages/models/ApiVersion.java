@@ -24,4 +24,8 @@ public class ApiVersion {
     public boolean greaterThan(KnownApiVersion other) {
         return greaterThan(other.get());
     }
+
+    public String toString() {
+        return "ApiVersion(major=" + major + ", minor=" + minor + ")";
+    }
 }

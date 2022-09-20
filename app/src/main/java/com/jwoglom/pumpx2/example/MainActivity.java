@@ -39,6 +39,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -54,7 +55,9 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
@@ -1065,7 +1068,15 @@ public class MainActivity extends AppCompatActivity {
 
     private BolusParameters bolusParameters = null;
     private void startBolusProcess(BluetoothPeripheral peripheral) {
+        ApiVersion apiVer = PumpState.getPumpAPIVersion();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (!apiVer.greaterThan(KnownApiVersion.API_V2_1)) {
+            builder.setTitle("Bolus Not Supported");
+            builder.setMessage("The API version of this pump does not support remote bolus:\n\n" + apiVer);
+            builder.setPositiveButton("OK", null);
+            builder.show();
+            return;
+        }
         builder.setTitle("Enter bolus");
         builder.setMessage("Enter bolus information (THIS IS NOT FINAL)");
 

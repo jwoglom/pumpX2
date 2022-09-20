@@ -377,8 +377,15 @@ public class TandemBluetoothHandler {
                 // If we are connecting on top of the native t:connect app, which has already
                 // set its MTU, then we want to ignore this error.
                 Timber.i("MTU was already updated, likely by the t:connect app (is %d), ignoring error %s", mtu, status);
+                tandemPump.onPumpCriticalError(peripheral,
+                        TandemError.SHARING_CONNECTION_WITH_TCONNECT_APP
+                                .withCause(TandemError.SET_MTU_FAILED)
+                                .withExtra("mtu: " + mtu + " status: " + status));
             } else {
                 Timber.e("MTU could not be updated (is %d), received %s. Ignoring error.", mtu, status);
+
+                tandemPump.onPumpCriticalError(peripheral,
+                        TandemError.SET_MTU_FAILED.withExtra("mtu: " + mtu + " status: " + status));
             }
             remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.MTU_UPDATED);
             checkIfInitialPumpConnectionEstablished(peripheral);
