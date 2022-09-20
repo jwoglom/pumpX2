@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class BTResponseParser {
@@ -50,6 +52,34 @@ public class BTResponseParser {
         return new PumpResponseMessage(output);
     }
 
+    public static PumpResponseMessage parseBestEffortForLogging(byte[] output, UUID uuid) {
+        if (output.length < 3) {
+            L.e(TAG, "parseBestEffortForLogging input has less than 3 bytes");
+            return null;
+        }
+        byte txId = parseTxId(output);
+        byte opCode = parseOpcode(output);
+        MessageType messageType = MessageType.fromOpcodeBestEffort(opCode);
+
+        Message message = null;
+        try {
+            message = Messages.fromOpcode(opCode, Characteristic.of(uuid)).newInstance();
+            message.fillWithEmptyCargo();
+        } catch (NullPointerException|InstantiationException|IllegalAccessException e) {
+            L.e(TAG, "parseBestEffortForLogging", e);
+            return null;
+        }
+
+        try {
+            TronMessageWrapper tron = new TronMessageWrapper(message, (byte) txId);
+            PacketArrayList packetArrayList = tron.buildPacketArrayList(messageType);
+            return BTResponseParser.parse(tron.message(), packetArrayList, output, uuid);
+        } catch (Exception e) {
+            L.e(TAG, "parseBestEffortForLogging", e);
+            return null;
+        }
+    }
+
     public static Byte parseTxId(byte[] output) {
         Preconditions.checkState(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
         /*
@@ -58,6 +88,16 @@ public class BTResponseParser {
         output[2] = opcode
          */
         return output[1];
+    }
+
+    public static Byte parseOpcode(byte[] output) {
+        Preconditions.checkState(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
+        /*
+        output[0] = packet index mod 15
+        output[1] = transaction ID
+        output[2] = opcode
+         */
+        return output[2];
     }
 
     private static void checkCharacteristicUuid(UUID uuid, byte[] output) {

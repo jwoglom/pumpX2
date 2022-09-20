@@ -478,7 +478,8 @@ public class MainActivity extends AppCompatActivity {
             Timber.d("Got history logs count for request: %d", numHistoryLogs);
             int sequenceNum = firstSequenceNum;
             for (int i=0; i<numHistoryLogs; i++) {
-                lastFetchedHistoryLogSequenceNum = remainingSequenceNums.poll();
+                Integer poll = remainingSequenceNums.poll();
+                lastFetchedHistoryLogSequenceNum = poll == null ? -1 : poll;
                 if (lastFetchedHistoryLogSequenceNum < sequenceNum) {
                     Timber.i("MISSED SEQUENCE NUMBER %d, got %d", lastFetchedHistoryLogSequenceNum, sequenceNum);
                     for (int j=0; j<(sequenceNum-lastFetchedHistoryLogSequenceNum); j++) {

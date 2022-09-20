@@ -129,5 +129,10 @@ public class PumpState {
     public static void enableActionsAffectingInsulinDelivery() {
         actionsAffectingInsulinDeliveryEnabled = true;
     }
+
+    /**
+     * When set, TandemPump will not send authentication messages on start.
+     */
+    public static boolean tconnectAppAlreadyAuthenticated = false;
 }
 

@@ -54,6 +54,10 @@ public abstract class TandemPump {
      * Callback invoked when the initial Bluetooth connection with the pump is established,
      * but before the pump authentication process begins. The default behavior is to trigger
      * a CentralChallenge which starts the authentication process.
+     * Note that this callback may be skipped when PumpX2 detects that the t:connect app is also
+     * in use on the device and as a result the pump is already authenticated.
+     * TODO: we need to still have the pairing key in order to send signed messages in this flow,
+     * which needs to be captured in the API semantics.
      * @param peripheral the BluetoothPeripheral representing the connected pump
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {

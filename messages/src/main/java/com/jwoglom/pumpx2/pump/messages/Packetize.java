@@ -22,6 +22,7 @@ public class Packetize {
     public static final String TAG = "Packetize";
     public static TransactionId txId = new TransactionId();
 
+    // TODO: these comments about chunk size are almost certainly due to the MTU.
     public static final int DEFAULT_MAX_CHUNK_SIZE = 18; // This was observed for currentStatus. It may be 40 for control.
     public static final int CONTROL_MAX_CHUNK_SIZE = 40; // this is a guess, it works for control.BolusPermissionResponse. maybe it should actually be 20?
 
