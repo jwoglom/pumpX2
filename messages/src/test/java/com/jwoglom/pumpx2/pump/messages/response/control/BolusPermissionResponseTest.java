@@ -80,4 +80,6 @@ public class BolusPermissionResponseTest {
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(BolusPermissionResponse.NackReason.INVALID_PUMPING_STATE, parsedRes.getNackReason());
     }
+
+    // 00054d051a0000f919b21b381709abfcdd23ae77a6eecdf474aa62146180b2e79d
 }

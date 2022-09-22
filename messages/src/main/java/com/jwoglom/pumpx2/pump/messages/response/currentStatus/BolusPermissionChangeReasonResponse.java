@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 
 @MessageProps(
-    opCode=-87,
+    opCode=-87, // 169
     size=5,
     type=MessageType.RESPONSE,
     request=BolusPermissionChangeReasonRequest.class,

@@ -2,11 +2,16 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
+import static org.junit.Assert.assertEquals;
+
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
+
+import java.time.Instant;
 
 public class LastBGResponseTest {
     @Test
@@ -43,5 +48,6 @@ public class LastBGResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2022-07-13T01:41:10Z"), parsedRes.getBgTimestampInstant());
     }
 }

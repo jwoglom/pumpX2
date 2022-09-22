@@ -15,7 +15,7 @@ public class BolusCalcDataSnapshotResponseTest {
         BolusCalcDataSnapshotResponse expected = new BolusCalcDataSnapshotResponse(
             // boolean isUnacked, int correctionFactor, long iob, int cartridgeRemainingInsulin, int targetBg, int isf, boolean carbEntryEnabled, long carbRatio, int maxBolusAmount, long maxBolusHourlyTotal, boolean maxBolusEventsExceeded, boolean maxIobEventsExceeded, boolean isAutopopAllowed
                 false, 209, 2937, 120, 110, 30, true, 6000, 25000, 2810, false, false, true,
-                // these bytes are unknown
+                // authentication hmac bytes
                 new byte[]{-112,-87,84,27,-35,15,0,0,1,-5,1},
                 new byte[]{85,85,85,85,85,85,85,85}
         );
@@ -35,7 +35,7 @@ public class BolusCalcDataSnapshotResponseTest {
         BolusCalcDataSnapshotResponse expected = new BolusCalcDataSnapshotResponse(
                 // boolean isUnacked, int correctionFactor, long iob, int cartridgeRemainingInsulin, int targetBg, int isf, boolean carbEntryEnabled, long carbRatio, int maxBolusAmount, long maxBolusHourlyTotal, boolean maxBolusEventsExceeded, boolean maxIobEventsExceeded, boolean isAutopopAllowed
                 false, 174, 2302, 120, 110, 30, true, 6000, 25000, 0, false, false, true,
-                // these bytes are unknown
+                // authentication hmac bytes
                 new byte[]{64,-82,84,27,-115,20,0,0,1,-16,1},
                 new byte[]{85,85,85,85,85,85,85,85}
         );

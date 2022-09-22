@@ -10,7 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
  * either in response to any request message (e.g. ErrorResponse).
  */
 @MessageProps(
-        opCode=-99999999,
+        opCode=0,
         size=0,
         type=MessageType.REQUEST,
         response=ErrorResponse.class

@@ -19,7 +19,7 @@ public abstract class Message {
         return getClass().getAnnotation(MessageProps.class);
     }
 
-    public int opCode() {
+    public byte opCode() {
         return props().opCode();
     }
 
@@ -45,7 +45,7 @@ public abstract class Message {
         return props().response().getAnnotation(MessageProps.class);
     }
 
-    public int getResponseOpCode() {
+    public byte getResponseOpCode() {
         if (type() == MessageType.REQUEST) {
             return getResponseProps().opCode();
         }

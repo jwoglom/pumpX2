@@ -66,8 +66,10 @@ public class InitiateBolusResponse extends Message {
     }
 
 
+    // identical to ChangeReason??
     public enum BolusResponseStatus {
         SUCCESS(0), // 0 = successBolusIsPending
+        REVOKED_PRIORITY(2)
 
         ;
 

@@ -12,7 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResp
  * which does not have an originating request.
  */
 @MessageProps(
-        opCode=-99999997,
+        opCode=0, // nonexistent
         size=0,
         type=MessageType.REQUEST,
         characteristic=Characteristic.HISTORY_LOG,

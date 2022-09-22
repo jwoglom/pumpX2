@@ -5,7 +5,10 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
+
+import java.time.Instant;
 
 @MessageProps(
     opCode=51,
@@ -17,15 +20,15 @@ public class LastBGResponse extends Message {
     
     private long bgTimestamp;
     private int bgValue;
-    private int bgSource;
+    private int bgSourceId;
     
     public LastBGResponse() {}
     
-    public LastBGResponse(long bgTimestamp, int bgValue, int bgSource) {
-        this.cargo = buildCargo(bgTimestamp, bgValue, bgSource);
+    public LastBGResponse(long bgTimestamp, int bgValue, int bgSourceId) {
+        this.cargo = buildCargo(bgTimestamp, bgValue, bgSourceId);
         this.bgTimestamp = bgTimestamp;
         this.bgValue = bgValue;
-        this.bgSource = bgSource;
+        this.bgSourceId = bgSourceId;
         
     }
 
@@ -34,7 +37,7 @@ public class LastBGResponse extends Message {
         this.cargo = raw;
         this.bgTimestamp = Bytes.readUint32(raw, 0);
         this.bgValue = Bytes.readShort(raw, 4);
-        this.bgSource = raw[6];
+        this.bgSourceId = raw[6];
         
     }
 
@@ -49,11 +52,44 @@ public class LastBGResponse extends Message {
     public long getBgTimestamp() {
         return bgTimestamp;
     }
+
+    public Instant getBgTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(bgTimestamp);
+    }
+
     public int getBgValue() {
         return bgValue;
     }
-    public int getBgSource() {
-        return bgSource;
+    public int getBgSourceId() {
+        return bgSourceId;
+    }
+    public BgSource getBgSource() {
+        return BgSource.fromId(bgSourceId);
+    }
+
+    public enum BgSource {
+        // TODO: confirm
+        MANUAL(0),
+        CGM(1),
+        ;
+
+        private final int id;
+        BgSource(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static BgSource fromId(int id) {
+            for (BgSource b : values()) {
+                if (b.id == id) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
     
 }

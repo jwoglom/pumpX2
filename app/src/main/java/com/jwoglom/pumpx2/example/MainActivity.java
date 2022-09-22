@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.example;
 
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_CALC_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_BOLUS_PERMISSION_REVOKED;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_CANCEL_BOLUS_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STATUS_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STREAM_RECEIVER;
@@ -31,7 +34,9 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -45,7 +50,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemBluetoothHandler;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -55,21 +62,28 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnapshotRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothPeripheral;
@@ -79,6 +93,8 @@ import org.apache.commons.codec.DecoderException;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,9 +168,12 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
         registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
         registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER));
+        registerReceiver(gotBolusCalcResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_RESPONSE_RECEIVER));
+        registerReceiver(gotBolusCalcLastBgResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER));
         registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER));
         registerReceiver(gotCancelBolusResponseReceiver, new IntentFilter(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER));
         registerReceiver(gotLastBolusStatusResponseAfterCancelReceiver, new IntentFilter(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER));
+        registerReceiver(gotBolusPermissionRevokedReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_REVOKED));
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
         registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT));
 
@@ -346,6 +365,9 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     } else if (className.equals(CancelBolusRequest.class.getName())) {
                         triggerCancelBolusRequestDialog(peripheral);
+                        return;
+                    } else if (className.equals(BolusPermissionChangeReasonRequest.class.getName())) {
+                        triggerBolusPermissionChangeReasonRequestDialog(peripheral);
                         return;
                     } else if (className.equals(BolusPermissionRequest.class.getName())) {
                         writePumpMessage(new BolusPermissionRequest(), peripheral);
@@ -1010,6 +1032,43 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
     }
+    private void triggerBolusPermissionChangeReasonRequestDialog(BluetoothPeripheral peripheral) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("BolusPermissionChangeReasonRequest");
+        builder.setMessage("Enter the bolus ID (this can be received from the in-progress bolus)");
+
+        final EditText input1 = new EditText(this);
+        final Context context = this;
+        input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        if (tandemEventCallback.lastBolusId > 0) {
+            input1.setText(String.valueOf(tandemEventCallback.lastBolusId));
+        }
+        builder.setView(input1);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String bolusIdStr = input1.getText().toString();
+                Timber.i("bolusId: %s", bolusIdStr);
+
+                if ("".equals(bolusIdStr)) {
+                    Timber.e("Not sending message because no units entered.");
+                    return;
+                }
+
+                int bolusId = Integer.parseInt(bolusIdStr);
+                writePumpMessage(new BolusPermissionChangeReasonRequest(bolusId), peripheral);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     private void triggerPairDialog(BluetoothPeripheral peripheral, String btAddress, CentralChallengeResponse challenge) {
         String btName = peripheral.getName();
@@ -1056,17 +1115,69 @@ public class MainActivity extends AppCompatActivity {
     //
 
     static class BolusParameters {
+        boolean windowOpen;
+        // bolus calc
+        boolean carbEntryEnabled;
+        long carbRatio;
+        long iob;
+        int cartridgeRemainingInsulin;
+        int correctionFactor;
+        boolean isAutopopAllowed;
+        int targetBg;
+        boolean exceeded;
+        // bolus parameters
         double units;
         int carbsGrams;
         int glucoseMgdl;
         BolusParameters(double units, int carbsGrams, int glucoseMgdl) {
+            this.windowOpen = false;
             this.units = units;
             this.carbsGrams = carbsGrams;
             this.glucoseMgdl = glucoseMgdl;
         }
+        BolusParameters() {
+            this.windowOpen = true;
+        }
+
+        public void fillBolusCalcDataSnapshot(
+            boolean carbEntryEnabled,
+            long carbRatio,
+            long iob,
+            int cartridgeRemainingInsulin,
+            int correctionFactor,
+            boolean isAutopopAllowed,
+            int targetBg,
+            boolean exceeded)
+        {
+            this.carbEntryEnabled = carbEntryEnabled;
+            this.carbRatio = carbRatio;
+            this.iob = iob;
+            this.cartridgeRemainingInsulin = cartridgeRemainingInsulin;
+            this.correctionFactor = correctionFactor;
+            this.isAutopopAllowed = isAutopopAllowed;
+            this.targetBg = targetBg;
+            this.exceeded = exceeded;
+
+        }
+
+        public boolean hasData() {
+            return units > 0;
+        }
+
+        public boolean hasBolusCalcData() {
+            return targetBg > 0;
+        }
+
+        public String toString() {
+            return JavaHelpers.autoToString(this, ImmutableSet.of());
+        }
     }
 
     private BolusParameters bolusParameters = null;
+    private EditText bolusUnitsView;
+    private EditText carbsGramsView;
+    private EditText glucoseMgdlView;
+    private TextView bolusCalcDetails;
     private void startBolusProcess(BluetoothPeripheral peripheral) {
         ApiVersion apiVer = PumpState.getPumpAPIVersion();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1077,8 +1188,9 @@ public class MainActivity extends AppCompatActivity {
             builder.show();
             return;
         }
+
         builder.setTitle("Enter bolus");
-        builder.setMessage("Enter bolus information (THIS IS NOT FINAL)");
+        builder.setMessage("Enter bolus information\n(THIS SCREEN IS A WORK IN PROGRESS!)");
 
         // TODO: automatically adjust insulin based on carbs, and send RemoteBgEntry/RemoteCarbEntry
 
@@ -1088,9 +1200,16 @@ public class MainActivity extends AppCompatActivity {
         final View bolusWindow = getLayoutInflater().inflate(R.layout.bolus_window, null);
         builder.setView(bolusWindow);
 
-        EditText bolusUnitsView = bolusWindow.findViewById(R.id.bolusUnits);
-        EditText carbsGramsView = bolusWindow.findViewById(R.id.carbsGrams);
-        EditText glucoseMgdlView = bolusWindow.findViewById(R.id.glucoseMgdl);
+        bolusUnitsView = bolusWindow.findViewById(R.id.bolusUnits);
+        carbsGramsView = bolusWindow.findViewById(R.id.carbsGrams);
+        glucoseMgdlView = bolusWindow.findViewById(R.id.glucoseMgdl);
+        bolusCalcDetails = bolusWindow.findViewById(R.id.bolusCalcDetails);
+        bolusCalcDetails.setText("Waiting for bolus calculator data...");
+
+        bolusParameters = new BolusParameters();
+        tandemEventCallback.bolusInProgress = true;
+
+        writePumpMessage(new BolusCalcDataSnapshotRequest(), peripheral);
 
         final MainActivity mainAct = this;
         builder.setPositiveButton("Bolus", new DialogInterface.OnClickListener() {
@@ -1104,7 +1223,7 @@ public class MainActivity extends AppCompatActivity {
                 double bolusUnits = Double.parseDouble(bolusUnitsStr);
 
                 String carbsGramsStr = carbsGramsView.getText().toString();
-                if (Strings.isNullOrEmpty(carbsGramsStr)) {
+                if (Strings.isNullOrEmpty(carbsGramsStr) || carbsGramsStr.equals("Disabled")) {
                     carbsGramsStr = "0";
                 }
                 int carbsGrams = Integer.parseInt(carbsGramsStr);
@@ -1117,23 +1236,126 @@ public class MainActivity extends AppCompatActivity {
                 Timber.i("bolusUnits: %f carbsGrams: %d glucoseMgdl: %d", bolusUnits, carbsGrams, glucoseMgdl);
 
                 mainAct.bolusParameters = new BolusParameters(bolusUnits, carbsGrams, glucoseMgdl);
-                dialog.cancel();
 
-                tandemEventCallback.bolusInProgress = true;
                 writePumpMessage(new BolusPermissionRequest(), peripheral);
-
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+                tandemEventCallback.bolusInProgress = false;
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                tandemEventCallback.bolusInProgress = false;
+            }
+        });
+
+        carbsGramsView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            private Toast lastToast = null;
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String str = editable.toString();
+                if (str.isEmpty()) {
+                    str = "0";
+                }
+                if (!bolusParameters.carbEntryEnabled) {
+                    Toast.makeText(mainAct, "Carb entry disabled!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int carbsGrams = Integer.parseInt(str);
+                bolusParameters.carbsGrams = carbsGrams;
+                float ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
+                Preconditions.checkState(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
+                // keep 2 decimal places
+                bolusParameters.units = Double.parseDouble(String.format("%.2f", carbsGrams / ratio));
+                Timber.i("bolusParameters update: %s", bolusParameters);
+                bolusUnitsView.setText(String.valueOf(bolusParameters.units));
+                if (lastToast != null) {
+                    lastToast.cancel();
+                }
+                lastToast = Toast.makeText(mainAct, "Updated units: " + carbsGrams + " carbs * (1 u/" + ratio + " carbs) = " + bolusParameters.units, Toast.LENGTH_SHORT);
+                lastToast.show();
             }
         });
 
         builder.show();
     }
 
+    private final BroadcastReceiver gotBolusCalcResponseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            boolean carbEntryEnabled = intent.getBooleanExtra("carbEntryEnabled", false);
+            long carbRatio = intent.getLongExtra("carbRatio", 0);
+            long iob = intent.getLongExtra("iob", 0);
+            int remainingInsulin = intent.getIntExtra("remainingInsulin", 0);
+            int correctionFactor = intent.getIntExtra("correctionFactor", 0);
+            boolean autopopAllowed = intent.getBooleanExtra("autopopAllowed", false);
+            int targetBg = intent.getIntExtra("targetBg", 0);
+            boolean exceeded = intent.getBooleanExtra("exceeded", false);
+
+            Preconditions.checkState(bolusParameters != null);
+            bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, autopopAllowed, targetBg, exceeded);
+            bolusCalcDetails.setText("");
+            carbsGramsView.setEnabled(bolusParameters.carbEntryEnabled);
+            if (!bolusParameters.carbEntryEnabled) {
+                carbsGramsView.setHint("Disabled");
+            }
+            if (bolusParameters.isAutopopAllowed) {
+                Toast.makeText(getApplicationContext(), "Fetching latest BG...", Toast.LENGTH_SHORT).show();
+                writePumpMessage(new LastBGRequest(), peripheral);
+            }
+        }
+    };
+
+
+    private final BroadcastReceiver gotBolusCalcLastBgResponseReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            long timestamp = intent.getLongExtra("timestamp", 0);
+            int sourceId = intent.getIntExtra("sourceId", -1);
+            int bgValue = intent.getIntExtra("bgValue", -1);
+
+            LastBGResponse.BgSource bgSource = LastBGResponse.BgSource.fromId(sourceId);
+
+            if (bgSource != LastBGResponse.BgSource.CGM) {
+                Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because source is not CGM (" + bgSource + ")", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Instant time = Dates.fromJan12008EpochSecondsToDate(timestamp);
+            Instant now = Instant.now();
+            long recencyMins = ChronoUnit.MINUTES.between(time, now);
+            if (recencyMins >= 15) {
+                Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because last BG is from " +recencyMins + " minutes ago", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!bolusParameters.isAutopopAllowed) {
+                Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because autopopulation is disallowed", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            glucoseMgdlView.setText(String.valueOf(bgValue));
+            Toast.makeText(getApplicationContext(), "WARNING: Automatic corrections are not implemented at this time.", Toast.LENGTH_LONG).show();
+        }
+    };
 
     private final BroadcastReceiver gotBolusPermissionResponseReceiver = new BroadcastReceiver() {
         @Override
@@ -1156,9 +1378,11 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            Preconditions.checkState(bolusParameters != null && bolusParameters.hasData());
+
             long bolusMilliunits = InsulinUnit.from1To1000(bolusParameters.units);
             new AlertDialog.Builder(context)
-                    .setTitle("Bolus Confirm")
+                    .setTitle("Bolus Confirm (" + bolusId + ")")
                     .setMessage("Carbs: " + bolusParameters.carbsGrams + "g\n" +
                                 "BG: " + (bolusParameters.glucoseMgdl == 0 ? "n/a" : bolusParameters.glucoseMgdl + "mg/dL") + "\n" +
                                 "Units to deliver: " + bolusParameters.units + "u")
@@ -1267,6 +1491,29 @@ public class MainActivity extends AppCompatActivity {
                             "Delivered: " + InsulinUnit.from1000To1(deliveredVolume) + "u\n" +
                             "Requested: " + InsulinUnit.from1000To1(requestedVolume) + "u\n" +
                             "Source: " + source + " ( " + sourceId + ")")
+                    .setNegativeButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
+
+            tandemEventCallback.bolusInProgress = false;
+        }
+    };
+
+    private final BroadcastReceiver gotBolusPermissionRevokedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String address = intent.getStringExtra("address");
+            BluetoothPeripheral peripheral = getPeripheral(address);
+
+            int bolusId = intent.getIntExtra("bolusId", -1);
+            String changeReason = intent.getStringExtra("changeReason");
+            int changeReasonId = intent.getIntExtra("changeReasonId", -1);
+            boolean currentPermissionHolder = intent.getBooleanExtra("currentPermissionHolder", false);
+            boolean isAcked = intent.getBooleanExtra("isAcked", false);
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Bolus Permission Revoked")
+                    .setMessage("A bolus with bolusId " + bolusId + " cannot be completed right now: " + changeReason + " (" + changeReasonId + ")\n\nAcked: " + isAcked + "\nCurrent permission holder: " + currentPermissionHolder)
                     .setNegativeButton(android.R.string.ok, null)
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .show();

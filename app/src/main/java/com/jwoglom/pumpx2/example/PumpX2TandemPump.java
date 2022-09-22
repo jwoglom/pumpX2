@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
@@ -16,10 +18,13 @@ import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionChangeReasonResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;
@@ -33,7 +38,6 @@ import com.welie.blessed.BluetoothPeripheral;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.welie.blessed.HciStatus;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,9 +53,12 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String GOT_HISTORY_LOG_STATUS_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStatus";
     public static final String GOT_HISTORY_LOG_STREAM_RECEIVER = "jwoglom.pumpx2.gotHistoryLogStream";
     public static final String GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusPermissionResponse";
+    public static final String GOT_BOLUS_CALC_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusCalcResponse";
+    public static final String GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotBolusCalcLastBgResponse";
     public static final String GOT_INITIATE_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotInitiateBolusResponse";
     public static final String GOT_CANCEL_BOLUS_RESPONSE_RECEIVER = "jwoglom.pumpx2.gotCancelBolusResponse";
     public static final String GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER = "jwoglom.pumpx2.gotLastBolusResponseAfterCancel";
+    public static final String GOT_BOLUS_PERMISSION_REVOKED = "jwoglom.pumpx2.bolusPermissionRevoked";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
     public static final String PUMP_ERROR_INTENT = "jwoglom.pumpx2.error";
 
@@ -131,6 +138,30 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("nackReasonId", resp.getNackReasonId());
                 context.sendBroadcast(intent);
                 return;
+            } else if (message instanceof BolusCalcDataSnapshotResponse && bolusInProgress) {
+                BolusCalcDataSnapshotResponse resp = (BolusCalcDataSnapshotResponse) message;
+                Intent intent = new Intent(GOT_BOLUS_CALC_RESPONSE_RECEIVER);
+                Preconditions.checkState(!resp.getIsUnacked(), "bolusCalcDataSnapshot: " + resp);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("carbEntryEnabled", resp.getCarbEntryEnabled());
+                intent.putExtra("carbRatio", resp.getCarbRatio());
+                intent.putExtra("iob", resp.getIob());
+                intent.putExtra("remainingInsulin", resp.getCartridgeRemainingInsulin());
+                intent.putExtra("correctionFactor", resp.getCorrectionFactor());
+                intent.putExtra("autopopAllowed", resp.getIsAutopopAllowed());
+                intent.putExtra("targetBg", resp.getTargetBg());
+                intent.putExtra("exceeded", resp.getMaxBolusEventsExceeded() || resp.getMaxIobEventsExceeded());
+                context.sendBroadcast(intent);
+                return;
+            } else if (message instanceof LastBGResponse && bolusInProgress) {
+                LastBGResponse resp = (LastBGResponse) message;
+                Intent intent = new Intent(GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("timestamp", resp.getBgTimestamp());
+                intent.putExtra("sourceId", resp.getBgSourceId());
+                intent.putExtra("bgValue", resp.getBgValue());
+                context.sendBroadcast(intent);
+                return;
             } else if (message instanceof InitiateBolusResponse && bolusInProgress) {
                 InitiateBolusResponse resp = (InitiateBolusResponse) message;
                 Intent intent = new Intent(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER);
@@ -163,6 +194,16 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("sourceId", resp.getBolusSourceId());
                 context.sendBroadcast(intent);
                 return;
+            } else if (message instanceof BolusPermissionChangeReasonResponse && bolusInProgress) {
+                BolusPermissionChangeReasonResponse resp = (BolusPermissionChangeReasonResponse) message;
+                Intent intent = new Intent(GOT_BOLUS_PERMISSION_REVOKED);
+                intent.putExtra("address", peripheral.getAddress());
+                intent.putExtra("bolusId", resp.getBolusId());
+                intent.putExtra("changeReason", resp.getLastChangeReason() != null ? resp.getLastChangeReason().name() : "null");
+                intent.putExtra("changeReasonId", resp.getLastChangeReasonId());
+                intent.putExtra("currentPermissionHolder", resp.getCurrentPermissionHolder());
+                intent.putExtra("isAcked", resp.getIsAcked());
+                context.sendBroadcast(intent);
             }
 
             if (message instanceof AlarmStatusResponse) {
@@ -212,6 +253,9 @@ public class PumpX2TandemPump extends TandemPump {
     public void onReceiveQualifyingEvent(BluetoothPeripheral peripheral, Set<QualifyingEvent> events) {
         Timber.i("Received QualifyingEvents: %s", events);
         Toast.makeText(context, "Received QualifyingEvents: " + events, Toast.LENGTH_LONG).show();
+        if (events.contains(QualifyingEvent.BOLUS_PERMISSION_REVOKED) && bolusInProgress) {
+            sendCommand(peripheral, new BolusPermissionChangeReasonRequest(lastBolusId));
+        }
     }
 
     @Override

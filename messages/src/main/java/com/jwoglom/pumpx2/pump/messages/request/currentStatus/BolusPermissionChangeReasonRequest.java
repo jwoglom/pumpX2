@@ -12,7 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionCh
  * TODO: causes an ErrorResponse!
  */
 @MessageProps(
-    opCode=-88,
+    opCode=-88, // 168
     size=2,
     type=MessageType.REQUEST,
     response=BolusPermissionChangeReasonResponse.class,
@@ -20,7 +20,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionCh
 )
 public class BolusPermissionChangeReasonRequest extends Message { 
     public BolusPermissionChangeReasonRequest() {
-        this.cargo = EMPTY;
+
     }
 
     private int bolusId;

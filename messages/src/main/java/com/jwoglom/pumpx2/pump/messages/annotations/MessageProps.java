@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MessageProps {
-    int opCode();
+    byte opCode();
     int size() default 0;
     boolean variableSize() default false;
     boolean stream() default false;
