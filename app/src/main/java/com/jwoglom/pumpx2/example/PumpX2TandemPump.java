@@ -151,6 +151,8 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("autopopAllowed", resp.getIsAutopopAllowed());
                 intent.putExtra("targetBg", resp.getTargetBg());
                 intent.putExtra("exceeded", resp.getMaxBolusEventsExceeded() || resp.getMaxIobEventsExceeded());
+                intent.putExtra("maxBolusAmount", resp.getMaxBolusAmount());
+                intent.putExtra("maxBolusHourlyTotal", resp.getMaxBolusHourlyTotal());
                 context.sendBroadcast(intent);
                 return;
             } else if (message instanceof LastBGResponse && bolusInProgress) {

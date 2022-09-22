@@ -1125,6 +1125,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isAutopopAllowed;
         int targetBg;
         boolean exceeded;
+        int maxBolusAmount;
         // bolus parameters
         double units;
         int carbsGrams;
@@ -1139,6 +1140,12 @@ public class MainActivity extends AppCompatActivity {
             this.windowOpen = true;
         }
 
+        public void fillParameters(double units, int carbsGrams, int glucoseMgdl) {
+            this.units = units;
+            this.carbsGrams = carbsGrams;
+            this.glucoseMgdl = glucoseMgdl;
+        }
+
         public void fillBolusCalcDataSnapshot(
             boolean carbEntryEnabled,
             long carbRatio,
@@ -1147,7 +1154,8 @@ public class MainActivity extends AppCompatActivity {
             int correctionFactor,
             boolean isAutopopAllowed,
             int targetBg,
-            boolean exceeded)
+            boolean exceeded,
+            int maxBolusAmount)
         {
             this.carbEntryEnabled = carbEntryEnabled;
             this.carbRatio = carbRatio;
@@ -1157,6 +1165,7 @@ public class MainActivity extends AppCompatActivity {
             this.isAutopopAllowed = isAutopopAllowed;
             this.targetBg = targetBg;
             this.exceeded = exceeded;
+            this.maxBolusAmount = maxBolusAmount;
 
         }
 
@@ -1170,6 +1179,22 @@ public class MainActivity extends AppCompatActivity {
 
         public String toString() {
             return JavaHelpers.autoToString(this, ImmutableSet.of());
+        }
+
+        public boolean invalid() {
+            return !Strings.isNullOrEmpty(invalidReason());
+        }
+
+        public String invalidReason() {
+            if (units > cartridgeRemainingInsulin) {
+                return units + " units is greater than cartridge amount (" + cartridgeRemainingInsulin + ")";
+            }
+            double maxBolus = InsulinUnit.from1000To1((long) maxBolusAmount);
+            if (units > maxBolus) {
+                return units + " units is greater than max bolus (" + maxBolus + ")";
+            }
+
+            return "";
         }
     }
 
@@ -1235,7 +1260,23 @@ public class MainActivity extends AppCompatActivity {
                 int glucoseMgdl = Integer.parseInt(glucoseMgdlStr);
                 Timber.i("bolusUnits: %f carbsGrams: %d glucoseMgdl: %d", bolusUnits, carbsGrams, glucoseMgdl);
 
-                mainAct.bolusParameters = new BolusParameters(bolusUnits, carbsGrams, glucoseMgdl);
+                mainAct.bolusParameters.fillParameters(bolusUnits, carbsGrams, glucoseMgdl);
+
+                if (mainAct.bolusParameters.invalid()) {
+                    dialog.cancel();
+                    new AlertDialog.Builder(mainAct)
+                            .setTitle("Invalid bolus entry")
+                            .setMessage(mainAct.bolusParameters.invalidReason())
+                            .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startBolusProcess(peripheral);
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    return;
+                }
 
                 writePumpMessage(new BolusPermissionRequest(), peripheral);
             }
@@ -1288,6 +1329,39 @@ public class MainActivity extends AppCompatActivity {
                 lastToast.show();
             }
         });
+        bolusUnitsView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            private Toast lastToast;
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String str = editable.toString();
+                if (str.isEmpty()) {
+                    str = "0";
+                }
+                double bolusUnits = Double.parseDouble(str);
+                int cartRemaining = bolusParameters.cartridgeRemainingInsulin;
+                if (lastToast != null) {
+                    lastToast.cancel();
+                }
+                if (bolusUnits > cartRemaining) {
+                    lastToast = Toast.makeText(mainAct, "INVALID: " + bolusUnits + " units is greater than cartridge amount (" + cartRemaining + ")", Toast.LENGTH_LONG);
+                    lastToast.show();
+                    return;
+                }
+                double maxBolus = InsulinUnit.from1000To1((long) bolusParameters.maxBolusAmount);
+                if (bolusUnits > maxBolus) {
+                    lastToast = Toast.makeText(mainAct, "INVALID: " + bolusUnits + " units is greater than max bolus (" + maxBolus + ")", Toast.LENGTH_LONG);
+                    lastToast.show();
+                    return;
+                }
+            }
+        });
 
         builder.show();
     }
@@ -1306,9 +1380,10 @@ public class MainActivity extends AppCompatActivity {
             boolean autopopAllowed = intent.getBooleanExtra("autopopAllowed", false);
             int targetBg = intent.getIntExtra("targetBg", 0);
             boolean exceeded = intent.getBooleanExtra("exceeded", false);
+            int maxBolusAmount = intent.getIntExtra("maxBolusAmount", -1);
 
             Preconditions.checkState(bolusParameters != null);
-            bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, autopopAllowed, targetBg, exceeded);
+            bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, autopopAllowed, targetBg, exceeded, maxBolusAmount);
             bolusCalcDetails.setText("");
             carbsGramsView.setEnabled(bolusParameters.carbEntryEnabled);
             if (!bolusParameters.carbEntryEnabled) {
