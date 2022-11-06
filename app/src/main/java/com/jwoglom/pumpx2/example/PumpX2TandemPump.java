@@ -148,6 +148,7 @@ public class PumpX2TandemPump extends TandemPump {
                 intent.putExtra("iob", resp.getIob());
                 intent.putExtra("remainingInsulin", resp.getCartridgeRemainingInsulin());
                 intent.putExtra("correctionFactor", resp.getCorrectionFactor());
+                intent.putExtra("isf", resp.getIsf());
                 intent.putExtra("autopopAllowed", resp.getIsAutopopAllowed());
                 intent.putExtra("targetBg", resp.getTargetBg());
                 intent.putExtra("exceeded", resp.getMaxBolusEventsExceeded() || resp.getMaxIobEventsExceeded());

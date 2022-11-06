@@ -34,6 +34,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -69,6 +70,7 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionReleaseRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnapshotRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;
@@ -79,7 +81,6 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
@@ -93,6 +94,7 @@ import org.apache.commons.codec.DecoderException;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_LOCATION_REQUEST = 2;
 
+    private Handler handler;
     private TextView statusText;
     private Button retryConnectButton;
     private Spinner requestMessageSpinner;
@@ -126,8 +129,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        handler = new Handler();
 
         statusText = findViewById(R.id.statusText);
+        initStatusText();
         retryConnectButton = findViewById(R.id.retryConnect);
         retryConnectButton.setOnClickListener((view) -> resetBluetoothHandler().startScan());
 
@@ -199,6 +204,31 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Timber.e("This device has no Bluetooth hardware");
         }
+    }
+
+    private void initStatusText() {
+        String[] waitingStatusTexts = new String[]{
+                "Looking for Bluetooth devices...",
+                "Looking for Bluetooth devices...\n\n\nTurn on your pump and make sure Mobile Connection is enabled within Options > Device Settings > Bluetooth Settings.",
+                "Looking for Bluetooth devices...\n\n\nTurn on your pump and make sure Mobile Connection is enabled within Options > Device Settings > Bluetooth Settings.\n\nToggle the setting if the device still won't connect."
+        };
+        statusText.setText(waitingStatusTexts[0]);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (statusText.getText().equals(waitingStatusTexts[0])) {
+                    statusText.setText(waitingStatusTexts[1]);
+                }
+            }
+        }, 10000);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (statusText.getText().equals(waitingStatusTexts[1])) {
+                    statusText.setText(waitingStatusTexts[2]);
+                }
+            }
+        }, 20000);
     }
 
     private void healthAndSafetyWarning() {
@@ -367,7 +397,10 @@ public class MainActivity extends AppCompatActivity {
                         triggerCancelBolusRequestDialog(peripheral);
                         return;
                     } else if (className.equals(BolusPermissionChangeReasonRequest.class.getName())) {
-                        triggerBolusPermissionChangeReasonRequestDialog(peripheral);
+                        triggerMessageWithBolusIdParameter(peripheral, BolusPermissionChangeReasonRequest.class);
+                        return;
+                    } else if (className.equals(BolusPermissionReleaseRequest.class.getName())) {
+                        triggerMessageWithBolusIdParameter(peripheral, BolusPermissionReleaseRequest.class);
                         return;
                     } else if (className.equals(BolusPermissionRequest.class.getName())) {
                         writePumpMessage(new BolusPermissionRequest(), peripheral);
@@ -1032,9 +1065,9 @@ public class MainActivity extends AppCompatActivity {
 
         builder.show();
     }
-    private void triggerBolusPermissionChangeReasonRequestDialog(BluetoothPeripheral peripheral) {
+    private void triggerMessageWithBolusIdParameter(BluetoothPeripheral peripheral, Class<? extends Message> messageClass) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("BolusPermissionChangeReasonRequest");
+        builder.setTitle(messageClass.getSimpleName());
         builder.setMessage("Enter the bolus ID (this can be received from the in-progress bolus)");
 
         final EditText input1 = new EditText(this);
@@ -1052,12 +1085,20 @@ public class MainActivity extends AppCompatActivity {
                 Timber.i("bolusId: %s", bolusIdStr);
 
                 if ("".equals(bolusIdStr)) {
-                    Timber.e("Not sending message because no units entered.");
+                    Timber.e("Not sending message because no bolus ID entered.");
                     return;
                 }
 
                 int bolusId = Integer.parseInt(bolusIdStr);
-                writePumpMessage(new BolusPermissionChangeReasonRequest(bolusId), peripheral);
+                Class<?>[] constructorType = {long.class};
+                Message message;
+                try {
+                    message = messageClass.getConstructor(constructorType).newInstance(bolusId);
+                } catch (IllegalAccessException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {
+                    Timber.e(e);
+                    return;
+                }
+                writePumpMessage(message, peripheral);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -1119,13 +1160,17 @@ public class MainActivity extends AppCompatActivity {
         // bolus calc
         boolean carbEntryEnabled;
         long carbRatio;
-        long iob;
+        double iob;
         int cartridgeRemainingInsulin;
         int correctionFactor;
+        int isf;
         boolean isAutopopAllowed;
         int targetBg;
         boolean exceeded;
         int maxBolusAmount;
+        // bolus internal parameters
+        double calculatedUnitsFromGlucose;
+        double calculatedUnitsFromCarbs;
         // bolus parameters
         double units;
         int carbsGrams;
@@ -1144,6 +1189,9 @@ public class MainActivity extends AppCompatActivity {
             this.units = units;
             this.carbsGrams = carbsGrams;
             this.glucoseMgdl = glucoseMgdl;
+
+            this.calculatedUnitsFromGlucose = 0;
+            this.calculatedUnitsFromCarbs = 0;
         }
 
         public void fillBolusCalcDataSnapshot(
@@ -1152,6 +1200,7 @@ public class MainActivity extends AppCompatActivity {
             long iob,
             int cartridgeRemainingInsulin,
             int correctionFactor,
+            int isf,
             boolean isAutopopAllowed,
             int targetBg,
             boolean exceeded,
@@ -1159,14 +1208,21 @@ public class MainActivity extends AppCompatActivity {
         {
             this.carbEntryEnabled = carbEntryEnabled;
             this.carbRatio = carbRatio;
-            this.iob = iob;
+            this.iob = InsulinUnit.from1000To1(iob); // 1000-unit
             this.cartridgeRemainingInsulin = cartridgeRemainingInsulin;
             this.correctionFactor = correctionFactor;
+            this.isf = isf;
             this.isAutopopAllowed = isAutopopAllowed;
             this.targetBg = targetBg;
             this.exceeded = exceeded;
             this.maxBolusAmount = maxBolusAmount;
 
+            this.calculatedUnitsFromGlucose = -1 * this.iob;
+
+        }
+
+        public void updateUnits() {
+            units = Math.max(0, calculatedUnitsFromCarbs + calculatedUnitsFromGlucose);
         }
 
         public boolean hasData() {
@@ -1215,7 +1271,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         builder.setTitle("Enter bolus");
-        builder.setMessage("Enter bolus information\n(THIS SCREEN IS A WORK IN PROGRESS!)");
+        builder.setMessage("Enter bolus information\n(THIS SCREEN IS A WORK IN PROGRESS! PLEASE VERIFY INSULIN CORRECTION CALCULATIONS ON YOUR PUMP!)");
 
         // TODO: automatically adjust insulin based on carbs, and send RemoteBgEntry/RemoteCarbEntry
 
@@ -1319,16 +1375,33 @@ public class MainActivity extends AppCompatActivity {
                 float ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
                 Preconditions.checkState(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
                 // keep 2 decimal places
-                bolusParameters.units = Double.parseDouble(String.format("%.2f", carbsGrams / ratio));
-                Timber.i("bolusParameters update: %s", bolusParameters);
-                bolusUnitsView.setText(String.valueOf(bolusParameters.units));
-                if (lastToast != null) {
-                    lastToast.cancel();
-                }
-                lastToast = Toast.makeText(mainAct, "Updated units: " + carbsGrams + " carbs * (1 u/" + ratio + " carbs) = " + bolusParameters.units, Toast.LENGTH_SHORT);
-                lastToast.show();
+                bolusParameters.calculatedUnitsFromCarbs = Double.parseDouble(String.format("%.2f", carbsGrams / ratio));
+                updateBolusParameterUnits();
             }
         });
+
+        glucoseMgdlView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String str = editable.toString();
+                if (str.isEmpty()) {
+                    str = "0";
+                }
+                int glucoseMgdl = Integer.parseInt(str);
+                bolusParameters.glucoseMgdl = glucoseMgdl;
+
+                if (glucoseMgdl > 40) {
+                    checkAutomaticCorrection();
+                }
+            }
+        });
+
         bolusUnitsView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -1377,13 +1450,14 @@ public class MainActivity extends AppCompatActivity {
             long iob = intent.getLongExtra("iob", 0);
             int remainingInsulin = intent.getIntExtra("remainingInsulin", 0);
             int correctionFactor = intent.getIntExtra("correctionFactor", 0);
+            int isf = intent.getIntExtra("isf", 0);
             boolean autopopAllowed = intent.getBooleanExtra("autopopAllowed", false);
             int targetBg = intent.getIntExtra("targetBg", 0);
             boolean exceeded = intent.getBooleanExtra("exceeded", false);
             int maxBolusAmount = intent.getIntExtra("maxBolusAmount", -1);
 
             Preconditions.checkState(bolusParameters != null);
-            bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, autopopAllowed, targetBg, exceeded, maxBolusAmount);
+            bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, isf, autopopAllowed, targetBg, exceeded, maxBolusAmount);
             bolusCalcDetails.setText("");
             carbsGramsView.setEnabled(bolusParameters.carbEntryEnabled);
             if (!bolusParameters.carbEntryEnabled) {
@@ -1392,6 +1466,9 @@ public class MainActivity extends AppCompatActivity {
             if (bolusParameters.isAutopopAllowed) {
                 Toast.makeText(getApplicationContext(), "Fetching latest BG...", Toast.LENGTH_SHORT).show();
                 writePumpMessage(new LastBGRequest(), peripheral);
+            } else {
+                // ensure IOB is processed
+                checkAutomaticCorrection();
             }
         }
     };
@@ -1411,6 +1488,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (bgSource != LastBGResponse.BgSource.CGM) {
                 Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because source is not CGM (" + bgSource + ")", Toast.LENGTH_SHORT).show();
+
+                // ensure IOB is processed
+                checkAutomaticCorrection();
                 return;
             }
 
@@ -1419,18 +1499,137 @@ public class MainActivity extends AppCompatActivity {
             long recencyMins = ChronoUnit.MINUTES.between(time, now);
             if (recencyMins >= 15) {
                 Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because last BG is from " +recencyMins + " minutes ago", Toast.LENGTH_SHORT).show();
+
+                // ensure IOB is processed
+                checkAutomaticCorrection();
                 return;
             }
 
             if (!bolusParameters.isAutopopAllowed) {
                 Toast.makeText(getApplicationContext(), "Not filling BG in Bolus Calculator because autopopulation is disallowed", Toast.LENGTH_SHORT).show();
+
+                // ensure IOB is processed
+                checkAutomaticCorrection();
                 return;
             }
 
             glucoseMgdlView.setText(String.valueOf(bgValue));
-            Toast.makeText(getApplicationContext(), "WARNING: Automatic corrections are not implemented at this time.", Toast.LENGTH_LONG).show();
+            bolusParameters.glucoseMgdl = bgValue;
+            checkAutomaticCorrection();
         }
     };
+
+    private final void checkAutomaticCorrection() {
+        Preconditions.checkState(bolusUnitsView != null && carbsGramsView != null && glucoseMgdlView != null);
+
+        String glucoseMgdlStr = glucoseMgdlView.getText().toString();
+        if (Strings.isNullOrEmpty(glucoseMgdlStr)) {
+            glucoseMgdlStr = "0";
+        }
+        int glucoseMgdl = Integer.parseInt(glucoseMgdlStr);
+
+        if (bolusParameters.isf < 1) {
+            Toast.makeText(getApplicationContext(), "No automatic correction can be made because there is no Correction Factor in your pump profile.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (glucoseMgdl <= 0) {
+            return;
+        }
+
+        Context context = MainActivity.this;
+
+        int bgDiff = glucoseMgdl - bolusParameters.targetBg;
+        double addedInsulin = (1.0 * bgDiff) / bolusParameters.isf - bolusParameters.iob;
+        Timber.i("addedInsulin: %.2f bgDiff: %d", addedInsulin, bgDiff);
+        String suffix = "\n\nCurrent IOB: " + String.format("%.2f", bolusParameters.iob) + "u\nEntered BG: " + glucoseMgdlStr + "mg/dL";
+
+        // TODO: rethink.
+        if (addedInsulin > 0) {
+            new AlertDialog.Builder(context)
+                    .setTitle("Correction")
+                    .setMessage("Your BG is above target. Add correction bolus?" + suffix)
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            bolusParameters.calculatedUnitsFromGlucose = addedInsulin;
+                            updateBolusParameterUnits();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else if (bolusParameters.calculatedUnitsFromCarbs >= 0) {
+            // If we can reduce the bolus
+            if (bolusParameters.calculatedUnitsFromCarbs + addedInsulin > 0) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Reduction")
+                        .setMessage("Your BG is below target. Reduce bolus calculation?" + suffix)
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                bolusParameters.calculatedUnitsFromGlucose = addedInsulin;
+                                updateBolusParameterUnits();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } else {
+                bolusParameters.calculatedUnitsFromGlucose = addedInsulin;
+                updateBolusParameterUnits();
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Your BG Is Low")
+                        .setMessage("Due to your BG and IOB, no bolus has been calculated. Eat carbs and re-test BG." + suffix)
+                        .setNegativeButton(android.R.string.ok, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        } else if (glucoseMgdl > bolusParameters.targetBg) {
+            bolusParameters.calculatedUnitsFromGlucose = addedInsulin;
+            updateBolusParameterUnits();
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Your BG is Above Target")
+                    .setMessage("Due to IOB, no correction will be calculated. Re-test BG as necessary." + suffix)
+                    .setNegativeButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        } else if (glucoseMgdl < bolusParameters.targetBg) {
+
+        } else {
+            bolusParameters.calculatedUnitsFromGlucose = addedInsulin;
+            updateBolusParameterUnits();
+
+            new AlertDialog.Builder(context)
+                    .setTitle("Your BG Is Low")
+                    .setMessage("Eat carbs and re-test BG." + suffix)
+                    .setNegativeButton(android.R.string.ok, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+    }
+
+    private void updateBolusParameterUnits() {
+        bolusParameters.updateUnits();
+        bolusUnitsView.setText(String.format("%.2f", bolusParameters.units));
+
+        Timber.i("bolusParameters update: %s", bolusParameters);
+
+        if (bolusParameters.calculatedUnitsFromGlucose > 0) {
+            bolusCalcDetails.setText("Insulin units were increased due to BG above target");
+        } else if (bolusParameters.calculatedUnitsFromGlucose < 0) {
+            String reason = bolusParameters.glucoseMgdl < bolusParameters.targetBg ? "BG below target" : "IOB";
+            if (bolusParameters.units == 0) {
+                bolusCalcDetails.setText("Insulin units were set to 0 due to " + reason);
+            } else {
+                bolusCalcDetails.setText("Insulin units were decreased due to " + reason);
+            }
+        } else {
+            bolusCalcDetails.setText("");
+        }
+    }
 
     private final BroadcastReceiver gotBolusPermissionResponseReceiver = new BroadcastReceiver() {
         @Override
