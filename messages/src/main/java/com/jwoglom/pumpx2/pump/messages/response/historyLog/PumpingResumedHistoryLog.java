@@ -46,6 +46,10 @@ public class PumpingResumedHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(insulinAmount)));
     }
+
+    /**
+     * @return the insulin amount at the time pumping was resumed (most likely the IOB, needs confirmation)
+     */
     public int getInsulinAmount() {
         return insulinAmount;
     }

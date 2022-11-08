@@ -4,8 +4,6 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import java.math.BigInteger;
-
 @HistoryLogProps(
     opCode = 11,
     displayName = "Pumping Suspended",
@@ -14,19 +12,19 @@ import java.math.BigInteger;
 public class PumpingSuspendedHistoryLog extends HistoryLog {
     
     private int insulinAmount;
-    private int reason;
+    private int reasonId;
     
     public PumpingSuspendedHistoryLog() {}
-    public PumpingSuspendedHistoryLog(long pumpTimeSec, long sequenceNum, int insulinAmount, int reason) {
+    public PumpingSuspendedHistoryLog(long pumpTimeSec, long sequenceNum, int insulinAmount, int reasonId) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, insulinAmount, reason);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, insulinAmount, reasonId);
         this.insulinAmount = insulinAmount;
-        this.reason = reason;
+        this.reasonId = reasonId;
         
     }
 
-    public PumpingSuspendedHistoryLog(int insulinAmount, int reason) {
-        this(0, 0, insulinAmount, reason);
+    public PumpingSuspendedHistoryLog(int insulinAmount, int reasonId) {
+        this(0, 0, insulinAmount, reasonId);
     }
 
     public int typeId() {
@@ -38,7 +36,7 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.insulinAmount = Bytes.readShort(raw, 14);
-        this.reason = raw[16];
+        this.reasonId = raw[16];
         
     }
 
@@ -50,11 +48,41 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
             Bytes.firstTwoBytesLittleEndian(insulinAmount), 
             new byte[]{ (byte) reason }));
     }
+
+    /**
+     * @return insulin amount in milliunits at the time pumping was suspended (I think this matches
+     * with the IOB, needs confirmation)
+     */
     public int getInsulinAmount() {
         return insulinAmount;
     }
-    public int getReason() {
-        return reason;
+    public int getReasonId() {
+        return reasonId;
+    }
+    public SuspendReason getReason() {
+        return SuspendReason.fromId(reasonId);
+    }
+
+    enum SuspendReason {
+        USER_ABORTED(0),
+        ALARM(1),
+        MALFUNCTION(2),
+        AUTO_SUSPEND_PREDICTIVE_LOW_GLUCOSE(6),
+
+        ;
+        private final int id;
+        SuspendReason(int id) {
+            this.id = id;
+        }
+
+        static SuspendReason fromId(int id) {
+            for (SuspendReason r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
     }
     
 }

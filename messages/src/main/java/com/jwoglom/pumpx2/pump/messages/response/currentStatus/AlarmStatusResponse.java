@@ -54,7 +54,7 @@ public class AlarmStatusResponse extends Message {
         CARTRIDGE_ALARM5(9),
         TEMPERATURE_ALARM(10),
         TEMPERATURE_ALARM2(11),
-        SHUTDOWN_ALARM(12),
+        BATTERY_SHUTDOWN_ALARM(12),
         DEFAULT_ALARM_13(13),
         INVALID_DATE_ALARM(14),
         TEMPERATURE_ALARM3(15),
@@ -64,10 +64,10 @@ public class AlarmStatusResponse extends Message {
         DEFAULT_ALARM_19(19),
         CARTRIDGE_ALARM7(20),
         ALTITUDE_ALARM(21),
-        BUTTON_ALARM(22),
+        STUCK_BUTTON_ALARM(22),
         RESUME_PUMP_ALARM2(23),
-        CARTRIDGE_ALARM8(24),
-        CARTRIDGE_ALARM9(25),
+        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),
+        CARTRIDGE_REMOVED_ALARM(25),
         OCCLUSION_ALARM2(26),
         DEFAULT_ALARM_27(27),
         DEFAULT_ALARM_28(28),
@@ -136,6 +136,15 @@ public class AlarmStatusResponse extends Message {
             }
 
             return current;
+        }
+
+        public static AlarmResponseType fromSingularId(long id) {
+            for (AlarmResponseType type : AlarmResponseType.values()) {
+                if (id == type.bitmask()) {
+                    return type;
+                }
+            }
+            return null;
         }
 
         public String toString() {

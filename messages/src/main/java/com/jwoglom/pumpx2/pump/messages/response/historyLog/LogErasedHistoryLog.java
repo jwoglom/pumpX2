@@ -32,7 +32,7 @@ public class LogErasedHistoryLog extends HistoryLog {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == 26);
+        Preconditions.checkArgument(raw.length == 26, "was " + raw.length);
         this.cargo = raw;
         parseBase(raw);
         this.numErased = Bytes.readUint32(raw, 10);

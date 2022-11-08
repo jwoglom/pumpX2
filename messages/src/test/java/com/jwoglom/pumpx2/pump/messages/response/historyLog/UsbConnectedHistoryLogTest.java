@@ -10,16 +10,16 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
-@Ignore("needs historyLog sample")
 public class UsbConnectedHistoryLogTest {
     @Test
-    public void testUsbConnectedHistoryLog() throws DecoderException {
+    public void testUsbConnectedHistoryLog1() throws DecoderException {
         UsbConnectedHistoryLog expected = new UsbConnectedHistoryLog(
             // float negotiatedCurrentmA
+                100.0F
         );
 
         UsbConnectedHistoryLog parsedRes = (UsbConnectedHistoryLog) HistoryLogMessageTester.testSingle(
-                "xxxx",
+                "240045e5951a71c902000000c842000000000000000000000000",
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());

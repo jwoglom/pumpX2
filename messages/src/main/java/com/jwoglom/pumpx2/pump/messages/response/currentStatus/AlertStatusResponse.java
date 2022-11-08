@@ -126,6 +126,15 @@ public class AlertStatusResponse extends Message {
         public BigInteger withBit() {
             return BigInteger.ZERO.setBit(bitmask);
         }
+
+        public static AlertResponseType fromSingularId(long id) {
+            for (AlertResponseType type : values()) {
+                if (type.bitmask == id) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
 
     public Set<AlertResponseType> getAlerts() {

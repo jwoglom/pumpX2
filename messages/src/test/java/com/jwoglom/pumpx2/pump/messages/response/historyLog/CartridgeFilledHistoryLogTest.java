@@ -10,16 +10,16 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
-@Ignore("needs historyLog sample")
 public class CartridgeFilledHistoryLogTest {
     @Test
     public void testCartridgeFilledHistoryLog() throws DecoderException {
         CartridgeFilledHistoryLog expected = new CartridgeFilledHistoryLog(
             // long insulinDisplay, float insulinActual
+                180, 185.63852F
         );
 
         CartridgeFilledHistoryLog parsedRes = (CartridgeFilledHistoryLog) HistoryLogMessageTester.testSingle(
-                "xxxx",
+                "2100fb59951a35c60200b400000076a339430000000000000000",
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());

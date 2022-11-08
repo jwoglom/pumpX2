@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 
 import java.math.BigInteger;
 
@@ -48,6 +49,13 @@ public class AlertActivatedHistoryLog extends HistoryLog {
     }
     public long getAlertId() {
         return alertId;
+    }
+
+    /**
+     * @return the type of alert
+     */
+    public AlertStatusResponse.AlertResponseType getAlertResponseType() {
+        return AlertStatusResponse.AlertResponseType.fromSingularId(alertId);
     }
     
 }
