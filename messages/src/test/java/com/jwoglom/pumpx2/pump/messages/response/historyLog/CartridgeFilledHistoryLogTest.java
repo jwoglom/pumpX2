@@ -18,7 +18,7 @@ public class CartridgeFilledHistoryLogTest {
                 180, 185.63852F
         );
 
-        CartridgeFilledHistoryLog parsedRes = (CartridgeFilledHistoryLog) HistoryLogMessageTester.testSingle(
+        CartridgeFilledHistoryLog parsedRes = (CartridgeFilledHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "2100fb59951a35c60200b400000076a339430000000000000000",
                 expected
         );

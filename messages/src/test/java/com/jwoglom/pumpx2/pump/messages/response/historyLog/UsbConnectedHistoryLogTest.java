@@ -18,7 +18,7 @@ public class UsbConnectedHistoryLogTest {
                 100.0F
         );
 
-        UsbConnectedHistoryLog parsedRes = (UsbConnectedHistoryLog) HistoryLogMessageTester.testSingle(
+        UsbConnectedHistoryLog parsedRes = (UsbConnectedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "240045e5951a71c902000000c842000000000000000000000000",
                 expected
         );

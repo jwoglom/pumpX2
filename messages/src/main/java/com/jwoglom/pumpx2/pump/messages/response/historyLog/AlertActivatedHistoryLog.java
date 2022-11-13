@@ -37,6 +37,7 @@ public class AlertActivatedHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.alertId = Bytes.readUint32(raw, 10);
+        // other unknown fields
         
     }
 

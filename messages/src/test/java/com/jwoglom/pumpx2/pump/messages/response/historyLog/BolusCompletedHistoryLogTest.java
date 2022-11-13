@@ -25,4 +25,21 @@ public class BolusCompletedHistoryLogTest {
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(Instant.parse("2022-02-19T20:59:10Z"), parsedRes.getPumpTimeSecInstant());
     }
+
+    @Test
+    public void testBolusCompletedHistoryLog_mismatchingFloats() throws DecoderException {
+        // BolusCompletedHistoryLog[bolusId=1047,completionStatus=3,insulinDelivered=0.89000005,insulinRequested=0.89,iob=1.0332867,cargo={20,0,0,91,-105,26,-7,-45,2,0,3,0,23,4,-67,66,-124,63,11,-41,99,63,10,-41,99,63},pumpTimeSec=446126848,sequenceNum=185337]
+        BolusCompletedHistoryLog expected = new BolusCompletedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested
+                446126848L, 185337L, 3, 1047, 1.0332867F, 0.89000005F, 0.89F
+        );
+
+        BolusCompletedHistoryLog parsedRes = (BolusCompletedHistoryLog) HistoryLogMessageTester.testSingle(
+                "1400005b971af9d3020003001704bd42843f0bd7633f0ad7633f",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2022-02-19T12:07:28Z"), parsedRes.getPumpTimeSecInstant());
+    }
 }

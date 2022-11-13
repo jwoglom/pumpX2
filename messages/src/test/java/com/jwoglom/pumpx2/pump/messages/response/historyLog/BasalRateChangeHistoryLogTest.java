@@ -13,7 +13,7 @@ public class BasalRateChangeHistoryLogTest {
                 0.436F, 0.8F, 5.0F, 0, 1
         );
 
-        BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingle(
+        BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "0300ce53951ac7c50200643bdf3ecdcc4c3f0000a04000000100",
                 expected
         );
@@ -27,7 +27,7 @@ public class BasalRateChangeHistoryLogTest {
                 0.0F, 1.25F, 5.0F, 0, 16
         );
 
-        BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingle(
+        BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "03002fe5951a6bc90200000000000000a03f0000a04000001000",
                 expected
         );

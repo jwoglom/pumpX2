@@ -21,11 +21,10 @@ public class AlarmActivatedHistoryLogTest {
                 18
         );
 
-        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "0500b3e8951a86c90200120000007720000082dc630000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM, parsedRes.getAlarmResponseType());
     }
 
@@ -36,11 +35,10 @@ public class AlarmActivatedHistoryLogTest {
                 23
         );
 
-        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "05004044971af9d2020017000000772000001200000000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM2, parsedRes.getAlarmResponseType());
     }
 
@@ -51,11 +49,10 @@ public class AlarmActivatedHistoryLogTest {
                 23
         );
 
-        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "0500b3e8951a87c9020017000000772000001200000000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM2, parsedRes.getAlarmResponseType());
     }
 
@@ -66,11 +63,10 @@ public class AlarmActivatedHistoryLogTest {
                 18
         );
 
-        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "05004044971af8d2020012000000772000000f38650000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM, parsedRes.getAlarmResponseType());
     }
 }

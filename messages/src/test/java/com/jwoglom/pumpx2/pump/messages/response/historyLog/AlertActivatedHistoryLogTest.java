@@ -21,11 +21,10 @@ public class AlertActivatedHistoryLogTest {
                 51
         );
 
-        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "040024c0981aadde020033000000000000000000000000800044",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlertStatusResponse.AlertResponseType.DEFAULT_ALERT_51, parsedRes.getAlertResponseType());
     }
 
@@ -36,11 +35,10 @@ public class AlertActivatedHistoryLogTest {
                 48
         );
 
-        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "040022df971aced8020030000000af2100000000000000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlertStatusResponse.AlertResponseType.CGM_UNAVAILABLE, parsedRes.getAlertResponseType());
     }
 
@@ -51,11 +49,10 @@ public class AlertActivatedHistoryLogTest {
                 11
         );
 
-        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "0400b5f4981a66e002000b000000ba2000000000000000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlertStatusResponse.AlertResponseType.INCOMPLETE_BOLUS_ALERT, parsedRes.getAlertResponseType());
     }
 
@@ -66,11 +63,10 @@ public class AlertActivatedHistoryLogTest {
                 0
         );
 
-        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingle(
+        AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "0400304e951a90c5020000000000322000006600000098c6ad43",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(AlertStatusResponse.AlertResponseType.LOW_INSULIN_ALERT, parsedRes.getAlertResponseType());
     }
 }

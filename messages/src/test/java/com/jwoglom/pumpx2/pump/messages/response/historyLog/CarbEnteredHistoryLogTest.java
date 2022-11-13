@@ -18,7 +18,7 @@ public class CarbEnteredHistoryLogTest {
                 45.0F
         );
 
-        CarbEnteredHistoryLog parsedRes = (CarbEnteredHistoryLog) HistoryLogMessageTester.testSingle(
+        CarbEnteredHistoryLog parsedRes = (CarbEnteredHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "3000cea4971ad1d6020000003442000000000000000000000000",
                 expected
         );
@@ -31,7 +31,7 @@ public class CarbEnteredHistoryLogTest {
                 60.0F
         );
 
-        CarbEnteredHistoryLog parsedRes = (CarbEnteredHistoryLog) HistoryLogMessageTester.testSingle(
+        CarbEnteredHistoryLog parsedRes = (CarbEnteredHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
                 "3000c6e2981ad7df020000007042000000000000000000000000",
                 expected
         );

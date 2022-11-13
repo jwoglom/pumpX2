@@ -51,6 +51,18 @@ public abstract class HistoryLog {
         this.sequenceNum = Bytes.readUint32(raw, 6);
     }
 
+    /**
+     * Resets the pumpTimeSec and sequenceNum to 0 so they don't have to be validated in every test clause
+     */
+    void clearBaseFieldsForTesting() {
+        this.pumpTimeSec = 0;
+        this.sequenceNum = 0;
+
+        for (int i=2; i<10; i++) {
+            this.cargo[i] = 0;
+        }
+    }
+
     public byte[] getCargo() {
         return this.cargo;
     }

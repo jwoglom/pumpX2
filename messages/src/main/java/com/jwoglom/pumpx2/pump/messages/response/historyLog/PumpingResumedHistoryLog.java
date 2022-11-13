@@ -44,6 +44,7 @@ public class PumpingResumedHistoryLog extends HistoryLog {
             new byte[]{12, 0},
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
+            new byte[4], // unknown -- uint32(100)
             Bytes.firstTwoBytesLittleEndian(insulinAmount)));
     }
 

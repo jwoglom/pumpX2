@@ -72,4 +72,16 @@ public class HistoryLogMessageTester {
 
         return parsed;
     }
+
+
+    // Tests just the historylog parsing without the HistoryLogStreamResponse wrapper
+    public static HistoryLog testSingleIgnoringBaseFields(String rawHex, HistoryLog expected) throws DecoderException {
+        HistoryLog parsed = HistoryLogParser.parse(Hex.decodeHex(rawHex));
+        parsed.clearBaseFieldsForTesting();
+
+        assertEquals(expected.typeId(), parsed.typeId());
+        assertEquals(expected.verboseToString(), parsed.verboseToString());
+
+        return parsed;
+    }
 }

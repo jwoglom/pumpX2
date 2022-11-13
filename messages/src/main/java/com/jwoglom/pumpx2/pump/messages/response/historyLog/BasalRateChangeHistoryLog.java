@@ -58,7 +58,7 @@ public class BasalRateChangeHistoryLog extends HistoryLog {
             Bytes.toFloat(baseBasalRate), 
             Bytes.toFloat(maxBasalRate), 
             Bytes.firstTwoBytesLittleEndian(insulinDeliveryProfile), 
-            new byte[]{ (byte) changeType });
+            new byte[]{ (byte) changeType, 0 });
     }
 
     /**
