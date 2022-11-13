@@ -14,6 +14,8 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogParser;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
@@ -85,6 +87,16 @@ public class Main {
             case "read":
             case "write":
                 System.out.println(parse(args[1], extra));
+                break;
+            case "historylog":
+                System.out.println(parseHistoryLog(args[1]));
+                break;
+            case "bulkhistorylog":
+                filename = args[1];
+                lines = Files.readAllLines(Path.of(filename));
+                for (String line : lines) {
+                    System.out.println(parseHistoryLog(line));
+                }
                 break;
         }
     }
@@ -283,5 +295,12 @@ public class Main {
         }
 
         return parsedMessage;
+    }
+
+    public static String parseHistoryLog(String rawHex) throws DecoderException {
+        HistoryLog message = HistoryLogParser.parse(Hex.decodeHex(rawHex));
+        String type = message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
+        int typeId = message.typeId();
+        return typeId+"\t"+type+"\t"+rawHex+"\t"+message;
     }
 }
