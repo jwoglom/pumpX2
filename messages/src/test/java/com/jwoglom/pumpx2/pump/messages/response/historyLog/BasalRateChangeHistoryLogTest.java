@@ -2,24 +2,33 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
-import com.jwoglom.pumpx2.pump.messages.MessageTester;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.historyLog.BasalRateChangeHistoryLog;
-
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
-import org.junit.Ignore;
 import org.junit.Test;
-@Ignore("needs historyLog sample")
+
 public class BasalRateChangeHistoryLogTest {
     @Test
-    public void testBasalRateChangeHistoryLog() throws DecoderException {
+    public void testBasalRateChangeHistoryLog_Default() throws DecoderException {
         BasalRateChangeHistoryLog expected = new BasalRateChangeHistoryLog(
             // float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType
+                0.436F, 0.8F, 5.0F, 0, 1
         );
 
         BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingle(
-                "xxxx",
+                "0300ce53951ac7c50200643bdf3ecdcc4c3f0000a04000000100",
+                expected
+        );
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    @Test
+    public void testBasalRateChangeHistoryLog_PumpSuspended() throws DecoderException {
+        BasalRateChangeHistoryLog expected = new BasalRateChangeHistoryLog(
+                // float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType
+                0.0F, 1.25F, 5.0F, 0, 16
+        );
+
+        BasalRateChangeHistoryLog parsedRes = (BasalRateChangeHistoryLog) HistoryLogMessageTester.testSingle(
+                "03002fe5951a6bc90200000000000000a03f0000a04000001000",
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
