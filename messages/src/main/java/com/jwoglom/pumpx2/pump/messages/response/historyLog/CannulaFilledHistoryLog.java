@@ -46,6 +46,10 @@ public class CannulaFilledHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(primeSize)));
     }
+
+    /**
+     * @return the number of units used to prime the cannula
+     */
     public float getPrimeSize() {
         return primeSize;
     }

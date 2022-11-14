@@ -41,7 +41,10 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
         this.declinedCorrection = declinedCorrection;
         this.selectedIOB = selectedIOB;
         this.spare2 = spare2;
-        
+    }
+
+    public BolusRequestedMsg2HistoryLog(int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
+        this(0, 0, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);
     }
 
     public int typeId() {
@@ -84,34 +87,68 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
             new byte[]{ (byte) selectedIOB }, 
             new byte[]{ (byte) spare2 });
     }
-    
+
+    /**
+     * @return bolus ID
+     */
     public int getBolusId() {
         return bolusId;
     }
     public int getOptions() {
         return options;
     }
+
+    /**
+     * @return 100 if a standard bolus, otherwise the percent of the bolus which is performed up
+     * front in an extended bolus
+     */
     public int getStandardPercent() {
         return standardPercent;
     }
+
+    /**
+     * @return 0 if a standard bolus, otherwise the duration between the standard and extended bolus
+     */
     public int getDuration() {
         return duration;
     }
+
     public int getSpare1() {
         return spare1;
     }
+
+    /**
+     * @return insulin sensitivity factor in the insulin delivery profile
+     */
     public int getIsf() {
         return isf;
     }
+
+    /**
+     * @return target BG in mg/dL in the insulin delivery profile
+     */
     public int getTargetBG() {
         return targetBG;
     }
+
+    /**
+     * @return true if the user overrode the insulin delivery amount (i.e., not calculated just
+     * from the combination of carbs + BG correction)
+     */
     public boolean getUserOverride() {
         return userOverride;
     }
+
+    /**
+     * @return true if the correction amount due to the current BG+IOB was declined
+     */
     public boolean getDeclinedCorrection() {
         return declinedCorrection;
     }
+
+    /**
+     * @return TODO(unknown)
+     */
     public int getSelectedIOB() {
         return selectedIOB;
     }

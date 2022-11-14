@@ -10,18 +10,32 @@ import com.google.common.collect.ImmutableList;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
-@Ignore("needs historyLog sample")
 public class BolusActivatedHistoryLogTest {
     @Test
-    public void testBolusActivatedHistoryLog() throws DecoderException {
+    public void testBolusActivatedHistoryLog1() throws DecoderException {
         BolusActivatedHistoryLog expected = new BolusActivatedHistoryLog(
             // int bolusId, float iob, float bolusSize
+            1037, 0.0F, 1.1F
+
         );
 
-        BolusActivatedHistoryLog parsedRes = (BolusActivatedHistoryLog) HistoryLogMessageTester.testSingle(
-                "xxxx",
+        BolusActivatedHistoryLog parsedRes = (BolusActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
+                "370071ef951adfc902000d04010000000000cdcc8c3f00000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    @Test
+    public void testBolusActivatedHistoryLog2() throws DecoderException {
+        BolusActivatedHistoryLog expected = new BolusActivatedHistoryLog(
+                // int bolusId, float iob, float bolusSize
+                1053, 2.0116007F, 0.5F
+
+        );
+
+        BolusActivatedHistoryLog parsedRes = (BolusActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
+                "37008393971a46d602001d04010011be00400000003f00000000",
+                expected
+        );
     }
 }

@@ -3,8 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-
-import java.util.Arrays;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 
 @HistoryLogProps(
     opCode = 16,
@@ -14,10 +13,9 @@ import java.util.Arrays;
 )
 public class BGHistoryLog extends HistoryLog {
 
-    private byte[] first8Bytes;
     private int bg;
     private int cgmCalibration;
-    private int bgSource;
+    private int bgSourceId;
     private float iob;
     private int targetBG;
     private int isf;
@@ -25,13 +23,13 @@ public class BGHistoryLog extends HistoryLog {
     
     public BGHistoryLog() {}
     
-    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSource, iob, targetBG, isf, spare);
+    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSourceId, float iob, int targetBG, int isf, long spare) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSourceId, iob, targetBG, isf, spare);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bg = bg;
         this.cgmCalibration = cgmCalibration;
-        this.bgSource = bgSource;
+        this.bgSourceId = bgSourceId;
         this.iob = iob;
         this.targetBG = targetBG;
         this.isf = isf;
@@ -49,7 +47,7 @@ public class BGHistoryLog extends HistoryLog {
         this.cargo = raw;
         this.bg = Bytes.readShort(raw, 10);
         this.cgmCalibration = raw[12];
-        this.bgSource = raw[13];
+        this.bgSourceId = raw[13];
         this.iob = Bytes.readFloat(raw, 14);
         this.targetBG = Bytes.readShort(raw, 18);
         this.isf = Bytes.readShort(raw, 20);
@@ -71,25 +69,56 @@ public class BGHistoryLog extends HistoryLog {
             Bytes.firstTwoBytesLittleEndian(isf), 
             Bytes.toUint32(spare));
     }
-    
+
+    /**
+     * @return the BG entry in mg/dL
+     */
     public int getBg() {
         return bg;
     }
+
+    /**
+     * @return TODO(unknown)
+     */
     public int getCgmCalibration() {
         return cgmCalibration;
     }
-    public int getBgSource() {
-        return bgSource;
+
+    public int getBgSourceId() {
+        return bgSourceId;
     }
+
+    /**
+     * @return the source of the BG entry (CGM or manual)
+     */
+    public LastBGResponse.BgSource getBgSource() {
+        return LastBGResponse.BgSource.fromId(bgSourceId);
+    }
+
+    /**
+     * @return the current insulin on board
+     */
     public float getIob() {
         return iob;
     }
+
+    /**
+     * @return the target BG in the pump profile
+     */
     public int getTargetBG() {
         return targetBG;
     }
+
+    /**
+     * @return the insulin sensitivity factor in the pump profile
+     */
     public int getIsf() {
         return isf;
     }
+
+    /**
+     * @return TODO(unknown): always 1?
+     */
     public long getSpare() {
         return spare;
     }

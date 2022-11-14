@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAbstractResponse;
 
 @HistoryLogProps(
     opCode = 20,
@@ -12,7 +13,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 )
 public class BolusCompletedHistoryLog extends HistoryLog {
     
-    private int completionStatus;
+    private int completionStatusId;
     private int bolusId;
     private float iob;
     private float insulinDelivered;
@@ -20,11 +21,11 @@ public class BolusCompletedHistoryLog extends HistoryLog {
     
     public BolusCompletedHistoryLog() {}
     
-    public BolusCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatus, bolusId, iob, insulinDelivered, insulinRequested);
+    public BolusCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatusId, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatusId, bolusId, iob, insulinDelivered, insulinRequested);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
-        this.completionStatus = completionStatus;
+        this.completionStatusId = completionStatusId;
         this.bolusId = bolusId;
         this.iob = iob;
         this.insulinDelivered = insulinDelivered;
@@ -40,7 +41,7 @@ public class BolusCompletedHistoryLog extends HistoryLog {
         Preconditions.checkArgument(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.completionStatus = Bytes.readShort(raw, 10);
+        this.completionStatusId = Bytes.readShort(raw, 10);
         this.bolusId = Bytes.readShort(raw, 12);
         this.iob = Bytes.readFloat(raw, 14);
         this.insulinDelivered = Bytes.readFloat(raw, 18);
@@ -61,18 +62,42 @@ public class BolusCompletedHistoryLog extends HistoryLog {
             Bytes.toFloat(insulinRequested));
     }
     
-    public int getCompletionStatus() {
-        return completionStatus;
+    public int getCompletionStatusId() {
+        return completionStatusId;
     }
+
+    /**
+     * @return whether the bolus was completed fully or stopped
+     */
+    public LastBolusStatusAbstractResponse.BolusStatus getCompletionStatus() {
+        return LastBolusStatusAbstractResponse.BolusStatus.fromId(completionStatusId);
+    }
+
+    /**
+     * @return the ID of the bolus
+     */
     public int getBolusId() {
         return bolusId;
     }
+
+    /**
+     * @return the current insulin on board
+     */
     public float getIob() {
         return iob;
     }
+
+    /**
+     * @return the amount of insulin delivered, in real units. Note that due to ieee float
+     * precision, even if the bolus was completed fully this may differ from the units requested
+     */
     public float getInsulinDelivered() {
         return insulinDelivered;
     }
+
+    /**
+     * @return the amount of insulin requested, in real units
+     */
     public float getInsulinRequested() {
         return insulinRequested;
     }

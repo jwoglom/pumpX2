@@ -46,6 +46,10 @@ public class TubingFilledHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(primeSize)));
     }
+
+    /**
+     * @return the number of units used to prime the tubing
+     */
     public float getPrimeSize() {
         return primeSize;
     }

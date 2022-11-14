@@ -50,9 +50,17 @@ public class CartridgeFilledHistoryLog extends HistoryLog {
             Bytes.toUint32(insulinDisplay), 
             Bytes.toFloat(insulinActual)));
     }
+
+    /**
+     * @return a user-facing displayable format (rounded) of the insulin filled
+     */
     public long getInsulinDisplay() {
         return insulinDisplay;
     }
+
+    /**
+     * @return the actual amount of insulin filled as reported by the pump mechanically
+     */
     public float getInsulinActual() {
         return insulinActual;
     }

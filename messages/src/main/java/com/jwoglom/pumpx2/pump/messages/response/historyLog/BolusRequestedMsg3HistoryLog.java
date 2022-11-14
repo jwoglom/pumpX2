@@ -29,7 +29,10 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
         this.foodBolusSize = foodBolusSize;
         this.correctionBolusSize = correctionBolusSize;
         this.totalBolusSize = totalBolusSize;
-        
+    }
+
+    public BolusRequestedMsg3HistoryLog(int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
+        this(0, 0, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize);
     }
 
     public int typeId() {
@@ -60,21 +63,37 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
             Bytes.toFloat(correctionBolusSize), 
             Bytes.toFloat(totalBolusSize));
     }
-    
+
+    /**
+     * @return bolus ID
+     */
     public int getBolusId() {
         return bolusId;
     }
     public int getSpare() {
         return spare;
     }
+
+    /**
+     * @return the portion of the bolus amount relating to food from carbs
+     */
     public float getFoodBolusSize() {
         return foodBolusSize;
     }
+
+    /**
+     * @return the portion of the bolus amount relating to the correction bolus from BG+IOB
+     */
     public float getCorrectionBolusSize() {
         return correctionBolusSize;
     }
+
+    /**
+     * @return the total bolus amount which is scheduled to be delivered following this message.
+     * note that this may not be correctionBolusSize+foodBolusSize if the amounts are overridden,
+     * or due to ieee float arithmetic
+     */
     public float getTotalBolusSize() {
         return totalBolusSize;
     }
-    
 }
