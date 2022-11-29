@@ -69,6 +69,7 @@ public class PumpX2TandemPump extends TandemPump {
 
     public PumpX2TandemPump(Context context) {
         super(context);
+        enableTconnectAppConnectionSharing();
     }
 
     @Override

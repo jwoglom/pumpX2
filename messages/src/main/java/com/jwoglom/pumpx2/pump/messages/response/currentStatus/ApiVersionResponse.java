@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.google.common.base.Preconditions;
+import com.google.errorprone.annotations.DoNotCall;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;

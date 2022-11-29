@@ -29,6 +29,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
@@ -53,6 +54,7 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import timber.log.Timber;
 import com.jwoglom.pumpx2.util.timber.DebugTree;
@@ -158,16 +160,41 @@ public class TandemBluetoothHandler {
                 remainingConnectionInitializationSteps.add(ConnectionInitializationStep.ALREADY_INITIALIZED);
                 if (PumpState.tconnectAppAlreadyAuthenticated) {
                     Timber.i("TandemPump: tconnect app has likely already authenticated. Skipping onInitialPumpConnection callback and triggering onPumpConnected");
-                    // IMPORTANT: the tconnect app has Bluetooth callbacks too! wait 500ms to avoid race conditions on the transaction ID
-                    // since we'll immediately trigger api version / timesincereset
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tandemPump.onPumpConnected(peripheral);
+                    // IMPORTANT: the tconnect app has Bluetooth callbacks too! wait to avoid race conditions on the transaction ID
+                    // since we'll immediately trigger api version / timesincereset.
+                    PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite = true;
+                    AtomicBoolean sentOnPumpConnected = new AtomicBoolean(false);
+                    // If at 500ms, 1000ms, or 1500ms the t:connect app has sent a message and we've
+                    // received the response, then we've been able to sync the current opcode and
+                    // can thus call the onPumpConnected callback.
+                    for (int i=500; i<2000; i+=500) {
+                        handler.postDelayed(() -> {
+                            if (PumpState.processedResponseMessages > 0) {
+                                if (sentOnPumpConnected.compareAndSet(false, true)) {
+                                    Timber.i("processed %d response messages, with set opcode, so triggering onPumpConnected", PumpState.processedResponseMessages);
+                                    tandemPump.onPumpConnected(peripheral);
+                                }
+                            }
+                        }, i);
+                    }
+
+                    // If the pump didn't send any messages in the first 2 seconds of connection,
+                    // then trigger the onConnected callback anyway, and we will likely fail the
+                    // first opcode write which we will then recover from and reconnect, allowing
+                    // the first case to succeed where either the app will send some message which
+                    // we'll be able to sync our opcode to, or the app won't and we'll send the first
+                    // message successfully with opcode 0.
+                    handler.postDelayed(() -> {
+                        if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
+                            if (sentOnPumpConnected.compareAndSet(false, true)) {
+                                Timber.i("no response messages, but pump still initialized, so triggering onPumpConnected");
+                                tandemPump.onPumpConnected(peripheral);
+                            }
                         }
-                    }, 500);
+                    }, 2000);
                     return;
                 }
+
                 tandemPump.onInitialPumpConnection(peripheral);
             } else if (!remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                 Timber.i("TandemBluetoothHandler: initial pump connection is waiting for: %s", remainingConnectionInitializationSteps);
@@ -204,15 +231,40 @@ public class TandemBluetoothHandler {
                 Timber.i("SUCCESS: Writing <%s> to %s", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()));
             } else {
                 Timber.e("ERROR: Failed writing <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()), status);
-                tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
+                if (PumpState.tconnectAppConnectionSharing && CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS.equals(characteristic.getUuid()) && status == GattStatus.ERROR) {
+                    // When we receive an error on the authorization characteristic while t:connect app connection sharing is enabled,
+                    // mark that we can ignore the authentication on the next connection since we trust the t:connect app will instead
+                    Timber.i("Setting PumpState.tconnectAppAlreadyAuthenticated for retried connection (current state: " + PumpState.tconnectAppAlreadyAuthenticated + ")");
+                    PumpState.tconnectAppAlreadyAuthenticated = true;
+                } else if (PumpState.tconnectAppConnectionSharing && PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite && !CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS.equals(characteristic.getUuid()) && status == GattStatus.ERROR) {
+                    // If we get an error on a non-authorization characteristic with t:connect app connection sharing enabled,
+                    // after the authorization stage has already been skipped due to the running t:connect app,
+                    // then the initial message we send will return an error because the opcode is wrong,
+                    // resulting in a disconnection. This case will still trigger a disconnect but
+                    // ignore the critical error popup on the first occurrence.
+                    Timber.i("Ignoring popup on initial failing non-authorization write due to t:connect app connection sharing");
+                    PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
+                } else {
+                    Timber.d("characteristic write error. tconnectAppConnectionSharing="+PumpState.tconnectAppConnectionSharing+" tconnectAppConnectionSharingIgnoreInitialFailingWrite="+PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite);
+                    tandemPump.onPumpCriticalError(peripheral,
+                            TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
+                }
             }
         }
 
         @Override
         public void onCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic btCharacteristic, @NotNull GattStatus status) {
-            if (status != GattStatus.SUCCESS) return;
+            if (status != GattStatus.SUCCESS) {
+                Timber.w("ERROR: Failed to receive update <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(btCharacteristic.getUuid()), status);
+                return;
+            }
 
+            Timber.d(">>characteristicUpdate enter");
+            innerCharacteristicUpdate(peripheral, value, btCharacteristic, status);
+            Timber.d(">>characteristicUpdate exit");
+        }
+
+        private synchronized void innerCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic btCharacteristic, @NotNull GattStatus status) {
             UUID characteristicUUID = btCharacteristic.getUuid();
             BluetoothBytesParser parser = new BluetoothBytesParser(value);
 
@@ -241,6 +293,8 @@ public class TandemBluetoothHandler {
                 Byte txId = BTResponseParser.parseTxId(value);
                 Timber.d("Received %s response, txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
 
+                // Since we've already gotten at least this response, we can sync our opcodes.
+                // PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
 
                 Message requestMessage = null;
                 if (characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS)) {
@@ -254,15 +308,21 @@ public class TandemBluetoothHandler {
                     }
                 } else {
                     Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
+                    Timber.d("requestMessage for txId=%d %s", txId, opt);
                     if (opt.isPresent()) {
                         requestMessage = opt.get();
                     } else {
                         // If the initial pump connection has been established (BT notifications, MTU, etc)
+                        PumpResponseMessage bestEffortParsedMsg = BTResponseParser.parseBestEffortForLogging(value, characteristicUUID);
                         if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                             if (!PumpState.tconnectAppAlreadyAuthenticated) {
-                                Timber.e("Received request for message we didn't send: pump already initialized (characteristic: %s, txId: %d): %s", characteristic, txId, BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                                Timber.e("Received request for message we didn't send: pump already initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             } else {
-                                Timber.i("Message likely sent by tconnect app (no request in PumpState; characteristic: %s, txId: %d): %s", characteristic, txId, BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                                Timber.i("Message likely sent by tconnect app (no request in PumpState; characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                            }
+
+                            if (PumpState.sendSharedConnectionResponseMessages && bestEffortParsedMsg != null && bestEffortParsedMsg.message().isPresent()) {
+                                tandemPump.onReceiveMessage(peripheral, bestEffortParsedMsg.message().get());
                             }
                         } else {
                             // If the initial pump connection has not been established, then this means we've received
@@ -275,7 +335,10 @@ public class TandemBluetoothHandler {
                             // the BT connection since it knows we've already authenticated. And we don't want to get
                             // into an authentication battle with the t:connect app anyway, we'll just let it handle auth.
 
-                            Timber.w("Received request for message we didn't send: pump has not yet been initialized (characteristic: %s, txId: %d): %s", characteristic, txId, BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                            Timber.w("Received request for message we didn't send: pump has not yet been initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                            if (!PumpState.tconnectAppAlreadyAuthenticated) {
+                                Timber.i("Setting PumpState.tconnectAppAlreadyAuthenticated");
+                            }
                             PumpState.tconnectAppAlreadyAuthenticated = true;
 
                         }
@@ -311,15 +374,22 @@ public class TandemBluetoothHandler {
                         throw e;
                     }
                 } catch (UnexpectedOpCodeException e) {
-                    Timber.i(e, "Unexpected opcode %d, expected %d: ignoring queue (which contained: %s)", e.foundOpcode, requestMessage.getResponseOpCode(), requestMessage);
-                    Timber.i("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                    Timber.i(e, "Unexpected opcode %d, expected %d for txId=%d: ignoring queue (which contained: %s)", e.foundOpcode, requestMessage.getResponseOpCode(), txId, requestMessage);
 
-                    // Throw the exception if we haven't detected another actor, since this is likely our fault
-                    if (!PumpState.tconnectAppAlreadyAuthenticated) {
+                    if (PumpState.tconnectAppAlreadyAuthenticated) {
+                        Timber.i("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                        if (Packetize.txId.get() < 1+txId) {
+                            Timber.i("updating txId from %d to %d", Packetize.txId.get(), 1 + txId);
+
+                            // Update the transaction ID if the t:connect app is present.
+                            Packetize.txId.set(1 + txId);
+                        } else {
+                            Timber.i("global txId=%d but self-assumed next txId+1=%d, so not incrementing", Packetize.txId.get(), 1 + txId);
+                        }
+                    } else {
+                        // Throw the exception if we haven't detected another actor, since this is likely our fault
                         throw e;
                     }
-                    // Update the transaction ID otherwise.
-                    Packetize.txId.set(1+txId);
 
                     return;
                 } catch (Exception e) {
@@ -327,13 +397,21 @@ public class TandemBluetoothHandler {
                     throw e;
                 }
 
+                PumpState.processedResponseMessages++;
                 Timber.i("Processed %s response (%d): %s (%s)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()));
 
                 if (response.message().isPresent()) {
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
                         !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS))
                     {
-                        PumpState.finishRequestMessage(characteristic, txId);
+                        if (response.message().get() instanceof ErrorResponse) {
+                            if (!PumpState.tconnectAppConnectionSharing) {
+                                tandemPump.onPumpCriticalError(peripheral, TandemError.ERROR_RESPONSE.withExtra("in response to " + requestMessage));
+                            }
+                            return;
+                        } else {
+                            PumpState.finishRequestMessage(characteristic, txId);
+                        }
                     }
                 } else {
                     Timber.w("Couldn't process the response message for '%s' -- we likely need more packets. This should resolve when fetching the next BT packet.", Hex.encodeHexString(parser.getValue()));
@@ -377,10 +455,12 @@ public class TandemBluetoothHandler {
                 // If we are connecting on top of the native t:connect app, which has already
                 // set its MTU, then we want to ignore this error.
                 Timber.i("MTU was already updated, likely by the t:connect app (is %d), ignoring error %s", mtu, status);
-                tandemPump.onPumpCriticalError(peripheral,
-                        TandemError.SHARING_CONNECTION_WITH_TCONNECT_APP
-                                .withCause(TandemError.SET_MTU_FAILED)
-                                .withExtra("mtu: " + mtu + " status: " + status));
+                if (!PumpState.tconnectAppConnectionSharing) {
+                    tandemPump.onPumpCriticalError(peripheral,
+                            TandemError.SHARING_CONNECTION_WITH_TCONNECT_APP
+                                    .withCause(TandemError.SET_MTU_FAILED)
+                                    .withExtra("mtu: " + mtu + " status: " + status));
+                }
             } else {
                 Timber.e("MTU could not be updated (is %d), received %s. Ignoring error.", mtu, status);
 

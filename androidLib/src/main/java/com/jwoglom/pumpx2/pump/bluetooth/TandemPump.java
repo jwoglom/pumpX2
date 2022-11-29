@@ -29,6 +29,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import timber.log.Timber;
 
 /**
@@ -38,7 +40,10 @@ import timber.log.Timber;
  */
 public abstract class TandemPump {
     public final Context context;
+
     final Optional<String> filterToBluetoothMac;
+    private int appInstanceId = 0;
+
     public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
         this.context = context;
         this.filterToBluetoothMac = filterToBluetoothMac;
@@ -61,8 +66,8 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the connected pump
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
-        Timber.i("TandemPump: onInitialPumpConnection");
-        sendCommand(peripheral, CentralChallengeRequestBuilder.create(0));
+        Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
+        sendCommand(peripheral, CentralChallengeRequestBuilder.create(appInstanceId));
     }
 
     /**
@@ -97,9 +102,11 @@ public abstract class TandemPump {
     /**
      * Callback invoked to notify on an invalid pump pairing code
      * @param peripheral the BluetoothPeripheral representing the pump
-     * @param resp the PumpChallengeResponse which was just received from the pump
+     * @param resp the PumpChallengeResponse which was just received from the pump. null if the
+     *             PumpX2 library didn't send the request because the pairing code didn't match the
+     *             expected format of 16 alphanumeric characters
      */
-    public void onInvalidPairingCode(BluetoothPeripheral peripheral, PumpChallengeResponse resp) {
+    public void onInvalidPairingCode(BluetoothPeripheral peripheral, @Nullable PumpChallengeResponse resp) {
         Timber.i("TandemPump: onInvalidPairingCode");
     }
 
@@ -194,8 +201,13 @@ public abstract class TandemPump {
      */
     public void pair(BluetoothPeripheral peripheral, CentralChallengeResponse centralChallenge, String pairingCode) {
         Timber.i("TandemPump: pair(" + pairingCode + ")");
-        Message message = PumpChallengeRequestBuilder.create(centralChallenge.getAppInstanceId(), pairingCode, centralChallenge.getHmacKey());
-        sendCommand(peripheral, message);
+        try {
+            Message message = PumpChallengeRequestBuilder.create(centralChallenge.getAppInstanceId(), pairingCode, centralChallenge.getHmacKey());
+            sendCommand(peripheral, message);
+        } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
+            Timber.e(e);
+            onInvalidPairingCode(peripheral, null);
+        }
     }
 
     /**
@@ -212,5 +224,34 @@ public abstract class TandemPump {
      */
     public final void enableActionsAffectingInsulinDelivery() {
         PumpState.enableActionsAffectingInsulinDelivery();
+    }
+
+    /**
+     * Sets the appInstanceId for use in the initial request which is used as part of multi-device
+     * connected setups. If requested, this should be called immediately after initialization.
+     */
+    public final void setAppInstanceId(int appInstanceId) {
+        this.appInstanceId = appInstanceId;
+    }
+
+    /**
+     * When enabled, PumpX2 will adapt its behavior to support connecting to a Tandem pump which
+     * is also connected via the t:connect app on the same device by sharing the Bluetooth connection.
+     * If requested, this should be called immediately after initialization.
+     * If not enabled, when t:connect or another application on the device is detected to be sharing
+     * the Bluetooth connection with us, onPumpCriticalError will be invoked with
+     * {@link TandemError#SHARING_CONNECTION_WITH_TCONNECT_APP}
+     */
+    public final void enableTconnectAppConnectionSharing() {
+        PumpState.tconnectAppConnectionSharing = true;
+    }
+
+    /**
+     * When enabled, will send response messages for requests which were not initiated by this device
+     * when t:connect app connection sharing is enabled. If requested, this should be called
+     * immediately after initialization.
+     */
+    public final void enableSendSharedConnectionResponseMessages() {
+        PumpState.sendSharedConnectionResponseMessages = true;
     }
 }

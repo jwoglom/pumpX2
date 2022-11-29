@@ -39,6 +39,9 @@ import java.util.stream.Collectors;
  * instantiated request messages, you can invoke:
  *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)
  *
+ * Note that if t:connect app connection sharing is enabled and the t:connect app is running,
+ * you can use enableSendSharedConnectionResponseMessages and get the response from these callbacks
+ * for free, without duplicating requests.
  */
 public enum QualifyingEvent {
     ALERT(1, ImmutableSet.of(

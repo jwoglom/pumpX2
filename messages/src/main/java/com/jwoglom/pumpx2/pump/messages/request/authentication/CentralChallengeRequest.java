@@ -11,6 +11,12 @@ import java.util.Arrays;
 
 import kotlin.collections.ArraysKt;
 
+/**
+ * The first message sent on connection to a Tandem pump which begins the authorization process.
+ *
+ * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
+ * connection initialization as part of performing the initial pump pairing process.
+ */
 @MessageProps(
     opCode=16,
     size=10,

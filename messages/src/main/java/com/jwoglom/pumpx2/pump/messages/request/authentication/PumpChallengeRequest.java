@@ -12,6 +12,12 @@ import java.util.Arrays;
 
 import kotlin.collections.ArraysKt;
 
+/**
+ * The second authorization message sent to the pump which contains the HMACed pairing code.
+ *
+ * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
+ * connection initialization as part of performing the initial pump pairing process.
+ */
 @MessageProps(
     opCode=18,
     size=22,

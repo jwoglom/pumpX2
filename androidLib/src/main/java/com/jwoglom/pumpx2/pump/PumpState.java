@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Pair;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -92,7 +93,7 @@ public class PumpState {
     public static synchronized void pushRequestMessage(Message m, byte txId) {
         Characteristic c = Characteristic.of(CharacteristicUUID.determine(m));
         Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Preconditions.checkState(!requestMessages.containsKey(key));
+        Preconditions.checkState(!requestMessages.containsKey(key), "requestMessages should not contain " + key + " when pushing request message " + m);
         requestMessages.put(key, Pair.create(false, m));
     }
 
@@ -108,13 +109,14 @@ public class PumpState {
         Pair<Characteristic, Byte> key = Pair.create(c, txId);
         Pair<Boolean, Message> pair = requestMessages.get(key);
         Preconditions.checkState(pair != null, "could not find requestMessage for txId "+txId+" and char "+c);
-        Preconditions.checkState(!pair.first, "txId "+txId+" was already processed for char "+c);
+        Preconditions.checkState(!pair.first, "txId "+txId+" was already processed for char "+c+": pair="+pair+" requestMessages="+requestMessages);
         requestMessages.put(key, Pair.create(true, pair.second));
     }
 
     public static synchronized void clearRequestMessages() {
         Timber.d("requestMessages clear: %s", requestMessages);
         requestMessages.clear();
+        processedResponseMessages = 0;
     }
 
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
@@ -137,9 +139,35 @@ public class PumpState {
         actionsAffectingInsulinDeliveryEnabled = true;
     }
 
+
     /**
-     * When set, TandemPump will not send authentication messages on start.
+     * Set via {@link TandemPump#enableTconnectAppConnectionSharing()}
+     */
+    public static boolean tconnectAppConnectionSharing = false;
+
+    /**
+     * Set via {@link TandemPump#enableSendSharedConnectionResponseMessages()}
+     */
+    public static boolean sendSharedConnectionResponseMessages = false;
+
+    /**
+     * When set internally by PumpX2, TandemPump will not send authentication messages on start.
+     * This is set to true when the initial authentication step fails, which means the pump is
+     * already authenticated with the running t:connect app.
      */
     public static boolean tconnectAppAlreadyAuthenticated = false;
+
+    /**
+     * Set internally by PumpX2 when tconnectAppAlreadyAuthenticated is enabled due to a failed
+     * authentication message, and causes an error on writing the first pump message from PumpX2 to
+     * be ignored, so that we can synchronize the initial opcode with the t:connect app.
+     */
+    public static boolean tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
+
+    /**
+     * Incremented each time during this connection to the pump that a response message has been
+     * received. Checked to avoid race conditions with t:connect app connection sharing.
+     */
+    public static int processedResponseMessages = 0;
 }
 

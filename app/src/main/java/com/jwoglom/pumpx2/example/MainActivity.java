@@ -21,6 +21,7 @@ import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.pumpT
 import static java.util.stream.Collectors.toList;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
@@ -39,6 +40,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -165,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        initWearUIFixes();
+
         registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
         registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
         registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT));
@@ -189,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        healthAndSafetyWarning();
+        firstRunMessages();
 
         if (getBluetoothManager().getAdapter() != null) {
             if (!isBluetoothEnabled()) {
@@ -231,7 +235,30 @@ public class MainActivity extends AppCompatActivity {
         }, 20000);
     }
 
-    private void healthAndSafetyWarning() {
+    public void initWearUIFixes() {
+        if (isWear()) {
+            statusText.setPadding(0, 20, 0, 0);
+            statusText.setTextSize(16);
+            for (int id : new int[]{R.id.basicLinearLayout, R.id.advancedLinearLayout}) {
+                ViewGroup.LayoutParams layoutParams = findViewById(id).getLayoutParams();
+                layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT;
+                layoutParams.width = ActionBar.LayoutParams.WRAP_CONTENT;
+                findViewById(id).setLayoutParams(layoutParams);
+            }
+            for (Button btn : new Button[]{bolusButton, batteryRequestButton, showMoreButton, requestSendButton, retryConnectButton, fetchHistoryLogsButton, recentHistoryLogsButton}) {
+                if (btn == null) {
+                    continue;
+                }
+                btn.setTextSize(8);
+                ViewGroup.LayoutParams layoutParams = btn.getLayoutParams();
+                layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT;
+                layoutParams.width = ActionBar.LayoutParams.WRAP_CONTENT;
+                btn.setLayoutParams(layoutParams);
+            }
+        }
+    }
+
+    private void firstRunMessages() {
         SharedPreferences prefs = getSharedPreferences("com.jwoglom.pumpx2.example", MODE_PRIVATE);
         if (prefs.getBoolean("firstrun", true)) {
             new AlertDialog.Builder(MainActivity.this)
@@ -561,13 +588,13 @@ public class MainActivity extends AppCompatActivity {
 
             int numHistoryLogs = intent.getIntExtra("numberOfHistoryLogs", 0);
             int firstSequenceNum = intent.getIntExtra("firstSequenceNum", 0);
-            Timber.d("Got history logs count for request: %d", numHistoryLogs);
+            Timber.d("HistoryLog stream: Got history logs count for request: %d", numHistoryLogs);
             int sequenceNum = firstSequenceNum;
             for (int i=0; i<numHistoryLogs; i++) {
                 Integer poll = remainingSequenceNums.poll();
                 lastFetchedHistoryLogSequenceNum = poll == null ? -1 : poll;
                 if (lastFetchedHistoryLogSequenceNum < sequenceNum) {
-                    Timber.i("MISSED SEQUENCE NUMBER %d, got %d", lastFetchedHistoryLogSequenceNum, sequenceNum);
+                    Timber.d("MISSED SEQUENCE NUMBER %d, got %d", lastFetchedHistoryLogSequenceNum, sequenceNum);
                     for (int j=0; j<(sequenceNum-lastFetchedHistoryLogSequenceNum); j++) {
                         remainingSequenceNums.poll();
                     }
@@ -578,7 +605,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (remainingSequenceNumsInBatch > 0) {
-                Timber.d("Sequence nums remaining in batch: %d", remainingSequenceNumsInBatch);
+                Timber.d("HistoryLog stream: Sequence nums remaining in batch: %d", remainingSequenceNumsInBatch);
                 return;
 //                Timber.i("Missed %d sequence nums (peek: %d)", remainingSequenceNumsInBatch, remainingSequenceNums.peek());
 //                for (int i=0; i<remainingSequenceNumsInBatch; i++) {
@@ -588,11 +615,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (remainingSequenceNums.isEmpty()) {
-                Timber.i("No sequence numbers remaining!");
+                Timber.d("HistoryLog stream: No sequence numbers remaining!");
                 return;
             }
 
-            Timber.i("Done with batch ending with %d", sequenceNum);
+            Timber.i("Done with HistoryLog batch ending with %d", sequenceNum);
             int count = Math.min(remainingSequenceNums.size(), sequenceNumBatchSize);
             remainingSequenceNumsInBatch = sequenceNumBatchSize;
             if (sequenceNum+remainingSequenceNumsInBatch > lastRemainingSequenceNum) {
@@ -1287,6 +1314,23 @@ public class MainActivity extends AppCompatActivity {
         bolusCalcDetails = bolusWindow.findViewById(R.id.bolusCalcDetails);
         bolusCalcDetails.setText("Waiting for bolus calculator data...");
 
+        if (isWear()) {
+            View carbsAndGlucoseLayout = bolusWindow.findViewById(R.id.carbsAndGlucoseLayout);
+            ViewGroup.LayoutParams layoutParams = carbsAndGlucoseLayout.getLayoutParams();
+            layoutParams.width = ActionBar.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = ActionBar.LayoutParams.WRAP_CONTENT;
+            carbsAndGlucoseLayout.setLayoutParams(layoutParams);
+
+            for (View view : new View[]{
+                    carbsGramsView, bolusWindow.findViewById(R.id.carbsGramsText),
+                    glucoseMgdlView, bolusWindow.findViewById(R.id.glucoseMgdlText)
+            }) {
+                layoutParams = view.getLayoutParams();
+                layoutParams.width = 180;
+                view.setLayoutParams(layoutParams);
+            }
+        }
+
         bolusParameters = new BolusParameters();
         tandemEventCallback.bolusInProgress = true;
 
@@ -1372,6 +1416,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 int carbsGrams = Integer.parseInt(str);
                 bolusParameters.carbsGrams = carbsGrams;
+                Timber.i("carbsGrams changed: " + carbsGrams);
                 float ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
                 Preconditions.checkState(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
                 // keep 2 decimal places
@@ -1394,6 +1439,7 @@ public class MainActivity extends AppCompatActivity {
                     str = "0";
                 }
                 int glucoseMgdl = Integer.parseInt(str);
+                Timber.i("glucoseMgdl changed: " + glucoseMgdl);
                 bolusParameters.glucoseMgdl = glucoseMgdl;
 
                 if (glucoseMgdl > 40) {
@@ -1418,18 +1464,23 @@ public class MainActivity extends AppCompatActivity {
                     str = "0";
                 }
                 double bolusUnits = Double.parseDouble(str);
+                Timber.i("bolusUnits changed: " + bolusUnits);
                 int cartRemaining = bolusParameters.cartridgeRemainingInsulin;
                 if (lastToast != null) {
                     lastToast.cancel();
                 }
                 if (bolusUnits > cartRemaining) {
-                    lastToast = Toast.makeText(mainAct, "INVALID: " + bolusUnits + " units is greater than cartridge amount (" + cartRemaining + ")", Toast.LENGTH_LONG);
+                    String text = "INVALID: " + bolusUnits + " units is greater than cartridge amount (" + cartRemaining + ")";
+                    Timber.w(text);
+                    lastToast = Toast.makeText(mainAct, text, Toast.LENGTH_LONG);
                     lastToast.show();
                     return;
                 }
                 double maxBolus = InsulinUnit.from1000To1((long) bolusParameters.maxBolusAmount);
                 if (bolusUnits > maxBolus) {
-                    lastToast = Toast.makeText(mainAct, "INVALID: " + bolusUnits + " units is greater than max bolus (" + maxBolus + ")", Toast.LENGTH_LONG);
+                    String text = "INVALID: " + bolusUnits + " units is greater than max bolus (" + maxBolus + ")";
+                    Timber.w(text);
+                    lastToast = Toast.makeText(mainAct, text, Toast.LENGTH_LONG);
                     lastToast.show();
                     return;
                 }
@@ -1800,5 +1851,9 @@ public class MainActivity extends AppCompatActivity {
         PumpState.setPairingCode(getApplicationContext(), pairingCode);
 
         tandemEventCallback.pair(peripheral, challenge, pairingCode);
+    }
+
+    private static boolean isWear() {
+        return Build.MODEL.toLowerCase().contains("watch") || Build.MODEL.toLowerCase().contains("wear");
     }
 }

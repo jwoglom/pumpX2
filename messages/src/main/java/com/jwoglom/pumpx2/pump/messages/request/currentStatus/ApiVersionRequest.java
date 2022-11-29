@@ -5,6 +5,13 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
+/**
+ * Returns the major and minor API version of the pump.
+ *
+ * When the Android libary is used, this message is invoked automatically by PumpX2 on connection
+ * with the pump so that the state can be tracked globally via PumpState.getPumpAPIVersion.
+ * Due to this, if called explicitly via the Android library, a callback will not be returned.
+ */
 @MessageProps(
     opCode=32,
     size=0,

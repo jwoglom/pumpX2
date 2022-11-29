@@ -10,6 +10,7 @@ public enum TandemError {
     BT_CONNECTION_FAILED("Bluetooth connection failed"),
     UNEXPECTED_TRANSACTION_ID("Unexpected transaction ID"),
     SET_MTU_FAILED("Set MTU"),
+    ERROR_RESPONSE("Error response from pump"),
     ;
 
     private String message;
