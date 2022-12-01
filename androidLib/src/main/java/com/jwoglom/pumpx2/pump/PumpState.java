@@ -90,33 +90,47 @@ public class PumpState {
 
     // The state of recent messages sent to the pump paired with the transaction id.
     private static final Map<Pair<Characteristic, Byte>, Pair<Boolean, Message>> requestMessages = new HashMap<>();
-    public static synchronized void pushRequestMessage(Message m, byte txId) {
-        Characteristic c = Characteristic.of(CharacteristicUUID.determine(m));
-        Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Preconditions.checkState(!requestMessages.containsKey(key), "requestMessages should not contain " + key + " when pushing request message " + m);
-        requestMessages.put(key, Pair.create(false, m));
-    }
-
-    public static synchronized Optional<Message> readRequestMessage(Characteristic c, byte txId) {
-        Pair<Boolean, Message> pair = requestMessages.get(Pair.create(c, txId));
-        if (pair == null) {
-            return Optional.empty();
+    public static void pushRequestMessage(Message m, byte txId) {
+        synchronized (requestMessages) {
+            Characteristic c = Characteristic.of(CharacteristicUUID.determine(m));
+            Pair<Characteristic, Byte> key = Pair.create(c, txId);
+            if (requestMessages.containsKey(key)) {
+                if (processedResponseMessages >= 255) {
+                    Timber.d("requestMessages contained %s when pushing request message due to presumed opcode looparound (processed %d so far): %s", key, processedResponseMessages, m);
+                } else {
+                    Timber.w("requestMessages should not contain %s when pushing request message unless due to opcode looparound (processed %d so far): %s", key, processedResponseMessages, m);
+                }
+            }
+            requestMessages.put(key, Pair.create(false, m));
         }
-        return Optional.of(pair.second);
     }
 
-    public static synchronized void finishRequestMessage(Characteristic c, byte txId) {
-        Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Pair<Boolean, Message> pair = requestMessages.get(key);
-        Preconditions.checkState(pair != null, "could not find requestMessage for txId "+txId+" and char "+c);
-        Preconditions.checkState(!pair.first, "txId "+txId+" was already processed for char "+c+": pair="+pair+" requestMessages="+requestMessages);
-        requestMessages.put(key, Pair.create(true, pair.second));
+    public static Optional<Message> readRequestMessage(Characteristic c, byte txId) {
+        synchronized (requestMessages) {
+            Pair<Boolean, Message> pair = requestMessages.get(Pair.create(c, txId));
+            if (pair == null) {
+                return Optional.empty();
+            }
+            return Optional.of(pair.second);
+        }
     }
 
-    public static synchronized void clearRequestMessages() {
-        Timber.d("requestMessages clear: %s", requestMessages);
-        requestMessages.clear();
-        processedResponseMessages = 0;
+    public static void finishRequestMessage(Characteristic c, byte txId) {
+        synchronized (requestMessages) {
+            Pair<Characteristic, Byte> key = Pair.create(c, txId);
+            Pair<Boolean, Message> pair = requestMessages.get(key);
+            Preconditions.checkState(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
+            Preconditions.checkState(!pair.first, "txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
+            requestMessages.put(key, Pair.create(true, pair.second));
+        }
+    }
+
+    public static void clearRequestMessages() {
+        synchronized (requestMessages) {
+            Timber.d("requestMessages clear: %s", requestMessages);
+            requestMessages.clear();
+            processedResponseMessages = 0;
+        }
     }
 
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();

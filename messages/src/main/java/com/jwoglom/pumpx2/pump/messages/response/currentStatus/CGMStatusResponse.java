@@ -15,29 +15,29 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;
 )
 public class CGMStatusResponse extends Message {
     
-    private int sessionState;
+    private int sessionStateId;
     private long lastCalibrationTimestamp;
     private long sensorStartedTimestamp;
-    private int transmitterBatteryStatus;
+    private int transmitterBatteryStatusId;
     
     public CGMStatusResponse() {}
     
-    public CGMStatusResponse(int sessionState, long lastCalibrationTimestamp, long sensorStartedTimestamp, int transmitterBatteryStatus) {
-        this.cargo = buildCargo(sessionState, lastCalibrationTimestamp, sensorStartedTimestamp, transmitterBatteryStatus);
-        this.sessionState = sessionState;
+    public CGMStatusResponse(int sessionStateId, long lastCalibrationTimestamp, long sensorStartedTimestamp, int transmitterBatteryStatusId) {
+        this.cargo = buildCargo(sessionStateId, lastCalibrationTimestamp, sensorStartedTimestamp, transmitterBatteryStatusId);
+        this.sessionStateId = sessionStateId;
         this.lastCalibrationTimestamp = lastCalibrationTimestamp;
         this.sensorStartedTimestamp = sensorStartedTimestamp;
-        this.transmitterBatteryStatus = transmitterBatteryStatus;
+        this.transmitterBatteryStatusId = transmitterBatteryStatusId;
         
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.sessionState = raw[0];
+        this.sessionStateId = raw[0];
         this.lastCalibrationTimestamp = Bytes.readUint32(raw, 1);
         this.sensorStartedTimestamp = Bytes.readUint32(raw, 5);
-        this.transmitterBatteryStatus = raw[9];
+        this.transmitterBatteryStatusId = raw[9];
         
     }
 
@@ -50,17 +50,75 @@ public class CGMStatusResponse extends Message {
             new byte[]{ (byte) transmitterBatteryStatus });
     }
     
-    public int getSessionState() {
-        return sessionState;
+    public int getSessionStateId() {
+        return sessionStateId;
     }
+
+    /**
+     * @return the state of the Dexcom CGM session
+     */
+    public SessionState getSessionState() {
+        return SessionState.fromId(sessionStateId);
+    }
+
+    public enum SessionState {
+        SESSION_STOPPED(0),
+        SESSION_START_PENDING(1),
+        SESSION_ACTIVE(2),
+        SESSION_STOP_PENDING(3),
+        ;
+
+        private final int id;
+        SessionState(int id) {
+            this.id = id;
+        }
+
+        public static SessionState fromId(int id) {
+            for (SessionState s : values()) {
+                if (s.id == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+    }
+
     public long getLastCalibrationTimestamp() {
         return lastCalibrationTimestamp;
     }
     public long getSensorStartedTimestamp() {
         return sensorStartedTimestamp;
     }
-    public int getTransmitterBatteryStatus() {
-        return transmitterBatteryStatus;
+    public int getTransmitterBatteryStatusId() {
+        return transmitterBatteryStatusId;
     }
-    
+
+    /**
+     * @return the battery status of the Dexcom CGM transmitter
+     */
+    public TransmitterBatteryStatus getTransmitterBatteryStatus() {
+        return TransmitterBatteryStatus.fromId(transmitterBatteryStatusId);
+    }
+    public enum TransmitterBatteryStatus {
+        UNAVAILABLE(0),
+        ERROR(1),
+        EXPIRED(2),
+        OK(3),
+        OUT_OF_RANGE(4),
+        ;
+
+        private final int id;
+        TransmitterBatteryStatus(int id) {
+            this.id = id;
+        }
+
+        public static TransmitterBatteryStatus fromId(int id) {
+            for (TransmitterBatteryStatus s : values()) {
+                if (s.id == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+    }
 }

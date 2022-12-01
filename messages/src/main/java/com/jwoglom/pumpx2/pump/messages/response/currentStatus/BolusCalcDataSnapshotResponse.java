@@ -95,43 +95,96 @@ public class BolusCalcDataSnapshotResponse extends Message {
             new byte[]{ (byte) (isAutopopAllowed ? 1 : 0) },
             unknown8bytes); // this contains unknown values
     }
-    
+
+    /**
+     * @return true if the data could not be retrieved successfully or is blank
+     */
     public boolean getIsUnacked() {
         return isUnacked;
     }
+
+    /**
+     * @return the current BG from the CGM if present in mg/dL
+     */
     public int getCorrectionFactor() {
         return correctionFactor;
     }
+
+    /**
+     * @return the insulin on board in 1000-units
+     */
     public long getIob() {
         return iob;
     }
+
+    /**
+     * @return the units of insulin remaining in the cartridge
+     */
     public int getCartridgeRemainingInsulin() {
         return cartridgeRemainingInsulin;
     }
+
+    /**
+     * @return the target BG from the pump profile
+     */
     public int getTargetBg() {
         return targetBg;
     }
+
+    /**
+     * @return the insulin sensitivity factor, i.e. 1 unit : __ mg/dL correction factor
+     */
     public int getIsf() {
         return isf;
     }
+
+    /**
+     * @return if carb entry is enabled in the pump profile settings
+     */
     public boolean getCarbEntryEnabled() {
         return carbEntryEnabled;
     }
+
+    /**
+     * @return the ratio from 1 milliunit : __ grams, or 1 unit : (__ * 1000) grams. If the carb
+     * ratio in the pump is 1u : 6 grams, then the long value returned is 6000
+     */
     public long getCarbRatio() {
         return carbRatio;
     }
+
+    /**
+     * @return the maximum amount allowed in one bolus insulin delivery, in milliunits
+     */
     public int getMaxBolusAmount() {
         return maxBolusAmount;
     }
+
+    /**
+     * @return the maximum amount allowed for boluses in a single hour, OR 0 if not configured
+     */
     public long getMaxBolusHourlyTotal() {
         return maxBolusHourlyTotal;
     }
+
+    /**
+     * @return true if the maximum bolus has been exceeded for the interval
+     */
     public boolean getMaxBolusEventsExceeded() {
         return maxBolusEventsExceeded;
     }
+
+    /**
+     * @return true if the maximum iob has been reached for the interval (i.e. max hourly bolus)
+     */
     public boolean getMaxIobEventsExceeded() {
         return maxIobEventsExceeded;
     }
+
+    /**
+     * @return true if the {@link #getCorrectionFactor()} amount can be used to fill in the current
+     * BG from the CGM to automatically add a correction to the insulin amount
+     */
     public boolean getIsAutopopAllowed() {
         return isAutopopAllowed;
     }

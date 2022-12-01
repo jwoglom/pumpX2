@@ -10,6 +10,10 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
 
 import java.time.Instant;
 
+/**
+ * This message ONLY returns BGs entered via the Bolus Calculator, and NOT the most recent CGM
+ * reading.
+ */
 @MessageProps(
     opCode=51,
     size=7,

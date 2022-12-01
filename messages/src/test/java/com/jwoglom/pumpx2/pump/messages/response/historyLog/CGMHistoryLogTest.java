@@ -68,4 +68,19 @@ public class CGMHistoryLogTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+    @Test
+    public void testCGMHistoryLog_NoArrow() throws DecoderException {
+        CGMHistoryLog expected = new CGMHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval
+                470616768L, 957589L, 0, 2, 0, 6, -66, 167, 470616468L, 2530, 1
+        );
+
+        CGMHistoryLog parsedRes = (CGMHistoryLog) HistoryLogMessageTester.testSingle(
+                "0001c00a0d1c959c0e000000020006bea70094090d1ce2090100",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }

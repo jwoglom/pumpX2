@@ -8,6 +8,11 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
 
+/**
+ * As part of the Bolus Wizard, returns a snapshot of data obtained from various other locations
+ * in the pump for determining how to render the initiate bolus screen and potentially pre-fill
+ * the BG and correction dose information.
+ */
 @MessageProps(
     opCode=114,
     size=0,

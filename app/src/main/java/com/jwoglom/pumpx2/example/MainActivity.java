@@ -1417,7 +1417,7 @@ public class MainActivity extends AppCompatActivity {
                 int carbsGrams = Integer.parseInt(str);
                 bolusParameters.carbsGrams = carbsGrams;
                 Timber.i("carbsGrams changed: " + carbsGrams);
-                float ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
+                double ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
                 Preconditions.checkState(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
                 // keep 2 decimal places
                 bolusParameters.calculatedUnitsFromCarbs = Double.parseDouble(String.format("%.2f", carbsGrams / ratio));
