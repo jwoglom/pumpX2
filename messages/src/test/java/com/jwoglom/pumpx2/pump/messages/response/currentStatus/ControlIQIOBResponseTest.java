@@ -29,6 +29,7 @@ public class ControlIQIOBResponseTest {
         assertEquals(expected.getMudaliarTotalIOB(), parsedRes.getMudaliarTotalIOB());
         assertEquals(expected.getSwan6hrIOB(), parsedRes.getSwan6hrIOB());
         assertEquals(expected.getIOBTypeInt(), parsedRes.getIOBTypeInt());
+        assertEquals(parsedRes.getSwan6hrIOB(), parsedRes.getPumpDisplayedIOB());
     }
 
     @Test
@@ -51,6 +52,7 @@ public class ControlIQIOBResponseTest {
         assertEquals(expected.getMudaliarTotalIOB(), parsedRes.getMudaliarTotalIOB());
         assertEquals(expected.getSwan6hrIOB(), parsedRes.getSwan6hrIOB());
         assertEquals(expected.getIOBTypeInt(), parsedRes.getIOBTypeInt());
+        assertEquals(parsedRes.getMudaliarIOB(), parsedRes.getPumpDisplayedIOB());
     }
 
     @Test
@@ -73,5 +75,6 @@ public class ControlIQIOBResponseTest {
         assertEquals(expected.getMudaliarTotalIOB(), parsedRes.getMudaliarTotalIOB());
         assertEquals(expected.getSwan6hrIOB(), parsedRes.getSwan6hrIOB());
         assertEquals(expected.getIOBTypeInt(), parsedRes.getIOBTypeInt());
+        assertEquals(parsedRes.getSwan6hrIOB(), parsedRes.getPumpDisplayedIOB());
     }
 }

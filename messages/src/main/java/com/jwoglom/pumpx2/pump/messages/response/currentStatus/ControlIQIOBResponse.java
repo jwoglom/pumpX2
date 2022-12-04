@@ -99,4 +99,20 @@ public class ControlIQIOBResponse extends Message {
         }
         return null;
     }
+
+    /**
+     * @return the IOB number displayed on the pump, based on the determined IOB mode, in milliunits
+     * to convert to a decimal use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1000To1}
+     */
+    public long getPumpDisplayedIOB() {
+        switch (getIOBType()) {
+            case MUDALIAR:
+                return getMudaliarIOB();
+            case SWAN_6HR:
+                return getSwan6hrIOB();
+            default: // if the pump gives an unknown value, default safely to the highest known IOB to us
+                return Math.max(getMudaliarIOB(), getSwan6hrIOB());
+        }
+
+    }
 }
