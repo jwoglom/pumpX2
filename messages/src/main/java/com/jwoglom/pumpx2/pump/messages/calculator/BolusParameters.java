@@ -2,7 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.calculator;
 
 import java.util.Objects;
 
-class BolusParameters {
+public class BolusParameters {
     Double units;
     Integer carbsGrams;
     Integer glucoseMgdl;

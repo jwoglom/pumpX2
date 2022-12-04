@@ -165,6 +165,11 @@ public class PumpState {
     public static boolean sendSharedConnectionResponseMessages = false;
 
     /**
+     * Set via {@link TandemPump#relyOnConnectionSharingForAuthentication()}
+     */
+    public static boolean relyOnConnectionSharingForAuthentication = false;
+
+    /**
      * When set internally by PumpX2, TandemPump will not send authentication messages on start.
      * This is set to true when the initial authentication step fails, which means the pump is
      * already authenticated with the running t:connect app.

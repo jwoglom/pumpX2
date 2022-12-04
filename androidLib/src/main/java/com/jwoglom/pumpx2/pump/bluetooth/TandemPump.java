@@ -67,7 +67,9 @@ public abstract class TandemPump {
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
         Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
-        sendCommand(peripheral, CentralChallengeRequestBuilder.create(appInstanceId));
+        if (!PumpState.relyOnConnectionSharingForAuthentication) {
+            sendCommand(peripheral, CentralChallengeRequestBuilder.create(appInstanceId));
+        }
     }
 
     /**
@@ -164,6 +166,9 @@ public abstract class TandemPump {
 
     /**
      * Called after authentication is complete and the pump can be connected to.
+     * The ApiVersionRequest and TimeSinceResetRequest commands are sent by default when the
+     * pump is connected so that internal state can be filled; to avoid sending these messages,
+     * override this function in your subclass of {@link TandemPump} and do not call super().
      * @param peripheral the BluetoothPeripheral representing the pump which was found
      */
     public void onPumpConnected(BluetoothPeripheral peripheral) {
@@ -253,5 +258,14 @@ public abstract class TandemPump {
      */
     public final void enableSendSharedConnectionResponseMessages() {
         PumpState.sendSharedConnectionResponseMessages = true;
+    }
+
+
+    /**
+     * When enabled, will rely on the t:connect app to perform authentication and will not send any
+     * authentication messages. Assumes {@link #enableTconnectAppConnectionSharing()} is also true.
+     */
+    public final void relyOnConnectionSharingForAuthentication() {
+        PumpState.relyOnConnectionSharingForAuthentication = true;
     }
 }

@@ -315,7 +315,9 @@ public class TandemBluetoothHandler {
                         // If the initial pump connection has been established (BT notifications, MTU, etc)
                         PumpResponseMessage bestEffortParsedMsg = BTResponseParser.parseBestEffortForLogging(value, characteristicUUID);
                         if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
-                            if (!PumpState.tconnectAppAlreadyAuthenticated) {
+                            if (PumpState.relyOnConnectionSharingForAuthentication) {
+                                Timber.i("Received first message reply to sync opcodes with relyOnConnectionSharingForAuthentication (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                            } else if (!PumpState.tconnectAppAlreadyAuthenticated) {
                                 Timber.e("Received request for message we didn't send: pump already initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             } else {
                                 Timber.i("Message likely sent by tconnect app (no request in PumpState; characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
@@ -336,10 +338,21 @@ public class TandemBluetoothHandler {
                             // into an authentication battle with the t:connect app anyway, we'll just let it handle auth.
 
                             Timber.w("Received request for message we didn't send: pump has not yet been initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
-                            if (!PumpState.tconnectAppAlreadyAuthenticated) {
+                            if (!PumpState.tconnectAppAlreadyAuthenticated && !characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS)) {
                                 Timber.i("Setting PumpState.tconnectAppAlreadyAuthenticated");
+
+                                // If we are relying fully on tconnect app authentication, then we are only
+                                // fully connected once we intercept the first message from their app with
+                                // connection sharing enabled.
+                                if (PumpState.relyOnConnectionSharingForAuthentication) {
+                                    Timber.i("Scheduling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
+                                    handler.postDelayed(() -> {
+                                        Timber.i("Calling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
+                                        tandemPump.onPumpConnected(peripheral);
+                                    }, 500);
+                                }
+                                PumpState.tconnectAppAlreadyAuthenticated = true;
                             }
-                            PumpState.tconnectAppAlreadyAuthenticated = true;
 
                         }
 
