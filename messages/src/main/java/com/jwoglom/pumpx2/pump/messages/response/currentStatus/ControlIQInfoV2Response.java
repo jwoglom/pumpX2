@@ -13,7 +13,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV2Req
     type=MessageType.RESPONSE,
     request=ControlIQInfoV2Request.class
 )
-public class ControlIQInfoV2Response extends Message {
+public class ControlIQInfoV2Response extends ControlIQInfoAbstractResponse {
     
     private boolean closedLoopEnabled;
     private int weight;
@@ -85,13 +85,13 @@ public class ControlIQInfoV2Response extends Message {
     public int getWeight() {
         return weight;
     }
-    public int getWeightUnit() {
+    public int getWeightUnitId() {
         return weightUnit;
     }
     public int getTotalDailyInsulin() {
         return totalDailyInsulin;
     }
-    public int getCurrentUserModeType() {
+    public int getCurrentUserModeTypeId() {
         return currentUserModeType;
     }
     public int getByte6() {

@@ -6,6 +6,9 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEGVGuiDataResponse;
 
+/**
+ * Gets the current CGM reading
+ */
 @MessageProps(
     opCode=34,
     size=0,

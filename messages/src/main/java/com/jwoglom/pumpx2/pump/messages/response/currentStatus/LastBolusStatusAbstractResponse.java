@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -13,6 +14,7 @@ public abstract class LastBolusStatusAbstractResponse extends Message {
     public abstract int getStatus();
     public abstract int getBolusId();
     public abstract long getTimestamp();
+    public abstract Instant getTimestampInstant();
     public abstract long getDeliveredVolume();
     public abstract int getBolusStatusId();
     public enum BolusStatus {

@@ -120,7 +120,9 @@ public class PumpState {
             Pair<Characteristic, Byte> key = Pair.create(c, txId);
             Pair<Boolean, Message> pair = requestMessages.get(key);
             Preconditions.checkState(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
-            Preconditions.checkState(!pair.first, "txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
+            if (pair.first) {
+                Timber.w("txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
+            }
             requestMessages.put(key, Pair.create(true, pair.second));
         }
     }

@@ -6,9 +6,11 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;
 
 import java.math.BigInteger;
+import java.time.Instant;
 
 /**
  * Does not contain requestedVolume which {@link LastBolusStatusV2Response} has
@@ -75,7 +77,7 @@ public class LastBolusStatusResponse extends LastBolusStatusAbstractResponse {
             Bytes.toUint32(extendedBolusDuration)
         );
     }
-    
+
     public int getStatus() {
         return status;
     }
@@ -85,6 +87,12 @@ public class LastBolusStatusResponse extends LastBolusStatusAbstractResponse {
     public long getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public Instant getTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(timestamp);
+    }
+
     public long getDeliveredVolume() {
         return deliveredVolume;
     }

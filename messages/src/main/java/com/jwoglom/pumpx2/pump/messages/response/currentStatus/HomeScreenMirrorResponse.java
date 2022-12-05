@@ -99,24 +99,28 @@ public class HomeScreenMirrorResponse extends Message {
     }
 
     public enum CGMTrendIcon {
-        NO_ARROW(0),
-        ARROW_DOUBLE_UP(1),
-        ARROW_UP(2),
-        ARROW_UP_RIGHT(3),
-        ARROW_FLAT(4),
-        ARROW_DOWN_RIGHT(5),
-        ARROW_DOWN(6),
-        ARROW_DOUBLE_DOWN(7)
+        NO_ARROW(0, ""),
+        ARROW_DOUBLE_UP(1, "▲▲"),
+        ARROW_UP(2, "▲"),
+        ARROW_UP_RIGHT(3, "⬈"),
+        ARROW_FLAT(4, "▶"),
+        ARROW_DOWN_RIGHT(5, "⬊"),
+        ARROW_DOWN(6, "▼"),
+        ARROW_DOUBLE_DOWN(7, "▼▼")
         ;
 
         private final int id;
-        CGMTrendIcon(int id) {
+        private final String arrow;
+        CGMTrendIcon(int id, String arrow) {
             this.id = id;
+            this.arrow = arrow;
         }
 
         public int id() {
             return id;
         }
+
+        public String arrow() { return arrow; }
 
         public static CGMTrendIcon fromId(int id) {
             for (CGMTrendIcon i : values()) {

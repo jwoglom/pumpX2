@@ -87,5 +87,11 @@ public interface BolusCalcCondition {
         public int hashCode() {
             return Objects.hash(msg);
         }
+
+        public String getMsg() {
+            return msg;
+        }
     }
+
+    String getMsg();
 }

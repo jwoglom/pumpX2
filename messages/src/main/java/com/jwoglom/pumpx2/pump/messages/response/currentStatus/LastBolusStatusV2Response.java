@@ -6,10 +6,12 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
+import java.time.Instant;
 import java.util.Set;
 
 /**
@@ -89,6 +91,12 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
     public long getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public Instant getTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(timestamp);
+    }
+
     public long getDeliveredVolume() {
         return deliveredVolume;
     }
