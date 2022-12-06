@@ -1,5 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
+import static com.jwoglom.pumpx2.pump.messages.calculator.BolusCalcCondition.NEGATIVE_BG_CORRECTION;
+import static com.jwoglom.pumpx2.pump.messages.calculator.BolusCalcCondition.NO_POSITIVE_BG_CORRECTION;
+import static com.jwoglom.pumpx2.pump.messages.calculator.BolusCalcCondition.POSITIVE_BG_CORRECTION;
+import static com.jwoglom.pumpx2.pump.messages.calculator.BolusCalcCondition.SET_ZERO_INSULIN;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -25,20 +29,14 @@ public class BolusCalculatorTest {
     private static final LastBGResponse EMPTY_BG_RESPONSE = new LastBGResponse(0L, 0, 0);
 
 
-    private static final BolusCalcCondition FILL_BG_FROM_CGM = new DataDecision("fill BG from CGM");
-    private static final BolusCalcCondition FILL_BG_FROM_INPUT = new DataDecision("use BG user input");
-
-    private static final BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("add positive BG correction", "above BG target");
-    private static final BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new Decision("not add positive BG correction", "active IOB is greater than correction bolus while above target");
-    private static final BolusCalcCondition SET_ZERO_INSULIN = new Decision("set zero insulin", "negative correction greater than carb amount");
-    private static final BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("add negative BG correction", "below BG target");
-
+    private static final BolusCalcCondition FILL_BG_FROM_CGM = new DataDecision("filling BG from CGM");
+    private static final BolusCalcCondition FILL_BG_FROM_INPUT = new DataDecision("using BG user input");
 
     @Test
     public void testNoActionWithoutBg() {
         expect(null, null,0.0, 0, new BolusCalcUnits(0.0, 0.0, 0.0, 0.0),
-                new DataDecision("not fill BG", "not present in data snapshot or LastBGResponse"),
-                new NonActionDecision("add units for BG", "no BG provided"));
+                new DataDecision("not filling BG", "not present in data snapshot or LastBGResponse"),
+                new NonActionDecision("not adding units for BG", "no BG provided"));
     }
 
     @Test

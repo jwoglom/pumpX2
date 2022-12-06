@@ -33,26 +33,26 @@ public class BolusCalcLastBG {
         // If the data from LastBGResponse is empty, then we rely on the correctionFactor.
         if (lastBGResponse == null || lastBGResponse.getBgValue() == 0) {
             if (bgValue == null) {
-                return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not fill BG", "not present in data snapshot or LastBGResponse")));
+                return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not filling BG", "not present in data snapshot or LastBGResponse")));
             } else {
-                return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.DataDecision("fill BG from CGM")));
+                return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from CGM")));
             }
         }
 
         long durationMins = ChronoUnit.MINUTES.between(lastBGResponse.getBgTimestampInstant(), Instant.now());
         if (bgValue == null && durationMins >= 15) {
-            return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not fill BG", "no BG in data snapshot and LastBGResponse BG is too old")));
+            return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not filling BG", "no BG in data snapshot and LastBGResponse BG is too old")));
         }
 
         if (bgValue == null) {
             if (lastBGResponse.getBgValue() >= 40 && lastBGResponse.getBgValue() <= 400) {
-                return Pair.of(lastBGResponse.getBgValue(), ImmutableList.of(new BolusCalcCondition.DataDecision("fill BG from " + lastBGResponse.getBgSource().name())));
+                return Pair.of(lastBGResponse.getBgValue(), ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from " + lastBGResponse.getBgSource().name())));
             } else {
                 return Pair.of(null, ImmutableList.of(new BolusCalcCondition.FailedSanityCheck("LastBGResponse BG not within interval")));
             }
         }
 
         // Default to using BolusCalcDataSnapshot correctionFactor if it exists
-        return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.Decision("fill BG from CGM")));
+        return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from CGM")));
     }
 }

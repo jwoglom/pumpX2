@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.calculator;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -9,7 +10,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Contains logic for deciding an estimated bolus amount given inputs and current pump/CGM status.
@@ -40,7 +43,7 @@ public class BolusCalculator {
         }
 
         if (userInputParameters.carbsGrams == null) {
-            return zeroWithCondition(new BolusCalcCondition.NonActionDecision("add units for carbs", "no carbs provided"));
+            return zeroWithCondition(new BolusCalcCondition.NonActionDecision("not adding units for carbs", "no carbs provided"));
         }
 
         double ratio = InsulinUnit.from1000To1(dataSnapshot.carbRatio);
@@ -71,13 +74,13 @@ public class BolusCalculator {
         List<BolusCalcCondition> conditions = new ArrayList<>();
         if (userInputParameters.glucoseMgdl != null) {
             lastBGValue = userInputParameters.glucoseMgdl;
-            conditions.add(new BolusCalcCondition.DataDecision("use BG user input"));
+            conditions.add(new BolusCalcCondition.DataDecision("using BG user input"));
         } else {
             Pair<Integer, List<BolusCalcCondition>> lastBG = this.lastBG.determineLastBG();
             conditions = new ArrayList<>(lastBG.getRight());
 
             if (lastBG.getLeft() == null) {
-                conditions.add(new BolusCalcCondition.NonActionDecision("add units for BG", "no BG provided"));
+                conditions.add(new BolusCalcCondition.NonActionDecision("not adding units for BG", "no BG provided"));
                 return new BolusCalcComponent(0.0, conditions);
             }
             lastBGValue = lastBG.getLeft();
@@ -95,14 +98,6 @@ public class BolusCalculator {
 
         int bgDiff = lastBGValue - dataSnapshot.targetBg;
         addedFromBG = (1.0 * bgDiff) / dataSnapshot.isf;
-
-//        if (addedInsulin > 0) {
-//            conditions.add(new BolusCalcCondition.Decision("add units for BG", "BG is above target"));
-//        } else if (addedInsulin < 0) {
-//            conditions.add(new BolusCalcCondition.Decision("subtract units for BG", "BG is below target"));
-//        } else {
-//            conditions.add(new BolusCalcCondition.NonActionDecision("adjust units for BG", "BG is at target"));
-//        }
 
         return new BolusCalcComponent(BolusCalcUnits.doublePrecision(addedFromBG), conditions);
     }
@@ -131,10 +126,12 @@ public class BolusCalculator {
      */
     public BolusCalcDecision parse() {
         if (userInputParameters.units != null) {
-            return new BolusCalcDecision(BolusCalcUnits.fromUser(userInputParameters.units), ImmutableList.of(new BolusCalcCondition.Decision("use user-provided insulin amount")));
+            return new BolusCalcDecision(
+                    BolusCalcUnits.fromUser(userInputParameters.units),
+                    ImmutableSet.of(new BolusCalcCondition.DataDecision("using user-provided insulin amount")));
         }
 
-        List<BolusCalcCondition> conditions = new ArrayList<>();
+        Set<BolusCalcCondition> conditions = new HashSet<>();
 
         BolusCalcComponent addedFromCarbs = getAddedFromCarbs();
         BolusCalcComponent addedFromBG = getAddedFromGlucose();
@@ -146,93 +143,30 @@ public class BolusCalculator {
         L.d(TAG, "addedFromIOB: " + addedFromIOB);
 
         double total = addedFromCarbs.getUnits();
-//        boolean includeBG = true;
-//        boolean includeIOB = true;
-//
-//        // when above or at target BG, do not include IOB
-//        if (addedFromBG.getUnits() >= 0 && addedFromBG.getUnits() + addedFromIOB.getUnits() <= 0) {
-//            conditions.add(new BolusCalcCondition.Decision("not reduce insulin", "IOB amount is greater than carb correction"));
-//            includeIOB = false;
-//        }
-//
-//
-////        // when below target BG, don't include IOB in total
-////        if (addedFromBG.getUnits() <= 0) {
-//////            includeIOB = false;
-//////            conditions.add(new BolusCalcCondition.Decision("not reduce insulin by IOB", "BG is not above target"));
-////        }
-//
-//        if (includeBG) {
-//            total += addedFromBG.getUnits();
-//        }
-//
-//        if (includeIOB) {
-//            total += addedFromIOB.getUnits();
-//        }
-//
-//        if (total < 0.0) {
-//            conditions.add(new BolusCalcCondition.Decision("set zero insulin", "negative correction without IOB greater than carb amount")); // "while below target"
-//            total = 0.0;
-//        }
-
-
-//        if (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0) {
-//            if (addedFromBG.getUnits() > 0) {
-//                conditions.add(new BolusCalcCondition.Decision("not add positive BG correction", "active IOB is greater than correction bolus while above target"));
-//            } else if (addedFromBG.getUnits() <= 0) {
-//                if (total + addedFromBG.getUnits() <= 0) {
-//                    conditions.add(new BolusCalcCondition.Decision("set zero insulin", "negative correction without IOB greater than carb amount while below target"));
-//                    total = 0.0;
-//                } else {
-//                    conditions.add(new BolusCalcCondition.Decision("not reduce insulin by IOB", "BG is not above target"));
-//                    total += addedFromBG.getUnits();
-//                }
-//            } else if (total + addedFromBG.getUnits() + addedFromIOB.getUnits() <= 0) {
-//                conditions.add(new BolusCalcCondition.Decision("set zero insulin", "negative correction greater than carb amount while below target"));
-//                total = 0.0;
-//            } else {
-//                total += addedFromBG.getUnits() + addedFromIOB.getUnits();
-//            }
-//        } else {
-//            total += addedFromBG.getUnits() + addedFromIOB.getUnits();
-//        }
 
         // above or at target
         if (addedFromBG.getUnits() >= 0) {
             // iob is higher than correction, so don't add either (carbs + max(0, bg + iob))
             if (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0) {
-                conditions.add(new BolusCalcCondition.Decision("not add positive BG correction", "active IOB is greater than correction bolus while above target"));
+                conditions.add(BolusCalcCondition.NO_POSITIVE_BG_CORRECTION);
             } else if (addedFromBG.getUnits() + addedFromIOB.getUnits() == 0) {
                 // do nothing
             } else {
                 // correction + iob adds a positive delta to the insulin
-                conditions.add(new BolusCalcCondition.Decision("add positive BG correction", "above BG target"));
+                conditions.add(BolusCalcCondition.POSITIVE_BG_CORRECTION);
                 total += addedFromBG.getUnits() + addedFromIOB.getUnits();
             }
         } else { // below target
             if (addedFromBG.getUnits() + addedFromIOB.getUnits() == 0) {
                 // do nothing
             } else if (total + addedFromBG.getUnits() + addedFromIOB.getUnits() > 0) { // correction + iob is less than the carb amount
-                conditions.add(new BolusCalcCondition.Decision("add negative BG correction", "below BG target"));
+                conditions.add(BolusCalcCondition.NEGATIVE_BG_CORRECTION);
                 total += addedFromBG.getUnits() + addedFromIOB.getUnits();
             } else { // correction + iob takes the insulin amount negative
                 total = 0.0;
-                conditions.add(new BolusCalcCondition.Decision("set zero insulin", "negative correction greater than carb amount"));
+                conditions.add(BolusCalcCondition.SET_ZERO_INSULIN);
             }
         }
-//
-//        if (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0) {
-//            if (addedFromBG.getUnits() >= 0) {
-//                conditions.add(new BolusCalcCondition.Decision("not add positive BG correction", "active IOB is greater than correction bolus while above target"));
-//            } else if (total + addedFromBG.getUnits() + addedFromIOB.getUnits() > 0) {
-//                total += addedFromBG.getUnits() + addedFromIOB.getUnits();
-//            } else {
-//                conditions.add(new BolusCalcCondition.Decision("set zero insulin", "negative correction greater than carb amount"));
-//            }
-//        } else {
-//            total += addedFromBG.getUnits() + addedFromIOB.getUnits();
-//        }
-
 
         conditions.addAll(addedFromCarbs.getConditions());
         conditions.addAll(addedFromBG.getConditions());
@@ -240,26 +174,16 @@ public class BolusCalculator {
 
         BolusCalcUnits bolusCalcUnits = new BolusCalcUnits(total, addedFromCarbs.getUnits(), addedFromBG.getUnits(), addedFromIOB.getUnits(), 0);
 
-//        if (addedFromCarbs.getUnits() == 0) {
-//            if (addedFromBG.getUnits() + addedFromIOB.getUnits() > 0) {
-//                conditions.add(new BolusCalcCondition.Decision("increase insulin", "BG is over target"));
-////            } else if (addedFromBG.getUnits() > 0 && (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0)) {
-////                conditions.add(new BolusCalcCondition.Decision("reduce insulin", "IOB is greater than BG correction despite being over target BG"));
-////            } else if (addedFromBG.getUnits() < 0) {
-////                conditions.add(new BolusCalcCondition.Decision("reduce insulin", "IOB is greater than BG correction despite being over target BG"));
-//            }
-//        } else {
-//            if (addedFromBG.getUnits() + addedFromIOB.getUnits() > 0) {
-//                conditions.add(new BolusCalcCondition.Decision("increase insulin", "BG is over target"));
-////            } else if (addedFromBG.getUnits() > 0 && (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0)) {
-////                conditions.add(new BolusCalcCondition.Decision("reduce insulin", "IOB reduces correction despite being over target BG"));
-//            } else if (addedFromBG.getUnits() + addedFromIOB.getUnits() < 0) {
-//                conditions.add(new BolusCalcCondition.Decision("reduce insulin", "BG is under target"));
-//            }
-//        }
-
         L.d(TAG, "bolusCalculator: " + bolusCalcUnits + ", " + conditions);
         Preconditions.checkState(bolusCalcUnits.getTotal() >= 0);
+
+        // If there are any FailedPreconditions, then return 0 units regardless
+        for (BolusCalcCondition condition : conditions) {
+            if (condition instanceof BolusCalcCondition.FailedSanityCheck) {
+                return new BolusCalcDecision(BolusCalcUnits.fromUser(0), conditions);
+            }
+        }
+
         return new BolusCalcDecision(bolusCalcUnits, conditions);
     }
 
@@ -272,10 +196,10 @@ public class BolusCalculator {
     }
 
     /**
-     * @return a list of {@link BolusCalcCondition}s which contain human-readable descriptions of
+     * @return a set of {@link BolusCalcCondition}s which contain human-readable descriptions of
      * how and why this estimate was made
      */
-    public List<BolusCalcCondition> getConditions() {
+    public Set<BolusCalcCondition> getConditions() {
         return parse().getConditions();
     }
 

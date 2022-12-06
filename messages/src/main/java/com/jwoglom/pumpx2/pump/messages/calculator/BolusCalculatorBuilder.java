@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A builder object for filling data into {@link BolusCalculator} when response messages are received
@@ -107,10 +108,10 @@ public class BolusCalculatorBuilder {
     }
 
     /**
-     * @return a list of {@link BolusCalcCondition} objects describing why the bolus calculator
+     * @return a set of {@link BolusCalcCondition} objects describing why the bolus calculator
      * decision was made.
      */
-    public List<BolusCalcCondition> getConditions() {
+    public Set<BolusCalcCondition> getConditions() {
         return new BolusCalculator(userInputParameters, dataSnapshot, lastBG).getConditions();
     }
 

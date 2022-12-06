@@ -89,11 +89,6 @@ public class BolusCalcUnits {
         decFormat.setRoundingMode(RoundingMode.HALF_UP);
     }
     static double doublePrecision(double val) {
-//        // hack with RoundingMode.FLOOR: round -0.051 => -0.05 and -0.059 => -0.06
-//        if (val < 0) {
-//            return -1 * doublePrecision(-1 * val);
-//        }
-        L.d("doublePrecision", val+" -> " + Double.parseDouble(decFormat.format(val)));
         return Double.parseDouble(decFormat.format(val));
     }
 }

@@ -1,10 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
 
 public interface BolusCalcCondition {
+    public static final BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target");
+    public static final BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new NonActionDecision("Adding positive BG correction", "active IOB is greater than correction bolus while above target");
+    public static final BolusCalcCondition SET_ZERO_INSULIN = new NonActionDecision("Setting zero insulin", "negative correction greater than carb amount");
+    public static final BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("Adding negative BG correction", "below BG target");
+
     class FailedPrecondition extends Condition implements BolusCalcCondition {
         public final String reason;
         FailedPrecondition(String reason) {
@@ -28,43 +31,42 @@ public interface BolusCalcCondition {
     class WaitingOnPrecondition extends Condition implements BolusCalcCondition {
         public final String thing;
         WaitingOnPrecondition(String thing) {
-            super("Waiting for data: " + thing);
+            super("Waiting for: " + thing);
             this.thing = thing;
         }
     }
 
     class Decision extends Condition implements BolusCalcCondition {
-        public final String decidedTo;
-        Decision(String decidedTo) {
-            super(decidedTo);
-            this.decidedTo = decidedTo;
+        public final String decision;
+        Decision(String decision) {
+            super(decision);
+            this.decision = decision;
         }
 
-        Decision(String decidedTo, String reason) {
-            this(decidedTo + " because: " + reason);
+        Decision(String decision, String because) {
+            this(decision + " because " + because);
         }
     }
 
 
     class DataDecision extends Decision implements BolusCalcCondition {
-        DataDecision(String decidedTo) {
-            super(decidedTo);
+        DataDecision(String decision) {
+            super(decision);
 
         }
 
-        DataDecision(String decidedTo, String reason) {
-            super(decidedTo, reason);
+        DataDecision(String decision, String reason) {
+            super(decision, reason);
         }
     }
 
     class NonActionDecision extends Decision implements BolusCalcCondition {
-        NonActionDecision(String decidedToNot) {
-            super("not " + decidedToNot);
-
+        NonActionDecision(String decision) {
+            super(decision);
         }
 
-        NonActionDecision(String decidedToNot, String reason) {
-            super("not " + decidedToNot, reason);
+        NonActionDecision(String decision, String reason) {
+            super(decision, reason);
         }
     }
 
