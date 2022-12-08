@@ -90,5 +90,12 @@ public class BolusPermissionResponse extends Message {
             return null;
         }
     }
-    
+
+    /**
+     * @return true when bolus permission was granted
+     */
+    public boolean isPermissionGranted() {
+        return status == 0 && getNackReason() == NackReason.PERMISSION_GRANTED;
+    }
+
 }

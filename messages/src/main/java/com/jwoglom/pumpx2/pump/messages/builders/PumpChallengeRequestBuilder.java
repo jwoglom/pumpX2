@@ -9,21 +9,21 @@ import java.nio.charset.Charset;
 public class PumpChallengeRequestBuilder {
     public static PumpChallengeRequest create(int appInstanceId, String pairingCode, byte[] hmacKey) throws InvalidPairingCodeFormat {
         String pairingChars = processPairingCode(pairingCode);
-        if(pairingChars.length() != 16) {
-            throw new InvalidPairingCodeFormat();
-        }
         return new PumpChallengeRequest(
                 appInstanceId,
                 Packetize.doHmacSha1(hmacKey, pairingChars.getBytes(Charset.forName("UTF-8"))));
     }
 
     // Remove all dashes and spaces
-    private static String processPairingCode(String pairingCode) {
+    public static String processPairingCode(String pairingCode) throws InvalidPairingCodeFormat {
         String processed = "";
         for (Character c : pairingCode.toCharArray()) {
             if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
                 processed += c;
             }
+        }
+        if (processed.length() != 16) {
+            throw new InvalidPairingCodeFormat();
         }
         return processed;
     }
