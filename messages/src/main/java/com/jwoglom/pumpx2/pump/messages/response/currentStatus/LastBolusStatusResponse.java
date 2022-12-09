@@ -8,9 +8,11 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Set;
 
 /**
  * Does not contain requestedVolume which {@link LastBolusStatusV2Response} has
@@ -104,6 +106,9 @@ public class LastBolusStatusResponse extends LastBolusStatusAbstractResponse {
     }
     public int getBolusTypeBitmask() {
         return bolusTypeBitmask;
+    }
+    public Set<BolusDeliveryHistoryLog.BolusType> getBolusTypes() {
+        return BolusDeliveryHistoryLog.BolusType.fromBitmask(bolusTypeBitmask);
     }
     public long getExtendedBolusDuration() {
         return extendedBolusDuration;

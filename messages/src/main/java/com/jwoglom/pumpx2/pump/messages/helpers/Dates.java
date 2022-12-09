@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.helpers;
 
+import static java.time.ZoneOffset.UTC;
+
 import java.time.Instant;
+import java.time.temporal.TemporalAdjuster;
 
 public class Dates {
     public static long fromJan12008ToUnixEpochSeconds(long seconds) {

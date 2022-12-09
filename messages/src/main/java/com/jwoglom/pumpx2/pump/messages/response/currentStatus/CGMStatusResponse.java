@@ -5,7 +5,10 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;
+
+import java.time.Instant;
 
 @MessageProps(
     opCode=81,
@@ -86,9 +89,17 @@ public class CGMStatusResponse extends Message {
     public long getLastCalibrationTimestamp() {
         return lastCalibrationTimestamp;
     }
+    public Instant getLastCalibrationTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(lastCalibrationTimestamp);
+    }
+
     public long getSensorStartedTimestamp() {
         return sensorStartedTimestamp;
     }
+    public Instant getSensorStartedTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(sensorStartedTimestamp);
+    }
+
     public int getTransmitterBatteryStatusId() {
         return transmitterBatteryStatusId;
     }

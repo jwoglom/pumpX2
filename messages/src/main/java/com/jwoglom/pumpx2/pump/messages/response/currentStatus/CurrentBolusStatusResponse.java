@@ -6,6 +6,9 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
+
+import java.util.Set;
 
 @MessageProps(
     opCode=45,
@@ -19,18 +22,18 @@ public class CurrentBolusStatusResponse extends Message {
     private int bolusId;
     private long timestamp;
     private long requestedVolume;
-    private int bolusSource;
+    private int bolusSourceId;
     private int bolusTypeBitmask;
     
     public CurrentBolusStatusResponse() {}
     
-    public CurrentBolusStatusResponse(int status, int bolusId, long timestamp, long requestedVolume, int bolusSource, int bolusTypeBitmask) {
-        this.cargo = buildCargo(status, bolusId, timestamp, requestedVolume, bolusSource, bolusTypeBitmask);
+    public CurrentBolusStatusResponse(int status, int bolusId, long timestamp, long requestedVolume, int bolusSourceId, int bolusTypeBitmask) {
+        this.cargo = buildCargo(status, bolusId, timestamp, requestedVolume, bolusSourceId, bolusTypeBitmask);
         this.status = status;
         this.bolusId = bolusId;
         this.timestamp = timestamp;
         this.requestedVolume = requestedVolume;
-        this.bolusSource = bolusSource;
+        this.bolusSourceId = bolusSourceId;
         this.bolusTypeBitmask = bolusTypeBitmask;
         
     }
@@ -42,7 +45,7 @@ public class CurrentBolusStatusResponse extends Message {
         this.bolusId = Bytes.readShort(raw, 1);
         this.timestamp = Bytes.readUint32(raw, 5);
         this.requestedVolume = Bytes.readUint32(raw, 9);
-        this.bolusSource = raw[13];
+        this.bolusSourceId = raw[13];
         this.bolusTypeBitmask = raw[14];
         
     }
@@ -71,11 +74,18 @@ public class CurrentBolusStatusResponse extends Message {
     public long getRequestedVolume() {
         return requestedVolume;
     }
-    public int getBolusSource() {
-        return bolusSource;
+    public int getBolusSourceId() {
+        return bolusSourceId;
     }
+    public BolusDeliveryHistoryLog.BolusSource getBolusSource() {
+        return BolusDeliveryHistoryLog.BolusSource.fromId(bolusSourceId);
+    }
+
     public int getBolusTypeBitmask() {
         return bolusTypeBitmask;
+    }
+    public Set<BolusDeliveryHistoryLog.BolusType> getBolusTypes() {
+        return BolusDeliveryHistoryLog.BolusType.fromBitmask(bolusTypeBitmask);
     }
     
 }
