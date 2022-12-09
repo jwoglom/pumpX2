@@ -87,4 +87,11 @@ public class InitiateBolusResponse extends Message {
             return null;
         }
     }
+
+    /**
+     * @return true when bolus was initiated
+     */
+    public boolean wasBolusInitiated() {
+        return status == 0 && getStatusType() == BolusResponseStatus.SUCCESS;
+    }
 }

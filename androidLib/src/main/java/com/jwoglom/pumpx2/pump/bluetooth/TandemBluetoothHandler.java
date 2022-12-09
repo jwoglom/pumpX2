@@ -71,7 +71,7 @@ public class TandemBluetoothHandler {
      * Initializes PumpX2.
      * @param context Android context
      * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
-     * @param timberTree the {@link Timber.Tree} which is initialied for logging with Timber.
+     * @param timberTree the {@link Timber.Tree} which is initialized for logging with Timber.
      *                   Timber initialization is skipped if null. See {@link LConfigurator}
      */
     public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree) {

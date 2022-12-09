@@ -152,6 +152,7 @@ public class PumpState {
     }
 
     public static void enableActionsAffectingInsulinDelivery() {
+        Timber.i("PumpState.enableActionsAffectingInsulinDelivery()");
         actionsAffectingInsulinDeliveryEnabled = true;
     }
 

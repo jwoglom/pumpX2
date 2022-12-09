@@ -72,10 +72,6 @@ public class TronMessageWrapper {
             }
         }
 
-        if (message.props().modifiesInsulinDelivery() && !PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled.get()) {
-            throw new ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception();
-        }
-
         return PacketArrayList.build(
                 (byte) opCode,
                 message.getCharacteristic(),
@@ -83,11 +79,5 @@ public class TronMessageWrapper {
                 packets.get(0).transactionId(),
                 message.signed()
         );
-    }
-
-    static class ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception extends RuntimeException {
-        ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception() {
-            super("The developer of this application has not enabled actions which affect insulin delivery");
-        }
     }
 }

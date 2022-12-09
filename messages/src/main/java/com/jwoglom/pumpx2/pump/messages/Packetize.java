@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages;
 import com.google.common.collect.Lists;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
@@ -52,6 +53,9 @@ public class Packetize {
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
         L.d(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
+        if (message.props().modifiesInsulinDelivery() && !PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled.get()) {
+            throw new ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception();
+        }
         if (message.signed()) {
             int i = length - 20;
             byte[] bArr2 = new byte[i];
@@ -88,5 +92,11 @@ public class Packetize {
 
     public static byte[] doHmacSha1(byte[] data, byte[] key) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(data);
+    }
+
+    public static class ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception extends RuntimeException {
+        ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception() {
+            super("The developer of this application has not enabled actions which affect insulin delivery");
+        }
     }
 }

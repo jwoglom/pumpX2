@@ -79,7 +79,7 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param message a request message from {@link com.jwoglom.pumpx2.pump.messages.request}
      */
-    public void sendCommand(BluetoothPeripheral peripheral, Message message) {
+    public synchronized void sendCommand(BluetoothPeripheral peripheral, Message message) {
         Timber.i("TandemPump: sendCommand(" + message + ")");
         ArrayList<byte[]> bytes = new ArrayList<>();
         byte currentTxId = Packetize.txId.get();
