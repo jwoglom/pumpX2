@@ -41,6 +41,10 @@ public class BolusParameters {
         return glucoseMgdl;
     }
 
+    public String toString() {
+        return "BolusParameters(units="+units+", carbsGrams="+carbsGrams+", glucoseMgdl="+glucoseMgdl+")";
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -110,4 +110,11 @@ public class CancelBolusResponse extends Message {
             return null;
         }
     }
+
+    /**
+     * @return true when the bolus was successfully cancelled
+     */
+    public boolean wasCancelled() {
+        return getStatus() == CancelStatus.SUCCESS && getReason() == CancelReason.NO_ERROR;
+    }
 }

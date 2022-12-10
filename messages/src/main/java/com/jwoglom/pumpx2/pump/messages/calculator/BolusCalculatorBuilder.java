@@ -128,4 +128,8 @@ public class BolusCalculatorBuilder {
     public BolusCalculator build() {
         return new BolusCalculator(userInputParameters, dataSnapshot, lastBG);
     }
+
+    public String toString() {
+        return "BolusCalculatorBuilder(userInputParameters="+userInputParameters+")";
+    }
 }
