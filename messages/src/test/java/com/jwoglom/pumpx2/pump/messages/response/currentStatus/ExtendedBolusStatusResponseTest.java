@@ -9,6 +9,7 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 public class ExtendedBolusStatusResponseTest {
+    // Returns empty when the most recent bolus is not an extended bolus.
     @Test
     public void testExtendedBolusStatusResponseEmpty() throws DecoderException {
         ExtendedBolusStatusResponse expected = new ExtendedBolusStatusResponse(

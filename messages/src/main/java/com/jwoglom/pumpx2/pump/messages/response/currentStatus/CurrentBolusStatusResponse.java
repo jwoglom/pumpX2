@@ -5,9 +5,11 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
+import java.time.Instant;
 import java.util.Set;
 
 @MessageProps(
@@ -18,7 +20,7 @@ import java.util.Set;
 )
 public class CurrentBolusStatusResponse extends Message {
     
-    private int status;
+    private int statusId;
     private int bolusId;
     private long timestamp;
     private long requestedVolume;
@@ -27,9 +29,9 @@ public class CurrentBolusStatusResponse extends Message {
     
     public CurrentBolusStatusResponse() {}
     
-    public CurrentBolusStatusResponse(int status, int bolusId, long timestamp, long requestedVolume, int bolusSourceId, int bolusTypeBitmask) {
-        this.cargo = buildCargo(status, bolusId, timestamp, requestedVolume, bolusSourceId, bolusTypeBitmask);
-        this.status = status;
+    public CurrentBolusStatusResponse(int statusId, int bolusId, long timestamp, long requestedVolume, int bolusSourceId, int bolusTypeBitmask) {
+        this.cargo = buildCargo(statusId, bolusId, timestamp, requestedVolume, bolusSourceId, bolusTypeBitmask);
+        this.statusId = statusId;
         this.bolusId = bolusId;
         this.timestamp = timestamp;
         this.requestedVolume = requestedVolume;
@@ -41,7 +43,7 @@ public class CurrentBolusStatusResponse extends Message {
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.status = raw[0];
+        this.statusId = raw[0];
         this.bolusId = Bytes.readShort(raw, 1);
         this.timestamp = Bytes.readUint32(raw, 5);
         this.requestedVolume = Bytes.readUint32(raw, 9);
@@ -62,18 +64,63 @@ public class CurrentBolusStatusResponse extends Message {
             new byte[]{ (byte) bolusTypeBitmask });
     }
     
-    public int getStatus() {
-        return status;
+    public int getStatusId() {
+        return statusId;
     }
+    public CurrentBolusStatus getStatus() {
+        return CurrentBolusStatus.fromId(statusId);
+    }
+
+    public enum CurrentBolusStatus {
+        REQUESTING(2),
+        DELIVERING(1),
+        ALREADY_DELIVERED_OR_INVALID(0),
+        ;
+
+        private final int id;
+        CurrentBolusStatus(int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public static CurrentBolusStatus fromId(int id) {
+            for (CurrentBolusStatus s : values()) {
+                if (s.id == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
+    }
+
     public int getBolusId() {
         return bolusId;
     }
+
     public long getTimestamp() {
         return timestamp;
     }
+
+    /**
+     * @return the {@link Instant} representing the timestamp in which the current bolus state
+     * ({@link CurrentBolusStatus}) was entered, according to the pump. i.e., if the status is in
+     * DELIVERING, then the timestamp the delivery started.
+     */
+    public Instant getTimestampInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(timestamp);
+    }
+
+    /**
+     * @return the requested insulin volume in milliunits. To convert to human-readable format,
+     * use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1000To1(Long)}).
+     */
     public long getRequestedVolume() {
         return requestedVolume;
     }
+
     public int getBolusSourceId() {
         return bolusSourceId;
     }
@@ -86,6 +133,15 @@ public class CurrentBolusStatusResponse extends Message {
     }
     public Set<BolusDeliveryHistoryLog.BolusType> getBolusTypes() {
         return BolusDeliveryHistoryLog.BolusType.fromBitmask(bolusTypeBitmask);
+    }
+
+    /**
+     * @return whether data is filled and this output can be used. If not valid, then the bolus
+     * is no longer "current" and {@link com.jwoglom.pumpx2.pump.messages.builders.LastBolusStatusRequestBuilder} must be used.
+     */
+    public boolean isValid() {
+        return !(getStatus() == CurrentBolusStatus.ALREADY_DELIVERED_OR_INVALID && getBolusId() == 0 && getTimestamp() == 0);
+
     }
     
 }

@@ -48,9 +48,23 @@ public class InitiateBolusRequest extends Message {
 
     // all parameters:
     // (C49011.this.bolusId, MobileBolusModel.mobileBolusModel.bolusType(), BolusConfirmFragment.this.bolusTotalVol(), BolusConfirmFragment.this.bolusFoodVol(), C49011.this.bolusCorrectionVol, BolusConfirmFragment.this.bolusCarbs(), BolusConfirmFragment.this.bolusBG(), BolusConfirmFragment.this.bolusIOB(), 0L, 0L, 0L)
+
+    /**
+     * The final command which initiates a bolus. Must specify a bolusID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}.
+     *
+     * @param totalVolume      the amount of insulin to be delivered, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}.
+     * @param bolusID          the bolus ID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}
+     * @param bolusTypeBitmask the bitmask of bolus type. Use {@link com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType#toBitmask(BolusDeliveryHistoryLog.BolusType...)}
+     * @param foodVolume       the amount of insulin attributed within metadata from food (carbs; optional)
+     * @param correctionVolume the amount of insulin attributed within metadata from a correction (optional)
+     * @param bolusCarbs       the number of carbs attributed within metadata (optional)
+     * @param bolusBG          the current BG attributed within metadata, if overridden from the current CGM reading (optional)
+     * @param bolusIOB         the current IOB attributed within metadata (optional)
+     */
     public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {
         this(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, 0, 0, 0);
     }
+
     public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long unknown1, long unknown2, long unknown3) {
         Preconditions.checkArgument(totalVolume >= MIN_BOLUS_MILLIUNITS);
         Preconditions.checkArgument(bolusID > 0);

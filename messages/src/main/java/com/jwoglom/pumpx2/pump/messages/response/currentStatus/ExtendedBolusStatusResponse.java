@@ -7,6 +7,9 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;
 
+/**
+ * Returns information on the current extended bolus.
+ */
 @MessageProps(
     opCode=47,
     size=18,
