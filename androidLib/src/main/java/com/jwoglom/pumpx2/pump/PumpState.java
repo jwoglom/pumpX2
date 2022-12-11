@@ -132,6 +132,7 @@ public class PumpState {
             Timber.d("requestMessages clear: %s", requestMessages);
             requestMessages.clear();
             processedResponseMessages = 0;
+            processedResponseMessagesFromUs = 0;
         }
     }
 
@@ -191,5 +192,6 @@ public class PumpState {
      * received. Checked to avoid race conditions with t:connect app connection sharing.
      */
     public static int processedResponseMessages = 0;
+    public static int processedResponseMessagesFromUs = 0;
 }
 

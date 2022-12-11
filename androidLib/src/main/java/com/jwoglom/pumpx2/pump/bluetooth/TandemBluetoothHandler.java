@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.bluetooth;
 
-import static com.welie.blessed.BluetoothBytesParser.bytes2String;
+import static com.welie.blessed.BluetoothBytesParser.asHexString;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -228,9 +228,9 @@ public class TandemBluetoothHandler {
         @Override
         public void onCharacteristicWrite(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
-                Timber.i("SUCCESS: Writing <%s> to %s", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()));
+                Timber.i("SUCCESS: Writing <%s> to %s", asHexString(value), CharacteristicUUID.which(characteristic.getUuid()));
             } else {
-                Timber.e("ERROR: Failed writing <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(characteristic.getUuid()), status);
+                Timber.e("ERROR: Failed writing <%s> to %s (%s)", asHexString(value), CharacteristicUUID.which(characteristic.getUuid()), status);
                 if (PumpState.tconnectAppConnectionSharing && CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS.equals(characteristic.getUuid()) && status == GattStatus.ERROR) {
                     // When we receive an error on the authorization characteristic while t:connect app connection sharing is enabled,
                     // mark that we can ignore the authentication on the next connection since we trust the t:connect app will instead
@@ -255,7 +255,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic btCharacteristic, @NotNull GattStatus status) {
             if (status != GattStatus.SUCCESS) {
-                Timber.w("ERROR: Failed to receive update <%s> to %s (%s)", bytes2String(value), CharacteristicUUID.which(btCharacteristic.getUuid()), status);
+                Timber.w("ERROR: Failed to receive update <%s> to %s (%s)", asHexString(value), CharacteristicUUID.which(btCharacteristic.getUuid()), status);
                 return;
             }
 
@@ -291,7 +291,8 @@ public class TandemBluetoothHandler {
                 Characteristic characteristic = Characteristic.of(characteristicUUID);
 
                 Byte txId = BTResponseParser.parseTxId(value);
-                Timber.d("Received %s response, txId %d: %s", uuidName, txId, Hex.encodeHexString(parser.getValue()));
+                PumpState.processedResponseMessages++;
+                Timber.d("Received %s response, txId %d: %s (processedResponseMessages=%d)", uuidName, txId, Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages);
 
                 // Since we've already gotten at least this response, we can sync our opcodes.
                 // PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
@@ -410,8 +411,8 @@ public class TandemBluetoothHandler {
                     throw e;
                 }
 
-                PumpState.processedResponseMessages++;
-                Timber.i("Processed %s response (%d): %s (%s) (%d processed total)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages);
+                PumpState.processedResponseMessagesFromUs++;
+                Timber.i("Processed %s response (%d): %s (%s) (%d processed total, %d from us)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages, PumpState.processedResponseMessagesFromUs);
 
                 if (response.message().isPresent()) {
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
