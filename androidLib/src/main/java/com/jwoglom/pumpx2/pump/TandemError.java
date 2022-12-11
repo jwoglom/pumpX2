@@ -11,6 +11,7 @@ public enum TandemError {
     UNEXPECTED_TRANSACTION_ID("Unexpected transaction ID"),
     SET_MTU_FAILED("Set MTU"),
     ERROR_RESPONSE("Error response from pump"),
+    INVALID_SIGNED_HMAC_SIGNATURE("Invalid signed HMAC signature"),
     ;
 
     private String message;

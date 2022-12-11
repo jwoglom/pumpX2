@@ -48,6 +48,7 @@ import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
 
 import com.jwoglom.pumpx2.shared.Hex;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -57,6 +58,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import timber.log.Timber;
+
 import com.jwoglom.pumpx2.util.timber.DebugTree;
 
 /**
@@ -69,7 +71,8 @@ public class TandemBluetoothHandler {
 
     /**
      * Initializes PumpX2.
-     * @param context Android context
+     *
+     * @param context    Android context
      * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
      * @param timberTree the {@link Timber.Tree} which is initialized for logging with Timber.
      *                   Timber initialization is skipped if null. See {@link LConfigurator}
@@ -90,9 +93,11 @@ public class TandemBluetoothHandler {
         central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler());
         resetRemainingConnectionInitializationSteps();
     }
+
     /**
      * Initializes PumpX2.
-     * @param context Android context
+     *
+     * @param context    Android context
      * @param tandemPump an instantiated version of your class which extends {@class TandemPump}
      */
     public TandemBluetoothHandler(Context context, TandemPump tandemPump) {
@@ -115,6 +120,7 @@ public class TandemBluetoothHandler {
 
     private final Set<ConnectionInitializationStep> remainingConnectionInitializationSteps = new HashSet<>();
     private final Set<UUID> remainingCharacteristicNotificationsInit = new HashSet<>();
+
     private synchronized void resetRemainingConnectionInitializationSteps() {
         remainingConnectionInitializationSteps.addAll(ImmutableList.copyOf(ConnectionInitializationStep.values()));
         remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.ALREADY_INITIALIZED);
@@ -167,7 +173,7 @@ public class TandemBluetoothHandler {
                     // If at 500ms, 1000ms, or 1500ms the t:connect app has sent a message and we've
                     // received the response, then we've been able to sync the current opcode and
                     // can thus call the onPumpConnected callback.
-                    for (int i=500; i<2000; i+=500) {
+                    for (int i = 500; i < 2000; i += 500) {
                         handler.postDelayed(() -> {
                             if (PumpState.processedResponseMessages > 0) {
                                 if (sentOnPumpConnected.compareAndSet(false, true)) {
@@ -245,7 +251,7 @@ public class TandemBluetoothHandler {
                     Timber.i("Ignoring popup on initial failing non-authorization write due to t:connect app connection sharing");
                     PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
                 } else {
-                    Timber.d("characteristic write error. tconnectAppConnectionSharing="+PumpState.tconnectAppConnectionSharing+" tconnectAppConnectionSharingIgnoreInitialFailingWrite="+PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite);
+                    Timber.d("characteristic write error. tconnectAppConnectionSharing=" + PumpState.tconnectAppConnectionSharing + " tconnectAppConnectionSharingIgnoreInitialFailingWrite=" + PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite);
                     tandemPump.onPumpCriticalError(peripheral,
                             TandemError.CHARACTERISTIC_WRITE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", value: " + Hex.encodeHexString(value) + ", status: " + status));
                 }
@@ -285,8 +291,7 @@ public class TandemBluetoothHandler {
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CONTROL_CHARACTERISTICS) ||
-                    characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS))
-            {
+                    characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                 String uuidName = CharacteristicUUID.which(characteristicUUID);
                 Characteristic characteristic = Characteristic.of(characteristicUUID);
 
@@ -360,7 +365,7 @@ public class TandemBluetoothHandler {
                         // It's probably important that we update the transaction ID on each message we receive.
                         // The txId we've seen was already used, and since Packetize.txId stores the next available txId,
                         // increment it by one.
-                        Packetize.txId.set(1+txId);
+                        Packetize.txId.set(1 + txId);
                         return;
                     }
                 }
@@ -392,7 +397,7 @@ public class TandemBluetoothHandler {
 
                     if (PumpState.tconnectAppAlreadyAuthenticated) {
                         Timber.i("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
-                        if (Packetize.txId.get() < 1+txId) {
+                        if (Packetize.txId.get() < 1 + txId) {
                             Timber.i("updating txId from %d to %d", Packetize.txId.get(), 1 + txId);
 
                             // Update the transaction ID if the t:connect app is present.
@@ -406,6 +411,14 @@ public class TandemBluetoothHandler {
                     }
 
                     return;
+                } catch (PacketArrayList.InvalidSignedMessageHMACSignatureException e) {
+                    Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
+                    tandemPump.onPumpCriticalError(peripheral, TandemError.INVALID_SIGNED_HMAC_SIGNATURE.withExtra(
+                            Strings.isNullOrEmpty(PumpState.getAuthenticationKey()) ?
+                                    "pairing code not specified" : "provided pairing code is likely invalid"
+                    ));
+                    return;
+
                 } catch (Exception e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
                     throw e;
@@ -416,8 +429,7 @@ public class TandemBluetoothHandler {
 
                 if (response.message().isPresent()) {
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
-                        !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS))
-                    {
+                            !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                         if (response.message().get() instanceof ErrorResponse) {
                             if (!PumpState.tconnectAppConnectionSharing) {
                                 tandemPump.onPumpCriticalError(peripheral, TandemError.ERROR_RESPONSE.withExtra("in response to " + requestMessage));
@@ -521,6 +533,7 @@ public class TandemBluetoothHandler {
         }
 
         private int reconnectDelay = 2500;
+
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
@@ -630,7 +643,7 @@ public class TandemBluetoothHandler {
                 Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
                 central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
             }
-        },1000);
+        }, 1000);
     }
 
     public void stop() {

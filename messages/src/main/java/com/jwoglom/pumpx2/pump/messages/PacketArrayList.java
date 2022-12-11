@@ -87,7 +87,7 @@ public class PacketArrayList {
         // the fullCargo size is 2 + the message length.
         L.d(TAG, "validate fullCargo size="+fullCargo.length);
         if (!ok) {
-            throw new RuntimeException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
+            throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
         } else if (this.isSigned) {
             L.d(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
@@ -97,7 +97,7 @@ public class PacketArrayList {
             Intrinsics.checkExpressionValueIsNotNull(bytes, "(this as java.lang.String).getBytes(charset)");
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, bytes);
             if (!Arrays.equals(expectedHmac, hmacSha)) {
-                throw new RuntimeException("Pump response invalid: SIGNATURE");
+                throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
                 //return false;
             }
         }
@@ -186,5 +186,17 @@ public class PacketArrayList {
 
     public String toString() {
         return JavaHelpers.autoToString(this, ImmutableSet.of());
+    }
+
+    public static class InvalidCRCException extends RuntimeException {
+        InvalidCRCException(String message) {
+            super(message);
+        }
+    }
+
+    public static class InvalidSignedMessageHMACSignatureException extends RuntimeException {
+        InvalidSignedMessageHMACSignatureException(String message) {
+            super(message);
+        }
     }
 }

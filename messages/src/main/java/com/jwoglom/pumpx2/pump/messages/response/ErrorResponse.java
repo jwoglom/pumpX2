@@ -14,7 +14,7 @@ import kotlin.collections.ArraysKt;
 import kotlin.collections.CollectionsKt;
 
 /**
- * With an ErorrCode of INVALID_PARAMETER, requestCodeId contains the request opcode which failed
+ * With an ErrorCode of INVALID_PARAMETER, requestCodeId contains the request opcode which failed
  *
  * There are really two different ErrorResponse's -- one with a size of 2, (for currentStatus)
  * and one with a size of 26 (for control / signed messages, called ErrorResponseControl by tandem)
