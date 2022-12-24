@@ -10,7 +10,13 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;
 
 /**
- * occurs before InitiateBolusRequest
+ * Saves the entered carbs as a history log entry which populates it in the pump's graph.
+ * If not called, then the bolus appears in the mobile app / t:connect without the carb amount.
+ *
+ * pumpTime is the ACTUAL pump time seconds since boot, not the timesincereset EPOCH value which is
+ * used for signing messages.
+ *
+ * called before InitiateBolusRequest
  */
 @MessageProps(
     opCode=-14,
@@ -29,10 +35,14 @@ public class RemoteCarbEntryRequest extends Message {
 
     public RemoteCarbEntryRequest() {}
 
+    public RemoteCarbEntryRequest(int carbs, long pumpTimeSecondsSinceBoot, int bolusId) {
+        this(carbs, 1, pumpTimeSecondsSinceBoot, bolusId);
+    }
+
     public RemoteCarbEntryRequest(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {
         this.cargo = buildCargo(carbs, unknown, pumpTimeSecondsSinceBoot, bolusId);
         this.carbs = carbs;
-        this.unknown = unknown;
+        this.unknown = unknown; // from examples, always 1
         this.pumpTime = pumpTimeSecondsSinceBoot;
         this.bolusId = bolusId;
     }

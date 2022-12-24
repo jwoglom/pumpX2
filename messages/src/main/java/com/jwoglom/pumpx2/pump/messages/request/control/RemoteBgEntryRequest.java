@@ -13,7 +13,6 @@ import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;
  * Adds the BG entered in the bolus window to the pump as a BG entry.
  * pumpTime is the ACTUAL pump time seconds since boot, not the timesincereset EPOCH value which is
  * used for signing messages.
- *
  */
 @MessageProps(
     opCode=-74,
