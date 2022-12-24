@@ -265,9 +265,7 @@ public class TandemBluetoothHandler {
                 return;
             }
 
-            Timber.d(">>characteristicUpdate enter");
             innerCharacteristicUpdate(peripheral, value, btCharacteristic, status);
-            Timber.d(">>characteristicUpdate exit");
         }
 
         private synchronized void innerCharacteristicUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic btCharacteristic, @NotNull GattStatus status) {
@@ -314,19 +312,20 @@ public class TandemBluetoothHandler {
                     }
                 } else {
                     Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
-                    Timber.d("requestMessage for txId=%d %s", txId, opt);
                     if (opt.isPresent()) {
+                        Timber.d("requestMessage for txId=%d (sent by us) %s", txId, opt);
                         requestMessage = opt.get();
                     } else {
+                        Timber.d("no requestMessage for txId=%d (sent by other client)", txId);
                         // If the initial pump connection has been established (BT notifications, MTU, etc)
                         PumpResponseMessage bestEffortParsedMsg = BTResponseParser.parseBestEffortForLogging(value, characteristicUUID);
                         if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                             if (PumpState.relyOnConnectionSharingForAuthentication) {
-                                Timber.i("Received first message reply to sync opcodes with relyOnConnectionSharingForAuthentication (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                                Timber.d("Received first message reply to sync opcodes with relyOnConnectionSharingForAuthentication (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             } else if (!PumpState.tconnectAppAlreadyAuthenticated) {
-                                Timber.e("Received request for message we didn't send: pump already initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                                Timber.d("Received request for message we didn't send: pump already initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             } else {
-                                Timber.i("Message likely sent by tconnect app (no request in PumpState; characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                                Timber.d("Message likely sent by tconnect app (no request in PumpState; characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             }
 
                             if (PumpState.sendSharedConnectionResponseMessages && bestEffortParsedMsg != null && bestEffortParsedMsg.message().isPresent()) {
@@ -343,17 +342,17 @@ public class TandemBluetoothHandler {
                             // the BT connection since it knows we've already authenticated. And we don't want to get
                             // into an authentication battle with the t:connect app anyway, we'll just let it handle auth.
 
-                            Timber.w("Received request for message we didn't send: pump has not yet been initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
+                            Timber.d("Received request for message we didn't send: pump has not yet been initialized (characteristic: %s, txId: %d): %s", characteristic, txId, bestEffortParsedMsg);
                             if (!PumpState.tconnectAppAlreadyAuthenticated && !characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS)) {
-                                Timber.i("Setting PumpState.tconnectAppAlreadyAuthenticated");
+                                Timber.d("Setting PumpState.tconnectAppAlreadyAuthenticated");
 
                                 // If we are relying fully on tconnect app authentication, then we are only
                                 // fully connected once we intercept the first message from their app with
                                 // connection sharing enabled.
                                 if (PumpState.relyOnConnectionSharingForAuthentication) {
-                                    Timber.i("Scheduling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
+                                    Timber.d("Scheduling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
                                     handler.postDelayed(() -> {
-                                        Timber.i("Calling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
+                                        Timber.d("Calling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
                                         tandemPump.onPumpConnected(peripheral);
                                     }, 500);
                                 }
@@ -393,17 +392,17 @@ public class TandemBluetoothHandler {
                         throw e;
                     }
                 } catch (UnexpectedOpCodeException e) {
-                    Timber.i(e, "Unexpected opcode %d, expected %d for txId=%d: ignoring queue (which contained: %s)", e.foundOpcode, requestMessage.getResponseOpCode(), txId, requestMessage);
+                    Timber.d("Unexpected opcode %d, expected %d for txId=%d: ignoring queue (which contained: %s): %s", e.foundOpcode, requestMessage.getResponseOpCode(), txId, requestMessage, e.toString());
 
                     if (PumpState.tconnectAppAlreadyAuthenticated) {
-                        Timber.i("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
+                        Timber.d("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
                         if (Packetize.txId.get() < 1 + txId) {
                             Timber.i("updating txId from %d to %d", Packetize.txId.get(), 1 + txId);
 
                             // Update the transaction ID if the t:connect app is present.
                             Packetize.txId.set(1 + txId);
                         } else {
-                            Timber.i("global txId=%d but self-assumed next txId+1=%d, so not incrementing", Packetize.txId.get(), 1 + txId);
+                            Timber.d("global txId=%d but self-assumed next txId+1=%d, so not incrementing", Packetize.txId.get(), 1 + txId);
                         }
                     } else {
                         // Throw the exception if we haven't detected another actor, since this is likely our fault
@@ -468,7 +467,7 @@ public class TandemBluetoothHandler {
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
-                Timber.i("unhandled response to %s: %s", CharacteristicUUID.which(characteristicUUID), Hex.encodeHexString(parser.getValue()));
+                Timber.w("UNHANDLED RESPONSE to %s: %s", CharacteristicUUID.which(characteristicUUID), Hex.encodeHexString(parser.getValue()));
             }
         }
 

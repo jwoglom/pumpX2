@@ -93,7 +93,7 @@ public abstract class TandemPump {
 
         for (byte[] b : bytes) {
             UUID uuid = CharacteristicUUID.determine(message);
-            Timber.i("sendCommand to %s: %s", uuid, Hex.encodeHexString(b));
+            Timber.d("TandemPump: raw sendCommand to characteristic %s: %s", CharacteristicUUID.which(uuid), Hex.encodeHexString(b));
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
                     uuid,
                     b,
