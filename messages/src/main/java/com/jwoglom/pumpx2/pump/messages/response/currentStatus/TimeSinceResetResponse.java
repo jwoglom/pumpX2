@@ -11,8 +11,9 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequ
 import java.time.Instant;
 
 /**
- * Returns information on the pump's current internal time. Different from the human-visible
- * time and date which is stored in the history log.
+ * Returns information on the pump's current internal time, which is different from the
+ * human-visible time and date which is stored in the history log. The currentTime is the
+ * user-set clock time.
  */
 @MessageProps(
     opCode=55,
@@ -22,24 +23,23 @@ import java.time.Instant;
 )
 public class TimeSinceResetResponse extends Message {
     
-    private long timeSinceReset;
-    private long pumpTime;
+    private long currentTime;
+    private long pumpTimeSinceReset;
     
     public TimeSinceResetResponse() {}
     
-    public TimeSinceResetResponse(long timeSinceReset, long pumpTime) {
-        this.cargo = buildCargo(timeSinceReset, pumpTime);
-        this.timeSinceReset = timeSinceReset;
-        this.pumpTime = pumpTime;
+    public TimeSinceResetResponse(long currentTime, long pumpTimeSinceReset) {
+        this.cargo = buildCargo(currentTime, pumpTimeSinceReset);
+        this.currentTime = currentTime;
+        this.pumpTimeSinceReset = pumpTimeSinceReset;
         
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.timeSinceReset = Bytes.readUint32(raw, 0);
-        this.pumpTime = Bytes.readUint32(raw, 4);
-        
+        this.currentTime = Bytes.readUint32(raw, 0);
+        this.pumpTimeSinceReset = Bytes.readUint32(raw, 4);
     }
 
     
@@ -50,26 +50,25 @@ public class TimeSinceResetResponse extends Message {
     }
 
     /**
-     * IMPORTANT NOTE: These names are actually switched: this returns the pump's internal
-     * realtime clock which is an actual date, instead of the internal epoch time... yes, it's
-     * confusing.
+     * @return the pump's internal realtime clock which is an actual date,
+     * instead of the internal epoch time
      */
-    public long getTimeSinceReset() {
-        return timeSinceReset;
+    public long getCurrentTime() {
+        return currentTime;
     }
 
     /**
      * @return the evaluation of timeSinceReset against the epoch
      */
-    public Instant getTimeSinceResetInstant() {
-        return Dates.fromJan12008EpochSecondsToDate(timeSinceReset);
+    public Instant getCurrentTimeInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(currentTime);
     }
 
     /**
      * @return the number of seconds the pump has been on since it was last reset
      */
-    public long getPumpTimeSeconds() {
-        return pumpTime;
+    public long getPumpTimeSecondsSinceReset() {
+        return pumpTimeSinceReset;
     }
     
 }

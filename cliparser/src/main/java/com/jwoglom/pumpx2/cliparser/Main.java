@@ -131,7 +131,7 @@ public class Main {
 
                 // Auto-update pumpTimeSinceReset
                 if (message instanceof TimeSinceResetResponse) {
-                    PumpStateSupplier.pumpTimeSinceReset = ((TimeSinceResetResponse) message)::getTimeSinceReset;
+                    PumpStateSupplier.pumpTimeSinceReset = ((TimeSinceResetResponse) message)::getCurrentTime;
                 }
 
                 if (messageStr.length() > 0) {
@@ -291,7 +291,7 @@ public class Main {
 
         if (parsedMessage instanceof TimeSinceResetResponse) {
             TimeSinceResetResponse tsr = (TimeSinceResetResponse) parsedMessage;
-            PumpStateSupplier.pumpTimeSinceReset = tsr::getPumpTimeSeconds;
+            PumpStateSupplier.pumpTimeSinceReset = tsr::getPumpTimeSecondsSinceReset;
         }
 
         return parsedMessage;

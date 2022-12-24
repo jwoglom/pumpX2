@@ -463,7 +463,7 @@ public class TandemBluetoothHandler {
                     if (msg instanceof ApiVersionResponse) {
                         PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());
                     } else if (msg instanceof TimeSinceResetResponse) {
-                        PumpState.setPumpTimeSinceReset(((TimeSinceResetResponse) msg).getTimeSinceReset());
+                        PumpState.setPumpTimeSinceReset(((TimeSinceResetResponse) msg).getCurrentTime());
                     }
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
