@@ -7,12 +7,12 @@ public class L {
     public static final String LOG_PREFIX = "PumpX2";
 
     // Giant hack to allow this logging class to be used across Android and non-Android code
-    public static BiConsumer<String, String> getTimberDebug = (a, b) -> {};
-    public static BiConsumer<String, String> getTimberInfo = (a, b) -> {};
-    public static BiConsumer<String, String> getTimberWarning = (a, b) -> {};
-    public static TriConsumer<Throwable, String, String> getTimberWarningThrowable = (a, b, c) -> {};
-    public static BiConsumer<String, String> getTimberError = (a, b) -> {};
-    public static TriConsumer<Throwable, String, String> getTimberErrorThrowable = (a, b, c) -> {};
+    public static TriConsumer<String, String, String> getTimberDebug = (a, b, c) -> {};
+    public static TriConsumer<String, String, String> getTimberInfo = (a, b, c) -> {};
+    public static TriConsumer<String, String, String> getTimberWarning = (a, b, c) -> {};
+    public static QuadConsumer<String, Throwable, String, String> getTimberWarningThrowable = (a, b, c, d) -> {};
+    public static TriConsumer<String, String, String> getTimberError = (a, b, c) -> {};
+    public static QuadConsumer<String, Throwable, String, String> getTimberErrorThrowable = (a, b, c, d) -> {};
 
     public static Consumer<String> getPrintln = System.out::println;
 
@@ -20,7 +20,7 @@ public class L {
     public static void d(String tag, String out) {
         getPrintln.accept(LOG_PREFIX + ":DEBUG: " + tag + ": " + out);
         try {
-            getTimberDebug.accept(tag + ": %s", out);
+            getTimberDebug.accept(tag, "%s", out);
         } catch (RuntimeException e) {
 
         }
@@ -30,7 +30,7 @@ public class L {
     public static void i(String tag, String out) {
         getPrintln.accept(LOG_PREFIX + ":INFO: " + tag + ": " + out);
         try {
-            getTimberInfo.accept(tag + ": %s", out);
+            getTimberInfo.accept(tag, "%s", out);
         } catch (RuntimeException e) {
 
         }
@@ -39,7 +39,7 @@ public class L {
     public static void w(String tag, String out) {
         getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + out);
         try {
-            getTimberWarning.accept(tag + ": %s", out);
+            getTimberWarning.accept(tag, "%s", out);
         } catch (RuntimeException e) {
 
         }
@@ -48,7 +48,7 @@ public class L {
     public static void w(String tag, Throwable thrw) {
         getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + thrw);
         try {
-            getTimberWarningThrowable.accept(thrw, tag + ": %s", thrw.toString());
+            getTimberWarningThrowable.accept(tag, thrw, "%s", thrw.toString());
         } catch (RuntimeException e) {
         }
     }
@@ -56,7 +56,7 @@ public class L {
     public static void w(String tag, String out, Throwable thrw) {
         getPrintln.accept(LOG_PREFIX + ":WARN: " + tag + ": " + out + ": " + thrw);
         try {
-            getTimberWarningThrowable.accept(thrw, tag + ": %s", out);
+            getTimberWarningThrowable.accept(tag, thrw, "%s", out);
         } catch (RuntimeException e) {
         }
     }
@@ -64,7 +64,7 @@ public class L {
     public static void e(String tag, String out) {
         getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + out);
         try {
-            getTimberError.accept(tag + ": %s", out);
+            getTimberError.accept(tag, "%s", out);
         } catch (RuntimeException e) {
         }
     }
@@ -72,7 +72,7 @@ public class L {
     public static void e(String tag, Throwable thrw) {
         getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + thrw);
         try {
-            getTimberErrorThrowable.accept(thrw, tag + ": %s", thrw.toString());
+            getTimberErrorThrowable.accept(tag, thrw, "%s", thrw.toString());
         } catch (RuntimeException e) {
         }
     }
@@ -80,7 +80,7 @@ public class L {
     public static void e(String tag, String out, Throwable thrw) {
         getPrintln.accept(LOG_PREFIX + ":ERROR: " + tag + ": " + out + ": " + thrw);
         try {
-            getTimberErrorThrowable.accept(thrw, tag + ": %s", out);
+            getTimberErrorThrowable.accept(tag, thrw, "%s", out);
         } catch (RuntimeException e) {
         }
     }

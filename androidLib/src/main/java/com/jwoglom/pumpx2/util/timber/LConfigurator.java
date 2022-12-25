@@ -19,12 +19,12 @@ public class LConfigurator {
             return;
         }
 
-        L.getTimberDebug = Timber::d;
-        L.getTimberInfo = Timber::i;
-        L.getTimberWarning = Timber::w;
-        L.getTimberWarningThrowable = Timber::w;
-        L.getTimberError = Timber::e;
-        L.getTimberErrorThrowable = Timber::e;
+        L.getTimberDebug = (a, b, c) -> Timber.tag(a).d(b, c);
+        L.getTimberInfo = (a, b, c) -> Timber.tag(a).i(b, c);
+        L.getTimberWarning = (a, b, c) -> Timber.tag(a).w(b, c);
+        L.getTimberWarningThrowable = (a, b, c, d) -> Timber.tag(a).w(b, c, d);
+        L.getTimberError = (a, b, c) -> Timber.tag(a).e(b, c);
+        L.getTimberErrorThrowable = (a, b, c, d) -> Timber.tag(a).e(b, c, d);
 
         L.getPrintln = (ignored) -> {};
         enabled = true;
@@ -39,12 +39,12 @@ public class LConfigurator {
         if (disabled || enabled) {
             return;
         }
-        L.getTimberDebug = (a, b) -> {};
-        L.getTimberInfo = (a, b) -> {};
-        L.getTimberWarning = (a, b) -> {};
-        L.getTimberWarningThrowable = (a, b, c) -> {};
-        L.getTimberError = (a, b) -> {};
-        L.getTimberErrorThrowable = (a, b, c) -> {};
+        L.getTimberDebug = (a, b, c) -> {};
+        L.getTimberInfo = (a, b, c) -> {};
+        L.getTimberWarning = (a, b, c) -> {};
+        L.getTimberWarningThrowable = (a, b, c, d) -> {};
+        L.getTimberError = (a, b, c) -> {};
+        L.getTimberErrorThrowable = (a, b, c, d) -> {};
 
         L.getPrintln = System.out::println;
         disabled = true;
