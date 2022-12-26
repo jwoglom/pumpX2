@@ -586,7 +586,7 @@ public class TandemBluetoothHandler {
         }
     };
 
-    private Optional<BluetoothPeripheral> getAlreadyConnectedPump() {
+    private Optional<BluetoothPeripheral> getAlreadyBondedPump() {
         // the BLESSED library doesn't include a function to get a list of all
         // bonded devices, and we want to check for a bonded Tandem device which
         // might have been done by the t:connect app itself outside of our knowledge.
@@ -632,12 +632,16 @@ public class TandemBluetoothHandler {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Optional<BluetoothPeripheral> alreadyConnectedPump = getAlreadyConnectedPump();
-                if (alreadyConnectedPump.isPresent()) {
-                    BluetoothPeripheral peripheral = alreadyConnectedPump.get();
-                    Timber.i("TandemBluetoothHandler: Already connected to Tandem peripheral: %s (%s), skipping scan and connecting", peripheral.getName(), peripheral.getAddress());
-                    central.autoConnectPeripheral(peripheral, peripheralCallback);
-                    return;
+                Optional<BluetoothPeripheral> alreadyBondedPump = getAlreadyBondedPump();
+                if (alreadyBondedPump.isPresent()) {
+                    BluetoothPeripheral peripheral = alreadyBondedPump.get();
+                    Timber.i("TandemBluetoothHandler: Already bonded to Tandem peripheral: %s (%s)", peripheral.getName(), peripheral.getAddress());
+                    if (tandemPump.onPumpDiscovered(peripheral, null)) {
+                        central.autoConnectPeripheral(peripheral, peripheralCallback);
+                        return;
+                    } else {
+                        Timber.i("TandemBluetoothHandler: onPumpDiscovered callback said to skip bonded pump %s", peripheral);
+                    }
                 }
                 Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
                 central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});

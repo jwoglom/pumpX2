@@ -144,14 +144,16 @@ public abstract class TandemPump {
     }
 
     /**
-     * Callback invoked when a pump is found during the Bluetooth search. Use to filter whether or
-     * not to connect to the identified pump.
+     * Callback invoked when a pump is found during the Bluetooth search, or when a Tandem pump
+     * is already bonded, to determine whether the detected pump should be connected to.
      * @param peripheral the BluetoothPeripheral representing the pump which was found
-     * @param scanResult the result of the Bluetooth search, including e.g. connection strength
+     * @param scanResult the result of the Bluetooth search, including e.g. connection strength, if
+     *                   the pump was discovered as a result of a Bluetooth search; if the pump is
+     *                   already bonded to the device, then is null.
      * @return true if we should connect to the detected pump, false otherwise
      */
-    public boolean onPumpDiscovered(BluetoothPeripheral peripheral, ScanResult scanResult) {
-        Timber.i("TandemPump: onPumpDiscovered(" + scanResult + ")");
+    public boolean onPumpDiscovered(BluetoothPeripheral peripheral, @Nullable ScanResult scanResult) {
+        Timber.i("TandemPump: onPumpDiscovered(peripheral=%s, scanResult=%s)", peripheral, scanResult);
         if (filterToBluetoothMac.isPresent()) {
             if (filterToBluetoothMac.get().equals(peripheral.getAddress())) {
                 Timber.i("TandemPump: found matching MAC (%s)", peripheral.getAddress());
