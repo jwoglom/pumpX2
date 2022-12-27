@@ -113,4 +113,10 @@ public class JavaHelpers {
         }
 
     }
+
+    public static String autoToStringJson(Object bean, Set<String> ignoredPropertyNames) {
+        return new ReflectionToStringBuilder(bean, ToStringStyle.JSON_STYLE)
+                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                .build();
+    }
 }
