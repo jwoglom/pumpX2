@@ -174,12 +174,17 @@ public class TandemBluetoothHandler {
                     // received the response, then we've been able to sync the current opcode and
                     // can thus call the onPumpConnected callback.
                     for (int i = 500; i < 2000; i += 500) {
+                        final int ii = i;
                         handler.postDelayed(() -> {
                             if (PumpState.processedResponseMessages > 0) {
                                 if (sentOnPumpConnected.compareAndSet(false, true)) {
-                                    Timber.i("processed %d response messages, with set opcode, so triggering onPumpConnected", PumpState.processedResponseMessages);
+                                    Timber.i("AlreadyAuthenticated#%d: processed %d response messages, with set opcode, so triggering onPumpConnected", ii, PumpState.processedResponseMessages);
                                     tandemPump.onPumpConnected(peripheral);
+                                } else {
+                                    Timber.d("AlreadyAuthenticated#%d: sentOnPumpConnected", ii);
                                 }
+                            } else {
+                                Timber.d("AlreadyAuthenticated#%d: 0 processed response messages", ii);
                             }
                         }, i);
                     }
@@ -193,9 +198,13 @@ public class TandemBluetoothHandler {
                     handler.postDelayed(() -> {
                         if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                             if (sentOnPumpConnected.compareAndSet(false, true)) {
-                                Timber.i("no response messages, but pump still initialized, so triggering onPumpConnected");
+                                Timber.i("AlreadyAuthenticated#final: no response messages, but pump still initialized, so triggering onPumpConnected");
                                 tandemPump.onPumpConnected(peripheral);
+                            } else {
+                                Timber.d("AlreadyAuthenticated#final: sentOnPumpConnected");
                             }
+                        } else {
+                            Timber.d("AlreadyAuthenticated#final: not already initialized: %s", remainingConnectionInitializationSteps);
                         }
                     }, 2000);
                     return;
@@ -541,13 +550,9 @@ public class TandemBluetoothHandler {
             Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
+                Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in %d ms", reconnectDelay);
                 // Reconnect to this device when it becomes available again
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        central.autoConnectPeripheral(peripheral, peripheralCallback);
-                    }
-                }, reconnectDelay);
+                handler.postDelayed(TandemBluetoothHandler.this::immediateConnectToPeripheral, reconnectDelay);
                 reconnectDelay *= 1.5;
             }
         }
@@ -625,29 +630,29 @@ public class TandemBluetoothHandler {
         return instance;
     }
 
+    private void immediateConnectToPeripheral() {
+        Timber.d("TandemBluetoothHandler: running immediateConnectToPeripheral");
+        Optional<BluetoothPeripheral> alreadyBondedPump = getAlreadyBondedPump();
+        if (alreadyBondedPump.isPresent()) {
+            BluetoothPeripheral peripheral = alreadyBondedPump.get();
+            Timber.i("TandemBluetoothHandler: Already bonded to Tandem peripheral: %s (%s)", peripheral.getName(), peripheral.getAddress());
+            if (tandemPump.onPumpDiscovered(peripheral, null)) {
+                central.autoConnectPeripheral(peripheral, peripheralCallback);
+                return;
+            } else {
+                Timber.i("TandemBluetoothHandler: onPumpDiscovered callback said to skip bonded pump %s", peripheral);
+            }
+        }
+        Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
+        central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
+    }
+
     public void startScan() {
         Timber.i("TandemBluetoothHandler: startScan");
         // Scan for peripherals with a certain service UUIDs
         central.startPairingPopupHack();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Optional<BluetoothPeripheral> alreadyBondedPump = getAlreadyBondedPump();
-                if (alreadyBondedPump.isPresent()) {
-                    BluetoothPeripheral peripheral = alreadyBondedPump.get();
-                    Timber.i("TandemBluetoothHandler: Already bonded to Tandem peripheral: %s (%s)", peripheral.getName(), peripheral.getAddress());
-                    if (tandemPump.onPumpDiscovered(peripheral, null)) {
-                        central.autoConnectPeripheral(peripheral, peripheralCallback);
-                        return;
-                    } else {
-                        Timber.i("TandemBluetoothHandler: onPumpDiscovered callback said to skip bonded pump %s", peripheral);
-                    }
-                }
-                Timber.i("TandemBluetoothHandler: Scanning for all Tandem peripherals");
-                central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
-            }
-        }, 1000);
+        handler.postDelayed(this::immediateConnectToPeripheral, 1000);
     }
 
     public void stop() {
