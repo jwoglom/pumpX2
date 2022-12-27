@@ -83,6 +83,11 @@ public class CurrentBatteryV2Response extends CurrentBatteryAbstractResponse {
     public int getChargingStatus() {
         return chargingStatus;
     }
+
+    public boolean isCharging() {
+        return chargingStatus == 1;
+    }
+
     public int getUnknown1() {
         return unknown1;
     }
