@@ -242,6 +242,7 @@ public class TandemBluetoothHandler {
                     // mark that we can ignore the authentication on the next connection since we trust the t:connect app will instead
                     Timber.i("Setting PumpState.tconnectAppAlreadyAuthenticated for retried connection (current state: " + PumpState.tconnectAppAlreadyAuthenticated + ")");
                     PumpState.tconnectAppAlreadyAuthenticated = true;
+                    //
                 } else if (PumpState.tconnectAppConnectionSharing && PumpState.tconnectAppConnectionSharingIgnoreInitialFailingWrite && !CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS.equals(characteristic.getUuid()) && status == GattStatus.ERROR) {
                     // If we get an error on a non-authorization characteristic with t:connect app connection sharing enabled,
                     // after the authorization stage has already been skipped due to the running t:connect app,
@@ -520,7 +521,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectedPeripheral(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
-            this.reconnectDelay = 5000;
+            this.reconnectDelay = 250;
         }
 
         @Override
@@ -531,7 +532,7 @@ public class TandemBluetoothHandler {
                     TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
         }
 
-        private int reconnectDelay = 2500;
+        private int reconnectDelay = 250;
 
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
