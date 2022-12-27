@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         fetchHistoryLogsButton = findViewById(R.id.fetch_history_logs);
         recentHistoryLogsButton = findViewById(R.id.recent_history_logs);
         bolusButton = findViewById(R.id.bolusButton);
+        bolusButton.setEnabled(false);
 
         basicLinearLayout = findViewById(R.id.basicLinearLayout);
         advancedLinearLayout = findViewById(R.id.advancedLinearLayout);
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getBoolean("firstrun", true)) {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("HEALTH AND SAFETY WARNING")
-                    .setMessage("This application is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.\n\n" +
+                    .setMessage("The PumpX2 sample application is deprecated. Please use https://github.com/jwoglom/wearx2 instead.\n\nThis application is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.\n\n" +
                             "There is NO WARRANTY IMPLIED OR EXPRESSED DUE TO USE OF THIS SOFTWARE. YOU ASSUME ALL RISK FOR ANY MALFUNCTIONS, BUGS, OR INSULIN DELIVERY ACTIONS.")
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int i) {
