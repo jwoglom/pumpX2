@@ -50,5 +50,9 @@ public class RemoteBgEntryResponse extends Message {
     public int getStatus() {
         return status;
     }
+
+    public boolean isSuccess() {
+        return status == 0;
+    }
     
 }

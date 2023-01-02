@@ -6,8 +6,10 @@ import java.time.Instant;
 import java.time.temporal.TemporalAdjuster;
 
 public class Dates {
+    public static final long JANUARY_1_2008_UNIX_EPOCH = 1199145600;
+
     public static long fromJan12008ToUnixEpochSeconds(long seconds) {
-        return seconds + 1199145600;
+        return seconds + JANUARY_1_2008_UNIX_EPOCH;
     }
 
     public static Instant fromJan12008EpochSecondsToDate(long seconds) {

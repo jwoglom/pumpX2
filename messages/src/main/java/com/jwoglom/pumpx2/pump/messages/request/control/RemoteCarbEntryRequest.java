@@ -6,21 +6,24 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 
 /**
  * Saves the entered carbs as a history log entry which populates it in the pump's graph.
  * If not called, then the bolus appears in the mobile app / t:connect without the carb amount.
  *
- * pumpTime is the ACTUAL pump time seconds since boot, not the timesincereset EPOCH value which is
- * used for signing messages.
+ * pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse
+ * via {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}
  *
- * called before InitiateBolusRequest
+ * This should be called before {@link InitiateBolusRequest}
  */
 @MessageProps(
     opCode=-14,
-    size=9,
+    size=9, // 33 with 24 byte padding
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     response=RemoteCarbEntryResponse.class,
@@ -35,11 +38,20 @@ public class RemoteCarbEntryRequest extends Message {
 
     public RemoteCarbEntryRequest() {}
 
+    /**
+     * Creates a request to affix information on the given number of carbs (in grams) to the
+     * bolus ID (which must be in progress; in a state between calling {@link BolusPermissionRequest}
+     * and {@link InitiateBolusRequest})
+     * @param carbs the number of carbs in grams
+     * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}
+     * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}
+     */
     public RemoteCarbEntryRequest(int carbs, long pumpTimeSecondsSinceBoot, int bolusId) {
         this(carbs, 1, pumpTimeSecondsSinceBoot, bolusId);
     }
 
     public RemoteCarbEntryRequest(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {
+        Preconditions.checkArgument(pumpTimeSecondsSinceBoot < Dates.JANUARY_1_2008_UNIX_EPOCH, "pumpTimeSecondsSinceBoot ("+pumpTimeSecondsSinceBoot+") should be seconds since boot; a unix epoch was provided instead");
         this.cargo = buildCargo(carbs, unknown, pumpTimeSecondsSinceBoot, bolusId);
         this.carbs = carbs;
         this.unknown = unknown; // from examples, always 1
@@ -47,11 +59,11 @@ public class RemoteCarbEntryRequest extends Message {
         this.bolusId = bolusId;
     }
 
-    public static byte[] buildCargo(int carbs, int unknown, long pumpTime, int bolusId) {
+    public static byte[] buildCargo(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {
         return Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(carbs),
                 new byte[]{(byte) unknown},
-                Bytes.toUint32(pumpTime),
+                Bytes.toUint32(pumpTimeSecondsSinceBoot),
                 Bytes.firstTwoBytesLittleEndian(bolusId)
         );
     }
