@@ -2,6 +2,8 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
+import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
+import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
@@ -82,5 +84,9 @@ public abstract class HistoryLog {
         byte[] ret = new byte[26];
         System.arraycopy(cargo, 0, ret, 0, cargo.length);
         return ret;
+    }
+
+    public HistoryLogProps props() {
+        return getClass().getAnnotation(HistoryLogProps.class);
     }
 }
