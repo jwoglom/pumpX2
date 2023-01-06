@@ -404,7 +404,7 @@ public class TandemBluetoothHandler {
                 } catch (UnexpectedOpCodeException e) {
                     Timber.d("Unexpected opcode %d, expected %d for txId=%d: ignoring queue (which contained: %s): %s", e.foundOpcode, requestMessage.getResponseOpCode(), txId, requestMessage, e.toString());
 
-                    if (PumpState.tconnectAppAlreadyAuthenticated) {
+                    if (PumpState.tconnectAppConnectionSharing || PumpState.tconnectAppAlreadyAuthenticated) {
                         Timber.d("Message likely sent by tconnect app (UnexpectedOpCodeException): %s", BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
                         if (Packetize.txId.get() < 1 + txId) {
                             Timber.i("updating txId from %d to %d", Packetize.txId.get(), 1 + txId);
@@ -415,8 +415,9 @@ public class TandemBluetoothHandler {
                             Timber.d("global txId=%d but self-assumed next txId+1=%d, so not incrementing", Packetize.txId.get(), 1 + txId);
                         }
                     } else {
-                        // Throw the exception if we haven't detected another actor, since this is likely our fault
-                        throw e;
+                        // Raise the exception if we haven't detected another actor, since this is likely our fault
+                        Timber.e(e, "Raised UnexpectedOpCodeException without connection sharing enabled");
+                        tandemPump.onPumpCriticalError(peripheral, TandemError.UNEXPECTED_OPCODE_REPLY);
                     }
 
                     return;

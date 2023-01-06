@@ -9,6 +9,7 @@ public enum TandemError {
     CONNECTION_UPDATE_FAILED("Updating connection"),
     BT_CONNECTION_FAILED("Bluetooth connection failed"),
     UNEXPECTED_TRANSACTION_ID("Unexpected transaction ID"),
+    UNEXPECTED_OPCODE_REPLY("Unexpected opcode reply"),
     SET_MTU_FAILED("Set MTU"),
     ERROR_RESPONSE("Error response from pump"),
     INVALID_SIGNED_HMAC_SIGNATURE("Invalid signed HMAC signature"),
