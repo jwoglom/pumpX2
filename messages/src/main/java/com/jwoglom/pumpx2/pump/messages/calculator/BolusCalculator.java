@@ -168,7 +168,10 @@ public class BolusCalculator {
                     total += addedFromBG.getUnits() + addedFromIOB.getUnits();
                 }
             } else { // correction + iob takes the insulin amount negative
-                if (shouldApply(ignored, conditions, BolusCalcCondition.SET_ZERO_INSULIN)) {
+                if (addedFromCarbs.getUnits() == 0) {
+                    // zero carbs, so don't apply condition
+                    total = 0.0;
+                } else if (shouldApply(ignored, conditions, BolusCalcCondition.SET_ZERO_INSULIN)) {
                     total = 0.0;
                 }
             }
