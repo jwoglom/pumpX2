@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Contains logic for deciding an estimated bolus amount given inputs and current pump/CGM status.
@@ -124,12 +125,14 @@ public class BolusCalculator {
      * @return a {@link BolusCalcDecision} including the total generated insulin amount, the amounts
      * for the individual {@link BolusCalcComponent}s, and the conditions which resulted in this calculation.
      */
-    public BolusCalcDecision parse() {
+    public BolusCalcDecision parse(BolusCalcCondition ...ignoredConditions) {
         if (userInputParameters.units != null) {
             return new BolusCalcDecision(
                     BolusCalcUnits.fromUser(userInputParameters.units),
                     ImmutableSet.of(new BolusCalcCondition.DataDecision("using user-provided insulin amount")));
         }
+
+        Set<BolusCalcCondition> ignored = Arrays.stream(ignoredConditions).collect(Collectors.toSet());
 
         Set<BolusCalcCondition> conditions = new HashSet<>();
 
@@ -153,18 +156,21 @@ public class BolusCalculator {
                 // do nothing
             } else {
                 // correction + iob adds a positive delta to the insulin
-                conditions.add(BolusCalcCondition.POSITIVE_BG_CORRECTION);
-                total += addedFromBG.getUnits() + addedFromIOB.getUnits();
+                if (shouldApply(ignored, conditions, BolusCalcCondition.POSITIVE_BG_CORRECTION)) {
+                    total += addedFromBG.getUnits() + addedFromIOB.getUnits();
+                }
             }
         } else { // below target
             if (addedFromBG.getUnits() + addedFromIOB.getUnits() == 0) {
                 // do nothing
             } else if (total + addedFromBG.getUnits() + addedFromIOB.getUnits() > 0) { // correction + iob is less than the carb amount
-                conditions.add(BolusCalcCondition.NEGATIVE_BG_CORRECTION);
-                total += addedFromBG.getUnits() + addedFromIOB.getUnits();
+                if (shouldApply(ignored, conditions, BolusCalcCondition.NEGATIVE_BG_CORRECTION)) {
+                    total += addedFromBG.getUnits() + addedFromIOB.getUnits();
+                }
             } else { // correction + iob takes the insulin amount negative
-                total = 0.0;
-                conditions.add(BolusCalcCondition.SET_ZERO_INSULIN);
+                if (shouldApply(ignored, conditions, BolusCalcCondition.SET_ZERO_INSULIN)) {
+                    total = 0.0;
+                }
             }
         }
 
@@ -185,6 +191,16 @@ public class BolusCalculator {
         }
 
         return new BolusCalcDecision(bolusCalcUnits, conditions);
+    }
+
+    private boolean shouldApply(Set<BolusCalcCondition> ignored, Set<BolusCalcCondition> conditions, BolusCalcCondition condition) {
+        if (ignored.contains(condition)) {
+            conditions.add(new BolusCalcCondition.IgnoredDecision(condition));
+            return false;
+        } else {
+            conditions.add(condition);
+            return true;
+        }
     }
 
     /**

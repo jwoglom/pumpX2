@@ -3,10 +3,10 @@ package com.jwoglom.pumpx2.pump.messages.calculator;
 import java.util.Objects;
 
 public interface BolusCalcCondition {
-    public static final BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target");
-    public static final BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new NonActionDecision("Adding positive BG correction", "active IOB is greater than correction bolus while above target");
-    public static final BolusCalcCondition SET_ZERO_INSULIN = new NonActionDecision("Setting zero insulin", "negative correction greater than carb amount");
-    public static final BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("Adding negative BG correction", "below BG target");
+    BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target");
+    BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new NonActionDecision("Not adding positive BG correction", "active IOB is greater than correction bolus while above target");
+    BolusCalcCondition SET_ZERO_INSULIN = new Decision("Setting zero insulin", "negative correction greater than carb amount");
+    BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("Adding negative BG correction", "below BG target");
 
     class FailedPrecondition extends Condition implements BolusCalcCondition {
         public final String reason;
@@ -61,12 +61,14 @@ public interface BolusCalcCondition {
     }
 
     class NonActionDecision extends Decision implements BolusCalcCondition {
-        NonActionDecision(String decision) {
-            super(decision);
-        }
-
         NonActionDecision(String decision, String reason) {
             super(decision, reason);
+        }
+    }
+
+    class IgnoredDecision extends Decision implements BolusCalcCondition {
+        IgnoredDecision(BolusCalcCondition decision) {
+            super("Ignoring '" + decision.getMsg() + "'", "ignored by user");
         }
     }
 
