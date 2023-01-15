@@ -390,7 +390,6 @@ public class TandemBluetoothHandler {
                     Timber.w(e, "Unexpected transaction id in '%s': %s", Hex.encodeHexString(parser.getValue()), BTResponseParser.parseBestEffortForLogging(value, characteristicUUID));
                     if (txId == 0 && e.foundTxId > 0) {
                         Timber.i("Ignoring txId %d since current txId is 0", e.foundTxId);
-                        return;
 //                        Timber.i("Setting txId from %d to %d, since initial txId was not 0", txId, e.foundTxId);
 //                        Packetize.txId.set(e.foundTxId);
 //                        Timber.i("Re-evaluating message with expected txId");
@@ -399,8 +398,9 @@ public class TandemBluetoothHandler {
                     } else {
                         tandemPump.onPumpCriticalError(peripheral,
                                 TandemError.UNEXPECTED_TRANSACTION_ID.withExtra("found TxID: " + e.foundTxId + ", expecting: " + txId));
-                        throw e;
+                        Timber.e(e, "Raised UnexpectedTransactionIdException");
                     }
+                    return;
                 } catch (UnexpectedOpCodeException e) {
                     Timber.d("Unexpected opcode %d, expected %d for txId=%d: ignoring queue (which contained: %s): %s", e.foundOpcode, requestMessage.getResponseOpCode(), txId, requestMessage, e.toString());
 
