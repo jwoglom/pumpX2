@@ -33,6 +33,8 @@ public class CharacteristicUUID {
     // Generic Bluetooth characteristics
     public static final UUID MANUFACTURER_NAME_CHARACTERISTIC_UUID = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
     public static final UUID MODEL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
+    public static final UUID SERIAL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A25-0000-1000-8000-00805f9b34fb");
+    public static final UUID SOFTWARE_REV_CHARACTERISTIC_UUID = UUID.fromString("00002A28-0000-1000-8000-00805f9b34fb");
 
     public static final List<UUID> ENABLED_NOTIFICATIONS = ImmutableList.of(
             CURRENT_STATUS_CHARACTERISTICS,
@@ -44,7 +46,7 @@ public class CharacteristicUUID {
             CONTROL_CHARACTERISTICS,
             CONTROL_STREAM_CHARACTERISTICS
 
-            // The pump doesn't respond to a request for notification on these UUIDs
+            // These UUIDs are on a different Bluetooth service than PUMP_SERVICE_UUID
             // SERVICE_CHANGED_CHARACTERISTICS,
             // NOTIFICATION_CCCD
     );

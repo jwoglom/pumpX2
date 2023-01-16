@@ -39,14 +39,18 @@ public class BTResponseParser {
                 byte b4 = packetArrayList.opCode();
                 L.d(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
-                L.d(TAG, "Parsed message: " + msg);
+                if (msg == null) {
+                    L.i(TAG, "PARSED-MESSAGE-FAILURE(" + CharacteristicUUID.which(uuid) + ", " + b4 + ", " + message.signed() + "): " + Hex.encodeHexString(copyOfRange));
+                } else {
+                    L.i(TAG, "PARSED-MESSAGE(" + CharacteristicUUID.which(uuid) + "): " + msg);
+                }
 
                 return new PumpResponseMessage(output, msg);
             } else {
                 L.d(TAG, "PacketArrayList could not validate");
             }
         } else {
-            L.d(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
+            L.i(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
             return new PumpResponseMessage(output);
         }
 

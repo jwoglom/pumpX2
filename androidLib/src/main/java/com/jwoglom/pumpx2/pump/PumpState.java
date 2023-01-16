@@ -188,6 +188,12 @@ public class PumpState {
     public static boolean tconnectAppConnectionSharingIgnoreInitialFailingWrite = false;
 
     /**
+     * When enabled, any requests attempted to be sent to the pump via PumpX2 will be BLOCKED, and
+     * instead the library will just listen silently to all BT characteristic reads which occur.
+     */
+    public static boolean onlySnoopBluetooth = false;
+
+    /**
      * Incremented each time during this connection to the pump that a response message has been
      * received. Checked to avoid race conditions with t:connect app connection sharing.
      */

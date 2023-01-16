@@ -80,6 +80,11 @@ public abstract class TandemPump {
      * @param message a request message from {@link com.jwoglom.pumpx2.pump.messages.request}
      */
     public synchronized void sendCommand(BluetoothPeripheral peripheral, Message message) {
+        if (PumpState.onlySnoopBluetooth) {
+            Timber.d("TandemPump: onlySnoopBluetooth blocked SendCommand(" + message + ")");
+            return;
+        }
+
         Timber.i("TandemPump: sendCommand(" + message + ")");
         ArrayList<byte[]> bytes = new ArrayList<>();
         byte currentTxId = Packetize.txId.get();
@@ -269,5 +274,13 @@ public abstract class TandemPump {
      */
     public final void relyOnConnectionSharingForAuthentication() {
         PumpState.relyOnConnectionSharingForAuthentication = true;
+    }
+
+    /**
+     * When enabled, any requests attempted to be sent to the pump via PumpX2 will be BLOCKED, and
+     * instead the library will just listen silently to all BT characteristic reads which occur.
+     */
+    public final void onlySnoopBluetoothAndBlockAllPumpX2Functionality() {
+        PumpState.onlySnoopBluetooth = true;
     }
 }
