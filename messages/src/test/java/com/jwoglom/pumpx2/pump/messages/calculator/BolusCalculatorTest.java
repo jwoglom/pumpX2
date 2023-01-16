@@ -68,7 +68,7 @@ public class BolusCalculatorTest {
 
     @Test
     public void testCorrectionToZeroNoCarbsBelowTargetWithHighIOB() {
-        expect(null, 105, 6.09, 0, new BolusCalcUnits(0, 0, -0.17, -6.09), FILL_BG_FROM_CGM, SET_ZERO_INSULIN);
+        expect(null, 105, 6.09, 0, new BolusCalcUnits(0, 0, -0.17, -6.09), FILL_BG_FROM_CGM); // SET_ZERO_INSULIN_ZERO_CARBS
         expect(null, 105, 6.09, 10, new BolusCalcUnits(0, 1.67, -0.17, -6.09), FILL_BG_FROM_CGM, SET_ZERO_INSULIN);
         expect(null, 110, 9.17, 0, new BolusCalcUnits(0.0, 0.0, 0.0, -9.17), FILL_BG_FROM_CGM, NO_POSITIVE_BG_CORRECTION);
         expect(null, 100, 9.17, 5, new BolusCalcUnits(0.0, 0.83, -0.33, -9.17), FILL_BG_FROM_CGM, SET_ZERO_INSULIN);
@@ -98,7 +98,7 @@ public class BolusCalculatorTest {
 
     @Test
     public void testSetZeroInsulinWhenBelowBGTargetWithLowCarbAmount() {
-        expect(null, 108, 7.45, 0, new BolusCalcUnits(0.0, 0, -0.07, -7.45), FILL_BG_FROM_CGM, SET_ZERO_INSULIN);
+        expect(null, 108, 7.45, 0, new BolusCalcUnits(0.0, 0, -0.07, -7.45), FILL_BG_FROM_CGM); // SET_ZERO_INSULIN_ZERO_CARBS
         expect(null, 108, 7.45, 20, new BolusCalcUnits(0, 3.33, -0.07, -7.45), FILL_BG_FROM_CGM, SET_ZERO_INSULIN);
         expect(83, 108, 7.45, 50, new BolusCalcUnits(0.0, 8.33, -0.9, -7.45), FILL_BG_FROM_INPUT, SET_ZERO_INSULIN);
         expect(80, 108, 7.45, 50, new BolusCalcUnits(0.0, 8.33, -1.0, -7.45), FILL_BG_FROM_INPUT, SET_ZERO_INSULIN);
