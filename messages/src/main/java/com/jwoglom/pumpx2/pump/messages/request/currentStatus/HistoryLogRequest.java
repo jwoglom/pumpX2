@@ -7,10 +7,6 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
 
-/**
- * TODO: the processing inside BTResponseParser for the responding HistoryLogStreamResponse
- * only supports a numberOfLogs of 1
- */
 @MessageProps(
     opCode=60,
     size=5,
