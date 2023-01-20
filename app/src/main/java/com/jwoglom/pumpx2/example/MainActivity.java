@@ -213,9 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initStatusText() {
         String[] waitingStatusTexts = new String[]{
-                "Looking for Bluetooth devices...",
-                "Looking for Bluetooth devices...\n\n\nTurn on your pump and make sure Mobile Connection is enabled within Options > Device Settings > Bluetooth Settings.",
-                "Looking for Bluetooth devices...\n\n\nTurn on your pump and make sure Mobile Connection is enabled within Options > Device Settings > Bluetooth Settings.\n\nToggle the setting if the device still won't connect."
+                "THIS APPLICATION IS DEPRECATED. Please use https://github.com/jwoglom/wearx2 instead."
         };
         statusText.setText(waitingStatusTexts[0]);
         handler.postDelayed(new Runnable() {
