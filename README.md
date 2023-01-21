@@ -6,15 +6,14 @@
 
 # PumpX2
 
-Reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
+API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
 
-> :warning: **This project is still in heavy testing and development. For safety reasons, please do NOT use on anything but a backup pump or one not connected to active insulin delivery.**
+> :warning: **This project is experimental.**
 
-Currently functions as a basic Android application which pairs to the pump
-and allows sending read-only message requests and receiving responses about
-the pump's status and history. An Android library is exported which can be used
-by other projects to interface with the pump, as well as a generic Java library for
-parsing messages which has no Android-specific dependencies.
+An Android library is exported which can be used by other projects to interface with the pump,
+as well as a generic Java library for parsing messages which has no Android-specific dependencies.
+
+**[If you're looking for an application to connect to your pump, see ControlX2.](https://github.com/jwoglom/controlX2)**
 
 [View supported request/response/history log messages][sheet]
 
@@ -41,9 +40,12 @@ parsing messages which has no Android-specific dependencies.
 [discord]: https://discord.gg/4fQUWHZ4Mw
 
 
-## Setup
+## Setup (for developers)
 
-* Download the most recent debug APK from the Actions tab in GitHub
+**This process should only be followed for developers who want to experiment with the API that PumpX2 provides.**
+If you're not a developer, [see ControlX2.](https://github.com/jwoglom/controlX2)
+
+* Download the most recent debug APK from the Actions tab in GitHub of the sample application.
 * `adb install` to your device
 * Disconnect from any tslim Bluetooth devices on your phone
 * If you have the official t:connect app, **force quit or log out** to avoid conflicts between the two applications. After pairing with pumpX2, you will need to log out and re-pair with the official Tandem app.

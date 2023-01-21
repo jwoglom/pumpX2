@@ -31,14 +31,14 @@ jobs:
     - name: Upload debug APK
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: app-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        name: sampleapp-debug.apk
+        path: sampleapp/build/outputs/apk/debug/sampleapp-debug.apk
 
     - name: Upload release (unsigned) APK
       uses: actions/upload-artifact@v3.1.0
       with:
-        name: app-release-unsigned.apk
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
+        name: sampleapp-release-unsigned.apk
+        path: sampleapp/build/outputs/apk/release/sampleapp-release-unsigned.apk
 
     - name: Publish artifacts with Gradle
       run: ./gradlew publishToMavenLocal
