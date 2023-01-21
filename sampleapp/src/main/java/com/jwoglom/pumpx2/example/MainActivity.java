@@ -33,6 +33,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -194,26 +195,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        firstRunMessages();
-
-        if (getBluetoothManager().getAdapter() != null) {
-            if (!isBluetoothEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+        new AlertDialog.Builder(this)
+            .setTitle("This application is deprecated")
+            .setMessage("THIS SAMPLE APPLICATION IS DEPRECATED. Please use https://github.com/jwoglom/controlx2 instead.")
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/jwoglom/controlx2"));
+                    startActivity(browserIntent);
                 }
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            } else {
-                checkPermissions();
-            }
-        } else {
-            Timber.e("This device has no Bluetooth hardware");
-        }
+            })
+            .setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    firstRunMessages();
+
+                    if (getBluetoothManager().getAdapter() != null) {
+                        if (!isBluetoothEnabled()) {
+                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                            }
+                            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                        } else {
+                            checkPermissions();
+                        }
+                    } else {
+                        Timber.e("This device has no Bluetooth hardware");
+                    }
+                }
+            }).show();
     }
 
     private void initStatusText() {
         String[] waitingStatusTexts = new String[]{
-                "THIS APPLICATION IS DEPRECATED. Please use https://github.com/jwoglom/wearx2 instead."
+                "THIS SAMPLE APPLICATION IS DEPRECATED. Please use https://github.com/jwoglom/controlx2 instead."
         };
         statusText.setText(waitingStatusTexts[0]);
         handler.postDelayed(new Runnable() {
@@ -262,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         if (prefs.getBoolean("firstrun", true)) {
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("HEALTH AND SAFETY WARNING")
-                    .setMessage("The PumpX2 sample application is deprecated. Please use https://github.com/jwoglom/wearx2 instead.\n\nThis application is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.\n\n" +
+                    .setMessage("The PumpX2 sample application is deprecated. Please use https://github.com/jwoglom/controlx2 instead.\n\nThis application is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.\n\n" +
                             "There is NO WARRANTY IMPLIED OR EXPRESSED DUE TO USE OF THIS SOFTWARE. YOU ASSUME ALL RISK FOR ANY MALFUNCTIONS, BUGS, OR INSULIN DELIVERY ACTIONS.")
                     .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int i) {
