@@ -91,9 +91,9 @@ And then reference these dependencies in your module's `build.gradle`:
 ```
 dependencies {
     [...]
-    implementation "com.jwoglom.pumpX2:pumpx2-android:v${project.pumpx2_version}"
-    implementation "com.jwoglom.pumpX2:pumpx2-messages:v${project.pumpx2_version}"
-    implementation "com.jwoglom.pumpX2:pumpx2-shared:v${project.pumpx2_version}"
+    implementation "com.github.jwoglom.pumpX2:pumpx2-android:v${project.pumpx2_version}"
+    implementation "com.github.jwoglom.pumpX2:pumpx2-messages:v${project.pumpx2_version}"
+    implementation "com.github.jwoglom.pumpX2:pumpx2-shared:v${project.pumpx2_version}"
 }
 ```
 
