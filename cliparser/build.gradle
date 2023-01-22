@@ -20,9 +20,33 @@ java {
 publishing {
     publications {
         "$project.name"(MavenPublication) {
-            artifactId "pumpx2-cliparser" // the full group name is already inferred for non-Android Java projects
+            artifactId "pumpx2-cliparser"
+            groupId rootProject.group
             version rootProject.version
             from components.java
+        }
+        pom {
+            name = "PumpX2 CLIParser"
+            description = "A sample CLI tool which uses the PumpX2 Java library to parse and decode t:slim X2 insulin pump message byte streams."
+            url = "https://github.com/jwoglom/pumpX2"
+            licenses {
+                license {
+                    name = "The MIT License (MIT)"
+                    url = "http://opensource.org/licenses/MIT"
+                }
+            }
+            developers {
+                developer {
+                    id = "jwoglom"
+                    name = "James Woglom"
+                    email = "j@wogloms.net"
+                }
+            }
+            scm {
+                connection = "scm:git:git@github.com:jwoglom/pumpX2.git"
+                developerConnection = "scm:git:git@github.com:jwoglom/pumpX2.git"
+                url = "scm:git:git@github.com:jwoglom/pumpX2.git"
+            }
         }
     }
 }

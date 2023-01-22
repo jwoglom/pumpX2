@@ -10,7 +10,10 @@ plugins {
 }
 
 group = "com.jwoglom.pumpx2"
-version = "1.2.7"
+version = "1.2.8"
+if (!project.hasProperty('buildRelease')) {
+    version += "-SNAPSHOT";
+}
 
 java {
     //withJavadocJar()
@@ -19,77 +22,31 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
-def hasSigningKey = project.hasProperty("signingKeyId") || project.hasProperty("signingKey")
-if(hasSigningKey) {
-    sign(project)
-}
-void sign(Project project) {
-    project.signing {
-        required { project.gradle.taskGraph.hasTask("required") }
-        def signingKeyId = project.findProperty("signingKeyId")
-        def signingKey = project.findProperty("signingKey")
-        def signingPassword = project.findProperty("signingPassword")
-        if (signingKeyId) {
-            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
-        } else if (signingKey) {
-            useInMemoryPgpKeys(signingKey, signingPassword)
-        }
-        sign publishing.publications.maven
-        sign configurations.archives
-    }
-}
-
-project.plugins.withType(MavenPublishPlugin).all {
-    PublishingExtension publishing = project.extensions.getByType(PublishingExtension)
-    publishing.publications.withType(MavenPublication).all { mavenPublication ->
-        mavenPublication.pom {
-            name = "${project.group}:${project.name}"
-            description = name
-            url = "https://github.com/jwoglom/pumpx2"
-            licenses {
-                license {
-                    name = "The Apache License, Version 2.0"
-                    url = "https://www.apache.org/licenses/LICENSE-2.0"
-                }
-            }
-            developers {
-                developer {
-                    id = "jwoglom"
-                    name = "James Woglom"
-                    email = "j@wogloms.net"
-                }
-            }
-            scm {
-                connection = "scm:git:https://github.com/jwoglom/pumpx2"
-                developerConnection = "scm:git:ssh://github.com/jwoglom/pumpx2.git"
-                url = "https://github.com/jwoglom/pumpx2"
-            }
-        }
-    }
-}
-
-nexusPublishing {
-    repositories {
-        //sonatypeUsername and sonatypePassword properties are used automatically
-         sonatype {
-        	    nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-        	    snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-         }
-    }
-    // these are not strictly required. The default timeouts are set to 1 minute. But Sonatype can be really slow.
-    // If you get the error "java.net.SocketTimeoutException: timeout", these lines will help.
-    connectTimeout = Duration.ofMinutes(3)
-    clientTimeout = Duration.ofMinutes(3)
+subprojects {
+    apply plugin: "maven-publish"
 }
 
 publishing {
     repositories {
         maven {
             name = "local"
-            // change URLs to point to your repos, e.g. http://my.org/repo
             def releasesRepoUrl = "$buildDir/repos/releases"
             def snapshotsRepoUrl = "$buildDir/repos/snapshots"
             url = version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
+}
+subprojects {
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/jwoglom/pumpx2")
+                credentials {
+                    username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+                }
+            }
         }
     }
 }

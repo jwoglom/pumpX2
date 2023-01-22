@@ -53,8 +53,34 @@ publishing {
     publications {
         "$project.name"(MavenPublication) {
             artifactId "pumpx2-android"
+            groupId rootProject.group
+            version rootProject.version
             afterEvaluate {
                 from components.release
+            }
+
+            pom {
+                name = "PumpX2 Android"
+                description = "An Android library for interfacing with the Tandem t:slim X2 insulin pump."
+                url = "https://github.com/jwoglom/pumpX2"
+                licenses {
+                    license {
+                        name = "The MIT License (MIT)"
+                        url = "http://opensource.org/licenses/MIT"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "jwoglom"
+                        name = "James Woglom"
+                        email = "j@wogloms.net"
+                    }
+                }
+                scm {
+                    connection = "scm:git:git@github.com:jwoglom/pumpX2.git"
+                    developerConnection = "scm:git:git@github.com:jwoglom/pumpX2.git"
+                    url = "scm:git:git@github.com:jwoglom/pumpX2.git"
+                }
             }
         }
     }
