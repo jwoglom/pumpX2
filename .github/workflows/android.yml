@@ -22,8 +22,12 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+
+    - uses: burrunan/gradle-cache-action@v1
+      name: Build with Gradle
+      with:
+        job-id: android
+        arguments: build
     - name: List Files
       run: find .
 
@@ -40,8 +44,11 @@ jobs:
         name: sampleapp-release-unsigned.apk
         path: sampleapp/build/outputs/apk/release/sampleapp-release-unsigned.apk
 
-    - name: Publish artifacts with Gradle
-      run: ./gradlew publishToMavenLocal
+    - uses: burrunan/gradle-cache-action@v1
+      name: Publish local artifacts with Gradle
+      with:
+        job-id: android
+        arguments: publishToMavenLocal
 
     - name: List Files in m2
       run: find ~/.m2
@@ -95,8 +102,12 @@ jobs:
         path: |
           ~/.m2/repository/
 
-    - name: Unit Test
-      run: ./gradlew testDebugUnitTest
+
+    - uses: burrunan/gradle-cache-action@v1
+      name: Unit Test
+      with:
+        job-id: android
+        arguments: testDebugUnitTest
 
     - name: Android Test Report
       uses: asadmansr/android-test-report-action@v1.2.0
@@ -105,9 +116,11 @@ jobs:
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
-    - name: Run Gradle Publish (Snapshot)
+    - uses: burrunan/gradle-cache-action@v1
+      name: Run Gradle Publish (Snapshot)
       env:
         USERNAME: ${{ secrets.USERNAME }}
         TOKEN: ${{ secrets.TOKEN }}
-      run: |
-        ./gradlew publishAllPublicationsToGitHubPackagesRepository
+      with:
+        job-id: android
+        arguments: publishAllPublicationsToGitHubPackagesRepository
