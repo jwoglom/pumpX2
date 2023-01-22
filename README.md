@@ -59,6 +59,60 @@ You may need to re-open the app, clear app data, and/or unpair and re-pair the d
 
 <img src="https://user-images.githubusercontent.com/192620/176375500-29a0d093-18bc-4cf6-b4d9-6ab1dd004d43.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375589-578c6bb6-e993-4087-8f06-0d38d6edf989.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375806-85950622-b6d9-44e5-8374-8f45c9268fa5.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375930-1750cae6-0d31-4104-8c1b-f9a67d711c59.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375889-577f30cf-e39a-4251-a2de-5b8581eb4650.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375967-eaea7b4a-e265-4d81-83b6-9cbd93d0fbcf.png" width="300" />
 
+### Maven Packages
+
+**For an Android project,** load the following Maven packages [from JitPack](https://jitpack.io):
+
+* `com.github.jwoglom.pumpX2:pumpx2-android`
+* `com.github.jwoglom.pumpX2:pumpx2-messages`
+* `com.github.jwoglom.pumpX2:pumpx2-shared`
+
+For example, using Gradle, first add the JitPack repositories to your root project `settings.gradle`:
+```
+pluginManagement {
+    repositories {
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+}
+```
+
+Add a reference to the PumpX2 version in your root project `build.gradle`:
+```
+buildscript {
+    ext {
+        pumpx2_version = "x.x.x"
+    }
+}
+```
+
+And then reference these dependencies in your module's `build.gradle`:
+```
+dependencies {
+    [...]
+    implementation "com.jwoglom.pumpX2:pumpx2-android:v${project.pumpx2_version}"
+    implementation "com.jwoglom.pumpX2:pumpx2-messages:v${project.pumpx2_version}"
+    implementation "com.jwoglom.pumpX2:pumpx2-shared:v${project.pumpx2_version}"
+}
+```
+
+Then, to use PumpX2, subclass [the `com.jwoglom.pumpx2.pump.bluetooth.TandemPump` class](https://github.com/jwoglom/pumpX2/blob/main/androidLib/src/main/java/com/jwoglom/pumpx2/pump/bluetooth/TandemPump.java),
+and initialize the library with:
+
+```
+TandemPump tandemPump = new SubclassedTandemPump(getApplicationContext());
+TandemBluetoothHandler bluetoothHandler = TandemBluetoothHandler.getInstance(getApplicationContext(), tandemPump);
+```
+
+**For a Java (non-Android) project,** load the following Maven packages:
+
+* `com.github.jwoglom.pumpX2:pumpx2-messages`
+* `com.github.jwoglom.pumpX2:pumpx2-shared`
+
+Look at [the `cliparser` Gradle module](https://github.com/jwoglom/pumpX2/blob/main/cliparser/src/main/java/com/jwoglom/pumpx2/cliparser/Main.java)
+for an example of how to use the library.
+
 
 ### Build Instructions
 
