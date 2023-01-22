@@ -59,7 +59,8 @@ You may need to re-open the app, clear app data, and/or unpair and re-pair the d
 
 <img src="https://user-images.githubusercontent.com/192620/176375500-29a0d093-18bc-4cf6-b4d9-6ab1dd004d43.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375589-578c6bb6-e993-4087-8f06-0d38d6edf989.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375806-85950622-b6d9-44e5-8374-8f45c9268fa5.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375930-1750cae6-0d31-4104-8c1b-f9a67d711c59.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375889-577f30cf-e39a-4251-a2de-5b8581eb4650.png" width="300" /><img src="https://user-images.githubusercontent.com/192620/176375967-eaea7b4a-e265-4d81-83b6-9cbd93d0fbcf.png" width="300" />
 
-## Build Instructions
+
+### Build Instructions
 
 To build the project, generating AAR (Android library) and JAR (Java library/executable) files:
 ```
@@ -68,7 +69,7 @@ To build the project, generating AAR (Android library) and JAR (Java library/exe
 ```
 
 The generated files will be created in `~/.m2/repository/com/jwoglom/pumpx2/`.
-You can alternatively download the most recent versions from the "Android CI" Github Action.
+You can alternatively download from Github Packages, or use the most recent versions from the "Android CI" Github Action. 
 
 To integrate the PumpX2 Android library into your project, import the following dependencies into your project:
 
