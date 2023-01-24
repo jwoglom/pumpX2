@@ -157,7 +157,11 @@ public class TandemBluetoothHandler {
 
             // Try to turn on notifications for other characteristics
             CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
-                peripheral.setNotify(ServiceUUID.PUMP_SERVICE_UUID, uuid, true);
+                UUID serviceUUID = ServiceUUID.PUMP_SERVICE_UUID;
+                if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
+                    serviceUUID = ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
+                }
+                peripheral.setNotify(serviceUUID, uuid, true);
             });
 
             Timber.i("TandemBluetoothHandler: waiting for Bluetooth initialization callback");

@@ -27,14 +27,19 @@ public class CharacteristicUUID {
     // For signed messages
     public static final UUID CONTROL_CHARACTERISTICS = UUID.fromString("7B83FFFC-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID CONTROL_STREAM_CHARACTERISTICS = UUID.fromString("7B83FFFD-9F77-4E5C-8064-AAE2C24838B9");
+
+    // Service Changed generic BT characteristic (on GENERIC_ATTRIBUTE_SERVICE_UUID)
     public static final UUID SERVICE_CHANGED_CHARACTERISTICS = UUID.fromString("00002A05-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem (000002A05-0000-1000-8000-00805F9B34FB)
+
+    // Client Characteristic Configuration; unused
     public static final UUID NOTIFICATION_CCCD = UUID.fromString("00002902-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem (000002902-0000-1000-8000-00805F9B34FB)
 
-    // Generic Bluetooth characteristics
+    // Generic Bluetooth characteristics (DIS_SERVICE_UUID)
     public static final UUID MANUFACTURER_NAME_CHARACTERISTIC_UUID = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
     public static final UUID MODEL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
-    public static final UUID SERIAL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002A25-0000-1000-8000-00805f9b34fb");
-    public static final UUID SOFTWARE_REV_CHARACTERISTIC_UUID = UUID.fromString("00002A28-0000-1000-8000-00805f9b34fb");
+    public static final UUID SERIAL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002a25-0000-1000-8000-00805f9b34fb");
+    public static final UUID SOFTWARE_REV_CHARACTERISTIC_UUID = UUID.fromString("00002a28-0000-1000-8000-00805f9b34fb");
+
 
     public static final List<UUID> ENABLED_NOTIFICATIONS = ImmutableList.of(
             CURRENT_STATUS_CHARACTERISTICS,
@@ -44,11 +49,10 @@ public class CharacteristicUUID {
             AUTHORIZATION_CHARACTERISTICS,
 
             CONTROL_CHARACTERISTICS,
-            CONTROL_STREAM_CHARACTERISTICS
+            CONTROL_STREAM_CHARACTERISTICS,
 
-            // These UUIDs are on a different Bluetooth service than PUMP_SERVICE_UUID
-            // SERVICE_CHANGED_CHARACTERISTICS,
-            // NOTIFICATION_CCCD
+            // NOTE: on GENERIC_ATTRIBUTE_SERVICE_UUID
+            SERVICE_CHANGED_CHARACTERISTICS
     );
 
     public static UUID determine(Message message) {
@@ -87,10 +91,16 @@ public class CharacteristicUUID {
             return "SERVICE_CHANGED";
         } else if (NOTIFICATION_CCCD.equals(uuid)) {
             return "NOTIFICATION";
+
+        // DIS_SERVICE_UUID
         } else if (MANUFACTURER_NAME_CHARACTERISTIC_UUID.equals(uuid)) {
             return "MANUFACTURER_NAME";
         } else if (MODEL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {
             return "MODEL_NUMBER";
+        } else if (SERIAL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {
+            return "SERIAL_NUMBER";
+        } else if (SOFTWARE_REV_CHARACTERISTIC_UUID.equals(uuid)) {
+            return "SOFTWARE_REV";
         }
         return "unknown (" + uuid + ")";
     }
