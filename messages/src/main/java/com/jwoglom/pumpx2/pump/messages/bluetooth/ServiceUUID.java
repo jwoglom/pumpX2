@@ -8,4 +8,14 @@ public class ServiceUUID {
 
     // Generic Bluetooth Device Information service (DIS)
     public static final UUID DIS_SERVICE_UUID = UUID.fromString("0000180A-0000-1000-8000-00805f9b34fb");
+
+    public static String which(UUID uuid) {
+        if (uuid.equals(PUMP_SERVICE_UUID)) {
+            return "PUMP_SERVICE";
+        } else if (uuid.equals(DIS_SERVICE_UUID)) {
+            return "DIS_SERVICE";
+        } else {
+            return "unknown (" + uuid + ")";
+        }
+    }
 }

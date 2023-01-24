@@ -56,6 +56,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -144,6 +145,11 @@ public class TandemBluetoothHandler {
             peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
 
             Timber.i("TandemBluetoothHandler: services discovered, configuring characteristics");
+
+            peripheral.getServices().forEach(service -> {
+                String characteristics = service.getCharacteristics().stream().map(c -> CharacteristicUUID.which(c.getUuid())).collect(Collectors.joining(", "));
+                Timber.i("Found service %s with characteristics: %s", ServiceUUID.which(service.getUuid()), characteristics);
+            });
 
             // Read manufacturer and model number from the Device Information Service
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID);
