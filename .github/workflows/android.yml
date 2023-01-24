@@ -116,11 +116,11 @@ jobs:
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
 
-    - uses: burrunan/gradle-cache-action@v1
-      name: Run Gradle Publish (Snapshot)
-      env:
-        USERNAME: ${{ secrets.USERNAME }}
-        TOKEN: ${{ secrets.TOKEN }}
-      with:
-        job-id: android
-        arguments: publishAllPublicationsToGitHubPackagesRepository
+#    - uses: burrunan/gradle-cache-action@v1
+#      name: Run Gradle Publish (Snapshot)
+#      env:
+#        USERNAME: ${{ secrets.USERNAME }}
+#        TOKEN: ${{ secrets.TOKEN }}
+#      with:
+#        job-id: android
+#        arguments: publishAllPublicationsToGitHubPackagesRepository
