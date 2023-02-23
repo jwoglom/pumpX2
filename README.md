@@ -3,19 +3,19 @@
 <img src="https://github.com/jwoglom/pumpx2/actions/workflows/android.yml/badge.svg" />
 </a>
 
-
 # PumpX2
 
 API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
 
-> :warning: **This project is experimental.**
+### :warning: Are you looking to control your pump from your phone and not a developer? You are in the wrong place.
 
-An Android library is exported which can be used by other projects to interface with the pump,
+[For an application to connect to your pump, see ControlX2.](https://github.com/jwoglom/controlX2)
+
+---
+
+PumpX2 is an Android library is exported which can be used by other projects to interface with the pump,
 as well as a generic Java library for parsing messages which has no Android-specific dependencies.
-
-**[If you're looking for an application to connect to your pump, see ControlX2.](https://github.com/jwoglom/controlX2)**
-
-[View supported request/response/history log messages][sheet]
+**This project is experimental and still under development.**
 
 [Discuss in #tslim-x2-dev on Discord][discord]
 
@@ -36,7 +36,6 @@ as well as a generic Java library for parsing messages which has no Android-spec
 * Non-bolus control features: these are not supported in current t:slim X2 firmware
 * Bolus wizard with automatic unit calculation from carbs / BG
 
-[sheet]: https://docs.google.com/spreadsheets/d/e/2PACX-1vTDnXBbJfiwVh-5PDK78RZqgI7C7ymOl-aEw5JLCV8rl7AiYZdoTwx_gBkWUZoducIxh7JXlOJJd9p6/pubhtml?gid=1917691101&single=true
 [discord]: https://discord.gg/4fQUWHZ4Mw
 
 
