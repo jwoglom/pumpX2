@@ -12,6 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,6 +86,10 @@ public class PumpState {
     }
 
     public static ApiVersion getPumpAPIVersion() {
+        if (pumpApiVersion == null) {
+            Timber.w("PumpState: Falling back on safe default for pumpApiVersion because ApiVersionResponse hasn't been received yet");
+            return KnownApiVersion.API_V2_1.get();
+        }
         return pumpApiVersion;
     }
 
