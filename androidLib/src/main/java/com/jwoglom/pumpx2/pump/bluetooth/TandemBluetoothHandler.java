@@ -139,7 +139,14 @@ public class TandemBluetoothHandler {
             // If setting the MTU returns an error, the pump is likely not accepting connections and needs to be open
             // to the pairing menu.
             // TODO: the t:connect Android app sets a higher MTU of 240 on the connection
-            peripheral.requestMtu(185);
+            int mtu = 185;
+            Timber.d("TandemBluetoothHandler: current MTU %d", peripheral.getCurrentMtu());
+            if (peripheral.getCurrentMtu() != mtu) {
+                peripheral.requestMtu(mtu);
+            } else {
+                Timber.i("TandemBluetoothHandler: skipping MTU because value is already %d", mtu);
+                remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.MTU_UPDATED);
+            }
 
             // Request a new connection priority
             peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
@@ -611,10 +618,9 @@ public class TandemBluetoothHandler {
             String name = device.getName();
             @SuppressLint("MissingPermission")
             String address = device.getAddress();
-            Timber.d("TandemBluetoothHandler: bondedDevices on adapter includes: %s (%s)", name, address);
             if (!Strings.isNullOrEmpty(name) && name.startsWith("tslim X2")) {
                 BluetoothPeripheral peripheral = central.getPeripheral(address);
-                Timber.d("TandemBluetoothHandler: '%s' appears to be a Tandem device, returning", name);
+                Timber.d("TandemBluetoothHandler: bondedDevice on adapter '%s' (%s) appears to be a Tandem device, returning", name, address);
                 return Optional.of(peripheral);
             }
         }
