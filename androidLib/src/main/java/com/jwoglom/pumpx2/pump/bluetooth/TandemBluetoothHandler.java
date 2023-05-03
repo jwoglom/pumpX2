@@ -498,15 +498,10 @@ public class TandemBluetoothHandler {
                 Timber.i("new MTU set: %d (%s)", mtu, status);
             } else if (status == GattStatus.INVALID_PDU) {
                 // INVALID_PDU means that the MTU was attempted to be set more than once.
+
                 // If we are connecting on top of the native t:connect app, which has already
                 // set its MTU, then we want to ignore this error.
-                Timber.i("MTU was already updated, likely by the t:connect app (is %d), ignoring error %s", mtu, status);
-                if (!PumpState.tconnectAppConnectionSharing) {
-                    tandemPump.onPumpCriticalError(peripheral,
-                            TandemError.SHARING_CONNECTION_WITH_TCONNECT_APP
-                                    .withCause(TandemError.SET_MTU_FAILED)
-                                    .withExtra("mtu: " + mtu + " status: " + status));
-                }
+                Timber.i("MTU was already updated, either by us or the t:connect app (is %d), ignoring error %s", mtu, status);
             } else {
                 Timber.e("MTU could not be updated (is %d), received %s. Ignoring error.", mtu, status);
 
