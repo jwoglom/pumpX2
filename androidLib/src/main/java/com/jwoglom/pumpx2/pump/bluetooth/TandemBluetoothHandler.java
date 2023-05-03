@@ -228,6 +228,19 @@ public class TandemBluetoothHandler {
                 }
 
                 tandemPump.onInitialPumpConnection(peripheral);
+
+                handler.postDelayed(() -> {
+                    if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
+                        int requestsSent = Packetize.txId.get();
+                        int repliesReceived = PumpState.processedResponseMessages;
+                        Timber.i("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
+                        if (requestsSent > 0 && repliesReceived == 0) {
+                            Timber.i("InitialPumpConnectionStuck: not getting pump replies. Disconnecting and unbonding: bondState=%s", peripheral.getBondState());
+                            peripheral.cancelConnection();
+                            central.removeBond(peripheral.getAddress());
+                        }
+                    }
+                }, 5000);
             } else if (!remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                 Timber.i("TandemBluetoothHandler: initial pump connection is waiting for: %s", remainingConnectionInitializationSteps);
             }
