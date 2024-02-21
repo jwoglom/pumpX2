@@ -52,6 +52,7 @@ public class Main {
         if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         }
+        PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
 
         String filename;
         List<String> lines;
