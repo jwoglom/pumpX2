@@ -42,7 +42,8 @@ public abstract class TandemPump {
     public final Context context;
 
     final Optional<String> filterToBluetoothMac;
-    private int appInstanceId = 0;
+    /** for KnownApiVersion.API_V3_2 and above, use instanceId=1 and not 0 */
+    private int appInstanceId = 1;
 
     public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
         this.context = context;
