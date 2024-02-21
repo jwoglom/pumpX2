@@ -19,6 +19,7 @@ import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
@@ -631,7 +632,7 @@ public class TandemBluetoothHandler {
             String name = device.getName();
             @SuppressLint("MissingPermission")
             String address = device.getAddress();
-            if (!Strings.isNullOrEmpty(name) && name.startsWith("tslim X2")) {
+            if (!Strings.isNullOrEmpty(name) && BluetoothConstants.isTandemBluetoothDevice(name)) {
                 BluetoothPeripheral peripheral = central.getPeripheral(address);
                 Timber.d("TandemBluetoothHandler: bondedDevice on adapter '%s' (%s) appears to be a Tandem device, returning", name, address);
                 return Optional.of(peripheral);
