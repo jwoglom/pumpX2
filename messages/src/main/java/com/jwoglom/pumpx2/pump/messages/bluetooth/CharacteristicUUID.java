@@ -40,6 +40,13 @@ public class CharacteristicUUID {
     public static final UUID SERIAL_NUMBER_CHARACTERISTIC_UUID = UUID.fromString("00002a25-0000-1000-8000-00805f9b34fb");
     public static final UUID SOFTWARE_REV_CHARACTERISTIC_UUID = UUID.fromString("00002a28-0000-1000-8000-00805f9b34fb");
 
+    // Generic Access Bluetooth characteristics (GENERIC_ACCESS_SERVICE)
+    public static final UUID GENERIC_ACCESS_DEVICE_NAME = UUID.fromString("00002a00-0000-1000-8000-00805f9b34fb");
+    public static final UUID GENERIC_ACCESS_APPEARANCE = UUID.fromString("00002a01-0000-1000-8000-00805f9b34fb");
+    public static final UUID GENERIC_ACCESS_PREFERRED_CONN_PARAMETERS = UUID.fromString("00002a04-0000-1000-8000-00805f9b34fb");
+    public static final UUID GENERIC_ACCESS_CENTRAL_ADDRESS_RESOLUTION = UUID.fromString("00002aa6-0000-1000-8000-00805f9b34fb");
+
+
 
     public static final List<UUID> ENABLED_NOTIFICATIONS = ImmutableList.of(
             CURRENT_STATUS_CHARACTERISTICS,
@@ -101,7 +108,18 @@ public class CharacteristicUUID {
             return "SERIAL_NUMBER";
         } else if (SOFTWARE_REV_CHARACTERISTIC_UUID.equals(uuid)) {
             return "SOFTWARE_REV";
+
+        // GENERIC_ACCESS_SERVICE
+        } else if (GENERIC_ACCESS_DEVICE_NAME.equals(uuid)) {
+            return "DEVICE_NAME";
+        } else if (GENERIC_ACCESS_APPEARANCE.equals(uuid)) {
+            return "APPEARANCE";
+        } else if (GENERIC_ACCESS_PREFERRED_CONN_PARAMETERS.equals(uuid)) {
+            return "PREFERRED_CONN_PARAMETERS";
+        } else if (GENERIC_ACCESS_CENTRAL_ADDRESS_RESOLUTION.equals(uuid)) {
+            return "CENTRAL_ADDRESS_RESOLUTION";
         }
+
         return "unknown (" + uuid + ")";
     }
 }
