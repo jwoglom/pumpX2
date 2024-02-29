@@ -38,7 +38,7 @@ public class PumpState {
     private static final String PAIRING_CODE_PREF = "pairingCode";
     public static String savedAuthenticationKey = null;
     public static void setPairingCode(Context context, String pairingCode) {
-        prefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).apply();
+        prefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).commit();
         savedAuthenticationKey = pairingCode;
     }
 
@@ -71,7 +71,7 @@ public class PumpState {
     // The most recent Bluetooth MAC of the connected pump
     private static final String SAVED_BLUETOOTH_MAC_PREF = "savedBluetoothMAC";
     public static void setSavedBluetoothMAC(Context context, String bluetoothMAC) {
-        prefs(context).edit().putString(SAVED_BLUETOOTH_MAC_PREF, bluetoothMAC).apply();
+        prefs(context).edit().putString(SAVED_BLUETOOTH_MAC_PREF, bluetoothMAC).commit();
     }
 
     public static String getSavedBluetoothMAC(Context context) {
