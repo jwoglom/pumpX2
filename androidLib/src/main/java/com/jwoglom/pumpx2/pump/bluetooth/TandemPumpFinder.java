@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.util.timber.DebugTree;
 import com.jwoglom.pumpx2.util.timber.LConfigurator;
 import com.welie.blessed.BluetoothCentralManager;
@@ -22,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import timber.log.Timber;
 
@@ -32,6 +34,7 @@ import timber.log.Timber;
  */
 public abstract class TandemPumpFinder {
     private final Context context;
+    private final Handler handler = new Handler();
 
     /**
      * Initializes TandemPumpFinder.
@@ -128,10 +131,17 @@ public abstract class TandemPumpFinder {
         return Optional.empty();
     }
 
+    private void immediateScanForPeripherals() {
+        Timber.d("TandemPumpFinder: Scanning for all Tandem peripherals");
+        central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
+    }
+
     public void startScan() {
         Timber.i("TandemPumpFinder: startScan");
         // Scan for peripherals with a certain service UUIDs
         central.startPairingPopupHack();
+
+        handler.postDelayed(this::immediateScanForPeripherals, 1000);
     }
 
 
