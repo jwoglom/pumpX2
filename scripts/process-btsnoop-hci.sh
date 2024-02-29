@@ -5,10 +5,12 @@ if [[ "$log" == *.log ]]; then
   csv=${1/.log/.csv}
   tsv=${1/.log/.tsv}
   stderr=${1/.log/.stderr}
+  keyfile=${1/.log/.authkey}
 elif [[ "$log" == *.btsnoop ]]; then
   csv=${1/.btsnoop/.csv}
   tsv=${1/.btsnoop/.tsv}
   stderr=${1/.btsnoop/.stderr}
+  keyfile=${1/.btsnoop/.authkey}
 else
   echo "File provided did not end in .log or .btsnoop"
   exit 1
@@ -20,6 +22,7 @@ if [[ "$PUMP_AUTHENTICATION_KEY" == "" ]]; then
   echo "Encrypted messages will not be decoded.">&2
   echo "============================================">&2
 fi
+echo $PUMP_AUTHENTICATION_KEY > $keyfile
 
 repoRoot=$(git rev-parse --show-toplevel)
 
