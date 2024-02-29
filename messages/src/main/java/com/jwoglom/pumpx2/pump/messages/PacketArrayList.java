@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -22,6 +23,7 @@ public class PacketArrayList {
 
     protected byte expectedOpCode;
     protected byte expectedCargoSize;
+    protected int actualExpectedCargoSize;
     protected byte expectedTxId;
     protected boolean isSigned;
     protected byte[] fullCargo;
@@ -34,19 +36,24 @@ public class PacketArrayList {
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Preconditions.checkArgument(expectedopCode != 0);
-        Preconditions.checkArgument(expectedCargoSize >= 0);
-        this.expectedOpCode = expectedopCode;
+        Preconditions.checkArgument(expectedCargoSize >= 0 || (256 + (int)expectedCargoSize) >= 0);
         this.expectedCargoSize = expectedCargoSize;
+        if (expectedCargoSize < 0 && expectedCargoSize > -128) {
+            this.actualExpectedCargoSize = 256 + expectedCargoSize;
+        } else {
+            this.actualExpectedCargoSize = expectedCargoSize;
+        }
+        this.expectedOpCode = expectedopCode;
         this.expectedTxId = expectedTxId;
         this.isSigned = isSigned;
-        this.fullCargo = new byte[(expectedCargoSize + 2)];
+        this.fullCargo = new byte[(this.actualExpectedCargoSize + 2)];
         this.messageData = new byte[3];
     }
 
     // Returns either PacketArrayList or StreamPacketArrayList depending on the opcode
     public static PacketArrayList build(byte expectedopCode, Characteristic characteristic, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Class<? extends Message> messageClass = Messages.fromOpcode(expectedopCode, characteristic);
-        L.d(TAG, String.format("queried messageClass for expectedOpcode %d, %s", expectedopCode, messageClass));
+        L.d(TAG, String.format("queried messageClass for expectedOpcode %d, %s: expectedCargoSize=%d", expectedopCode, messageClass, expectedCargoSize));
         MessageProps messageProps = messageClass.getAnnotation(MessageProps.class);
         if (messageProps.stream()) {
             return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
@@ -114,7 +121,10 @@ public class PacketArrayList {
 
     protected void parse(byte[] bArr) {
         byte opCode = bArr[2];
-        byte cargoSize = bArr[4];
+        int cargoSize = bArr[4];
+        if (cargoSize < 0 && cargoSize > -128) {
+            cargoSize += 256;
+        }
         // ErrorResponse handling. Can have a dynamic cargo size in different situations.
         if (77 == opCode && 2 == cargoSize) {
             this.expectedOpCode = 77;
@@ -125,16 +135,23 @@ public class PacketArrayList {
             this.expectedCargoSize = 26;
             this.fullCargo = new byte[28];
         }
+        // ApiVersionRequest can either have 0 cargo size or (byte)-87 == (int)167
+        // its cargo size is set as 167 in the MessageProps but we allow the 0-cargo here as well
+        if (32 == opCode && 0 == cargoSize) {
+            this.expectedCargoSize = 0;
+            this.actualExpectedCargoSize = 0;
+        }
         if (opCode == this.expectedOpCode) {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];
             byte txId = bArr[3];
             if (txId != this.expectedTxId) {
                 throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
-            } else if (cargoSize != this.expectedCargoSize) {
-                if (cargoSize == this.expectedCargoSize + 24 && isSigned) {
+            } else if (cargoSize != this.actualExpectedCargoSize) {
+                if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
                     L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     expectedCargoSize += 24;
+                    actualExpectedCargoSize += 24;
                 } else {
                     throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
                 }
@@ -145,6 +162,7 @@ public class PacketArrayList {
         }
         L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
     }
+
 
     public void validatePacket(byte[] packetData) {
         Intrinsics.checkParameterIsNotNull(packetData, "packetData");

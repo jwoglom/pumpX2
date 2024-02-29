@@ -1,8 +1,10 @@
 package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
+import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 
 /**
@@ -14,7 +16,8 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionRespons
  */
 @MessageProps(
     opCode=32,
-    size=0,
+    size=167, // or 0
+    variableSize=true,
     type=MessageType.REQUEST,
     response=ApiVersionResponse.class
 )
@@ -23,7 +26,15 @@ public class ApiVersionRequest extends Message {
         this.cargo = EMPTY;
     }
 
+    public ApiVersionRequest(byte[] cargo) {
+        this.cargo = cargo;
+    }
+
     public void parse(byte[] raw) {
-        this.cargo = raw;
+        // empty cargo is ok
+        if (raw.length == 0) return;
+
+        Preconditions.checkArgument(raw.length == props().size(), "got length "+raw.length);
+        this.cargo = Bytes.dropFirstN(raw, 3);
     }
 }
