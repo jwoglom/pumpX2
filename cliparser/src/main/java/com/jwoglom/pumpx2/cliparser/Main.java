@@ -32,6 +32,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 public class Main {
     private static final String TAG = "CLIParser";
     static {
@@ -191,10 +193,11 @@ public class Main {
         int txId = initialRead[1];
         int opCode = initialRead[2];
         Message message = null;
+        Characteristic characteristic = null;
         try {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
-                System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities);
+                System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ");
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
                     possibilities = ImmutableSet.of(Characteristic.CONTROL);
@@ -207,12 +210,12 @@ public class Main {
                 } else {
                     return null;
                 }
+                System.out.print("\n");
             }
             if (possibilities.size() == 0) {
                 System.err.print("Unknown opcode "+opCode);
                 return null;
             }
-            Characteristic characteristic = null;
             for (Characteristic c : possibilities) {
                 characteristic = c;
             }
@@ -225,17 +228,20 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            return testRequest(rawHex, txId, message, extra);
+            return testRequest(rawHex, txId, characteristic.getUuid(), message, extra);
         } catch (IllegalStateException e) {
             System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
         }
     }
 
-    public static Message testRequest(String rawHex, int txId, Message expected, String ...extraRawHex) throws DecoderException {
+    public static Message testRequest(String rawHex, int txId, @Nullable UUID uuid, Message expected, String ...extraRawHex) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
 
-        UUID uuid = CharacteristicUUID.determine(expected);
+        if (uuid == null) {
+            uuid = CharacteristicUUID.determine(expected);
+        }
+        System.err.println("testRequest uuid="+Characteristic.of(uuid));
         MessageType messageType = expected.type();
 
         TronMessageWrapper tron = new TronMessageWrapper(expected, (byte) txId);
@@ -282,7 +288,7 @@ public class Main {
                 }
                 String firstRawHex = messages.remove(0);
                 String[] newExtra = messages.toArray(new String[0]);
-                return testRequest(firstRawHex, txId, expected, newExtra);
+                return testRequest(firstRawHex, txId, uuid, expected, newExtra);
             }
             return null;
         }

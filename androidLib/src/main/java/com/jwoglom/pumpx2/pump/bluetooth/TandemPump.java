@@ -15,8 +15,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
@@ -202,7 +201,7 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param centralChallenge the CentralChallengeResponse which should be passed to pair()
      */
-    public abstract void onWaitingForPairingCode(BluetoothPeripheral peripheral, AbstractChallengeResponse centralChallenge);
+    public abstract void onWaitingForPairingCode(BluetoothPeripheral peripheral, AbstractCentralChallengeResponse centralChallenge);
 
 
     /**
@@ -213,7 +212,7 @@ public abstract class TandemPump {
      * @param pairingCode the 16-character pairing code displayed on the pump screen. Any whitespace
      *                    or dashes will be removed.
      */
-    public void pair(BluetoothPeripheral peripheral, AbstractChallengeResponse centralChallenge, String pairingCode) {
+    public void pair(BluetoothPeripheral peripheral, AbstractCentralChallengeResponse centralChallenge, String pairingCode) {
         Timber.i("TandemPump: pair(" + pairingCode + ")");
         try {
             Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
