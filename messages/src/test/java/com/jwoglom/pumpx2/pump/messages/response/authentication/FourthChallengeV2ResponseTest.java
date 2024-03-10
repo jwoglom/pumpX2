@@ -16,8 +16,6 @@ public class FourthChallengeV2ResponseTest {
         FourthChallengeV2Response expected = new FourthChallengeV2Response(
                 0,
                 0,
-                0,
-                0,
                 0
         );
 

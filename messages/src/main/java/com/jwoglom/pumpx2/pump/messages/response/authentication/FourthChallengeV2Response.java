@@ -21,13 +21,11 @@ public class FourthChallengeV2Response extends Message {
     private int appInstanceId;
     private long unknownField1;
     private long unknownField2;
-    private long unknownField3;
-    private long unknownField4;
 
     public FourthChallengeV2Response() {}
 
-    public FourthChallengeV2Response(int appInstanceId, long unknownField1, long unknownField2, long unknownField3, long unknownField4) {
-        parse(buildCargo(appInstanceId, unknownField1, unknownField2, unknownField3, unknownField4));
+    public FourthChallengeV2Response(int appInstanceId, long unknownField1, long unknownField2) {
+        parse(buildCargo(appInstanceId, unknownField1, unknownField2));
         Preconditions.checkState(this.appInstanceId == appInstanceId);
         Preconditions.checkState(this.unknownField1 == unknownField1);
         Preconditions.checkState(this.unknownField2 == unknownField2);
@@ -41,19 +39,15 @@ public class FourthChallengeV2Response extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.appInstanceId = Bytes.readShort(raw, 0);
-        this.unknownField1 = Bytes.readUint32(raw, 2);
-        this.unknownField2 = Bytes.readUint32(raw, 6);
-        this.unknownField3 = Bytes.readUint32(raw, 10);
-        this.unknownField4 = Bytes.readUint32(raw, 14);
+        this.unknownField1 = Bytes.readUint64(raw, 2).longValue();
+        this.unknownField1 = Bytes.readUint64(raw, 10).longValue();
     }
 
-    public static byte[] buildCargo(int appInstanceId, long unknownField1, long unknownField2, long unknownField3, long unknownField4) {
+    public static byte[] buildCargo(int appInstanceId, long unknownField1, long unknownField2) {
         return Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(appInstanceId),
                 Bytes.toUint64(unknownField1),
-                Bytes.toUint64(unknownField2),
-                Bytes.toUint64(unknownField3),
-                Bytes.toUint64(unknownField4)
+                Bytes.toUint64(unknownField2)
         );
     }
 
@@ -67,13 +61,5 @@ public class FourthChallengeV2Response extends Message {
 
     public long getUnknownField2() {
         return unknownField2;
-    }
-
-    public long getUnknownField3() {
-        return unknownField3;
-    }
-
-    public long getUnknownField4() {
-        return unknownField4;
     }
 }
