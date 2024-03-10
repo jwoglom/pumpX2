@@ -32,6 +32,7 @@ import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -491,6 +492,10 @@ public class TandemBluetoothHandler {
                 if (msg instanceof CentralChallengeResponse) {
                     CentralChallengeResponse resp = (CentralChallengeResponse) response.message().get();
                     tandemPump.onWaitingForPairingCode(peripheral, resp);
+                } else if (msg instanceof CentralChallengeV2Response) {
+                    CentralChallengeV2Response resp = (CentralChallengeV2Response) response.message().get();
+                    tandemPump.onWaitingForPairingCode(peripheral, resp);
+
                 } else if (msg instanceof PumpChallengeResponse) {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {

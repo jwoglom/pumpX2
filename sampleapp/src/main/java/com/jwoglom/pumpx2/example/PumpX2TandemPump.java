@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
@@ -263,7 +264,7 @@ public class PumpX2TandemPump extends TandemPump {
     }
 
     @Override
-    public void onWaitingForPairingCode(BluetoothPeripheral peripheral, CentralChallengeResponse centralChallenge) {
+    public void onWaitingForPairingCode(BluetoothPeripheral peripheral, AbstractChallengeResponse centralChallenge) {
         // checkHmac(authKey, centralChallenge we sent, new byte[0])
         // doHmacSha1(10 bytes from central challenge request, bytes from authKey/pairing code) == 2-22 of response
         Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
