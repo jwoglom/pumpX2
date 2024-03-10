@@ -7,6 +7,8 @@ import tempfile
 
 def parse(op, param='parse'):
     cwd = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
+    if ' ' in op or '\n' in op:
+        op = ''.join([i.strip() for i in op.split('\n')])
     try:
         return subprocess.check_output(['./gradlew', 'cliparser', '-q', f'--args={param} {op}'], cwd=cwd).decode().strip()
     except Exception:
