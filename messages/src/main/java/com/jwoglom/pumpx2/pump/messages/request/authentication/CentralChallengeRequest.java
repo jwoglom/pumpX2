@@ -21,7 +21,7 @@ import java.util.Arrays;
     characteristic=Characteristic.AUTHORIZATION,
     response=CentralChallengeResponse.class
 )
-public class CentralChallengeRequest extends AbstractChallengeRequest {
+public class CentralChallengeRequest extends AbstractCentralChallengeRequest {
     private int appInstanceId;
     private byte[] centralChallenge;
 

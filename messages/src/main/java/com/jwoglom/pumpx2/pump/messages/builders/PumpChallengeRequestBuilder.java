@@ -1,17 +1,16 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
-import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 
 import java.nio.charset.Charset;
 
 public class PumpChallengeRequestBuilder {
-    public static PumpChallengeRequest create(AbstractChallengeResponse challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
+    public static PumpChallengeRequest create(AbstractCentralChallengeResponse challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
         if (challengeResponse instanceof CentralChallengeResponse) {
             return createV1((CentralChallengeResponse) challengeResponse, pairingCode);
         } else if (challengeResponse instanceof CentralChallengeV2Response) {

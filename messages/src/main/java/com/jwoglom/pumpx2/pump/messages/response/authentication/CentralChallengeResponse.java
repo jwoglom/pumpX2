@@ -1,7 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
 import com.google.common.base.Preconditions;
-import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -10,8 +9,6 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeR
 
 import java.util.Arrays;
 
-import kotlin.collections.ArraysKt;
-
 @MessageProps(
     opCode=17,
     size=30,
@@ -19,7 +16,7 @@ import kotlin.collections.ArraysKt;
     characteristic=Characteristic.AUTHORIZATION,
     request=CentralChallengeRequest.class
 )
-public class CentralChallengeResponse extends AbstractChallengeResponse {
+public class CentralChallengeResponse extends AbstractCentralChallengeResponse {
     private int appInstanceId;
     private byte[] centralChallengeHash;
     private byte[] hmacKey;

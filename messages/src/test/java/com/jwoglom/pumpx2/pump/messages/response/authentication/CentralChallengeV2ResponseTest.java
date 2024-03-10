@@ -11,28 +11,6 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 public class CentralChallengeV2ResponseTest {
-//    @Test
-//    public void testTconnectAppFirstPumpReplyMessage() throws DecoderException {
-//        CentralChallengeResponse expected = new CentralChallengeResponse(1, new byte[]{
-//                -116, 33, 45, 122, -113, -67, -88, 95, -125, -93, 68, 2, 84, 72, -115, -5, 86, 18, 100, -20
-//        }, new byte[]{
-//                -124, 12, 78, 22, -121, 48, 70, -68
-//        });
-//
-//        CentralChallengeResponse parsedRes = (CentralChallengeResponse) MessageTester.test(
-//                "000011001e01008c212d7a8fbda85f83a3440254488dfb561264ec840c4e16873046bc2c1a",
-//                0,
-//                2,
-//                CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
-//                expected
-//        );
-//
-//        assertEquals(expected.getAppInstanceId(), parsedRes.getAppInstanceId());
-//        assertHexEquals(expected.getCentralChallengeHash(), parsedRes.getCentralChallengeHash());
-//        assertHexEquals(expected.getHmacKey(), parsedRes.getHmacKey());
-//    }
-
-
     // ./android-2024-02-29-6char2.csv
     @Test
     public void test_167cargo_response_split() throws DecoderException {
@@ -55,7 +33,7 @@ public class CentralChallengeV2ResponseTest {
 
     // ad-hoc
     @Test
-    public void test_response() throws DecoderException {
+    public void test_oneoff_response() throws DecoderException {
         // TandemPump: raw sendCommand to characteristic AUTHORIZATION: 09002000a701004104e6acd57cf25de99d99b055
         // TandemPump: raw sendCommand to characteristic AUTHORIZATION: 08002a7a47f68f294a4728d6f0f30322fff4ab1c
         // TandemPump: raw sendCommand to characteristic AUTHORIZATION: 0700047efadaa6e9980c28a13cc4eb87064e8919

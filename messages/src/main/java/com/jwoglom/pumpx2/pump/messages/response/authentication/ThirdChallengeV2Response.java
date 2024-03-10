@@ -1,34 +1,36 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
 import com.google.common.base.Preconditions;
+import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.ThirdChallengeV2Request;
 
 import java.util.Arrays;
 
 @MessageProps(
-    opCode=33, // or 35?
+    opCode=37,
     size=167,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.AUTHORIZATION,
-    request= CentralChallengeV2Request.class
+    request=ThirdChallengeV2Request.class
 )
-public class CentralChallengeV2Response extends AbstractCentralChallengeResponse {
+public class ThirdChallengeV2Response extends Message {
     private int appInstanceId;
     private byte[] centralChallengeHash;
 
-    public CentralChallengeV2Response() {}
+    public ThirdChallengeV2Response() {}
 
-    public CentralChallengeV2Response(int appInstanceId, byte[] centralChallengeHash) {
+    public ThirdChallengeV2Response(int appInstanceId, byte[] centralChallengeHash) {
         parse(buildCargo(appInstanceId, centralChallengeHash));
         Preconditions.checkState(this.appInstanceId == appInstanceId);
         Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
     }
 
-    public CentralChallengeV2Response(byte[] raw) {
+    public ThirdChallengeV2Response(byte[] raw) {
         parse(raw);
     }
 

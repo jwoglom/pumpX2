@@ -8,9 +8,9 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class PumpAbstractChallengeResponseTest {
+public class PumpChallengeResponseTest {
     @Test
-    public void testTconnectAppChallengeResponseMessageSuccess() throws DecoderException {
+    public void testTconnectAppChallengeResponseMessageSuccess_legacyAuth() throws DecoderException {
         PumpChallengeResponse expected = new PumpChallengeResponse(1, true);
 
         PumpChallengeResponse parsedRes = (PumpChallengeResponse) MessageTester.test(
@@ -26,7 +26,7 @@ public class PumpAbstractChallengeResponseTest {
     }
 
     @Test
-    public void testTconnectAppChallengeResponseMessageFailure() throws DecoderException {
+    public void testTconnectAppChallengeResponseMessageFailure_legacyAuth() throws DecoderException {
         PumpChallengeResponse expected = new PumpChallengeResponse(1, false);
 
         PumpChallengeResponse parsedRes = (PumpChallengeResponse) MessageTester.test(

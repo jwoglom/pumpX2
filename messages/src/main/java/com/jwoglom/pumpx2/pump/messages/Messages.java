@@ -6,6 +6,8 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.ThirdChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -52,6 +54,8 @@ import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.ThirdChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -139,9 +143,11 @@ import java.util.Set;
 
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
-    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class),
-    CENTRAL_CHALLENGE_V2(CentralChallengeV2Request.class, CentralChallengeV2Response.class),
-    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class),
+    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy
+    CENTRAL_CHALLENGE_V2(CentralChallengeV2Request.class, CentralChallengeV2Response.class), // jpake
+    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy
+    PUMP_CHALLENGE_V2(PumpChallengeV2Request.class, PumpChallengeV2Response.class), // jpake
+    THIRD_CHALLENGE_V2(ThirdChallengeV2Request.class, ThirdChallengeV2Response.class), // jpake
     ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
     ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),
     CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),

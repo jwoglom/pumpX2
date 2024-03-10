@@ -35,4 +35,8 @@ public enum Characteristic {
         }
         return null;
     }
+
+    public UUID getUuid() {
+        return uuid;
+    }
 }
