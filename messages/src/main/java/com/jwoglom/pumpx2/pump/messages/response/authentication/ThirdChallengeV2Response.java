@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 @MessageProps(
     opCode=37,
-    size=167,
+    size=170, // 3 bytes longer than second
     type=MessageType.RESPONSE,
     characteristic=Characteristic.AUTHORIZATION,
     request=ThirdChallengeV2Request.class
@@ -38,11 +38,11 @@ public class ThirdChallengeV2Response extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
-        centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length
+        centralChallengeHash = Arrays.copyOfRange(raw, 2, 170); // 168 == 3 greater than normal
     }
 
-    public static byte[] buildCargo(int byte0short, byte[] bytes2to167) {
-        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to167);
+    public static byte[] buildCargo(int byte0short, byte[] bytes2to170) {
+        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to170);
     }
 
     public int getAppInstanceId() {
