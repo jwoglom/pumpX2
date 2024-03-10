@@ -198,6 +198,9 @@ public class Main {
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
                     possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                } else if (possibilities.contains(Characteristic.AUTHORIZATION)) {
+                    System.err.print("Using AUTHORIZATION");
+                    possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
                 } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
                     System.err.print("Using CURRENT_STATUS");
                     possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
