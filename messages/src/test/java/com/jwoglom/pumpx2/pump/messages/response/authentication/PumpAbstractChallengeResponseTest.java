@@ -8,7 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class PumpChallengeResponseTest {
+public class PumpAbstractChallengeResponseTest {
     @Test
     public void testTconnectAppChallengeResponseMessageSuccess() throws DecoderException {
         PumpChallengeResponse expected = new PumpChallengeResponse(1, true);

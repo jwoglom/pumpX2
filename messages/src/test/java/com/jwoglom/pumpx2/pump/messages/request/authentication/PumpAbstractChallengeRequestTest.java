@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.junit.Test;
 
-public class PumpChallengeRequestTest {
+public class PumpAbstractChallengeRequestTest {
     @Test
     public void testTconnectAppPumpChallengeRequest() {
         PumpChallengeRequest expected = new PumpChallengeRequest(1, new byte[]{

@@ -10,7 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class CentralChallengeResponseTest {
+public class CentralAbstractChallengeResponseTest {
     @Test
     public void testTconnectAppFirstPumpReplyMessage() throws DecoderException {
         CentralChallengeResponse expected = new CentralChallengeResponse(1, new byte[]{

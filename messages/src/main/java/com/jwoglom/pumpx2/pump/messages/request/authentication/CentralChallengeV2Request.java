@@ -4,33 +4,37 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 
 import java.util.Arrays;
 
 /**
- * The first message sent on connection to a Tandem pump which begins the authorization process.
+ * WIP NEW: The first message sent on connection to a Tandem pump which begins the authorization process.
  *
  * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
  * connection initialization as part of performing the initial pump pairing process.
  */
 @MessageProps(
-    opCode=16,
-    size=10,
+    opCode=32, // or 34??
+    size=167,
     type=MessageType.REQUEST,
     characteristic=Characteristic.AUTHORIZATION,
-    response=CentralChallengeResponse.class
+    response=CentralChallengeV2Response.class
 )
-public class CentralChallengeRequest extends AbstractChallengeRequest {
+public class CentralChallengeV2Request extends AbstractChallengeRequest {
     private int appInstanceId;
     private byte[] centralChallenge;
 
-    public CentralChallengeRequest() {}
+    public CentralChallengeV2Request() {}
 
-    public CentralChallengeRequest(int appInstanceId, byte[] centralChallenge) {
+    public CentralChallengeV2Request(int appInstanceId, byte[] centralChallenge) {
         this.cargo = buildCargo(appInstanceId, centralChallenge);
         this.appInstanceId = appInstanceId;
-        this.centralChallenge = centralChallenge; // len=10
+        this.centralChallenge = centralChallenge; // 165
+    }
+
+    public CentralChallengeV2Request(byte[] rawCargo) {
+        parse(rawCargo);
     }
 
     public int getAppInstanceId() {
@@ -42,8 +46,8 @@ public class CentralChallengeRequest extends AbstractChallengeRequest {
     }
 
     private static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {
-        byte[] cargo = new byte[10];
-        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge), 0, cargo, 0, 10);
+        byte[] cargo = new byte[167];
+        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge), 0, cargo, 0, 167);
 
         return cargo;
     }

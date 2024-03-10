@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
@@ -49,6 +50,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequ
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
@@ -138,6 +140,7 @@ import java.util.Set;
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
     CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class),
+    CENTRAL_CHALLENGE_V2(CentralChallengeV2Request.class, CentralChallengeV2Response.class),
     PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class),
     ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
     ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),

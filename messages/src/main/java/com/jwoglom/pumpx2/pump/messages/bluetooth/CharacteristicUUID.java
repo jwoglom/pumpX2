@@ -3,8 +3,10 @@ package com.jwoglom.pumpx2.pump.messages.bluetooth;
 import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 
@@ -66,7 +68,9 @@ public class CharacteristicUUID {
         if (message instanceof CentralChallengeRequest ||
             message instanceof CentralChallengeResponse ||
             message instanceof PumpChallengeRequest ||
-            message instanceof PumpChallengeResponse) {
+            message instanceof PumpChallengeResponse ||
+            message instanceof CentralChallengeV2Request ||
+            message instanceof CentralChallengeV2Response) {
             return AUTHORIZATION_CHARACTERISTICS;
         }
 
