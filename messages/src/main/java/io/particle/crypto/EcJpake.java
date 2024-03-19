@@ -82,9 +82,10 @@ public class EcJpake {
 
     private static final String CURVE_NAME = "P-256";
     private static final int CURVE_ID = 23; // RFC 4492, 5.1.1
-    private static final String HASH_NAME = "SHA-256";
+    private static final String HASH_NAME = "SHA-1";
     private static final byte[] CLIENT_ID = "client".getBytes();
     private static final byte[] SERVER_ID = "server".getBytes();
+    private static final boolean ENCODED_COMPRESSED = false;
 
     /**
      * Constructor.
@@ -274,7 +275,7 @@ public class EcJpake {
     }
 
     private void writeZkpHashPoint(OutputStream out, ECPoint point) {
-        byte[] encoded = point.getEncoded(false /* compressed */);
+        byte[] encoded = point.getEncoded(ENCODED_COMPRESSED /* compressed */);
         Streams.writeUint32Be(out, encoded.length);
         Streams.write(out, encoded);
     }
@@ -296,7 +297,7 @@ public class EcJpake {
     }
 
     private void writePoint(OutputStream out, ECPoint point) {
-        byte[] encoded = point.getEncoded(false /* compressed */);
+        byte[] encoded = point.getEncoded(ENCODED_COMPRESSED /* compressed */);
         if (encoded.length > 255) {
             throw new RuntimeException("Encoded ECPoint is too long");
         }
