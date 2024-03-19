@@ -135,8 +135,8 @@ public class PacketArrayList {
             this.expectedCargoSize = 26;
             this.fullCargo = new byte[28];
         }
-        // ApiVersionRequest can either have 0 cargo size or (byte)-87 == (int)167
-        // its cargo size is set as 167 in the MessageProps but we allow the 0-cargo here as well
+        // ApiVersionRequest can either have 0 cargo size or 2
+        // its cargo size is set as 2 in the MessageProps but we allow the 0-cargo here as well
         if (32 == opCode && 0 == cargoSize) {
             this.expectedCargoSize = 0;
             this.actualExpectedCargoSize = 0;

@@ -7,33 +7,31 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.FifthChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.FourthChallengeV2Request;
-
-import java.util.Arrays;
+import com.jwoglom.pumpx2.shared.Hex;
 
 @MessageProps(
-    opCode=39,
-    size=18,
+    opCode=41,
+    size=50,
     type=MessageType.RESPONSE,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    request=FourthChallengeV2Request.class
+    request=FifthChallengeV2Request.class
 )
-public class FourthChallengeV2Response extends Message {
+public class FifthChallengeV2Response extends Message {
     private int appInstanceId;
-    private long unknownField1;
-    private long unknownField2;
+    private byte[] centralChallenge;
 
-    public FourthChallengeV2Response() {}
+    public FifthChallengeV2Response() {}
 
-    public FourthChallengeV2Response(int appInstanceId, long unknownField1, long unknownField2) {
-        parse(buildCargo(appInstanceId, unknownField1, unknownField2));
+    public FifthChallengeV2Response(int appInstanceId, byte[] centralChallenge) {
+        parse(buildCargo(appInstanceId, centralChallenge));
         Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(this.unknownField1 == unknownField1);
-        Preconditions.checkState(this.unknownField2 == unknownField2);
+        Preconditions.checkState(Hex.encodeHexString(this.centralChallenge).equals(Hex.encodeHexString(centralChallenge)));
     }
 
-    public FourthChallengeV2Response(byte[] raw) {
+    public FifthChallengeV2Response(byte[] raw) {
         parse(raw);
     }
 
@@ -41,15 +39,13 @@ public class FourthChallengeV2Response extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.appInstanceId = Bytes.readShort(raw, 0);
-        this.unknownField1 = Bytes.readUint64(raw, 2).longValue();
-        this.unknownField1 = Bytes.readUint64(raw, 10).longValue();
+        this.centralChallenge = Bytes.dropFirstN(raw, 2);
     }
 
-    public static byte[] buildCargo(int appInstanceId, long unknownField1, long unknownField2) {
+    public static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {
         return Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(appInstanceId),
-                Bytes.toUint64(unknownField1),
-                Bytes.toUint64(unknownField2)
+                centralChallenge
         );
     }
 
@@ -57,11 +53,7 @@ public class FourthChallengeV2Response extends Message {
         return appInstanceId;
     }
 
-    public long getUnknownField1() {
-        return unknownField1;
-    }
-
-    public long getUnknownField2() {
-        return unknownField2;
+    public byte[] getCentralChallenge() {
+        return centralChallenge;
     }
 }

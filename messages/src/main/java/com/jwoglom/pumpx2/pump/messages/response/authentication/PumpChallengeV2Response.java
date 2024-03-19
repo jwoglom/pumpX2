@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
 
@@ -15,6 +16,7 @@ import java.util.Arrays;
     opCode=35,
     size=167,
     type=MessageType.RESPONSE,
+    minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
     request=PumpChallengeV2Request.class
 )

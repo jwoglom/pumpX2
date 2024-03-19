@@ -16,7 +16,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionRespons
  */
 @MessageProps(
     opCode=32,
-    size=167, // or 0
+    size=2, // or 0
     variableSize=true,
     type=MessageType.REQUEST,
     response=ApiVersionResponse.class
