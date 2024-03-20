@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.ThirdChallengeV2Response;
 
 import java.util.Arrays;
 
@@ -23,7 +24,7 @@ import java.util.Arrays;
     type=MessageType.REQUEST,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    response=PumpChallengeV2Response.class
+    response=ThirdChallengeV2Response.class
 )
 public class ThirdChallengeV2Request extends Message {
     private int appInstanceId;

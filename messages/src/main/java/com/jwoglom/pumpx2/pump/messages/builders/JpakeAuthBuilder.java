@@ -4,11 +4,13 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.particle.crypto.EcJpake;
@@ -38,24 +40,34 @@ public class JpakeAuthBuilder {
         this(pairingCode, new ArrayList<Message>(), new ArrayList<Message>());
     }
 
-    public Message buildNextRequest() {
+    public Message nextRequest() {
+        Message request;
         if (round == 1) {
-            byte[] challenge = this.cli.getRound1();
+            byte[] challenge = Arrays.copyOfRange(this.cli.getRound1(), 0, 165);
             L.i(TAG, "Req1: " + Hex.encodeHexString(challenge));
-            return new CentralChallengeV2Request(0, challenge);
+            request = new CentralChallengeV2Request(0, challenge);
         } else if (round == 2) {
-            byte[] challenge = this.cli.getRound2();
+            byte[] challenge = Arrays.copyOfRange(this.cli.getRound2(), 0, 165);
             L.i(TAG, "Req2: " + Hex.encodeHexString(challenge));
-            return new PumpChallengeV2Request(0, challenge);
+            request = new PumpChallengeV2Request(0, challenge);
+        } else {
+            return null;
         }
-        return null;
+
+        this.sentMessages.add(request);
+        return request;
     }
 
     public void processResponse(Message response) {
+        this.receivedMessages.add(response);
         if (response instanceof CentralChallengeV2Response) {
-            CentralChallengeV2Response m = (CentralChallengeV2Response)response;
+            CentralChallengeV2Response m = (CentralChallengeV2Response) response;
             L.i(TAG, "Res1: " + Hex.encodeHexString(m.getCentralChallengeHash()));
             this.cli.readRound1(m.getCentralChallengeHash());
+        } else if (response instanceof PumpChallengeV2Response) {
+            PumpChallengeV2Response m = (PumpChallengeV2Response) response;
+            L.i(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));
+            this.cli.readRound2(m.getCentralChallengeHash());
         }
     }
 }

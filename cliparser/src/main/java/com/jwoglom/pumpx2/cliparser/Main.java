@@ -198,6 +198,12 @@ public class Main {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ");
+                if (
+                    (opCode == 32 && rawHex.length() == 14) || // ApiVersionRequest with cargo size=2
+                    (opCode == 33 && rawHex.length() == 22)    // ApiVersionResponse
+                ) {
+                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                }
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
                     possibilities = ImmutableSet.of(Characteristic.CONTROL);

@@ -87,8 +87,10 @@ public class PumpState {
 
     public static ApiVersion getPumpAPIVersion() {
         if (pumpApiVersion == null) {
-            Timber.w("PumpState: Falling back on safe default for pumpApiVersion because ApiVersionResponse hasn't been received yet");
-            return KnownApiVersion.API_V2_1.get();
+            Timber.w("Assuming KnownApiVersion.API_V3_4");
+            return KnownApiVersion.API_V3_4.get();
+//            Timber.w("PumpState: Falling back on safe default for pumpApiVersion because ApiVersionResponse hasn't been received yet");
+//            return KnownApiVersion.API_V2_1.get();
         }
         return pumpApiVersion;
     }
