@@ -46,8 +46,15 @@ public class PumpChallengeRequestBuilder {
             }
             return processed;
         } else {
-            throw new InvalidPairingCodeFormat("");
+            throw new InvalidPairingCodeFormat("invalid PairingCodeType");
         }
+    }
+
+    public static String processPairingCode(String pairingCode) throws InvalidPairingCodeFormat {
+        if (pairingCode.length() == 6) {
+            return processPairingCode(pairingCode, PairingCodeType.SHORT_6CHAR);
+        }
+        return processPairingCode(pairingCode, PairingCodeType.LONG_16CHAR);
     }
 
     // HMAC sha1
@@ -64,15 +71,9 @@ public class PumpChallengeRequestBuilder {
 
     // ECJPake (Password Authenticated Key Exchange by Juggling over Eliptic Curve)
     public static PumpChallengeRequest createV2(CentralChallengeV2Response challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
-        int appInstanceId = challengeResponse.getAppInstanceId();
-        byte[] hmacKey = challengeResponse.getCentralChallengeHash();
-
         // TODO
         String pairingChars = processPairingCode(pairingCode, PairingCodeType.SHORT_6CHAR);
-        byte[] challengeHash = Packetize.doHmacSha1(hmacKey, pairingChars.getBytes(Charset.forName("UTF-8")));
-        return new PumpChallengeRequest(
-                appInstanceId,
-                challengeHash);
+        return null;
     }
 
     public static class InvalidPairingCodeFormat extends Exception {

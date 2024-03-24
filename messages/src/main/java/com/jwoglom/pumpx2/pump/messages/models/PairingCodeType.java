@@ -19,4 +19,13 @@ public enum PairingCodeType {
     public String getLabel() {
         return label;
     }
+
+    public static PairingCodeType fromLabel(String label) {
+        for (PairingCodeType t : values()) {
+            if (t.getLabel().equals(label)) {
+                return t;
+            }
+        }
+        return null;
+    }
 }
