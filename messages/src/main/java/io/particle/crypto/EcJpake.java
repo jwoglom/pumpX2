@@ -90,6 +90,10 @@ public class EcJpake {
     private static final boolean ENCODED_COMPRESSED = false;
 
     static {
+        // Remove builtin Android BouncyCastle provider and replace with newer version
+        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) != null) {
+            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME);
+        }
         Security.addProvider(new BouncyCastleProvider());
     }
 
