@@ -50,6 +50,13 @@ public class JpakeAuthBuilder {
         return INSTANCE;
     }
 
+    public static JpakeAuthBuilder getInstance() {
+        if (INSTANCE == null) {
+            throw new IllegalArgumentException("JPAKE auth session does not exist");
+        }
+        return INSTANCE;
+    }
+
     public Message nextRequest() {
         Message request;
         if (round == 1) {

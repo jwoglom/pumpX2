@@ -27,6 +27,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
@@ -34,6 +35,7 @@ import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
@@ -492,10 +494,6 @@ public class TandemBluetoothHandler {
                 if (msg instanceof CentralChallengeResponse) {
                     CentralChallengeResponse resp = (CentralChallengeResponse) response.message().get();
                     tandemPump.onWaitingForPairingCode(peripheral, resp);
-                } else if (msg instanceof CentralChallengeV2Response) {
-                    CentralChallengeV2Response resp = (CentralChallengeV2Response) response.message().get();
-                    tandemPump.onWaitingForPairingCode(peripheral, resp);
-
                 } else if (msg instanceof PumpChallengeResponse) {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {
@@ -505,6 +503,19 @@ public class TandemBluetoothHandler {
                         Timber.w("Invalid pairing code: %s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
+                // JPAKE
+                } else if (msg instanceof CentralChallengeV2Response) {
+                    CentralChallengeV2Response resp = (CentralChallengeV2Response) response.message().get();
+                    Timber.i("JpakeAuthResp1: %s", resp);
+                    JpakeAuthBuilder.getInstance().processResponse(msg);
+                    Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    Timber.i("JpakeAuthReq2: %s", req);
+                    tandemPump.sendCommand(peripheral, req);
+                } else if (msg instanceof PumpChallengeV2Response) {
+                    PumpChallengeV2Response resp = (PumpChallengeV2Response) response.message().get();
+                    Timber.i("JpakeAuthResp2: %s", resp);
+                    JpakeAuthBuilder.getInstance().processResponse(msg);
+                    Timber.i("JpakeAuthReq3: TODO");
                 } else {
                     if (msg instanceof ApiVersionResponse) {
                         PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());
