@@ -42,6 +42,14 @@ public class JpakeAuthBuilder {
         this(pairingCode, new ArrayList<Message>(), new ArrayList<Message>());
     }
 
+    private static JpakeAuthBuilder INSTANCE = null;
+    public static JpakeAuthBuilder getInstance(String pairingCode) {
+        if (INSTANCE == null || !INSTANCE.pairingCode.equals(pairingCode)) {
+            INSTANCE = new JpakeAuthBuilder(pairingCode);
+        }
+        return INSTANCE;
+    }
+
     public Message nextRequest() {
         Message request;
         if (round == 1) {
