@@ -12,7 +12,10 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
@@ -77,7 +80,12 @@ public abstract class TandemPump {
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
         Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
         if (!PumpState.relyOnConnectionSharingForAuthentication) {
-            sendCommand(peripheral, CentralChallengeRequestBuilder.create(appInstanceId));
+            AbstractCentralChallengeRequest request = CentralChallengeRequestBuilder.create(appInstanceId);
+            if (request != null) {
+                sendCommand(peripheral, request);
+            } else {
+                onWaitingForPairingCode(peripheral, null);
+            }
         }
     }
 
@@ -209,7 +217,7 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param centralChallenge the CentralChallengeResponse which should be passed to pair()
      */
-    public abstract void onWaitingForPairingCode(BluetoothPeripheral peripheral, AbstractCentralChallengeResponse centralChallenge);
+    public abstract void onWaitingForPairingCode(BluetoothPeripheral peripheral, @Nullable AbstractCentralChallengeResponse centralChallenge);
 
 
     /**
@@ -217,17 +225,27 @@ public abstract class TandemPump {
      * from the onWaitingForPairingCode callback.
      * @param peripheral the BluetoothPeripheral representing the pump
      * @param centralChallenge the CentralChallengeResponse received from onWaitingForPairingCode
-     * @param pairingCode the 16-character pairing code displayed on the pump screen. Any whitespace
-     *                    or dashes will be removed.
+     * @param pairingCode with {@link PairingCodeType#LONG_16CHAR}: the 16-character pairing code
+     *                    displayed on the pump screen. Any whitespace or dashes will be removed.
+     *                    with {@link PairingCodeType#SHORT_6CHAR}: the 6-character pairing code
+     *                    displayed on the pump screen.
      */
-    public void pair(BluetoothPeripheral peripheral, AbstractCentralChallengeResponse centralChallenge, String pairingCode) {
-        Timber.i("TandemPump: pair(" + pairingCode + ")");
-        try {
-            Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
+    public void pair(BluetoothPeripheral peripheral, @Nullable AbstractCentralChallengeResponse centralChallenge, String pairingCode) {
+        if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
+            Timber.i("TandemPump: pair(LONG_16CHAR, " + pairingCode + ")");
+            try {
+                Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
+                sendCommand(peripheral, message);
+            } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
+                Timber.e(e);
+                onInvalidPairingCode(peripheral, null);
+            }
+        } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
+            Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ")");
+            Message message = JpakeAuthBuilder.getInstance(pairingCode).nextRequest();
             sendCommand(peripheral, message);
-        } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
-            Timber.e(e);
-            onInvalidPairingCode(peripheral, null);
+        } else {
+            throw new IllegalArgumentException("no pairingCodeType");
         }
     }
 
