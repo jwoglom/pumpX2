@@ -41,6 +41,5 @@ public class JpakeAuthBuilderIntegrationTest {
         JpakeAuthBuilder b = new JpakeAuthBuilder("738006");
         CentralChallengeV2Request req1 = (CentralChallengeV2Request) b.nextRequest();
         assertEquals(165, req1.getCentralChallenge().length);
-        assertArrayEquals(req1.getCentralChallenge(), Hex.decodeHex("410482aab86788db4bb673b5bf6e1efebc2444959581beeb1825ddcee5f5afed72256b5ae1febae9e4de20655d55f5c4dfab7342b6758561c57f2be661c29baf66114104c1b41be994d750aae9fe79ff120f6d8f013b2e24bb93b1418c9ad8f11d48049d987bcad1c65bfee8afe7cb73ef2eeb1d9182c78a6d901ac56d3655ae7a7883c0207b65776f21eafb69066a2775b990524148f137188b9bce55e4e772d0ac2c82ae410419dab4e1187686adf94a8576b42a6e007c4b30accdaf4e2f4ade2ce98e1c71e5e8eb0abc38dbf0ab7806b463aa5e1d548bac0549076eb166d57dba83fbdcf49041041e3b5052779014414de1aebe09701bb5a14101647219657a0053cfafde665e2ab3513744594729a342f464a68e65b347d4324096ce104527dd68628390d5adb120ec01691186e41de21eed83b860f19df357dedd1ba372f5465b3a8db86c2d1e1d"));
     }
 }

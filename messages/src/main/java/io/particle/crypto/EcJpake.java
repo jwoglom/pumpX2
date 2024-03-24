@@ -22,6 +22,7 @@ package io.particle.crypto;
 import io.particle.util.Streams;
 
 import org.bouncycastle.jce.ECNamedCurveTable;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECParameterSpec;
 import org.bouncycastle.math.ec.ECPoint;
 import org.bouncycastle.util.BigIntegers;
@@ -34,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.io.InputStream;
+import java.security.Security;
 
 /**
  * A class implementing the EC-JPAKE protocol as defined by the Thread specification.
@@ -82,10 +84,14 @@ public class EcJpake {
 
     private static final String CURVE_NAME = "P-256";
     private static final int CURVE_ID = 23; // RFC 4492, 5.1.1
-    private static final String HASH_NAME = "SHA-1";
+    private static final String HASH_NAME = "RIPEMD160";
     private static final byte[] CLIENT_ID = "client".getBytes();
     private static final byte[] SERVER_ID = "server".getBytes();
     private static final boolean ENCODED_COMPRESSED = false;
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     /**
      * Constructor.

@@ -28,6 +28,8 @@ public class JpakeAuthBuilder {
     public JpakeAuthBuilder(String pairingCode, List<Message> sentMessages, List<Message> receivedMessages) {
         this.pairingCode = pairingCode;
         this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCode.getBytes(StandardCharsets.UTF_8));
+        this.sentMessages = sentMessages;
+        this.receivedMessages = receivedMessages;
 //        for (int i=0; i<sentMessages.size(); i++) {
 //            processRequest(sentMessages.get(i));
 //            if (i < receivedMessages.size()) {
@@ -44,10 +46,12 @@ public class JpakeAuthBuilder {
         Message request;
         if (round == 1) {
             byte[] challenge = Arrays.copyOfRange(this.cli.getRound1(), 0, 165);
+            //byte[] challenge = this.cli.getRound1();
             L.i(TAG, "Req1: " + Hex.encodeHexString(challenge));
             request = new CentralChallengeV2Request(0, challenge);
         } else if (round == 2) {
             byte[] challenge = Arrays.copyOfRange(this.cli.getRound2(), 0, 165);
+            //byte[] challenge = this.cli.getRound2();
             L.i(TAG, "Req2: " + Hex.encodeHexString(challenge));
             request = new PumpChallengeV2Request(0, challenge);
         } else {
