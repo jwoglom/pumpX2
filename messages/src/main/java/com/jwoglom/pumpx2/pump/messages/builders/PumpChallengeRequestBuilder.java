@@ -22,25 +22,13 @@ public class PumpChallengeRequestBuilder {
 
     public static String processPairingCode(String pairingCode, PairingCodeType type) throws InvalidPairingCodeFormat {
         if (type == PairingCodeType.LONG_16CHAR) {
-            // Remove all dashes and spaces
-            String processed = "";
-            for (Character c : pairingCode.toCharArray()) {
-                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
-                    processed += c;
-                }
-            }
+            String processed = type.filterCharacters(pairingCode);
             if (processed.length() != 16) {
                 throw new InvalidLongPairingCodeFormat();
             }
             return processed;
         } else if (type == PairingCodeType.SHORT_6CHAR) {
-            // Remove all non-numbers and spaces
-            String processed = "";
-            for (Character c : pairingCode.toCharArray()) {
-                if ((c >= '0' && c <= '9')) {
-                    processed += c;
-                }
-            }
+            String processed = type.filterCharacters(pairingCode);
             if (processed.length() != 6) {
                 throw new InvalidShortPairingCodeFormat();
             }
@@ -51,7 +39,7 @@ public class PumpChallengeRequestBuilder {
     }
 
     public static String processPairingCode(String pairingCode) throws InvalidPairingCodeFormat {
-        if (pairingCode.length() == 6) {
+        if (pairingCode.length() == 6 || PairingCodeType.SHORT_6CHAR.filterCharacters(pairingCode).length() == 6) {
             return processPairingCode(pairingCode, PairingCodeType.SHORT_6CHAR);
         }
         return processPairingCode(pairingCode, PairingCodeType.LONG_16CHAR);

@@ -20,6 +20,24 @@ public enum PairingCodeType {
         return label;
     }
 
+    public String filterCharacters(String pairingCode) {
+        String processed = "";
+        for (Character c : pairingCode.toCharArray()) {
+            if (this == LONG_16CHAR) {
+                // Remove all dashes and spaces
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    processed += c;
+                }
+            } else if (this == SHORT_6CHAR) {
+                // Remove all non-numbers and spaces
+                if ((c >= '0' && c <= '9')) {
+                    processed += c;
+                }
+            }
+        }
+        return processed;
+    }
+
     public static PairingCodeType fromLabel(String label) {
         for (PairingCodeType t : values()) {
             if (t.getLabel().equals(label)) {
