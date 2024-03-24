@@ -45,15 +45,23 @@ public abstract class TandemPump {
     /** for KnownApiVersion.API_V3_2 and above, use instanceId=1 and not 0 */
     private int appInstanceId = 1;
 
-    public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
+    public TandemPump(Context context, TandemConfig config) {
         this.context = context;
-        this.filterToBluetoothMac = filterToBluetoothMac;
+
+        this.filterToBluetoothMac = config.getFilterToBluetoothMac();
+        if (config.getPairingCodeType().isPresent()) {
+            PumpState.pairingCodeType = config.getPairingCodeType().get();
+        }
 
         PumpState.savedAuthenticationKey = PumpState.getPairingCode(context);
     }
 
+    public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
+        this(context, new TandemConfig().withFilterToBluetoothMac(filterToBluetoothMac.orElse(null)));
+    }
+
     public TandemPump(Context context) {
-        this(context, Optional.empty());
+        this(context, new TandemConfig());
     }
 
     /**

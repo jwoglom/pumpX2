@@ -13,6 +13,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,10 +88,12 @@ public class PumpState {
 
     public static ApiVersion getPumpAPIVersion() {
         if (pumpApiVersion == null) {
-            Timber.w("Assuming KnownApiVersion.API_V3_4");
-            return KnownApiVersion.API_V3_4.get();
-//            Timber.w("PumpState: Falling back on safe default for pumpApiVersion because ApiVersionResponse hasn't been received yet");
-//            return KnownApiVersion.API_V2_1.get();
+            if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
+                Timber.w("PumpState: Falling back on safe 6-character pairing code default for pumpApiVersion (API_V3_4)");
+                return KnownApiVersion.API_V3_4.get();
+            }
+            Timber.w("PumpState: Falling back on safe 16-character pairing code default for pumpApiVersion because ApiVersionResponse hasn't been received yet");
+            return KnownApiVersion.API_V2_1.get();
         }
         return pumpApiVersion;
     }
@@ -206,5 +209,10 @@ public class PumpState {
      */
     public static int processedResponseMessages = 0;
     public static int processedResponseMessagesFromUs = 0;
+
+    /**
+     * Used in the TandemPump constructor to set the pairing code type.
+     */
+    public static PairingCodeType pairingCodeType = PairingCodeType.LONG_16CHAR;
 }
 
