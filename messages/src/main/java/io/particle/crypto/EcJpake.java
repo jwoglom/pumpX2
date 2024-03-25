@@ -84,9 +84,9 @@ public class EcJpake {
 
     private static final String CURVE_NAME = "P-256";
     private static final int CURVE_ID = 23; // RFC 4492, 5.1.1
-    private static final String HASH_NAME = "RIPEMD160";
-    private static final byte[] CLIENT_ID = "client".getBytes();
-    private static final byte[] SERVER_ID = "server".getBytes();
+    private static final String HASH_NAME = "SHA256";
+    private static final byte[] CLIENT_ID = new byte[]{0};
+    private static final byte[] SERVER_ID = new byte[]{1};
     private static final boolean ENCODED_COMPRESSED = false;
 
     static {
