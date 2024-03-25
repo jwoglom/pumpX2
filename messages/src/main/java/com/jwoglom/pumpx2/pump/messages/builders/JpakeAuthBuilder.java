@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
@@ -21,7 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import io.particle.crypto.EcJpake;
+import kotlin.jvm.internal.Intrinsics;
 
 public class JpakeAuthBuilder {
     private static String TAG = "JPAKE";
@@ -108,12 +113,15 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
-            byte[] nonce = this.generateNonce();
-            L.i(TAG, "Req4 generatedNonce=" + Hex.encodeHexString(nonce));
+            byte[] nonce = this.serverNonce3;
+
+            byte[] hmaced = hmacSha256(this.derivedSecret, nonce);
+
+            L.i(TAG, "Req4 hmaced=" + Hex.encodeHexString(hmaced));
             request = new Jpake4KeyConfirmationRequest(0,
                     nonce,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    this.derivedSecret
+                    hmaced
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
@@ -174,6 +182,35 @@ public class JpakeAuthBuilder {
         byte[] nonce = new byte[8];
         this.rand.nextBytes(nonce);
         return nonce;
+    }
+
+    private byte mod255(int i) {
+        if (i < 0) {
+            return (byte) ((i + 255 + 1) & 255);
+        }
+        return (byte) i;
+    }
+
+    private byte[] mod255(byte[] data) {
+        for (int i = 0; i < data.length; i++) {
+            byte b = data[i];
+            if (b < 0) {
+                data[i] = mod255(b);
+            }
+        }
+        return data;
+    }
+
+    byte[] hmacSha256(byte[] data, byte[] key) {
+        try {
+            SecretKeySpec secretKeySpec = new SecretKeySpec(mod255(key), "HmacSHA256");
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(secretKeySpec);
+            return mac.doFinal(mod255(data));
+        } catch (Exception e) {
+            L.e(TAG, "hmacSha256: "+e);
+            return new byte[]{};
+        }
     }
 
     public enum JpakeStep {

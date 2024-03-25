@@ -115,8 +115,10 @@ public class JpakeAuthBuilderIntegrationTest {
         assertHexEquals(nonce, b.serverNonce3);
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
-        assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
-        assertHexEquals(req4.getHashDigest(), b.derivedSecret);
+        assertHexEquals(req4.getNonce(), b.serverNonce3);//Hex.decodeHex("998c182c9d70a375"));
+        byte[] hmaced = b.hmacSha256(b.derivedSecret, b.serverNonce3);
+        assertEquals(32, hmaced.length);
+        assertHexEquals(req4.getHashDigest(), hmaced);
 
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(0, req4.getNonce(), Jpake4KeyConfirmationResponse.RESERVED, req4.getHashDigest());
         b.processResponse(res4);
