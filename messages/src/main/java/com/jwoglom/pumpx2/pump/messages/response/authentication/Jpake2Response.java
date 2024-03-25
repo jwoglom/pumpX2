@@ -21,15 +21,13 @@ import java.util.Arrays;
 )
 public class Jpake2Response extends Message {
     private int appInstanceId;
-    private byte[] unknown3b;
     private byte[] centralChallengeHash;
 
     public Jpake2Response() {}
 
-    public Jpake2Response(int appInstanceId, byte[] unknown3b, byte[] centralChallengeHash) {
-        parse(buildCargo(appInstanceId, unknown3b, centralChallengeHash));
+    public Jpake2Response(int appInstanceId, byte[] centralChallengeHash) {
+        parse(buildCargo(appInstanceId, centralChallengeHash));
         Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.unknown3b, unknown3b));
         Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
     }
 
@@ -41,20 +39,15 @@ public class Jpake2Response extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
-        unknown3b = Arrays.copyOfRange(raw, 2, 5);
-        centralChallengeHash = Arrays.copyOfRange(raw, 5, 170); // 165
+        centralChallengeHash = Arrays.copyOfRange(raw, 2, 170); // 168
     }
 
-    public static byte[] buildCargo(int byte0short, byte[] bytes2to5, byte[] bytes5to170) {
-        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to5, bytes5to170);
+    public static byte[] buildCargo(int byte0short, byte[] bytes2to170) {
+        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to170);
     }
 
     public int getAppInstanceId() {
         return appInstanceId;
-    }
-
-    public byte[] getUnknown3b() {
-        return unknown3b;
     }
 
     public byte[] getCentralChallengeHash() {

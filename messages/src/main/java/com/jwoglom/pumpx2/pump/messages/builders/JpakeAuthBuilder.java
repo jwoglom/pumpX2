@@ -16,6 +16,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,20 +29,21 @@ public class JpakeAuthBuilder {
     private String pairingCode;
     private List<Message> sentMessages;
     private List<Message> receivedMessages;
-    private byte[] clientRound1;
-    private byte[] serverRound1;
-    private byte[] clientRound2;
-    private byte[] serverRound2;
-    private byte[] serverNonce3;
-    private byte[] serverNonce4;
-    private byte[] serverHashDigest4;
+    byte[] clientRound1;
+    byte[] serverRound1;
+    byte[] clientRound2;
+    byte[] serverRound2;
+    byte[] derivedSecret;
+    byte[] serverNonce3;
+    byte[] serverNonce4;
+    byte[] serverHashDigest4;
     private EcJpake cli;
 
-    private JpakeStep step;
+    JpakeStep step;
 
-    public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2) {
+    public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2, SecureRandom rand) {
         this.pairingCode = pairingCode;
-        this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCode.getBytes(StandardCharsets.UTF_8));
+        this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCode.getBytes(StandardCharsets.UTF_8), rand);
         this.sentMessages = new ArrayList<>();
         this.receivedMessages = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class JpakeAuthBuilder {
     }
 
     public JpakeAuthBuilder(String pairingCode) {
-        this(pairingCode, JpakeStep.INITIAL, null, null, null, null);
+        this(pairingCode, JpakeStep.INITIAL, null, null, null, null, new SecureRandom());
     }
 
     private static JpakeAuthBuilder INSTANCE = null;
@@ -97,20 +99,26 @@ public class JpakeAuthBuilder {
             step = JpakeStep.ROUND_2_SENT;
         } else if (step == JpakeStep.ROUND_2_RECEIVED) {
             request = new Jpake3SessionKeyRequest(0);
-            L.i(TAG, "Req3");
+
+            this.derivedSecret = this.cli.deriveSecret();
+            L.i(TAG, "Req3 DerivedSecret=" + Hex.encodeHexString(derivedSecret));
 
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
-            byte[] hashDigest = new byte[]{};
-            byte[] nonce = new byte[]{};
+            byte[] nonce = this.serverNonce3;
+            byte[] hashDigest = this.derivedSecret;
             request = new Jpake4KeyConfirmationRequest(0,
-                    hashDigest,
+                    nonce,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    nonce
+                    hashDigest
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
+        } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
+            step = JpakeStep.COMPLETE;
+
+            return null;
         } else {
             return null;
         }
@@ -152,10 +160,10 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_3_RECEIVED;
         } else if (response instanceof Jpake4KeyConfirmationResponse) {
             Jpake4KeyConfirmationResponse m = (Jpake4KeyConfirmationResponse) response;
-            L.i(TAG, "Res4: nonce=" + Hex.encodeHexString(m.getNonce()) +" hashDigest=" + Hex.encodeHexString(m.getHashDigest()));
+            L.i(TAG, "Res4: nonce=" + Hex.encodeHexString(m.getHashDigest()) + " hashDigest=" + Hex.encodeHexString(m.getNonce()));
 
-            this.serverNonce4 = m.getNonce();
-            this.serverHashDigest4 = m.getHashDigest();
+            this.serverNonce4 = m.getHashDigest();
+            this.serverHashDigest4 = m.getNonce();
             step = JpakeStep.CONFIRM_4_RECEIVED;
         }
     }
@@ -172,5 +180,6 @@ public class JpakeAuthBuilder {
         CONFIRM_3_RECEIVED,
         CONFIRM_4_SENT,
         CONFIRM_4_RECEIVED,
+        COMPLETE
     }
 }

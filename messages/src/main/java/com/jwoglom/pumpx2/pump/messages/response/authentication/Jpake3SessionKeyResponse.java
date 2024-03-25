@@ -25,6 +25,8 @@ public class Jpake3SessionKeyResponse extends Message {
     private byte[] deviceKeyNonce;
     private byte[] deviceKeyReserved;
 
+    public static byte[] RESERVED = new byte[]{0,0,0,0,0,0,0,0};
+
     public Jpake3SessionKeyResponse() {}
 
     public Jpake3SessionKeyResponse(byte[] raw) {

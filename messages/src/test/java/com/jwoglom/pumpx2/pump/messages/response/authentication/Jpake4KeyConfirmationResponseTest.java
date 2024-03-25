@@ -31,8 +31,8 @@ public class Jpake4KeyConfirmationResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertEquals(expected.getAppInstanceId(), parsedReq.getAppInstanceId());
-        assertHexEquals(expected.getHashDigest(), parsedReq.getHashDigest());
-        assertHexEquals(expected.getReserved(), parsedReq.getReserved());
         assertHexEquals(expected.getNonce(), parsedReq.getNonce());
+        assertHexEquals(expected.getReserved(), parsedReq.getReserved());
+        assertHexEquals(expected.getHashDigest(), parsedReq.getHashDigest());
     }
 }

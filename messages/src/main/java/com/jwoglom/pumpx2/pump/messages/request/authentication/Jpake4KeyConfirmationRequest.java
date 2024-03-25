@@ -27,21 +27,21 @@ import java.util.Arrays;
 )
 public class Jpake4KeyConfirmationRequest extends Message {
     private int appInstanceId;
-    private byte[] hashDigest;
-    private byte[] reserved;
     private byte[] nonce;
+    private byte[] reserved;
+    private byte[] hashDigest;
 
     public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
 
     public Jpake4KeyConfirmationRequest() {}
 
 
-    public Jpake4KeyConfirmationRequest(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
-        this.cargo = buildCargo(appInstanceId, hashDigest, reserved, nonce);
+    public Jpake4KeyConfirmationRequest(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {
+        this.cargo = buildCargo(appInstanceId, nonce, reserved, hashDigest);
         this.appInstanceId = appInstanceId;
-        this.hashDigest = hashDigest;
-        this.reserved = reserved;
         this.nonce = nonce;
+        this.reserved = reserved;
+        this.hashDigest = hashDigest;
     }
 
     public Jpake4KeyConfirmationRequest(byte[] rawCargo) {
@@ -52,16 +52,16 @@ public class Jpake4KeyConfirmationRequest extends Message {
         return appInstanceId;
     }
 
-    public byte[] getHashDigest() {
-        return hashDigest;
+    public byte[] getNonce() {
+        return nonce;
     }
 
     public byte[] getReserved() {
         return reserved;
     }
 
-    public byte[] getNonce() {
-        return nonce;
+    public byte[] getHashDigest() {
+        return hashDigest;
     }
 
     private static byte[] buildCargo(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
@@ -82,8 +82,8 @@ public class Jpake4KeyConfirmationRequest extends Message {
     public void parse(byte[] raw) {
         this.cargo = raw;
         this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);
-        this.hashDigest = Arrays.copyOfRange(raw, 2, 10);
+        this.nonce = Arrays.copyOfRange(raw, 2, 10);
         this.reserved = Arrays.copyOfRange(raw, 10, 18);
-        this.nonce = Arrays.copyOfRange(raw, 18, 50); // 32
+        this.hashDigest = Arrays.copyOfRange(raw, 18, 50); // 32
     }
 }
