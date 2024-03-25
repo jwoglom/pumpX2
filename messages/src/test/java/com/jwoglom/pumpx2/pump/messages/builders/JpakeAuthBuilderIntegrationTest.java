@@ -40,8 +40,10 @@ public class JpakeAuthBuilderIntegrationTest {
                 "e14648731067823471832c9f3dc9e48275f1041b0332f5447cad007341a5e3c3" +
                 // deriveSecret()
                 "fc55f787a26b3f5619c891a3cd34907b" +
-                // random 8 bytes for jpake3 nonce
-                "e734344901549417"));
+                // generateNonce() server
+                "e734344901549417" +
+                // generateNonce() client
+                "998c182c9d70a375"));
 //        EcJpake cli = new EcJpake(EcJpake.Role.CLIENT, "passw0rd".getBytes(), rand);
 //        byte[] cliRound1 = cli.getRound1();
 //        assertArrayEquals(cliRound1, Hex.decodeHex("4104e92f1a97685b86ea2e8a583724095e355955d1356942c2fa7a0da21f148690052607421562f9771fbcf70fdc33056b2f2596145d8c5cd7be986259e2918d9f554104854faebe27e2f81652f0e71b38410d704fc521965bd40005fa47de22d7de67c2ba301fe248f63b954891e5ba9237c4dace174b022dcc6d55cc977115e0e5e24a2062080ced0ce4c03ca7fb9c80e1374939956623bc951905ac6ed5c6a96ea647c34104580e59d4e2377620a0e2003a22cf5b603165676e48de7095c21f8c76afdef847bc976aa1f58ee050c757f9ccc2af19142a15714a27268886fc50ddf0f8b4573e41046b1d85ca2a6bf3e956269bac6529856ab73089e1522eba11b2b16f2e50908cd6ee7bb6b1f7ecefc424bebe177039e9e2c98da07c7f521388789d5bb37dc2830e209967d2ec8e533bb526645218a376bb3d318103e0aef96c300f30986ab3d0e027"));
@@ -105,8 +107,7 @@ public class JpakeAuthBuilderIntegrationTest {
         byte[] secret = Hex.decodeHex("e734344901549417f6243f8e4a712f87ae9409476f8d022c347ff690249683aa");
         assertHexEquals(secret, b.derivedSecret);
 
-        byte[] nonce = new byte[8];
-        rand.nextBytes(nonce);
+        byte[] nonce = b.generateNonce();
         assertHexEquals(nonce, Hex.decodeHex("e734344901549417"));
         Jpake3SessionKeyResponse res3 = new Jpake3SessionKeyResponse(0, nonce, Jpake3SessionKeyResponse.RESERVED);
 
@@ -114,7 +115,7 @@ public class JpakeAuthBuilderIntegrationTest {
         assertHexEquals(nonce, b.serverNonce3);
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
-        assertHexEquals(req4.getNonce(), b.serverNonce3);
+        assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
         assertHexEquals(req4.getHashDigest(), b.derivedSecret);
 
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(0, req4.getNonce(), Jpake4KeyConfirmationResponse.RESERVED, req4.getHashDigest());

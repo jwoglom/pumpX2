@@ -38,6 +38,7 @@ public class JpakeAuthBuilder {
     byte[] serverNonce4;
     byte[] serverHashDigest4;
     private EcJpake cli;
+    private SecureRandom rand;
 
     JpakeStep step;
 
@@ -52,6 +53,7 @@ public class JpakeAuthBuilder {
         this.serverRound1 = serverRound1;
         this.clientRound2 = clientRound2;
         this.serverRound2 = serverRound2;
+        this.rand = rand;
     }
 
     public JpakeAuthBuilder(String pairingCode) {
@@ -106,12 +108,12 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
-            byte[] nonce = this.serverNonce3;
-            byte[] hashDigest = this.derivedSecret;
+            byte[] nonce = this.generateNonce();
+            L.i(TAG, "Req4 generatedNonce=" + Hex.encodeHexString(nonce));
             request = new Jpake4KeyConfirmationRequest(0,
                     nonce,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    hashDigest
+                    this.derivedSecret
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
@@ -166,6 +168,12 @@ public class JpakeAuthBuilder {
             this.serverHashDigest4 = m.getNonce();
             step = JpakeStep.CONFIRM_4_RECEIVED;
         }
+    }
+
+    byte[] generateNonce() {
+        byte[] nonce = new byte[8];
+        this.rand.nextBytes(nonce);
+        return nonce;
     }
 
     public enum JpakeStep {
