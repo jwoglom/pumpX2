@@ -35,7 +35,7 @@ import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
@@ -511,8 +511,8 @@ public class TandemBluetoothHandler {
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     Timber.i("JpakeAuthReq2: %s", req);
                     tandemPump.sendCommand(peripheral, req);
-                } else if (msg instanceof PumpChallengeV2Response) {
-                    PumpChallengeV2Response resp = (PumpChallengeV2Response) response.message().get();
+                } else if (msg instanceof Jpake1bResponse) {
+                    Jpake1bResponse resp = (Jpake1bResponse) response.message().get();
                     Timber.i("JpakeAuthResp2: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
                     Timber.i("JpakeAuthReq3: TODO");

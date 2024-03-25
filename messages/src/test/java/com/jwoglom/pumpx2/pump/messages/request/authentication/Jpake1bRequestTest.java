@@ -14,7 +14,7 @@ import java.io.ByteArrayInputStream;
 
 import io.particle.util.Streams;
 
-public class PumpChallengeV2RequestTest {
+public class Jpake1bRequestTest {
     // ./android-2024-02-29-6char2.csv
 
     // CentralChallengeV2Request:
@@ -76,14 +76,14 @@ public class PumpChallengeV2RequestTest {
     @Test
     public void test_167cargo_pumpchallenge_split() throws DecoderException {
 
-        PumpChallengeV2Request expected = new PumpChallengeV2Request(
+        Jpake1bRequest expected = new Jpake1bRequest(
                 0,
                 new byte[]{
                     65,4,-6,-15,-63,-57,115,112,65,-88,-120,114,-70,67,92,121,-2,103,-79,79,-41,-109,-12,82,-76,-31,-92,28,-12,-24,86,-98,-47,-74,124,-102,-80,82,61,-105,-9,-102,83,106,-76,-104,-46,61,13,-108,20,67,-77,25,64,47,-108,6,57,60,28,-128,12,32,60,-84,65,4,45,-47,-102,-83,127,37,-22,-67,6,75,111,46,-28,116,-84,-112,15,-42,21,80,-82,-9,-127,-20,-94,-101,78,-97,-37,-110,26,30,-51,57,94,-120,-52,14,-26,-16,-100,-106,29,73,-29,-29,29,34,-53,23,-114,-90,60,-27,96,-21,-25,17,39,82,27,111,125,51,32,48,59,-127,114,-58,125,-123,93,-67,-18,-84,-102,50,-15,-16,103,-22,73,36,-71,87,1,86,48,33,-121,76,47,120,120,94,106
                 }
         );
 
-        PumpChallengeV2Request parsedReq = (PumpChallengeV2Request) MessageTester.test(
+        Jpake1bRequest parsedReq = (Jpake1bRequest) MessageTester.test(
                 "09012201a700004104faf1c1c7737041a88872ba",
                 1,
                 10,

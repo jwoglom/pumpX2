@@ -2,9 +2,9 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -68,7 +68,7 @@ public class JpakeAuthBuilder {
             byte[] challenge = Arrays.copyOfRange(this.cli.getRound2(), 0, 165);
             //byte[] challenge = this.cli.getRound2();
             L.i(TAG, "Req2: " + Hex.encodeHexString(challenge));
-            request = new PumpChallengeV2Request(0, challenge);
+            request = new Jpake1bRequest(0, challenge);
         } else {
             return null;
         }
@@ -83,8 +83,8 @@ public class JpakeAuthBuilder {
             Jpake1aResponse m = (Jpake1aResponse) response;
             L.i(TAG, "Res1: " + Hex.encodeHexString(m.getCentralChallengeHash()));
             this.cli.readRound1(m.getCentralChallengeHash());
-        } else if (response instanceof PumpChallengeV2Response) {
-            PumpChallengeV2Response m = (PumpChallengeV2Response) response;
+        } else if (response instanceof Jpake1bResponse) {
+            Jpake1bResponse m = (Jpake1bResponse) response;
             L.i(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));
             this.cli.readRound2(m.getCentralChallengeHash());
         }

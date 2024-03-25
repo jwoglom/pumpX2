@@ -7,8 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 
 import java.util.Arrays;
 
@@ -18,21 +17,21 @@ import java.util.Arrays;
     type=MessageType.RESPONSE,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    request=PumpChallengeV2Request.class
+    request= Jpake1bRequest.class
 )
-public class PumpChallengeV2Response extends Message {
+public class Jpake1bResponse extends Message {
     private int appInstanceId;
     private byte[] centralChallengeHash;
 
-    public PumpChallengeV2Response() {}
+    public Jpake1bResponse() {}
 
-    public PumpChallengeV2Response(int appInstanceId, byte[] centralChallengeHash) {
+    public Jpake1bResponse(int appInstanceId, byte[] centralChallengeHash) {
         parse(buildCargo(appInstanceId, centralChallengeHash));
         Preconditions.checkState(this.appInstanceId == appInstanceId);
         Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
     }
 
-    public PumpChallengeV2Response(byte[] raw) {
+    public Jpake1bResponse(byte[] raw) {
         parse(raw);
     }
 

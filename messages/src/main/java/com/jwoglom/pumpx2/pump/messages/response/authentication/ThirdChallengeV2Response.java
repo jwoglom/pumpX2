@@ -7,7 +7,6 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.ThirdChallengeV2Request;
 
 import java.util.Arrays;

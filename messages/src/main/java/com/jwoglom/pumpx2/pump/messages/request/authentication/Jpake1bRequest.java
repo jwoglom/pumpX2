@@ -1,18 +1,14 @@
 package com.jwoglom.pumpx2.pump.messages.request.authentication;
 
-import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 
 import java.util.Arrays;
-
-import kotlin.collections.ArraysKt;
 
 /**
  * The second authorization message sent to the pump with V2 authorization style which contains the
@@ -27,21 +23,21 @@ import kotlin.collections.ArraysKt;
     type=MessageType.REQUEST,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    response=PumpChallengeV2Response.class
+    response=Jpake1bResponse.class
 )
-public class PumpChallengeV2Request extends Message {
+public class Jpake1bRequest extends Message {
     private int appInstanceId;
     private byte[] centralChallenge;
 
-    public PumpChallengeV2Request() {}
+    public Jpake1bRequest() {}
 
-    public PumpChallengeV2Request(int appInstanceId, byte[] centralChallenge) {
+    public Jpake1bRequest(int appInstanceId, byte[] centralChallenge) {
         this.cargo = buildCargo(appInstanceId, centralChallenge);
         this.appInstanceId = appInstanceId;
         this.centralChallenge = centralChallenge; // 165
     }
 
-    public PumpChallengeV2Request(byte[] rawCargo) {
+    public Jpake1bRequest(byte[] rawCargo) {
         parse(rawCargo);
     }
 
