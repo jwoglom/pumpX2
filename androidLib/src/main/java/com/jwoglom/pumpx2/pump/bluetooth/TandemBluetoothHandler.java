@@ -35,6 +35,8 @@ import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
@@ -529,6 +531,25 @@ public class TandemBluetoothHandler {
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     Timber.i("JpakeAuthReq3: %s", req);
                     tandemPump.sendCommand(peripheral, req);
+                } else if (msg instanceof Jpake3SessionKeyResponse) {
+                    Jpake3SessionKeyResponse resp = (Jpake3SessionKeyResponse) response.message().get();
+                    Timber.i("JpakeAuthResp3: %s", resp);
+                    JpakeAuthBuilder.getInstance().processResponse(msg);
+
+                    Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    Timber.i("JpakeAuthReq4: %s", req);
+                    tandemPump.sendCommand(peripheral, req);
+                } else if (msg instanceof Jpake4KeyConfirmationResponse) {
+                    Jpake4KeyConfirmationResponse resp = (Jpake4KeyConfirmationResponse) response.message().get();
+                    Timber.i("JpakeAuthResp4: %s", resp);
+                    JpakeAuthBuilder.getInstance().processResponse(msg);
+
+                    Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    if (req == null) {
+                        Timber.i("JpakeAuth DONE: PumpConnected");
+                        PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
+                        tandemPump.onPumpConnected(peripheral);
+                    }
                 } else {
                     if (msg instanceof ApiVersionResponse) {
                         PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());

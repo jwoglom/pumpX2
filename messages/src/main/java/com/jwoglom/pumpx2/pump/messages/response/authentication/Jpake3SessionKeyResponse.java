@@ -10,41 +10,59 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest;
 import com.jwoglom.pumpx2.shared.Hex;
 
+import java.util.Arrays;
+
 @MessageProps(
     opCode=39,
     size=18,
     type=MessageType.RESPONSE,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    request= Jpake3SessionKeyRequest.class
+    request=Jpake3SessionKeyRequest.class
 )
 public class Jpake3SessionKeyResponse extends Message {
-    private byte[] unknownField1;
+    private int appInstanceId;
+    private byte[] deviceKeyNonce;
+    private byte[] deviceKeyReserved;
 
     public Jpake3SessionKeyResponse() {}
 
-    public Jpake3SessionKeyResponse(byte[] unknownField1) {
-        parse(buildCargo(unknownField1));
-        Preconditions.checkState(Hex.encodeHexString(this.unknownField1).equals(Hex.encodeHexString(unknownField1)));
+    public Jpake3SessionKeyResponse(byte[] raw) {
+        parse(raw);
     }
 
-    //public FourthChallengeV2Response(byte[] raw) {
-    //    parse(raw);
-    //}
+    public Jpake3SessionKeyResponse(int appInstanceId, byte[] nonce, byte[] reserved) {
+        parse(buildCargo(appInstanceId, nonce, reserved));
+        Preconditions.checkState(this.appInstanceId == appInstanceId);
+        Preconditions.checkState(Hex.encodeHexString(this.deviceKeyNonce).equals(Hex.encodeHexString(nonce)));
+        Preconditions.checkState(Hex.encodeHexString(this.deviceKeyReserved).equals(Hex.encodeHexString(reserved)));
+    }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.unknownField1 = raw;
+        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);
+        this.deviceKeyNonce = Arrays.copyOfRange(raw, 2, 10); // 8
+        this.deviceKeyReserved = Arrays.copyOfRange(raw, 10, 18); // 8
     }
 
-    public static byte[] buildCargo(byte[] unknownField1) {
+    public static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved) {
         return Bytes.combine(
-                unknownField1
+                Bytes.firstTwoBytesLittleEndian(appInstanceId),
+                nonce,
+                reserved
         );
     }
 
-    public byte[] getUnknownField1() {
-        return unknownField1;
+    public int getAppInstanceId() {
+        return appInstanceId;
+    }
+
+    public byte[] getDeviceKeyNonce() {
+        return deviceKeyNonce;
+    }
+
+    public byte[] getDeviceKeyReserved() {
+        return deviceKeyReserved;
     }
 }

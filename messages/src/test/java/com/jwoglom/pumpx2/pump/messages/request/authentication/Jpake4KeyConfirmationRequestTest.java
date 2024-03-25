@@ -1,5 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.authentication;
 
+import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
@@ -14,7 +15,9 @@ public class Jpake4KeyConfirmationRequestTest {
     public void test_167cargo_fifthchallenge_split() throws DecoderException {
         Jpake4KeyConfirmationRequest expected = new Jpake4KeyConfirmationRequest(
                 0,
-                new byte[]{87,26,-48,52,116,28,119,125,0,0,0,0,0,0,0,0,47,-20,-32,-126,-118,-111,-9,55,42,71,-53,123,-11,-105,-94,-106,-106,31,102,-16,-12,92,75,123,118,-23,-82,-81,-113,23,111,109}
+                new byte[]{87,26,-48,52,116,28,119,125},
+                new byte[]{0,0,0,0,0,0,0,0},
+                new byte[]{47,-20,-32,-126,-118,-111,-9,55,42,71,-53,123,-11,-105,-94,-106,-106,31,102,-16,-12,92,75,123,118,-23,-82,-81,-113,23,111,109}
         );
 
         /*
@@ -34,8 +37,11 @@ public class Jpake4KeyConfirmationRequestTest {
                 "00046e"
         );
 
-        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertEquals(0, parsedReq.getAppInstanceId());
+        assertHexEquals(expected.getHashDigest(), parsedReq.getHashDigest());
+        assertHexEquals(expected.getReserved(), parsedReq.getReserved());
+        assertHexEquals(expected.getNonce(), parsedReq.getNonce());
 
     }
 }

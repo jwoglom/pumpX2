@@ -43,9 +43,9 @@ public class Jpake3SessionKeyRequest extends Message {
         return challengeParam;
     }
 
-    private static byte[] buildCargo(int appInstanceId) {
+    private static byte[] buildCargo(int challengeParam) {
         byte[] cargo = new byte[2];
-        System.arraycopy(Bytes.firstTwoBytesLittleEndian(appInstanceId), 0, cargo, 0, 2);
+        System.arraycopy(Bytes.firstTwoBytesLittleEndian(challengeParam), 0, cargo, 0, 2);
 
         return cargo;
     }

@@ -10,6 +10,8 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest;
 import com.jwoglom.pumpx2.shared.Hex;
 
+import java.util.Arrays;
+
 @MessageProps(
     opCode=41,
     size=50,
@@ -20,39 +22,63 @@ import com.jwoglom.pumpx2.shared.Hex;
 )
 public class Jpake4KeyConfirmationResponse extends Message {
     private int appInstanceId;
-    private byte[] centralChallenge;
+    private byte[] hashDigest;
+    private byte[] reserved;
+    private byte[] nonce;
+
+    public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
 
     public Jpake4KeyConfirmationResponse() {}
 
-    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] centralChallenge) {
-        parse(buildCargo(appInstanceId, centralChallenge));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Hex.encodeHexString(this.centralChallenge).equals(Hex.encodeHexString(centralChallenge)));
+
+    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
+        this.cargo = buildCargo(appInstanceId, hashDigest, reserved, nonce);
+        this.appInstanceId = appInstanceId;
+        this.hashDigest = hashDigest;
+        this.reserved = reserved;
+        this.nonce = nonce;
     }
 
-    public Jpake4KeyConfirmationResponse(byte[] raw) {
-        parse(raw);
-    }
-
-    public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
-        this.cargo = raw;
-        this.appInstanceId = Bytes.readShort(raw, 0);
-        this.centralChallenge = Bytes.dropFirstN(raw, 2);
-    }
-
-    public static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {
-        return Bytes.combine(
-                Bytes.firstTwoBytesLittleEndian(appInstanceId),
-                centralChallenge
-        );
+    public Jpake4KeyConfirmationResponse(byte[] rawCargo) {
+        parse(rawCargo);
     }
 
     public int getAppInstanceId() {
         return appInstanceId;
     }
 
-    public byte[] getCentralChallenge() {
-        return centralChallenge;
+    public byte[] getHashDigest() {
+        return hashDigest;
+    }
+
+    public byte[] getReserved() {
+        return reserved;
+    }
+
+    public byte[] getNonce() {
+        return nonce;
+    }
+
+    private static byte[] buildCargo(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
+        Preconditions.checkArgument(hashDigest.length == 8);
+        Preconditions.checkArgument(reserved.length == 8);
+        Preconditions.checkArgument(nonce.length == 32);
+        byte[] cargo = new byte[50];
+        System.arraycopy(Bytes.combine(
+                Bytes.firstTwoBytesLittleEndian(appInstanceId),
+                hashDigest,
+                reserved,
+                nonce
+        ), 0, cargo, 0, 50);
+
+        return cargo;
+    }
+
+    public void parse(byte[] raw) {
+        this.cargo = raw;
+        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);
+        this.hashDigest = Arrays.copyOfRange(raw, 2, 10);
+        this.reserved = Arrays.copyOfRange(raw, 10, 18);
+        this.nonce = Arrays.copyOfRange(raw, 18, 50); // 32
     }
 }

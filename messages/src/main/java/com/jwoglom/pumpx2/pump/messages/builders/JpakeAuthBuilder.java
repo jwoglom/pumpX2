@@ -5,9 +5,13 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -28,6 +32,9 @@ public class JpakeAuthBuilder {
     private byte[] serverRound1;
     private byte[] clientRound2;
     private byte[] serverRound2;
+    private byte[] serverNonce3;
+    private byte[] serverNonce4;
+    private byte[] serverHashDigest4;
     private EcJpake cli;
 
     private JpakeStep step;
@@ -89,7 +96,21 @@ public class JpakeAuthBuilder {
 
             step = JpakeStep.ROUND_2_SENT;
         } else if (step == JpakeStep.ROUND_2_RECEIVED) {
-            return null;
+            request = new Jpake3SessionKeyRequest(0);
+            L.i(TAG, "Req3");
+
+            step = JpakeStep.CONFIRM_3_SENT;
+        } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
+            // TODO: determine hashdigest + nonce
+            byte[] hashDigest = new byte[]{};
+            byte[] nonce = new byte[]{};
+            request = new Jpake4KeyConfirmationRequest(0,
+                    hashDigest,
+                    Jpake4KeyConfirmationRequest.RESERVED,
+                    nonce
+            );
+
+            step = JpakeStep.CONFIRM_4_SENT;
         } else {
             return null;
         }
@@ -123,6 +144,19 @@ public class JpakeAuthBuilder {
 
             this.cli.readRound2(this.serverRound2);
             step = JpakeStep.ROUND_2_RECEIVED;
+        } else if (response instanceof Jpake3SessionKeyResponse) {
+            Jpake3SessionKeyResponse m = (Jpake3SessionKeyResponse) response;
+            L.i(TAG, "Res3: nonce=" + Hex.encodeHexString(m.getDeviceKeyNonce()));
+
+            this.serverNonce3 = m.getDeviceKeyNonce();
+            step = JpakeStep.CONFIRM_3_RECEIVED;
+        } else if (response instanceof Jpake4KeyConfirmationResponse) {
+            Jpake4KeyConfirmationResponse m = (Jpake4KeyConfirmationResponse) response;
+            L.i(TAG, "Res4: nonce=" + Hex.encodeHexString(m.getNonce()) +" hashDigest=" + Hex.encodeHexString(m.getHashDigest()));
+
+            this.serverNonce4 = m.getNonce();
+            this.serverHashDigest4 = m.getHashDigest();
+            step = JpakeStep.CONFIRM_4_RECEIVED;
         }
     }
 
@@ -134,6 +168,9 @@ public class JpakeAuthBuilder {
         ROUND_1B_RECEIVED,
         ROUND_2_SENT,
         ROUND_2_RECEIVED,
-
+        CONFIRM_3_SENT,
+        CONFIRM_3_RECEIVED,
+        CONFIRM_4_SENT,
+        CONFIRM_4_RECEIVED,
     }
 }
