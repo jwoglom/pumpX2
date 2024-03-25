@@ -1,7 +1,11 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
+import static org.apache.commons.codec.digest.HmacUtils.hmacSha256;
+
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
+import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
+import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
@@ -119,23 +123,23 @@ public class JpakeAuthBuilder {
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
             this.clientNonce4 = generateNonce();
-            byte[] hmaced = hmacSha256(this.derivedSecret, this.serverNonce3);
+            byte[] hashDigest = Hkdf.build(this.serverNonce3, this.derivedSecret);
 
-            L.i(TAG, "Req4 hmaced=" + Hex.encodeHexString(hmaced)+" clientNonce=" + Hex.encodeHexString(this.clientNonce4));
+            L.i(TAG, "Req4 hashDigest=" + Hex.encodeHexString(hashDigest)+" clientNonce=" + Hex.encodeHexString(this.clientNonce4));
             request = new Jpake4KeyConfirmationRequest(0,
                     this.clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    hmaced
+                    hashDigest
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            byte[] hmaced = hmacSha256(this.derivedSecret, this.serverNonce4);
-            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmaced))) {
+            byte[] hashDigest = Hkdf.build(this.serverNonce4, this.derivedSecret);
+            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hashDigest))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
-                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hmaced=" + Hex.encodeHexString(hmaced) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
+                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hashDigest=" + Hex.encodeHexString(hashDigest) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
                 step = JpakeStep.INVALID;
             }
 
@@ -193,35 +197,6 @@ public class JpakeAuthBuilder {
         byte[] nonce = new byte[8];
         this.rand.nextBytes(nonce);
         return nonce;
-    }
-
-    private byte mod255(int i) {
-        if (i < 0) {
-            return (byte) ((i + 255 + 1) & 255);
-        }
-        return (byte) i;
-    }
-
-    private byte[] mod255(byte[] data) {
-        for (int i = 0; i < data.length; i++) {
-            byte b = data[i];
-            if (b < 0) {
-                data[i] = mod255(b);
-            }
-        }
-        return data;
-    }
-
-    byte[] hmacSha256(byte[] data, byte[] key) {
-        try {
-            SecretKeySpec secretKeySpec = new SecretKeySpec(mod255(key), "HmacSHA256");
-            Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(secretKeySpec);
-            return mac.doFinal(mod255(data));
-        } catch (Exception e) {
-            L.e(TAG, "hmacSha256: "+e);
-            return new byte[]{};
-        }
     }
 
     public enum JpakeStep {

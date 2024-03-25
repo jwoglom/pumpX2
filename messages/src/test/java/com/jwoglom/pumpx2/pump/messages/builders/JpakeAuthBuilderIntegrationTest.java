@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
+import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.builders.jpake.SecureRandomMock;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
@@ -116,11 +118,11 @@ public class JpakeAuthBuilderIntegrationTest {
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
         assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
-        byte[] clientHmac = b.hmacSha256(b.derivedSecret, b.serverNonce3);
+        byte[] clientHmac = Hkdf.build(b.serverNonce3, b.derivedSecret);
         assertEquals(32, clientHmac.length);
         assertHexEquals(req4.getHashDigest(), clientHmac);
 
-        byte[] serverHmac = b.hmacSha256(b.derivedSecret, b.clientNonce4);
+        byte[] serverHmac = Hkdf.build(b.clientNonce4, b.derivedSecret);
         assertEquals(32, serverHmac.length);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
