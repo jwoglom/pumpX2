@@ -33,7 +33,7 @@ import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
@@ -504,8 +504,8 @@ public class TandemBluetoothHandler {
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
                 // JPAKE
-                } else if (msg instanceof CentralChallengeV2Response) {
-                    CentralChallengeV2Response resp = (CentralChallengeV2Response) response.message().get();
+                } else if (msg instanceof Jpake1aResponse) {
+                    Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
                     Timber.i("JpakeAuthResp1: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();

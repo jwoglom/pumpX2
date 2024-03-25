@@ -4,11 +4,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;
-import com.jwoglom.pumpx2.shared.Hex;
-
-import org.apache.commons.codec.DecoderException;
 
 public class CentralChallengeRequestBuilder {
     public static AbstractCentralChallengeRequest create(int appInstanceId) {

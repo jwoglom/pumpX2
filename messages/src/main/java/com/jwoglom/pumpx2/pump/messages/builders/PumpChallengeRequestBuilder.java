@@ -5,7 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 
 import java.nio.charset.Charset;
 
@@ -13,8 +13,8 @@ public class PumpChallengeRequestBuilder {
     public static PumpChallengeRequest create(AbstractCentralChallengeResponse challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
         if (challengeResponse instanceof CentralChallengeResponse) {
             return createV1((CentralChallengeResponse) challengeResponse, pairingCode);
-        } else if (challengeResponse instanceof CentralChallengeV2Response) {
-            return createV2((CentralChallengeV2Response) challengeResponse, pairingCode);
+        } else if (challengeResponse instanceof Jpake1aResponse) {
+            return createV2((Jpake1aResponse) challengeResponse, pairingCode);
         } else {
             throw new RuntimeException("invalid CentralChallengeResponse");
         }
@@ -58,7 +58,7 @@ public class PumpChallengeRequestBuilder {
     }
 
     // ECJPake (Password Authenticated Key Exchange by Juggling over Eliptic Curve)
-    public static PumpChallengeRequest createV2(CentralChallengeV2Response challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
+    public static PumpChallengeRequest createV2(Jpake1aResponse challengeResponse, String pairingCode) throws InvalidPairingCodeFormat {
         // TODO
         String pairingChars = processPairingCode(pairingCode, PairingCodeType.SHORT_6CHAR);
         return null;

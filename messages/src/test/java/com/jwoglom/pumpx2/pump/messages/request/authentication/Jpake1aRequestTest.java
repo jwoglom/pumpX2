@@ -4,23 +4,22 @@ import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class CentralChallengeV2RequestTest {
+public class Jpake1aRequestTest {
     // ./android-2024-02-29-6char2.csv
     @Test
     public void test_167cargo_split() throws DecoderException {
         // empty cargo
-        CentralChallengeV2Request expected = new CentralChallengeV2Request(
+        Jpake1aRequest expected = new Jpake1aRequest(
                 new byte[]{
                         0,0,65,4,-26,-84,-43,124,-14,93,-23,-99,-103,-80,85,42,122,71,-10,-113,41,74,71,40,-42,-16,-13,3,34,-1,-12,-85,28,4,126,-6,-38,-90,-23,-104,12,40,-95,60,-60,-21,-121,6,78,-119,25,22,-19,39,-92,-120,31,93,-127,-102,58,108,-97,85,-50,76,-80,-128,65,4,15,-42,60,-7,-56,-106,46,52,43,-84,85,5,-123,-50,-111,-73,65,43,47,-53,48,27,-35,40,-68,42,118,37,-89,-106,27,-15,-56,-63,-104,65,-3,9,30,-110,2,-98,-101,-89,-123,-57,34,74,24,60,57,-114,51,107,-79,31,54,-68,-20,113,-24,61,-107,-115,32,64,78,-127,90,-54,89,28,18,-114,-101,-76,-105,81,-20,8,13,62,75,-41,63,-33,99,-43,-95,6,87,122,-86,102,-45,-89,-97
                 }
         );
 
-        CentralChallengeV2Request parsedReq = (CentralChallengeV2Request) MessageTester.test(
+        Jpake1aRequest parsedReq = (Jpake1aRequest) MessageTester.test(
                 "09002000a700004104e6acd57cf25de99d99b055",
                 0,
                 10,

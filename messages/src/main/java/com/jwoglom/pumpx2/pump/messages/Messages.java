@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.FifthChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.FourthChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
@@ -54,7 +54,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequ
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.FifthChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.FourthChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
@@ -148,7 +148,7 @@ import java.util.Set;
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
     CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy
-    CENTRAL_CHALLENGE_V2(CentralChallengeV2Request.class, CentralChallengeV2Response.class), // jpake
+    CENTRAL_CHALLENGE_V2(Jpake1aRequest.class, Jpake1aResponse.class), // jpake
     PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy
     PUMP_CHALLENGE_V2(PumpChallengeV2Request.class, PumpChallengeV2Response.class), // jpake
     THIRD_CHALLENGE_V2(ThirdChallengeV2Request.class, ThirdChallengeV2Response.class), // jpake

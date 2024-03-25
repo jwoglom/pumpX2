@@ -4,7 +4,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.builders.jpake.SecureRandomMock;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.shared.Hex;
 
 import org.apache.commons.codec.DecoderException;
@@ -39,7 +39,7 @@ public class JpakeAuthBuilderIntegrationTest {
 //        assertArrayEquals(secret, Hex.decodeHex("e734344901549417f6243f8e4a712f87ae9409476f8d022c347ff690249683aa"));
         String pairingCode = "738006";
         JpakeAuthBuilder b = new JpakeAuthBuilder("738006");
-        CentralChallengeV2Request req1 = (CentralChallengeV2Request) b.nextRequest();
+        Jpake1aRequest req1 = (Jpake1aRequest) b.nextRequest();
         assertEquals(165, req1.getCentralChallenge().length);
     }
 }
