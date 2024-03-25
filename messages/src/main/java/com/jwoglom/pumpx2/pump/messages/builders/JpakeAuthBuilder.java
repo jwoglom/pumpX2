@@ -40,6 +40,7 @@ public class JpakeAuthBuilder {
     byte[] serverRound2;
     byte[] derivedSecret;
     byte[] serverNonce3;
+    byte[] clientNonce4;
     byte[] serverNonce4;
     byte[] serverHashDigest4;
     private EcJpake cli;
@@ -80,6 +81,10 @@ public class JpakeAuthBuilder {
         return INSTANCE;
     }
 
+    public static void clearInstance() {
+        INSTANCE = null;
+    }
+
     public Message nextRequest() {
         Message request;
         if (step == JpakeStep.INITIAL) {
@@ -113,20 +118,26 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
-            byte[] nonce = this.serverNonce3;
+            this.clientNonce4 = generateNonce();
+            byte[] hmaced = hmacSha256(this.derivedSecret, this.serverNonce3);
 
-            byte[] hmaced = hmacSha256(this.derivedSecret, nonce);
-
-            L.i(TAG, "Req4 hmaced=" + Hex.encodeHexString(hmaced));
+            L.i(TAG, "Req4 hmaced=" + Hex.encodeHexString(hmaced)+" clientNonce=" + Hex.encodeHexString(this.clientNonce4));
             request = new Jpake4KeyConfirmationRequest(0,
-                    nonce,
+                    this.clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
                     hmaced
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            step = JpakeStep.COMPLETE;
+            byte[] hmaced = hmacSha256(this.derivedSecret, this.serverNonce4);
+            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmaced))) {
+                L.i(TAG, "HMAC SECRET VALIDATES");
+                step = JpakeStep.COMPLETE;
+            } else {
+                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hmaced=" + Hex.encodeHexString(hmaced) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
+                step = JpakeStep.INVALID;
+            }
 
             return null;
         } else {
@@ -172,8 +183,8 @@ public class JpakeAuthBuilder {
             Jpake4KeyConfirmationResponse m = (Jpake4KeyConfirmationResponse) response;
             L.i(TAG, "Res4: nonce=" + Hex.encodeHexString(m.getHashDigest()) + " hashDigest=" + Hex.encodeHexString(m.getNonce()));
 
-            this.serverNonce4 = m.getHashDigest();
-            this.serverHashDigest4 = m.getNonce();
+            this.serverHashDigest4 = m.getHashDigest();
+            this.serverNonce4 = m.getNonce();
             step = JpakeStep.CONFIRM_4_RECEIVED;
         }
     }
@@ -225,6 +236,11 @@ public class JpakeAuthBuilder {
         CONFIRM_3_RECEIVED,
         CONFIRM_4_SENT,
         CONFIRM_4_RECEIVED,
-        COMPLETE
+        COMPLETE,
+        INVALID
+    }
+
+    public boolean done() {
+        return step == JpakeStep.COMPLETE;
     }
 }

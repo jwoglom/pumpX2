@@ -545,7 +545,7 @@ public class TandemBluetoothHandler {
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    if (req == null) {
+                    if (req == null && JpakeAuthBuilder.getInstance().done()) {
                         Timber.i("JpakeAuth DONE: PumpConnected");
                         PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                         tandemPump.onPumpConnected(peripheral);

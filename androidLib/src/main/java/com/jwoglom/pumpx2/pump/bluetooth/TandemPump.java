@@ -242,6 +242,7 @@ public abstract class TandemPump {
             }
         } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
             Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ")");
+            JpakeAuthBuilder.clearInstance();
             Message message = JpakeAuthBuilder.getInstance(pairingCode).nextRequest();
             sendCommand(peripheral, message);
         } else {
