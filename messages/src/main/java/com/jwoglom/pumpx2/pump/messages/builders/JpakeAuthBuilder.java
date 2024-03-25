@@ -4,8 +4,10 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -25,27 +27,26 @@ public class JpakeAuthBuilder {
     private byte[] clientRound1;
     private byte[] serverRound1;
     private byte[] clientRound2;
+    private byte[] serverRound2;
     private EcJpake cli;
 
-    private JpakeStep step = JpakeStep.INITIAL;
+    private JpakeStep step;
 
-    public JpakeAuthBuilder(String pairingCode, List<Message> sentMessages, List<Message> receivedMessages) {
+    public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2) {
         this.pairingCode = pairingCode;
         this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCode.getBytes(StandardCharsets.UTF_8));
-        this.sentMessages = sentMessages;
-        this.receivedMessages = receivedMessages;
-        this.clientRound1 = null;
-        this.serverRound1 = null;
-//        for (int i=0; i<sentMessages.size(); i++) {
-//            processRequest(sentMessages.get(i));
-//            if (i < receivedMessages.size()) {
-//                processResponse(receivedMessages.get(i));
-//            }
-//        }
+        this.sentMessages = new ArrayList<>();
+        this.receivedMessages = new ArrayList<>();
+
+        this.step = step;
+        this.clientRound1 = clientRound1;
+        this.serverRound1 = serverRound1;
+        this.clientRound2 = clientRound2;
+        this.serverRound2 = serverRound2;
     }
 
     public JpakeAuthBuilder(String pairingCode) {
-        this(pairingCode, new ArrayList<Message>(), new ArrayList<Message>());
+        this(pairingCode, JpakeStep.INITIAL, null, null, null, null);
     }
 
     private static JpakeAuthBuilder INSTANCE = null;
@@ -83,9 +84,12 @@ public class JpakeAuthBuilder {
         } else if (step == JpakeStep.ROUND_1B_RECEIVED) {
             this.clientRound2 = this.cli.getRound2();
             byte[] challenge = Arrays.copyOfRange(this.clientRound2, 0, 165);
-            //byte[] challenge = this.cli.getRound2();
             L.i(TAG, "Req2: " + Hex.encodeHexString(challenge));
-            request = new Jpake1bRequest(0, challenge);
+            request = new Jpake2Request(0, challenge);
+
+            step = JpakeStep.ROUND_2_SENT;
+        } else if (step == JpakeStep.ROUND_2_RECEIVED) {
+            return null;
         } else {
             return null;
         }
@@ -111,6 +115,14 @@ public class JpakeAuthBuilder {
 
             this.cli.readRound1(fullServerRound1);
             step = JpakeStep.ROUND_1B_RECEIVED;
+        } else if (response instanceof Jpake2Response) {
+            Jpake2Response m = (Jpake2Response) response;
+            L.i(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));
+            this.serverRound2 = m.getCentralChallengeHash();
+            L.i(TAG, "FULL_ROUND_2_RESPONSE: " + Hex.encodeHexString(this.serverRound2));
+
+            this.cli.readRound2(this.serverRound2);
+            step = JpakeStep.ROUND_2_RECEIVED;
         }
     }
 
@@ -120,6 +132,8 @@ public class JpakeAuthBuilder {
         ROUND_1A_RECEIVED,
         ROUND_1B_SENT,
         ROUND_1B_RECEIVED,
+        ROUND_2_SENT,
+        ROUND_2_RECEIVED,
 
     }
 }

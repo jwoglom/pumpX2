@@ -5,8 +5,8 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.FifthChallengeV2Request;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.FourthChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
@@ -55,8 +55,8 @@ import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.FifthChallengeV2Response;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.FourthChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
@@ -152,8 +152,8 @@ public enum Messages {
     PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy
     JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake
     JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake
-    FOURTH_CHALLENGE_V2(FourthChallengeV2Request.class, FourthChallengeV2Response.class), // jpake
-    FIFTH_CHALLENGE_V2(FifthChallengeV2Request.class, FifthChallengeV2Response.class), // jpake
+    JPAKE_3_SESSION_KEY(Jpake3SessionKeyRequest.class, Jpake3SessionKeyResponse.class), // jpake
+    JPAKE_4_KEY_CONFIRMATION(Jpake4KeyConfirmationRequest.class, Jpake4KeyConfirmationResponse.class), // jpake
     ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
     ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),
     CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),

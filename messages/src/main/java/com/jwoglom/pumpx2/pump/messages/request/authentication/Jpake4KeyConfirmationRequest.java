@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.FourthChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
 
 import java.util.Arrays;
 
@@ -22,21 +22,21 @@ import java.util.Arrays;
     type=MessageType.REQUEST,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    response=FourthChallengeV2Response.class
+    response=Jpake4KeyConfirmationResponse.class
 )
-public class FifthChallengeV2Request extends Message {
+public class Jpake4KeyConfirmationRequest extends Message {
     private int appInstanceId;
     private byte[] centralChallenge;
 
-    public FifthChallengeV2Request() {}
+    public Jpake4KeyConfirmationRequest() {}
 
-    public FifthChallengeV2Request(int appInstanceId, byte[] centralChallenge) {
+    public Jpake4KeyConfirmationRequest(int appInstanceId, byte[] centralChallenge) {
         this.cargo = buildCargo(appInstanceId, centralChallenge);
         this.appInstanceId = appInstanceId;
         this.centralChallenge = centralChallenge;
     }
 
-    public FifthChallengeV2Request(byte[] rawCargo) {
+    public Jpake4KeyConfirmationRequest(byte[] rawCargo) {
         parse(rawCargo);
     }
 

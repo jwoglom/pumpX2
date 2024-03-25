@@ -34,6 +34,7 @@ import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLog
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
@@ -506,16 +507,28 @@ public class TandemBluetoothHandler {
                 // JPAKE
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
-                    Timber.i("JpakeAuthResp1: %s", resp);
+                    Timber.i("JpakeAuthResp1a: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
+
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.i("JpakeAuthReq2: %s", req);
+                    Timber.i("JpakeAuthReq1b: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake1bResponse) {
                     Jpake1bResponse resp = (Jpake1bResponse) response.message().get();
+                    Timber.i("JpakeAuthResp1b: %s", resp);
+                    JpakeAuthBuilder.getInstance().processResponse(msg);
+
+                    Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    Timber.i("JpakeAuthReq2: %s", req);
+                    tandemPump.sendCommand(peripheral, req);
+                } else if (msg instanceof Jpake2Response) {
+                    Jpake2Response resp = (Jpake2Response) response.message().get();
                     Timber.i("JpakeAuthResp2: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
-                    Timber.i("JpakeAuthReq3: TODO");
+
+                    Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    Timber.i("JpakeAuthReq3: %s", req);
+                    tandemPump.sendCommand(peripheral, req);
                 } else {
                     if (msg instanceof ApiVersionResponse) {
                         PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());
