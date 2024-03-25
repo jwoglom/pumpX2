@@ -10,7 +10,8 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
 import java.util.Arrays;
 
 /**
- * WIP NEW: The first message sent on connection to a Tandem pump which begins the authorization process.
+ * The first message sent on connection to a Tandem pump which begins the authorization process
+ * using the 6-character pairing code -- the first half of the first JPAKE authorization client request.
  *
  * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
  * connection initialization as part of performing the initial pump pairing process.

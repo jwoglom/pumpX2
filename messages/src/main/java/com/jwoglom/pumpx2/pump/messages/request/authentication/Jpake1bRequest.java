@@ -12,7 +12,8 @@ import java.util.Arrays;
 
 /**
  * The second authorization message sent to the pump with V2 authorization style which contains the
- * second round of EcJpake. The message structure is identical to CentralChallengeV2Request.
+ * second half of the first round client output of EcJpake.
+ * The message structure is identical to {@link Jpake1aRequest}.
  *
  * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
  * connection initialization as part of performing the initial pump pairing process.

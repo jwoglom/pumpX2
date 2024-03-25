@@ -6,13 +6,15 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.ThirdChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 
 import java.util.Arrays;
 
 /**
  * The third authorization message sent to the pump with V2 authorization style which contains the
- * third round of EcJpake. The message structure is identical to CentralChallengeV2Request.
+ * second round of EcJpake. The message structure is identical to {@link Jpake1aRequest} and
+ * {@link Jpake1bRequest}, the second EcJpake round has half the length though so does not need to
+ * be split into two sub-messages.
  *
  * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
  * connection initialization as part of performing the initial pump pairing process.
@@ -23,21 +25,21 @@ import java.util.Arrays;
     type=MessageType.REQUEST,
     minApi=KnownApiVersion.API_V3_2,
     characteristic=Characteristic.AUTHORIZATION,
-    response=ThirdChallengeV2Response.class
+    response= Jpake2Response.class
 )
-public class ThirdChallengeV2Request extends Message {
+public class Jpake2Request extends Message {
     private int appInstanceId;
     private byte[] centralChallenge;
 
-    public ThirdChallengeV2Request() {}
+    public Jpake2Request() {}
 
-    public ThirdChallengeV2Request(int appInstanceId, byte[] centralChallenge) {
+    public Jpake2Request(int appInstanceId, byte[] centralChallenge) {
         this.cargo = buildCargo(appInstanceId, centralChallenge);
         this.appInstanceId = appInstanceId;
         this.centralChallenge = centralChallenge; // 165
     }
 
-    public ThirdChallengeV2Request(byte[] rawCargo) {
+    public Jpake2Request(byte[] rawCargo) {
         parse(rawCargo);
     }
 

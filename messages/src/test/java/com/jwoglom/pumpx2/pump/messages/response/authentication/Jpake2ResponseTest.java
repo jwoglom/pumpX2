@@ -2,17 +2,16 @@ package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.ThirdChallengeV2Request;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class ThirdChallengeV2ResponseTest {
+public class Jpake2ResponseTest {
     // ./android-2024-02-29-6char2.csv
     @Test
     public void test_167cargo_response_split() throws DecoderException {
         //1805	103.080736	c2:48:14:3a:a4:c8 (tslim X2 ***941)	Google_aa:a4:cd (James' Pixel 7a)	ATT	141	00022502aa00000300174104634f4cfde021623a609c98311ae7508b41126542de029b76b1781de8f3db6e723950a8e64715c97cf44d80a6976b91ab846cdbf732bf160c1c0223f0a674a4734104732ff948fed2dbb06806502a7ae7ca0afdf1991eab79c866ff53e9d23bd4d1886f3cb55663b7979947f6a96d52511ac843b9d28b20805f263365bc50d1b93d7620bec12ade679a6b482ba5bfbe973e91dcdcd87bc3ab04090803db2945cca39e4c9be8	Rcvd Handle Value Notification, Handle: 0x0022 (Unknown)
-        ThirdChallengeV2Response expected = new ThirdChallengeV2Response(
+        Jpake2Response expected = new Jpake2Response(
                 0,
                 new byte[]{3,0,23},
                 new byte[]{
@@ -20,7 +19,7 @@ public class ThirdChallengeV2ResponseTest {
                 }
         );
 
-        ThirdChallengeV2Response parsedReq = (ThirdChallengeV2Response) MessageTester.test(
+        Jpake2Response parsedReq = (Jpake2Response) MessageTester.test(
                 "00022502aa00000300174104634f4cfde021623a609c98311ae7508b41126542de029b76b1781de8f3db6e723950a8e64715c97cf44d80a6976b91ab846cdbf732bf160c1c0223f0a674a4734104732ff948fed2dbb06806502a7ae7ca0afdf1991eab79c866ff53e9d23bd4d1886f3cb55663b7979947f6a96d52511ac843b9d28b20805f263365bc50d1b93d7620bec12ade679a6b482ba5bfbe973e91dcdcd87bc3ab04090803db2945cca39e4c9be8",
                 2,
                 10,

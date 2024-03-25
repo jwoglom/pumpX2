@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.FifthChallengeV2R
 import com.jwoglom.pumpx2.pump.messages.request.authentication.FourthChallengeV2Request;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
-import com.jwoglom.pumpx2.pump.messages.request.authentication.ThirdChallengeV2Request;
+import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -59,7 +59,7 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.FifthChallengeV2
 import com.jwoglom.pumpx2.pump.messages.response.authentication.FourthChallengeV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.ThirdChallengeV2Response;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
@@ -148,10 +148,10 @@ import java.util.Set;
 public enum Messages {
     API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),
     CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy
-    CENTRAL_CHALLENGE_V2(Jpake1aRequest.class, Jpake1aResponse.class), // jpake
+    JPAKE_ROUND1A(Jpake1aRequest.class, Jpake1aResponse.class), // jpake
     PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy
-    PUMP_CHALLENGE_V2(Jpake1bRequest.class, Jpake1bResponse.class), // jpake
-    THIRD_CHALLENGE_V2(ThirdChallengeV2Request.class, ThirdChallengeV2Response.class), // jpake
+    JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake
+    JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake
     FOURTH_CHALLENGE_V2(FourthChallengeV2Request.class, FourthChallengeV2Response.class), // jpake
     FIFTH_CHALLENGE_V2(FifthChallengeV2Request.class, FifthChallengeV2Response.class), // jpake
     ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),
