@@ -119,14 +119,14 @@ public class JpakeAuthBuilderIntegrationTest {
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
         assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
-        byte[] clientHkdf = Hkdf.build(b.clientNonce4, b.derivedSecret);
+        byte[] clientHkdf = Hkdf.build(b.serverNonce3, b.derivedSecret);
         assertEquals(32, clientHkdf.length);
-        byte[] clientHmacedHkdf = HmacSha256.hmacSha256(b.serverNonce3, clientHkdf);
+        byte[] clientHmacedHkdf = HmacSha256.hmacSha256(b.clientNonce4, clientHkdf);
         assertHexEquals(req4.getHashDigest(), clientHmacedHkdf);
 
-        byte[] serverHkdf = Hkdf.build(req4.getNonce(), b.derivedSecret);
+        byte[] serverHkdf = Hkdf.build(b.clientNonce4, b.derivedSecret);
         assertEquals(32, serverHkdf.length);
-        byte[] serverHmacedHkdf = HmacSha256.hmacSha256(b.clientNonce4, serverHkdf);
+        byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHkdf);
         assertEquals(32, serverHmacedHkdf.length);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
