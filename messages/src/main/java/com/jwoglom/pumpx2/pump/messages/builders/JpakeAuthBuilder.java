@@ -123,7 +123,7 @@ public class JpakeAuthBuilder {
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
             this.clientNonce4 = generateNonce();
-            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce3, this.derivedSecret);
+            byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
             byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, hkdfDerivedMaterial);
 
 
@@ -136,7 +136,7 @@ public class JpakeAuthBuilder {
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce4, this.derivedSecret);
+            byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
             byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
             if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
