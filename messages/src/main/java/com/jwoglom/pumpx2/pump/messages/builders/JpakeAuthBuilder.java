@@ -123,23 +123,26 @@ public class JpakeAuthBuilder {
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
             this.clientNonce4 = generateNonce();
-            byte[] hashDigest = Hkdf.build(this.serverNonce3, this.derivedSecret);
+            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce3, this.derivedSecret);
+            byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, hkdfDerivedMaterial);
 
-            L.i(TAG, "Req4 hashDigest=" + Hex.encodeHexString(hashDigest)+" clientNonce=" + Hex.encodeHexString(this.clientNonce4));
+
+            L.i(TAG, "Req4 hmacAuthHash=" + Hex.encodeHexString(hmacAuthHash)+" hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial));
             request = new Jpake4KeyConfirmationRequest(0,
                     this.clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    hashDigest
+                    hmacAuthHash
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            byte[] hashDigest = Hkdf.build(this.serverNonce4, this.derivedSecret);
-            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hashDigest))) {
+            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce4, this.derivedSecret);
+            byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
+            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
-                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hashDigest=" + Hex.encodeHexString(hashDigest) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
+                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial) + " hmacAuthHash=" + Hex.encodeHexString(hmacAuthHash) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
                 step = JpakeStep.INVALID;
             }
 

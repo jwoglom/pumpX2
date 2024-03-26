@@ -4,6 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
@@ -118,21 +119,24 @@ public class JpakeAuthBuilderIntegrationTest {
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
         assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
-        byte[] clientHmac = Hkdf.build(b.serverNonce3, b.derivedSecret);
-        assertEquals(32, clientHmac.length);
-        assertHexEquals(req4.getHashDigest(), clientHmac);
+        byte[] clientHkdf = Hkdf.build(b.serverNonce3, b.derivedSecret);
+        assertEquals(32, clientHkdf.length);
+        byte[] clientHmacedHkdf = HmacSha256.hmacSha256(b.serverNonce3, clientHkdf);
+        assertHexEquals(req4.getHashDigest(), clientHmacedHkdf);
 
-        byte[] serverHmac = Hkdf.build(b.clientNonce4, b.derivedSecret);
-        assertEquals(32, serverHmac.length);
+        byte[] serverHkdf = Hkdf.build(b.clientNonce4, b.derivedSecret);
+        assertEquals(32, serverHkdf.length);
+        byte[] serverHmacedHkdf = HmacSha256.hmacSha256(b.clientNonce4, serverHkdf);
+        assertEquals(32, serverHmacedHkdf.length);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
                 req4.getNonce(),
                 Jpake4KeyConfirmationResponse.RESERVED,
-                serverHmac);
+                serverHmacedHkdf);
         b.processResponse(res4);
 
         assertNull(b.nextRequest());
         assertEquals(JpakeAuthBuilder.JpakeStep.COMPLETE, b.step);
-
+        assertTrue(b.done());
     }
 }

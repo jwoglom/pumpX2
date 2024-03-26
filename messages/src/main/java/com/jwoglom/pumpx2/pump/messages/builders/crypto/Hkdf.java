@@ -2,8 +2,6 @@ package com.jwoglom.pumpx2.pump.messages.builders.crypto;
 
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import org.apache.commons.codec.DecoderException;
-
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
