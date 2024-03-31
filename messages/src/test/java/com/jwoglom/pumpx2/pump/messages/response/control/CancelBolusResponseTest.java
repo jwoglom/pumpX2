@@ -6,6 +6,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
@@ -100,5 +101,28 @@ public class CancelBolusResponseTest {
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.FAILED);
         assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.INVALID_OR_ALREADY_DELIVERED);
+    }
+
+    @Test
+    public void testCancelBolusResponse_Mobi_extendedbolus() throws DecoderException {
+        // TimeSinceResetResponse[currentTime=512442842,pumpTimeSinceReset=1905413,cargo={-38,65,-117,30,5,19,29,0}]
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1905413L);
+
+        // CancelBolusResponse[bolusId=34463,reasonId=2,statusId=1,cargo={1,-97,-122,2,0}]
+        CancelBolusResponse expected = new CancelBolusResponse(
+                0, 501, 0
+        );
+
+        CancelBolusResponse parsedRes = (CancelBolusResponse) MessageTester.test(
+                "002da12d1d00f50100007b428b1e59cc3479f5c851559f897f196f9511a5916f7499ff65",
+                45,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(parsedRes.getStatus(), CancelBolusResponse.CancelStatus.SUCCESS);
+        assertEquals(parsedRes.getReason(), CancelBolusResponse.CancelReason.NO_ERROR);
     }
 }
