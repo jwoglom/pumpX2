@@ -63,6 +63,9 @@ def add_args(ctx, opt):
   while True:
     arg = {}
     name = input('Arg name: ')
+    if name and name[0] == '?':
+      print("Unknown, using raw")
+      name = "raw"
     if name and name[0] == '+':
       n = int(name[1:])
       ctx[opt + "Size"] += n
@@ -100,8 +103,14 @@ def add_args(ctx, opt):
       arg["size"] = int(input("String length: "))
       arg["type"] = 'String'
     else:
-      arg["size"] = int(typ)
-      arg["type"] = 'int'
+      if name == 'raw':
+        arg["type"] = 'byte[]'
+      else:
+        arg["type"] = 'int'
+      if typ == '?':
+        arg["size"] = 10
+      else:
+        arg["size"] = int(typ)
     inp = None
     if not "--skipIndex" in sys.argv:
       inp = input('Index into sequence (%d?): ' % int(ctx[opt + "Size"]))
@@ -115,6 +124,7 @@ def add_args(ctx, opt):
 
     for i in ["UsedByTidepool", "UsedByAndroid", "ReferencedInAndroid"]:
       ctx["historyLog" + i] = ("--historyLog" + i) in sys.argv
+
 
   if ctx["cat"] == "historyLog":
     ctx[opt + "Size"] -= 10
@@ -136,7 +146,7 @@ def parseOp(op, request=False, response=False):
     while not i.lower() == 'y':
       i = input("Continue? (y)")
 
-  npos = n if n >= 0 else (1 + -1*n)
+  npos = n if n >= 0 else (-1*n)
   if request and npos % 2 != 0:
     print('This opcode is a request but is not divisible by 2 when it should')
     i = ''
