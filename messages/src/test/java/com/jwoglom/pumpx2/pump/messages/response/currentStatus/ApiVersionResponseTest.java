@@ -41,4 +41,20 @@ public class ApiVersionResponseTest {
         assertEquals(expected.getMajorVersion(), parsedRes.getMajorVersion());
         assertEquals(expected.getMinorVersion(), parsedRes.getMinorVersion());
     }
+    @Test
+    public void testApiVersionResponseMobi() throws DecoderException {
+        // Tandem Mobi release version
+        ApiVersionResponse expected = new ApiVersionResponse(3, 5);
+
+        ApiVersionResponse parsedRes = (ApiVersionResponse) MessageTester.test(
+                "000421040403000500d7cc",
+                4,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertEquals(expected.getMajorVersion(), parsedRes.getMajorVersion());
+        assertEquals(expected.getMinorVersion(), parsedRes.getMinorVersion());
+    }
 }
