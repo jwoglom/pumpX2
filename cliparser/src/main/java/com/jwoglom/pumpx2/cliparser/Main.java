@@ -253,7 +253,11 @@ public class Main {
         ) {
             possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
         } else if (
-                (opCode == 37 && len == 148) // InitiateBolusRequest
+                (opCode == 37 && len == 148) || // InitiateBolusRequest
+                (opCode == -92 && len == 78) || // SetTempRateRequest
+                (opCode == -91 && len == 70) || // SetTempRateResponse
+                (opCode == -90 && len == 66) || // StopTempRateRequest
+                (opCode == -89 && len == 68) // StopTempRateResponse
         ) {
             possibilities = ImmutableSet.of(Characteristic.CONTROL);
         } else if (

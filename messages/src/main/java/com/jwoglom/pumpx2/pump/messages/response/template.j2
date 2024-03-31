@@ -35,7 +35,7 @@ public class {{responseName}} extends Message {
         {% endif %}{% endfor %}{% endif %}
     }
 
-    public void parse(byte[] raw) {{% if catUuid == "CONTROL" %}
+    public void parse(byte[] raw) { {% if catUuid == "CONTROL" %}
         raw = this.removeSignedRequestHmacBytes(raw);{% endif %}
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;

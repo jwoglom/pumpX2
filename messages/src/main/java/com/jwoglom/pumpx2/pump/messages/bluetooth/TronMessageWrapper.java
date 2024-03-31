@@ -19,6 +19,9 @@ public class TronMessageWrapper {
 
         String authKey = "";
         if (requestMessage.signed()) {
+            if (PumpStateSupplier.authenticationKey == null) {
+                throw new RuntimeException("PumpStateSupplier.authenticationKey is not set, and a signed message was given to TronMessageWrapper");
+            }
             authKey = PumpStateSupplier.authenticationKey.get();
         }
         this.packets = Packetize.packetize(requestMessage, authKey, currentTxId);
