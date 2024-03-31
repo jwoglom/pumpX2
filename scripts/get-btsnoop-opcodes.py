@@ -4,6 +4,12 @@ import csv
 import subprocess
 import os, os.path
 import tempfile
+import arrow
+
+def parse_ts(ts):
+    if not ts:
+        return ''
+    return '#'+str(arrow.get(float(ts)))
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
@@ -26,7 +32,11 @@ lastSeqNum = {'READ': None, 'WRITE': None}
 for rline in reader:
     type = ''
 
-    btId, btOp, value = rline
+    if len(rline) == 3:
+        btId, btOp, value = rline
+        ts = ''
+    elif len(rline) == 4:
+        btId, btOp, value, ts = rline
 
     if btOp == '0x1b':
         type = 'READ'
@@ -51,24 +61,25 @@ for rline in reader:
             currentWrite.append(value)
     else:
         if type == 'READ':
-            packets.append(['READ', currentRead])
+            packets.append(['READ', currentRead, parse_ts(ts)])
             currentRead = [value]
         elif type == 'WRITE':
-            packets.append(['WRITE', currentWrite])
+            packets.append(['WRITE', currentWrite, parse_ts(ts)])
             currentWrite = [value]
     lastSeqNum[type] = seqNum
 
 if currentRead:
-    packets.append(['READ', currentRead])
+    packets.append(['READ', currentRead, parse_ts(ts)])
 if currentWrite:
-    packets.append(['WRITE', currentWrite])
+    packets.append(['WRITE', currentWrite, parse_ts(ts)])
 
 
 
 f = tempfile.NamedTemporaryFile(delete=False)
+print(f.name, file=sys.stderr)
 for packet in packets:
-    type, group = packet
-    f.write(("".join(group) + "\n").encode())
+    type, group, ts = packet
+    f.write(("".join(group) + ts+"\n").encode())
     # print(f'{type}\t{group}\t', end='')
     #print(parse(type, ))
     # sys.stdout.flush()

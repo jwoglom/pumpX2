@@ -31,5 +31,5 @@ if [[ "$log" == "" ]]; then
     exit 1
 fi
 
-tshark -r $log -T fields -E separator=, -E quote=d -e frame.number -e btatt.opcode -e btatt.value 'btatt.value' > $csv
+tshark -r $log -T fields -E separator=, -E quote=d -e frame.number -e btatt.opcode -e btatt.value -e frame.time_epoch 'btatt.value' > $csv
 $repoRoot/scripts/get-btsnoop-opcodes.py $csv > $tsv 2> $stderr

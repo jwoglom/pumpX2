@@ -84,7 +84,13 @@ public class Main {
                 filename = args[1];
                 lines = Files.readAllLines(Path.of(filename));
                 for (String line : lines) {
-                    System.out.println(line+"\t"+parseFull(line));
+                    String[] parts = line.split("#", 2);
+                    String parseLine = parts[0];
+                    String commentPart = "";
+                    if (parts.length == 2) {
+                        commentPart = "\t" + parts[1];
+                    }
+                    System.out.println(parseLine+"\t"+parseFull(parseLine)+commentPart);
                 }
                 break;
             case "read":
@@ -124,7 +130,7 @@ public class Main {
         try {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() == 0) {
-                return "Unknown opcode "+opCode;
+                return opCode+"\tUnknown opcode "+opCode;
             }
             Characteristic characteristic = null;
             for (Characteristic c : possibilities) {
@@ -143,7 +149,7 @@ public class Main {
                 messageStr += message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
             }
         } catch (NullPointerException e) {
-            return "Unknown opcode "+opCode;
+            return opCode+"\tUnknown opcode "+opCode;
         } catch (InstantiationException|IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -198,11 +204,27 @@ public class Main {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ");
+                int len = rawHex.length();
                 if (
-                    (opCode == 32 && rawHex.length() == 14) || // ApiVersionRequest with cargo size=2
-                    (opCode == 33 && rawHex.length() == 22)    // ApiVersionResponse
+                    (opCode == 32 && len == 14) || // ApiVersionRequest with cargo size=2
+                    (opCode == 33 && len == 22) || // ApiVersionResponse
+                    (opCode == 35 && len == 30) || // CurrentEGVGuiDataResponse
+                    (opCode == 37 && len == 22) // InsulinStatusResponse
                 ) {
                     possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                } else if (
+                    (opCode == 37 && len == 148) // InitiateBolusRequest
+                ) {
+                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                } else if (
+                    (opCode == 32 && len == 384) || // Jpake1aRequest
+                    (opCode == 33 && len == 384) || // Jpake1aResponse
+                    (opCode == 34 && len == 384) || // Jpake1bRequest
+                    (opCode == 35 && len == 384) || // Jpake1bResponse
+                    (opCode == 36 && len == 384) || // Jpake2Request
+                    (opCode == 37 && len == 354) // Jpake2Response
+                ) {
+                    possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
                 }
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
