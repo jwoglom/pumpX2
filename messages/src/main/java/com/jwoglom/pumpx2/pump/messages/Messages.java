@@ -144,6 +144,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeN
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg124Response;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetModesRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetSleepScheduleRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetSleepScheduleResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -226,6 +228,7 @@ public enum Messages {
     UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),
     UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),
     SET_MODES(SetModesRequest.class, SetModesResponse.class),
+    SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),
     // MESSAGES_END
     ;
 

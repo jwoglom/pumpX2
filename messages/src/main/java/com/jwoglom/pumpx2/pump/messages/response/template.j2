@@ -16,7 +16,8 @@ import java.math.BigInteger;
     opCode={{responseOpcode}},
     size={{responseSize}},
     type=MessageType.RESPONSE,
-    characteristic=Characteristic.{{catUuid}},
+    characteristic=Characteristic.{{catUuid}},{% if catUuid == "CONTROL" %}
+    signed=true,{% endif %}
     {% if mobiOnly %}minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
     {% endif %}request={{requestName}}.class
@@ -34,7 +35,8 @@ public class {{responseName}} extends Message {
         {% endif %}{% endfor %}{% endif %}
     }
 
-    public void parse(byte[] raw) {
+    public void parse(byte[] raw) {{% if catUuid == "CONTROL" %}
+        raw = this.removeSignedRequestHmacBytes(raw);{% endif %}
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         {% for arg in responseArgs %}{% if arg.name != "raw" %}this.{{ arg.name }} = {% if arg.size == 1 %}raw{% if arg.type == "byte[]" %}{% else %}[{{ arg.index }}]{% endif %}{% if arg.type == "boolean" %} != 0{% endif %};

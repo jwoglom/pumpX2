@@ -13,6 +13,8 @@ public enum MultiDay {
     SUNDAY(64),
     ;
 
+    public static final Set<MultiDay> ALL_DAYS = fromBitmask(127);
+
     private final int id;
 
     MultiDay(int id) {
