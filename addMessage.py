@@ -121,7 +121,7 @@ def add_args(ctx, opt):
 
   return ctx
 
-def parseOp(op):
+def parseOp(op, request=False, response=False):
   if op[:2] == '0x':
     n = int(op[2:], 16)
     print('Opcode %s = %d' % (op, n))
@@ -135,6 +135,20 @@ def parseOp(op):
     i = ''
     while not i.lower() == 'y':
       i = input("Continue? (y)")
+
+  npos = n if n >= 0 else (1 + -1*n)
+  if request and npos % 2 != 0:
+    print('This opcode is a request but is not divisible by 2 when it should')
+    i = ''
+    while not i.lower() == 'y':
+      i = input("Continue? (y)")
+
+  if response and npos % 2 != 1:
+    print('This opcode is a response but is divisible by 2 when it should not')
+    i = ''
+    while not i.lower() == 'y':
+      i = input("Continue? (y)")
+
   return n
 
 def build_ctx():
@@ -166,7 +180,7 @@ def build_ctx():
 
   ctx["requestName"] = ctx["name"] + 'Request'
   if not cat in RESPONSE_ONLY_CATEGORIES:
-    ctx["requestOpcode"] = parseOp(input(ctx["requestName"] + ' opcode: '))
+    ctx["requestOpcode"] = parseOp(input(ctx["requestName"] + ' opcode: '), request=True)
     ctx = add_args(ctx, "request")
   else:
     ctx["requestOpcode"] = 0
@@ -175,7 +189,7 @@ def build_ctx():
     ctx["responseName"] = ctx["name"] + 'Response'
   else:
     ctx["responseName"] = ctx["name"] + 'HistoryLog'
-  ctx["responseOpcode"] = parseOp(input(ctx["responseName"] + ' opcode: '))
+  ctx["responseOpcode"] = parseOp(input(ctx["responseName"] + ' opcode: '), response=True)
   ctx = add_args(ctx, "response")  
 
   print(json.dumps(ctx))

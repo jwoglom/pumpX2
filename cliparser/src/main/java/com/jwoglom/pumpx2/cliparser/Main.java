@@ -90,7 +90,7 @@ public class Main {
                     if (parts.length == 2) {
                         commentPart = "\t" + parts[1];
                     }
-                    System.out.println(parseLine+"\t"+parseFull(parseLine)+commentPart);
+                    System.out.println(parseLine+commentPart+"\t"+parseFull(parseLine));
                 }
                 break;
             case "read":
@@ -129,6 +129,7 @@ public class Main {
         String messageStr = "";
         try {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
+            possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
             if (possibilities.size() == 0) {
                 return opCode+"\tUnknown opcode "+opCode;
             }
@@ -204,28 +205,7 @@ public class Main {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ");
-                int len = rawHex.length();
-                if (
-                    (opCode == 32 && len == 14) || // ApiVersionRequest with cargo size=2
-                    (opCode == 33 && len == 22) || // ApiVersionResponse
-                    (opCode == 35 && len == 30) || // CurrentEGVGuiDataResponse
-                    (opCode == 37 && len == 22) // InsulinStatusResponse
-                ) {
-                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
-                } else if (
-                    (opCode == 37 && len == 148) // InitiateBolusRequest
-                ) {
-                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
-                } else if (
-                    (opCode == 32 && len == 384) || // Jpake1aRequest
-                    (opCode == 33 && len == 384) || // Jpake1aResponse
-                    (opCode == 34 && len == 384) || // Jpake1bRequest
-                    (opCode == 35 && len == 384) || // Jpake1bResponse
-                    (opCode == 36 && len == 384) || // Jpake2Request
-                    (opCode == 37 && len == 354) // Jpake2Response
-                ) {
-                    possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
-                }
+                possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
                     possibilities = ImmutableSet.of(Characteristic.CONTROL);
@@ -261,6 +241,33 @@ public class Main {
             System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
         }
+    }
+
+    private static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
+        int len = rawHex.length();
+        if (
+                (opCode == 32 && len == 14) || // ApiVersionRequest with cargo size=2
+                        (opCode == 33 && len == 22) || // ApiVersionResponse
+                        (opCode == 35 && len == 30) || // CurrentEGVGuiDataResponse
+                        (opCode == 37 && len == 22) // InsulinStatusResponse
+        ) {
+            possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+        } else if (
+                (opCode == 37 && len == 148) // InitiateBolusRequest
+        ) {
+            possibilities = ImmutableSet.of(Characteristic.CONTROL);
+        } else if (
+                (opCode == 32 && len == 384) || // Jpake1aRequest
+                        (opCode == 33 && len == 384) || // Jpake1aResponse
+                        (opCode == 34 && len == 384) || // Jpake1bRequest
+                        (opCode == 35 && len == 384) || // Jpake1bResponse
+                        (opCode == 36 && len == 384) || // Jpake2Request
+                        (opCode == 37 && len == 354) // Jpake2Response
+        ) {
+            possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
+        }
+
+        return possibilities;
     }
 
     public static Message testRequest(String rawHex, int txId, @Nullable UUID uuid, Message expected, String ...extraRawHex) throws DecoderException {

@@ -8,8 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 {% if mobiOnly %}import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
-{% endif %}
-import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
+{% endif %}import com.jwoglom.pumpx2.pump.messages.request.{{cat}}.{{requestName}};
 
 import java.math.BigInteger;
 
@@ -18,11 +17,9 @@ import java.math.BigInteger;
     size={{responseSize}},
     type=MessageType.RESPONSE,
     characteristic=Characteristic.{{catUuid}},
-    {% if mobiOnly %}
-    minApi=KnownApiVersion.MOBI_API_V3_5,
+    {% if mobiOnly %}minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
-    {% endif %}
-    request={{requestName}}.class
+    {% endif %}request={{requestName}}.class
 )
 public class {{responseName}} extends Message {
     {% for arg in responseArgs %}

@@ -8,19 +8,19 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg69Response;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode111Response;
 
 @MessageProps(
-    opCode=-70,
+    opCode=110,
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
-    response=UnknownMobiOpcodeNeg69Response.class
+    response=UnknownMobiOpcode111Response.class
 )
-public class UnknownMobiOpcodeNeg69Request extends Message { 
-    public UnknownMobiOpcodeNeg69Request() {
+public class UnknownMobiOpcode111Request extends Message { 
+    public UnknownMobiOpcode111Request() {
         this.cargo = EMPTY;
     }
 
