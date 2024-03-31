@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
@@ -152,6 +153,39 @@ public class InitiateBolusRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+    @Test
+    public void testInitiateBolusRequest_Mobi_Extended() throws DecoderException {
+        // TimeSinceResetResponse[currentTime=512442842,pumpTimeSinceReset=1905413,cargo={-38,65,-117,30,5,19,29,0}]
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1905413L);
+
+        // 0.5, 50/50, 2h
+        // units, percent now/later, duration
+        // -6,0,0,0,-11,1,0,0,12,0,0,0,0,0,0,0,0,0,0,-86,0,-6,10,0,0,0 ,0,0,0,0 ,0 ,0,0,0,0,0,0 < Base
+        // -6,0,0,0,-11,1,0,0,12,0,0,0,0,0,0,0,0,0,0,-86,0,-6,10,0,0,-6,0,0,0,32,28,0,0,0,0,0,0 < Extended
+        // extendedLaterVolume = -6,0,0,0 = 250
+        // extendedLaterSeconds = 32,28,0,0 = 7200 = 2 hours
+        // extended3 = 0,0,0,0 = 0 = presumably indicator of percent
+        //
+        InitiateBolusRequest expected = new InitiateBolusRequest(250, 501, 12, 0, 0, 0, 170, 2810, 250, 7200, 0);
+
+        InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
+                // Untitled_2_Live_-_Humans_iPhone
+                "030d9e0d3dfa000000f50100000c000000000000",
+                13,
+                3,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "020d00000000aa00fa0a0000fa000000201c0000",
+                "010d00000000b4968b1eae36a1f4be8a1069db07",
+                "000d5f7074e1705b443ff533986f"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        assertEquals(250, parsedReq.getExtendedVolume());
+        assertEquals(7200, parsedReq.getExtendedSeconds());
+
     }
 
     private byte[] stripHmacCargo(byte[] cargo) {

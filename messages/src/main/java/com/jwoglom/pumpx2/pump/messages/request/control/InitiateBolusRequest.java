@@ -36,9 +36,9 @@ public class InitiateBolusRequest extends Message {
     private int bolusCarbs;
     private int bolusBG;
     private long bolusIOB;
-    private long unknown1;
-    private long unknown2;
-    private long unknown3;
+    private long extendedVolume;
+    private long extendedSeconds;
+    private long extended3;
 
     public InitiateBolusRequest() {}
 
@@ -65,7 +65,23 @@ public class InitiateBolusRequest extends Message {
         this(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, 0, 0, 0);
     }
 
-    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long unknown1, long unknown2, long unknown3) {
+
+    /**
+     * The final command which initiates a bolus. Must specify a bolusID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}.
+     *
+     * @param totalVolume      the amount of insulin to be delivered, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}. For an extended bolus, this is the amount delivered now. The total amount of insulin delivered over the entire extended bolus period is totalVolume+extendedVolume.
+     * @param bolusID          the bolus ID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}
+     * @param bolusTypeBitmask the bitmask of bolus type. Use {@link com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType#toBitmask(BolusDeliveryHistoryLog.BolusType...)}
+     * @param foodVolume       the amount of insulin attributed within metadata from food (carbs; optional)
+     * @param correctionVolume the amount of insulin attributed within metadata from a correction (optional)
+     * @param bolusCarbs       the number of carbs attributed within metadata (optional)
+     * @param bolusBG          the current BG attributed within metadata, if overridden from the current CGM reading (optional)
+     * @param bolusIOB         the current IOB attributed within metadata (optional)
+     * @param extendedVolume   the amount of insulin to be delivered delayed via an extended bolus section, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}.
+     * @param extendedSeconds  the length of the extended bolus in seconds.
+     * @param extended3        TODO unknown, set as 0
+     */
+    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {
         Preconditions.checkArgument(totalVolume >= MIN_BOLUS_MILLIUNITS);
         Preconditions.checkArgument(bolusID > 0);
         Preconditions.checkArgument(foodVolume >= 0);
@@ -73,7 +89,7 @@ public class InitiateBolusRequest extends Message {
         Preconditions.checkArgument(bolusCarbs >= 0);
         Preconditions.checkArgument(bolusBG >= 0);
         Preconditions.checkArgument(bolusIOB >= 0);
-        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, unknown1, unknown2, unknown3);
+        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, extendedVolume, extendedSeconds, extended3);
         this.totalVolume = totalVolume; //
         this.bolusID = bolusID;
         this.bolusTypeBitmask = bolusTypeBitmask; //
@@ -82,9 +98,9 @@ public class InitiateBolusRequest extends Message {
         this.bolusCarbs = bolusCarbs; //
         this.bolusBG = bolusBG; //
         this.bolusIOB = bolusIOB; //
-        this.unknown1 = unknown1;
-        this.unknown2 = unknown2;
-        this.unknown3 = unknown3;
+        this.extendedVolume = extendedVolume;
+        this.extendedSeconds = extendedSeconds;
+        this.extended3 = extended3;
     }
 
     public void parse(byte[] raw) {
@@ -135,14 +151,18 @@ public class InitiateBolusRequest extends Message {
         this.bolusCarbs = Bytes.readShort(raw, 17); // correct
         this.bolusBG = Bytes.readShort(raw, 19); // correct
         this.bolusIOB = Bytes.readUint32(raw, 21);  // correct
-        // 25 - 36 inclusive are 0s
+        // STANDARD BOLUS: 25 - 36 inclusive are 0s
+        // EXTENDED BOLUS:
+        this.extendedVolume = Bytes.readUint32(raw, 25); // 25-28 = extended1
+        this.extendedSeconds = Bytes.readUint32(raw, 29); // 29-32 = extended2
+        this.extended3 = Bytes.readUint32(raw, 33); // 33-36 = extended3, seems to be 0
         // 24 byte hmac padding
         // this.timestamp = Bytes.readUint32(raw, 37); // equal to pumpTimeSinceReset
         // 41 - 61 unknown
     }
 
 
-    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long unknown1, long unknown2, long unknown3) {
+    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {
         return Bytes.combine(
                 Bytes.toUint32(totalVolume),
                 Bytes.firstTwoBytesLittleEndian(bolusID),
@@ -153,9 +173,9 @@ public class InitiateBolusRequest extends Message {
                 Bytes.firstTwoBytesLittleEndian(bolusCarbs),
                 Bytes.firstTwoBytesLittleEndian(bolusBG),
                 Bytes.toUint32(bolusIOB),
-                Bytes.toUint32(unknown1),
-                Bytes.toUint32(unknown2),
-                Bytes.toUint32(unknown3)
+                Bytes.toUint32(extendedVolume),
+                Bytes.toUint32(extendedSeconds),
+                Bytes.toUint32(extended3)
                 // 24 byte signed padding with hmac
 //                Bytes.toUint32(timestamp),
 //                new byte[20]
@@ -196,5 +216,17 @@ public class InitiateBolusRequest extends Message {
 
     public long getBolusIOB() {
         return bolusIOB;
+    }
+
+    public long getExtendedVolume() {
+        return extendedVolume;
+    }
+
+    public long getExtendedSeconds() {
+        return extendedSeconds;
+    }
+
+    public long getExtended3() {
+        return extended3;
     }
 }
