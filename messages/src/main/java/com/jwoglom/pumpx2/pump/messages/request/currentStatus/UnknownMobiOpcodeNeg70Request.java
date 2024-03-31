@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
+package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -8,28 +8,21 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg69Request;
-
-import java.math.BigInteger;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg70Response;
 
 @MessageProps(
-    opCode=-69,
-    size=53,
-    type=MessageType.RESPONSE,
+    opCode=-70,
+    size=0,
+    type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
-    request=UnknownMobiOpcodeNeg69Request.class
+    response=UnknownMobiOpcodeNeg70Response.class
 )
-public class UnknownMobiOpcodeNeg69Response extends Message {
-    
-    public UnknownMobiOpcodeNeg69Response(byte[] raw) {
-        parse(raw);
+public class UnknownMobiOpcodeNeg70Request extends Message { 
+    public UnknownMobiOpcodeNeg70Request() {
+        this.cargo = EMPTY;
     }
-
-    public UnknownMobiOpcodeNeg69Response() {
-    }
-
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
@@ -37,6 +30,5 @@ public class UnknownMobiOpcodeNeg69Response extends Message {
         
     }
 
-    
     
 }

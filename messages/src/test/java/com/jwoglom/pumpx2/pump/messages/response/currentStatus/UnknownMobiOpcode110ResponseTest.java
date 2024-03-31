@@ -8,14 +8,14 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class UnknownMobiOpcode111ResponseTest {
+public class UnknownMobiOpcode110ResponseTest {
     @Test
-    public void testUnknownMobiOpcode111Response_a() throws DecoderException {
-        UnknownMobiOpcode111Response expected = new UnknownMobiOpcode111Response(
+    public void testUnknownMobiOpcode110Response_a() throws DecoderException {
+        UnknownMobiOpcode110Response expected = new UnknownMobiOpcode110Response(
             new byte[]{-47,-64,0,0}
         );
 
-        UnknownMobiOpcode111Response parsedRes = (UnknownMobiOpcode111Response) MessageTester.test(
+        UnknownMobiOpcode110Response parsedRes = (UnknownMobiOpcode110Response) MessageTester.test(
                 // HobbyBill/Untitled_1_Live_-_Humans_iPhone_non-decoded.btsnoop
                 "00e36fe304d1c00000a3fc",
                 -29,
@@ -28,12 +28,12 @@ public class UnknownMobiOpcode111ResponseTest {
     }
 
     @Test
-    public void testUnknownMobiOpcode111Response_b() throws DecoderException {
-        UnknownMobiOpcode111Response expected = new UnknownMobiOpcode111Response(
+    public void testUnknownMobiOpcode110Response_b() throws DecoderException {
+        UnknownMobiOpcode110Response expected = new UnknownMobiOpcode110Response(
                 new byte[]{-47,-64,0,0}
         );
 
-        UnknownMobiOpcode111Response parsedRes = (UnknownMobiOpcode111Response) MessageTester.test(
+        UnknownMobiOpcode110Response parsedRes = (UnknownMobiOpcode110Response) MessageTester.test(
                 // HobbyBill/Untitled_1_Live_-_Humans_iPhone_non-decoded.btsnoop
                 "00e46fe404d1c00000e234",
                 -28,
@@ -46,12 +46,12 @@ public class UnknownMobiOpcode111ResponseTest {
     }
 
     @Test
-    public void testUnknownMobiOpcode111Response_c() throws DecoderException {
-        UnknownMobiOpcode111Response expected = new UnknownMobiOpcode111Response(
+    public void testUnknownMobiOpcode110Response_c() throws DecoderException {
+        UnknownMobiOpcode110Response expected = new UnknownMobiOpcode110Response(
                 new byte[]{57,-62,0,0}
         );
 
-        UnknownMobiOpcode111Response parsedRes = (UnknownMobiOpcode111Response) MessageTester.test(
+        UnknownMobiOpcode110Response parsedRes = (UnknownMobiOpcode110Response) MessageTester.test(
                 // HobbyBill/Untitled_1_Live_-_Humans_iPhone_non-decoded.btsnoop
                 "00fa6ffa0439c200008cc1",
                 -6,

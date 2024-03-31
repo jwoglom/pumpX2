@@ -4,20 +4,20 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg69Request;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg70Request;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class UnknownMobiOpcodeNeg69RequestTest {
+public class UnknownMobiOpcodeNeg70RequestTest {
     @Test
     @Ignore("no testdata")
-    public void testUnknownMobiOpcodeNeg69Request() throws DecoderException {
+    public void testUnknownMobiOpcodeNeg70Request() throws DecoderException {
         // empty cargo
-        UnknownMobiOpcodeNeg69Request expected = new UnknownMobiOpcodeNeg69Request();
+        UnknownMobiOpcodeNeg70Request expected = new UnknownMobiOpcodeNeg70Request();
 
-        UnknownMobiOpcodeNeg69Request parsedReq = (UnknownMobiOpcodeNeg69Request) MessageTester.test(
+        UnknownMobiOpcodeNeg70Request parsedReq = (UnknownMobiOpcodeNeg70Request) MessageTester.test(
                 "xxxx",
                 3,
                 1,

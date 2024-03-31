@@ -9,7 +9,7 @@ import arrow
 def parse_ts(ts):
     if not ts:
         return ''
-    return '#'+str(arrow.get(float(ts)))
+    return str(arrow.get(float(ts)))
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
@@ -40,10 +40,14 @@ for rline in reader:
 
     if btOp == '0x1b':
         type = 'READ'
-    elif btOp == '0x52':
+    elif btOp == '0x52': # android btsnoop
+        type = 'WRITE'
+    elif btOp == '0x12': # iOS packetlogger
         type = 'WRITE'
     
+    
     if not type:
+        print('unknown btOp, skipping', btOp, file=sys.stderr)
         continue
 
     value = value.split("â")[0]
@@ -76,10 +80,12 @@ if currentWrite:
 
 
 f = tempfile.NamedTemporaryFile(delete=False)
-print(f.name, file=sys.stderr)
 for packet in packets:
     type, group, ts = packet
-    f.write(("".join(group) + ts+"\n").encode())
+    prettyMap = {'READ':'ReadResp', 'WRITE':'WriteReq'}
+    if ts:
+        ts = '\t'+ts
+    f.write(("".join(group) + "#" + prettyMap.get(type, type) + ""+ts+"\n").encode())
     # print(f'{type}\t{group}\t', end='')
     #print(parse(type, ))
     # sys.stdout.flush()
