@@ -159,6 +159,11 @@ def build_ctx():
   ctx["cat"] = cat
   ctx["catUuid"] = CATEGORY_UUID[cat]
 
+  ctx["mobiOnly"] = False
+  if ("--mobi") in sys.argv:
+    print('Mobi-only')
+    ctx["mobiOnly"] = True
+
   ctx["requestName"] = ctx["name"] + 'Request'
   if not cat in RESPONSE_ONLY_CATEGORIES:
     ctx["requestOpcode"] = parseOp(input(ctx["requestName"] + ' opcode: '))

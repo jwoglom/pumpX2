@@ -134,6 +134,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationReques
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LocalizationResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionReleaseRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionReleaseResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg69Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg69Response;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -211,6 +213,7 @@ public enum Messages {
     REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),
     LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),
     BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),
+    UNKNOWN_MOBI_OPCODE_NEG69(UnknownMobiOpcodeNeg69Request.class, UnknownMobiOpcodeNeg69Response.class),
     // MESSAGES_END
     ;
 
