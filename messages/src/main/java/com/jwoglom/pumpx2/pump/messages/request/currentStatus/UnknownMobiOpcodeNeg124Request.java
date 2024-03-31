@@ -12,16 +12,17 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode
 
 @MessageProps(
     opCode=-124,
-    size=24,
+    size=0, // 24 bytes with trailer
     type=MessageType.REQUEST,
-    characteristic=Characteristic.CURRENT_STATUS,
+    signed=true,
+    characteristic=Characteristic.CONTROL,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
     response=UnknownMobiOpcodeNeg124Response.class
 )
 public class UnknownMobiOpcodeNeg124Request extends Message {
     public UnknownMobiOpcodeNeg124Request(byte[] raw) {
-        this.cargo = raw;
+        parse(raw);
     }
 
     public UnknownMobiOpcodeNeg124Request() {
@@ -29,6 +30,7 @@ public class UnknownMobiOpcodeNeg124Request extends Message {
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         

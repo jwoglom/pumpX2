@@ -7,7 +7,6 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -20,6 +19,7 @@ import kotlin.text.Charsets;
 
 public class PacketArrayList {
     protected static final String TAG = "PacketArrayList";
+    public static final String IGNORE_INVALID_HMAC = "IGNORE_HMAC_SIGNATURE_EXCEPTION";
 
     protected byte expectedOpCode;
     protected byte expectedCargoSize;
@@ -104,6 +104,9 @@ public class PacketArrayList {
             Intrinsics.checkExpressionValueIsNotNull(bytes, "(this as java.lang.String).getBytes(charset)");
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, bytes);
             if (!Arrays.equals(expectedHmac, hmacSha)) {
+                if (str.equals(IGNORE_INVALID_HMAC)) {
+                    return true;
+                }
                 throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
                 //return false;
             }

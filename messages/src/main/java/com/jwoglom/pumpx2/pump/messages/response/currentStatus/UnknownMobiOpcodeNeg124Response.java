@@ -14,33 +14,42 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-123,
-    size=25,
+    size=1, // 25 with trailer
     type=MessageType.RESPONSE,
-    characteristic=Characteristic.CURRENT_STATUS,
+    characteristic=Characteristic.CONTROL,
+    signed=true,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
     request=UnknownMobiOpcodeNeg124Request.class
 )
 public class UnknownMobiOpcodeNeg124Response extends Message {
-    
+
+    private int status;
     
     public UnknownMobiOpcodeNeg124Response() {}
-    
+
+    public UnknownMobiOpcodeNeg124Response(int status) {
+        this.cargo = buildCargo(status);
+    }
+
     public UnknownMobiOpcodeNeg124Response(byte[] raw) {
-        this.cargo = buildCargo(raw);
-        
+        parse(raw);
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
+        this.status = raw[0];
         
     }
 
     
-    public static byte[] buildCargo(byte[] raw) {
-        return Bytes.combine(
-            raw);
+    public static byte[] buildCargo(int status) {
+        return new byte[]{(byte) status};
     }
-    
+
+    public int getStatus() {
+        return status;
+    }
 }
