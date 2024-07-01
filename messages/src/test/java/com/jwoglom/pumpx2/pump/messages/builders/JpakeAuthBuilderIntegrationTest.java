@@ -123,9 +123,17 @@ public class JpakeAuthBuilderIntegrationTest {
         b.processResponse(res3);
         assertHexEquals(nonce, b.serverNonce3);
 
+        String step4Type = "hkdf-hmac";
+
         // (4) CLIENT
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
-        byte[] clientHashDigest = Hkdf.build(req4.getNonce(), b.derivedSecret);
+        byte[] clientHashDigest = step4Type.equals("hkdf") ?
+                    Hkdf.build(req4.getNonce(), b.derivedSecret) :
+                step4Type.equals("hmac") ?
+                    HmacSha256.hmacSha256(b.derivedSecret, req4.getNonce()) :
+                step4Type.equals("hkdf-hmac") ?
+                    HmacSha256.hmacSha256(Hkdf.build(b.serverNonce3, b.derivedSecret), req4.getNonce()) :
+                null;
         assertEquals(32, clientHashDigest.length);
         assertHexEquals(req4.getHashDigest(), clientHashDigest);
         //assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
@@ -139,15 +147,21 @@ public class JpakeAuthBuilderIntegrationTest {
         // (4) SERVER
         byte[] serverNonce = b.generateNonce();
         assertHexEquals(serverNonce, Hex.decodeHex("ad08275f109e41b0"));
-        byte[] serverHkdfHashDigest = Hkdf.build(serverNonce, b.derivedSecret);
-        assertEquals(32, serverHkdfHashDigest.length);
-        //byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHkdfHashDigest);
+        byte[] serverHashDigest = step4Type.equals("hkdf") ?
+                Hkdf.build(serverNonce, b.derivedSecret) :
+            step4Type.equals("hmac") ?
+                HmacSha256.hmacSha256(b.derivedSecret, serverNonce) :
+            step4Type.equals("hkdf-hmac") ?
+                HmacSha256.hmacSha256(Hkdf.build(req4.getNonce(), b.derivedSecret), serverNonce) :
+            null;
+        assertEquals(32, serverHashDigest.length);
+        //byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHashDigest);
         //assertEquals(32, serverHmacedHkdf.length);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
                 serverNonce,
                 Jpake4KeyConfirmationResponse.RESERVED,
-                serverHkdfHashDigest);
+                serverHashDigest);
         b.processResponse(res4);
 
         assertNull(b.nextRequest());

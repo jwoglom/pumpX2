@@ -50,7 +50,7 @@ public class JpakeAuthBuilder {
 
     public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2, SecureRandom rand) {
         this.pairingCode = pairingCode;
-        this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCode.getBytes(StandardCharsets.UTF_8), rand);
+        this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCodeToBytes(pairingCode), rand);
         this.sentMessages = new ArrayList<>();
         this.receivedMessages = new ArrayList<>();
 
@@ -68,6 +68,29 @@ public class JpakeAuthBuilder {
 
     public JpakeAuthBuilder(String pairingCode, SecureRandom random) {
         this(pairingCode, JpakeStep.INITIAL, null, null, null, null, random);
+    }
+
+    static byte[] pairingCodeToBytes(String pairingCode) {
+        return pairingCode.getBytes(StandardCharsets.UTF_8);
+//        byte[] ret = new byte[6];
+//        for (int i=0; i<pairingCode.length(); i++) {
+//            ret[i] = charCode(pairingCode.charAt(i));
+//        }
+//        return ret;
+    }
+
+    static byte charCode(char c) {
+        if (c == '0') return 0;
+        if (c == '1') return 1;
+        if (c == '2') return 2;
+        if (c == '3') return 3;
+        if (c == '4') return 4;
+        if (c == '5') return 5;
+        if (c == '6') return 6;
+        if (c == '7') return 7;
+        if (c == '8') return 8;
+        if (c == '9') return 9;
+        return -1;
     }
 
     private static JpakeAuthBuilder INSTANCE = null;
@@ -88,6 +111,8 @@ public class JpakeAuthBuilder {
     public static void clearInstance() {
         INSTANCE = null;
     }
+
+    String step4Type = "hkdf-hmac";
 
     public Message nextRequest() {
         Message request;
@@ -132,27 +157,43 @@ public class JpakeAuthBuilder {
             // Hkdf returns 8
             // Hmac returns 32
 
+            byte[] hashDigest3 = step4Type.equals("hkdf") ?
+                        Hkdf.build(clientNonce4, derivedSecret) :
+                    step4Type.equals("hmac") ?
+                        HmacSha256.hmacSha256(derivedSecret, clientNonce4) :
+                    step4Type.equals("hkdf-hmac") ?
+                        HmacSha256.hmacSha256(Hkdf.build(serverNonce3, derivedSecret), clientNonce4) :
+                    null;
+
 
             L.i(TAG, "Req4: clientNonce4=" + Hex.encodeHexString(clientNonce4));
             L.i(TAG, "Req4: derivedSecret=" + Hex.encodeHexString(derivedSecret));
-            L.i(TAG, "Req4: HmacSha256.hmacSha256(clientNonce4, derivedSecret)=" + Hex.encodeHexString(HmacSha256.hmacSha256(clientNonce4, derivedSecret)));
+            L.i(TAG, "Req4: HmacSha256.hmacSha256(derivedSecret, clientNonce4)=" + Hex.encodeHexString(HmacSha256.hmacSha256(derivedSecret, clientNonce4)));
             L.i(TAG, "Req4: Hkdf.build(clientNonce4, derivedSecret)=" + Hex.encodeHexString(Hkdf.build(clientNonce4, derivedSecret)));
+            L.i(TAG, "Req4: HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), clientNonce4)=" + Hex.encodeHexString(HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), clientNonce4)));
             request = new Jpake4KeyConfirmationRequest(0,
                     clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    Hkdf.build(clientNonce4, derivedSecret)
+                    hashDigest3
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce4, this.derivedSecret);
+
+            byte[] derivedMaterial = step4Type.equals("hkdf") ?
+                        Hkdf.build(serverNonce4, derivedSecret) :
+                    step4Type.equals("hmac") ?
+                        HmacSha256.hmacSha256(derivedSecret, serverNonce4) :
+                    step4Type.equals("hkdf-hmac") ?
+                        HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), serverNonce4) :
+                    null;
             //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
             //if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
-            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hkdfDerivedMaterial))) {
+            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(derivedMaterial))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
-                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial) + " serverHashDigest4=" + Hex.encodeHexString(serverNonce4));
+                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE derivedMaterial=" + Hex.encodeHexString(derivedMaterial));
                 L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
                 L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
                 step = JpakeStep.INVALID;
