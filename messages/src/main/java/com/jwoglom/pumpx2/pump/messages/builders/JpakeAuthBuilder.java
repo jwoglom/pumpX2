@@ -73,8 +73,7 @@ public class JpakeAuthBuilder {
     private static JpakeAuthBuilder INSTANCE = null;
     public static JpakeAuthBuilder getInstance(String pairingCode) {
         if (INSTANCE == null || !INSTANCE.pairingCode.equals(pairingCode)) {
-            // INSECURE
-            INSTANCE = new JpakeAuthBuilder(pairingCode, new AllZeroSecureRandom());
+            INSTANCE = new JpakeAuthBuilder(pairingCode);
         }
         return INSTANCE;
     }
@@ -139,21 +138,23 @@ public class JpakeAuthBuilder {
             L.i(TAG, "Req4: HmacSha256.hmacSha256(clientNonce4, derivedSecret)=" + Hex.encodeHexString(HmacSha256.hmacSha256(clientNonce4, derivedSecret)));
             L.i(TAG, "Req4: Hkdf.build(clientNonce4, derivedSecret)=" + Hex.encodeHexString(Hkdf.build(clientNonce4, derivedSecret)));
             request = new Jpake4KeyConfirmationRequest(0,
-                    HmacSha256.hmacSha256(serverNonce3, derivedSecret),
+                    clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
-                    clientNonce4
+                    Hkdf.build(clientNonce4, derivedSecret)
             );
 
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
-            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverHashDigest4, this.derivedSecret);
+            byte[] hkdfDerivedMaterial = Hkdf.build(this.serverNonce4, this.derivedSecret);
             //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
             //if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
-            if (Hex.encodeHexString(serverNonce4).equals(Hex.encodeHexString(hkdfDerivedMaterial))) {
+            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hkdfDerivedMaterial))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
                 L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial) + " serverHashDigest4=" + Hex.encodeHexString(serverNonce4));
+                L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
+                L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
                 step = JpakeStep.INVALID;
             }
 

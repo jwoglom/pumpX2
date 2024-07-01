@@ -12,7 +12,6 @@ import org.junit.Test;
 
 public class Jpake4KeyConfirmationRequestTest {
     // ./android-2024-02-29-6char2.csv
-    @Ignore("TODO fix once jpake works")
     @Test
     public void test_167cargo_fifthchallenge_split() throws DecoderException {
         Jpake4KeyConfirmationRequest expected = new Jpake4KeyConfirmationRequest(
