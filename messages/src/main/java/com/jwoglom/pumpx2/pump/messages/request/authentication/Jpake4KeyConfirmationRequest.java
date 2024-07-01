@@ -27,21 +27,21 @@ import java.util.Arrays;
 )
 public class Jpake4KeyConfirmationRequest extends Message {
     private int appInstanceId;
-    private byte[] nonce;
-    private byte[] reserved;
     private byte[] hashDigest;
+    private byte[] reserved;
+    private byte[] nonce;
 
     public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
 
     public Jpake4KeyConfirmationRequest() {}
 
 
-    public Jpake4KeyConfirmationRequest(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {
-        this.cargo = buildCargo(appInstanceId, nonce, reserved, hashDigest);
+    public Jpake4KeyConfirmationRequest(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
+        this.cargo = buildCargo(appInstanceId, hashDigest, reserved, nonce);
         this.appInstanceId = appInstanceId;
-        this.nonce = nonce;
-        this.reserved = reserved;
         this.hashDigest = hashDigest;
+        this.reserved = reserved;
+        this.nonce = nonce;
     }
 
     public Jpake4KeyConfirmationRequest(byte[] rawCargo) {
@@ -56,24 +56,24 @@ public class Jpake4KeyConfirmationRequest extends Message {
         return nonce;
     }
 
-    public byte[] getReserved() {
-        return reserved;
-    }
-
     public byte[] getHashDigest() {
         return hashDigest;
     }
 
+    public byte[] getReserved() {
+        return reserved;
+    }
+
     private static byte[] buildCargo(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
-        Preconditions.checkArgument(hashDigest.length == 8);
+        Preconditions.checkArgument(nonce.length == 8, "nonce was " + nonce.length + " not 8");
         Preconditions.checkArgument(reserved.length == 8);
-        Preconditions.checkArgument(nonce.length == 32);
+        Preconditions.checkArgument(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");
         byte[] cargo = new byte[50];
         System.arraycopy(Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(appInstanceId),
-                hashDigest,
+                nonce,
                 reserved,
-                nonce
+                hashDigest
         ), 0, cargo, 0, 50);
 
         return cargo;

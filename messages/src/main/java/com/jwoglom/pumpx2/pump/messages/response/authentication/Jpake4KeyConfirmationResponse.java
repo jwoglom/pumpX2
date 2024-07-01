@@ -21,21 +21,21 @@ import java.util.Arrays;
 )
 public class Jpake4KeyConfirmationResponse extends Message {
     private int appInstanceId;
-    private byte[] nonce;
-    private byte[] reserved;
     private byte[] hashDigest;
+    private byte[] reserved;
+    private byte[] nonce;
 
     public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
 
     public Jpake4KeyConfirmationResponse() {}
 
 
-    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {
-        this.cargo = buildCargo(appInstanceId, nonce, reserved, hashDigest);
+    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
+        this.cargo = buildCargo(appInstanceId, hashDigest, reserved, nonce);
         this.appInstanceId = appInstanceId;
-        this.nonce = nonce;
-        this.reserved = reserved;
         this.hashDigest = hashDigest;
+        this.reserved = reserved;
+        this.nonce = nonce;
     }
 
     public Jpake4KeyConfirmationResponse(byte[] rawCargo) {
@@ -46,28 +46,28 @@ public class Jpake4KeyConfirmationResponse extends Message {
         return appInstanceId;
     }
 
-    public byte[] getNonce() {
-        return nonce;
+    public byte[] getHashDigest() {
+        return hashDigest;
     }
 
     public byte[] getReserved() {
         return reserved;
     }
 
-    public byte[] getHashDigest() {
-        return hashDigest;
+    public byte[] getNonce() {
+        return nonce;
     }
 
-    private static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {
-        Preconditions.checkArgument(nonce.length == 8);
+    private static byte[] buildCargo(int appInstanceId, byte[] hashDigest, byte[] reserved, byte[] nonce) {
+        Preconditions.checkArgument(hashDigest.length == 8, "hashDigest was " + hashDigest.length + " not 8");
         Preconditions.checkArgument(reserved.length == 8);
-        Preconditions.checkArgument(hashDigest.length == 32);
+        Preconditions.checkArgument(nonce.length == 32, "nonce was " + nonce.length + " not 32");
         byte[] cargo = new byte[50];
         System.arraycopy(Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(appInstanceId),
-                nonce,
+                hashDigest,
                 reserved,
-                hashDigest
+                nonce
         ), 0, cargo, 0, 50);
 
         return cargo;
@@ -76,8 +76,8 @@ public class Jpake4KeyConfirmationResponse extends Message {
     public void parse(byte[] raw) {
         this.cargo = raw;
         this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);
-        this.nonce = Arrays.copyOfRange(raw, 2, 10);
+        this.hashDigest = Arrays.copyOfRange(raw, 2, 10);
         this.reserved = Arrays.copyOfRange(raw, 10, 18);
-        this.hashDigest = Arrays.copyOfRange(raw, 18, 50); // 32
+        this.nonce = Arrays.copyOfRange(raw, 18, 50); // 32
     }
 }

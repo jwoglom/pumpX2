@@ -6,11 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.builders.jpake.SecureRandomMock;
-import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
@@ -26,7 +24,6 @@ import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class JpakeAuthBuilderIntegrationTest {
@@ -46,7 +43,9 @@ public class JpakeAuthBuilderIntegrationTest {
                 // generateNonce() server
                 "e734344901549417" +
                 // generateNonce() client
-                "998c182c9d70a375"));
+                "998c182c9d70a375" +
+                // generateNonce() server
+                "ad08275f109e41b0"));
 //        EcJpake cli = new EcJpake(EcJpake.Role.CLIENT, "passw0rd".getBytes(), rand);
 //        byte[] cliRound1 = cli.getRound1();
 //        assertArrayEquals(cliRound1, Hex.decodeHex("4104e92f1a97685b86ea2e8a583724095e355955d1356942c2fa7a0da21f148690052607421562f9771fbcf70fdc33056b2f2596145d8c5cd7be986259e2918d9f554104854faebe27e2f81652f0e71b38410d704fc521965bd40005fa47de22d7de67c2ba301fe248f63b954891e5ba9237c4dace174b022dcc6d55cc977115e0e5e24a2062080ced0ce4c03ca7fb9c80e1374939956623bc951905ac6ed5c6a96ea647c34104580e59d4e2377620a0e2003a22cf5b603165676e48de7095c21f8c76afdef847bc976aa1f58ee050c757f9ccc2af19142a15714a27268886fc50ddf0f8b4573e41046b1d85ca2a6bf3e956269bac6529856ab73089e1522eba11b2b16f2e50908cd6ee7bb6b1f7ecefc424bebe177039e9e2c98da07c7f521388789d5bb37dc2830e209967d2ec8e533bb526645218a376bb3d318103e0aef96c300f30986ab3d0e027"));
@@ -118,23 +117,28 @@ public class JpakeAuthBuilderIntegrationTest {
         assertHexEquals(nonce, b.serverNonce3);
 
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
-        assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
+        byte[] hmacSha4 = HmacSha256.hmacSha256(b.serverNonce3, b.derivedSecret);
+        assertEquals(32, hmacSha4.length);
+        assertHexEquals(req4.getHashDigest(), hmacSha4);
+        //assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
         //byte[] clientHkdf = Hkdf.build(b.serverNonce3, b.derivedSecret);
         //assertEquals(32, clientHkdf.length);
         //byte[] clientHmacedHkdf = HmacSha256.hmacSha256(b.clientNonce4, clientHkdf);
-        byte[] hmacAuthHash = HmacSha256.hmacSha256(b.serverNonce3, b.derivedSecret);
-        assertEquals(32, hmacAuthHash.length);
-        assertHexEquals(req4.getHashDigest(), hmacAuthHash);
+        //byte[] hmacAuthHash = HmacSha256.hmacSha256(b.serverNonce3, b.derivedSecret);
+        //byte[] hmacAuthHash = HmacSha256.hmacSha256(b.serverNonce3, HmacSha256.hmacSha256(b.clientNonce4, b.derivedSecret));
+        assertHexEquals(req4.getNonce(), b.clientNonce4);
 
-        byte[] serverHkdf = Hkdf.build(b.clientNonce4, b.derivedSecret);
-        assertEquals(32, serverHkdf.length);
-        //byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHkdf);
+        byte[] serverNonce = b.generateNonce();
+        assertHexEquals(serverNonce, Hex.decodeHex("ad08275f109e41b0"));
+        byte[] serverHkdfHashDigest = Hkdf.build(serverNonce, b.derivedSecret);
+        assertEquals(32, serverHkdfHashDigest.length);
+        //byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHkdfHashDigest);
         //assertEquals(32, serverHmacedHkdf.length);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
-                req4.getNonce(),
+                serverNonce,
                 Jpake4KeyConfirmationResponse.RESERVED,
-                serverHkdf);
+                serverHkdfHashDigest);
         b.processResponse(res4);
 
         assertNull(b.nextRequest());
