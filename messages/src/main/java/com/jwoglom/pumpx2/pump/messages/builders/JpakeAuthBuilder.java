@@ -4,6 +4,7 @@ import static org.apache.commons.codec.digest.HmacUtils.hmacSha256;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
+import com.jwoglom.pumpx2.pump.messages.builders.crypto.AllZeroSecureRandom;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -70,10 +71,15 @@ public class JpakeAuthBuilder {
         this(pairingCode, JpakeStep.INITIAL, null, null, null, null, new SecureRandom());
     }
 
+    public JpakeAuthBuilder(String pairingCode, SecureRandom random) {
+        this(pairingCode, JpakeStep.INITIAL, null, null, null, null, random);
+    }
+
     private static JpakeAuthBuilder INSTANCE = null;
     public static JpakeAuthBuilder getInstance(String pairingCode) {
         if (INSTANCE == null || !INSTANCE.pairingCode.equals(pairingCode)) {
-            INSTANCE = new JpakeAuthBuilder(pairingCode);
+            // INSECURE
+            INSTANCE = new JpakeAuthBuilder(pairingCode, new AllZeroSecureRandom());
         }
         return INSTANCE;
     }
@@ -123,11 +129,11 @@ public class JpakeAuthBuilder {
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
             // TODO: determine hashdigest + nonce
             this.clientNonce4 = generateNonce();
-            byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
-            byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, hkdfDerivedMaterial);
+            //byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
+            byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, this.derivedSecret);
 
 
-            L.i(TAG, "Req4 hmacAuthHash=" + Hex.encodeHexString(hmacAuthHash)+" hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial));
+            L.i(TAG, "Req4 hmacAuthHash=" + Hex.encodeHexString(hmacAuthHash) + " derivedSecret=" + this.derivedSecret + " serverNonce3=" + this.serverNonce3);
             request = new Jpake4KeyConfirmationRequest(0,
                     this.clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
@@ -137,12 +143,13 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
             byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
-            byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
-            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
+            //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
+            //if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
+            if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hkdfDerivedMaterial))) {
                 L.i(TAG, "HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
-                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial) + " hmacAuthHash=" + Hex.encodeHexString(hmacAuthHash) + " serverHashDigest=" + Hex.encodeHexString(serverHashDigest4));
+                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hkdfDerivedMaterial=" + Hex.encodeHexString(hkdfDerivedMaterial) + " serverHashDigest4=" + Hex.encodeHexString(serverHashDigest4));
                 step = JpakeStep.INVALID;
             }
 

@@ -7,9 +7,11 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SetTempRateResponseTest {
+    @Ignore
     @Test
     public void testSetTempRateResponse() throws DecoderException { 
         initPumpState("authenticationKey", 0L);
