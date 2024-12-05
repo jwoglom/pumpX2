@@ -148,8 +148,9 @@ public class PacketArrayList {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];
             byte txId = bArr[3];
+            L.d(TAG, "PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));
             if (txId != this.expectedTxId) {
-                throw new IllegalArgumentException("Unexpected transaction ID in packet: " + ((int) txId) + ", expecting " + ((int) this.expectedTxId));
+                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
             } else if (cargoSize != this.actualExpectedCargoSize) {
                 if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
                     L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
