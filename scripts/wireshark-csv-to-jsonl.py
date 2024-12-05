@@ -4,13 +4,13 @@ import csv
 import subprocess
 import os, os.path
 import tempfile
-import arrow
+import datetime
 import json
 
 def parse_ts(ts):
     if not ts:
         return ''
-    return str(arrow.get(float(ts)))
+    return str(datetime.datetime.fromtimestamp(float(ts)))
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
@@ -59,6 +59,10 @@ for rline in reader:
         continue
 
     value = value.split("â")[0]
+
+    if len(value) <= 4:
+        print('btVal less than 4, skipping', value, file=sys.stderr)
+        continue
 
     remainingPackets = int(value[0:2], 16)
     seqNum = int(value[2:4], 16)

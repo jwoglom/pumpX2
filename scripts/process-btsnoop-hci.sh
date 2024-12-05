@@ -34,5 +34,14 @@ if [[ "$log" == "" ]]; then
     exit 1
 fi
 
+echo Exporting wireshark csv...
+
+if ! command -v tshark 2>&1 >/dev/null; then
+  echo "tshark CLI is not installed -- please install wireshark"
+  exit 1
+fi
+
 tshark -r $log -T fields -E separator=, -E quote=d -e frame.number -e btatt.opcode -e btatt.value -e btatt.uuid128 -e frame.time_epoch 'btatt.value' > $csv
+
+echo Parsing...
 $repoRoot/scripts/wireshark-csv-to-jsonl.py $csv > $jsonl 2> $stderr
