@@ -35,7 +35,7 @@ public class Jpake1aResponse extends AbstractCentralChallengeResponse {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Preconditions.checkArgument(raw.length == props().size(), "size is "+raw.length+" not "+props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
         centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length
