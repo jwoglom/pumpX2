@@ -16,10 +16,14 @@ fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
 headers = next(reader)
 
+'''
+to parse single json line:
+$ ./gradlew cliparser -q --console=plain --args='json' < <(echo '{"type": "ReadResp", "btChar": "", "value": "", "ts": ""}') 2>/dev/null|jq
+'''
 def parseJsonLines(path):
     cwd = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
     try:
-        return subprocess.check_output(['./gradlew', 'cliparser', '-q', f'--args=parseJsonLines {path}'], cwd=cwd).decode().strip()
+        return subprocess.check_output(['./gradlew', 'cliparser', '-q', '--console=plain', f'--args=jsonlines {path}'], cwd=cwd).decode().strip()
     except Exception as e:
         return json.dumps({"error": str(e)})
 
@@ -86,12 +90,14 @@ if currentWrite:
 f = tempfile.NamedTemporaryFile(delete=False)
 for packet in packets:
     type, group, btChar, ts = packet
+    prettyMap = {'READ':'ReadResp', 'WRITE':'WriteReq'}
     f.write((json.dumps({
-        "type": type,
+        "type": prettyMap.get(type, type),
         "btChar": btChar,
         "value": "".join(group),
         "ts": ts
     })+"\n").encode())
+    sys.stderr.flush()
     f.flush()
 f.close()
 print(f.name, file=sys.stderr)

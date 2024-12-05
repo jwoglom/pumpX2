@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
@@ -20,6 +21,7 @@ import kotlin.text.Charsets;
 public class PacketArrayList {
     protected static final String TAG = "PacketArrayList";
     public static final String IGNORE_INVALID_HMAC = "IGNORE_HMAC_SIGNATURE_EXCEPTION";
+    public static boolean ignoreInvalidTxId = false;
 
     protected byte expectedOpCode;
     protected byte expectedCargoSize;
@@ -150,7 +152,7 @@ public class PacketArrayList {
             byte txId = bArr[3];
             L.d(TAG, "PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));
             if (txId != this.expectedTxId) {
-                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
+                throwUnexpectedTransactionIdException(txId);
             } else if (cargoSize != this.actualExpectedCargoSize) {
                 if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
                     L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
@@ -200,10 +202,19 @@ public class PacketArrayList {
                 L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);
                 return;
             }
-            throw new UnexpectedTransactionIdException(secondByte, this.expectedTxId, this.expectedOpCode);
+            throwUnexpectedTransactionIdException(secondByte);
         } else {
             throw new IllegalArgumentException("Invalid data size: " + packetData.length);
         }
+    }
+
+    private void throwUnexpectedTransactionIdException(byte foundTxId) {
+        RuntimeException ex = new UnexpectedTransactionIdException(foundTxId, this.expectedTxId, this.expectedOpCode);
+        if (ignoreInvalidTxId) {
+            L.e(TAG, ex);
+            return;
+        }
+        throw ex;
     }
 
     public String toString() {

@@ -2,6 +2,9 @@ package com.jwoglom.pumpx2.cliparser;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableSet;
+import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
+import com.jwoglom.pumpx2.cliparser.util.JsonMessageParser;
+import com.jwoglom.pumpx2.cliparser.util.NoMessageMatch;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
@@ -19,6 +22,8 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogParser;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
+import org.json.JSONObject;
+
 import com.jwoglom.pumpx2.shared.Hex;
 
 import java.io.IOException;
@@ -29,8 +34,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -56,12 +63,16 @@ public class Main {
         }
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
 
+        // PacketArrayList.ignoreInvalidTxId = true;
+
         String filename;
         List<String> lines;
         String[] extra = new String[0];
         if (args.length >= 2) {
             extra = Arrays.copyOfRange(args, 2, args.length);
         }
+
+        String allArgs = Arrays.stream(Arrays.copyOfRange(args, 1, args.length)).collect(Collectors.joining(" "));
 
         switch (args[0].toLowerCase(Locale.ROOT)) {
             case "opcode":
@@ -107,6 +118,25 @@ public class Main {
                     System.out.println(parseHistoryLog(line));
                 }
                 break;
+            case "json":
+                System.err.println("Waiting for stdin...");
+                System.err.flush();
+                if (allArgs.isEmpty()) {
+                    allArgs = new Scanner(System.in).nextLine();
+                }
+                System.out.println(JsonMessageParser.parse(allArgs));
+                break;
+            case "jsonlines":
+                filename = args[1];
+                lines = Files.readAllLines(Path.of(filename));
+                for (String line : lines) {
+                    System.out.println(JsonMessageParser.parse(line));
+                }
+                break;
+            default:
+                System.err.println("Nothing to do.");
+                break;
+
         }
     }
 
@@ -129,7 +159,7 @@ public class Main {
         String messageStr = "";
         try {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
-            possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
+            possibilities = CharacteristicGuesser.filterKnownPossibilities(rawHex, opCode, possibilities);
             if (possibilities.size() == 0) {
                 return opCode+"\tUnknown opcode "+opCode;
             }
@@ -194,6 +224,7 @@ public class Main {
         return ret;
     }
 
+
     @SuppressWarnings("deprecation")
     public static Message parse(String rawHex, String ...extra) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
@@ -205,7 +236,7 @@ public class Main {
             Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
             if (possibilities.size() > 1) {
                 System.err.print("Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ");
-                possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
+                possibilities = CharacteristicGuesser.filterKnownPossibilities(rawHex, opCode, possibilities);
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
                     possibilities = ImmutableSet.of(Characteristic.CONTROL);
@@ -241,37 +272,6 @@ public class Main {
             System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
         }
-    }
-
-    private static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
-        int len = rawHex.length();
-        if (
-                (opCode == 32 && len == 14) || // ApiVersionRequest with cargo size=2
-                        (opCode == 33 && len == 22) || // ApiVersionResponse
-                        (opCode == 35 && len == 30) || // CurrentEGVGuiDataResponse
-                        (opCode == 37 && len == 22) // InsulinStatusResponse
-        ) {
-            possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
-        } else if (
-                (opCode == 37 && len == 148) || // InitiateBolusRequest
-                (opCode == -92 && len == 78) || // SetTempRateRequest
-                (opCode == -91 && len == 70) || // SetTempRateResponse
-                (opCode == -90 && len == 66) || // StopTempRateRequest
-                (opCode == -89 && len == 68) // StopTempRateResponse
-        ) {
-            possibilities = ImmutableSet.of(Characteristic.CONTROL);
-        } else if (
-                (opCode == 32 && len == 384) || // Jpake1aRequest
-                        (opCode == 33 && len == 384) || // Jpake1aResponse
-                        (opCode == 34 && len == 384) || // Jpake1bRequest
-                        (opCode == 35 && len == 384) || // Jpake1bResponse
-                        (opCode == 36 && len == 384) || // Jpake2Request
-                        (opCode == 37 && len == 354) // Jpake2Response
-        ) {
-            possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
-        }
-
-        return possibilities;
     }
 
     public static Message testRequest(String rawHex, int txId, @Nullable UUID uuid, Message expected, String ...extraRawHex) throws DecoderException {

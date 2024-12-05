@@ -291,6 +291,17 @@ public enum Messages {
         return items;
     }
 
+    public static Set<Class<? extends Message>> findPossibleMessagesForCharacteristic(Characteristic characteristic) {
+        Set<Class<? extends Message>> items = new HashSet<>();
+        for (Map.Entry<Pair<Characteristic, Integer>, Class<? extends Message>> entry : OPCODES.entrySet()) {
+            if (entry.getKey().getLeft().equals(characteristic)) {
+                items.add(entry.getValue());
+            }
+        }
+
+        return items;
+    }
+
     public static Class<? extends Message> fromOpcode(int opCode, Characteristic characteristic) {
         return OPCODES.get(Pair.of(characteristic, opCode));
     }
