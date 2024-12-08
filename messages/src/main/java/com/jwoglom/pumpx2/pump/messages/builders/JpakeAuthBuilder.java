@@ -48,7 +48,7 @@ public class JpakeAuthBuilder {
 
     JpakeStep step;
 
-    public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2, SecureRandom rand) {
+    public JpakeAuthBuilder(String pairingCode, JpakeStep step, byte[] clientRound1, byte[] serverRound1, byte[] clientRound2, byte[] serverRound2, byte[] derivedSecret, SecureRandom rand) {
         this.pairingCode = pairingCode;
         this.cli = new EcJpake(EcJpake.Role.CLIENT, pairingCodeToBytes(pairingCode), rand);
         this.sentMessages = new ArrayList<>();
@@ -59,15 +59,28 @@ public class JpakeAuthBuilder {
         this.serverRound1 = serverRound1;
         this.clientRound2 = clientRound2;
         this.serverRound2 = serverRound2;
+        this.derivedSecret = derivedSecret;
         this.rand = rand;
     }
 
     public JpakeAuthBuilder(String pairingCode) {
-        this(pairingCode, JpakeStep.INITIAL, null, null, null, null, new SecureRandom());
+        this(pairingCode, decideInitialStep(null), null, null, null, null, null, new SecureRandom());
     }
 
-    public JpakeAuthBuilder(String pairingCode, SecureRandom random) {
-        this(pairingCode, JpakeStep.INITIAL, null, null, null, null, random);
+    public JpakeAuthBuilder(String pairingCode, byte[] derivedSecret) {
+        this(pairingCode, decideInitialStep(derivedSecret), null, null, null, null, derivedSecret, new SecureRandom());
+    }
+
+    public JpakeAuthBuilder(String pairingCode, byte[] derivedSecret, SecureRandom random) {
+        this(pairingCode, decideInitialStep(derivedSecret), null, null, null, null, derivedSecret, random);
+    }
+
+    static JpakeStep decideInitialStep(byte[] derivedSecret) {
+        if (derivedSecret == null || derivedSecret.length == 0) {
+            return JpakeStep.BOOTSTRAP_INITIAL;
+        } else {
+            return JpakeStep.CONFIRM_INITIAL;
+        }
     }
 
     static byte[] pairingCodeToBytes(String pairingCode) {
@@ -94,10 +107,15 @@ public class JpakeAuthBuilder {
     }
 
     private static JpakeAuthBuilder INSTANCE = null;
-    public static JpakeAuthBuilder getInstance(String pairingCode) {
+    public static JpakeAuthBuilder initializeWithPairingCode(String pairingCode) {
         if (INSTANCE == null || !INSTANCE.pairingCode.equals(pairingCode)) {
-            INSTANCE = new JpakeAuthBuilder(pairingCode, new AllZeroSecureRandom());
+            INSTANCE = new JpakeAuthBuilder(pairingCode, null);
         }
+        return INSTANCE;
+    }
+
+    public static JpakeAuthBuilder initializeWithDerivedSecret(String pairingCode, byte[] derivedSecret) {
+        INSTANCE = new JpakeAuthBuilder(pairingCode, derivedSecret);
         return INSTANCE;
     }
 
@@ -114,7 +132,7 @@ public class JpakeAuthBuilder {
 
     public Message nextRequest() {
         Message request;
-        if (step == JpakeStep.INITIAL) {
+        if (step == JpakeStep.BOOTSTRAP_INITIAL) {
             this.clientRound1 = this.cli.getRound1();
             byte[] challenge = Arrays.copyOfRange(this.clientRound1, 0, 165);
 
@@ -141,6 +159,10 @@ public class JpakeAuthBuilder {
 
             this.derivedSecret = this.cli.deriveSecret();
             L.i(TAG, "Req3 DerivedSecret=" + Hex.encodeHexString(derivedSecret));
+
+            step = JpakeStep.CONFIRM_3_SENT;
+        } else if (step == JpakeStep.CONFIRM_INITIAL) {
+            request = new Jpake3SessionKeyRequest(0);
 
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
@@ -229,13 +251,14 @@ public class JpakeAuthBuilder {
     }
 
     public enum JpakeStep {
-        INITIAL,
+        BOOTSTRAP_INITIAL,
         ROUND_1A_SENT,
         ROUND_1A_RECEIVED,
         ROUND_1B_SENT,
         ROUND_1B_RECEIVED,
         ROUND_2_SENT,
         ROUND_2_RECEIVED,
+        CONFIRM_INITIAL,
         CONFIRM_3_SENT,
         CONFIRM_3_RECEIVED,
         CONFIRM_4_SENT,
@@ -250,5 +273,9 @@ public class JpakeAuthBuilder {
 
     public boolean invalid() {
         return step == JpakeStep.INVALID;
+    }
+
+    public byte[] getDerivedSecret() {
+        return this.derivedSecret;
     }
 }

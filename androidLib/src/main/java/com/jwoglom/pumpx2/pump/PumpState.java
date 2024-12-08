@@ -51,6 +51,15 @@ public class PumpState {
         return savedAuthenticationKey;
     }
 
+    private static final String JPAKE_DERIVED_SECRET_PREF = "jpakeDerivedSecret";
+    public static String getJpakeDerivedSecret(Context context) {
+        return prefs(context).getString(JPAKE_DERIVED_SECRET_PREF, null);
+    }
+
+    public static void setJpakeDerivedSecret(Context context, String hexDerivedSecret) {
+        prefs(context).edit().putString(JPAKE_DERIVED_SECRET_PREF, hexDerivedSecret).commit();
+    }
+
     // This is used during packet generation for signed messages,
     // and is filled by calling TimeSinceResetRequest
     public static Long pumpTimeSinceReset = null;

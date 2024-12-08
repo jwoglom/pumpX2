@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 
+import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -27,6 +28,8 @@ import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
 
 import com.jwoglom.pumpx2.shared.Hex;
+
+import org.apache.commons.codec.DecoderException;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -242,10 +245,24 @@ public abstract class TandemPump {
                 onInvalidPairingCode(peripheral, null);
             }
         } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
-            Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ")");
-            JpakeAuthBuilder.clearInstance();
-            Message message = JpakeAuthBuilder.getInstance(pairingCode).nextRequest();
-            sendCommand(peripheral, message);
+            String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
+            if (Strings.isNullOrEmpty(jpakeSecretHex)) {
+                Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ", BOOTSTRAP)");
+                JpakeAuthBuilder.clearInstance();
+                Message message = JpakeAuthBuilder.initializeWithPairingCode(pairingCode).nextRequest();
+                sendCommand(peripheral, message);
+            } else {
+                Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ", CONFIRM)");
+                JpakeAuthBuilder.clearInstance();
+                try {
+                    Message message = JpakeAuthBuilder.initializeWithDerivedSecret(pairingCode, Hex.decodeHex(jpakeSecretHex)).nextRequest();
+                    sendCommand(peripheral, message);
+                } catch (DecoderException e) {
+                    Timber.e(e);
+                    onInvalidPairingCode(peripheral, null);
+                    PumpState.setJpakeDerivedSecret(context, "");
+                }
+            }
         } else {
             throw new IllegalArgumentException("no pairingCodeType");
         }
