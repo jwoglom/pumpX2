@@ -22,7 +22,7 @@ if [ "$?" != "0" ]; then
   exit 1
 fi
 
-unzip -p "$1" "$hcifile" > $log
+unzip -p "$zip" "$hcifile" > $log
 
 if [[ -f "$keyfile" ]]; then
   echo "Using existent keyfile $keyfile: $(cat $keyfile)"

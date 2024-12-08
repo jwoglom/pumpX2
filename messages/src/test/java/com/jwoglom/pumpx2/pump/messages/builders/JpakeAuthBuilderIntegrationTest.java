@@ -28,7 +28,6 @@ import org.junit.Test;
 import java.util.Arrays;
 
 public class JpakeAuthBuilderIntegrationTest {
-    @Ignore("testing")
     @Test
     public void clientRole_simulated() throws DecoderException {
         SecureRandomMock rand = new SecureRandomMock(Hex.decodeHex(
@@ -95,7 +94,7 @@ public class JpakeAuthBuilderIntegrationTest {
         assertHexEquals(servRound1, b.serverRound1);
 
         // (2) CLIENT
-        byte[] cliRound2 = Hex.decodeHex("410401cbf7400850b52ab66bc0633de63a83b2a0e8b679451bca80573a5ef5a4116f36c7ef60efae1a46df7988d63c58136adadcc52e6e1cec0641c99d494523d15c41040fbeb1bc502d7017aa8d15e20cc43f89c46270c4a3a101cb5cb7ea9b2075ad10753dd1a327f9bdf91121d5da5c8c3e1827fcd21951f9dd944faffdf6688fcf1120e636ca18769e80923b24d4636191aac2a7573d9a0c3898e690f735425d8702fd");
+        byte[] cliRound2 = Hex.decodeHex("41047a06fd054b56eb2ddc9f074a64d0fd12747006f1c2ea44bc86ec2394672b063fa6234f4d160f0020b4c322382b96176d9a25c4c41947915ec313006ee418385b41040fbeb1bc502d7017aa8d15e20cc43f89c46270c4a3a101cb5cb7ea9b2075ad10753dd1a327f9bdf91121d5da5c8c3e1827fcd21951f9dd944faffdf6688fcf11207e9c7aa10d4456096d53f77803765051de82196176d9c9513ff36821a64862cf");
         Jpake2Request req2 = (Jpake2Request) b.nextRequest();
         assertEquals(165, req2.getCentralChallenge().length);
         assertHexEquals(cliRound2, req2.getCentralChallenge());
@@ -114,7 +113,7 @@ public class JpakeAuthBuilderIntegrationTest {
         Jpake3SessionKeyRequest req3 = (Jpake3SessionKeyRequest) b.nextRequest();
         assertEquals(req3.getChallengeParam(), 0);
 
-        byte[] secret = Hex.decodeHex("e734344901549417f6243f8e4a712f87ae9409476f8d022c347ff690249683aa");
+        byte[] secret = Hex.decodeHex("45d66d65aedfd39ce50be0eacca491ff183b7e1c22bf722b8dfb20408e0c78d4");
         assertHexEquals(secret, b.derivedSecret);
 
         // (3) SERVER
@@ -129,15 +128,11 @@ public class JpakeAuthBuilderIntegrationTest {
 
         // (4) CLIENT
         Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) b.nextRequest();
-        byte[] clientHashDigest = step4Type.equals("hkdf") ?
-                    Hkdf.build(req4.getNonce(), b.derivedSecret) :
-                step4Type.equals("hmac") ?
-                    HmacSha256.hmacSha256(b.derivedSecret, req4.getNonce()) :
-                step4Type.equals("hkdf-hmac") ?
-                    HmacSha256.hmacSha256(Hkdf.build(b.serverNonce3, b.derivedSecret), req4.getNonce()) :
-                null;
+        byte[] clientHashDigest = HmacSha256.hmacSha256(req4.getNonce(), Hkdf.build(b.serverNonce3, b.derivedSecret));
         assertEquals(32, clientHashDigest.length);
         assertHexEquals(req4.getHashDigest(), clientHashDigest);
+        byte[] expectedHashDigest = Hex.decodeHex("78277ee13aff3fbe0587a6666445eb329b03be0cacfbc7da6f6213765f31371b");
+        assertHexEquals(clientHashDigest, expectedHashDigest);
         //assertHexEquals(req4.getNonce(), Hex.decodeHex("998c182c9d70a375"));
         //byte[] clientHkdf = Hkdf.build(b.serverNonce3, b.derivedSecret);
         //assertEquals(32, clientHkdf.length);
@@ -149,16 +144,11 @@ public class JpakeAuthBuilderIntegrationTest {
         // (4) SERVER
         byte[] serverNonce = b.generateNonce();
         assertHexEquals(serverNonce, Hex.decodeHex("ad08275f109e41b0"));
-        byte[] serverHashDigest = step4Type.equals("hkdf") ?
-                Hkdf.build(serverNonce, b.derivedSecret) :
-            step4Type.equals("hmac") ?
-                HmacSha256.hmacSha256(b.derivedSecret, serverNonce) :
-            step4Type.equals("hkdf-hmac") ?
-                HmacSha256.hmacSha256(Hkdf.build(req4.getNonce(), b.derivedSecret), serverNonce) :
-            null;
+        byte[] serverHashDigest = HmacSha256.hmacSha256(serverNonce, Hkdf.build(b.serverNonce3, b.derivedSecret));
         assertEquals(32, serverHashDigest.length);
-        //byte[] serverHmacedHkdf = HmacSha256.hmacSha256(req4.getNonce(), serverHashDigest);
-        //assertEquals(32, serverHmacedHkdf.length);
+
+        byte[] expectedServerHashDigest = Hex.decodeHex("6e7a179c5a601572a2b91251e577454c8b32ebeafae5bc87209cced02fa7b358");
+        assertHexEquals(serverHashDigest, expectedServerHashDigest);
         Jpake4KeyConfirmationResponse res4 = new Jpake4KeyConfirmationResponse(
                 0,
                 serverNonce,
