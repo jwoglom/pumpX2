@@ -157,85 +157,14 @@ public class JpakeAuthBuilder {
 
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_3_RECEIVED) {
-            // TODO: determine hashdigest + nonce
             this.clientNonce4 = generateNonce();
-            //byte[] hkdfDerivedMaterial = Hkdf.build(this.clientNonce4, this.derivedSecret);
-            //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, this.derivedSecret);
-            //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce3, HmacSha256.hmacSha256(this.clientNonce4, this.derivedSecret));
-
-            // doHkdfFromNonceAndKeyMaterial
-            // HKDF.hkdfExpand(HKDF.updateMacOnSecretKeySpec(nonce, keyMaterial), new byte[0], 32)
-            // Hkdf returns 8
-            // Hmac returns 32
-
-            byte[] hashDigest3 = new byte[0];
-
-            int method = (attemptNo) % 24;
-            L.i(TAG, "JpakeAuthBuilder ATTEMPTNO="+attemptNo+" JPAKEMETHOD="+method);
-
-            if (method == 0) {
-                // step4Type.equals("hkdf") ?
-                hashDigest3 = Hkdf.build(clientNonce4, derivedSecret);
-            } else if (method == 1) {
-                hashDigest3 = Hkdf.build(serverNonce3, derivedSecret);
-            } else if (method == 2) {
-                hashDigest3 = Hkdf.build(clientNonce4, HmacSha256.hmacSha256(serverNonce3, derivedSecret));
-            } else if (method == 3) {
-                hashDigest3 = Hkdf.build(clientNonce4, HmacSha256.hmacSha256(derivedSecret, serverNonce3));
-            } else if (method == 4) {
-                hashDigest3 = Hkdf.build(serverNonce3, HmacSha256.hmacSha256(derivedSecret, clientNonce4));
-            } else if (method == 5) {
-                hashDigest3 = Hkdf.build(serverNonce3, HmacSha256.hmacSha256(clientNonce4, derivedSecret));
-            } else if (method == 6) {
-                hashDigest3 = Hkdf.build(HmacSha256.hmacSha256(serverNonce3, derivedSecret), clientNonce4);
-            } else if (method == 7) {
-                hashDigest3 = Hkdf.build(HmacSha256.hmacSha256(derivedSecret, serverNonce3), clientNonce4);
-            } else if (method == 8) {
-                hashDigest3 = Hkdf.build(HmacSha256.hmacSha256(derivedSecret, clientNonce4), serverNonce3);
-            } else if (method == 9) {
-                hashDigest3 = Hkdf.build(HmacSha256.hmacSha256(clientNonce4, derivedSecret), serverNonce3);
-            } else if (method == 10) {
-                // step4Type.equals("hmac") ?
-                hashDigest3 = HmacSha256.hmacSha256(derivedSecret, clientNonce4);
-            } else if (method == 11) {
-                hashDigest3 = HmacSha256.hmacSha256(derivedSecret, serverNonce3);
-            } else if (method == 12) {
-                hashDigest3 = HmacSha256.hmacSha256(clientNonce4, derivedSecret);
-            } else if (method == 13) {
-                hashDigest3 = HmacSha256.hmacSha256(serverNonce3, derivedSecret);
-            } else if (method == 14) {
-                hashDigest3 = HmacSha256.hmacSha256(derivedSecret, serverNonce3);
-            } else if (method == 15) {
-                hashDigest3 = HmacSha256.hmacSha256(derivedSecret, clientNonce4);
-            } else if (method == 16) {
-                // step4Type.equals("hkdf-hmac")
-                hashDigest3 = HmacSha256.hmacSha256(Hkdf.build(serverNonce3, derivedSecret), clientNonce4);
-            } else if (method == 17) {
-                hashDigest3 = HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), serverNonce3);
-            } else if (method == 18) {
-                hashDigest3 = HmacSha256.hmacSha256(Hkdf.build(derivedSecret, serverNonce3), clientNonce4);
-            } else if (method == 19) {
-                hashDigest3 = HmacSha256.hmacSha256(Hkdf.build(derivedSecret, clientNonce4), serverNonce3);
-            } else if (method == 20) {
-                hashDigest3 = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(serverNonce3, derivedSecret));
-            } else if (method == 21) {
-                hashDigest3 = HmacSha256.hmacSha256(serverNonce3, Hkdf.build(clientNonce4, derivedSecret));
-            } else if (method == 22) {
-                hashDigest3 = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(derivedSecret, serverNonce3));
-            } else if (method == 23) {
-                hashDigest3 = HmacSha256.hmacSha256(serverNonce3, Hkdf.build(derivedSecret, clientNonce4));
-            }
-
-            attemptNo++;
+            byte[] hashDigest3 = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(serverNonce3, derivedSecret));
 
 
             L.i(TAG, "Req4: clientNonce4=" + Hex.encodeHexString(clientNonce4));
             L.i(TAG, "Req4: derivedSecret=" + Hex.encodeHexString(derivedSecret));
             L.i(TAG, "Req4: serverNonce3=" + Hex.encodeHexString(serverNonce3));
-            L.i(TAG, "Req4: >>hashDigest3<<=" + Hex.encodeHexString(hashDigest3));
-//            L.i(TAG, "Req4: HmacSha256.hmacSha256(derivedSecret, clientNonce4)=" + Hex.encodeHexString(HmacSha256.hmacSha256(derivedSecret, clientNonce4)));
-//            L.i(TAG, "Req4: Hkdf.build(clientNonce4, derivedSecret)=" + Hex.encodeHexString(Hkdf.build(clientNonce4, derivedSecret)));
-//            L.i(TAG, "Req4: HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), clientNonce4)=" + Hex.encodeHexString(HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), clientNonce4)));
+            L.i(TAG, "Req4: hashDigest3=" + Hex.encodeHexString(hashDigest3));
             request = new Jpake4KeyConfirmationRequest(0,
                     clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
@@ -245,26 +174,50 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
 
-            L.i(TAG, "JpakeAuthBuilder CONFIRM_4_RECEIVED!!!");
+            attemptNo = attemptNo%3;
+            L.i(TAG, "JpakeAuthBuilder CONFIRM_4_RECEIVED ATTEMPTNO="+attemptNo);
 
-            byte[] derivedMaterial = step4Type.equals("hkdf") ?
-                        Hkdf.build(serverNonce4, derivedSecret) :
-                    step4Type.equals("hmac") ?
-                        HmacSha256.hmacSha256(derivedSecret, serverNonce4) :
-                    step4Type.equals("hkdf-hmac") ?
-                        HmacSha256.hmacSha256(Hkdf.build(clientNonce4, derivedSecret), serverNonce4) :
-                    null;
-            //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
-            //if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
-            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(derivedMaterial))) {
-                L.i(TAG, "HMAC SECRET VALIDATES");
-                step = JpakeStep.COMPLETE;
-            } else {
-                L.w(TAG, "HMAC SECRET DOES NOT VALIDATE derivedMaterial=" + Hex.encodeHexString(derivedMaterial));
-                L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
-                L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
-                step = JpakeStep.INVALID;
-            }
+//            if (attemptNo == 0) {
+//                byte[] derivedMaterial = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(serverNonce4, derivedSecret));
+//                //byte[] hmacAuthHash = HmacSha256.hmacSha256(this.serverNonce4, hkdfDerivedMaterial);
+//                //if (Hex.encodeHexString(serverHashDigest4).equals(Hex.encodeHexString(hmacAuthHash))) {
+//                if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(derivedMaterial))) {
+//                    L.i(TAG, "HMAC SECRET VALIDATES");
+//                    step = JpakeStep.COMPLETE;
+//                } else {
+//                    L.w(TAG, "HMAC SECRET DOES NOT VALIDATE derivedMaterial=" + Hex.encodeHexString(derivedMaterial));
+//                    L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
+//                    L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
+//                    L.w(TAG, "serverHashDigest4=" + Hex.encodeHexString(this.serverHashDigest4));
+//                    step = JpakeStep.INVALID;
+//                }
+//            } else if (attemptNo == 1) {
+//                byte[] hashDigest4 = HmacSha256.hmacSha256(serverNonce4, Hkdf.build(clientNonce4, derivedSecret));
+//                if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hashDigest4))) {
+//                    L.i(TAG, "HMAC SECRET VALIDATES");
+//                    step = JpakeStep.COMPLETE;
+//                } else {
+//                    L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hashDigest=" + Hex.encodeHexString(hashDigest4));
+//                    L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
+//                    L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
+//                    L.w(TAG, "serverHashDigest4=" + Hex.encodeHexString(this.serverHashDigest4));
+//                    step = JpakeStep.INVALID;
+//                }
+//            } else if (attemptNo == 2) {
+                byte[] hashDigest4 = HmacSha256.hmacSha256(serverNonce4, Hkdf.build(serverNonce3, derivedSecret));
+                if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hashDigest4))) {
+                    L.i(TAG, "HMAC SECRET VALIDATES");
+                    step = JpakeStep.COMPLETE;
+                } else {
+                    L.w(TAG, "HMAC SECRET DOES NOT VALIDATE hashDigest=" + Hex.encodeHexString(hashDigest4));
+                    L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
+                    L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
+                    L.w(TAG, "serverHashDigest4=" + Hex.encodeHexString(this.serverHashDigest4));
+                    step = JpakeStep.INVALID;
+                }
+//            }
+
+            attemptNo++;
 
             return null;
         } else {
@@ -341,5 +294,9 @@ public class JpakeAuthBuilder {
 
     public boolean done() {
         return step == JpakeStep.COMPLETE;
+    }
+
+    public boolean invalid() {
+        return step == JpakeStep.INVALID;
     }
 }

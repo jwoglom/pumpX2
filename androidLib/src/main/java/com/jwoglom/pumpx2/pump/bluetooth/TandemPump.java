@@ -19,6 +19,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralCh
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
@@ -130,8 +131,8 @@ public abstract class TandemPump {
      *             PumpX2 library didn't send the request because the pairing code didn't match the
      *             expected format of 16 alphanumeric characters
      */
-    public void onInvalidPairingCode(BluetoothPeripheral peripheral, @Nullable PumpChallengeResponse resp) {
-        Timber.i("TandemPump: onInvalidPairingCode");
+    public void onInvalidPairingCode(BluetoothPeripheral peripheral, @Nullable AbstractPumpChallengeResponse resp) {
+        Timber.i("TandemPump: onInvalidPairingCode: %s", resp);
     }
 
     /**

@@ -19,7 +19,7 @@ import java.util.Arrays;
     characteristic=Characteristic.AUTHORIZATION,
     request= Jpake4KeyConfirmationRequest.class
 )
-public class Jpake4KeyConfirmationResponse extends Message {
+public class Jpake4KeyConfirmationResponse extends AbstractPumpChallengeResponse {
     private int appInstanceId;
     private byte[] nonce;
     private byte[] reserved;

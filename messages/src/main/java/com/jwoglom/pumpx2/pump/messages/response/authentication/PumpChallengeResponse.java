@@ -18,7 +18,7 @@ import kotlin.collections.ArraysKt;
     request=PumpChallengeRequest.class
 )
 // aka AuthenticationStatusResponse
-public class PumpChallengeResponse extends Message {
+public class PumpChallengeResponse extends AbstractPumpChallengeResponse {
     private int appInstanceId;
     private boolean success;
 

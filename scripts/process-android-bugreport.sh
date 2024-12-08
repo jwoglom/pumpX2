@@ -4,6 +4,11 @@ zip=$1
 if [[ "$zip" == *.zip ]]; then
   log=${1/.zip/.log}
   keyfile=${1/.zip/.authkey}
+elif [[ "$zip" == "" ]]; then
+  filename=$(date +"%Y-%m-%dT%H-%M-%S%z")
+  echo "Running adb bugreport $filename"
+  adb bugreport $filename
+  zip=${filename}.zip
 else
   echo "File provided did not end in .zip -- did you run adb bugreport?"
   exit 1

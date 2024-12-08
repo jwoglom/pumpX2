@@ -11,6 +11,7 @@ import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;
@@ -83,7 +84,7 @@ public class PumpX2TandemPump extends TandemPump {
     }
 
     @Override
-    public void onInvalidPairingCode(BluetoothPeripheral peripheral, PumpChallengeResponse resp) {
+    public void onInvalidPairingCode(BluetoothPeripheral peripheral, AbstractPumpChallengeResponse resp) {
         Intent intent = new Intent(PUMP_INVALID_CHALLENGE_INTENT);
         intent.putExtra("address", peripheral.getAddress());
         intent.putExtra("appInstanceId", resp.getAppInstanceId());
