@@ -17,6 +17,8 @@ import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_ERROR_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_INVALID_CHALLENGE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.UPDATE_TEXT_RECEIVER;
 import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.authenticationKey;
+import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.jpakeDerivedSecretHex;
+import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.pumpPairingCode;
 import static com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier.pumpTimeSinceReset;
 import static java.util.stream.Collectors.toList;
 
@@ -403,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
             statusText.setText("Connected to pump!");
             statusText.postInvalidate();
 
-            Timber.i("CONNECTED: PUMP_AUTHENTICATION_KEY=" + authenticationKey.get() + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
+            Timber.i("CONNECTED: PUMP_PAIRING_CODE=" + pumpPairingCode.get() + " JPAKE_DERIVED_SECRET = " + jpakeDerivedSecretHex.get() + " PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authenticationKey.get()) + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
 
             basicLinearLayout.setVisibility(View.VISIBLE);
 

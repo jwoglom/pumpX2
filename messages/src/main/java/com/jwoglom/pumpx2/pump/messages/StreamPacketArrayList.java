@@ -113,7 +113,7 @@ public class StreamPacketArrayList extends PacketArrayList {
         }
     }
 
-    public boolean validate(String unused) {
+    public boolean validate(String authKey) {
         createMessageData();
         setExpectedCRC();
 

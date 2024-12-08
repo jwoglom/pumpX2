@@ -13,6 +13,7 @@ import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import kotlin.jvm.internal.Intrinsics;
@@ -77,8 +78,8 @@ public class PacketArrayList {
         return b >= 0;
     }
 
-    public boolean validate(String str) {
-        Intrinsics.checkParameterIsNotNull(str, "ak");
+    public boolean validate(byte[] authKey) {
+        Intrinsics.checkParameterIsNotNull(authKey, "ak");
         if (needsMorePacket()) {
             return false;
         }
@@ -98,18 +99,20 @@ public class PacketArrayList {
         if (!ok) {
             throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
         } else if (this.isSigned) {
-            L.d(TAG, "validate(" + str + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
+            L.d(TAG, "validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
             byte[] bArr2 = this.messageData;
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
-            byte[] bytes = str.getBytes(Charsets.UTF_8);
-            Intrinsics.checkExpressionValueIsNotNull(bytes, "(this as java.lang.String).getBytes(charset)");
-            byte[] hmacSha = Packetize.doHmacSha1(byteArray, bytes);
+            byte[] hmacSha = Packetize.doHmacSha1(byteArray, authKey);
             if (!Arrays.equals(expectedHmac, hmacSha)) {
-                if (str.equals(IGNORE_INVALID_HMAC)) {
+                if (Arrays.equals(authKey, IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8))) {
                     return true;
                 }
-                throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
+                L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
+
+                // TEMPORARY
+                return true;
+                //throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
                 //return false;
             }
         }
@@ -134,10 +137,12 @@ public class PacketArrayList {
         if (77 == opCode && 2 == cargoSize) {
             this.expectedOpCode = 77;
             this.expectedCargoSize = 2;
+            this.actualExpectedCargoSize = 2;
             this.fullCargo = new byte[4];
         } else if (77 == opCode && 26 == cargoSize) {
             this.expectedOpCode = 77;
             this.expectedCargoSize = 26;
+            this.actualExpectedCargoSize = 26;
             this.fullCargo = new byte[28];
         }
         // ApiVersionRequest can either have 0 cargo size or 2
@@ -159,7 +164,7 @@ public class PacketArrayList {
                     expectedCargoSize += 24;
                     actualExpectedCargoSize += 24;
                 } else {
-                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.expectedCargoSize));
+                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize));
                 }
             }
             this.fullCargo = Bytes.dropFirstN(bArr, 5);

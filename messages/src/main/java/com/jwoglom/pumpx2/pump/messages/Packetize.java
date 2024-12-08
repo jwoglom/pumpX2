@@ -36,11 +36,11 @@ public class Packetize {
         return DEFAULT_MAX_CHUNK_SIZE;
     }
 
-    public static List<Packet> packetize(Message message, String authenticationKey, byte currentTxId) {
+    public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId) {
         return packetize(message, authenticationKey, currentTxId, determineMaxChunkSize(message));
     }
 
-    public static List<Packet> packetize(Message message, String authenticationKey, byte currentTxId, int maxChunkSize) {
+    public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId, int maxChunkSize) {
         int length = 3 + message.getCargo().length;
         if (message.signed()) {
             length += 24;
@@ -58,15 +58,16 @@ public class Packetize {
         }
         if (message.signed()) {
             int i = length - 20;
-            byte[] bArr2 = new byte[i];
+            byte[] messageData = new byte[i];
+            System.arraycopy(packet, 0, messageData, 0, i);
             long pumpStateTimeSinceReset = PumpStateSupplier.pumpTimeSinceReset.get();
             byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
-            L.d(TAG, "using authenticationKey=" + authenticationKey + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
-            System.arraycopy(packet, 0, bArr2, 0, i);
-            System.arraycopy(timeSinceReset, 0, bArr2, length - 24, 4);
-            byte[] hmacByteKey = authenticationKey.getBytes(Charsets.UTF_8);
-            byte[] hmacSha1Output = doHmacSha1(bArr2, hmacByteKey);
-            System.arraycopy(bArr2, 0, packet, 0, i);
+            System.arraycopy(timeSinceReset, 0, messageData, length - 24, 4);
+
+            L.d(TAG, "using authenticationKey=" + Hex.encodeHexString(authenticationKey) + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
+
+            byte[] hmacSha1Output = doHmacSha1(messageData, authenticationKey);
+            System.arraycopy(messageData, 0, packet, 0, i);
             System.arraycopy(hmacSha1Output, 0, packet, i, hmacSha1Output.length);
         }
         L.d(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));

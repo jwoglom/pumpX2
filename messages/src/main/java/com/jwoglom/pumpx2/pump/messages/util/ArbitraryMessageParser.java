@@ -22,11 +22,6 @@ import java.util.UUID;
  * Helper class which parses arbitrary messages (with or without the known opcode and transaction ID)
  */
 public class ArbitraryMessageParser {
-    public static void setPumpAuthenticationKey(String pumpAuthenticationKey) {
-        if (!Strings.isNullOrEmpty(pumpAuthenticationKey)) {
-            PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
-        }
-    }
 
     public static void setPumpTimeSinceReset(String pumpTimeSinceReset) {
         if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){

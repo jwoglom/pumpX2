@@ -1,14 +1,47 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
+import com.jwoglom.pumpx2.shared.Hex;
+import com.jwoglom.pumpx2.shared.L;
 
+import org.apache.commons.codec.DecoderException;
+
+import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 public class PumpStateSupplier {
+    private static final String TAG = "PumpStateSupplier";
 
-    public static Supplier<String> authenticationKey = null;
+    public static Supplier<byte[]> authenticationKey = PumpStateSupplier::determinePumpAuthKey;
+    public static Supplier<String> pumpPairingCode = null;
+    public static Supplier<String> jpakeDerivedSecretHex = null;
     public static Supplier<Long> pumpTimeSinceReset = null;
     public static Supplier<ApiVersion> pumpApiVersion = null;
     public static Supplier<Boolean> controlIQSupported = () -> false;
     public static Supplier<Boolean> actionsAffectingInsulinDeliveryEnabled = () -> false;
+
+
+    private static byte[] determinePumpAuthKey() {
+        String jpake = jpakeDerivedSecretHex == null ? null : jpakeDerivedSecretHex.get();
+        String code = pumpPairingCode == null ? null : pumpPairingCode.get();
+
+        if (jpake == null && code == null) {
+            throw new IllegalStateException("no pump authenticationKey");
+        }
+
+        // stored jpake raw derived secret is decoded from hex for use in hmac
+        if (jpake != null && !jpake.isEmpty()) {
+            try {
+                L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + jpake);
+                return Hex.decodeHex(jpake);
+            } catch (DecoderException e) {
+                L.e(TAG, e);
+            }
+        }
+
+        L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code);
+
+        // pairing code is passed as raw ascii to hmac
+        return code.getBytes(StandardCharsets.UTF_8);
+    }
 }

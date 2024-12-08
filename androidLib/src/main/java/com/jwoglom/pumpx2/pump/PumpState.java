@@ -25,7 +25,8 @@ public class PumpState {
     // TODO: Refactor this class to be less hacky.
 
     static {
-        PumpStateSupplier.authenticationKey = PumpState::getAuthenticationKey;
+        PumpStateSupplier.pumpPairingCode = PumpState::getPairingCodeCached;
+        PumpStateSupplier.jpakeDerivedSecretHex = PumpState::getJpakeDerivedSecretCached;
         PumpStateSupplier.pumpTimeSinceReset = PumpState::getPumpTimeSinceReset;
         PumpStateSupplier.pumpApiVersion = PumpState::getPumpAPIVersion;
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = PumpState::actionsAffectingInsulinDeliveryEnabled;
@@ -37,27 +38,35 @@ public class PumpState {
 
     // The pairing code is also called the authentication key
     private static final String PAIRING_CODE_PREF = "pairingCode";
-    public static String savedAuthenticationKey = null;
+    public static String savedPairingCode = null;
     public static void setPairingCode(Context context, String pairingCode) {
         prefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).commit();
-        savedAuthenticationKey = pairingCode;
+        savedPairingCode = pairingCode;
     }
 
     public static String getPairingCode(Context context) {
-        return prefs(context).getString(PAIRING_CODE_PREF, null);
+        savedPairingCode = prefs(context).getString(PAIRING_CODE_PREF, null);
+        return savedPairingCode;
     }
 
-    public static String getAuthenticationKey() {
-        return savedAuthenticationKey;
+    public static String getPairingCodeCached() {
+        return savedPairingCode;
     }
 
     private static final String JPAKE_DERIVED_SECRET_PREF = "jpakeDerivedSecret";
+    public static String savedJpakeDerivedSecret = null;
     public static String getJpakeDerivedSecret(Context context) {
-        return prefs(context).getString(JPAKE_DERIVED_SECRET_PREF, null);
+        savedJpakeDerivedSecret = prefs(context).getString(JPAKE_DERIVED_SECRET_PREF, null);
+        return savedJpakeDerivedSecret;
     }
 
     public static void setJpakeDerivedSecret(Context context, String hexDerivedSecret) {
         prefs(context).edit().putString(JPAKE_DERIVED_SECRET_PREF, hexDerivedSecret).commit();
+        savedJpakeDerivedSecret = hexDerivedSecret;
+    }
+
+    public static String getJpakeDerivedSecretCached() {
+        return savedJpakeDerivedSecret;
     }
 
     // This is used during packet generation for signed messages,

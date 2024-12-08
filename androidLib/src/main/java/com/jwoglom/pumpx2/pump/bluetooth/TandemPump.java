@@ -21,7 +21,6 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
-import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.HciStatus;
@@ -60,7 +59,7 @@ public abstract class TandemPump {
             PumpState.pairingCodeType = config.getPairingCodeType().get();
         }
 
-        PumpState.savedAuthenticationKey = PumpState.getPairingCode(context);
+        PumpState.savedPairingCode = PumpState.getPairingCode(context);
     }
 
     public TandemPump(Context context, Optional<String> filterToBluetoothMac) {
@@ -201,6 +200,10 @@ public abstract class TandemPump {
      */
     public void onPumpConnected(BluetoothPeripheral peripheral) {
         Timber.i("TandemPump: onPumpConnected");
+
+        // hack: ensure cached in PumpState.
+        Timber.i("JpakeDerivedSecret=%s", PumpState.getJpakeDerivedSecret(context));
+
         sendCommand(peripheral, new ApiVersionRequest());
         sendCommand(peripheral, new TimeSinceResetRequest());
     }
@@ -247,12 +250,12 @@ public abstract class TandemPump {
         } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
             String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
             if (Strings.isNullOrEmpty(jpakeSecretHex)) {
-                Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ", BOOTSTRAP)");
+                Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", BOOTSTRAP)");
                 JpakeAuthBuilder.clearInstance();
                 Message message = JpakeAuthBuilder.initializeWithPairingCode(pairingCode).nextRequest();
                 sendCommand(peripheral, message);
             } else {
-                Timber.i("TandemPump: pair(SHORT_6CHAR, " + pairingCode + ", CONFIRM)");
+                Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", derivedSecret=" + jpakeSecretHex + ")");
                 JpakeAuthBuilder.clearInstance();
                 try {
                     Message message = JpakeAuthBuilder.initializeWithDerivedSecret(pairingCode, Hex.decodeHex(jpakeSecretHex)).nextRequest();

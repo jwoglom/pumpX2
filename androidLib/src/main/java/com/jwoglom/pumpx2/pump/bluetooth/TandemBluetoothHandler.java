@@ -461,7 +461,7 @@ public class TandemBluetoothHandler {
                 } catch (PacketArrayList.InvalidSignedMessageHMACSignatureException e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
                     tandemPump.onPumpCriticalError(peripheral, TandemError.INVALID_SIGNED_HMAC_SIGNATURE.withExtra(
-                            Strings.isNullOrEmpty(PumpState.getAuthenticationKey()) ?
+                            Strings.isNullOrEmpty(PumpState.getPairingCodeCached()) ?
                                     "pairing code not specified" : "provided pairing code is likely invalid"
                     ));
                     return;

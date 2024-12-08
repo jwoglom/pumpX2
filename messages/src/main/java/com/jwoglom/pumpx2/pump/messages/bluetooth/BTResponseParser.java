@@ -33,7 +33,7 @@ public class BTResponseParser {
 
         packetArrayList.validatePacket(output);
         if (!packetArrayList.needsMorePacket()) {
-            if (packetArrayList.validate(message.signed() ? PumpStateSupplier.authenticationKey.get() : "")) {
+            if (packetArrayList.validate(message.signed() ? PumpStateSupplier.authenticationKey.get() : new byte[0])) {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();

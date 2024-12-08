@@ -26,7 +26,7 @@ public class MessageTester {
     private static final String TAG = "MessageTester";
 
     public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
-        PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
+        PumpStateSupplier.pumpPairingCode = () -> pumpAuthenticationKey;
         PumpStateSupplier.pumpTimeSinceReset = () -> timeSinceReset;
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
     }

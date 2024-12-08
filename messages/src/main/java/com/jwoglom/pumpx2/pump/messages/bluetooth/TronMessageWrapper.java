@@ -17,7 +17,7 @@ public class TronMessageWrapper {
     public TronMessageWrapper(Message requestMessage, byte currentTxId) {
         this.message = requestMessage;
 
-        String authKey = "";
+        byte[] authKey = new byte[0];
         if (requestMessage.signed()) {
             if (PumpStateSupplier.authenticationKey == null) {
                 throw new RuntimeException("PumpStateSupplier.authenticationKey is not set, and a signed message was given to TronMessageWrapper");
@@ -32,7 +32,7 @@ public class TronMessageWrapper {
     public TronMessageWrapper(Message requestMessage, byte currentTxId, int maxChunkSize) {
         this.message = requestMessage;
 
-        String authKey = "";
+        byte[] authKey = new byte[0];
         if (requestMessage.signed()) {
             authKey = PumpStateSupplier.authenticationKey.get();
         }

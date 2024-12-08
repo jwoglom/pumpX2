@@ -53,8 +53,9 @@ public class Main {
         }
 
         String pumpAuthenticationKey = System.getenv("PUMP_AUTHENTICATION_KEY");
-        if (!Strings.isNullOrEmpty(pumpAuthenticationKey)) {
-            PumpStateSupplier.authenticationKey = () -> pumpAuthenticationKey;
+        String pumpPairingCode = System.getenv("PUMP_PAIRING_CODE");
+        if (!Strings.isNullOrEmpty(pumpPairingCode)) {
+            PumpStateSupplier.pumpPairingCode = () -> pumpPairingCode;
         }
 
         String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");
@@ -124,12 +125,14 @@ public class Main {
                 if (allArgs.isEmpty()) {
                     allArgs = new Scanner(System.in).nextLine();
                 }
+                System.err.println("Processing "+allArgs);
                 System.out.println(JsonMessageParser.parse(allArgs));
                 break;
             case "jsonlines":
                 filename = args[1];
                 lines = Files.readAllLines(Path.of(filename));
                 for (String line : lines) {
+                    System.err.println("Processing "+line);
                     System.out.println(JsonMessageParser.parse(line));
                 }
                 break;
