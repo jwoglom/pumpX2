@@ -27,6 +27,7 @@ public class PumpState {
     static {
         PumpStateSupplier.pumpPairingCode = PumpState::getPairingCodeCached;
         PumpStateSupplier.jpakeDerivedSecretHex = PumpState::getJpakeDerivedSecretCached;
+        PumpStateSupplier.jpakeServerNonceHex = PumpState::getJpakeServerNonceCached;
         PumpStateSupplier.pumpTimeSinceReset = PumpState::getPumpTimeSinceReset;
         PumpStateSupplier.pumpApiVersion = PumpState::getPumpAPIVersion;
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = PumpState::actionsAffectingInsulinDeliveryEnabled;
@@ -67,6 +68,23 @@ public class PumpState {
 
     public static String getJpakeDerivedSecretCached() {
         return savedJpakeDerivedSecret;
+    }
+
+
+    private static final String JPAKE_SERVER_NONCE_PREF = "jpakeServerNonce";
+    public static String savedJpakeServerNonce = null;
+    public static String getJpakeServerNonce(Context context) {
+        savedJpakeServerNonce = prefs(context).getString(JPAKE_SERVER_NONCE_PREF, null);
+        return savedJpakeServerNonce;
+    }
+
+    public static void setJpakeServerNonce(Context context, String hexDerivedSecret) {
+        prefs(context).edit().putString(JPAKE_SERVER_NONCE_PREF, hexDerivedSecret).commit();
+        savedJpakeServerNonce = hexDerivedSecret;
+    }
+
+    public static String getJpakeServerNonceCached() {
+        return savedJpakeServerNonce;
     }
 
     // This is used during packet generation for signed messages,

@@ -278,4 +278,8 @@ public class JpakeAuthBuilder {
     public byte[] getDerivedSecret() {
         return this.derivedSecret;
     }
+
+    public byte[] getServerNonce() {
+        return this.serverNonce3;
+    }
 }

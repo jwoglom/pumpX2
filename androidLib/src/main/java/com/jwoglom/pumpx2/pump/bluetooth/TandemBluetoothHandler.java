@@ -551,6 +551,8 @@ public class TandemBluetoothHandler {
                             PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                             byte[] derivedSecret = JpakeAuthBuilder.getInstance().getDerivedSecret();
                             PumpState.setJpakeDerivedSecret(context, Hex.encodeHexString(derivedSecret));
+                            byte[] serverNonce = JpakeAuthBuilder.getInstance().getServerNonce();
+                            PumpState.setJpakeServerNonce(context, Hex.encodeHexString(serverNonce));
                             tandemPump.onPumpConnected(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
                             Timber.i("JpakeAuth DONE: Invalid");

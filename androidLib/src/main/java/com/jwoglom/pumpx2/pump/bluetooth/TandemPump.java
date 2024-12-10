@@ -203,6 +203,7 @@ public abstract class TandemPump {
 
         // hack: ensure cached in PumpState.
         Timber.i("JpakeDerivedSecret=%s", PumpState.getJpakeDerivedSecret(context));
+        Timber.i("JpakeServerNonce=%s", PumpState.getJpakeServerNonce(context));
 
         sendCommand(peripheral, new ApiVersionRequest());
         sendCommand(peripheral, new TimeSinceResetRequest());
@@ -249,6 +250,7 @@ public abstract class TandemPump {
             }
         } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
             String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
+            PumpState.setJpakeServerNonce(context, "");
             if (Strings.isNullOrEmpty(jpakeSecretHex)) {
                 Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", BOOTSTRAP)");
                 JpakeAuthBuilder.clearInstance();
