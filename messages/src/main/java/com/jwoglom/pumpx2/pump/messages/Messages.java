@@ -150,6 +150,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetTempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetTempRateResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.StopTempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.StopTempRateResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ResumeInsulinDeliveryRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ResumeInsulinDeliveryResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -235,6 +237,7 @@ public enum Messages {
     SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),
     SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),
     STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),
+    RESUME_INSULIN_DELIVERY(ResumeInsulinDeliveryRequest.class, ResumeInsulinDeliveryResponse.class),
     // MESSAGES_END
     ;
 

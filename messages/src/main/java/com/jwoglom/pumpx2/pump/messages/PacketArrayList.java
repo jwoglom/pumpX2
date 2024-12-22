@@ -97,7 +97,11 @@ public class PacketArrayList {
         // the fullCargo size is 2 + the message length.
         L.d(TAG, "validate fullCargo size="+fullCargo.length);
         if (!ok) {
-            throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
+            if (Arrays.equals(authKey, IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8))) {
+                L.e(TAG, "CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
+            } else {
+                throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length);
+            }
         } else if (this.isSigned) {
             L.d(TAG, "validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
