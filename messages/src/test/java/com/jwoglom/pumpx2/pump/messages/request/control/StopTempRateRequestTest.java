@@ -31,4 +31,25 @@ public class StopTempRateRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
+    @Test
+    public void testStopTempRateRequest_2() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1906112L);
+
+        // empty cargo
+        StopTempRateRequest expected = new StopTempRateRequest();
+
+        StopTempRateRequest parsedReq = (StopTempRateRequest) MessageTester.test(
+                // 2024-12-22-mobi-screenrec.jsonl
+                // 2024-12-22 09:46:38.384000
+                "0151a651181eeaee1ffbff278a74c8692c24136b",
+                81,
+                2,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "00513e473b93df7f77e6fb867d"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }

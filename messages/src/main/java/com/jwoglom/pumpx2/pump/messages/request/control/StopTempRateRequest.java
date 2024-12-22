@@ -16,6 +16,7 @@ import com.jwoglom.pumpx2.pump.messages.response.control.StopTempRateResponse;
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     signed=true,
+    modifiesInsulinDelivery=true,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
     response=StopTempRateResponse.class
