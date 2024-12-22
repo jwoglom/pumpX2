@@ -15,6 +15,8 @@ import java.math.BigInteger;
     size=11,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
+    signed=false, // NOT signed (?)
+    modifiesInsulinDelivery=true,
     request=ChangeCartridgeRequest.class
 )
 public class ChangeCartridgeResponse extends Message {
@@ -23,6 +25,13 @@ public class ChangeCartridgeResponse extends Message {
     private int unknown1;
     
     public ChangeCartridgeResponse() {}
+
+
+    public ChangeCartridgeResponse(byte[] raw) {
+        this.cargo = raw;
+        parse(raw);
+
+    }
     
     public ChangeCartridgeResponse(int status, int unknown1) {
         this.cargo = buildCargo(status, unknown1);

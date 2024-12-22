@@ -67,7 +67,7 @@ public class CharacteristicUUID {
             return HISTORY_LOG_CHARACTERISTICS;
         }
 
-        if (message.signed()) {
+        if (message.signed() || message.getCharacteristic() == Characteristic.CONTROL) {
             return CONTROL_CHARACTERISTICS;
         }
 

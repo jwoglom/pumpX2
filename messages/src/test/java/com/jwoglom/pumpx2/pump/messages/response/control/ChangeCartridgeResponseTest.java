@@ -20,8 +20,9 @@ public class ChangeCartridgeResponseTest {
      * (invalid message signing?)
      */
     @Test
-    @Ignore("WIP; need to fix duplicate UUID across UUIDs: https://github.com/jwoglom/pumpX2/issues/2")
     public void testChangeCartridgeResponseNoSignature() throws DecoderException {
+        initPumpState("authenticationKey", 0L);
+
         ChangeCartridgeResponse expected = new ChangeCartridgeResponse(
             // int status, int unknown1
             100, 100
@@ -30,6 +31,25 @@ public class ChangeCartridgeResponseTest {
         ChangeCartridgeResponse parsedRes = (ChangeCartridgeResponse) MessageTester.test(
                 "000491040b6464000000000000000000d201",
                 4,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    @Test
+    public void testChangeCartridgeResponse_2() throws DecoderException {
+        initPumpState("authenticationKey", 0L);
+
+        ChangeCartridgeResponse expected = new ChangeCartridgeResponse(
+                new byte[]{87,90,0,-103,0,-123,0,113,15,-100,-1}
+        );
+
+        ChangeCartridgeResponse parsedRes = (ChangeCartridgeResponse) MessageTester.test(
+                "007691760b575a0099008500710f9cff51ac",
+                118,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

@@ -5,20 +5,20 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.control.ResumeInsulinDeliveryRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.ResumePumpingRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class ResumeInsulinDeliveryRequestTest {
+public class ResumePumpingRequestTest {
     @Test
-    public void testResumeInsulinDeliveryRequest() throws DecoderException {
+    public void testResumePumpingRequest() throws DecoderException {
         initPumpState("authenticationKey", 0L);
 
         // empty cargo
-        ResumeInsulinDeliveryRequest expected = new ResumeInsulinDeliveryRequest();
+        ResumePumpingRequest expected = new ResumePumpingRequest();
 
-        ResumeInsulinDeliveryRequest parsedReq = (ResumeInsulinDeliveryRequest) MessageTester.test(
+        ResumePumpingRequest parsedReq = (ResumePumpingRequest) MessageTester.test(
                 "013d9a3d1808eaee1ff9e90b186d391c9892ca8f",
                 61,
                 1,

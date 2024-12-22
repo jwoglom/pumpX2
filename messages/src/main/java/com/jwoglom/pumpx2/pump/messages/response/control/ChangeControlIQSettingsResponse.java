@@ -1,4 +1,4 @@
-package com.jwoglom.pumpx2.pump.messages.request.control;
+package com.jwoglom.pumpx2.pump.messages.response.control;
 
 import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -6,22 +6,24 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
-import com.jwoglom.pumpx2.pump.messages.response.control.ResumeInsulinDeliveryResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;
+
+import java.math.BigInteger;
 
 @MessageProps(
-    opCode=-102,
+    opCode=-53,
     size=0,
-    type=MessageType.REQUEST,
+    type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    modifiesInsulinDelivery=true,
-    response=ResumeInsulinDeliveryResponse.class,
-    supportedDevices=SupportedDevices.MOBI_ONLY
+    request=ChangeControlIQSettingsRequest.class
 )
-public class ResumeInsulinDeliveryRequest extends Message { 
-    public ResumeInsulinDeliveryRequest() {
+public class ChangeControlIQSettingsResponse extends Message {
+    
+    
+    public ChangeControlIQSettingsResponse() {
         this.cargo = EMPTY;
+        
     }
 
     public void parse(byte[] raw) { 
@@ -31,5 +33,6 @@ public class ResumeInsulinDeliveryRequest extends Message {
         
     }
 
+    
     
 }

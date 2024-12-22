@@ -13,6 +13,8 @@ import com.jwoglom.pumpx2.pump.messages.response.control.ChangeCartridgeResponse
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
+    signed=false, // NOT signed (?)
+    modifiesInsulinDelivery=true,
     response=ChangeCartridgeResponse.class
 )
 public class ChangeCartridgeRequest extends Message { 
@@ -21,6 +23,7 @@ public class ChangeCartridgeRequest extends Message {
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         
