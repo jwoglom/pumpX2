@@ -80,6 +80,9 @@ public class PumpResponseMessageBuilder {
         if (Strings.isNullOrEmpty(btChar)) {
             Characteristic guessedCharacteristic = CharacteristicGuesser.guessBestCharacteristic(valueStr, value[2]);
             L.i(TAG, "guessed characteristic for opCode "+value[2]+": "+guessedCharacteristic);
+            if (guessedCharacteristic == null) {
+                throw new NoMessageMatch.NoOpCodeForCharacteristicException(value[2], null, null, valueStr, null);
+            }
             btChar = guessedCharacteristic.getUuid().toString().replace("-", "");
         }
 

@@ -28,6 +28,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
+import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
@@ -324,8 +325,12 @@ public class TandemBluetoothHandler {
                 Timber.i("Received manufacturer: %s", manufacturer);
             } else if (characteristicUUID.equals(CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID)) {
                 String modelNumber = parser.getStringValue(0);
-                Timber.i("Received modelNumber: %s", modelNumber);
-                tandemPump.onPumpModel(peripheral, modelNumber);
+                Timber.i("Received modelNumber: %s - BT name: %s", modelNumber, peripheral.getName());
+                if (peripheral.getName().startsWith("Tandem Mobi")) {
+                    tandemPump.onPumpModel(peripheral, KnownDeviceModel.MOBI);
+                } else if (peripheral.getName().startsWith("tslim X2")) {
+                    tandemPump.onPumpModel(peripheral, KnownDeviceModel.TSLIM_X2);
+                }
             } else if (characteristicUUID.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS)) {
                 // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
                 // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);

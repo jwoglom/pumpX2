@@ -20,9 +20,13 @@ public class TronMessageWrapper {
         byte[] authKey = new byte[0];
         if (requestMessage.signed()) {
             if (PumpStateSupplier.authenticationKey == null) {
-                throw new RuntimeException("PumpStateSupplier.authenticationKey is not set, and a signed message was given to TronMessageWrapper");
+                throw new MissingPumpAuthenticationKey("PumpStateSupplier.authenticationKey is not set for signed message", requestMessage);
             }
-            authKey = PumpStateSupplier.authenticationKey.get();
+            try {
+                authKey = PumpStateSupplier.authenticationKey.get();
+            } catch (IllegalStateException e) {
+                throw new MissingPumpAuthenticationKey("PumpStateSupplier.authenticationKey returned " + e.getMessage(), requestMessage);
+            }
         }
         this.packets = Packetize.packetize(requestMessage, authKey, currentTxId);
     }
@@ -83,5 +87,11 @@ public class TronMessageWrapper {
                 packets.get(0).transactionId(),
                 message.signed()
         );
+    }
+
+    public static class MissingPumpAuthenticationKey extends RuntimeException {
+        MissingPumpAuthenticationKey(String reason, Message requestMessage) {
+            super("Missing pump authentication key when parsing "+requestMessage+": "+reason);
+        }
     }
 }

@@ -13,7 +13,7 @@ public class NoMessageMatch extends RuntimeException {
     public static class NoOpCodeForCharacteristicException extends NoMessageMatch {
         public byte opCode;
         public NoOpCodeForCharacteristicException(byte opCode, UUID uuid, String uuidName, String value, List<String> knownMessages) {
-            super("Invalid opCode "+opCode, uuid, uuidName, value, "known messages for this characteristic: "+ String.join(", ", knownMessages));
+            super("Invalid opCode "+opCode, uuid, uuidName, value, "known messages for this characteristic: "+ (knownMessages == null ? "<none>" : String.join(", ", knownMessages)));
             this.opCode = opCode;
         }
     }

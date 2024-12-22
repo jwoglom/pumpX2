@@ -15,6 +15,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.builders.CentralChallengeRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.PumpChallengeRequestBuilder;
+import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;
 import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -212,11 +213,10 @@ public abstract class TandemPump {
     /**
      * Called when the pump model number is returned from the Bluetooth DIS
      * @param peripheral the BluetoothPeripheral representing the pump which is connected
-     * @param modelNumber the model number of the pump. Expected value is "X2" for the t:slim X2;
-     *                    may be different in the future, e.g. for Mobi)
+     * @param model the model variant of the pump. Either TSLIM_X2 or MOBI.
      */
-    public void onPumpModel(BluetoothPeripheral peripheral, String modelNumber) {
-        Timber.i("TandemPump: onPumpModel: %s", modelNumber);
+    public void onPumpModel(BluetoothPeripheral peripheral, KnownDeviceModel model) {
+        Timber.i("TandemPump: onPumpModel: %s", model);
     }
 
     /**

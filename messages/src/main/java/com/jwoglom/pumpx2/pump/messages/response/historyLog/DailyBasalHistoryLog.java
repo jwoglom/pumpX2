@@ -20,7 +20,7 @@ public class DailyBasalHistoryLog extends HistoryLog {
     private float lastBasalRate;
     private float iob;
     private boolean finalEventForDay;
-    private int actualBatteryCharge;
+    private int batteryChargeRaw;
     private int lipoMv;
     
     public DailyBasalHistoryLog() {}
@@ -31,7 +31,7 @@ public class DailyBasalHistoryLog extends HistoryLog {
         this.lastBasalRate = lastBasalRate;
         this.iob = iob;
         this.finalEventForDay = finalEventForDay;
-        this.actualBatteryCharge = actualBatteryCharge;
+        this.batteryChargeRaw = actualBatteryCharge;
         this.lipoMv = lipoMv;
         
     }
@@ -52,7 +52,7 @@ public class DailyBasalHistoryLog extends HistoryLog {
         this.lastBasalRate = Bytes.readFloat(raw, 14);
         this.iob = Bytes.readFloat(raw, 18);
         this.finalEventForDay = raw[22] == 1;
-        this.actualBatteryCharge = raw[23];
+        this.batteryChargeRaw = raw[23];
         this.lipoMv = Bytes.readShort(raw, 24);
         
     }
@@ -98,11 +98,16 @@ public class DailyBasalHistoryLog extends HistoryLog {
         return finalEventForDay;
     }
 
+
+    public int getBatteryChargeRaw() {
+        return batteryChargeRaw;
+    }
+
     /**
      * @return the reported battery charge in percent
      */
-    public int getActualBatteryCharge() {
-        return actualBatteryCharge;
+    public double getBatteryChargePercent() {
+       return (100 * ((batteryChargeRaw+256.0) / 512.0));
     }
 
     /**
