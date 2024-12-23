@@ -154,6 +154,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.ResumePumpingRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ResumePumpingResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ChangeControlIQSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -241,6 +243,7 @@ public enum Messages {
     STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),
     RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),
     CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),
+    ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),
     // MESSAGES_END
     ;
 
