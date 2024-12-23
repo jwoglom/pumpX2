@@ -15,12 +15,12 @@ public class ChangeControlIQSettingsResponseTest {
         initPumpState("authenticationKey", 0L);
         
         ChangeControlIQSettingsResponse expected = new ChangeControlIQSettingsResponse(
-            // 
+            new byte[3]
         );
 
         ChangeControlIQSettingsResponse parsedRes = (ChangeControlIQSettingsResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "005ccb5c1b000000d9a3ee1f799d9f28e8a6759fed2cb0fafeffdea01a2b0cf56bb0",
+                92,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

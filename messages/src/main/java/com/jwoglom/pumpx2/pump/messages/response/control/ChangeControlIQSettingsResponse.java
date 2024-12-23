@@ -12,7 +12,7 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-53,
-    size=0,
+    size=3,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
@@ -23,7 +23,10 @@ public class ChangeControlIQSettingsResponse extends Message {
     
     public ChangeControlIQSettingsResponse() {
         this.cargo = EMPTY;
-        
+    }
+
+    public ChangeControlIQSettingsResponse(byte[] raw) {
+        parse(raw);
     }
 
     public void parse(byte[] raw) { 
