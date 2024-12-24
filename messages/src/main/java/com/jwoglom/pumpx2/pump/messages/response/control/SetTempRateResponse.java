@@ -23,19 +23,23 @@ import java.math.BigInteger;
     request=SetTempRateRequest.class
 )
 public class SetTempRateResponse extends Message {
-    
-    
+
+    private int status;
+    private int id;
+
+
     public SetTempRateResponse() {}
     
     public SetTempRateResponse(byte[] raw) {
-        this.cargo = buildCargo(raw);
-        
+        parse(raw);
     }
 
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
+        this.status = raw[0];
+        this.id = raw[1];
         
     }
 
@@ -44,6 +48,13 @@ public class SetTempRateResponse extends Message {
         return Bytes.combine(
             raw);
     }
-    
-    
+
+
+    public int getStatus() {
+        return status;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
