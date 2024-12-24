@@ -156,6 +156,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsR
 import com.jwoglom.pumpx2.pump.messages.response.control.ChangeControlIQSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -244,6 +246,7 @@ public enum Messages {
     RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),
     CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),
     ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),
+    SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),
     // MESSAGES_END
     ;
 
