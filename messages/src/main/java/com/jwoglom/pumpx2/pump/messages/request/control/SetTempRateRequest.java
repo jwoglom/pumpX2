@@ -22,27 +22,51 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetTempRateResponse;
     response=SetTempRateResponse.class
 )
 public class SetTempRateRequest extends Message {
+
+    private int minutes;
+    private int percent;
     
     public SetTempRateRequest() {}
 
     public SetTempRateRequest(byte[] raw) {
         parse(raw);
-        
+    }
+
+    public SetTempRateRequest(int minutes, int percent) {
+        Preconditions.checkArgument(minutes >= 2, "duration of temp rate must be 2 minutes or greater");
+        Preconditions.checkArgument(percent >= 0 && percent <= 250, "percent temp rate must be between 0-250%");
+        this.cargo = buildCargo(minutes, percent);
+        this.minutes = minutes;
+        this.percent = percent;
     }
 
     public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        
+        this.minutes = Bytes.readShort(raw, 2) + 2;
+        this.percent = Bytes.readShort(raw, 4);
     }
 
     
-    public static byte[] buildCargo(int rate) {
+    public static byte[] buildCargo(int minutes, int percent) {
+        byte[] pfx = new byte[]{-96, -69};
+//        if (percent == 0) {
+//            pfx = new byte[]{0, -90};
+//        }
         return Bytes.combine(
-                new byte[]{0,0,0,0,0,0}
+                pfx,
+                Bytes.firstTwoBytesLittleEndian(minutes - 2),
+                Bytes.firstTwoBytesLittleEndian(percent)
         );
     }
-    
-    
+
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
 }
