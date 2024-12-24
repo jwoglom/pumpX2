@@ -14,7 +14,6 @@ def parse_ts(ts):
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
-headers = next(reader)
 
 '''
 to parse single json line:

@@ -56,10 +56,10 @@ Make sure the version of the additional tools package matches Xcode's version. I
 
 1. From the PumpX2 repo root, run:
 ```bash
-PUMP_AUTHENTICATION_KEY=123456 scripts/process-btsnoop-hci.sh /path/to/bluetoothd-hci-2024-11-20_15-24-02.log
+PUMP_AUTHENTICATION_KEY=xxxx scripts/process-btsnoop-hci.sh /path/to/bluetoothd-hci-2024-11-20_15-24-02.log
 ```
 
-where `123456` is your 6-character pump pairing code, and the `.log` file is the exported BTSnoop from the prior step.
+where `xxxx` is your 16-character pump pairing code (for legacy pairing) or the derived key material (for new-style pairing) or the magic string `IGNORE_HMAC_SIGNATURE_EXCEPTION`, and the `.log` file is the exported BTSnoop from the prior step.
 
 After it runs, a `.csv` and `.jsonl` file will be placed in the same directory as the log file.
 The `.csv` is a pre-processed extraction of the raw Bluetooth characteristic and values, while the `.jsonl` is parsed via PumpX2 using the cliparser module.
@@ -77,3 +77,5 @@ cat /path/to/bluetoothd-hci-2024-11-20_15-24-02.jsonl | jq -c -s '[.[] | select(
 ```
 
 Note that these exclude unprocessable bluetooth messages -- see json lines containing an `error` key.
+
+For six-digit

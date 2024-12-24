@@ -14,7 +14,6 @@ def parse_ts(ts):
 
 fpath = sys.argv[1]
 reader = csv.reader(open(fpath, 'r', encoding='unicode_escape'))
-headers = next(reader)
 
 def parseJsonLines(path):
     cwd = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../')
