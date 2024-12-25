@@ -162,6 +162,12 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationS
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetG6TransmitterIdResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.StartG6SensorSessionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.StartG6SensorSessionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.StopG6SensorSessionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.StopG6SensorSessionResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -253,6 +259,9 @@ public enum Messages {
     SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),
     OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),
     DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),
+    SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),
+    START_G6_SENSOR_SESSION(StartG6SensorSessionRequest.class, StartG6SensorSessionResponse.class),
+    STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),
     // MESSAGES_END
     ;
 

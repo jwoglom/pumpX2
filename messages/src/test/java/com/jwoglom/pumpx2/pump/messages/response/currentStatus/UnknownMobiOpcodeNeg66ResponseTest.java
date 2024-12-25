@@ -43,4 +43,20 @@ public class UnknownMobiOpcodeNeg66ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+    @Test
+    public void testUnknownMobiOpcodeNeg66Response_c() throws DecoderException {
+        UnknownMobiOpcodeNeg66Response expected = new UnknownMobiOpcodeNeg66Response(
+                new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
+        );
+
+        UnknownMobiOpcodeNeg66Response parsedRes = (UnknownMobiOpcodeNeg66Response) MessageTester.test(
+                "005bbf5b140000000000000000000000000000000000000000d75f",
+                91,
+                2,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }
