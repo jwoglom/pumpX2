@@ -27,4 +27,24 @@ public class ReminderStatusResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+
+    @Test
+    public void testReminderStatusResponse_SiteChangeReminder() throws DecoderException {
+        ReminderStatusResponse expected = new ReminderStatusResponse(
+                ReminderStatusResponse.ReminderType.toBitmask(
+                        ReminderStatusResponse.ReminderType.SITE_CHANGE_REMINDER
+                )
+        );
+
+        ReminderStatusResponse parsedRes = (ReminderStatusResponse) MessageTester.test(
+                "00194919080400000000000000177d",
+                25,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }

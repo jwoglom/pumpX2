@@ -158,6 +158,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeReque
 import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -247,6 +251,8 @@ public enum Messages {
     CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),
     ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),
     SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),
+    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),
+    DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),
     // MESSAGES_END
     ;
 
