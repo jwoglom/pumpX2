@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.builders;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;</a>
+<span class="sourceLineNo">008</span><a id="line.8"></a>
+<span class="sourceLineNo">009</span><a id="line.9">public class CentralChallengeRequestBuilder {</a>
+<span class="sourceLineNo">010</span><a id="line.10">    public static AbstractCentralChallengeRequest create(int appInstanceId) {</a>
+<span class="sourceLineNo">011</span><a id="line.11">        if (PumpStateSupplier.pumpApiVersion.get().greaterThan(KnownApiVersion.API_V3)) {</a>
+<span class="sourceLineNo">012</span><a id="line.12">            return null; // Handled inside pair()</a>
+<span class="sourceLineNo">013</span><a id="line.13">        } else {</a>
+<span class="sourceLineNo">014</span><a id="line.14">            return createV1(appInstanceId);</a>
+<span class="sourceLineNo">015</span><a id="line.15">        }</a>
+<span class="sourceLineNo">016</span><a id="line.16">    }</a>
+<span class="sourceLineNo">017</span><a id="line.17"></a>
+<span class="sourceLineNo">018</span><a id="line.18">    private static AbstractCentralChallengeRequest createV1(int appInstanceId) {</a>
+<span class="sourceLineNo">019</span><a id="line.19">        // TODO: this should be 8 instead of 10, we cut off 2 bytes at the end for no reason</a>
+<span class="sourceLineNo">020</span><a id="line.20">        byte[] centralChallenge = Bytes.getSecureRandom10Bytes();</a>
+<span class="sourceLineNo">021</span><a id="line.21">        return new CentralChallengeRequest(appInstanceId, centralChallenge);</a>
+<span class="sourceLineNo">022</span><a id="line.22">    }</a>
+<span class="sourceLineNo">023</span><a id="line.23">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

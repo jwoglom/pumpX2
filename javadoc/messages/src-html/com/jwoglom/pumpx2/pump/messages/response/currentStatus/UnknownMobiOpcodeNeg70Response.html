@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.google.common.base.Preconditions;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.pump.messages.Message;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import com.jwoglom.pumpx2.pump.messages.MessageType;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;</a>
+<span class="sourceLineNo">011</span><a id="line.11">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg70Request;</a>
+<span class="sourceLineNo">012</span><a id="line.12"></a>
+<span class="sourceLineNo">013</span><a id="line.13">import java.math.BigInteger;</a>
+<span class="sourceLineNo">014</span><a id="line.14"></a>
+<span class="sourceLineNo">015</span><a id="line.15">@MessageProps(</a>
+<span class="sourceLineNo">016</span><a id="line.16">    opCode=-69,</a>
+<span class="sourceLineNo">017</span><a id="line.17">    size=53,</a>
+<span class="sourceLineNo">018</span><a id="line.18">    type=MessageType.RESPONSE,</a>
+<span class="sourceLineNo">019</span><a id="line.19">    characteristic=Characteristic.CURRENT_STATUS,</a>
+<span class="sourceLineNo">020</span><a id="line.20">    minApi=KnownApiVersion.MOBI_API_V3_5,</a>
+<span class="sourceLineNo">021</span><a id="line.21">    supportedDevices=SupportedDevices.MOBI_ONLY,</a>
+<span class="sourceLineNo">022</span><a id="line.22">    request=UnknownMobiOpcodeNeg70Request.class</a>
+<span class="sourceLineNo">023</span><a id="line.23">)</a>
+<span class="sourceLineNo">024</span><a id="line.24">public class UnknownMobiOpcodeNeg70Response extends Message {</a>
+<span class="sourceLineNo">025</span><a id="line.25">    </a>
+<span class="sourceLineNo">026</span><a id="line.26">    public UnknownMobiOpcodeNeg70Response(byte[] raw) {</a>
+<span class="sourceLineNo">027</span><a id="line.27">        parse(raw);</a>
+<span class="sourceLineNo">028</span><a id="line.28">    }</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30">    public UnknownMobiOpcodeNeg70Response() {</a>
+<span class="sourceLineNo">031</span><a id="line.31">    }</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">035</span><a id="line.35">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">036</span><a id="line.36">        this.cargo = raw;</a>
+<span class="sourceLineNo">037</span><a id="line.37">        </a>
+<span class="sourceLineNo">038</span><a id="line.38">    }</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">    </a>
+<span class="sourceLineNo">041</span><a id="line.41">    </a>
+<span class="sourceLineNo">042</span><a id="line.42">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

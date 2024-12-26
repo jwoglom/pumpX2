@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.response.historyLog;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.google.common.base.Preconditions;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
+<span class="sourceLineNo">006</span><a id="line.6"></a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.math.BigInteger;</a>
+<span class="sourceLineNo">008</span><a id="line.8"></a>
+<span class="sourceLineNo">009</span><a id="line.9">@HistoryLogProps(</a>
+<span class="sourceLineNo">010</span><a id="line.10">    opCode = 160,</a>
+<span class="sourceLineNo">011</span><a id="line.11">    displayName = "CGM Calibration",</a>
+<span class="sourceLineNo">012</span><a id="line.12">    usedByTidepool = true</a>
+<span class="sourceLineNo">013</span><a id="line.13">)</a>
+<span class="sourceLineNo">014</span><a id="line.14">public class CgmCalibrationHistoryLog extends HistoryLog {</a>
+<span class="sourceLineNo">015</span><a id="line.15">    </a>
+<span class="sourceLineNo">016</span><a id="line.16">    private long currentTime;</a>
+<span class="sourceLineNo">017</span><a id="line.17">    private long timestamp;</a>
+<span class="sourceLineNo">018</span><a id="line.18">    private long calTimestamp;</a>
+<span class="sourceLineNo">019</span><a id="line.19">    private int value;</a>
+<span class="sourceLineNo">020</span><a id="line.20">    private int currentDisplayValue;</a>
+<span class="sourceLineNo">021</span><a id="line.21">    </a>
+<span class="sourceLineNo">022</span><a id="line.22">    public CgmCalibrationHistoryLog() {}</a>
+<span class="sourceLineNo">023</span><a id="line.23">    public CgmCalibrationHistoryLog(long pumpTimeSec, long sequenceNum, long currentTime, long timestamp, long calTimestamp, int value, int currentDisplayValue) {</a>
+<span class="sourceLineNo">024</span><a id="line.24">        super(pumpTimeSec, sequenceNum);</a>
+<span class="sourceLineNo">025</span><a id="line.25">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentTime, timestamp, calTimestamp, value, currentDisplayValue);</a>
+<span class="sourceLineNo">026</span><a id="line.26">        this.currentTime = currentTime;</a>
+<span class="sourceLineNo">027</span><a id="line.27">        this.timestamp = timestamp;</a>
+<span class="sourceLineNo">028</span><a id="line.28">        this.calTimestamp = calTimestamp;</a>
+<span class="sourceLineNo">029</span><a id="line.29">        this.value = value;</a>
+<span class="sourceLineNo">030</span><a id="line.30">        this.currentDisplayValue = currentDisplayValue;</a>
+<span class="sourceLineNo">031</span><a id="line.31">        </a>
+<span class="sourceLineNo">032</span><a id="line.32">    }</a>
+<span class="sourceLineNo">033</span><a id="line.33"></a>
+<span class="sourceLineNo">034</span><a id="line.34">    public CgmCalibrationHistoryLog(long currentTime, long timestamp, long calTimestamp, int value, int currentDisplayValue) {</a>
+<span class="sourceLineNo">035</span><a id="line.35">        this(0, 0, currentTime, timestamp, calTimestamp, value, currentDisplayValue);</a>
+<span class="sourceLineNo">036</span><a id="line.36">    }</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">    public int typeId() {</a>
+<span class="sourceLineNo">039</span><a id="line.39">        return 160;</a>
+<span class="sourceLineNo">040</span><a id="line.40">    }</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">043</span><a id="line.43">        Preconditions.checkArgument(raw.length == 26);</a>
+<span class="sourceLineNo">044</span><a id="line.44">        this.cargo = raw;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        parseBase(raw);</a>
+<span class="sourceLineNo">046</span><a id="line.46">        this.currentTime = Bytes.readUint32(raw, 10);</a>
+<span class="sourceLineNo">047</span><a id="line.47">        this.timestamp = Bytes.readUint32(raw, 14);</a>
+<span class="sourceLineNo">048</span><a id="line.48">        this.calTimestamp = Bytes.readUint32(raw, 18);</a>
+<span class="sourceLineNo">049</span><a id="line.49">        this.value = Bytes.readShort(raw, 22);</a>
+<span class="sourceLineNo">050</span><a id="line.50">        this.currentDisplayValue = Bytes.readShort(raw, 24);</a>
+<span class="sourceLineNo">051</span><a id="line.51">        </a>
+<span class="sourceLineNo">052</span><a id="line.52">    }</a>
+<span class="sourceLineNo">053</span><a id="line.53"></a>
+<span class="sourceLineNo">054</span><a id="line.54">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTime, long timestamp, long calTimestamp, int value, int currentDisplayValue) {</a>
+<span class="sourceLineNo">055</span><a id="line.55">        return HistoryLog.fillCargo(Bytes.combine(</a>
+<span class="sourceLineNo">056</span><a id="line.56">            new byte[]{-96, 0}, // (byte) 160</a>
+<span class="sourceLineNo">057</span><a id="line.57">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">058</span><a id="line.58">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">059</span><a id="line.59">            Bytes.toUint32(currentTime), </a>
+<span class="sourceLineNo">060</span><a id="line.60">            Bytes.toUint32(timestamp), </a>
+<span class="sourceLineNo">061</span><a id="line.61">            Bytes.toUint32(calTimestamp), </a>
+<span class="sourceLineNo">062</span><a id="line.62">            Bytes.firstTwoBytesLittleEndian(value), </a>
+<span class="sourceLineNo">063</span><a id="line.63">            Bytes.firstTwoBytesLittleEndian(currentDisplayValue)));</a>
+<span class="sourceLineNo">064</span><a id="line.64">    }</a>
+<span class="sourceLineNo">065</span><a id="line.65">    public long getCurrentTime() {</a>
+<span class="sourceLineNo">066</span><a id="line.66">        return currentTime;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    }</a>
+<span class="sourceLineNo">068</span><a id="line.68">    public long getTimestamp() {</a>
+<span class="sourceLineNo">069</span><a id="line.69">        return timestamp;</a>
+<span class="sourceLineNo">070</span><a id="line.70">    }</a>
+<span class="sourceLineNo">071</span><a id="line.71">    public long getCalTimestamp() {</a>
+<span class="sourceLineNo">072</span><a id="line.72">        return calTimestamp;</a>
+<span class="sourceLineNo">073</span><a id="line.73">    }</a>
+<span class="sourceLineNo">074</span><a id="line.74">    public int getValue() {</a>
+<span class="sourceLineNo">075</span><a id="line.75">        return value;</a>
+<span class="sourceLineNo">076</span><a id="line.76">    }</a>
+<span class="sourceLineNo">077</span><a id="line.77">    public int getCurrentDisplayValue() {</a>
+<span class="sourceLineNo">078</span><a id="line.78">        return currentDisplayValue;</a>
+<span class="sourceLineNo">079</span><a id="line.79">    }</a>
+<span class="sourceLineNo">080</span><a id="line.80">    </a>
+<span class="sourceLineNo">081</span><a id="line.81">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

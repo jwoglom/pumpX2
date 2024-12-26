@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.shared.L;</a>
+<span class="sourceLineNo">007</span><a id="line.7"></a>
+<span class="sourceLineNo">008</span><a id="line.8">import com.jwoglom.pumpx2.shared.Hex;</a>
+<span class="sourceLineNo">009</span><a id="line.9"></a>
+<span class="sourceLineNo">010</span><a id="line.10">import kotlin.jvm.internal.Intrinsics;</a>
+<span class="sourceLineNo">011</span><a id="line.11"></a>
+<span class="sourceLineNo">012</span><a id="line.12">public class StreamPacketArrayList extends PacketArrayList {</a>
+<span class="sourceLineNo">013</span><a id="line.13">    protected static final String TAG = "StreamPacketArrayList";</a>
+<span class="sourceLineNo">014</span><a id="line.14"></a>
+<span class="sourceLineNo">015</span><a id="line.15">    private byte[] originalMessageData = new byte[0];</a>
+<span class="sourceLineNo">016</span><a id="line.16"></a>
+<span class="sourceLineNo">017</span><a id="line.17">    // Streams don't have transaction IDs</a>
+<span class="sourceLineNo">018</span><a id="line.18">    public StreamPacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {</a>
+<span class="sourceLineNo">019</span><a id="line.19">        super(expectedopCode, expectedCargoSize, (byte) 0, isSigned);</a>
+<span class="sourceLineNo">020</span><a id="line.20">    }</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">    public void validatePacket(byte[] packetData) {</a>
+<span class="sourceLineNo">023</span><a id="line.23">        Intrinsics.checkParameterIsNotNull(packetData, "packetData");</a>
+<span class="sourceLineNo">024</span><a id="line.24">        if (packetData.length == 0) {</a>
+<span class="sourceLineNo">025</span><a id="line.25">            throw new IllegalArgumentException("Empty data");</a>
+<span class="sourceLineNo">026</span><a id="line.26">        } else if (packetData.length &gt;= 3) {</a>
+<span class="sourceLineNo">027</span><a id="line.27">            byte firstByteMod15 = (byte) (packetData[0] &amp; 15);</a>
+<span class="sourceLineNo">028</span><a id="line.28">            byte secondByte = packetData[1];</a>
+<span class="sourceLineNo">029</span><a id="line.29">            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);</a>
+<span class="sourceLineNo">030</span><a id="line.30">            if (secondByte == this.expectedTxId) {</a>
+<span class="sourceLineNo">031</span><a id="line.31">                if (this.empty) {</a>
+<span class="sourceLineNo">032</span><a id="line.32">                    this.firstByteMod15 = firstByteMod15;</a>
+<span class="sourceLineNo">033</span><a id="line.33">                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");</a>
+<span class="sourceLineNo">034</span><a id="line.34">                    parse(packetData);</a>
+<span class="sourceLineNo">035</span><a id="line.35">                } else if (((byte) 0) == firstByteMod15) {</a>
+<span class="sourceLineNo">036</span><a id="line.36">                    L.d(TAG, "firstByteMod15=0");</a>
+<span class="sourceLineNo">037</span><a id="line.37">                    if (this.firstByteMod15 == firstByteMod15) {</a>
+<span class="sourceLineNo">038</span><a id="line.38">                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
+<span class="sourceLineNo">039</span><a id="line.39">                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));</a>
+<span class="sourceLineNo">040</span><a id="line.40">                    } else {</a>
+<span class="sourceLineNo">041</span><a id="line.41">                        throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
+<span class="sourceLineNo">042</span><a id="line.42">                    }</a>
+<span class="sourceLineNo">043</span><a id="line.43">                } else if (this.firstByteMod15 == firstByteMod15) {</a>
+<span class="sourceLineNo">044</span><a id="line.44">                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
+<span class="sourceLineNo">045</span><a id="line.45">                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));</a>
+<span class="sourceLineNo">046</span><a id="line.46">                } else {</a>
+<span class="sourceLineNo">047</span><a id="line.47">                    throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
+<span class="sourceLineNo">048</span><a id="line.48">                }</a>
+<span class="sourceLineNo">049</span><a id="line.49">                //if (!moreHistoryLogsRemaining()) {</a>
+<span class="sourceLineNo">050</span><a id="line.50">                if (!needsMorePacket()) {</a>
+<span class="sourceLineNo">051</span><a id="line.51">                    L.d(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));</a>
+<span class="sourceLineNo">052</span><a id="line.52">                    this.empty = true;</a>
+<span class="sourceLineNo">053</span><a id="line.53">                }</a>
+<span class="sourceLineNo">054</span><a id="line.54">                this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);</a>
+<span class="sourceLineNo">055</span><a id="line.55">                return;</a>
+<span class="sourceLineNo">056</span><a id="line.56">            }</a>
+<span class="sourceLineNo">057</span><a id="line.57">            throw new IllegalArgumentException("Unexpected transaction ID 1: " + ((int) secondByte) + ", expecting " + ((int) this.expectedTxId) + ", opCode: " + ((int) this.expectedOpCode));</a>
+<span class="sourceLineNo">058</span><a id="line.58">        } else {</a>
+<span class="sourceLineNo">059</span><a id="line.59">            throw new IllegalArgumentException("Invalid data size: " + packetData.length);</a>
+<span class="sourceLineNo">060</span><a id="line.60">        }</a>
+<span class="sourceLineNo">061</span><a id="line.61">    }</a>
+<span class="sourceLineNo">062</span><a id="line.62"></a>
+<span class="sourceLineNo">063</span><a id="line.63">    protected void parse(byte[] bArr) {</a>
+<span class="sourceLineNo">064</span><a id="line.64">        L.d(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));</a>
+<span class="sourceLineNo">065</span><a id="line.65">        byte opCode = bArr[2];</a>
+<span class="sourceLineNo">066</span><a id="line.66">        byte cargoSize = bArr[4];</a>
+<span class="sourceLineNo">067</span><a id="line.67">        if (opCode == this.expectedOpCode) {</a>
+<span class="sourceLineNo">068</span><a id="line.68">            this.firstByteMod15 = (byte) (bArr[0] &amp; 15);</a>
+<span class="sourceLineNo">069</span><a id="line.69">            this.opCode = bArr[2];</a>
+<span class="sourceLineNo">070</span><a id="line.70">            byte txId = bArr[3];</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">            // Replace cargo size</a>
+<span class="sourceLineNo">073</span><a id="line.73">            expectedCargoSize = cargoSize;</a>
+<span class="sourceLineNo">074</span><a id="line.74">            if (txId != this.expectedTxId) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);</a>
+<span class="sourceLineNo">076</span><a id="line.76">            } else if (cargoSize &lt;= 255) {</a>
+<span class="sourceLineNo">077</span><a id="line.77">                byte numHistoryLogs = bArr[5];</a>
+<span class="sourceLineNo">078</span><a id="line.78">                if (cargoSize == (numHistoryLogs*26) + 2) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">                    this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
+<span class="sourceLineNo">080</span><a id="line.80">                    this.empty = false;</a>
+<span class="sourceLineNo">081</span><a id="line.81">                    return;</a>
+<span class="sourceLineNo">082</span><a id="line.82">                }</a>
+<span class="sourceLineNo">083</span><a id="line.83">                throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");</a>
+<span class="sourceLineNo">084</span><a id="line.84">            } else {</a>
+<span class="sourceLineNo">085</span><a id="line.85">                throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));</a>
+<span class="sourceLineNo">086</span><a id="line.86">            }</a>
+<span class="sourceLineNo">087</span><a id="line.87">        } else {</a>
+<span class="sourceLineNo">088</span><a id="line.88">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</a>
+<span class="sourceLineNo">089</span><a id="line.89">        }</a>
+<span class="sourceLineNo">090</span><a id="line.90">    }</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92"></a>
+<span class="sourceLineNo">093</span><a id="line.93">    private boolean moreHistoryLogsRemaining() {</a>
+<span class="sourceLineNo">094</span><a id="line.94">        if (firstByteMod15 == 0) {</a>
+<span class="sourceLineNo">095</span><a id="line.95">            return !validate("");</a>
+<span class="sourceLineNo">096</span><a id="line.96">        }</a>
+<span class="sourceLineNo">097</span><a id="line.97">        return firstByteMod15 &gt; 0;</a>
+<span class="sourceLineNo">098</span><a id="line.98">    }</a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">//    private void rebuildMessageDataForCRC() {</a>
+<span class="sourceLineNo">101</span><a id="line.101">//        originalMessageData = messageData;</a>
+<span class="sourceLineNo">102</span><a id="line.102">//        messageData = Bytes.combine(</a>
+<span class="sourceLineNo">103</span><a id="line.103">//                new byte[]{ (byte) Messages.HISTORY_LOG_STREAM.responseOpCode() },</a>
+<span class="sourceLineNo">104</span><a id="line.104">//                new byte[]{ 0 },</a>
+<span class="sourceLineNo">105</span><a id="line.105">//                new byte[]{ expectedCargoSize },</a>
+<span class="sourceLineNo">106</span><a id="line.106">//                CollectionsKt.toByteArray(ArraysKt.dropLast(fullCargo, 2))</a>
+<span class="sourceLineNo">107</span><a id="line.107">//        );</a>
+<span class="sourceLineNo">108</span><a id="line.108">//    }</a>
+<span class="sourceLineNo">109</span><a id="line.109"></a>
+<span class="sourceLineNo">110</span><a id="line.110">    private void setExpectedCRC() {</a>
+<span class="sourceLineNo">111</span><a id="line.111">        if (this.fullCargo.length &gt;= 2) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);</a>
+<span class="sourceLineNo">113</span><a id="line.113">        }</a>
+<span class="sourceLineNo">114</span><a id="line.114">    }</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">    public boolean validate(String authKey) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">        createMessageData();</a>
+<span class="sourceLineNo">118</span><a id="line.118">        setExpectedCRC();</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">        byte[] crcOut = Bytes.calculateCRC16(messageData);</a>
+<span class="sourceLineNo">121</span><a id="line.121">        if (crcOut[0] == expectedCrc[0] &amp;&amp; crcOut[1] == expectedCrc[1]) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">            return true;</a>
+<span class="sourceLineNo">123</span><a id="line.123">        }</a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">        throw new IllegalArgumentException("CRC error with history log: originalMessageData: "+ Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">    }</a>
+<span class="sourceLineNo">128</span><a id="line.128">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

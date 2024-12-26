@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.request.control;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.google.common.base.Preconditions;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.pump.messages.Message;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import com.jwoglom.pumpx2.pump.messages.MessageType;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;</a>
+<span class="sourceLineNo">010</span><a id="line.10">import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;</a>
+<span class="sourceLineNo">011</span><a id="line.11"></a>
+<span class="sourceLineNo">012</span><a id="line.12">import java.util.Set;</a>
+<span class="sourceLineNo">013</span><a id="line.13"></a>
+<span class="sourceLineNo">014</span><a id="line.14">/**</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * Initiates a bolus. Must be done following a BolusPermissionRequest, which returns a bolusID</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * that is used for completing the bolus.</a>
+<span class="sourceLineNo">017</span><a id="line.17"> */</a>
+<span class="sourceLineNo">018</span><a id="line.18">@MessageProps(</a>
+<span class="sourceLineNo">019</span><a id="line.19">    opCode=-98,</a>
+<span class="sourceLineNo">020</span><a id="line.20">    size=37, // 61 with 24 byte padding</a>
+<span class="sourceLineNo">021</span><a id="line.21">    type=MessageType.REQUEST,</a>
+<span class="sourceLineNo">022</span><a id="line.22">    characteristic=Characteristic.CONTROL,</a>
+<span class="sourceLineNo">023</span><a id="line.23">    response=InitiateBolusResponse.class,</a>
+<span class="sourceLineNo">024</span><a id="line.24">    signed=true,</a>
+<span class="sourceLineNo">025</span><a id="line.25">    modifiesInsulinDelivery=true</a>
+<span class="sourceLineNo">026</span><a id="line.26">)</a>
+<span class="sourceLineNo">027</span><a id="line.27">public class InitiateBolusRequest extends Message {</a>
+<span class="sourceLineNo">028</span><a id="line.28">    public static long MIN_BOLUS_MILLIUNITS = 50; // 0.05 u</a>
+<span class="sourceLineNo">029</span><a id="line.29">    public static long MIN_EXTENDED_BOLUS_MILLIUNITS = 400; // 0.40 u</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">    private long totalVolume;</a>
+<span class="sourceLineNo">032</span><a id="line.32">    private int bolusID;</a>
+<span class="sourceLineNo">033</span><a id="line.33">    private int bolusTypeBitmask;</a>
+<span class="sourceLineNo">034</span><a id="line.34">    private long foodVolume;</a>
+<span class="sourceLineNo">035</span><a id="line.35">    private long correctionVolume;</a>
+<span class="sourceLineNo">036</span><a id="line.36">    private int bolusCarbs;</a>
+<span class="sourceLineNo">037</span><a id="line.37">    private int bolusBG;</a>
+<span class="sourceLineNo">038</span><a id="line.38">    private long bolusIOB;</a>
+<span class="sourceLineNo">039</span><a id="line.39">    private long extendedVolume;</a>
+<span class="sourceLineNo">040</span><a id="line.40">    private long extendedSeconds;</a>
+<span class="sourceLineNo">041</span><a id="line.41">    private long extended3;</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">    public InitiateBolusRequest() {}</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">    public InitiateBolusRequest(byte[] raw) {</a>
+<span class="sourceLineNo">046</span><a id="line.46">        parse(raw);</a>
+<span class="sourceLineNo">047</span><a id="line.47">    }</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">    // all parameters:</a>
+<span class="sourceLineNo">050</span><a id="line.50">    // (C49011.this.bolusId, MobileBolusModel.mobileBolusModel.bolusType(), BolusConfirmFragment.this.bolusTotalVol(), BolusConfirmFragment.this.bolusFoodVol(), C49011.this.bolusCorrectionVol, BolusConfirmFragment.this.bolusCarbs(), BolusConfirmFragment.this.bolusBG(), BolusConfirmFragment.this.bolusIOB(), 0L, 0L, 0L)</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">    /**</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * The final command which initiates a bolus. Must specify a bolusID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}.</a>
+<span class="sourceLineNo">054</span><a id="line.54">     *</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * @param totalVolume      the amount of insulin to be delivered, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}.</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * @param bolusID          the bolus ID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * @param bolusTypeBitmask the bitmask of bolus type. Use {@link com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType#toBitmask(BolusDeliveryHistoryLog.BolusType...)}</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * @param foodVolume       the amount of insulin attributed within metadata from food (carbs; optional)</a>
+<span class="sourceLineNo">059</span><a id="line.59">     * @param correctionVolume the amount of insulin attributed within metadata from a correction (optional)</a>
+<span class="sourceLineNo">060</span><a id="line.60">     * @param bolusCarbs       the number of carbs attributed within metadata (optional)</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * @param bolusBG          the current BG attributed within metadata, if overridden from the current CGM reading (optional)</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * @param bolusIOB         the current IOB attributed within metadata (optional)</a>
+<span class="sourceLineNo">063</span><a id="line.63">     */</a>
+<span class="sourceLineNo">064</span><a id="line.64">    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB) {</a>
+<span class="sourceLineNo">065</span><a id="line.65">        this(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, 0, 0, 0);</a>
+<span class="sourceLineNo">066</span><a id="line.66">    }</a>
+<span class="sourceLineNo">067</span><a id="line.67"></a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">    /**</a>
+<span class="sourceLineNo">070</span><a id="line.70">     * The final command which initiates a bolus. Must specify a bolusID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}.</a>
+<span class="sourceLineNo">071</span><a id="line.71">     *</a>
+<span class="sourceLineNo">072</span><a id="line.72">     * @param totalVolume      the amount of insulin to be delivered, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}. For an extended bolus, this is the amount delivered now. The total amount of insulin delivered over the entire extended bolus period is totalVolume+extendedVolume.</a>
+<span class="sourceLineNo">073</span><a id="line.73">     * @param bolusID          the bolus ID returned from {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}</a>
+<span class="sourceLineNo">074</span><a id="line.74">     * @param bolusTypeBitmask the bitmask of bolus type. Use {@link com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType#toBitmask(BolusDeliveryHistoryLog.BolusType...)}</a>
+<span class="sourceLineNo">075</span><a id="line.75">     * @param foodVolume       the amount of insulin attributed within metadata from food (carbs; optional)</a>
+<span class="sourceLineNo">076</span><a id="line.76">     * @param correctionVolume the amount of insulin attributed within metadata from a correction (optional)</a>
+<span class="sourceLineNo">077</span><a id="line.77">     * @param bolusCarbs       the number of carbs attributed within metadata (optional)</a>
+<span class="sourceLineNo">078</span><a id="line.78">     * @param bolusBG          the current BG attributed within metadata, if overridden from the current CGM reading (optional)</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * @param bolusIOB         the current IOB attributed within metadata (optional)</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * @param extendedVolume   the amount of insulin to be delivered delayed via an extended bolus section, in milliunits. Use {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1To1000}.</a>
+<span class="sourceLineNo">081</span><a id="line.81">     * @param extendedSeconds  the length of the extended bolus in seconds.</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * @param extended3        TODO unknown, set as 0</a>
+<span class="sourceLineNo">083</span><a id="line.83">     */</a>
+<span class="sourceLineNo">084</span><a id="line.84">    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {</a>
+<span class="sourceLineNo">085</span><a id="line.85">        Preconditions.checkArgument(totalVolume &gt;= MIN_BOLUS_MILLIUNITS);</a>
+<span class="sourceLineNo">086</span><a id="line.86">        Preconditions.checkArgument(bolusID &gt; 0);</a>
+<span class="sourceLineNo">087</span><a id="line.87">        Preconditions.checkArgument(foodVolume &gt;= 0);</a>
+<span class="sourceLineNo">088</span><a id="line.88">        Preconditions.checkArgument(correctionVolume &gt;= 0);</a>
+<span class="sourceLineNo">089</span><a id="line.89">        Preconditions.checkArgument(bolusCarbs &gt;= 0);</a>
+<span class="sourceLineNo">090</span><a id="line.90">        Preconditions.checkArgument(bolusBG &gt;= 0);</a>
+<span class="sourceLineNo">091</span><a id="line.91">        Preconditions.checkArgument(bolusIOB &gt;= 0);</a>
+<span class="sourceLineNo">092</span><a id="line.92">        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, extendedVolume, extendedSeconds, extended3);</a>
+<span class="sourceLineNo">093</span><a id="line.93">        this.totalVolume = totalVolume; //</a>
+<span class="sourceLineNo">094</span><a id="line.94">        this.bolusID = bolusID;</a>
+<span class="sourceLineNo">095</span><a id="line.95">        this.bolusTypeBitmask = bolusTypeBitmask; //</a>
+<span class="sourceLineNo">096</span><a id="line.96">        this.foodVolume = foodVolume; //</a>
+<span class="sourceLineNo">097</span><a id="line.97">        this.correctionVolume = correctionVolume; //</a>
+<span class="sourceLineNo">098</span><a id="line.98">        this.bolusCarbs = bolusCarbs; //</a>
+<span class="sourceLineNo">099</span><a id="line.99">        this.bolusBG = bolusBG; //</a>
+<span class="sourceLineNo">100</span><a id="line.100">        this.bolusIOB = bolusIOB; //</a>
+<span class="sourceLineNo">101</span><a id="line.101">        this.extendedVolume = extendedVolume;</a>
+<span class="sourceLineNo">102</span><a id="line.102">        this.extendedSeconds = extendedSeconds;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        this.extended3 = extended3;</a>
+<span class="sourceLineNo">104</span><a id="line.104">    }</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">        raw = removeSignedRequestHmacBytes(raw);</a>
+<span class="sourceLineNo">108</span><a id="line.108">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">109</span><a id="line.109">        this.cargo = raw;</a>
+<span class="sourceLineNo">110</span><a id="line.110">        // argument positions are guesses!!</a>
+<span class="sourceLineNo">111</span><a id="line.111">        // 1u bolus</a>
+<span class="sourceLineNo">112</span><a id="line.112">        // LastBolusStatusV2Response[bit0=1,bolusId=10650,bolusSourceId=8,bolusStatusId=3,bolusTypeBitmask=8,deliveredVolume=1000,extendedBolusDuration=0,requestedVolume=1000,timestamp=461510714,cargo={1,-102,41,0,0,58,24,-126,27,-24,3,0,0,3,8,8,0,0,0,0,-24,3,0,0}</a>
+<span class="sourceLineNo">113</span><a id="line.113">        //   0  1 2 3 4    5  6 7 8 9 101112131415161718192021222324252627282930313233343536 37 38 39   40 41  42 43 44  45  46  47  48 49 50 51 52 53  54  55   56  57  58   59  60</a>
+<span class="sourceLineNo">114</span><a id="line.114">        // {-24,3,0,0,-102,41,0,0,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-14,23,-126,27,104,-7,76,-21,-26,113,122,93,21,81,39,20,127,-20,-102,-39,121,-110,106,-84}</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116"></a>
+<span class="sourceLineNo">117</span><a id="line.117">        // 142 mg/dl, 0.13u, 13g carbs (food)</a>
+<span class="sourceLineNo">118</span><a id="line.118">        // LastBolusStatusV2Response[bit0=1,bolusId=10652,bolusSourceId=8,bolusStatusId=3,bolusTypeBitmask=1,deliveredVolume=130,extendedBolusDuration=0,requestedVolume=130,timestamp=461589271,cargo={1,-100,41,0,0,23,75,-125,27,-126,0,0,0,3,8,1,0,0,0,0,-126,0,0,0}]</a>
+<span class="sourceLineNo">119</span><a id="line.119">        // TimeSinceResetResponse[pumpTime=1079274,timeSinceReset=461589180]</a>
+<span class="sourceLineNo">120</span><a id="line.120">        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589180 ./scripts/get-single-opcode.py '033e9e3e3d820000009c29000001820000000000 023e00000d008e00000000000000000000000000 013e00000000bc4a831b9cbf19ffb856288a8afa 003e8f24a463e00cf3bbe5d305dd'</a>
+<span class="sourceLineNo">121</span><a id="line.121">        //  0     1  2  3  4     5   6  7  8  9    10 11 12 13 14 15 16  17 18    19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36   37  38    39  40    41   42  43  44   45  46  47    48    49  50    51  52   53  54   55  56   57   58   59   60</a>
+<span class="sourceLineNo">122</span><a id="line.122">        // {-126, 0, 0, 0, -100, 41, 0, 0, 1, -126, 0, 0, 0, 0, 0, 0, 0, 13, 0, -114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -68, 74, -125, 27, -100, -65, 25, -1, -72, 86, 40, -118, -118, -6, -113, 36, -92, 99, -32, 12, -13, -69, -27, -45}</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124"></a>
+<span class="sourceLineNo">125</span><a id="line.125">        // 161 mg/dl, 0.11u, 11g carbs (food), 0.13u IOB</a>
+<span class="sourceLineNo">126</span><a id="line.126">        // LastBolusStatusV2Response[bit0=1,bolusId=10653,bolusSourceId=8,bolusStatusId=3,bolusTypeBitmask=1,deliveredVolume=110,extendedBolusDuration=0,requestedVolume=110,timestamp=461589462,cargo={1,-99,41,0,0,-42,75,-125,27,110,0,0,0,3,8,1,0,0,0,0,110,0,0,0}</a>
+<span class="sourceLineNo">127</span><a id="line.127">        // ControlIQIOBResponse[iobType=0,mudaliarIOB=240,mudaliarTotalIOB=240,swan6hrIOB=240,timeRemainingSeconds=17940,cargo={-16,0,0,0,20,70,0,0,-16,0,0,0,-16,0,0,0,0}]</a>
+<span class="sourceLineNo">128</span><a id="line.128">        // ControlIQInfoV2Response[byte6=1,byte7=2,byte8=4,closedLoopEnabled=false,controlStateType=1,currentUserModeType=0,exerciseChoice=0,exerciseDuration=0,totalDailyInsulin=75,weight=140,weightUnit=2,cargo={0,-116,0,2,75,0,1,2,4,1,0,0,0,0,0,0,0,0,0}]</a>
+<span class="sourceLineNo">129</span><a id="line.129">        // CurrentBasalStatusResponse[basalModifiedBitmask=0,currentBasalRate=0,profileBasalRate=0,cargo={0,0,0,0,0,0,0,0,0}]</a>
+<span class="sourceLineNo">130</span><a id="line.130">        // CurrentBolusStatusResponse[bolusId=0,bolusSource=0,bolusTypeBitmask=0,requestedVolume=0,status=0,timestamp=0,cargo={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}]</a>
+<span class="sourceLineNo">131</span><a id="line.131">        // LastBGResponse[bgSource=0,bgTimestamp=461589432,bgValue=161,cargo={-72,75,-125,27,-95,0,0}]</a>
+<span class="sourceLineNo">132</span><a id="line.132">        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589420</a>
+<span class="sourceLineNo">133</span><a id="line.133">        // ./scripts/get-single-opcode.py '03399e393d6e0000009d290000016e0000000000 023900000b00a100820000000000000000000000 013900000000ac4b831b7a0b7cfc14a30b9c3995 0039dc8bbbdfa2ce2ce995725407'</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">        // for (int i=0; i&lt;56; i++){System.out.println(i+" float: "+Bytes.readFloat(parsedMessage.cargo, i)+" uint32: "+Bytes.readUint32(parsedMessage.cargo, i)+" short: "+Bytes.readShort(parsedMessage.cargo,i)); }</a>
+<span class="sourceLineNo">136</span><a id="line.136">        /*</a>
+<span class="sourceLineNo">137</span><a id="line.137">        for (int i=0; i&lt;61; i++) {</a>
+<span class="sourceLineNo">138</span><a id="line.138">            System.out.print(i+" "+parsedMessage.cargo[i]+" ");</a>
+<span class="sourceLineNo">139</span><a id="line.139">            if (i+4 &lt;= 61) {System.out.print("float: "+Bytes.readFloat(parsedMessage.cargo, i)+" ");}</a>
+<span class="sourceLineNo">140</span><a id="line.140">            if (i+4 &lt;= 61) {System.out.print("uint32: "+Bytes.readUint32(parsedMessage.cargo, i)+" ");}</a>
+<span class="sourceLineNo">141</span><a id="line.141">            if (i+2 &lt;= 61) {System.out.print("short: "+Bytes.readShort(parsedMessage.cargo,i));}</a>
+<span class="sourceLineNo">142</span><a id="line.142">            System.out.println();</a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144">         */</a>
+<span class="sourceLineNo">145</span><a id="line.145">        this.totalVolume = Bytes.readUint32(raw, 0); // correct</a>
+<span class="sourceLineNo">146</span><a id="line.146">        this.bolusID = Bytes.readShort(raw, 4); // correct</a>
+<span class="sourceLineNo">147</span><a id="line.147">        // 6, 7 empty</a>
+<span class="sourceLineNo">148</span><a id="line.148">        this.bolusTypeBitmask = raw[8]; // correct, may be a short?</a>
+<span class="sourceLineNo">149</span><a id="line.149">        this.foodVolume = Bytes.readUint32(raw, 9); // correct</a>
+<span class="sourceLineNo">150</span><a id="line.150">        this.correctionVolume = Bytes.readUint32(raw, 13); // double check</a>
+<span class="sourceLineNo">151</span><a id="line.151">        this.bolusCarbs = Bytes.readShort(raw, 17); // correct</a>
+<span class="sourceLineNo">152</span><a id="line.152">        this.bolusBG = Bytes.readShort(raw, 19); // correct</a>
+<span class="sourceLineNo">153</span><a id="line.153">        this.bolusIOB = Bytes.readUint32(raw, 21);  // correct</a>
+<span class="sourceLineNo">154</span><a id="line.154">        // STANDARD BOLUS: 25 - 36 inclusive are 0s</a>
+<span class="sourceLineNo">155</span><a id="line.155">        // EXTENDED BOLUS:</a>
+<span class="sourceLineNo">156</span><a id="line.156">        this.extendedVolume = Bytes.readUint32(raw, 25); // 25-28 = extended1</a>
+<span class="sourceLineNo">157</span><a id="line.157">        this.extendedSeconds = Bytes.readUint32(raw, 29); // 29-32 = extended2</a>
+<span class="sourceLineNo">158</span><a id="line.158">        this.extended3 = Bytes.readUint32(raw, 33); // 33-36 = extended3, seems to be 0</a>
+<span class="sourceLineNo">159</span><a id="line.159">        // 24 byte hmac padding</a>
+<span class="sourceLineNo">160</span><a id="line.160">        // this.timestamp = Bytes.readUint32(raw, 37); // equal to pumpTimeSinceReset</a>
+<span class="sourceLineNo">161</span><a id="line.161">        // 41 - 61 unknown</a>
+<span class="sourceLineNo">162</span><a id="line.162">    }</a>
+<span class="sourceLineNo">163</span><a id="line.163"></a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">    public static byte[] buildCargo(long totalVolume, int bolusID, int bolusTypeId, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {</a>
+<span class="sourceLineNo">166</span><a id="line.166">        return Bytes.combine(</a>
+<span class="sourceLineNo">167</span><a id="line.167">                Bytes.toUint32(totalVolume),</a>
+<span class="sourceLineNo">168</span><a id="line.168">                Bytes.firstTwoBytesLittleEndian(bolusID),</a>
+<span class="sourceLineNo">169</span><a id="line.169">                new byte[]{0, 0},</a>
+<span class="sourceLineNo">170</span><a id="line.170">                new byte[]{(byte) bolusTypeId},</a>
+<span class="sourceLineNo">171</span><a id="line.171">                Bytes.toUint32(foodVolume),</a>
+<span class="sourceLineNo">172</span><a id="line.172">                Bytes.toUint32(correctionVolume),</a>
+<span class="sourceLineNo">173</span><a id="line.173">                Bytes.firstTwoBytesLittleEndian(bolusCarbs),</a>
+<span class="sourceLineNo">174</span><a id="line.174">                Bytes.firstTwoBytesLittleEndian(bolusBG),</a>
+<span class="sourceLineNo">175</span><a id="line.175">                Bytes.toUint32(bolusIOB),</a>
+<span class="sourceLineNo">176</span><a id="line.176">                Bytes.toUint32(extendedVolume),</a>
+<span class="sourceLineNo">177</span><a id="line.177">                Bytes.toUint32(extendedSeconds),</a>
+<span class="sourceLineNo">178</span><a id="line.178">                Bytes.toUint32(extended3)</a>
+<span class="sourceLineNo">179</span><a id="line.179">                // 24 byte signed padding with hmac</a>
+<span class="sourceLineNo">180</span><a id="line.180">//                Bytes.toUint32(timestamp),</a>
+<span class="sourceLineNo">181</span><a id="line.181">//                new byte[20]</a>
+<span class="sourceLineNo">182</span><a id="line.182">        );</a>
+<span class="sourceLineNo">183</span><a id="line.183">    }</a>
+<span class="sourceLineNo">184</span><a id="line.184"></a>
+<span class="sourceLineNo">185</span><a id="line.185">    public long getTotalVolume() {</a>
+<span class="sourceLineNo">186</span><a id="line.186">        return totalVolume;</a>
+<span class="sourceLineNo">187</span><a id="line.187">    }</a>
+<span class="sourceLineNo">188</span><a id="line.188"></a>
+<span class="sourceLineNo">189</span><a id="line.189">    public int getBolusID() {</a>
+<span class="sourceLineNo">190</span><a id="line.190">        return bolusID;</a>
+<span class="sourceLineNo">191</span><a id="line.191">    }</a>
+<span class="sourceLineNo">192</span><a id="line.192"></a>
+<span class="sourceLineNo">193</span><a id="line.193">    public int getBolusTypeBitmask() {</a>
+<span class="sourceLineNo">194</span><a id="line.194">        return bolusTypeBitmask;</a>
+<span class="sourceLineNo">195</span><a id="line.195">    }</a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">    public Set&lt;BolusDeliveryHistoryLog.BolusType&gt; getBolusTypes() {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        return BolusDeliveryHistoryLog.BolusType.fromBitmask(bolusTypeBitmask);</a>
+<span class="sourceLineNo">199</span><a id="line.199">    }</a>
+<span class="sourceLineNo">200</span><a id="line.200"></a>
+<span class="sourceLineNo">201</span><a id="line.201">    public long getFoodVolume() {</a>
+<span class="sourceLineNo">202</span><a id="line.202">        return foodVolume;</a>
+<span class="sourceLineNo">203</span><a id="line.203">    }</a>
+<span class="sourceLineNo">204</span><a id="line.204"></a>
+<span class="sourceLineNo">205</span><a id="line.205">    public long getCorrectionVolume() {</a>
+<span class="sourceLineNo">206</span><a id="line.206">        return correctionVolume;</a>
+<span class="sourceLineNo">207</span><a id="line.207">    }</a>
+<span class="sourceLineNo">208</span><a id="line.208"></a>
+<span class="sourceLineNo">209</span><a id="line.209">    public int getBolusCarbs() {</a>
+<span class="sourceLineNo">210</span><a id="line.210">        return bolusCarbs;</a>
+<span class="sourceLineNo">211</span><a id="line.211">    }</a>
+<span class="sourceLineNo">212</span><a id="line.212"></a>
+<span class="sourceLineNo">213</span><a id="line.213">    public int getBolusBG() {</a>
+<span class="sourceLineNo">214</span><a id="line.214">        return bolusBG;</a>
+<span class="sourceLineNo">215</span><a id="line.215">    }</a>
+<span class="sourceLineNo">216</span><a id="line.216"></a>
+<span class="sourceLineNo">217</span><a id="line.217">    public long getBolusIOB() {</a>
+<span class="sourceLineNo">218</span><a id="line.218">        return bolusIOB;</a>
+<span class="sourceLineNo">219</span><a id="line.219">    }</a>
+<span class="sourceLineNo">220</span><a id="line.220"></a>
+<span class="sourceLineNo">221</span><a id="line.221">    public long getExtendedVolume() {</a>
+<span class="sourceLineNo">222</span><a id="line.222">        return extendedVolume;</a>
+<span class="sourceLineNo">223</span><a id="line.223">    }</a>
+<span class="sourceLineNo">224</span><a id="line.224"></a>
+<span class="sourceLineNo">225</span><a id="line.225">    public long getExtendedSeconds() {</a>
+<span class="sourceLineNo">226</span><a id="line.226">        return extendedSeconds;</a>
+<span class="sourceLineNo">227</span><a id="line.227">    }</a>
+<span class="sourceLineNo">228</span><a id="line.228"></a>
+<span class="sourceLineNo">229</span><a id="line.229">    public long getExtended3() {</a>
+<span class="sourceLineNo">230</span><a id="line.230">        return extended3;</a>
+<span class="sourceLineNo">231</span><a id="line.231">    }</a>
+<span class="sourceLineNo">232</span><a id="line.232">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

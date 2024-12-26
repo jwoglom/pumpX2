@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.util;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.jwoglom.pumpx2.pump.messages.Messages;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.shared.JavaHelpers;</a>
+<span class="sourceLineNo">005</span><a id="line.5"></a>
+<span class="sourceLineNo">006</span><a id="line.6">import java.util.Arrays;</a>
+<span class="sourceLineNo">007</span><a id="line.7">import java.util.List;</a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.util.stream.Collectors;</a>
+<span class="sourceLineNo">009</span><a id="line.9"></a>
+<span class="sourceLineNo">010</span><a id="line.10">public class MessageHelpers {</a>
+<span class="sourceLineNo">011</span><a id="line.11">    public static final String REQUEST_PACKAGE = "com.jwoglom.pumpx2.pump.messages.request";</a>
+<span class="sourceLineNo">012</span><a id="line.12">    public static List&lt;String&gt; getAllPumpRequestMessages() {</a>
+<span class="sourceLineNo">013</span><a id="line.13">        return Arrays.stream(Messages.values())</a>
+<span class="sourceLineNo">014</span><a id="line.14">                .map(messages -&gt; messages.requestClass().getName())</a>
+<span class="sourceLineNo">015</span><a id="line.15">                .filter(name -&gt; name.startsWith(REQUEST_PACKAGE))</a>
+<span class="sourceLineNo">016</span><a id="line.16">                .filter(name -&gt; !name.endsWith("Test"))</a>
+<span class="sourceLineNo">017</span><a id="line.17">                .map(MessageHelpers::lastTwoParts)</a>
+<span class="sourceLineNo">018</span><a id="line.18">                .sorted()</a>
+<span class="sourceLineNo">019</span><a id="line.19">                .collect(Collectors.toList());</a>
+<span class="sourceLineNo">020</span><a id="line.20">    }</a>
+<span class="sourceLineNo">021</span><a id="line.21"></a>
+<span class="sourceLineNo">022</span><a id="line.22">    public static String lastTwoParts(String name) {</a>
+<span class="sourceLineNo">023</span><a id="line.23">        String[] parts = name.split("\\.");</a>
+<span class="sourceLineNo">024</span><a id="line.24">        return parts[parts.length-2] + "." + parts[parts.length-1];</a>
+<span class="sourceLineNo">025</span><a id="line.25">    }</a>
+<span class="sourceLineNo">026</span><a id="line.26">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>

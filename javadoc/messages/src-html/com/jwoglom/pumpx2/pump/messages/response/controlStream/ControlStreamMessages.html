@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package com.jwoglom.pumpx2.pump.messages.response.controlStream;</a>
+<span class="sourceLineNo">002</span><a id="line.2"></a>
+<span class="sourceLineNo">003</span><a id="line.3">import com.google.common.base.Preconditions;</a>
+<span class="sourceLineNo">004</span><a id="line.4">import com.jwoglom.pumpx2.pump.messages.Message;</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.Messages;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</a>
+<span class="sourceLineNo">007</span><a id="line.7"></a>
+<span class="sourceLineNo">008</span><a id="line.8">public class ControlStreamMessages {</a>
+<span class="sourceLineNo">009</span><a id="line.9">    public static Message determineRequestMessage(byte[] rawBtValue) throws InstantiationException, IllegalAccessException {</a>
+<span class="sourceLineNo">010</span><a id="line.10">        Preconditions.checkArgument(rawBtValue.length &gt;= 3);</a>
+<span class="sourceLineNo">011</span><a id="line.11">        byte opCode = rawBtValue[2];</a>
+<span class="sourceLineNo">012</span><a id="line.12">        return Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();</a>
+<span class="sourceLineNo">013</span><a id="line.13">    }</a>
+<span class="sourceLineNo">014</span><a id="line.14">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
