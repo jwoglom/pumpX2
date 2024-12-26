@@ -28,6 +28,11 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+tasks.javadoc {
+    source = sourceSets.main.allJava
+    options.linkSource = true
+}
+
 publishing {
     publications {
         "$project.name"(MavenPublication) {

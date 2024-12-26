@@ -1,0 +1,92 @@
+name: javadoc
+
+on:
+  push:
+    branches: [ dev ]
+    paths: [ '**.java', '.github/workflows/javadoc.yml' ]
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v3
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build docs with Maven
+        run: ./gradlew javadoc
+
+      - name: Checkout the gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy to Documentation Website Location
+        run: |
+          mkdir -p gh-pages/javadoc/messages
+          rm -rf gh-pages/javadoc/messages
+          cp -rf messages/build/docs/javadoc/. gh-pages/javadoc/messages/
+
+      - name: Tidy up the javadocs
+        id: tidy
+        uses: cicirello/javadoc-cleanup@v1
+        with:
+          base-url-path: https://jwoglom.github.io/pumpx2/javadoc/
+          path-to-root: gh-pages/javadoc/messages
+          user-defined-block: |
+            <meta name="referrer" content="strict-origin-when-cross-origin">
+
+      - name: Log javadoc-cleanup output
+        run: |
+          echo "modified-count = ${{ steps.tidy.outputs.modified-count }}"
+
+      - name: Commit documentation changes without pushing yet
+        run: |
+          cd gh-pages
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name 'github-actions'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m "Javadoc update $(date)"
+          fi
+          cd ..
+
+      - name: Generate the sitemap
+        id: sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://jwoglom.github.io/pumpx2/javadoc/
+          path-to-root: gh-pages
+
+      - name: Output stats
+        run: |
+          echo "sitemap-path = ${{ steps.sitemap.outputs.sitemap-path }}"
+          echo "url-count = ${{ steps.sitemap.outputs.url-count }}"
+          echo "excluded-count = ${{ steps.sitemap.outputs.excluded-count }}"
+
+      - name: Commit documentation website sitemap and push all commits
+        run: |
+          cd gh-pages
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name 'github-actions'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+            git add -A
+            git commit -m "Sitemap update $(date)"
+          fi
+          git push
+          cd ..
