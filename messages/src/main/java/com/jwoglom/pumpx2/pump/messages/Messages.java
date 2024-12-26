@@ -170,6 +170,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.StopG6SensorSessionReque
 import com.jwoglom.pumpx2.pump.messages.response.control.StopG6SensorSessionResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.PlaySoundRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -265,6 +267,7 @@ public enum Messages {
     START_G6_SENSOR_SESSION(StartG6SensorSessionRequest.class, StartG6SensorSessionResponse.class),
     STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
+    DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
     // MESSAGES_END
     ;
 
