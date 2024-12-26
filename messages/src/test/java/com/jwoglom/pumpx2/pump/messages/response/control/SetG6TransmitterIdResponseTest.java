@@ -15,12 +15,12 @@ public class SetG6TransmitterIdResponseTest {
         initPumpState("authenticationKey", 0L);
         
         SetG6TransmitterIdResponse expected = new SetG6TransmitterIdResponse(
-            // 
+            0
         );
 
         SetG6TransmitterIdResponse parsedRes = (SetG6TransmitterIdResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "0021b121190085c3f21f51e3fabfa0a59cd348aed259b44201903b33d9bead20",
+                33,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected
