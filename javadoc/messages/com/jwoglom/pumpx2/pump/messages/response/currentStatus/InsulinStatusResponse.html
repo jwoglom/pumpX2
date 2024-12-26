@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.10">InsulinStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.24">InsulinStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/InsulinStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>InsulinStatusRequest</code></a>, opCode 37, size 4
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>37</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>4</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/InsulinStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>InsulinStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -212,7 +224,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,int,int)">buildCargo</a></span>&#8203;(int&nbsp;currentInsulinAmount,
           int&nbsp;isEstimate,
           int&nbsp;insulinLowAmount)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for InsulinStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(currentInsulinAmount) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(currentInsulinAmount) [byte 1]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -232,7 +253,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for InsulinStatusResponse:
+ <code>currentInsulinAmount</code><code>Bytes.readShort(raw, 0)</code>
+ <code>isEstimate</code><code>raw[2]</code>
+ <code>insulinLowAmount</code><code>raw[3]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -271,7 +299,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>InsulinStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.22">InsulinStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.36">InsulinStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int)">
@@ -280,7 +308,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>InsulinStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.24">InsulinStatusResponse</a>&#8203;(int&nbsp;currentInsulinAmount,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.38">InsulinStatusResponse</a>&#8203;(int&nbsp;currentInsulinAmount,
                              int&nbsp;isEstimate,
                              int&nbsp;insulinLowAmount)</pre>
 </li>
@@ -301,7 +329,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.32">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.54">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for InsulinStatusResponse:</caption>
+ <tr><td><code>currentInsulinAmount</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>isEstimate</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>insulinLowAmount</code></td><td><code>raw[3]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -314,9 +348,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.42">buildCargo</a>&#8203;(int&nbsp;currentInsulinAmount,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.74">buildCargo</a>&#8203;(int&nbsp;currentInsulinAmount,
                                 int&nbsp;isEstimate,
                                 int&nbsp;insulinLowAmount)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for InsulinStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(currentInsulinAmount) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(currentInsulinAmount) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getCurrentInsulinAmount()">
@@ -325,7 +367,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentInsulinAmount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.49">getCurrentInsulinAmount</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.81">getCurrentInsulinAmount</a>()</pre>
 </li>
 </ul>
 <a id="getIsEstimate()">
@@ -334,7 +376,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsEstimate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.52">getIsEstimate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.84">getIsEstimate</a>()</pre>
 </li>
 </ul>
 <a id="getInsulinLowAmount()">
@@ -343,7 +385,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getInsulinLowAmount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.55">getInsulinLowAmount</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/InsulinStatusResponse.html#line.87">getInsulinLowAmount</a>()</pre>
 </li>
 </ul>
 </li>

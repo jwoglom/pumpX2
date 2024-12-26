@@ -141,11 +141,28 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.18">TimeSinceResetResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.39">TimeSinceResetResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">Returns information on the pump's current internal time, which is different from the
  human-visible time and date which is stored in the history log. The currentTime is the
- user-set clock time.</div>
+ user-set clock time.
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/TimeSinceResetRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>TimeSinceResetRequest</code></a>, opCode 55, size 8
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>55</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>8</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/TimeSinceResetRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>TimeSinceResetRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -213,7 +230,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(long,long)">buildCargo</a></span>&#8203;(long&nbsp;timeSinceReset,
           long&nbsp;pumpTime)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for TimeSinceResetResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(timeSinceReset) [byte 0]</code>
+ 1<code>toUint32(timeSinceReset) [byte 1]</code>
+ 2<code>toUint32(timeSinceReset) [byte 2]</code>
+ 3<code>toUint32(timeSinceReset) [byte 3]</code>
+ 4<code>toUint32(pumpTime) [byte 0]</code>
+ 5<code>toUint32(pumpTime) [byte 1]</code>
+ 6<code>toUint32(pumpTime) [byte 2]</code>
+ 7<code>toUint32(pumpTime) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
@@ -233,7 +263,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for TimeSinceResetResponse:
+ <code>currentTime</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>pumpTimeSinceReset</code><code>Bytes.readUint32(raw, 4)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -272,7 +308,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>TimeSinceResetResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.29">TimeSinceResetResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.50">TimeSinceResetResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,long)">
@@ -281,7 +317,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TimeSinceResetResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.31">TimeSinceResetResponse</a>&#8203;(long&nbsp;currentTime,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.52">TimeSinceResetResponse</a>&#8203;(long&nbsp;currentTime,
                               long&nbsp;pumpTimeSinceReset)</pre>
 </li>
 </ul>
@@ -301,7 +337,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.38">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.66">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for TimeSinceResetResponse:</caption>
+ <tr><td><code>currentTime</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>pumpTimeSinceReset</code></td><td><code>Bytes.readUint32(raw, 4)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -314,8 +355,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.46">buildCargo</a>&#8203;(long&nbsp;timeSinceReset,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.88">buildCargo</a>&#8203;(long&nbsp;timeSinceReset,
                                 long&nbsp;pumpTime)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for TimeSinceResetResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(timeSinceReset) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(timeSinceReset) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(timeSinceReset) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(timeSinceReset) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(pumpTime) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(pumpTime) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(pumpTime) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(pumpTime) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getCurrentTime()">
@@ -324,7 +377,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentTime</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.56">getCurrentTime</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.98">getCurrentTime</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the pump's internal realtime clock which is an actual date,
@@ -338,7 +391,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentTimeInstant</h4>
-<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.63">getCurrentTimeInstant</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.105">getCurrentTimeInstant</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the evaluation of timeSinceReset against the epoch</dd>
@@ -351,7 +404,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPumpTimeSecondsSinceReset</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.70">getPumpTimeSecondsSinceReset</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line.112">getPumpTimeSecondsSinceReset</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the number of seconds the pump has been on since it was last reset</dd>

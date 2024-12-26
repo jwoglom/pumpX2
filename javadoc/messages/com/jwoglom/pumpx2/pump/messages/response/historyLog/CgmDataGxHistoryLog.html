@@ -274,7 +274,18 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CgmDataGxHistoryLog:
+ <code>status</code><code>Bytes.readShort(raw, 10)</code>
+ <code>type</code><code>raw[12]</code>
+ <code>rate</code><code>raw[13]</code>
+ <code>rssi</code><code>raw[15]</code>
+ <code>value</code><code>Bytes.readShort(raw, 16)</code>
+ <code>timestamp</code><code>Bytes.readUint32(raw, 18)</code>
+ <code>transmitterTimestamp</code><code>Bytes.readUint32(raw, 22)</code>
+ </div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -382,7 +393,17 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.46">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.58">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CgmDataGxHistoryLog:</caption>
+ <tr><td><code>status</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>type</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>rate</code></td><td><code>raw[13]</code></td></tr>
+ <tr><td><code>rssi</code></td><td><code>raw[15]</code></td></tr>
+ <tr><td><code>value</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>timestamp</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
+ <tr><td><code>transmitterTimestamp</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -395,7 +416,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.60">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.72">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;status,
                                 int&nbsp;type,
@@ -412,7 +433,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.73">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.85">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getType()">
@@ -421,7 +442,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.76">getType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.88">getType</a>()</pre>
 </li>
 </ul>
 <a id="getRate()">
@@ -430,7 +451,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.79">getRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.91">getRate</a>()</pre>
 </li>
 </ul>
 <a id="getRssi()">
@@ -439,7 +460,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getRssi</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.82">getRssi</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.94">getRssi</a>()</pre>
 </li>
 </ul>
 <a id="getValue()">
@@ -448,7 +469,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getValue</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.85">getValue</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.97">getValue</a>()</pre>
 </li>
 </ul>
 <a id="getTimestamp()">
@@ -457,7 +478,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.88">getTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.100">getTimestamp</a>()</pre>
 </li>
 </ul>
 <a id="getTransmitterTimestamp()">
@@ -466,7 +487,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTransmitterTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.91">getTransmitterTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#line.103">getTransmitterTimestamp</a>()</pre>
 </li>
 </ul>
 </li>

@@ -228,7 +228,38 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
           float&nbsp;maxBasalRate,
           int&nbsp;insulinDeliveryProfile,
           int&nbsp;changeType)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BasalRateChangeHistoryLog.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 4<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 5<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 6<code>toUint32(sequenceNum) [byte 0]</code>
+ 7<code>toUint32(sequenceNum) [byte 1]</code>
+ 8<code>toUint32(sequenceNum) [byte 2]</code>
+ 9<code>toUint32(sequenceNum) [byte 3]</code>
+ 10<code>toFloat(commandBasalRate) [byte 0]</code>
+ 11<code>toFloat(commandBasalRate) [byte 1]</code>
+ 12<code>toFloat(commandBasalRate) [byte 2]</code>
+ 13<code>toFloat(commandBasalRate) [byte 3]</code>
+ 14<code>toFloat(baseBasalRate) [byte 0]</code>
+ 15<code>toFloat(baseBasalRate) [byte 1]</code>
+ 16<code>toFloat(baseBasalRate) [byte 2]</code>
+ 17<code>toFloat(baseBasalRate) [byte 3]</code>
+ 18<code>toFloat(maxBasalRate) [byte 0]</code>
+ 19<code>toFloat(maxBasalRate) [byte 1]</code>
+ 20<code>toFloat(maxBasalRate) [byte 2]</code>
+ 21<code>toFloat(maxBasalRate) [byte 3]</code>
+ 22<code>firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 0]</code>
+ 23<code>firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 1]</code>
+ 24<code>new byte[]{...} [element 0]</code>
+ 25<code>new byte[]{...} [element 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>float</code></td>
@@ -263,7 +294,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BasalRateChangeHistoryLog:
+ <code>commandBasalRate</code><code>Bytes.readFloat(raw, 10)</code>
+ <code>baseBasalRate</code><code>Bytes.readFloat(raw, 14)</code>
+ <code>maxBasalRate</code><code>Bytes.readFloat(raw, 18)</code>
+ <code>insulinDeliveryProfile</code><code>Bytes.readShort(raw, 22)</code>
+ <code>changeTypeId</code><code>raw[24]</code>
+ </div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -367,7 +407,15 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.40">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.50">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BasalRateChangeHistoryLog:</caption>
+ <tr><td><code>commandBasalRate</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
+ <tr><td><code>baseBasalRate</code></td><td><code>Bytes.readFloat(raw, 14)</code></td></tr>
+ <tr><td><code>maxBasalRate</code></td><td><code>Bytes.readFloat(raw, 18)</code></td></tr>
+ <tr><td><code>insulinDeliveryProfile</code></td><td><code>Bytes.readShort(raw, 22)</code></td></tr>
+ <tr><td><code>changeTypeId</code></td><td><code>raw[24]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -380,13 +428,43 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.52">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.94">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 float&nbsp;commandBasalRate,
                                 float&nbsp;baseBasalRate,
                                 float&nbsp;maxBasalRate,
                                 int&nbsp;insulinDeliveryProfile,
                                 int&nbsp;changeType)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BasalRateChangeHistoryLog.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>10</td><td><code>toFloat(commandBasalRate) [byte 0]</code></td></tr>
+ <tr><td>11</td><td><code>toFloat(commandBasalRate) [byte 1]</code></td></tr>
+ <tr><td>12</td><td><code>toFloat(commandBasalRate) [byte 2]</code></td></tr>
+ <tr><td>13</td><td><code>toFloat(commandBasalRate) [byte 3]</code></td></tr>
+ <tr><td>14</td><td><code>toFloat(baseBasalRate) [byte 0]</code></td></tr>
+ <tr><td>15</td><td><code>toFloat(baseBasalRate) [byte 1]</code></td></tr>
+ <tr><td>16</td><td><code>toFloat(baseBasalRate) [byte 2]</code></td></tr>
+ <tr><td>17</td><td><code>toFloat(baseBasalRate) [byte 3]</code></td></tr>
+ <tr><td>18</td><td><code>toFloat(maxBasalRate) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>toFloat(maxBasalRate) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>toFloat(maxBasalRate) [byte 2]</code></td></tr>
+ <tr><td>21</td><td><code>toFloat(maxBasalRate) [byte 3]</code></td></tr>
+ <tr><td>22</td><td><code>firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 1]</code></td></tr>
+ <tr><td>24</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>25</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getCommandBasalRate()">
@@ -395,7 +473,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCommandBasalRate</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.67">getCommandBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.109">getCommandBasalRate</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the basal rate which is being changed to</dd>
@@ -408,7 +486,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBaseBasalRate</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.74">getBaseBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.116">getBaseBasalRate</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the basal rate which is default for the current profile segment</dd>
@@ -421,7 +499,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBasalRate</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.81">getMaxBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.123">getMaxBasalRate</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the maximum allowed basal rate in the profile settings</dd>
@@ -434,7 +512,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getInsulinDeliveryProfile</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.88">getInsulinDeliveryProfile</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.130">getInsulinDeliveryProfile</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the ID of the Insulin Delivery Profile (IDP)</dd>
@@ -447,7 +525,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getChangeTypeId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.92">getChangeTypeId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.134">getChangeTypeId</a>()</pre>
 </li>
 </ul>
 <a id="getChangeType()">
@@ -456,7 +534,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getChangeType</h4>
-<pre class="methodSignature">public&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.BasalRateChangeHistoryLog.ChangeType&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.124">getChangeType</a>()</pre>
+<pre class="methodSignature">public&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.BasalRateChangeHistoryLog.ChangeType&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#line.166">getChangeType</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the reason that the basal rate was changed</dd>

@@ -27,112 +27,163 @@
 <span class="sourceLineNo">018</span><a id="line.18"> *</a>
 <span class="sourceLineNo">019</span><a id="line.19"> * @see com.jwoglom.pumpx2.pump.messages.builders.InsulinDeliveryProfileRequestBuilder</a>
 <span class="sourceLineNo">020</span><a id="line.20"> */</a>
-<span class="sourceLineNo">021</span><a id="line.21">@MessageProps(</a>
-<span class="sourceLineNo">022</span><a id="line.22">    opCode=63,</a>
-<span class="sourceLineNo">023</span><a id="line.23">    size=8,</a>
-<span class="sourceLineNo">024</span><a id="line.24">    type=MessageType.RESPONSE,</a>
-<span class="sourceLineNo">025</span><a id="line.25">    request=ProfileStatusRequest.class</a>
-<span class="sourceLineNo">026</span><a id="line.26">)</a>
-<span class="sourceLineNo">027</span><a id="line.27">public class ProfileStatusResponse extends Message {</a>
-<span class="sourceLineNo">028</span><a id="line.28">    </a>
-<span class="sourceLineNo">029</span><a id="line.29">    private int numberOfProfiles;</a>
-<span class="sourceLineNo">030</span><a id="line.30">    private int idpSlot0Id;</a>
-<span class="sourceLineNo">031</span><a id="line.31">    private int idpSlot1Id;</a>
-<span class="sourceLineNo">032</span><a id="line.32">    private int idpSlot2Id;</a>
-<span class="sourceLineNo">033</span><a id="line.33">    private int idpSlot3Id;</a>
-<span class="sourceLineNo">034</span><a id="line.34">    private int idpSlot4Id;</a>
-<span class="sourceLineNo">035</span><a id="line.35">    private int idpSlot5Id;</a>
-<span class="sourceLineNo">036</span><a id="line.36">    private int activeSegmentIndex;</a>
-<span class="sourceLineNo">037</span><a id="line.37">    </a>
-<span class="sourceLineNo">038</span><a id="line.38">    public ProfileStatusResponse() {}</a>
-<span class="sourceLineNo">039</span><a id="line.39">    </a>
-<span class="sourceLineNo">040</span><a id="line.40">    public ProfileStatusResponse(int numberOfProfiles, int idpSlot0Id, int idpSlot1Id, int idpSlot2Id, int idpSlot3Id, int idpSlot4Id, int idpSlot5Id, int activeSegmentIndex) {</a>
-<span class="sourceLineNo">041</span><a id="line.41">        this.cargo = buildCargo(numberOfProfiles, idpSlot0Id, idpSlot1Id, idpSlot2Id, idpSlot3Id, idpSlot4Id, idpSlot5Id, activeSegmentIndex);</a>
-<span class="sourceLineNo">042</span><a id="line.42">        this.numberOfProfiles = numberOfProfiles;</a>
-<span class="sourceLineNo">043</span><a id="line.43">        this.idpSlot0Id = idpSlot0Id;</a>
-<span class="sourceLineNo">044</span><a id="line.44">        this.idpSlot1Id = idpSlot1Id;</a>
-<span class="sourceLineNo">045</span><a id="line.45">        this.idpSlot2Id = idpSlot2Id;</a>
-<span class="sourceLineNo">046</span><a id="line.46">        this.idpSlot3Id = idpSlot3Id;</a>
-<span class="sourceLineNo">047</span><a id="line.47">        this.idpSlot4Id = idpSlot4Id;</a>
-<span class="sourceLineNo">048</span><a id="line.48">        this.idpSlot5Id = idpSlot5Id;</a>
-<span class="sourceLineNo">049</span><a id="line.49">        this.activeSegmentIndex = activeSegmentIndex;</a>
-<span class="sourceLineNo">050</span><a id="line.50">        </a>
-<span class="sourceLineNo">051</span><a id="line.51">    }</a>
-<span class="sourceLineNo">052</span><a id="line.52"></a>
-<span class="sourceLineNo">053</span><a id="line.53">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">054</span><a id="line.54">        Preconditions.checkArgument(raw.length == props().size());</a>
-<span class="sourceLineNo">055</span><a id="line.55">        this.cargo = raw;</a>
-<span class="sourceLineNo">056</span><a id="line.56">        this.numberOfProfiles = raw[0];</a>
-<span class="sourceLineNo">057</span><a id="line.57">        this.idpSlot0Id = raw[1];</a>
-<span class="sourceLineNo">058</span><a id="line.58">        this.idpSlot1Id = raw[2];</a>
-<span class="sourceLineNo">059</span><a id="line.59">        this.idpSlot2Id = raw[3];</a>
-<span class="sourceLineNo">060</span><a id="line.60">        this.idpSlot3Id = raw[4];</a>
-<span class="sourceLineNo">061</span><a id="line.61">        this.idpSlot4Id = raw[5];</a>
-<span class="sourceLineNo">062</span><a id="line.62">        this.idpSlot5Id = raw[6];</a>
-<span class="sourceLineNo">063</span><a id="line.63">        this.activeSegmentIndex = raw[7];</a>
-<span class="sourceLineNo">064</span><a id="line.64">        </a>
-<span class="sourceLineNo">065</span><a id="line.65">    }</a>
-<span class="sourceLineNo">066</span><a id="line.66"></a>
-<span class="sourceLineNo">067</span><a id="line.67">    </a>
-<span class="sourceLineNo">068</span><a id="line.68">    public static byte[] buildCargo(int numberOfProfiles, int idpSlot0Id, int idpSlot1Id, int idpSlot2Id, int idpSlot3Id, int idpSlot4Id, int idpSlot5Id, int activeSegmentIndex) {</a>
-<span class="sourceLineNo">069</span><a id="line.69">        return Bytes.combine(</a>
-<span class="sourceLineNo">070</span><a id="line.70">            new byte[]{ (byte) numberOfProfiles }, </a>
-<span class="sourceLineNo">071</span><a id="line.71">            new byte[]{ (byte) idpSlot0Id }, </a>
-<span class="sourceLineNo">072</span><a id="line.72">            new byte[]{ (byte) idpSlot1Id }, </a>
-<span class="sourceLineNo">073</span><a id="line.73">            new byte[]{ (byte) idpSlot2Id }, </a>
-<span class="sourceLineNo">074</span><a id="line.74">            new byte[]{ (byte) idpSlot3Id }, </a>
-<span class="sourceLineNo">075</span><a id="line.75">            new byte[]{ (byte) idpSlot4Id }, </a>
-<span class="sourceLineNo">076</span><a id="line.76">            new byte[]{ (byte) idpSlot5Id }, </a>
-<span class="sourceLineNo">077</span><a id="line.77">            new byte[]{ (byte) activeSegmentIndex });</a>
-<span class="sourceLineNo">078</span><a id="line.78">    }</a>
-<span class="sourceLineNo">079</span><a id="line.79">    </a>
-<span class="sourceLineNo">080</span><a id="line.80">    public int getNumberOfProfiles() {</a>
-<span class="sourceLineNo">081</span><a id="line.81">        return numberOfProfiles;</a>
-<span class="sourceLineNo">082</span><a id="line.82">    }</a>
-<span class="sourceLineNo">083</span><a id="line.83">    public int getIdpSlot0Id() {</a>
-<span class="sourceLineNo">084</span><a id="line.84">        return idpSlot0Id;</a>
-<span class="sourceLineNo">085</span><a id="line.85">    }</a>
-<span class="sourceLineNo">086</span><a id="line.86">    public int getIdpSlot1Id() {</a>
-<span class="sourceLineNo">087</span><a id="line.87">        return idpSlot1Id;</a>
-<span class="sourceLineNo">088</span><a id="line.88">    }</a>
-<span class="sourceLineNo">089</span><a id="line.89">    public int getIdpSlot2Id() {</a>
-<span class="sourceLineNo">090</span><a id="line.90">        return idpSlot2Id;</a>
-<span class="sourceLineNo">091</span><a id="line.91">    }</a>
-<span class="sourceLineNo">092</span><a id="line.92">    public int getIdpSlot3Id() {</a>
-<span class="sourceLineNo">093</span><a id="line.93">        return idpSlot3Id;</a>
-<span class="sourceLineNo">094</span><a id="line.94">    }</a>
-<span class="sourceLineNo">095</span><a id="line.95">    public int getIdpSlot4Id() {</a>
-<span class="sourceLineNo">096</span><a id="line.96">        return idpSlot4Id;</a>
-<span class="sourceLineNo">097</span><a id="line.97">    }</a>
-<span class="sourceLineNo">098</span><a id="line.98">    public int getIdpSlot5Id() {</a>
-<span class="sourceLineNo">099</span><a id="line.99">        return idpSlot5Id;</a>
-<span class="sourceLineNo">100</span><a id="line.100">    }</a>
-<span class="sourceLineNo">101</span><a id="line.101">    public int getActiveSegmentIndex() {</a>
-<span class="sourceLineNo">102</span><a id="line.102">        return activeSegmentIndex;</a>
-<span class="sourceLineNo">103</span><a id="line.103">    }</a>
-<span class="sourceLineNo">104</span><a id="line.104"></a>
+<span class="sourceLineNo">021</span><a id="line.21">/**</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * The returned idp (insulin delivery profile) slots have a value of -1 if the slot is not present.</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * Otherwise, an IDPSettingsRequest with that IDP id will return the details of that slot.</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * The IDP slot 0 ALWAYS contains the currently selected insulin delivery profile, unless it is</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * -1 in which case no delivery profiles exist.</a>
+<span class="sourceLineNo">026</span><a id="line.26"> *</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * @see com.jwoglom.pumpx2.pump.messages.builders.InsulinDeliveryProfileRequestBuilder</a>
+<span class="sourceLineNo">028</span><a id="line.28"> *</a>
+<span class="sourceLineNo">029</span><a id="line.29"></a>
+<span class="sourceLineNo">030</span><a id="line.30"> *</a>
+<span class="sourceLineNo">031</span><a id="line.31"> * &lt;br&gt;</a>
+<span class="sourceLineNo">032</span><a id="line.32"> *</a>
+<span class="sourceLineNo">033</span><a id="line.33"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest}, opCode 63, size 8</a>
+<span class="sourceLineNo">034</span><a id="line.34"> *</a>
+<span class="sourceLineNo">035</span><a id="line.35"> * &lt;br&gt;</a>
+<span class="sourceLineNo">036</span><a id="line.36"> *</a>
+<span class="sourceLineNo">037</span><a id="line.37"> * </a>
+<span class="sourceLineNo">038</span><a id="line.38"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;63&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;8&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">043</span><a id="line.43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">044</span><a id="line.44"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">045</span><a id="line.45"> */@MessageProps(</a>
+<span class="sourceLineNo">046</span><a id="line.46">    opCode=63,</a>
+<span class="sourceLineNo">047</span><a id="line.47">    size=8,</a>
+<span class="sourceLineNo">048</span><a id="line.48">    type=MessageType.RESPONSE,</a>
+<span class="sourceLineNo">049</span><a id="line.49">    request=ProfileStatusRequest.class</a>
+<span class="sourceLineNo">050</span><a id="line.50">)</a>
+<span class="sourceLineNo">051</span><a id="line.51">public class ProfileStatusResponse extends Message {</a>
+<span class="sourceLineNo">052</span><a id="line.52">    </a>
+<span class="sourceLineNo">053</span><a id="line.53">    private int numberOfProfiles;</a>
+<span class="sourceLineNo">054</span><a id="line.54">    private int idpSlot0Id;</a>
+<span class="sourceLineNo">055</span><a id="line.55">    private int idpSlot1Id;</a>
+<span class="sourceLineNo">056</span><a id="line.56">    private int idpSlot2Id;</a>
+<span class="sourceLineNo">057</span><a id="line.57">    private int idpSlot3Id;</a>
+<span class="sourceLineNo">058</span><a id="line.58">    private int idpSlot4Id;</a>
+<span class="sourceLineNo">059</span><a id="line.59">    private int idpSlot5Id;</a>
+<span class="sourceLineNo">060</span><a id="line.60">    private int activeSegmentIndex;</a>
+<span class="sourceLineNo">061</span><a id="line.61">    </a>
+<span class="sourceLineNo">062</span><a id="line.62">    public ProfileStatusResponse() {}</a>
+<span class="sourceLineNo">063</span><a id="line.63">    </a>
+<span class="sourceLineNo">064</span><a id="line.64">    public ProfileStatusResponse(int numberOfProfiles, int idpSlot0Id, int idpSlot1Id, int idpSlot2Id, int idpSlot3Id, int idpSlot4Id, int idpSlot5Id, int activeSegmentIndex) {</a>
+<span class="sourceLineNo">065</span><a id="line.65">        this.cargo = buildCargo(numberOfProfiles, idpSlot0Id, idpSlot1Id, idpSlot2Id, idpSlot3Id, idpSlot4Id, idpSlot5Id, activeSegmentIndex);</a>
+<span class="sourceLineNo">066</span><a id="line.66">        this.numberOfProfiles = numberOfProfiles;</a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.idpSlot0Id = idpSlot0Id;</a>
+<span class="sourceLineNo">068</span><a id="line.68">        this.idpSlot1Id = idpSlot1Id;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        this.idpSlot2Id = idpSlot2Id;</a>
+<span class="sourceLineNo">070</span><a id="line.70">        this.idpSlot3Id = idpSlot3Id;</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.idpSlot4Id = idpSlot4Id;</a>
+<span class="sourceLineNo">072</span><a id="line.72">        this.idpSlot5Id = idpSlot5Id;</a>
+<span class="sourceLineNo">073</span><a id="line.73">        this.activeSegmentIndex = activeSegmentIndex;</a>
+<span class="sourceLineNo">074</span><a id="line.74">        </a>
+<span class="sourceLineNo">075</span><a id="line.75">    }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">    /**</a>
+<span class="sourceLineNo">078</span><a id="line.78">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * &lt;caption&gt;Parsed fields for ProfileStatusResponse:&lt;/caption&gt;</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numberOfProfiles&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">081</span><a id="line.81">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot0Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot1Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot2Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">084</span><a id="line.84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot3Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot4Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpSlot5Id&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;activeSegmentIndex&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">089</span><a id="line.89">     */</a>
+<span class="sourceLineNo">090</span><a id="line.90">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">092</span><a id="line.92">        this.cargo = raw;</a>
+<span class="sourceLineNo">093</span><a id="line.93">        this.numberOfProfiles = raw[0];</a>
+<span class="sourceLineNo">094</span><a id="line.94">        this.idpSlot0Id = raw[1];</a>
+<span class="sourceLineNo">095</span><a id="line.95">        this.idpSlot1Id = raw[2];</a>
+<span class="sourceLineNo">096</span><a id="line.96">        this.idpSlot2Id = raw[3];</a>
+<span class="sourceLineNo">097</span><a id="line.97">        this.idpSlot3Id = raw[4];</a>
+<span class="sourceLineNo">098</span><a id="line.98">        this.idpSlot4Id = raw[5];</a>
+<span class="sourceLineNo">099</span><a id="line.99">        this.idpSlot5Id = raw[6];</a>
+<span class="sourceLineNo">100</span><a id="line.100">        this.activeSegmentIndex = raw[7];</a>
+<span class="sourceLineNo">101</span><a id="line.101">        </a>
+<span class="sourceLineNo">102</span><a id="line.102">    }</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">    </a>
 <span class="sourceLineNo">105</span><a id="line.105">    /**</a>
-<span class="sourceLineNo">106</span><a id="line.106">     * @return the active insulin delivery profile ID, which is always slot 0</a>
-<span class="sourceLineNo">107</span><a id="line.107">     */</a>
-<span class="sourceLineNo">108</span><a id="line.108">    public int getActiveIdpSlotId() {</a>
-<span class="sourceLineNo">109</span><a id="line.109">        return getIdpSlot0Id();</a>
-<span class="sourceLineNo">110</span><a id="line.110">    }</a>
-<span class="sourceLineNo">111</span><a id="line.111"></a>
-<span class="sourceLineNo">112</span><a id="line.112">    /**</a>
-<span class="sourceLineNo">113</span><a id="line.113">     * @return all IDP slots in order restricted to the total number of profiles.</a>
-<span class="sourceLineNo">114</span><a id="line.114">     */</a>
-<span class="sourceLineNo">115</span><a id="line.115">    public List&lt;Integer&gt; getIdpSlotIds() {</a>
-<span class="sourceLineNo">116</span><a id="line.116">        return ImmutableList.of(</a>
-<span class="sourceLineNo">117</span><a id="line.117">                getIdpSlot0Id(),</a>
-<span class="sourceLineNo">118</span><a id="line.118">                getIdpSlot1Id(),</a>
-<span class="sourceLineNo">119</span><a id="line.119">                getIdpSlot2Id(),</a>
-<span class="sourceLineNo">120</span><a id="line.120">                getIdpSlot3Id(),</a>
-<span class="sourceLineNo">121</span><a id="line.121">                getIdpSlot4Id(),</a>
-<span class="sourceLineNo">122</span><a id="line.122">                getIdpSlot5Id()</a>
-<span class="sourceLineNo">123</span><a id="line.123">        ).subList(0, getNumberOfProfiles());</a>
-<span class="sourceLineNo">124</span><a id="line.124">    }</a>
-<span class="sourceLineNo">125</span><a id="line.125">    </a>
-<span class="sourceLineNo">126</span><a id="line.126">}</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">107</span><a id="line.107">     * &lt;caption&gt;Byte layout for ProfileStatusResponse.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">108</span><a id="line.108">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">109</span><a id="line.109">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">110</span><a id="line.110">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">111</span><a id="line.111">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">112</span><a id="line.112">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">113</span><a id="line.113">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">114</span><a id="line.114">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">115</span><a id="line.115">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">116</span><a id="line.116">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">117</span><a id="line.117">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">118</span><a id="line.118">     */</a>
+<span class="sourceLineNo">119</span><a id="line.119">    public static byte[] buildCargo(int numberOfProfiles, int idpSlot0Id, int idpSlot1Id, int idpSlot2Id, int idpSlot3Id, int idpSlot4Id, int idpSlot5Id, int activeSegmentIndex) {</a>
+<span class="sourceLineNo">120</span><a id="line.120">        return Bytes.combine(</a>
+<span class="sourceLineNo">121</span><a id="line.121">            new byte[]{ (byte) numberOfProfiles }, </a>
+<span class="sourceLineNo">122</span><a id="line.122">            new byte[]{ (byte) idpSlot0Id }, </a>
+<span class="sourceLineNo">123</span><a id="line.123">            new byte[]{ (byte) idpSlot1Id }, </a>
+<span class="sourceLineNo">124</span><a id="line.124">            new byte[]{ (byte) idpSlot2Id }, </a>
+<span class="sourceLineNo">125</span><a id="line.125">            new byte[]{ (byte) idpSlot3Id }, </a>
+<span class="sourceLineNo">126</span><a id="line.126">            new byte[]{ (byte) idpSlot4Id }, </a>
+<span class="sourceLineNo">127</span><a id="line.127">            new byte[]{ (byte) idpSlot5Id }, </a>
+<span class="sourceLineNo">128</span><a id="line.128">            new byte[]{ (byte) activeSegmentIndex });</a>
+<span class="sourceLineNo">129</span><a id="line.129">    }</a>
+<span class="sourceLineNo">130</span><a id="line.130">    </a>
+<span class="sourceLineNo">131</span><a id="line.131">    public int getNumberOfProfiles() {</a>
+<span class="sourceLineNo">132</span><a id="line.132">        return numberOfProfiles;</a>
+<span class="sourceLineNo">133</span><a id="line.133">    }</a>
+<span class="sourceLineNo">134</span><a id="line.134">    public int getIdpSlot0Id() {</a>
+<span class="sourceLineNo">135</span><a id="line.135">        return idpSlot0Id;</a>
+<span class="sourceLineNo">136</span><a id="line.136">    }</a>
+<span class="sourceLineNo">137</span><a id="line.137">    public int getIdpSlot1Id() {</a>
+<span class="sourceLineNo">138</span><a id="line.138">        return idpSlot1Id;</a>
+<span class="sourceLineNo">139</span><a id="line.139">    }</a>
+<span class="sourceLineNo">140</span><a id="line.140">    public int getIdpSlot2Id() {</a>
+<span class="sourceLineNo">141</span><a id="line.141">        return idpSlot2Id;</a>
+<span class="sourceLineNo">142</span><a id="line.142">    }</a>
+<span class="sourceLineNo">143</span><a id="line.143">    public int getIdpSlot3Id() {</a>
+<span class="sourceLineNo">144</span><a id="line.144">        return idpSlot3Id;</a>
+<span class="sourceLineNo">145</span><a id="line.145">    }</a>
+<span class="sourceLineNo">146</span><a id="line.146">    public int getIdpSlot4Id() {</a>
+<span class="sourceLineNo">147</span><a id="line.147">        return idpSlot4Id;</a>
+<span class="sourceLineNo">148</span><a id="line.148">    }</a>
+<span class="sourceLineNo">149</span><a id="line.149">    public int getIdpSlot5Id() {</a>
+<span class="sourceLineNo">150</span><a id="line.150">        return idpSlot5Id;</a>
+<span class="sourceLineNo">151</span><a id="line.151">    }</a>
+<span class="sourceLineNo">152</span><a id="line.152">    public int getActiveSegmentIndex() {</a>
+<span class="sourceLineNo">153</span><a id="line.153">        return activeSegmentIndex;</a>
+<span class="sourceLineNo">154</span><a id="line.154">    }</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">    /**</a>
+<span class="sourceLineNo">157</span><a id="line.157">     * @return the active insulin delivery profile ID, which is always slot 0</a>
+<span class="sourceLineNo">158</span><a id="line.158">     */</a>
+<span class="sourceLineNo">159</span><a id="line.159">    public int getActiveIdpSlotId() {</a>
+<span class="sourceLineNo">160</span><a id="line.160">        return getIdpSlot0Id();</a>
+<span class="sourceLineNo">161</span><a id="line.161">    }</a>
+<span class="sourceLineNo">162</span><a id="line.162"></a>
+<span class="sourceLineNo">163</span><a id="line.163">    /**</a>
+<span class="sourceLineNo">164</span><a id="line.164">     * @return all IDP slots in order restricted to the total number of profiles.</a>
+<span class="sourceLineNo">165</span><a id="line.165">     */</a>
+<span class="sourceLineNo">166</span><a id="line.166">    public List&lt;Integer&gt; getIdpSlotIds() {</a>
+<span class="sourceLineNo">167</span><a id="line.167">        return ImmutableList.of(</a>
+<span class="sourceLineNo">168</span><a id="line.168">                getIdpSlot0Id(),</a>
+<span class="sourceLineNo">169</span><a id="line.169">                getIdpSlot1Id(),</a>
+<span class="sourceLineNo">170</span><a id="line.170">                getIdpSlot2Id(),</a>
+<span class="sourceLineNo">171</span><a id="line.171">                getIdpSlot3Id(),</a>
+<span class="sourceLineNo">172</span><a id="line.172">                getIdpSlot4Id(),</a>
+<span class="sourceLineNo">173</span><a id="line.173">                getIdpSlot5Id()</a>
+<span class="sourceLineNo">174</span><a id="line.174">        ).subList(0, getNumberOfProfiles());</a>
+<span class="sourceLineNo">175</span><a id="line.175">    }</a>
+<span class="sourceLineNo">176</span><a id="line.176">    </a>
+<span class="sourceLineNo">177</span><a id="line.177">}</a>
 
 
 

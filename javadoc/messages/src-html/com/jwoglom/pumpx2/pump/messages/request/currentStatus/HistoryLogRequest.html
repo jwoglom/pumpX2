@@ -16,50 +16,82 @@
 <span class="sourceLineNo">007</span><a id="line.7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
 <span class="sourceLineNo">008</span><a id="line.8">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;</a>
 <span class="sourceLineNo">009</span><a id="line.9"></a>
-<span class="sourceLineNo">010</span><a id="line.10">@MessageProps(</a>
-<span class="sourceLineNo">011</span><a id="line.11">    opCode=60,</a>
-<span class="sourceLineNo">012</span><a id="line.12">    size=5,</a>
-<span class="sourceLineNo">013</span><a id="line.13">    type=MessageType.REQUEST,</a>
-<span class="sourceLineNo">014</span><a id="line.14">    response=HistoryLogResponse.class</a>
-<span class="sourceLineNo">015</span><a id="line.15">)</a>
-<span class="sourceLineNo">016</span><a id="line.16">public class HistoryLogRequest extends Message { </a>
-<span class="sourceLineNo">017</span><a id="line.17">    private long startLog;</a>
-<span class="sourceLineNo">018</span><a id="line.18">    private int numberOfLogs;</a>
-<span class="sourceLineNo">019</span><a id="line.19">    </a>
-<span class="sourceLineNo">020</span><a id="line.20">    public HistoryLogRequest() {}</a>
-<span class="sourceLineNo">021</span><a id="line.21"></a>
-<span class="sourceLineNo">022</span><a id="line.22">    public HistoryLogRequest(long startLog, int numberOfLogs) {</a>
-<span class="sourceLineNo">023</span><a id="line.23">        this.cargo = buildCargo(startLog, numberOfLogs);</a>
-<span class="sourceLineNo">024</span><a id="line.24">        this.startLog = startLog;</a>
-<span class="sourceLineNo">025</span><a id="line.25">        this.numberOfLogs = numberOfLogs;</a>
-<span class="sourceLineNo">026</span><a id="line.26">        </a>
-<span class="sourceLineNo">027</span><a id="line.27">    }</a>
-<span class="sourceLineNo">028</span><a id="line.28"></a>
-<span class="sourceLineNo">029</span><a id="line.29">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">030</span><a id="line.30">        Preconditions.checkArgument(raw.length == props().size());</a>
-<span class="sourceLineNo">031</span><a id="line.31">        this.cargo = raw;</a>
-<span class="sourceLineNo">032</span><a id="line.32">        this.startLog = Bytes.readUint32(raw, 0);</a>
-<span class="sourceLineNo">033</span><a id="line.33">        this.numberOfLogs = raw[4];</a>
-<span class="sourceLineNo">034</span><a id="line.34">        </a>
-<span class="sourceLineNo">035</span><a id="line.35">    }</a>
-<span class="sourceLineNo">036</span><a id="line.36"></a>
-<span class="sourceLineNo">037</span><a id="line.37">    </a>
-<span class="sourceLineNo">038</span><a id="line.38">    public static byte[] buildCargo(long startLog, int numberOfLogs) {</a>
-<span class="sourceLineNo">039</span><a id="line.39">        return Bytes.combine(</a>
-<span class="sourceLineNo">040</span><a id="line.40">            Bytes.toUint32(startLog), </a>
-<span class="sourceLineNo">041</span><a id="line.41">        </a>
-<span class="sourceLineNo">042</span><a id="line.42">            new byte[]{ (byte) numberOfLogs }</a>
-<span class="sourceLineNo">043</span><a id="line.43">        );</a>
-<span class="sourceLineNo">044</span><a id="line.44">    }</a>
-<span class="sourceLineNo">045</span><a id="line.45">    public long getStartLog() {</a>
-<span class="sourceLineNo">046</span><a id="line.46">        return startLog;</a>
-<span class="sourceLineNo">047</span><a id="line.47">    }</a>
-<span class="sourceLineNo">048</span><a id="line.48">    public int getNumberOfLogs() {</a>
-<span class="sourceLineNo">049</span><a id="line.49">        return numberOfLogs;</a>
-<span class="sourceLineNo">050</span><a id="line.50">    }</a>
-<span class="sourceLineNo">051</span><a id="line.51">    </a>
-<span class="sourceLineNo">052</span><a id="line.52">    </a>
-<span class="sourceLineNo">053</span><a id="line.53">}</a>
+<span class="sourceLineNo">010</span><a id="line.10">/**</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse}, opCode 60, size 5</a>
+<span class="sourceLineNo">012</span><a id="line.12"> *</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * &lt;br&gt;</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * </a>
+<span class="sourceLineNo">016</span><a id="line.16"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;60&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;5&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24">@MessageProps(</a>
+<span class="sourceLineNo">025</span><a id="line.25">    opCode=60,</a>
+<span class="sourceLineNo">026</span><a id="line.26">    size=5,</a>
+<span class="sourceLineNo">027</span><a id="line.27">    type=MessageType.REQUEST,</a>
+<span class="sourceLineNo">028</span><a id="line.28">    response=HistoryLogResponse.class</a>
+<span class="sourceLineNo">029</span><a id="line.29">)</a>
+<span class="sourceLineNo">030</span><a id="line.30">public class HistoryLogRequest extends Message { </a>
+<span class="sourceLineNo">031</span><a id="line.31">    private long startLog;</a>
+<span class="sourceLineNo">032</span><a id="line.32">    private int numberOfLogs;</a>
+<span class="sourceLineNo">033</span><a id="line.33">    </a>
+<span class="sourceLineNo">034</span><a id="line.34">    public HistoryLogRequest() {}</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">    public HistoryLogRequest(long startLog, int numberOfLogs) {</a>
+<span class="sourceLineNo">037</span><a id="line.37">        this.cargo = buildCargo(startLog, numberOfLogs);</a>
+<span class="sourceLineNo">038</span><a id="line.38">        this.startLog = startLog;</a>
+<span class="sourceLineNo">039</span><a id="line.39">        this.numberOfLogs = numberOfLogs;</a>
+<span class="sourceLineNo">040</span><a id="line.40">        </a>
+<span class="sourceLineNo">041</span><a id="line.41">    }</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">    /**</a>
+<span class="sourceLineNo">044</span><a id="line.44">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">045</span><a id="line.45">     * &lt;caption&gt;Parsed fields for HistoryLogRequest:&lt;/caption&gt;</a>
+<span class="sourceLineNo">046</span><a id="line.46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;startLog&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numberOfLogs&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">049</span><a id="line.49">     */</a>
+<span class="sourceLineNo">050</span><a id="line.50">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">051</span><a id="line.51">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">052</span><a id="line.52">        this.cargo = raw;</a>
+<span class="sourceLineNo">053</span><a id="line.53">        this.startLog = Bytes.readUint32(raw, 0);</a>
+<span class="sourceLineNo">054</span><a id="line.54">        this.numberOfLogs = raw[4];</a>
+<span class="sourceLineNo">055</span><a id="line.55">        </a>
+<span class="sourceLineNo">056</span><a id="line.56">    }</a>
+<span class="sourceLineNo">057</span><a id="line.57"></a>
+<span class="sourceLineNo">058</span><a id="line.58">    </a>
+<span class="sourceLineNo">059</span><a id="line.59">    /**</a>
+<span class="sourceLineNo">060</span><a id="line.60">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * &lt;caption&gt;Byte layout for HistoryLogRequest.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(startLog) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(startLog) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(startLog) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(startLog) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">068</span><a id="line.68">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">069</span><a id="line.69">     */</a>
+<span class="sourceLineNo">070</span><a id="line.70">    public static byte[] buildCargo(long startLog, int numberOfLogs) {</a>
+<span class="sourceLineNo">071</span><a id="line.71">        return Bytes.combine(</a>
+<span class="sourceLineNo">072</span><a id="line.72">            Bytes.toUint32(startLog), </a>
+<span class="sourceLineNo">073</span><a id="line.73">        </a>
+<span class="sourceLineNo">074</span><a id="line.74">            new byte[]{ (byte) numberOfLogs }</a>
+<span class="sourceLineNo">075</span><a id="line.75">        );</a>
+<span class="sourceLineNo">076</span><a id="line.76">    }</a>
+<span class="sourceLineNo">077</span><a id="line.77">    public long getStartLog() {</a>
+<span class="sourceLineNo">078</span><a id="line.78">        return startLog;</a>
+<span class="sourceLineNo">079</span><a id="line.79">    }</a>
+<span class="sourceLineNo">080</span><a id="line.80">    public int getNumberOfLogs() {</a>
+<span class="sourceLineNo">081</span><a id="line.81">        return numberOfLogs;</a>
+<span class="sourceLineNo">082</span><a id="line.82">    }</a>
+<span class="sourceLineNo">083</span><a id="line.83">    </a>
+<span class="sourceLineNo">084</span><a id="line.84">    </a>
+<span class="sourceLineNo">085</span><a id="line.85">}</a>
 
 
 

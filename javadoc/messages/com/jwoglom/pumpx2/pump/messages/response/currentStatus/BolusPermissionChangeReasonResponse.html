@@ -141,8 +141,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.11">BolusPermissionChangeReasonResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.26">BolusPermissionChangeReasonResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/BolusPermissionChangeReasonRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BolusPermissionChangeReasonRequest</code></a>, opCode -87, size 5
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-87</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>5</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/BolusPermissionChangeReasonRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BolusPermissionChangeReasonRequest</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_FUTURE"><code>KnownApiVersion.API_FUTURE</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -237,7 +250,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           boolean&nbsp;isAcked,
           int&nbsp;lastChangeReason,
           boolean&nbsp;currentPermissionHolder)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BolusPermissionChangeReasonResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>new byte[]{...} [element 0]</code>
+ 4<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -267,7 +290,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BolusPermissionChangeReasonResponse:
+ <code>bolusId</code><code>Bytes.readShort(raw, 0)</code>
+ <code>isAcked</code><code>raw[2] != 0</code>
+ <code>lastChangeReasonId</code><code>raw[3]</code>
+ <code>currentPermissionHolder</code><code>raw[4] != 0</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -306,7 +337,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>BolusPermissionChangeReasonResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.25">BolusPermissionChangeReasonResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.40">BolusPermissionChangeReasonResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,boolean,int,boolean)">
@@ -315,7 +346,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>BolusPermissionChangeReasonResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.27">BolusPermissionChangeReasonResponse</a>&#8203;(int&nbsp;bolusId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.42">BolusPermissionChangeReasonResponse</a>&#8203;(int&nbsp;bolusId,
                                            boolean&nbsp;isAcked,
                                            int&nbsp;lastChangeReasonId,
                                            boolean&nbsp;currentPermissionHolder)</pre>
@@ -337,7 +368,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.36">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.60">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BolusPermissionChangeReasonResponse:</caption>
+ <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>isAcked</code></td><td><code>raw[2] != 0</code></td></tr>
+ <tr><td><code>lastChangeReasonId</code></td><td><code>raw[3]</code></td></tr>
+ <tr><td><code>currentPermissionHolder</code></td><td><code>raw[4] != 0</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -350,10 +388,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.47">buildCargo</a>&#8203;(int&nbsp;bolusId,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.82">buildCargo</a>&#8203;(int&nbsp;bolusId,
                                 boolean&nbsp;isAcked,
                                 int&nbsp;lastChangeReason,
                                 boolean&nbsp;currentPermissionHolder)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BolusPermissionChangeReasonResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBolusId()">
@@ -362,7 +409,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.55">getBolusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.90">getBolusId</a>()</pre>
 </li>
 </ul>
 <a id="getIsAcked()">
@@ -371,7 +418,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsAcked</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.58">getIsAcked</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.93">getIsAcked</a>()</pre>
 </li>
 </ul>
 <a id="getLastChangeReasonId()">
@@ -380,7 +427,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastChangeReasonId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.61">getLastChangeReasonId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.96">getLastChangeReasonId</a>()</pre>
 </li>
 </ul>
 <a id="getLastChangeReason()">
@@ -389,7 +436,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastChangeReason</h4>
-<pre class="methodSignature">public&nbsp;<a href="BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.64">getLastChangeReason</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.99">getLastChangeReason</a>()</pre>
 </li>
 </ul>
 <a id="getCurrentPermissionHolder()">
@@ -398,7 +445,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCurrentPermissionHolder</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.67">getCurrentPermissionHolder</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#line.102">getCurrentPermissionHolder</a>()</pre>
 </li>
 </ul>
 </li>

@@ -54,61 +54,74 @@
 <span class="sourceLineNo">045</span><a id="line.45">        return 96;</a>
 <span class="sourceLineNo">046</span><a id="line.46">    }</a>
 <span class="sourceLineNo">047</span><a id="line.47"></a>
-<span class="sourceLineNo">048</span><a id="line.48">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">049</span><a id="line.49">        Preconditions.checkArgument(raw.length == 26);</a>
-<span class="sourceLineNo">050</span><a id="line.50">        this.cargo = raw;</a>
-<span class="sourceLineNo">051</span><a id="line.51">        parseBase(raw);</a>
-<span class="sourceLineNo">052</span><a id="line.52">        this.modification = raw[10];</a>
-<span class="sourceLineNo">053</span><a id="line.53">        this.reminderId = raw[11];</a>
-<span class="sourceLineNo">054</span><a id="line.54">        this.status = raw[12];</a>
-<span class="sourceLineNo">055</span><a id="line.55">        this.enable = raw[13];</a>
-<span class="sourceLineNo">056</span><a id="line.56">        this.frequencyMinutes = Bytes.readUint32(raw, 14);</a>
-<span class="sourceLineNo">057</span><a id="line.57">        this.startTime = Bytes.readShort(raw, 18);</a>
-<span class="sourceLineNo">058</span><a id="line.58">        this.endTime = Bytes.readShort(raw, 20);</a>
-<span class="sourceLineNo">059</span><a id="line.59">        this.activeDays = raw[22];</a>
-<span class="sourceLineNo">060</span><a id="line.60">        </a>
-<span class="sourceLineNo">061</span><a id="line.61">    }</a>
-<span class="sourceLineNo">062</span><a id="line.62"></a>
-<span class="sourceLineNo">063</span><a id="line.63">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modification, int reminderId, int status, int enable, long frequencyMinutes, int startTime, int endTime, int activeDays) {</a>
-<span class="sourceLineNo">064</span><a id="line.64">        return HistoryLog.fillCargo(Bytes.combine(</a>
-<span class="sourceLineNo">065</span><a id="line.65">            new byte[]{96, 0},</a>
-<span class="sourceLineNo">066</span><a id="line.66">            Bytes.toUint32(pumpTimeSec),</a>
-<span class="sourceLineNo">067</span><a id="line.67">            Bytes.toUint32(sequenceNum),</a>
-<span class="sourceLineNo">068</span><a id="line.68">            new byte[]{ (byte) modification }, </a>
-<span class="sourceLineNo">069</span><a id="line.69">            new byte[]{ (byte) reminderId }, </a>
-<span class="sourceLineNo">070</span><a id="line.70">            new byte[]{ (byte) status }, </a>
-<span class="sourceLineNo">071</span><a id="line.71">            new byte[]{ (byte) enable }, </a>
-<span class="sourceLineNo">072</span><a id="line.72">            Bytes.toUint32(frequencyMinutes), </a>
-<span class="sourceLineNo">073</span><a id="line.73">            Bytes.firstTwoBytesLittleEndian(startTime), </a>
-<span class="sourceLineNo">074</span><a id="line.74">            Bytes.firstTwoBytesLittleEndian(endTime), </a>
-<span class="sourceLineNo">075</span><a id="line.75">            new byte[]{ (byte) activeDays }));</a>
-<span class="sourceLineNo">076</span><a id="line.76">    }</a>
-<span class="sourceLineNo">077</span><a id="line.77">    public int getModification() {</a>
-<span class="sourceLineNo">078</span><a id="line.78">        return modification;</a>
-<span class="sourceLineNo">079</span><a id="line.79">    }</a>
-<span class="sourceLineNo">080</span><a id="line.80">    public int getReminderId() {</a>
-<span class="sourceLineNo">081</span><a id="line.81">        return reminderId;</a>
-<span class="sourceLineNo">082</span><a id="line.82">    }</a>
-<span class="sourceLineNo">083</span><a id="line.83">    public int getStatus() {</a>
-<span class="sourceLineNo">084</span><a id="line.84">        return status;</a>
-<span class="sourceLineNo">085</span><a id="line.85">    }</a>
-<span class="sourceLineNo">086</span><a id="line.86">    public int getEnable() {</a>
-<span class="sourceLineNo">087</span><a id="line.87">        return enable;</a>
-<span class="sourceLineNo">088</span><a id="line.88">    }</a>
-<span class="sourceLineNo">089</span><a id="line.89">    public long getFrequencyMinutes() {</a>
-<span class="sourceLineNo">090</span><a id="line.90">        return frequencyMinutes;</a>
-<span class="sourceLineNo">091</span><a id="line.91">    }</a>
-<span class="sourceLineNo">092</span><a id="line.92">    public int getStartTime() {</a>
-<span class="sourceLineNo">093</span><a id="line.93">        return startTime;</a>
-<span class="sourceLineNo">094</span><a id="line.94">    }</a>
-<span class="sourceLineNo">095</span><a id="line.95">    public int getEndTime() {</a>
-<span class="sourceLineNo">096</span><a id="line.96">        return endTime;</a>
-<span class="sourceLineNo">097</span><a id="line.97">    }</a>
-<span class="sourceLineNo">098</span><a id="line.98">    public int getActiveDays() {</a>
-<span class="sourceLineNo">099</span><a id="line.99">        return activeDays;</a>
-<span class="sourceLineNo">100</span><a id="line.100">    }</a>
-<span class="sourceLineNo">101</span><a id="line.101">    </a>
-<span class="sourceLineNo">102</span><a id="line.102">}</a>
+<span class="sourceLineNo">048</span><a id="line.48">    /**</a>
+<span class="sourceLineNo">049</span><a id="line.49">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50">     * &lt;caption&gt;Parsed fields for ParamChangeReminderHistoryLog:&lt;/caption&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modification&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reminderId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enable&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;frequencyMinutes&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;startTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;endTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;activeDays&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">060</span><a id="line.60">     */</a>
+<span class="sourceLineNo">061</span><a id="line.61">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">062</span><a id="line.62">        Preconditions.checkArgument(raw.length == 26);</a>
+<span class="sourceLineNo">063</span><a id="line.63">        this.cargo = raw;</a>
+<span class="sourceLineNo">064</span><a id="line.64">        parseBase(raw);</a>
+<span class="sourceLineNo">065</span><a id="line.65">        this.modification = raw[10];</a>
+<span class="sourceLineNo">066</span><a id="line.66">        this.reminderId = raw[11];</a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.status = raw[12];</a>
+<span class="sourceLineNo">068</span><a id="line.68">        this.enable = raw[13];</a>
+<span class="sourceLineNo">069</span><a id="line.69">        this.frequencyMinutes = Bytes.readUint32(raw, 14);</a>
+<span class="sourceLineNo">070</span><a id="line.70">        this.startTime = Bytes.readShort(raw, 18);</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.endTime = Bytes.readShort(raw, 20);</a>
+<span class="sourceLineNo">072</span><a id="line.72">        this.activeDays = raw[22];</a>
+<span class="sourceLineNo">073</span><a id="line.73">        </a>
+<span class="sourceLineNo">074</span><a id="line.74">    }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modification, int reminderId, int status, int enable, long frequencyMinutes, int startTime, int endTime, int activeDays) {</a>
+<span class="sourceLineNo">077</span><a id="line.77">        return HistoryLog.fillCargo(Bytes.combine(</a>
+<span class="sourceLineNo">078</span><a id="line.78">            new byte[]{96, 0},</a>
+<span class="sourceLineNo">079</span><a id="line.79">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">080</span><a id="line.80">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">081</span><a id="line.81">            new byte[]{ (byte) modification }, </a>
+<span class="sourceLineNo">082</span><a id="line.82">            new byte[]{ (byte) reminderId }, </a>
+<span class="sourceLineNo">083</span><a id="line.83">            new byte[]{ (byte) status }, </a>
+<span class="sourceLineNo">084</span><a id="line.84">            new byte[]{ (byte) enable }, </a>
+<span class="sourceLineNo">085</span><a id="line.85">            Bytes.toUint32(frequencyMinutes), </a>
+<span class="sourceLineNo">086</span><a id="line.86">            Bytes.firstTwoBytesLittleEndian(startTime), </a>
+<span class="sourceLineNo">087</span><a id="line.87">            Bytes.firstTwoBytesLittleEndian(endTime), </a>
+<span class="sourceLineNo">088</span><a id="line.88">            new byte[]{ (byte) activeDays }));</a>
+<span class="sourceLineNo">089</span><a id="line.89">    }</a>
+<span class="sourceLineNo">090</span><a id="line.90">    public int getModification() {</a>
+<span class="sourceLineNo">091</span><a id="line.91">        return modification;</a>
+<span class="sourceLineNo">092</span><a id="line.92">    }</a>
+<span class="sourceLineNo">093</span><a id="line.93">    public int getReminderId() {</a>
+<span class="sourceLineNo">094</span><a id="line.94">        return reminderId;</a>
+<span class="sourceLineNo">095</span><a id="line.95">    }</a>
+<span class="sourceLineNo">096</span><a id="line.96">    public int getStatus() {</a>
+<span class="sourceLineNo">097</span><a id="line.97">        return status;</a>
+<span class="sourceLineNo">098</span><a id="line.98">    }</a>
+<span class="sourceLineNo">099</span><a id="line.99">    public int getEnable() {</a>
+<span class="sourceLineNo">100</span><a id="line.100">        return enable;</a>
+<span class="sourceLineNo">101</span><a id="line.101">    }</a>
+<span class="sourceLineNo">102</span><a id="line.102">    public long getFrequencyMinutes() {</a>
+<span class="sourceLineNo">103</span><a id="line.103">        return frequencyMinutes;</a>
+<span class="sourceLineNo">104</span><a id="line.104">    }</a>
+<span class="sourceLineNo">105</span><a id="line.105">    public int getStartTime() {</a>
+<span class="sourceLineNo">106</span><a id="line.106">        return startTime;</a>
+<span class="sourceLineNo">107</span><a id="line.107">    }</a>
+<span class="sourceLineNo">108</span><a id="line.108">    public int getEndTime() {</a>
+<span class="sourceLineNo">109</span><a id="line.109">        return endTime;</a>
+<span class="sourceLineNo">110</span><a id="line.110">    }</a>
+<span class="sourceLineNo">111</span><a id="line.111">    public int getActiveDays() {</a>
+<span class="sourceLineNo">112</span><a id="line.112">        return activeDays;</a>
+<span class="sourceLineNo">113</span><a id="line.113">    }</a>
+<span class="sourceLineNo">114</span><a id="line.114">    </a>
+<span class="sourceLineNo">115</span><a id="line.115">}</a>
 
 
 

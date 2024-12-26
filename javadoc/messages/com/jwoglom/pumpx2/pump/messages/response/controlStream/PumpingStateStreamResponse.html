@@ -141,8 +141,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.15">PumpingStateStreamResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.32">PumpingStateStreamResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/controlStream/NonexistentPumpingStateStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.controlStream"><code>NonexistentPumpingStateStreamRequest</code></a>, opCode -23, size 5
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-23</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>5</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL_STREAM"><code>Characteristic.CONTROL_STREAM</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/controlStream/NonexistentPumpingStateStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.controlStream"><code>NonexistentPumpingStateStreamRequest</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>stream</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -233,7 +248,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(boolean,long)">buildCargo</a></span>&#8203;(boolean&nbsp;isPumpingStateSetAfterStartUp,
           long&nbsp;stateBitmask)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpingStateStreamResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>toUint32(stateBitmask) [byte 0]</code>
+ 2<code>toUint32(stateBitmask) [byte 1]</code>
+ 3<code>toUint32(stateBitmask) [byte 2]</code>
+ 4<code>toUint32(stateBitmask) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -253,7 +278,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpingStateStreamResponse:
+ <code>isPumpingStateSetAfterStartUp</code><code>raw[0] != 0</code>
+ <code>stateBitmask</code><code>Bytes.readUint32(raw, 1)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -292,7 +323,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpingStateStreamResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.29">PumpingStateStreamResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.46">PumpingStateStreamResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(boolean,long)">
@@ -301,7 +332,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpingStateStreamResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.31">PumpingStateStreamResponse</a>&#8203;(boolean&nbsp;isPumpingStateSetAfterStartUp,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.48">PumpingStateStreamResponse</a>&#8203;(boolean&nbsp;isPumpingStateSetAfterStartUp,
                                   long&nbsp;stateBitmask)</pre>
 </li>
 </ul>
@@ -321,7 +352,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.37">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.61">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpingStateStreamResponse:</caption>
+ <tr><td><code>isPumpingStateSetAfterStartUp</code></td><td><code>raw[0] != 0</code></td></tr>
+ <tr><td><code>stateBitmask</code></td><td><code>Bytes.readUint32(raw, 1)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -334,8 +370,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.45">buildCargo</a>&#8203;(boolean&nbsp;isPumpingStateSetAfterStartUp,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.80">buildCargo</a>&#8203;(boolean&nbsp;isPumpingStateSetAfterStartUp,
                                 long&nbsp;stateBitmask)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpingStateStreamResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(stateBitmask) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(stateBitmask) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(stateBitmask) [byte 2]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(stateBitmask) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIsPumpingStateSetAfterStartUp()">
@@ -344,7 +389,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsPumpingStateSetAfterStartUp</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.51">getIsPumpingStateSetAfterStartUp</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.86">getIsPumpingStateSetAfterStartUp</a>()</pre>
 </li>
 </ul>
 <a id="getStateBitmask()">
@@ -353,7 +398,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStateBitmask</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.54">getStateBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.89">getStateBitmask</a>()</pre>
 </li>
 </ul>
 <a id="getStates()">
@@ -362,7 +407,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getStates</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="PumpingStateStreamResponse.PumpingState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.controlStream">PumpingStateStreamResponse.PumpingState</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.57">getStates</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="PumpingStateStreamResponse.PumpingState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.controlStream">PumpingStateStreamResponse.PumpingState</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/PumpingStateStreamResponse.html#line.92">getStates</a>()</pre>
 </li>
 </ul>
 </li>

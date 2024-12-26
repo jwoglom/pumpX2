@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.10">PumpGlobalsResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.24">PumpGlobalsResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/PumpGlobalsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpGlobalsRequest</code></a>, opCode 87, size 14
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>87</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>14</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/PumpGlobalsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpGlobalsRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -253,7 +265,26 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;alertAnnun,
           int&nbsp;alarmAnnun,
           int&nbsp;fillTubingAnnun)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpGlobalsResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>firstTwoBytesLittleEndian(quickBolusIncrementUnits) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(quickBolusIncrementUnits) [byte 1]</code>
+ 3<code>firstTwoBytesLittleEndian(quickBolusIncrementCarbs) [byte 0]</code>
+ 4<code>firstTwoBytesLittleEndian(quickBolusIncrementCarbs) [byte 1]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ 7<code>new byte[]{...} [element 0]</code>
+ 8<code>new byte[]{...} [element 0]</code>
+ 9<code>new byte[]{...} [element 0]</code>
+ 10<code>new byte[]{...} [element 0]</code>
+ 11<code>new byte[]{...} [element 0]</code>
+ 12<code>new byte[]{...} [element 0]</code>
+ 13<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a></code></td>
@@ -318,7 +349,23 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpGlobalsResponse:
+ <code>quickBolusEnabled</code><code>raw[0]</code>
+ <code>quickBolusIncrementUnits</code><code>Bytes.readShort(raw, 1)</code>
+ <code>quickBolusIncrementCarbs</code><code>Bytes.readShort(raw, 3)</code>
+ <code>quickBolusEntryType</code><code>raw[5]</code>
+ <code>quickBolusStatus</code><code>raw[6]</code>
+ <code>buttonAnnun</code><code>raw[7]</code>
+ <code>quickBolusAnnun</code><code>raw[8]</code>
+ <code>bolusAnnun</code><code>raw[9]</code>
+ <code>reminderAnnun</code><code>raw[10]</code>
+ <code>alertAnnun</code><code>raw[11]</code>
+ <code>alarmAnnun</code><code>raw[12]</code>
+ <code>fillTubingAnnun</code><code>raw[13]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -357,7 +404,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpGlobalsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.31">PumpGlobalsResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.45">PumpGlobalsResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int,int,int,int,int,int)">
@@ -366,7 +413,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpGlobalsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.33">PumpGlobalsResponse</a>&#8203;(int&nbsp;quickBolusEnabled,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.47">PumpGlobalsResponse</a>&#8203;(int&nbsp;quickBolusEnabled,
                            int&nbsp;quickBolusIncrementUnits,
                            int&nbsp;quickBolusIncrementCarbs,
                            int&nbsp;quickBolusEntryType,
@@ -396,7 +443,22 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.50">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.81">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpGlobalsResponse:</caption>
+ <tr><td><code>quickBolusEnabled</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>quickBolusIncrementUnits</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>quickBolusIncrementCarbs</code></td><td><code>Bytes.readShort(raw, 3)</code></td></tr>
+ <tr><td><code>quickBolusEntryType</code></td><td><code>raw[5]</code></td></tr>
+ <tr><td><code>quickBolusStatus</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>buttonAnnun</code></td><td><code>raw[7]</code></td></tr>
+ <tr><td><code>quickBolusAnnun</code></td><td><code>raw[8]</code></td></tr>
+ <tr><td><code>bolusAnnun</code></td><td><code>raw[9]</code></td></tr>
+ <tr><td><code>reminderAnnun</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>alertAnnun</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>alarmAnnun</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>fillTubingAnnun</code></td><td><code>raw[13]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -409,7 +471,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.69">buildCargo</a>&#8203;(int&nbsp;quickBolusEnabled,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.120">buildCargo</a>&#8203;(int&nbsp;quickBolusEnabled,
                                 int&nbsp;quickBolusIncrementUnits,
                                 int&nbsp;quickBolusIncrementCarbs,
                                 int&nbsp;quickBolusEntryType,
@@ -421,6 +483,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;alertAnnun,
                                 int&nbsp;alarmAnnun,
                                 int&nbsp;fillTubingAnnun)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpGlobalsResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(quickBolusIncrementUnits) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(quickBolusIncrementUnits) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(quickBolusIncrementCarbs) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(quickBolusIncrementCarbs) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>7</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>8</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>9</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>10</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>11</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>12</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>13</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getQuickBolusEnabled()">
@@ -429,7 +509,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusEnabled</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.85">getQuickBolusEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.136">getQuickBolusEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getQuickBolusIncrementUnits()">
@@ -438,7 +518,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusIncrementUnits</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.88">getQuickBolusIncrementUnits</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.139">getQuickBolusIncrementUnits</a>()</pre>
 </li>
 </ul>
 <a id="getQuickBolusIncrementCarbs()">
@@ -447,7 +527,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusIncrementCarbs</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.91">getQuickBolusIncrementCarbs</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.142">getQuickBolusIncrementCarbs</a>()</pre>
 </li>
 </ul>
 <a id="getQuickBolusEntryType()">
@@ -456,7 +536,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusEntryType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.94">getQuickBolusEntryType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.145">getQuickBolusEntryType</a>()</pre>
 </li>
 </ul>
 <a id="getQuickBolusStatus()">
@@ -465,7 +545,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.97">getQuickBolusStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.148">getQuickBolusStatus</a>()</pre>
 </li>
 </ul>
 <a id="getButtonAnnun()">
@@ -474,7 +554,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getButtonAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.100">getButtonAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.151">getButtonAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getQuickBolusAnnun()">
@@ -483,7 +563,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getQuickBolusAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.103">getQuickBolusAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.154">getQuickBolusAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getBolusAnnun()">
@@ -492,7 +572,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.106">getBolusAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.157">getBolusAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getReminderAnnun()">
@@ -501,7 +581,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getReminderAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.109">getReminderAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.160">getReminderAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getAlertAnnun()">
@@ -510,7 +590,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAlertAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.112">getAlertAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.163">getAlertAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getAlarmAnnun()">
@@ -519,7 +599,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAlarmAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.115">getAlarmAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.166">getAlarmAnnun</a>()</pre>
 </li>
 </ul>
 <a id="getFillTubingAnnun()">
@@ -528,7 +608,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getFillTubingAnnun</h4>
-<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.118">getFillTubingAnnun</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="PumpGlobalsResponse.AnnunciationEnum.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse.AnnunciationEnum</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#line.169">getFillTubingAnnun</a>()</pre>
 </li>
 </ul>
 </li>

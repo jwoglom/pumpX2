@@ -250,7 +250,15 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for IdpActionHistoryLog:
+ <code>idp</code><code>raw[10]</code>
+ <code>status</code><code>raw[11]</code>
+ <code>sourceIdp</code><code>raw[12]</code>
+ <code>name</code><code>Bytes.readString(raw, 18, 8)</code>
+ </div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -352,7 +360,14 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.40">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.49">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for IdpActionHistoryLog:</caption>
+ <tr><td><code>idp</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>sourceIdp</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>name</code></td><td><code>Bytes.readString(raw, 18, 8)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -365,7 +380,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.51">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.60">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;idp,
                                 int&nbsp;status,
@@ -379,7 +394,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdp</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.61">getIdp</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.70">getIdp</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -388,7 +403,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.64">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.73">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getSourceIdp()">
@@ -397,7 +412,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getSourceIdp</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.67">getSourceIdp</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.76">getSourceIdp</a>()</pre>
 </li>
 </ul>
 <a id="getName()">
@@ -406,7 +421,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getName</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.70">getName</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#line.79">getName</a>()</pre>
 </li>
 </ul>
 </li>

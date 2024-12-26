@@ -141,13 +141,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.22">HistoryLogStreamResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.48">HistoryLogStreamResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">Multiple HistoryLogStreamResponse's can be received after initiating a HistoryLogRequest.
  The available sequence numbers can be checked on with a HistoryLogStatusRequest.
  This response message is received via the HISTORY_LOG CharacteristicUUID,
  and all other Response objects in the historyLog package are wrapped inside of
- HistoryLogStreamResponse (they contain their own opcodes like standard requests).</div>
+ HistoryLogStreamResponse (they contain their own opcodes like standard requests).
+
+
+
+ <br>
+
+ Response message for <a href="../../request/historyLog/NonexistentHistoryLogStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.historyLog"><code>NonexistentHistoryLogStreamRequest</code></a>, opCode -127, size 28
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-127</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>28</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>variableSize</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>stream</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#HISTORY_LOG"><code>Characteristic.HISTORY_LOG</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/historyLog/NonexistentHistoryLogStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.historyLog"><code>NonexistentHistoryLogStreamRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -247,7 +267,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for HistoryLogStreamResponse:
+ <code>numberOfHistoryLogs</code><code>raw[0]</code>
+ <code>streamId</code><code>raw[1]</code>
+ <code>historyLogStreamBytes</code><code>new ArrayList&lt;&gt;()</code>
+ </div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;</code></td>
@@ -291,7 +318,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>HistoryLogStreamResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.38">HistoryLogStreamResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.64">HistoryLogStreamResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,java.util.List)">
@@ -300,7 +327,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>HistoryLogStreamResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.40">HistoryLogStreamResponse</a>&#8203;(int&nbsp;numberOfHistoryLogs,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.66">HistoryLogStreamResponse</a>&#8203;(int&nbsp;numberOfHistoryLogs,
                                 int&nbsp;streamId,
                                 java.util.List&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</pre>
 </li>
@@ -321,7 +348,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.49">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.83">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for HistoryLogStreamResponse:</caption>
+ <tr><td><code>numberOfHistoryLogs</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>streamId</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>historyLogStreamBytes</code></td><td><code>new ArrayList&lt;&gt;()</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -334,7 +367,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.70">buildCargo</a>&#8203;(int&nbsp;numberOfHistoryLogs,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.104">buildCargo</a>&#8203;(int&nbsp;numberOfHistoryLogs,
                                 int&nbsp;streamId,
                                 java.util.List&lt;byte[]&gt;&nbsp;historyLogStreams)</pre>
 </li>
@@ -345,7 +378,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parseHistoryLogStream</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.83">parseHistoryLogStream</a>&#8203;(java.util.List&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</pre>
+<pre class="methodSignature">public static&nbsp;java.util.List&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.117">parseHistoryLogStream</a>&#8203;(java.util.List&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</pre>
 </li>
 </ul>
 <a id="getStreamId()">
@@ -354,7 +387,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStreamId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.89">getStreamId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.123">getStreamId</a>()</pre>
 </li>
 </ul>
 <a id="getNumberOfHistoryLogs()">
@@ -363,7 +396,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getNumberOfHistoryLogs</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.93">getNumberOfHistoryLogs</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.127">getNumberOfHistoryLogs</a>()</pre>
 </li>
 </ul>
 <a id="getHistoryLogStreamBytes()">
@@ -372,7 +405,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHistoryLogStreamBytes</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;byte[]&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.97">getHistoryLogStreamBytes</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;byte[]&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.131">getHistoryLogStreamBytes</a>()</pre>
 </li>
 </ul>
 <a id="getHistoryLogs()">
@@ -381,7 +414,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHistoryLogs</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.101">getHistoryLogs</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.135">getHistoryLogs</a>()</pre>
 </li>
 </ul>
 <a id="getHistoryLogsToString()">
@@ -390,7 +423,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getHistoryLogsToString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.105">getHistoryLogsToString</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line.139">getHistoryLogsToString</a>()</pre>
 </li>
 </ul>
 </li>

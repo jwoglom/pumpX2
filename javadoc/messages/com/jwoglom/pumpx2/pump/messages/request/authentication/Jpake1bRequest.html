@@ -141,14 +141,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.21">Jpake1bRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.47">Jpake1bRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">The second authorization message sent to the pump with V2 authorization style which contains the
  second half of the first round client output of EcJpake.
  The message structure is identical to <a href="Jpake1aRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>Jpake1aRequest</code></a>.
 
  When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
- connection initialization as part of performing the initial pump pairing process.</div>
+ connection initialization as part of performing the initial pump pairing process.
+
+
+
+ <br>
+
+ Request message for <a href="../../response/authentication/Jpake1bResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication"><code>Jpake1bResponse</code></a>, opCode 34, size 167
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>34</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>167</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V3_2"><code>KnownApiVersion.API_V3_2</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/authentication/Jpake1bResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication"><code>Jpake1bResponse</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -229,7 +248,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for Jpake1bRequest:
+ <code>appInstanceId</code><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code>
+ <code>centralChallenge</code><code>Arrays.copyOfRange(raw, 2, raw.length)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -268,7 +293,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake1bRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.33">Jpake1bRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.59">Jpake1bRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,byte[])">
@@ -277,7 +302,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake1bRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.35">Jpake1bRequest</a>&#8203;(int&nbsp;appInstanceId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.61">Jpake1bRequest</a>&#8203;(int&nbsp;appInstanceId,
                       byte[]&nbsp;centralChallenge)</pre>
 </li>
 </ul>
@@ -287,7 +312,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Jpake1bRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.41">Jpake1bRequest</a>&#8203;(byte[]&nbsp;rawCargo)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.67">Jpake1bRequest</a>&#8203;(byte[]&nbsp;rawCargo)</pre>
 </li>
 </ul>
 </li>
@@ -306,7 +331,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppInstanceId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.45">getAppInstanceId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.71">getAppInstanceId</a>()</pre>
 </li>
 </ul>
 <a id="getCentralChallenge()">
@@ -315,7 +340,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCentralChallenge</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.49">getCentralChallenge</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.75">getCentralChallenge</a>()</pre>
 </li>
 </ul>
 <a id="parse(byte[])">
@@ -324,7 +349,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.60">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake1bRequest.html#line.93">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for Jpake1bRequest:</caption>
+ <tr><td><code>appInstanceId</code></td><td><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code></td></tr>
+ <tr><td><code>centralChallenge</code></td><td><code>Arrays.copyOfRange(raw, 2, raw.length)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>

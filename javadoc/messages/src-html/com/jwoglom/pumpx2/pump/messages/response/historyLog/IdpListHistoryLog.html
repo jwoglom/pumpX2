@@ -52,56 +52,68 @@
 <span class="sourceLineNo">043</span><a id="line.43">        return 71;</a>
 <span class="sourceLineNo">044</span><a id="line.44">    }</a>
 <span class="sourceLineNo">045</span><a id="line.45"></a>
-<span class="sourceLineNo">046</span><a id="line.46">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">047</span><a id="line.47">        Preconditions.checkArgument(raw.length == 26);</a>
-<span class="sourceLineNo">048</span><a id="line.48">        this.cargo = raw;</a>
-<span class="sourceLineNo">049</span><a id="line.49">        parseBase(raw);</a>
-<span class="sourceLineNo">050</span><a id="line.50">        this.numProfiles = raw[10];</a>
-<span class="sourceLineNo">051</span><a id="line.51">        this.slot1 = raw[14];</a>
-<span class="sourceLineNo">052</span><a id="line.52">        this.slot2 = raw[15];</a>
-<span class="sourceLineNo">053</span><a id="line.53">        this.slot3 = raw[16];</a>
-<span class="sourceLineNo">054</span><a id="line.54">        this.slot4 = raw[17];</a>
-<span class="sourceLineNo">055</span><a id="line.55">        this.slot5 = raw[18];</a>
-<span class="sourceLineNo">056</span><a id="line.56">        this.slot6 = raw[19];</a>
-<span class="sourceLineNo">057</span><a id="line.57">        </a>
-<span class="sourceLineNo">058</span><a id="line.58">    }</a>
-<span class="sourceLineNo">059</span><a id="line.59"></a>
-<span class="sourceLineNo">060</span><a id="line.60">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int numProfiles, int slot1, int slot2, int slot3, int slot4, int slot5, int slot6) {</a>
-<span class="sourceLineNo">061</span><a id="line.61">        return HistoryLog.fillCargo(Bytes.combine(</a>
-<span class="sourceLineNo">062</span><a id="line.62">            new byte[]{71, 0},</a>
-<span class="sourceLineNo">063</span><a id="line.63">            Bytes.toUint32(pumpTimeSec),</a>
-<span class="sourceLineNo">064</span><a id="line.64">            Bytes.toUint32(sequenceNum),</a>
-<span class="sourceLineNo">065</span><a id="line.65">            new byte[]{ (byte) numProfiles }, </a>
-<span class="sourceLineNo">066</span><a id="line.66">            new byte[]{ (byte) slot1 }, </a>
-<span class="sourceLineNo">067</span><a id="line.67">            new byte[]{ (byte) slot2 }, </a>
-<span class="sourceLineNo">068</span><a id="line.68">            new byte[]{ (byte) slot3 }, </a>
-<span class="sourceLineNo">069</span><a id="line.69">            new byte[]{ (byte) slot4 }, </a>
-<span class="sourceLineNo">070</span><a id="line.70">            new byte[]{ (byte) slot5 }, </a>
-<span class="sourceLineNo">071</span><a id="line.71">            new byte[]{ (byte) slot6 }));</a>
-<span class="sourceLineNo">072</span><a id="line.72">    }</a>
-<span class="sourceLineNo">073</span><a id="line.73">    public int getNumProfiles() {</a>
-<span class="sourceLineNo">074</span><a id="line.74">        return numProfiles;</a>
-<span class="sourceLineNo">075</span><a id="line.75">    }</a>
-<span class="sourceLineNo">076</span><a id="line.76">    public int getSlot1() {</a>
-<span class="sourceLineNo">077</span><a id="line.77">        return slot1;</a>
-<span class="sourceLineNo">078</span><a id="line.78">    }</a>
-<span class="sourceLineNo">079</span><a id="line.79">    public int getSlot2() {</a>
-<span class="sourceLineNo">080</span><a id="line.80">        return slot2;</a>
-<span class="sourceLineNo">081</span><a id="line.81">    }</a>
-<span class="sourceLineNo">082</span><a id="line.82">    public int getSlot3() {</a>
-<span class="sourceLineNo">083</span><a id="line.83">        return slot3;</a>
+<span class="sourceLineNo">046</span><a id="line.46">    /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48">     * &lt;caption&gt;Parsed fields for IdpListHistoryLog:&lt;/caption&gt;</a>
+<span class="sourceLineNo">049</span><a id="line.49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numProfiles&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot3&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot4&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot5&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;slot6&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57">     */</a>
+<span class="sourceLineNo">058</span><a id="line.58">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">059</span><a id="line.59">        Preconditions.checkArgument(raw.length == 26);</a>
+<span class="sourceLineNo">060</span><a id="line.60">        this.cargo = raw;</a>
+<span class="sourceLineNo">061</span><a id="line.61">        parseBase(raw);</a>
+<span class="sourceLineNo">062</span><a id="line.62">        this.numProfiles = raw[10];</a>
+<span class="sourceLineNo">063</span><a id="line.63">        this.slot1 = raw[14];</a>
+<span class="sourceLineNo">064</span><a id="line.64">        this.slot2 = raw[15];</a>
+<span class="sourceLineNo">065</span><a id="line.65">        this.slot3 = raw[16];</a>
+<span class="sourceLineNo">066</span><a id="line.66">        this.slot4 = raw[17];</a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.slot5 = raw[18];</a>
+<span class="sourceLineNo">068</span><a id="line.68">        this.slot6 = raw[19];</a>
+<span class="sourceLineNo">069</span><a id="line.69">        </a>
+<span class="sourceLineNo">070</span><a id="line.70">    }</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int numProfiles, int slot1, int slot2, int slot3, int slot4, int slot5, int slot6) {</a>
+<span class="sourceLineNo">073</span><a id="line.73">        return HistoryLog.fillCargo(Bytes.combine(</a>
+<span class="sourceLineNo">074</span><a id="line.74">            new byte[]{71, 0},</a>
+<span class="sourceLineNo">075</span><a id="line.75">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">076</span><a id="line.76">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">077</span><a id="line.77">            new byte[]{ (byte) numProfiles }, </a>
+<span class="sourceLineNo">078</span><a id="line.78">            new byte[]{ (byte) slot1 }, </a>
+<span class="sourceLineNo">079</span><a id="line.79">            new byte[]{ (byte) slot2 }, </a>
+<span class="sourceLineNo">080</span><a id="line.80">            new byte[]{ (byte) slot3 }, </a>
+<span class="sourceLineNo">081</span><a id="line.81">            new byte[]{ (byte) slot4 }, </a>
+<span class="sourceLineNo">082</span><a id="line.82">            new byte[]{ (byte) slot5 }, </a>
+<span class="sourceLineNo">083</span><a id="line.83">            new byte[]{ (byte) slot6 }));</a>
 <span class="sourceLineNo">084</span><a id="line.84">    }</a>
-<span class="sourceLineNo">085</span><a id="line.85">    public int getSlot4() {</a>
-<span class="sourceLineNo">086</span><a id="line.86">        return slot4;</a>
+<span class="sourceLineNo">085</span><a id="line.85">    public int getNumProfiles() {</a>
+<span class="sourceLineNo">086</span><a id="line.86">        return numProfiles;</a>
 <span class="sourceLineNo">087</span><a id="line.87">    }</a>
-<span class="sourceLineNo">088</span><a id="line.88">    public int getSlot5() {</a>
-<span class="sourceLineNo">089</span><a id="line.89">        return slot5;</a>
+<span class="sourceLineNo">088</span><a id="line.88">    public int getSlot1() {</a>
+<span class="sourceLineNo">089</span><a id="line.89">        return slot1;</a>
 <span class="sourceLineNo">090</span><a id="line.90">    }</a>
-<span class="sourceLineNo">091</span><a id="line.91">    public int getSlot6() {</a>
-<span class="sourceLineNo">092</span><a id="line.92">        return slot6;</a>
+<span class="sourceLineNo">091</span><a id="line.91">    public int getSlot2() {</a>
+<span class="sourceLineNo">092</span><a id="line.92">        return slot2;</a>
 <span class="sourceLineNo">093</span><a id="line.93">    }</a>
-<span class="sourceLineNo">094</span><a id="line.94">    </a>
-<span class="sourceLineNo">095</span><a id="line.95">}</a>
+<span class="sourceLineNo">094</span><a id="line.94">    public int getSlot3() {</a>
+<span class="sourceLineNo">095</span><a id="line.95">        return slot3;</a>
+<span class="sourceLineNo">096</span><a id="line.96">    }</a>
+<span class="sourceLineNo">097</span><a id="line.97">    public int getSlot4() {</a>
+<span class="sourceLineNo">098</span><a id="line.98">        return slot4;</a>
+<span class="sourceLineNo">099</span><a id="line.99">    }</a>
+<span class="sourceLineNo">100</span><a id="line.100">    public int getSlot5() {</a>
+<span class="sourceLineNo">101</span><a id="line.101">        return slot5;</a>
+<span class="sourceLineNo">102</span><a id="line.102">    }</a>
+<span class="sourceLineNo">103</span><a id="line.103">    public int getSlot6() {</a>
+<span class="sourceLineNo">104</span><a id="line.104">        return slot6;</a>
+<span class="sourceLineNo">105</span><a id="line.105">    }</a>
+<span class="sourceLineNo">106</span><a id="line.106">    </a>
+<span class="sourceLineNo">107</span><a id="line.107">}</a>
 
 
 

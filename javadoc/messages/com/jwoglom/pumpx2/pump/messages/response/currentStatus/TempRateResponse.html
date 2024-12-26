@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.13">TempRateResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.27">TempRateResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/control/SetTempRateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetTempRateRequest</code></a>, opCode 43, size 10
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>43</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>10</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/control/SetTempRateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetTempRateRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -218,7 +230,22 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;percentage,
           long&nbsp;startTime,
           long&nbsp;duration)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for TempRateResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>toUint32(startTime) [byte 0]</code>
+ 3<code>toUint32(startTime) [byte 1]</code>
+ 4<code>toUint32(startTime) [byte 2]</code>
+ 5<code>toUint32(startTime) [byte 3]</code>
+ 6<code>toUint32(duration) [byte 0]</code>
+ 7<code>toUint32(duration) [byte 1]</code>
+ 8<code>toUint32(duration) [byte 2]</code>
+ 9<code>toUint32(duration) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -248,7 +275,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for TempRateResponse:
+ <code>active</code><code>raw[0] != 0</code>
+ <code>percentage</code><code>(int) (raw[1] &amp; 255)</code>
+ <code>startTimeRaw</code><code>Bytes.readUint32(raw, 2)</code>
+ <code>duration</code><code>Bytes.readUint32(raw, 6)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -287,7 +322,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>TempRateResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.26">TempRateResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.40">TempRateResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -296,7 +331,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>TempRateResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.27">TempRateResponse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.41">TempRateResponse</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(boolean,int,long,long)">
@@ -305,7 +340,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TempRateResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.31">TempRateResponse</a>&#8203;(boolean&nbsp;active,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.45">TempRateResponse</a>&#8203;(boolean&nbsp;active,
                         int&nbsp;percentage,
                         long&nbsp;startTimeRaw,
                         long&nbsp;duration)</pre>
@@ -327,7 +362,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.40">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.63">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for TempRateResponse:</caption>
+ <tr><td><code>active</code></td><td><code>raw[0] != 0</code></td></tr>
+ <tr><td><code>percentage</code></td><td><code>(int) (raw[1] &amp; 255)</code></td></tr>
+ <tr><td><code>startTimeRaw</code></td><td><code>Bytes.readUint32(raw, 2)</code></td></tr>
+ <tr><td><code>duration</code></td><td><code>Bytes.readUint32(raw, 6)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -340,10 +382,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.51">buildCargo</a>&#8203;(boolean&nbsp;active,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.90">buildCargo</a>&#8203;(boolean&nbsp;active,
                                 int&nbsp;percentage,
                                 long&nbsp;startTime,
                                 long&nbsp;duration)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for TempRateResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(startTime) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(startTime) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(startTime) [byte 2]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(startTime) [byte 3]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(duration) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(duration) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(duration) [byte 2]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(duration) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getActive()">
@@ -352,7 +408,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getActive</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.59">getActive</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.98">getActive</a>()</pre>
 </li>
 </ul>
 <a id="getPercentage()">
@@ -361,7 +417,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getPercentage</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.62">getPercentage</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.101">getPercentage</a>()</pre>
 </li>
 </ul>
 <a id="getStartTimeRaw()">
@@ -370,7 +426,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStartTimeRaw</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.65">getStartTimeRaw</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.104">getStartTimeRaw</a>()</pre>
 </li>
 </ul>
 <a id="getStartTimeInstant()">
@@ -379,7 +435,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStartTimeInstant</h4>
-<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.72">getStartTimeInstant</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.111">getStartTimeInstant</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the evaluation of timeSinceReset against the epoch</dd>
@@ -392,7 +448,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getDuration</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.76">getDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#line.115">getDuration</a>()</pre>
 </li>
 </ul>
 </li>

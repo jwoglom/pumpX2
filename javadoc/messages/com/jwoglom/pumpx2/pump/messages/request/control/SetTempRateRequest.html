@@ -141,8 +141,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.13">SetTempRateRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.32">SetTempRateRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Request message for <a href="../../response/control/SetTempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetTempRateResponse</code></a>, opCode -92, size 6
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-92</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>6</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>modifiesInsulinDelivery</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#MOBI_API_V3_5"><code>KnownApiVersion.MOBI_API_V3_5</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>supportedDevices</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/SupportedDevices.html#MOBI_ONLY"><code>SupportedDevices.MOBI_ONLY</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/SetTempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetTempRateResponse</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -214,7 +231,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,int)">buildCargo</a></span>&#8203;(int&nbsp;minutes,
           int&nbsp;percent)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for SetTempRateRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(minutes * 1000L * 60L) [byte 0]</code>
+ 1<code>toUint32(minutes * 1000L * 60L) [byte 1]</code>
+ 2<code>toUint32(minutes * 1000L * 60L) [byte 2]</code>
+ 3<code>toUint32(minutes * 1000L * 60L) [byte 3]</code>
+ 4<code>firstTwoBytesLittleEndian(percent) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(percent) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -229,7 +257,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for SetTempRateRequest:
+ <code>minutes</code><code>Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60)</code>
+ <code>percent</code><code>Bytes.readShort(raw, 4)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -268,7 +302,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetTempRateRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.29">SetTempRateRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.48">SetTempRateRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -277,7 +311,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetTempRateRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.31">SetTempRateRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.50">SetTempRateRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int)">
@@ -286,7 +320,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SetTempRateRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.35">SetTempRateRequest</a>&#8203;(int&nbsp;minutes,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.54">SetTempRateRequest</a>&#8203;(int&nbsp;minutes,
                           int&nbsp;percent)</pre>
 </li>
 </ul>
@@ -306,7 +340,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.43">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.69">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for SetTempRateRequest:</caption>
+ <tr><td><code>minutes</code></td><td><code>Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60)</code></td></tr>
+ <tr><td><code>percent</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -319,8 +358,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.52">buildCargo</a>&#8203;(int&nbsp;minutes,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.90">buildCargo</a>&#8203;(int&nbsp;minutes,
                                 int&nbsp;percent)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for SetTempRateRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(minutes * 1000L * 60L) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(minutes * 1000L * 60L) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(minutes * 1000L * 60L) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(minutes * 1000L * 60L) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(percent) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>firstTwoBytesLittleEndian(percent) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getMinutes()">
@@ -329,7 +378,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMinutes</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.60">getMinutes</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.98">getMinutes</a>()</pre>
 </li>
 </ul>
 <a id="getPercent()">
@@ -338,7 +387,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPercent</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.64">getPercent</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#line.102">getPercent</a>()</pre>
 </li>
 </ul>
 </li>

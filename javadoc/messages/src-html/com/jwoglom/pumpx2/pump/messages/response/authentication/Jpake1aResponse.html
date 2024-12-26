@@ -19,49 +19,73 @@
 <span class="sourceLineNo">010</span><a id="line.10"></a>
 <span class="sourceLineNo">011</span><a id="line.11">import java.util.Arrays;</a>
 <span class="sourceLineNo">012</span><a id="line.12"></a>
-<span class="sourceLineNo">013</span><a id="line.13">@MessageProps(</a>
-<span class="sourceLineNo">014</span><a id="line.14">    opCode=33, // or 35?</a>
-<span class="sourceLineNo">015</span><a id="line.15">    size=167,</a>
-<span class="sourceLineNo">016</span><a id="line.16">    type=MessageType.RESPONSE,</a>
-<span class="sourceLineNo">017</span><a id="line.17">    minApi=KnownApiVersion.API_V3_2,</a>
-<span class="sourceLineNo">018</span><a id="line.18">    characteristic=Characteristic.AUTHORIZATION,</a>
-<span class="sourceLineNo">019</span><a id="line.19">    request= Jpake1aRequest.class</a>
-<span class="sourceLineNo">020</span><a id="line.20">)</a>
-<span class="sourceLineNo">021</span><a id="line.21">public class Jpake1aResponse extends AbstractCentralChallengeResponse {</a>
-<span class="sourceLineNo">022</span><a id="line.22">    private int appInstanceId;</a>
-<span class="sourceLineNo">023</span><a id="line.23">    private byte[] centralChallengeHash;</a>
-<span class="sourceLineNo">024</span><a id="line.24"></a>
-<span class="sourceLineNo">025</span><a id="line.25">    public Jpake1aResponse() {}</a>
-<span class="sourceLineNo">026</span><a id="line.26"></a>
-<span class="sourceLineNo">027</span><a id="line.27">    public Jpake1aResponse(int appInstanceId, byte[] centralChallengeHash) {</a>
-<span class="sourceLineNo">028</span><a id="line.28">        parse(buildCargo(appInstanceId, centralChallengeHash));</a>
-<span class="sourceLineNo">029</span><a id="line.29">        Preconditions.checkState(this.appInstanceId == appInstanceId);</a>
-<span class="sourceLineNo">030</span><a id="line.30">        Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));</a>
-<span class="sourceLineNo">031</span><a id="line.31">    }</a>
-<span class="sourceLineNo">032</span><a id="line.32"></a>
-<span class="sourceLineNo">033</span><a id="line.33">    public Jpake1aResponse(byte[] raw) {</a>
-<span class="sourceLineNo">034</span><a id="line.34">        parse(raw);</a>
-<span class="sourceLineNo">035</span><a id="line.35">    }</a>
-<span class="sourceLineNo">036</span><a id="line.36"></a>
-<span class="sourceLineNo">037</span><a id="line.37">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">038</span><a id="line.38">        Preconditions.checkArgument(raw.length == props().size(), "size is "+raw.length+" not "+props().size());</a>
-<span class="sourceLineNo">039</span><a id="line.39">        this.cargo = raw;</a>
-<span class="sourceLineNo">040</span><a id="line.40">        appInstanceId = Bytes.readShort(raw, 0);</a>
-<span class="sourceLineNo">041</span><a id="line.41">        centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length</a>
-<span class="sourceLineNo">042</span><a id="line.42">    }</a>
-<span class="sourceLineNo">043</span><a id="line.43"></a>
-<span class="sourceLineNo">044</span><a id="line.44">    public static byte[] buildCargo(int byte0short, byte[] bytes2to167) {</a>
-<span class="sourceLineNo">045</span><a id="line.45">        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to167);</a>
-<span class="sourceLineNo">046</span><a id="line.46">    }</a>
-<span class="sourceLineNo">047</span><a id="line.47"></a>
-<span class="sourceLineNo">048</span><a id="line.48">    public int getAppInstanceId() {</a>
-<span class="sourceLineNo">049</span><a id="line.49">        return appInstanceId;</a>
-<span class="sourceLineNo">050</span><a id="line.50">    }</a>
-<span class="sourceLineNo">051</span><a id="line.51"></a>
-<span class="sourceLineNo">052</span><a id="line.52">    public byte[] getCentralChallengeHash() {</a>
-<span class="sourceLineNo">053</span><a id="line.53">        return centralChallengeHash;</a>
-<span class="sourceLineNo">054</span><a id="line.54">    }</a>
-<span class="sourceLineNo">055</span><a id="line.55">}</a>
+<span class="sourceLineNo">013</span><a id="line.13">/**</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest}, opCode 33, size 167</a>
+<span class="sourceLineNo">015</span><a id="line.15"> *</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * &lt;br&gt;</a>
+<span class="sourceLineNo">017</span><a id="line.17"> *</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * </a>
+<span class="sourceLineNo">019</span><a id="line.19"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;33&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;167&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V3_2}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">028</span><a id="line.28"> */</a>
+<span class="sourceLineNo">029</span><a id="line.29">@MessageProps(</a>
+<span class="sourceLineNo">030</span><a id="line.30">    opCode=33, // or 35?</a>
+<span class="sourceLineNo">031</span><a id="line.31">    size=167,</a>
+<span class="sourceLineNo">032</span><a id="line.32">    type=MessageType.RESPONSE,</a>
+<span class="sourceLineNo">033</span><a id="line.33">    minApi=KnownApiVersion.API_V3_2,</a>
+<span class="sourceLineNo">034</span><a id="line.34">    characteristic=Characteristic.AUTHORIZATION,</a>
+<span class="sourceLineNo">035</span><a id="line.35">    request= Jpake1aRequest.class</a>
+<span class="sourceLineNo">036</span><a id="line.36">)</a>
+<span class="sourceLineNo">037</span><a id="line.37">public class Jpake1aResponse extends AbstractCentralChallengeResponse {</a>
+<span class="sourceLineNo">038</span><a id="line.38">    private int appInstanceId;</a>
+<span class="sourceLineNo">039</span><a id="line.39">    private byte[] centralChallengeHash;</a>
+<span class="sourceLineNo">040</span><a id="line.40"></a>
+<span class="sourceLineNo">041</span><a id="line.41">    public Jpake1aResponse() {}</a>
+<span class="sourceLineNo">042</span><a id="line.42"></a>
+<span class="sourceLineNo">043</span><a id="line.43">    public Jpake1aResponse(int appInstanceId, byte[] centralChallengeHash) {</a>
+<span class="sourceLineNo">044</span><a id="line.44">        parse(buildCargo(appInstanceId, centralChallengeHash));</a>
+<span class="sourceLineNo">045</span><a id="line.45">        Preconditions.checkState(this.appInstanceId == appInstanceId);</a>
+<span class="sourceLineNo">046</span><a id="line.46">        Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));</a>
+<span class="sourceLineNo">047</span><a id="line.47">    }</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">    public Jpake1aResponse(byte[] raw) {</a>
+<span class="sourceLineNo">050</span><a id="line.50">        parse(raw);</a>
+<span class="sourceLineNo">051</span><a id="line.51">    }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">054</span><a id="line.54">        Preconditions.checkArgument(raw.length == props().size(), "size is "+raw.length+" not "+props().size());</a>
+<span class="sourceLineNo">055</span><a id="line.55">        this.cargo = raw;</a>
+<span class="sourceLineNo">056</span><a id="line.56">        appInstanceId = Bytes.readShort(raw, 0);</a>
+<span class="sourceLineNo">057</span><a id="line.57">        centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length</a>
+<span class="sourceLineNo">058</span><a id="line.58">    }</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">    /**</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * &lt;caption&gt;Byte layout for Jpake1aResponse.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(byte0short) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(byte0short) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67">     */</a>
+<span class="sourceLineNo">068</span><a id="line.68">    public static byte[] buildCargo(int byte0short, byte[] bytes2to167) {</a>
+<span class="sourceLineNo">069</span><a id="line.69">        return Bytes.combine(Bytes.firstTwoBytesLittleEndian(byte0short), bytes2to167);</a>
+<span class="sourceLineNo">070</span><a id="line.70">    }</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">    public int getAppInstanceId() {</a>
+<span class="sourceLineNo">073</span><a id="line.73">        return appInstanceId;</a>
+<span class="sourceLineNo">074</span><a id="line.74">    }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">    public byte[] getCentralChallengeHash() {</a>
+<span class="sourceLineNo">077</span><a id="line.77">        return centralChallengeHash;</a>
+<span class="sourceLineNo">078</span><a id="line.78">    }</a>
+<span class="sourceLineNo">079</span><a id="line.79">}</a>
 
 
 

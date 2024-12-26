@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.10">CurrentBasalStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.24">CurrentBasalStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/CurrentBasalStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentBasalStatusRequest</code></a>, opCode 41, size 9
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>41</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>9</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CurrentBasalStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentBasalStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -212,7 +224,21 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(long,long,int)">buildCargo</a></span>&#8203;(long&nbsp;profileBasalRate,
           long&nbsp;currentBasalRate,
           int&nbsp;basalModifiedBitmask)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CurrentBasalStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(profileBasalRate) [byte 0]</code>
+ 1<code>toUint32(profileBasalRate) [byte 1]</code>
+ 2<code>toUint32(profileBasalRate) [byte 2]</code>
+ 3<code>toUint32(profileBasalRate) [byte 3]</code>
+ 4<code>toUint32(currentBasalRate) [byte 0]</code>
+ 5<code>toUint32(currentBasalRate) [byte 1]</code>
+ 6<code>toUint32(currentBasalRate) [byte 2]</code>
+ 7<code>toUint32(currentBasalRate) [byte 3]</code>
+ 8<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -232,7 +258,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CurrentBasalStatusResponse:
+ <code>profileBasalRate</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>currentBasalRate</code><code>Bytes.readUint32(raw, 4)</code>
+ <code>basalModifiedBitmask</code><code>raw[8]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -271,7 +304,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CurrentBasalStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.22">CurrentBasalStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.36">CurrentBasalStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,long,int)">
@@ -280,7 +313,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CurrentBasalStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.24">CurrentBasalStatusResponse</a>&#8203;(long&nbsp;profileBasalRate,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.38">CurrentBasalStatusResponse</a>&#8203;(long&nbsp;profileBasalRate,
                                   long&nbsp;currentBasalRate,
                                   int&nbsp;basalModifiedBitmask)</pre>
 </li>
@@ -301,7 +334,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.32">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.54">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CurrentBasalStatusResponse:</caption>
+ <tr><td><code>profileBasalRate</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>currentBasalRate</code></td><td><code>Bytes.readUint32(raw, 4)</code></td></tr>
+ <tr><td><code>basalModifiedBitmask</code></td><td><code>raw[8]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -314,9 +353,22 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.42">buildCargo</a>&#8203;(long&nbsp;profileBasalRate,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.79">buildCargo</a>&#8203;(long&nbsp;profileBasalRate,
                                 long&nbsp;currentBasalRate,
                                 int&nbsp;basalModifiedBitmask)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CurrentBasalStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(profileBasalRate) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(profileBasalRate) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(profileBasalRate) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(profileBasalRate) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(currentBasalRate) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(currentBasalRate) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(currentBasalRate) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(currentBasalRate) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getProfileBasalRate()">
@@ -325,7 +377,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileBasalRate</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.49">getProfileBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.86">getProfileBasalRate</a>()</pre>
 </li>
 </ul>
 <a id="getCurrentBasalRate()">
@@ -334,7 +386,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentBasalRate</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.52">getCurrentBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.89">getCurrentBasalRate</a>()</pre>
 </li>
 </ul>
 <a id="getBasalModifiedBitmask()">
@@ -343,7 +395,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBasalModifiedBitmask</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.55">getBasalModifiedBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#line.92">getBasalModifiedBitmask</a>()</pre>
 </li>
 </ul>
 </li>

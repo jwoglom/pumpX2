@@ -141,8 +141,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.13">LocalizationResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.28">LocalizationResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/LocalizationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LocalizationRequest</code></a>, opCode -89, size 7
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-89</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>7</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/LocalizationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LocalizationRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -214,7 +227,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;regionSetting,
           int&nbsp;languageSelected,
           long&nbsp;languagesAvailableBitmask)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for LocalizationResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>toUint32(languagesAvailableBitmask) [byte 0]</code>
+ 4<code>toUint32(languagesAvailableBitmask) [byte 1]</code>
+ 5<code>toUint32(languagesAvailableBitmask) [byte 2]</code>
+ 6<code>toUint32(languagesAvailableBitmask) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -239,7 +264,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for LocalizationResponse:
+ <code>glucoseOUM</code><code>raw[0]</code>
+ <code>regionSetting</code><code>raw[1]</code>
+ <code>languageSelected</code><code>raw[2]</code>
+ <code>languagesAvailableBitmask</code><code>Bytes.readUint32(raw, 3)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -278,7 +311,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>LocalizationResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.27">LocalizationResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.42">LocalizationResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,long)">
@@ -287,7 +320,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LocalizationResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.29">LocalizationResponse</a>&#8203;(int&nbsp;glucoseOUM,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.44">LocalizationResponse</a>&#8203;(int&nbsp;glucoseOUM,
                             int&nbsp;regionSetting,
                             int&nbsp;languageSelected,
                             long&nbsp;languagesAvailableBitmask)</pre>
@@ -309,7 +342,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.39">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.63">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for LocalizationResponse:</caption>
+ <tr><td><code>glucoseOUM</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>regionSetting</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>languageSelected</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>languagesAvailableBitmask</code></td><td><code>Bytes.readUint32(raw, 3)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -322,10 +362,21 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.51">buildCargo</a>&#8203;(int&nbsp;glucoseOUM,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.88">buildCargo</a>&#8203;(int&nbsp;glucoseOUM,
                                 int&nbsp;regionSetting,
                                 int&nbsp;languageSelected,
                                 long&nbsp;languagesAvailableBitmask)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for LocalizationResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(languagesAvailableBitmask) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(languagesAvailableBitmask) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(languagesAvailableBitmask) [byte 2]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(languagesAvailableBitmask) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getGlucoseOUM()">
@@ -334,7 +385,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getGlucoseOUM</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.60">getGlucoseOUM</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.97">getGlucoseOUM</a>()</pre>
 </li>
 </ul>
 <a id="getRegionSetting()">
@@ -343,7 +394,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getRegionSetting</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.63">getRegionSetting</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.100">getRegionSetting</a>()</pre>
 </li>
 </ul>
 <a id="getLanguageSelected()">
@@ -352,7 +403,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLanguageSelected</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.66">getLanguageSelected</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.103">getLanguageSelected</a>()</pre>
 </li>
 </ul>
 <a id="getLanguagesAvailableBitmask()">
@@ -361,7 +412,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getLanguagesAvailableBitmask</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.69">getLanguagesAvailableBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line.106">getLanguagesAvailableBitmask</a>()</pre>
 </li>
 </ul>
 </li>

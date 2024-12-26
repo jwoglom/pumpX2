@@ -20,76 +20,101 @@
 <span class="sourceLineNo">011</span><a id="line.11"></a>
 <span class="sourceLineNo">012</span><a id="line.12">import java.util.Arrays;</a>
 <span class="sourceLineNo">013</span><a id="line.13"></a>
-<span class="sourceLineNo">014</span><a id="line.14">@MessageProps(</a>
-<span class="sourceLineNo">015</span><a id="line.15">    opCode=41,</a>
-<span class="sourceLineNo">016</span><a id="line.16">    size=50,</a>
-<span class="sourceLineNo">017</span><a id="line.17">    type=MessageType.RESPONSE,</a>
-<span class="sourceLineNo">018</span><a id="line.18">    minApi=KnownApiVersion.API_V3_2,</a>
-<span class="sourceLineNo">019</span><a id="line.19">    characteristic=Characteristic.AUTHORIZATION,</a>
-<span class="sourceLineNo">020</span><a id="line.20">    request= Jpake4KeyConfirmationRequest.class</a>
-<span class="sourceLineNo">021</span><a id="line.21">)</a>
-<span class="sourceLineNo">022</span><a id="line.22">public class Jpake4KeyConfirmationResponse extends AbstractPumpChallengeResponse {</a>
-<span class="sourceLineNo">023</span><a id="line.23">    private int appInstanceId;</a>
-<span class="sourceLineNo">024</span><a id="line.24">    private byte[] nonce;</a>
-<span class="sourceLineNo">025</span><a id="line.25">    private byte[] reserved;</a>
-<span class="sourceLineNo">026</span><a id="line.26">    private byte[] hashDigest;</a>
-<span class="sourceLineNo">027</span><a id="line.27"></a>
-<span class="sourceLineNo">028</span><a id="line.28">    public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};</a>
-<span class="sourceLineNo">029</span><a id="line.29"></a>
-<span class="sourceLineNo">030</span><a id="line.30">    public Jpake4KeyConfirmationResponse() {}</a>
-<span class="sourceLineNo">031</span><a id="line.31"></a>
-<span class="sourceLineNo">032</span><a id="line.32"></a>
-<span class="sourceLineNo">033</span><a id="line.33">    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {</a>
-<span class="sourceLineNo">034</span><a id="line.34">        this.cargo = buildCargo(appInstanceId, nonce, reserved, hashDigest);</a>
-<span class="sourceLineNo">035</span><a id="line.35">        this.appInstanceId = appInstanceId;</a>
-<span class="sourceLineNo">036</span><a id="line.36">        this.nonce = nonce;</a>
-<span class="sourceLineNo">037</span><a id="line.37">        this.reserved = reserved;</a>
-<span class="sourceLineNo">038</span><a id="line.38">        this.hashDigest = hashDigest;</a>
-<span class="sourceLineNo">039</span><a id="line.39">    }</a>
-<span class="sourceLineNo">040</span><a id="line.40"></a>
-<span class="sourceLineNo">041</span><a id="line.41">    public Jpake4KeyConfirmationResponse(byte[] rawCargo) {</a>
-<span class="sourceLineNo">042</span><a id="line.42">        parse(rawCargo);</a>
-<span class="sourceLineNo">043</span><a id="line.43">    }</a>
-<span class="sourceLineNo">044</span><a id="line.44"></a>
-<span class="sourceLineNo">045</span><a id="line.45">    public int getAppInstanceId() {</a>
-<span class="sourceLineNo">046</span><a id="line.46">        return appInstanceId;</a>
-<span class="sourceLineNo">047</span><a id="line.47">    }</a>
+<span class="sourceLineNo">014</span><a id="line.14">/**</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest}, opCode 41, size 50</a>
+<span class="sourceLineNo">016</span><a id="line.16"> *</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * &lt;br&gt;</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * </a>
+<span class="sourceLineNo">020</span><a id="line.20"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;41&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;50&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">024</span><a id="line.24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V3_2}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">029</span><a id="line.29"> */</a>
+<span class="sourceLineNo">030</span><a id="line.30">@MessageProps(</a>
+<span class="sourceLineNo">031</span><a id="line.31">    opCode=41,</a>
+<span class="sourceLineNo">032</span><a id="line.32">    size=50,</a>
+<span class="sourceLineNo">033</span><a id="line.33">    type=MessageType.RESPONSE,</a>
+<span class="sourceLineNo">034</span><a id="line.34">    minApi=KnownApiVersion.API_V3_2,</a>
+<span class="sourceLineNo">035</span><a id="line.35">    characteristic=Characteristic.AUTHORIZATION,</a>
+<span class="sourceLineNo">036</span><a id="line.36">    request= Jpake4KeyConfirmationRequest.class</a>
+<span class="sourceLineNo">037</span><a id="line.37">)</a>
+<span class="sourceLineNo">038</span><a id="line.38">public class Jpake4KeyConfirmationResponse extends AbstractPumpChallengeResponse {</a>
+<span class="sourceLineNo">039</span><a id="line.39">    private int appInstanceId;</a>
+<span class="sourceLineNo">040</span><a id="line.40">    private byte[] nonce;</a>
+<span class="sourceLineNo">041</span><a id="line.41">    private byte[] reserved;</a>
+<span class="sourceLineNo">042</span><a id="line.42">    private byte[] hashDigest;</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">    public static byte[] RESERVED = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};</a>
+<span class="sourceLineNo">045</span><a id="line.45"></a>
+<span class="sourceLineNo">046</span><a id="line.46">    public Jpake4KeyConfirmationResponse() {}</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
 <span class="sourceLineNo">048</span><a id="line.48"></a>
-<span class="sourceLineNo">049</span><a id="line.49">    public byte[] getNonce() {</a>
-<span class="sourceLineNo">050</span><a id="line.50">        return nonce;</a>
-<span class="sourceLineNo">051</span><a id="line.51">    }</a>
-<span class="sourceLineNo">052</span><a id="line.52"></a>
-<span class="sourceLineNo">053</span><a id="line.53">    public byte[] getReserved() {</a>
-<span class="sourceLineNo">054</span><a id="line.54">        return reserved;</a>
+<span class="sourceLineNo">049</span><a id="line.49">    public Jpake4KeyConfirmationResponse(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {</a>
+<span class="sourceLineNo">050</span><a id="line.50">        this.cargo = buildCargo(appInstanceId, nonce, reserved, hashDigest);</a>
+<span class="sourceLineNo">051</span><a id="line.51">        this.appInstanceId = appInstanceId;</a>
+<span class="sourceLineNo">052</span><a id="line.52">        this.nonce = nonce;</a>
+<span class="sourceLineNo">053</span><a id="line.53">        this.reserved = reserved;</a>
+<span class="sourceLineNo">054</span><a id="line.54">        this.hashDigest = hashDigest;</a>
 <span class="sourceLineNo">055</span><a id="line.55">    }</a>
 <span class="sourceLineNo">056</span><a id="line.56"></a>
-<span class="sourceLineNo">057</span><a id="line.57">    public byte[] getHashDigest() {</a>
-<span class="sourceLineNo">058</span><a id="line.58">        return hashDigest;</a>
+<span class="sourceLineNo">057</span><a id="line.57">    public Jpake4KeyConfirmationResponse(byte[] rawCargo) {</a>
+<span class="sourceLineNo">058</span><a id="line.58">        parse(rawCargo);</a>
 <span class="sourceLineNo">059</span><a id="line.59">    }</a>
 <span class="sourceLineNo">060</span><a id="line.60"></a>
-<span class="sourceLineNo">061</span><a id="line.61">    private static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {</a>
-<span class="sourceLineNo">062</span><a id="line.62">        Preconditions.checkArgument(nonce.length == 8, "nonce was " + nonce.length + " not 8");</a>
-<span class="sourceLineNo">063</span><a id="line.63">        Preconditions.checkArgument(reserved.length == 8);</a>
-<span class="sourceLineNo">064</span><a id="line.64">        Preconditions.checkArgument(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");</a>
-<span class="sourceLineNo">065</span><a id="line.65">        byte[] cargo = new byte[50];</a>
-<span class="sourceLineNo">066</span><a id="line.66">        System.arraycopy(Bytes.combine(</a>
-<span class="sourceLineNo">067</span><a id="line.67">                Bytes.firstTwoBytesLittleEndian(appInstanceId),</a>
-<span class="sourceLineNo">068</span><a id="line.68">                nonce,</a>
-<span class="sourceLineNo">069</span><a id="line.69">                reserved,</a>
-<span class="sourceLineNo">070</span><a id="line.70">                hashDigest</a>
-<span class="sourceLineNo">071</span><a id="line.71">        ), 0, cargo, 0, 50);</a>
+<span class="sourceLineNo">061</span><a id="line.61">    public int getAppInstanceId() {</a>
+<span class="sourceLineNo">062</span><a id="line.62">        return appInstanceId;</a>
+<span class="sourceLineNo">063</span><a id="line.63">    }</a>
+<span class="sourceLineNo">064</span><a id="line.64"></a>
+<span class="sourceLineNo">065</span><a id="line.65">    public byte[] getNonce() {</a>
+<span class="sourceLineNo">066</span><a id="line.66">        return nonce;</a>
+<span class="sourceLineNo">067</span><a id="line.67">    }</a>
+<span class="sourceLineNo">068</span><a id="line.68"></a>
+<span class="sourceLineNo">069</span><a id="line.69">    public byte[] getReserved() {</a>
+<span class="sourceLineNo">070</span><a id="line.70">        return reserved;</a>
+<span class="sourceLineNo">071</span><a id="line.71">    }</a>
 <span class="sourceLineNo">072</span><a id="line.72"></a>
-<span class="sourceLineNo">073</span><a id="line.73">        return cargo;</a>
-<span class="sourceLineNo">074</span><a id="line.74">    }</a>
-<span class="sourceLineNo">075</span><a id="line.75"></a>
-<span class="sourceLineNo">076</span><a id="line.76">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">077</span><a id="line.77">        this.cargo = raw;</a>
-<span class="sourceLineNo">078</span><a id="line.78">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</a>
-<span class="sourceLineNo">079</span><a id="line.79">        this.nonce = Arrays.copyOfRange(raw, 2, 10);</a>
-<span class="sourceLineNo">080</span><a id="line.80">        this.reserved = Arrays.copyOfRange(raw, 10, 18);</a>
-<span class="sourceLineNo">081</span><a id="line.81">        this.hashDigest = Arrays.copyOfRange(raw, 18, 50); // 32</a>
-<span class="sourceLineNo">082</span><a id="line.82">    }</a>
-<span class="sourceLineNo">083</span><a id="line.83">}</a>
+<span class="sourceLineNo">073</span><a id="line.73">    public byte[] getHashDigest() {</a>
+<span class="sourceLineNo">074</span><a id="line.74">        return hashDigest;</a>
+<span class="sourceLineNo">075</span><a id="line.75">    }</a>
+<span class="sourceLineNo">076</span><a id="line.76"></a>
+<span class="sourceLineNo">077</span><a id="line.77">    private static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {</a>
+<span class="sourceLineNo">078</span><a id="line.78">        Preconditions.checkArgument(nonce.length == 8, "nonce was " + nonce.length + " not 8");</a>
+<span class="sourceLineNo">079</span><a id="line.79">        Preconditions.checkArgument(reserved.length == 8);</a>
+<span class="sourceLineNo">080</span><a id="line.80">        Preconditions.checkArgument(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");</a>
+<span class="sourceLineNo">081</span><a id="line.81">        byte[] cargo = new byte[50];</a>
+<span class="sourceLineNo">082</span><a id="line.82">        System.arraycopy(Bytes.combine(</a>
+<span class="sourceLineNo">083</span><a id="line.83">                Bytes.firstTwoBytesLittleEndian(appInstanceId),</a>
+<span class="sourceLineNo">084</span><a id="line.84">                nonce,</a>
+<span class="sourceLineNo">085</span><a id="line.85">                reserved,</a>
+<span class="sourceLineNo">086</span><a id="line.86">                hashDigest</a>
+<span class="sourceLineNo">087</span><a id="line.87">        ), 0, cargo, 0, 50);</a>
+<span class="sourceLineNo">088</span><a id="line.88"></a>
+<span class="sourceLineNo">089</span><a id="line.89">        return cargo;</a>
+<span class="sourceLineNo">090</span><a id="line.90">    }</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">    /**</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * &lt;caption&gt;Parsed fields for Jpake4KeyConfirmationResponse:&lt;/caption&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appInstanceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;nonce&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 2, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reserved&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 10, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;hashDigest&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 18, 50)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">100</span><a id="line.100">     */</a>
+<span class="sourceLineNo">101</span><a id="line.101">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">102</span><a id="line.102">        this.cargo = raw;</a>
+<span class="sourceLineNo">103</span><a id="line.103">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</a>
+<span class="sourceLineNo">104</span><a id="line.104">        this.nonce = Arrays.copyOfRange(raw, 2, 10);</a>
+<span class="sourceLineNo">105</span><a id="line.105">        this.reserved = Arrays.copyOfRange(raw, 10, 18);</a>
+<span class="sourceLineNo">106</span><a id="line.106">        this.hashDigest = Arrays.copyOfRange(raw, 18, 50); // 32</a>
+<span class="sourceLineNo">107</span><a id="line.107">    }</a>
+<span class="sourceLineNo">108</span><a id="line.108">}</a>
 
 
 

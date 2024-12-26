@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.10">HomeScreenMirrorResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.24">HomeScreenMirrorResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/HomeScreenMirrorRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HomeScreenMirrorRequest</code></a>, opCode 57, size 9
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>57</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>9</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/HomeScreenMirrorRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HomeScreenMirrorRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -277,7 +289,21 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;apControlStateIcon,
           boolean&nbsp;remainingInsulinPlusIcon,
           boolean&nbsp;cgmDisplayData)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for HomeScreenMirrorResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>new byte[]{...} [element 0]</code>
+ 4<code>new byte[]{...} [element 0]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ 7<code>new byte[]{...} [element 0]</code>
+ 8<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="HomeScreenMirrorResponse.ApControlStateIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.ApControlStateIcon</a></code></td>
@@ -327,7 +353,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for HomeScreenMirrorResponse:
+ <code>cgmTrendIcon</code><code>Byte.toUnsignedInt(raw[0])</code>
+ <code>cgmAlertIcon</code><code>Byte.toUnsignedInt(raw[1])</code>
+ <code>statusIcon0</code><code>Byte.toUnsignedInt(raw[2])</code>
+ <code>statusIcon1</code><code>Byte.toUnsignedInt(raw[3])</code>
+ <code>bolusStatusIcon</code><code>Byte.toUnsignedInt(raw[4])</code>
+ <code>basalStatusIcon</code><code>Byte.toUnsignedInt(raw[5])</code>
+ <code>apControlStateIcon</code><code>Byte.toUnsignedInt(raw[6])</code>
+ <code>remainingInsulinPlusIcon</code><code>raw[7] != 0</code>
+ <code>cgmDisplayData</code><code>raw[8] != 0</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -366,7 +405,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>HomeScreenMirrorResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.28">HomeScreenMirrorResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.42">HomeScreenMirrorResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int,boolean,boolean)">
@@ -375,7 +414,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>HomeScreenMirrorResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.30">HomeScreenMirrorResponse</a>&#8203;(int&nbsp;cgmTrendIcon,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.44">HomeScreenMirrorResponse</a>&#8203;(int&nbsp;cgmTrendIcon,
                                 int&nbsp;cgmAlertIcon,
                                 int&nbsp;statusIcon0,
                                 int&nbsp;statusIcon1,
@@ -402,7 +441,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.44">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.72">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for HomeScreenMirrorResponse:</caption>
+ <tr><td><code>cgmTrendIcon</code></td><td><code>Byte.toUnsignedInt(raw[0])</code></td></tr>
+ <tr><td><code>cgmAlertIcon</code></td><td><code>Byte.toUnsignedInt(raw[1])</code></td></tr>
+ <tr><td><code>statusIcon0</code></td><td><code>Byte.toUnsignedInt(raw[2])</code></td></tr>
+ <tr><td><code>statusIcon1</code></td><td><code>Byte.toUnsignedInt(raw[3])</code></td></tr>
+ <tr><td><code>bolusStatusIcon</code></td><td><code>Byte.toUnsignedInt(raw[4])</code></td></tr>
+ <tr><td><code>basalStatusIcon</code></td><td><code>Byte.toUnsignedInt(raw[5])</code></td></tr>
+ <tr><td><code>apControlStateIcon</code></td><td><code>Byte.toUnsignedInt(raw[6])</code></td></tr>
+ <tr><td><code>remainingInsulinPlusIcon</code></td><td><code>raw[7] != 0</code></td></tr>
+ <tr><td><code>cgmDisplayData</code></td><td><code>raw[8] != 0</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -415,7 +466,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.60">buildCargo</a>&#8203;(int&nbsp;cgmTrendIcon,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.103">buildCargo</a>&#8203;(int&nbsp;cgmTrendIcon,
                                 int&nbsp;cgmAlertIcon,
                                 int&nbsp;statusIcon0,
                                 int&nbsp;statusIcon1,
@@ -424,6 +475,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;apControlStateIcon,
                                 boolean&nbsp;remainingInsulinPlusIcon,
                                 boolean&nbsp;cgmDisplayData)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for HomeScreenMirrorResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>7</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>8</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getCgmTrendIcon()">
@@ -432,7 +496,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCgmTrendIcon</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.CGMTrendIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.CGMTrendIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.73">getCgmTrendIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.CGMTrendIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.CGMTrendIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.116">getCgmTrendIcon</a>()</pre>
 </li>
 </ul>
 <a id="getCgmAlertIcon()">
@@ -441,7 +505,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCgmAlertIcon</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.CGMAlertIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.CGMAlertIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.76">getCgmAlertIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.CGMAlertIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.CGMAlertIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.119">getCgmAlertIcon</a>()</pre>
 </li>
 </ul>
 <a id="getStatusIcon0()">
@@ -450,7 +514,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatusIcon0</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.StatusIcon0.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.StatusIcon0</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.79">getStatusIcon0</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.StatusIcon0.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.StatusIcon0</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.122">getStatusIcon0</a>()</pre>
 </li>
 </ul>
 <a id="getStatusIcon1()">
@@ -459,7 +523,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatusIcon1</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.StatusIcon1.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.StatusIcon1</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.82">getStatusIcon1</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.StatusIcon1.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.StatusIcon1</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.125">getStatusIcon1</a>()</pre>
 </li>
 </ul>
 <a id="getBolusStatusIcon()">
@@ -468,7 +532,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusStatusIcon</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.BolusStatusIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.BolusStatusIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.85">getBolusStatusIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.BolusStatusIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.BolusStatusIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.128">getBolusStatusIcon</a>()</pre>
 </li>
 </ul>
 <a id="getBasalStatusIcon()">
@@ -477,7 +541,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBasalStatusIcon</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.BasalStatusIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.BasalStatusIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.88">getBasalStatusIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.BasalStatusIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.BasalStatusIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.131">getBasalStatusIcon</a>()</pre>
 </li>
 </ul>
 <a id="getApControlStateIcon()">
@@ -486,7 +550,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getApControlStateIcon</h4>
-<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.ApControlStateIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.ApControlStateIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.91">getApControlStateIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="HomeScreenMirrorResponse.ApControlStateIcon.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.ApControlStateIcon</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.134">getApControlStateIcon</a>()</pre>
 </li>
 </ul>
 <a id="getRemainingInsulinPlusIcon()">
@@ -495,7 +559,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getRemainingInsulinPlusIcon</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.94">getRemainingInsulinPlusIcon</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.137">getRemainingInsulinPlusIcon</a>()</pre>
 </li>
 </ul>
 <a id="getCgmDisplayData()">
@@ -504,7 +568,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCgmDisplayData</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.97">getCgmDisplayData</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#line.140">getCgmDisplayData</a>()</pre>
 </li>
 </ul>
 </li>

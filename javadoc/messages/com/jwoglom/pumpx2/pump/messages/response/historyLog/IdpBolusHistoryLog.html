@@ -266,7 +266,17 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for IdpBolusHistoryLog:
+ <code>idp</code><code>raw[10]</code>
+ <code>modification</code><code>raw[11]</code>
+ <code>bolusStatus</code><code>raw[12]</code>
+ <code>insulinDuration</code><code>Bytes.readShort(raw, 14)</code>
+ <code>maxBolusSize</code><code>Bytes.readShort(raw, 16)</code>
+ <code>bolusEntryType</code><code>raw[18]</code>
+ </div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -372,7 +382,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.42">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.53">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for IdpBolusHistoryLog:</caption>
+ <tr><td><code>idp</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>modification</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>bolusStatus</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>insulinDuration</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>maxBolusSize</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>bolusEntryType</code></td><td><code>raw[18]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -385,7 +404,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.55">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.66">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;idp,
                                 int&nbsp;modification,
@@ -401,7 +420,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdp</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.67">getIdp</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.78">getIdp</a>()</pre>
 </li>
 </ul>
 <a id="getModification()">
@@ -410,7 +429,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getModification</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.70">getModification</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.81">getModification</a>()</pre>
 </li>
 </ul>
 <a id="getBolusStatus()">
@@ -419,7 +438,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.73">getBolusStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.84">getBolusStatus</a>()</pre>
 </li>
 </ul>
 <a id="getInsulinDuration()">
@@ -428,7 +447,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getInsulinDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.76">getInsulinDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.87">getInsulinDuration</a>()</pre>
 </li>
 </ul>
 <a id="getMaxBolusSize()">
@@ -437,7 +456,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBolusSize</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.79">getMaxBolusSize</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.90">getMaxBolusSize</a>()</pre>
 </li>
 </ul>
 <a id="getBolusEntryType()">
@@ -446,7 +465,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBolusEntryType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.82">getBolusEntryType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#line.93">getBolusEntryType</a>()</pre>
 </li>
 </ul>
 </li>

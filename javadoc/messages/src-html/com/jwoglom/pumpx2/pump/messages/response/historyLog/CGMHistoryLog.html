@@ -52,69 +52,115 @@
 <span class="sourceLineNo">043</span><a id="line.43">        return 256;</a>
 <span class="sourceLineNo">044</span><a id="line.44">    }</a>
 <span class="sourceLineNo">045</span><a id="line.45"></a>
-<span class="sourceLineNo">046</span><a id="line.46">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">047</span><a id="line.47">        Preconditions.checkArgument(raw.length == 26);</a>
-<span class="sourceLineNo">048</span><a id="line.48">        this.cargo = raw;</a>
-<span class="sourceLineNo">049</span><a id="line.49">        parseBase(raw);</a>
-<span class="sourceLineNo">050</span><a id="line.50">        this.glucoseValueStatus = Bytes.readShort(raw, 10);</a>
-<span class="sourceLineNo">051</span><a id="line.51">        this.cgmDataType = raw[12];</a>
-<span class="sourceLineNo">052</span><a id="line.52">        this.rate = raw[13];</a>
-<span class="sourceLineNo">053</span><a id="line.53">        this.algorithmState = raw[14];</a>
-<span class="sourceLineNo">054</span><a id="line.54">        this.rssi = raw[15];</a>
-<span class="sourceLineNo">055</span><a id="line.55">        this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);</a>
-<span class="sourceLineNo">056</span><a id="line.56">        this.timeStampSeconds = Bytes.readUint32(raw, 18);</a>
-<span class="sourceLineNo">057</span><a id="line.57">        this.egvInfoBitmask = Bytes.readShort(raw, 22);</a>
-<span class="sourceLineNo">058</span><a id="line.58">        this.interval = raw[24];</a>
-<span class="sourceLineNo">059</span><a id="line.59">        </a>
-<span class="sourceLineNo">060</span><a id="line.60">    }</a>
-<span class="sourceLineNo">061</span><a id="line.61"></a>
-<span class="sourceLineNo">062</span><a id="line.62">    </a>
-<span class="sourceLineNo">063</span><a id="line.63">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {</a>
-<span class="sourceLineNo">064</span><a id="line.64">        return Bytes.combine(</a>
-<span class="sourceLineNo">065</span><a id="line.65">            new byte[]{0, 1},</a>
-<span class="sourceLineNo">066</span><a id="line.66">            Bytes.toUint32(pumpTimeSec),</a>
-<span class="sourceLineNo">067</span><a id="line.67">            Bytes.toUint32(sequenceNum),</a>
-<span class="sourceLineNo">068</span><a id="line.68">            Bytes.firstTwoBytesLittleEndian(glucoseValueStatus), </a>
-<span class="sourceLineNo">069</span><a id="line.69">            new byte[]{ (byte) cgmDataType }, </a>
-<span class="sourceLineNo">070</span><a id="line.70">            new byte[]{ (byte) rate }, </a>
-<span class="sourceLineNo">071</span><a id="line.71">            new byte[]{ (byte) algorithmState }, </a>
-<span class="sourceLineNo">072</span><a id="line.72">            new byte[]{ (byte) rssi }, </a>
-<span class="sourceLineNo">073</span><a id="line.73">            Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue), </a>
-<span class="sourceLineNo">074</span><a id="line.74">            Bytes.toUint32(timeStampSeconds), </a>
-<span class="sourceLineNo">075</span><a id="line.75">            Bytes.firstTwoBytesLittleEndian(egvInfoBitmask), </a>
-<span class="sourceLineNo">076</span><a id="line.76">            new byte[]{ (byte) interval },</a>
-<span class="sourceLineNo">077</span><a id="line.77">            new byte[]{ 1 }); // missing param?</a>
-<span class="sourceLineNo">078</span><a id="line.78">    }</a>
-<span class="sourceLineNo">079</span><a id="line.79">    </a>
-<span class="sourceLineNo">080</span><a id="line.80">    public int getGlucoseValueStatus() {</a>
-<span class="sourceLineNo">081</span><a id="line.81">        return glucoseValueStatus;</a>
-<span class="sourceLineNo">082</span><a id="line.82">    }</a>
-<span class="sourceLineNo">083</span><a id="line.83">    public int getCgmDataType() {</a>
-<span class="sourceLineNo">084</span><a id="line.84">        return cgmDataType;</a>
-<span class="sourceLineNo">085</span><a id="line.85">    }</a>
-<span class="sourceLineNo">086</span><a id="line.86">    public int getRate() {</a>
-<span class="sourceLineNo">087</span><a id="line.87">        return rate;</a>
-<span class="sourceLineNo">088</span><a id="line.88">    }</a>
-<span class="sourceLineNo">089</span><a id="line.89">    public int getAlgorithmState() {</a>
-<span class="sourceLineNo">090</span><a id="line.90">        return algorithmState;</a>
-<span class="sourceLineNo">091</span><a id="line.91">    }</a>
-<span class="sourceLineNo">092</span><a id="line.92">    public int getRssi() {</a>
-<span class="sourceLineNo">093</span><a id="line.93">        return rssi;</a>
-<span class="sourceLineNo">094</span><a id="line.94">    }</a>
-<span class="sourceLineNo">095</span><a id="line.95">    public int getCurrentGlucoseDisplayValue() {</a>
-<span class="sourceLineNo">096</span><a id="line.96">        return currentGlucoseDisplayValue;</a>
-<span class="sourceLineNo">097</span><a id="line.97">    }</a>
-<span class="sourceLineNo">098</span><a id="line.98">    public long getTimeStampSeconds() {</a>
-<span class="sourceLineNo">099</span><a id="line.99">        return timeStampSeconds;</a>
-<span class="sourceLineNo">100</span><a id="line.100">    }</a>
-<span class="sourceLineNo">101</span><a id="line.101">    public int getEgvInfoBitmask() {</a>
-<span class="sourceLineNo">102</span><a id="line.102">        return egvInfoBitmask;</a>
-<span class="sourceLineNo">103</span><a id="line.103">    }</a>
-<span class="sourceLineNo">104</span><a id="line.104">    public int getInterval() {</a>
-<span class="sourceLineNo">105</span><a id="line.105">        return interval;</a>
-<span class="sourceLineNo">106</span><a id="line.106">    }</a>
-<span class="sourceLineNo">107</span><a id="line.107">    </a>
-<span class="sourceLineNo">108</span><a id="line.108">}</a>
+<span class="sourceLineNo">046</span><a id="line.46">    /**</a>
+<span class="sourceLineNo">047</span><a id="line.47">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">048</span><a id="line.48">     * &lt;caption&gt;Parsed fields for CGMHistoryLog:&lt;/caption&gt;</a>
+<span class="sourceLineNo">049</span><a id="line.49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseValueStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">050</span><a id="line.50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmDataType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">051</span><a id="line.51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">052</span><a id="line.52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;algorithmState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">053</span><a id="line.53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">054</span><a id="line.54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentGlucoseDisplayValue&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">055</span><a id="line.55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timeStampSeconds&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">056</span><a id="line.56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvInfoBitmask&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;interval&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59">     */</a>
+<span class="sourceLineNo">060</span><a id="line.60">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">061</span><a id="line.61">        Preconditions.checkArgument(raw.length == 26);</a>
+<span class="sourceLineNo">062</span><a id="line.62">        this.cargo = raw;</a>
+<span class="sourceLineNo">063</span><a id="line.63">        parseBase(raw);</a>
+<span class="sourceLineNo">064</span><a id="line.64">        this.glucoseValueStatus = Bytes.readShort(raw, 10);</a>
+<span class="sourceLineNo">065</span><a id="line.65">        this.cgmDataType = raw[12];</a>
+<span class="sourceLineNo">066</span><a id="line.66">        this.rate = raw[13];</a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.algorithmState = raw[14];</a>
+<span class="sourceLineNo">068</span><a id="line.68">        this.rssi = raw[15];</a>
+<span class="sourceLineNo">069</span><a id="line.69">        this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);</a>
+<span class="sourceLineNo">070</span><a id="line.70">        this.timeStampSeconds = Bytes.readUint32(raw, 18);</a>
+<span class="sourceLineNo">071</span><a id="line.71">        this.egvInfoBitmask = Bytes.readShort(raw, 22);</a>
+<span class="sourceLineNo">072</span><a id="line.72">        this.interval = raw[24];</a>
+<span class="sourceLineNo">073</span><a id="line.73">        </a>
+<span class="sourceLineNo">074</span><a id="line.74">    }</a>
+<span class="sourceLineNo">075</span><a id="line.75"></a>
+<span class="sourceLineNo">076</span><a id="line.76">    </a>
+<span class="sourceLineNo">077</span><a id="line.77">    /**</a>
+<span class="sourceLineNo">078</span><a id="line.78">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * &lt;caption&gt;Byte layout for CGMHistoryLog.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">080</span><a id="line.80">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">081</span><a id="line.81">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">082</span><a id="line.82">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">084</span><a id="line.84">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">089</span><a id="line.89">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">090</span><a id="line.90">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(glucoseValueStatus) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">092</span><a id="line.92">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(glucoseValueStatus) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeStampSeconds) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeStampSeconds) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeStampSeconds) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">102</span><a id="line.102">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeStampSeconds) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">103</span><a id="line.103">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(egvInfoBitmask) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">104</span><a id="line.104">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(egvInfoBitmask) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">105</span><a id="line.105">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">106</span><a id="line.106">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">107</span><a id="line.107">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">108</span><a id="line.108">     */</a>
+<span class="sourceLineNo">109</span><a id="line.109">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">        return Bytes.combine(</a>
+<span class="sourceLineNo">111</span><a id="line.111">            new byte[]{0, 1},</a>
+<span class="sourceLineNo">112</span><a id="line.112">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">113</span><a id="line.113">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">114</span><a id="line.114">            Bytes.firstTwoBytesLittleEndian(glucoseValueStatus), </a>
+<span class="sourceLineNo">115</span><a id="line.115">            new byte[]{ (byte) cgmDataType }, </a>
+<span class="sourceLineNo">116</span><a id="line.116">            new byte[]{ (byte) rate }, </a>
+<span class="sourceLineNo">117</span><a id="line.117">            new byte[]{ (byte) algorithmState }, </a>
+<span class="sourceLineNo">118</span><a id="line.118">            new byte[]{ (byte) rssi }, </a>
+<span class="sourceLineNo">119</span><a id="line.119">            Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue), </a>
+<span class="sourceLineNo">120</span><a id="line.120">            Bytes.toUint32(timeStampSeconds), </a>
+<span class="sourceLineNo">121</span><a id="line.121">            Bytes.firstTwoBytesLittleEndian(egvInfoBitmask), </a>
+<span class="sourceLineNo">122</span><a id="line.122">            new byte[]{ (byte) interval },</a>
+<span class="sourceLineNo">123</span><a id="line.123">            new byte[]{ 1 }); // missing param?</a>
+<span class="sourceLineNo">124</span><a id="line.124">    }</a>
+<span class="sourceLineNo">125</span><a id="line.125">    </a>
+<span class="sourceLineNo">126</span><a id="line.126">    public int getGlucoseValueStatus() {</a>
+<span class="sourceLineNo">127</span><a id="line.127">        return glucoseValueStatus;</a>
+<span class="sourceLineNo">128</span><a id="line.128">    }</a>
+<span class="sourceLineNo">129</span><a id="line.129">    public int getCgmDataType() {</a>
+<span class="sourceLineNo">130</span><a id="line.130">        return cgmDataType;</a>
+<span class="sourceLineNo">131</span><a id="line.131">    }</a>
+<span class="sourceLineNo">132</span><a id="line.132">    public int getRate() {</a>
+<span class="sourceLineNo">133</span><a id="line.133">        return rate;</a>
+<span class="sourceLineNo">134</span><a id="line.134">    }</a>
+<span class="sourceLineNo">135</span><a id="line.135">    public int getAlgorithmState() {</a>
+<span class="sourceLineNo">136</span><a id="line.136">        return algorithmState;</a>
+<span class="sourceLineNo">137</span><a id="line.137">    }</a>
+<span class="sourceLineNo">138</span><a id="line.138">    public int getRssi() {</a>
+<span class="sourceLineNo">139</span><a id="line.139">        return rssi;</a>
+<span class="sourceLineNo">140</span><a id="line.140">    }</a>
+<span class="sourceLineNo">141</span><a id="line.141">    public int getCurrentGlucoseDisplayValue() {</a>
+<span class="sourceLineNo">142</span><a id="line.142">        return currentGlucoseDisplayValue;</a>
+<span class="sourceLineNo">143</span><a id="line.143">    }</a>
+<span class="sourceLineNo">144</span><a id="line.144">    public long getTimeStampSeconds() {</a>
+<span class="sourceLineNo">145</span><a id="line.145">        return timeStampSeconds;</a>
+<span class="sourceLineNo">146</span><a id="line.146">    }</a>
+<span class="sourceLineNo">147</span><a id="line.147">    public int getEgvInfoBitmask() {</a>
+<span class="sourceLineNo">148</span><a id="line.148">        return egvInfoBitmask;</a>
+<span class="sourceLineNo">149</span><a id="line.149">    }</a>
+<span class="sourceLineNo">150</span><a id="line.150">    public int getInterval() {</a>
+<span class="sourceLineNo">151</span><a id="line.151">        return interval;</a>
+<span class="sourceLineNo">152</span><a id="line.152">    }</a>
+<span class="sourceLineNo">153</span><a id="line.153">    </a>
+<span class="sourceLineNo">154</span><a id="line.154">}</a>
 
 
 

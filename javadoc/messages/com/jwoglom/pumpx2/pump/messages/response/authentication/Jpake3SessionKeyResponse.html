@@ -141,8 +141,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.15">Jpake3SessionKeyResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.31">Jpake3SessionKeyResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/authentication/Jpake3SessionKeyRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>Jpake3SessionKeyRequest</code></a>, opCode 39, size 18
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>39</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>18</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V3_2"><code>KnownApiVersion.API_V3_2</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/authentication/Jpake3SessionKeyRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>Jpake3SessionKeyRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -229,7 +243,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,byte%5B%5D,byte%5B%5D)">buildCargo</a></span>&#8203;(int&nbsp;appInstanceId,
           byte[]&nbsp;nonce,
           byte[]&nbsp;reserved)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for Jpake3SessionKeyResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(appInstanceId) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(appInstanceId) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -249,7 +270,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for Jpake3SessionKeyResponse:
+ <code>appInstanceId</code><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code>
+ <code>deviceKeyNonce</code><code>Arrays.copyOfRange(raw, 2, 10)</code>
+ <code>deviceKeyReserved</code><code>Arrays.copyOfRange(raw, 10, 18)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -288,7 +316,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RESERVED</h4>
-<pre>public static&nbsp;byte[] <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.28">RESERVED</a></pre>
+<pre>public static&nbsp;byte[] <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.44">RESERVED</a></pre>
 </li>
 </ul>
 </li>
@@ -307,7 +335,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake3SessionKeyResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.30">Jpake3SessionKeyResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.46">Jpake3SessionKeyResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -316,7 +344,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake3SessionKeyResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.32">Jpake3SessionKeyResponse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.48">Jpake3SessionKeyResponse</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,byte[],byte[])">
@@ -325,7 +353,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Jpake3SessionKeyResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.36">Jpake3SessionKeyResponse</a>&#8203;(int&nbsp;appInstanceId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.52">Jpake3SessionKeyResponse</a>&#8203;(int&nbsp;appInstanceId,
                                 byte[]&nbsp;nonce,
                                 byte[]&nbsp;reserved)</pre>
 </li>
@@ -346,7 +374,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.43">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.67">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for Jpake3SessionKeyResponse:</caption>
+ <tr><td><code>appInstanceId</code></td><td><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code></td></tr>
+ <tr><td><code>deviceKeyNonce</code></td><td><code>Arrays.copyOfRange(raw, 2, 10)</code></td></tr>
+ <tr><td><code>deviceKeyReserved</code></td><td><code>Arrays.copyOfRange(raw, 10, 18)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -359,9 +393,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.51">buildCargo</a>&#8203;(int&nbsp;appInstanceId,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.83">buildCargo</a>&#8203;(int&nbsp;appInstanceId,
                                 byte[]&nbsp;nonce,
                                 byte[]&nbsp;reserved)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for Jpake3SessionKeyResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(appInstanceId) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(appInstanceId) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getAppInstanceId()">
@@ -370,7 +410,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppInstanceId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.59">getAppInstanceId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.91">getAppInstanceId</a>()</pre>
 </li>
 </ul>
 <a id="getDeviceKeyNonce()">
@@ -379,7 +419,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getDeviceKeyNonce</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.63">getDeviceKeyNonce</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.95">getDeviceKeyNonce</a>()</pre>
 </li>
 </ul>
 <a id="getDeviceKeyReserved()">
@@ -388,7 +428,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getDeviceKeyReserved</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.67">getDeviceKeyReserved</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#line.99">getDeviceKeyReserved</a>()</pre>
 </li>
 </ul>
 </li>

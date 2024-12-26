@@ -258,7 +258,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CorrectionDeclinedHistoryLog:
+ <code>bg</code><code>Bytes.readShort(raw, 10)</code>
+ <code>bolusId</code><code>Bytes.readShort(raw, 12)</code>
+ <code>iob</code><code>Bytes.readFloat(raw, 14)</code>
+ <code>targetBg</code><code>Bytes.readShort(raw, 18)</code>
+ <code>isf</code><code>Bytes.readShort(raw, 20)</code>
+ </div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -362,7 +371,15 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.42">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.52">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CorrectionDeclinedHistoryLog:</caption>
+ <tr><td><code>bg</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
+ <tr><td><code>iob</code></td><td><code>Bytes.readFloat(raw, 14)</code></td></tr>
+ <tr><td><code>targetBg</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>isf</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -375,7 +392,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.54">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.64">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;bg,
                                 int&nbsp;bolusId,
@@ -390,7 +407,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBg</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.65">getBg</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.75">getBg</a>()</pre>
 </li>
 </ul>
 <a id="getBolusId()">
@@ -399,7 +416,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.68">getBolusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.78">getBolusId</a>()</pre>
 </li>
 </ul>
 <a id="getIob()">
@@ -408,7 +425,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIob</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.71">getIob</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.81">getIob</a>()</pre>
 </li>
 </ul>
 <a id="getTargetBg()">
@@ -417,7 +434,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getTargetBg</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.74">getTargetBg</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.84">getTargetBg</a>()</pre>
 </li>
 </ul>
 <a id="getIsf()">
@@ -426,7 +443,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getIsf</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.77">getIsf</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#line.87">getIsf</a>()</pre>
 </li>
 </ul>
 </li>

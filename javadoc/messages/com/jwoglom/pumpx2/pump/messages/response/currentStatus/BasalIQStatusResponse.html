@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.10">BasalIQStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.24">BasalIQStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/BasalIQStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BasalIQStatusRequest</code></a>, opCode 113, size 2
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>113</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>2</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/BasalIQStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BasalIQStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -233,7 +245,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,boolean)">buildCargo</a></span>&#8203;(int&nbsp;basalIQStatusState,
           boolean&nbsp;deliveringTherapy)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BasalIQStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="BasalIQStatusResponse.BasalIQStatusState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse.BasalIQStatusState</a></code></td>
@@ -253,7 +272,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BasalIQStatusResponse:
+ <code>basalIQStatusState</code><code>raw[0]</code>
+ <code>deliveringTherapy</code><code>raw[1] != 0</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -292,7 +317,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>BasalIQStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.21">BasalIQStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.35">BasalIQStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,boolean)">
@@ -301,7 +326,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>BasalIQStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.23">BasalIQStatusResponse</a>&#8203;(int&nbsp;basalIQStatusState,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.37">BasalIQStatusResponse</a>&#8203;(int&nbsp;basalIQStatusState,
                              boolean&nbsp;deliveringTherapy)</pre>
 </li>
 </ul>
@@ -321,7 +346,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.30">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.51">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BasalIQStatusResponse:</caption>
+ <tr><td><code>basalIQStatusState</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>deliveringTherapy</code></td><td><code>raw[1] != 0</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -334,8 +364,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.39">buildCargo</a>&#8203;(int&nbsp;basalIQStatusState,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.68">buildCargo</a>&#8203;(int&nbsp;basalIQStatusState,
                                 boolean&nbsp;deliveringTherapy)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BasalIQStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBasalIQStatusStateId()">
@@ -344,7 +380,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBasalIQStatusStateId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.45">getBasalIQStatusStateId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.74">getBasalIQStatusStateId</a>()</pre>
 </li>
 </ul>
 <a id="getBasalIQStatusState()">
@@ -353,7 +389,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBasalIQStatusState</h4>
-<pre class="methodSignature">public&nbsp;<a href="BasalIQStatusResponse.BasalIQStatusState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse.BasalIQStatusState</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.48">getBasalIQStatusState</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="BasalIQStatusResponse.BasalIQStatusState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse.BasalIQStatusState</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.77">getBasalIQStatusState</a>()</pre>
 </li>
 </ul>
 <a id="getDeliveringTherapy()">
@@ -362,7 +398,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getDeliveringTherapy</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.51">getDeliveringTherapy</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#line.80">getDeliveringTherapy</a>()</pre>
 </li>
 </ul>
 </li>

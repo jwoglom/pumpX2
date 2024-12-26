@@ -141,13 +141,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.16">IDPSettingsResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.38">IDPSettingsResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">Contains information about a given insulin delivery profile.
  Some information is specific to a time segment on the profile.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>IDPSegmentResponse</code></a></dd>
+<dd><a href="IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>
+
+ Response message for , opCode 65, size 23
+
+ 
+
+ 
+ 
+ Message properties:
+ opCode65
+ size23
+ type
+ request
+ </code></a></dd>
 </dl>
 </li>
 </ul>
@@ -224,7 +237,35 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;insulinDuration,
           int&nbsp;maxBolus,
           boolean&nbsp;carbEntry)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for IDPSettingsResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>writeString(name, 16) [byte 0]</code>
+ 2<code>writeString(name, 16) [byte 1]</code>
+ 3<code>writeString(name, 16) [byte 2]</code>
+ 4<code>writeString(name, 16) [byte 3]</code>
+ 5<code>writeString(name, 16) [byte 4]</code>
+ 6<code>writeString(name, 16) [byte 5]</code>
+ 7<code>writeString(name, 16) [byte 6]</code>
+ 8<code>writeString(name, 16) [byte 7]</code>
+ 9<code>writeString(name, 16) [byte 8]</code>
+ 10<code>writeString(name, 16) [byte 9]</code>
+ 11<code>writeString(name, 16) [byte 10]</code>
+ 12<code>writeString(name, 16) [byte 11]</code>
+ 13<code>writeString(name, 16) [byte 12]</code>
+ 14<code>writeString(name, 16) [byte 13]</code>
+ 15<code>writeString(name, 16) [byte 14]</code>
+ 16<code>writeString(name, 16) [byte 15]</code>
+ 17<code>new byte[]{...} [element 0]</code>
+ 18<code>firstTwoBytesLittleEndian(insulinDuration) [byte 0]</code>
+ 19<code>firstTwoBytesLittleEndian(insulinDuration) [byte 1]</code>
+ 20<code>firstTwoBytesLittleEndian(maxBolus) [byte 0]</code>
+ 21<code>firstTwoBytesLittleEndian(maxBolus) [byte 1]</code>
+ 22<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -259,7 +300,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for IDPSettingsResponse:
+ <code>idpId</code><code>raw[0]</code>
+ <code>name</code><code>Bytes.readString(raw, 1, 16)</code>
+ <code>numberOfProfileSegments</code><code>raw[17]</code>
+ <code>insulinDuration</code><code>Bytes.readShort(raw, 18)</code>
+ <code>maxBolus</code><code>Bytes.readShort(raw, 20)</code>
+ <code>carbEntry</code><code>raw[22] != 0</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -298,7 +349,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>IDPSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.31">IDPSettingsResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.53">IDPSettingsResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,java.lang.String,int,int,int,boolean)">
@@ -307,7 +358,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>IDPSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.33">IDPSettingsResponse</a>&#8203;(int&nbsp;idpId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.55">IDPSettingsResponse</a>&#8203;(int&nbsp;idpId,
                            java.lang.String&nbsp;name,
                            int&nbsp;numberOfProfileSegments,
                            int&nbsp;insulinDuration,
@@ -331,7 +382,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.44">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.77">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for IDPSettingsResponse:</caption>
+ <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>name</code></td><td><code>Bytes.readString(raw, 1, 16)</code></td></tr>
+ <tr><td><code>numberOfProfileSegments</code></td><td><code>raw[17]</code></td></tr>
+ <tr><td><code>insulinDuration</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>maxBolus</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ <tr><td><code>carbEntry</code></td><td><code>raw[22] != 0</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -344,12 +404,39 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.57">buildCargo</a>&#8203;(int&nbsp;idpId,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.119">buildCargo</a>&#8203;(int&nbsp;idpId,
                                 java.lang.String&nbsp;name,
                                 int&nbsp;numberOfProfileSegments,
                                 int&nbsp;insulinDuration,
                                 int&nbsp;maxBolus,
                                 boolean&nbsp;carbEntry)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for IDPSettingsResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>writeString(name, 16) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>writeString(name, 16) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>writeString(name, 16) [byte 2]</code></td></tr>
+ <tr><td>4</td><td><code>writeString(name, 16) [byte 3]</code></td></tr>
+ <tr><td>5</td><td><code>writeString(name, 16) [byte 4]</code></td></tr>
+ <tr><td>6</td><td><code>writeString(name, 16) [byte 5]</code></td></tr>
+ <tr><td>7</td><td><code>writeString(name, 16) [byte 6]</code></td></tr>
+ <tr><td>8</td><td><code>writeString(name, 16) [byte 7]</code></td></tr>
+ <tr><td>9</td><td><code>writeString(name, 16) [byte 8]</code></td></tr>
+ <tr><td>10</td><td><code>writeString(name, 16) [byte 9]</code></td></tr>
+ <tr><td>11</td><td><code>writeString(name, 16) [byte 10]</code></td></tr>
+ <tr><td>12</td><td><code>writeString(name, 16) [byte 11]</code></td></tr>
+ <tr><td>13</td><td><code>writeString(name, 16) [byte 12]</code></td></tr>
+ <tr><td>14</td><td><code>writeString(name, 16) [byte 13]</code></td></tr>
+ <tr><td>15</td><td><code>writeString(name, 16) [byte 14]</code></td></tr>
+ <tr><td>16</td><td><code>writeString(name, 16) [byte 15]</code></td></tr>
+ <tr><td>17</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>18</td><td><code>firstTwoBytesLittleEndian(insulinDuration) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>firstTwoBytesLittleEndian(insulinDuration) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>firstTwoBytesLittleEndian(maxBolus) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>firstTwoBytesLittleEndian(maxBolus) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIdpId()">
@@ -358,7 +445,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.67">getIdpId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.129">getIdpId</a>()</pre>
 </li>
 </ul>
 <a id="getName()">
@@ -367,7 +454,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.70">getName</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.132">getName</a>()</pre>
 </li>
 </ul>
 <a id="getNumberOfProfileSegments()">
@@ -376,7 +463,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getNumberOfProfileSegments</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.73">getNumberOfProfileSegments</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.135">getNumberOfProfileSegments</a>()</pre>
 </li>
 </ul>
 <a id="getInsulinDuration()">
@@ -385,7 +472,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getInsulinDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.76">getInsulinDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.138">getInsulinDuration</a>()</pre>
 </li>
 </ul>
 <a id="getMaxBolus()">
@@ -394,7 +481,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBolus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.79">getMaxBolus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.141">getMaxBolus</a>()</pre>
 </li>
 </ul>
 <a id="getCarbEntry()">
@@ -403,7 +490,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCarbEntry</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.82">getCarbEntry</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#line.144">getCarbEntry</a>()</pre>
 </li>
 </ul>
 </li>

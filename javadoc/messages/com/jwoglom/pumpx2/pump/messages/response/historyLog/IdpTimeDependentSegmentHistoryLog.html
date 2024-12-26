@@ -290,7 +290,20 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for IdpTimeDependentSegmentHistoryLog:
+ <code>idp</code><code>raw[10]</code>
+ <code>status</code><code>raw[11]</code>
+ <code>segmentIndex</code><code>raw[12]</code>
+ <code>modificationType</code><code>raw[13]</code>
+ <code>startTime</code><code>Bytes.readShort(raw, 14)</code>
+ <code>basalRate</code><code>Bytes.readShort(raw, 16)</code>
+ <code>isf</code><code>Bytes.readShort(raw, 18)</code>
+ <code>targetBg</code><code>Bytes.readUint32(raw, 20)</code>
+ <code>carbRatio</code><code>raw[24]</code>
+ </div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -402,7 +415,19 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.50">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.64">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for IdpTimeDependentSegmentHistoryLog:</caption>
+ <tr><td><code>idp</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>segmentIndex</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>modificationType</code></td><td><code>raw[13]</code></td></tr>
+ <tr><td><code>startTime</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>basalRate</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>isf</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>targetBg</code></td><td><code>Bytes.readUint32(raw, 20)</code></td></tr>
+ <tr><td><code>carbRatio</code></td><td><code>raw[24]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -415,7 +440,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.66">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.80">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;idp,
                                 int&nbsp;status,
@@ -434,7 +459,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdp</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.81">getIdp</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.95">getIdp</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -443,7 +468,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.84">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.98">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getSegmentIndex()">
@@ -452,7 +477,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getSegmentIndex</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.87">getSegmentIndex</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.101">getSegmentIndex</a>()</pre>
 </li>
 </ul>
 <a id="getModificationType()">
@@ -461,7 +486,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getModificationType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.90">getModificationType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.104">getModificationType</a>()</pre>
 </li>
 </ul>
 <a id="getStartTime()">
@@ -470,7 +495,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStartTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.93">getStartTime</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.107">getStartTime</a>()</pre>
 </li>
 </ul>
 <a id="getBasalRate()">
@@ -479,7 +504,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBasalRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.96">getBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.110">getBasalRate</a>()</pre>
 </li>
 </ul>
 <a id="getIsf()">
@@ -488,7 +513,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsf</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.99">getIsf</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.113">getIsf</a>()</pre>
 </li>
 </ul>
 <a id="getTargetBg()">
@@ -497,7 +522,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getTargetBg</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.102">getTargetBg</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.116">getTargetBg</a>()</pre>
 </li>
 </ul>
 <a id="getCarbRatio()">
@@ -506,7 +531,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCarbRatio</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.105">getCarbRatio</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpTimeDependentSegmentHistoryLog.html#line.119">getCarbRatio</a>()</pre>
 </li>
 </ul>
 </li>

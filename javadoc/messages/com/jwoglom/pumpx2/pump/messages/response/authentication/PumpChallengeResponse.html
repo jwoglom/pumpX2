@@ -146,8 +146,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.13">PumpChallengeResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.28">PumpChallengeResponse</a>
 extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractPumpChallengeResponse</a></pre>
+<div class="block">Response message for <a href="../../request/authentication/PumpChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>PumpChallengeRequest</code></a>, opCode 19, size 3
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>19</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>3</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/authentication/PumpChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>PumpChallengeRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -215,7 +228,15 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,boolean)">buildCargo</a></span>&#8203;(int&nbsp;appInstanceId,
           boolean&nbsp;success)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpChallengeResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(appInstanceId) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(appInstanceId) [byte 1]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -274,7 +295,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpChallengeResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.25">PumpChallengeResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.40">PumpChallengeResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,boolean)">
@@ -283,7 +304,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpChallengeResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.27">PumpChallengeResponse</a>&#8203;(int&nbsp;appInstanceId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.42">PumpChallengeResponse</a>&#8203;(int&nbsp;appInstanceId,
                              boolean&nbsp;success)</pre>
 </li>
 </ul>
@@ -303,7 +324,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.31">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.46">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractPumpChallengeResponse.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractPumpChallengeResponse</a></code></dd>
@@ -316,8 +337,15 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.38">buildCargo</a>&#8203;(int&nbsp;appInstanceId,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.62">buildCargo</a>&#8203;(int&nbsp;appInstanceId,
                                 boolean&nbsp;success)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpChallengeResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(appInstanceId) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(appInstanceId) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getAppInstanceId()">
@@ -326,7 +354,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppInstanceId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.42">getAppInstanceId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.66">getAppInstanceId</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractPumpChallengeResponse.html#getAppInstanceId()">getAppInstanceId</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractPumpChallengeResponse</a></code></dd>
@@ -339,7 +367,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getSuccess</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.46">getSuccess</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.70">getSuccess</a>()</pre>
 </li>
 </ul>
 <a id="hasSuccess()">
@@ -348,7 +376,7 @@ extends <a href="AbstractPumpChallengeResponse.html" title="class in com.jwoglom
 <ul class="blockListLast">
 <li class="blockList">
 <h4>hasSuccess</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.49">hasSuccess</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/PumpChallengeResponse.html#line.73">hasSuccess</a>()</pre>
 </li>
 </ul>
 </li>

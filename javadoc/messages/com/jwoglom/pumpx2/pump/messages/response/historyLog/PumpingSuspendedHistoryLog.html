@@ -239,7 +239,13 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpingSuspendedHistoryLog:
+ <code>insulinAmount</code><code>Bytes.readShort(raw, 14)</code>
+ <code>reasonId</code><code>raw[16]</code>
+ </div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -337,7 +343,12 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.34">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.41">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpingSuspendedHistoryLog:</caption>
+ <tr><td><code>insulinAmount</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>reasonId</code></td><td><code>raw[16]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -350,7 +361,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.43">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.50">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;insulinAmount,
                                 int&nbsp;reason)</pre>
@@ -362,7 +373,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getInsulinAmount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.56">getInsulinAmount</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.63">getInsulinAmount</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>insulin amount in milliunits at the time pumping was suspended (I think this matches
@@ -376,7 +387,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getReasonId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.59">getReasonId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.66">getReasonId</a>()</pre>
 </li>
 </ul>
 <a id="getReason()">
@@ -385,7 +396,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getReason</h4>
-<pre class="methodSignature">public&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.PumpingSuspendedHistoryLog.SuspendReason&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.62">getReason</a>()</pre>
+<pre class="methodSignature">public&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.PumpingSuspendedHistoryLog.SuspendReason&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line.69">getReason</a>()</pre>
 </li>
 </ul>
 </li>

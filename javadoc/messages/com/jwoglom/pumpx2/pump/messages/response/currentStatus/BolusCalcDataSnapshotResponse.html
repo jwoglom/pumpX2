@@ -141,8 +141,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.13">BolusCalcDataSnapshotResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.28">BolusCalcDataSnapshotResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/BolusCalcDataSnapshotRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BolusCalcDataSnapshotRequest</code></a>, opCode 115, size 46
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>115</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>46</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/BolusCalcDataSnapshotRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BolusCalcDataSnapshotRequest</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V2_5"><code>KnownApiVersion.API_V2_5</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -252,7 +265,39 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           boolean&nbsp;isAutopopAllowed,
           byte[]&nbsp;unknown11bytes,
           byte[]&nbsp;unknown8bytes)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BolusCalcDataSnapshotResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>firstTwoBytesLittleEndian(correctionFactor) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(correctionFactor) [byte 1]</code>
+ 3<code>toUint32(iob) [byte 0]</code>
+ 4<code>toUint32(iob) [byte 1]</code>
+ 5<code>toUint32(iob) [byte 2]</code>
+ 6<code>toUint32(iob) [byte 3]</code>
+ 7<code>firstTwoBytesLittleEndian(cartridgeRemainingInsulin) [byte 0]</code>
+ 8<code>firstTwoBytesLittleEndian(cartridgeRemainingInsulin) [byte 1]</code>
+ 9<code>firstTwoBytesLittleEndian(targetBg) [byte 0]</code>
+ 10<code>firstTwoBytesLittleEndian(targetBg) [byte 1]</code>
+ 11<code>firstTwoBytesLittleEndian(isf) [byte 0]</code>
+ 12<code>firstTwoBytesLittleEndian(isf) [byte 1]</code>
+ 13<code>new byte[]{...} [element 0]</code>
+ 14<code>toUint32(carbRatio) [byte 0]</code>
+ 15<code>toUint32(carbRatio) [byte 1]</code>
+ 16<code>toUint32(carbRatio) [byte 2]</code>
+ 17<code>toUint32(carbRatio) [byte 3]</code>
+ 18<code>firstTwoBytesLittleEndian(maxBolusAmount) [byte 0]</code>
+ 19<code>firstTwoBytesLittleEndian(maxBolusAmount) [byte 1]</code>
+ 20<code>toUint32(maxBolusHourlyTotal) [byte 0]</code>
+ 21<code>toUint32(maxBolusHourlyTotal) [byte 1]</code>
+ 22<code>toUint32(maxBolusHourlyTotal) [byte 2]</code>
+ 23<code>toUint32(maxBolusHourlyTotal) [byte 3]</code>
+ 24<code>new byte[]{...} [element 0]</code>
+ 25<code>new byte[]{...} [element 0]</code>
+ 26<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -322,7 +367,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BolusCalcDataSnapshotResponse:
+ <code>isUnacked</code><code>raw[0] != 0</code>
+ <code>correctionFactor</code><code>Bytes.readShort(raw, 1)</code>
+ <code>iob</code><code>Bytes.readUint32(raw, 3)</code>
+ <code>cartridgeRemainingInsulin</code><code>Bytes.readShort(raw, 7)</code>
+ <code>targetBg</code><code>Bytes.readShort(raw, 9)</code>
+ <code>isf</code><code>Bytes.readShort(raw, 11)</code>
+ <code>carbEntryEnabled</code><code>raw[13] != 0</code>
+ <code>carbRatio</code><code>Bytes.readUint32(raw, 14)</code>
+ <code>maxBolusAmount</code><code>Bytes.readShort(raw, 18)</code>
+ <code>maxBolusHourlyTotal</code><code>Bytes.readUint32(raw, 20)</code>
+ <code>maxBolusEventsExceeded</code><code>raw[24] != 0</code>
+ <code>maxIobEventsExceeded</code><code>raw[25] != 0</code>
+ <code>isAutopopAllowed</code><code>raw[37] != 0</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -361,7 +423,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>BolusCalcDataSnapshotResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.36">BolusCalcDataSnapshotResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.51">BolusCalcDataSnapshotResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(boolean,int,long,int,int,int,boolean,long,int,long,boolean,boolean,boolean)">
@@ -370,7 +432,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>BolusCalcDataSnapshotResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.38">BolusCalcDataSnapshotResponse</a>&#8203;(boolean&nbsp;isUnacked,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.53">BolusCalcDataSnapshotResponse</a>&#8203;(boolean&nbsp;isUnacked,
                                      int&nbsp;correctionFactor,
                                      long&nbsp;iob,
                                      int&nbsp;cartridgeRemainingInsulin,
@@ -391,7 +453,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>BolusCalcDataSnapshotResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.42">BolusCalcDataSnapshotResponse</a>&#8203;(boolean&nbsp;isUnacked,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.57">BolusCalcDataSnapshotResponse</a>&#8203;(boolean&nbsp;isUnacked,
                                      int&nbsp;correctionFactor,
                                      long&nbsp;iob,
                                      int&nbsp;cartridgeRemainingInsulin,
@@ -424,7 +486,23 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.60">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.93">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BolusCalcDataSnapshotResponse:</caption>
+ <tr><td><code>isUnacked</code></td><td><code>raw[0] != 0</code></td></tr>
+ <tr><td><code>correctionFactor</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>iob</code></td><td><code>Bytes.readUint32(raw, 3)</code></td></tr>
+ <tr><td><code>cartridgeRemainingInsulin</code></td><td><code>Bytes.readShort(raw, 7)</code></td></tr>
+ <tr><td><code>targetBg</code></td><td><code>Bytes.readShort(raw, 9)</code></td></tr>
+ <tr><td><code>isf</code></td><td><code>Bytes.readShort(raw, 11)</code></td></tr>
+ <tr><td><code>carbEntryEnabled</code></td><td><code>raw[13] != 0</code></td></tr>
+ <tr><td><code>carbRatio</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
+ <tr><td><code>maxBolusAmount</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>maxBolusHourlyTotal</code></td><td><code>Bytes.readUint32(raw, 20)</code></td></tr>
+ <tr><td><code>maxBolusEventsExceeded</code></td><td><code>raw[24] != 0</code></td></tr>
+ <tr><td><code>maxIobEventsExceeded</code></td><td><code>raw[25] != 0</code></td></tr>
+ <tr><td><code>isAutopopAllowed</code></td><td><code>raw[37] != 0</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -437,7 +515,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.80">buildCargo</a>&#8203;(boolean&nbsp;isUnacked,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.146">buildCargo</a>&#8203;(boolean&nbsp;isUnacked,
                                 int&nbsp;correctionFactor,
                                 long&nbsp;iob,
                                 int&nbsp;cartridgeRemainingInsulin,
@@ -452,6 +530,37 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 boolean&nbsp;isAutopopAllowed,
                                 byte[]&nbsp;unknown11bytes,
                                 byte[]&nbsp;unknown8bytes)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BolusCalcDataSnapshotResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(correctionFactor) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(correctionFactor) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(iob) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(iob) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(iob) [byte 2]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(iob) [byte 3]</code></td></tr>
+ <tr><td>7</td><td><code>firstTwoBytesLittleEndian(cartridgeRemainingInsulin) [byte 0]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(cartridgeRemainingInsulin) [byte 1]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(targetBg) [byte 0]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(targetBg) [byte 1]</code></td></tr>
+ <tr><td>11</td><td><code>firstTwoBytesLittleEndian(isf) [byte 0]</code></td></tr>
+ <tr><td>12</td><td><code>firstTwoBytesLittleEndian(isf) [byte 1]</code></td></tr>
+ <tr><td>13</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>14</td><td><code>toUint32(carbRatio) [byte 0]</code></td></tr>
+ <tr><td>15</td><td><code>toUint32(carbRatio) [byte 1]</code></td></tr>
+ <tr><td>16</td><td><code>toUint32(carbRatio) [byte 2]</code></td></tr>
+ <tr><td>17</td><td><code>toUint32(carbRatio) [byte 3]</code></td></tr>
+ <tr><td>18</td><td><code>firstTwoBytesLittleEndian(maxBolusAmount) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>firstTwoBytesLittleEndian(maxBolusAmount) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(maxBolusHourlyTotal) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>toUint32(maxBolusHourlyTotal) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>toUint32(maxBolusHourlyTotal) [byte 2]</code></td></tr>
+ <tr><td>23</td><td><code>toUint32(maxBolusHourlyTotal) [byte 3]</code></td></tr>
+ <tr><td>24</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>25</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>26</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIsUnacked()">
@@ -460,7 +569,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsUnacked</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.102">getIsUnacked</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.168">getIsUnacked</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the data could not be retrieved successfully or is blank</dd>
@@ -473,7 +582,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCorrectionFactor</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.109">getCorrectionFactor</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.175">getCorrectionFactor</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current BG from the CGM if present in mg/dL</dd>
@@ -486,7 +595,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIob</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.116">getIob</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.182">getIob</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the insulin on board in 1000-units</dd>
@@ -499,7 +608,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCartridgeRemainingInsulin</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.123">getCartridgeRemainingInsulin</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.189">getCartridgeRemainingInsulin</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the units of insulin remaining in the cartridge</dd>
@@ -512,7 +621,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getTargetBg</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.130">getTargetBg</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.196">getTargetBg</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the target BG from the pump profile</dd>
@@ -525,7 +634,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsf</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.137">getIsf</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.203">getIsf</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the insulin sensitivity factor, i.e. 1 unit : __ mg/dL correction factor</dd>
@@ -538,7 +647,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCarbEntryEnabled</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.144">getCarbEntryEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.210">getCarbEntryEnabled</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>if carb entry is enabled in the pump profile settings</dd>
@@ -551,7 +660,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCarbRatio</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.152">getCarbRatio</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.218">getCarbRatio</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the ratio from 1 milliunit : __ grams, or 1 unit : (__ * 1000) grams. If the carb
@@ -565,7 +674,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBolusAmount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.159">getMaxBolusAmount</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.225">getMaxBolusAmount</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the maximum amount allowed in one bolus insulin delivery, in milliunits</dd>
@@ -578,7 +687,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBolusHourlyTotal</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.166">getMaxBolusHourlyTotal</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.232">getMaxBolusHourlyTotal</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the maximum amount allowed for boluses in a single hour, OR 0 if not configured</dd>
@@ -591,7 +700,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxBolusEventsExceeded</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.173">getMaxBolusEventsExceeded</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.239">getMaxBolusEventsExceeded</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the maximum bolus has been exceeded for the interval</dd>
@@ -604,7 +713,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMaxIobEventsExceeded</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.180">getMaxIobEventsExceeded</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.246">getMaxIobEventsExceeded</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the maximum iob has been reached for the interval (i.e. max hourly bolus)</dd>
@@ -617,7 +726,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getIsAutopopAllowed</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.188">getIsAutopopAllowed</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#line.254">getIsAutopopAllowed</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if the <a href="#getCorrectionFactor()"><code>getCorrectionFactor()</code></a> amount can be used to fill in the current

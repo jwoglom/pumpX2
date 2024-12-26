@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.10">PumpVersionResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.24">PumpVersionResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/PumpVersionRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpVersionRequest</code></a>, opCode 85, size 48
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>85</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>48</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/PumpVersionRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpVersionRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -226,7 +238,60 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           long&nbsp;pcbaSN,
           java.lang.String&nbsp;pcbaRev,
           long&nbsp;modelNum)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpVersionResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(armSwVer) [byte 0]</code>
+ 1<code>toUint32(armSwVer) [byte 1]</code>
+ 2<code>toUint32(armSwVer) [byte 2]</code>
+ 3<code>toUint32(armSwVer) [byte 3]</code>
+ 4<code>toUint32(mspSwVer) [byte 0]</code>
+ 5<code>toUint32(mspSwVer) [byte 1]</code>
+ 6<code>toUint32(mspSwVer) [byte 2]</code>
+ 7<code>toUint32(mspSwVer) [byte 3]</code>
+ 8<code>toUint32(configABits) [byte 0]</code>
+ 9<code>toUint32(configABits) [byte 1]</code>
+ 10<code>toUint32(configABits) [byte 2]</code>
+ 11<code>toUint32(configABits) [byte 3]</code>
+ 12<code>toUint32(configBBits) [byte 0]</code>
+ 13<code>toUint32(configBBits) [byte 1]</code>
+ 14<code>toUint32(configBBits) [byte 2]</code>
+ 15<code>toUint32(configBBits) [byte 3]</code>
+ 16<code>toUint32(serialNum) [byte 0]</code>
+ 17<code>toUint32(serialNum) [byte 1]</code>
+ 18<code>toUint32(serialNum) [byte 2]</code>
+ 19<code>toUint32(serialNum) [byte 3]</code>
+ 20<code>toUint32(partNum) [byte 0]</code>
+ 21<code>toUint32(partNum) [byte 1]</code>
+ 22<code>toUint32(partNum) [byte 2]</code>
+ 23<code>toUint32(partNum) [byte 3]</code>
+ 24<code>writeString(pumpRev, 8) [byte 0]</code>
+ 25<code>writeString(pumpRev, 8) [byte 1]</code>
+ 26<code>writeString(pumpRev, 8) [byte 2]</code>
+ 27<code>writeString(pumpRev, 8) [byte 3]</code>
+ 28<code>writeString(pumpRev, 8) [byte 4]</code>
+ 29<code>writeString(pumpRev, 8) [byte 5]</code>
+ 30<code>writeString(pumpRev, 8) [byte 6]</code>
+ 31<code>writeString(pumpRev, 8) [byte 7]</code>
+ 32<code>toUint32(pcbaSN) [byte 0]</code>
+ 33<code>toUint32(pcbaSN) [byte 1]</code>
+ 34<code>toUint32(pcbaSN) [byte 2]</code>
+ 35<code>toUint32(pcbaSN) [byte 3]</code>
+ 36<code>writeString(pcbaRev, 8) [byte 0]</code>
+ 37<code>writeString(pcbaRev, 8) [byte 1]</code>
+ 38<code>writeString(pcbaRev, 8) [byte 2]</code>
+ 39<code>writeString(pcbaRev, 8) [byte 3]</code>
+ 40<code>writeString(pcbaRev, 8) [byte 4]</code>
+ 41<code>writeString(pcbaRev, 8) [byte 5]</code>
+ 42<code>writeString(pcbaRev, 8) [byte 6]</code>
+ 43<code>writeString(pcbaRev, 8) [byte 7]</code>
+ 44<code>toUint32(modelNum) [byte 0]</code>
+ 45<code>toUint32(modelNum) [byte 1]</code>
+ 46<code>toUint32(modelNum) [byte 2]</code>
+ 47<code>toUint32(modelNum) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
@@ -281,7 +346,21 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpVersionResponse:
+ <code>armSwVer</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>mspSwVer</code><code>Bytes.readUint32(raw, 4)</code>
+ <code>configABits</code><code>Bytes.readUint32(raw, 8)</code>
+ <code>configBBits</code><code>Bytes.readUint32(raw, 12)</code>
+ <code>serialNum</code><code>Bytes.readUint32(raw, 16)</code>
+ <code>partNum</code><code>Bytes.readUint32(raw, 20)</code>
+ <code>pumpRev</code><code>Bytes.readString(raw, 24, 8)</code>
+ <code>pcbaSN</code><code>Bytes.readUint32(raw, 32)</code>
+ <code>pcbaRev</code><code>Bytes.readString(raw, 36, 8)</code>
+ <code>modelNum</code><code>Bytes.readUint32(raw, 44)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -320,7 +399,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpVersionResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.29">PumpVersionResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.43">PumpVersionResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,long,long,long,long,long,java.lang.String,long,java.lang.String,long)">
@@ -329,7 +408,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpVersionResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.31">PumpVersionResponse</a>&#8203;(long&nbsp;armSwVer,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.45">PumpVersionResponse</a>&#8203;(long&nbsp;armSwVer,
                            long&nbsp;mspSwVer,
                            long&nbsp;configABits,
                            long&nbsp;configBBits,
@@ -357,7 +436,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.46">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.75">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpVersionResponse:</caption>
+ <tr><td><code>armSwVer</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>mspSwVer</code></td><td><code>Bytes.readUint32(raw, 4)</code></td></tr>
+ <tr><td><code>configABits</code></td><td><code>Bytes.readUint32(raw, 8)</code></td></tr>
+ <tr><td><code>configBBits</code></td><td><code>Bytes.readUint32(raw, 12)</code></td></tr>
+ <tr><td><code>serialNum</code></td><td><code>Bytes.readUint32(raw, 16)</code></td></tr>
+ <tr><td><code>partNum</code></td><td><code>Bytes.readUint32(raw, 20)</code></td></tr>
+ <tr><td><code>pumpRev</code></td><td><code>Bytes.readString(raw, 24, 8)</code></td></tr>
+ <tr><td><code>pcbaSN</code></td><td><code>Bytes.readUint32(raw, 32)</code></td></tr>
+ <tr><td><code>pcbaRev</code></td><td><code>Bytes.readString(raw, 36, 8)</code></td></tr>
+ <tr><td><code>modelNum</code></td><td><code>Bytes.readUint32(raw, 44)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -370,7 +462,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.63">buildCargo</a>&#8203;(long&nbsp;armSwVer,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.146">buildCargo</a>&#8203;(long&nbsp;armSwVer,
                                 long&nbsp;mspSwVer,
                                 long&nbsp;configABits,
                                 long&nbsp;configBBits,
@@ -380,6 +472,58 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 long&nbsp;pcbaSN,
                                 java.lang.String&nbsp;pcbaRev,
                                 long&nbsp;modelNum)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpVersionResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(armSwVer) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(armSwVer) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(armSwVer) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(armSwVer) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(mspSwVer) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(mspSwVer) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(mspSwVer) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(mspSwVer) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(configABits) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(configABits) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>toUint32(configABits) [byte 2]</code></td></tr>
+ <tr><td>11</td><td><code>toUint32(configABits) [byte 3]</code></td></tr>
+ <tr><td>12</td><td><code>toUint32(configBBits) [byte 0]</code></td></tr>
+ <tr><td>13</td><td><code>toUint32(configBBits) [byte 1]</code></td></tr>
+ <tr><td>14</td><td><code>toUint32(configBBits) [byte 2]</code></td></tr>
+ <tr><td>15</td><td><code>toUint32(configBBits) [byte 3]</code></td></tr>
+ <tr><td>16</td><td><code>toUint32(serialNum) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>toUint32(serialNum) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>toUint32(serialNum) [byte 2]</code></td></tr>
+ <tr><td>19</td><td><code>toUint32(serialNum) [byte 3]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(partNum) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>toUint32(partNum) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>toUint32(partNum) [byte 2]</code></td></tr>
+ <tr><td>23</td><td><code>toUint32(partNum) [byte 3]</code></td></tr>
+ <tr><td>24</td><td><code>writeString(pumpRev, 8) [byte 0]</code></td></tr>
+ <tr><td>25</td><td><code>writeString(pumpRev, 8) [byte 1]</code></td></tr>
+ <tr><td>26</td><td><code>writeString(pumpRev, 8) [byte 2]</code></td></tr>
+ <tr><td>27</td><td><code>writeString(pumpRev, 8) [byte 3]</code></td></tr>
+ <tr><td>28</td><td><code>writeString(pumpRev, 8) [byte 4]</code></td></tr>
+ <tr><td>29</td><td><code>writeString(pumpRev, 8) [byte 5]</code></td></tr>
+ <tr><td>30</td><td><code>writeString(pumpRev, 8) [byte 6]</code></td></tr>
+ <tr><td>31</td><td><code>writeString(pumpRev, 8) [byte 7]</code></td></tr>
+ <tr><td>32</td><td><code>toUint32(pcbaSN) [byte 0]</code></td></tr>
+ <tr><td>33</td><td><code>toUint32(pcbaSN) [byte 1]</code></td></tr>
+ <tr><td>34</td><td><code>toUint32(pcbaSN) [byte 2]</code></td></tr>
+ <tr><td>35</td><td><code>toUint32(pcbaSN) [byte 3]</code></td></tr>
+ <tr><td>36</td><td><code>writeString(pcbaRev, 8) [byte 0]</code></td></tr>
+ <tr><td>37</td><td><code>writeString(pcbaRev, 8) [byte 1]</code></td></tr>
+ <tr><td>38</td><td><code>writeString(pcbaRev, 8) [byte 2]</code></td></tr>
+ <tr><td>39</td><td><code>writeString(pcbaRev, 8) [byte 3]</code></td></tr>
+ <tr><td>40</td><td><code>writeString(pcbaRev, 8) [byte 4]</code></td></tr>
+ <tr><td>41</td><td><code>writeString(pcbaRev, 8) [byte 5]</code></td></tr>
+ <tr><td>42</td><td><code>writeString(pcbaRev, 8) [byte 6]</code></td></tr>
+ <tr><td>43</td><td><code>writeString(pcbaRev, 8) [byte 7]</code></td></tr>
+ <tr><td>44</td><td><code>toUint32(modelNum) [byte 0]</code></td></tr>
+ <tr><td>45</td><td><code>toUint32(modelNum) [byte 1]</code></td></tr>
+ <tr><td>46</td><td><code>toUint32(modelNum) [byte 2]</code></td></tr>
+ <tr><td>47</td><td><code>toUint32(modelNum) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getArmSwVer()">
@@ -388,7 +532,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getArmSwVer</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.77">getArmSwVer</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.160">getArmSwVer</a>()</pre>
 </li>
 </ul>
 <a id="getMspSwVer()">
@@ -397,7 +541,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMspSwVer</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.80">getMspSwVer</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.163">getMspSwVer</a>()</pre>
 </li>
 </ul>
 <a id="getConfigABits()">
@@ -406,7 +550,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getConfigABits</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.83">getConfigABits</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.166">getConfigABits</a>()</pre>
 </li>
 </ul>
 <a id="getConfigBBits()">
@@ -415,7 +559,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getConfigBBits</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.86">getConfigBBits</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.169">getConfigBBits</a>()</pre>
 </li>
 </ul>
 <a id="getSerialNum()">
@@ -424,7 +568,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSerialNum</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.89">getSerialNum</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.172">getSerialNum</a>()</pre>
 </li>
 </ul>
 <a id="getPartNum()">
@@ -433,7 +577,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getPartNum</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.92">getPartNum</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.175">getPartNum</a>()</pre>
 </li>
 </ul>
 <a id="getPumpRev()">
@@ -442,7 +586,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getPumpRev</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.95">getPumpRev</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.178">getPumpRev</a>()</pre>
 </li>
 </ul>
 <a id="getPcbaSN()">
@@ -451,7 +595,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getPcbaSN</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.98">getPcbaSN</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.181">getPcbaSN</a>()</pre>
 </li>
 </ul>
 <a id="getPcbaRev()">
@@ -460,7 +604,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getPcbaRev</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.101">getPcbaRev</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.184">getPcbaRev</a>()</pre>
 </li>
 </ul>
 <a id="getModelNum()">
@@ -469,7 +613,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getModelNum</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.104">getModelNum</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#line.187">getModelNum</a>()</pre>
 </li>
 </ul>
 </li>

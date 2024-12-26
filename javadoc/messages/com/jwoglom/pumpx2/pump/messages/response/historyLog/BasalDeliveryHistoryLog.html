@@ -258,7 +258,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BasalDeliveryHistoryLog:
+ <code>commandedRateSource</code><code>Bytes.readShort(raw, 10)</code>
+ <code>commandedRate</code><code>Bytes.readShort(raw, 14)</code>
+ <code>profileBasalRate</code><code>Bytes.readShort(raw, 16)</code>
+ <code>algorithmRate</code><code>Bytes.readShort(raw, 18)</code>
+ <code>tempRate</code><code>Bytes.readShort(raw, 20)</code>
+ </div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -362,7 +371,15 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.42">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.52">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BasalDeliveryHistoryLog:</caption>
+ <tr><td><code>commandedRateSource</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>commandedRate</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>profileBasalRate</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>algorithmRate</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>tempRate</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -375,7 +392,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.54">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.64">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;commandedRateSource,
                                 int&nbsp;commandedRate,
@@ -390,7 +407,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCommandedRateSource</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.65">getCommandedRateSource</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.75">getCommandedRateSource</a>()</pre>
 </li>
 </ul>
 <a id="getCommandedRate()">
@@ -399,7 +416,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCommandedRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.68">getCommandedRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.78">getCommandedRate</a>()</pre>
 </li>
 </ul>
 <a id="getProfileBasalRate()">
@@ -408,7 +425,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileBasalRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.71">getProfileBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.81">getProfileBasalRate</a>()</pre>
 </li>
 </ul>
 <a id="getAlgorithmRate()">
@@ -417,7 +434,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getAlgorithmRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.74">getAlgorithmRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.84">getAlgorithmRate</a>()</pre>
 </li>
 </ul>
 <a id="getTempRate()">
@@ -426,7 +443,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTempRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.77">getTempRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#line.87">getTempRate</a>()</pre>
 </li>
 </ul>
 </li>

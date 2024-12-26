@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.10">BasalIQAlertInfoResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.24">BasalIQAlertInfoResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/BasalIQAlertInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BasalIQAlertInfoRequest</code></a>, opCode 103, size 4
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>103</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>4</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/BasalIQAlertInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BasalIQAlertInfoRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -231,7 +243,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(long)">buildCargo</a></span>&#8203;(long&nbsp;alertId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BasalIQAlertInfoResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(alertId) [byte 0]</code>
+ 1<code>toUint32(alertId) [byte 1]</code>
+ 2<code>toUint32(alertId) [byte 2]</code>
+ 3<code>toUint32(alertId) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="BasalIQAlertInfoResponse.BasalIQAlert.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQAlertInfoResponse.BasalIQAlert</a></code></td>
@@ -246,7 +267,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BasalIQAlertInfoResponse:
+ <code>alertId</code><code>Bytes.readUint32(raw, 0)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -285,7 +311,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>BasalIQAlertInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.20">BasalIQAlertInfoResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.34">BasalIQAlertInfoResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long)">
@@ -294,7 +320,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>BasalIQAlertInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.22">BasalIQAlertInfoResponse</a>&#8203;(long&nbsp;alertId)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.36">BasalIQAlertInfoResponse</a>&#8203;(long&nbsp;alertId)</pre>
 </li>
 </ul>
 </li>
@@ -313,7 +339,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.28">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.48">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BasalIQAlertInfoResponse:</caption>
+ <tr><td><code>alertId</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -326,7 +356,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.36">buildCargo</a>&#8203;(long&nbsp;alertId)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.66">buildCargo</a>&#8203;(long&nbsp;alertId)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BasalIQAlertInfoResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(alertId) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(alertId) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(alertId) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(alertId) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getAlertId()">
@@ -335,7 +373,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAlertId</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.41">getAlertId</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.71">getAlertId</a>()</pre>
 </li>
 </ul>
 <a id="getAlert()">
@@ -344,7 +382,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getAlert</h4>
-<pre class="methodSignature">public&nbsp;<a href="BasalIQAlertInfoResponse.BasalIQAlert.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQAlertInfoResponse.BasalIQAlert</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.44">getAlert</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="BasalIQAlertInfoResponse.BasalIQAlert.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQAlertInfoResponse.BasalIQAlert</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#line.74">getAlert</a>()</pre>
 </li>
 </ul>
 </li>

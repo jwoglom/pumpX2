@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.10">HistoryLogStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.24">HistoryLogStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/HistoryLogStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HistoryLogStatusRequest</code></a>, opCode 59, size 12
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>59</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>12</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/HistoryLogStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HistoryLogStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -212,7 +224,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(long,long,long)">buildCargo</a></span>&#8203;(long&nbsp;numEntries,
           long&nbsp;firstSequenceNum,
           long&nbsp;lastSequenceNum)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for HistoryLogStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(numEntries) [byte 0]</code>
+ 1<code>toUint32(numEntries) [byte 1]</code>
+ 2<code>toUint32(numEntries) [byte 2]</code>
+ 3<code>toUint32(numEntries) [byte 3]</code>
+ 4<code>toUint32(firstSequenceNum) [byte 0]</code>
+ 5<code>toUint32(firstSequenceNum) [byte 1]</code>
+ 6<code>toUint32(firstSequenceNum) [byte 2]</code>
+ 7<code>toUint32(firstSequenceNum) [byte 3]</code>
+ 8<code>toUint32(lastSequenceNum) [byte 0]</code>
+ 9<code>toUint32(lastSequenceNum) [byte 1]</code>
+ 10<code>toUint32(lastSequenceNum) [byte 2]</code>
+ 11<code>toUint32(lastSequenceNum) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
@@ -232,7 +261,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for HistoryLogStatusResponse:
+ <code>numEntries</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>firstSequenceNum</code><code>Bytes.readUint32(raw, 4)</code>
+ <code>lastSequenceNum</code><code>Bytes.readUint32(raw, 8)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -271,7 +307,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>HistoryLogStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.22">HistoryLogStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.36">HistoryLogStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,long,long)">
@@ -280,7 +316,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>HistoryLogStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.24">HistoryLogStatusResponse</a>&#8203;(long&nbsp;numEntries,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.38">HistoryLogStatusResponse</a>&#8203;(long&nbsp;numEntries,
                                 long&nbsp;firstSequenceNum,
                                 long&nbsp;lastSequenceNum)</pre>
 </li>
@@ -301,7 +337,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.32">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.54">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for HistoryLogStatusResponse:</caption>
+ <tr><td><code>numEntries</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>firstSequenceNum</code></td><td><code>Bytes.readUint32(raw, 4)</code></td></tr>
+ <tr><td><code>lastSequenceNum</code></td><td><code>Bytes.readUint32(raw, 8)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -314,9 +356,25 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.42">buildCargo</a>&#8203;(long&nbsp;numEntries,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.82">buildCargo</a>&#8203;(long&nbsp;numEntries,
                                 long&nbsp;firstSequenceNum,
                                 long&nbsp;lastSequenceNum)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for HistoryLogStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(numEntries) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(numEntries) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(numEntries) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(numEntries) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(firstSequenceNum) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(firstSequenceNum) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(firstSequenceNum) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(firstSequenceNum) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(lastSequenceNum) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(lastSequenceNum) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>toUint32(lastSequenceNum) [byte 2]</code></td></tr>
+ <tr><td>11</td><td><code>toUint32(lastSequenceNum) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getNumEntries()">
@@ -325,7 +383,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getNumEntries</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.49">getNumEntries</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.89">getNumEntries</a>()</pre>
 </li>
 </ul>
 <a id="getFirstSequenceNum()">
@@ -334,7 +392,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getFirstSequenceNum</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.52">getFirstSequenceNum</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.92">getFirstSequenceNum</a>()</pre>
 </li>
 </ul>
 <a id="getLastSequenceNum()">
@@ -343,7 +401,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getLastSequenceNum</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.55">getLastSequenceNum</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#line.95">getLastSequenceNum</a>()</pre>
 </li>
 </ul>
 </li>

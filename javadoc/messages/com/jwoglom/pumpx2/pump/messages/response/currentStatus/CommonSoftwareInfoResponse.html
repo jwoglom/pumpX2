@@ -141,8 +141,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.11">CommonSoftwareInfoResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.26">CommonSoftwareInfoResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-113</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>60</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -222,7 +235,71 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           long&nbsp;bootloaderPartNumber,
           long&nbsp;bootloaderPartDashNumber,
           long&nbsp;bootloaderPartRevisionNumber)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CommonSoftwareInfoResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>writeString(appSoftwareVersion, 18) [byte 0]</code>
+ 1<code>writeString(appSoftwareVersion, 18) [byte 1]</code>
+ 2<code>writeString(appSoftwareVersion, 18) [byte 2]</code>
+ 3<code>writeString(appSoftwareVersion, 18) [byte 3]</code>
+ 4<code>writeString(appSoftwareVersion, 18) [byte 4]</code>
+ 5<code>writeString(appSoftwareVersion, 18) [byte 5]</code>
+ 6<code>writeString(appSoftwareVersion, 18) [byte 6]</code>
+ 7<code>writeString(appSoftwareVersion, 18) [byte 7]</code>
+ 8<code>writeString(appSoftwareVersion, 18) [byte 8]</code>
+ 9<code>writeString(appSoftwareVersion, 18) [byte 9]</code>
+ 10<code>writeString(appSoftwareVersion, 18) [byte 10]</code>
+ 11<code>writeString(appSoftwareVersion, 18) [byte 11]</code>
+ 12<code>writeString(appSoftwareVersion, 18) [byte 12]</code>
+ 13<code>writeString(appSoftwareVersion, 18) [byte 13]</code>
+ 14<code>writeString(appSoftwareVersion, 18) [byte 14]</code>
+ 15<code>writeString(appSoftwareVersion, 18) [byte 15]</code>
+ 16<code>writeString(appSoftwareVersion, 18) [byte 16]</code>
+ 17<code>writeString(appSoftwareVersion, 18) [byte 17]</code>
+ 18<code>toUint32(appSoftwarePartNumber) [byte 0]</code>
+ 19<code>toUint32(appSoftwarePartNumber) [byte 1]</code>
+ 20<code>toUint32(appSoftwarePartNumber) [byte 2]</code>
+ 21<code>toUint32(appSoftwarePartNumber) [byte 3]</code>
+ 22<code>toUint32(appSoftwareDashNumber) [byte 0]</code>
+ 23<code>toUint32(appSoftwareDashNumber) [byte 1]</code>
+ 24<code>toUint32(appSoftwareDashNumber) [byte 2]</code>
+ 25<code>toUint32(appSoftwareDashNumber) [byte 3]</code>
+ 26<code>toUint32(appSoftwarePartRevisionNumber) [byte 0]</code>
+ 27<code>toUint32(appSoftwarePartRevisionNumber) [byte 1]</code>
+ 28<code>toUint32(appSoftwarePartRevisionNumber) [byte 2]</code>
+ 29<code>toUint32(appSoftwarePartRevisionNumber) [byte 3]</code>
+ 30<code>writeString(bootloaderVersion, 17) [byte 0]</code>
+ 31<code>writeString(bootloaderVersion, 17) [byte 1]</code>
+ 32<code>writeString(bootloaderVersion, 17) [byte 2]</code>
+ 33<code>writeString(bootloaderVersion, 17) [byte 3]</code>
+ 34<code>writeString(bootloaderVersion, 17) [byte 4]</code>
+ 35<code>writeString(bootloaderVersion, 17) [byte 5]</code>
+ 36<code>writeString(bootloaderVersion, 17) [byte 6]</code>
+ 37<code>writeString(bootloaderVersion, 17) [byte 7]</code>
+ 38<code>writeString(bootloaderVersion, 17) [byte 8]</code>
+ 39<code>writeString(bootloaderVersion, 17) [byte 9]</code>
+ 40<code>writeString(bootloaderVersion, 17) [byte 10]</code>
+ 41<code>writeString(bootloaderVersion, 17) [byte 11]</code>
+ 42<code>writeString(bootloaderVersion, 17) [byte 12]</code>
+ 43<code>writeString(bootloaderVersion, 17) [byte 13]</code>
+ 44<code>writeString(bootloaderVersion, 17) [byte 14]</code>
+ 45<code>writeString(bootloaderVersion, 17) [byte 15]</code>
+ 46<code>writeString(bootloaderVersion, 17) [byte 16]</code>
+ 47<code>toUint32(bootloaderPartNumber) [byte 0]</code>
+ 48<code>toUint32(bootloaderPartNumber) [byte 1]</code>
+ 49<code>toUint32(bootloaderPartNumber) [byte 2]</code>
+ 50<code>toUint32(bootloaderPartNumber) [byte 3]</code>
+ 51<code>toUint32(bootloaderPartDashNumber) [byte 0]</code>
+ 52<code>toUint32(bootloaderPartDashNumber) [byte 1]</code>
+ 53<code>toUint32(bootloaderPartDashNumber) [byte 2]</code>
+ 54<code>toUint32(bootloaderPartDashNumber) [byte 3]</code>
+ 55<code>toUint32(bootloaderPartRevisionNumber) [byte 0]</code>
+ 56<code>toUint32(bootloaderPartRevisionNumber) [byte 1]</code>
+ 57<code>toUint32(bootloaderPartRevisionNumber) [byte 2]</code>
+ 58<code>toUint32(bootloaderPartRevisionNumber) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
@@ -267,7 +344,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CommonSoftwareInfoResponse:
+ <code>appSoftwareVersion</code><code>Bytes.readString(raw, 0, 18)</code>
+ <code>appSoftwarePartNumber</code><code>Bytes.readUint32(raw, 18)</code>
+ <code>appSoftwarePartDashNumber</code><code>Bytes.readUint32(raw, 22)</code>
+ <code>appSoftwarePartRevisionNumber</code><code>Bytes.readUint32(raw, 26)</code>
+ <code>bootloaderVersion</code><code>Bytes.readString(raw, 30, 17)</code>
+ <code>bootloaderPartNumber</code><code>Bytes.readUint32(raw, 47)</code>
+ <code>bootloaderPartDashNumber</code><code>Bytes.readUint32(raw, 51)</code>
+ <code>bootloaderPartRevisionNumber</code><code>Bytes.readUint32(raw, 55)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -306,7 +395,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CommonSoftwareInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.29">CommonSoftwareInfoResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.44">CommonSoftwareInfoResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.lang.String,long,long,long,java.lang.String,long,long,long)">
@@ -315,7 +404,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CommonSoftwareInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.31">CommonSoftwareInfoResponse</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.46">CommonSoftwareInfoResponse</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
                                   long&nbsp;appSoftwarePartNumber,
                                   long&nbsp;appSoftwarePartDashNumber,
                                   long&nbsp;appSoftwarePartRevisionNumber,
@@ -341,7 +430,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.44">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.72">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CommonSoftwareInfoResponse:</caption>
+ <tr><td><code>appSoftwareVersion</code></td><td><code>Bytes.readString(raw, 0, 18)</code></td></tr>
+ <tr><td><code>appSoftwarePartNumber</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
+ <tr><td><code>appSoftwarePartDashNumber</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ <tr><td><code>appSoftwarePartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 26)</code></td></tr>
+ <tr><td><code>bootloaderVersion</code></td><td><code>Bytes.readString(raw, 30, 17)</code></td></tr>
+ <tr><td><code>bootloaderPartNumber</code></td><td><code>Bytes.readUint32(raw, 47)</code></td></tr>
+ <tr><td><code>bootloaderPartDashNumber</code></td><td><code>Bytes.readUint32(raw, 51)</code></td></tr>
+ <tr><td><code>bootloaderPartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 55)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -354,7 +454,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.59">buildCargo</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.152">buildCargo</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
                                 long&nbsp;appSoftwarePartNumber,
                                 long&nbsp;appSoftwareDashNumber,
                                 long&nbsp;appSoftwarePartRevisionNumber,
@@ -362,6 +462,69 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 long&nbsp;bootloaderPartNumber,
                                 long&nbsp;bootloaderPartDashNumber,
                                 long&nbsp;bootloaderPartRevisionNumber)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CommonSoftwareInfoResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>writeString(appSoftwareVersion, 18) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>writeString(appSoftwareVersion, 18) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>writeString(appSoftwareVersion, 18) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>writeString(appSoftwareVersion, 18) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>writeString(appSoftwareVersion, 18) [byte 4]</code></td></tr>
+ <tr><td>5</td><td><code>writeString(appSoftwareVersion, 18) [byte 5]</code></td></tr>
+ <tr><td>6</td><td><code>writeString(appSoftwareVersion, 18) [byte 6]</code></td></tr>
+ <tr><td>7</td><td><code>writeString(appSoftwareVersion, 18) [byte 7]</code></td></tr>
+ <tr><td>8</td><td><code>writeString(appSoftwareVersion, 18) [byte 8]</code></td></tr>
+ <tr><td>9</td><td><code>writeString(appSoftwareVersion, 18) [byte 9]</code></td></tr>
+ <tr><td>10</td><td><code>writeString(appSoftwareVersion, 18) [byte 10]</code></td></tr>
+ <tr><td>11</td><td><code>writeString(appSoftwareVersion, 18) [byte 11]</code></td></tr>
+ <tr><td>12</td><td><code>writeString(appSoftwareVersion, 18) [byte 12]</code></td></tr>
+ <tr><td>13</td><td><code>writeString(appSoftwareVersion, 18) [byte 13]</code></td></tr>
+ <tr><td>14</td><td><code>writeString(appSoftwareVersion, 18) [byte 14]</code></td></tr>
+ <tr><td>15</td><td><code>writeString(appSoftwareVersion, 18) [byte 15]</code></td></tr>
+ <tr><td>16</td><td><code>writeString(appSoftwareVersion, 18) [byte 16]</code></td></tr>
+ <tr><td>17</td><td><code>writeString(appSoftwareVersion, 18) [byte 17]</code></td></tr>
+ <tr><td>18</td><td><code>toUint32(appSoftwarePartNumber) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>toUint32(appSoftwarePartNumber) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(appSoftwarePartNumber) [byte 2]</code></td></tr>
+ <tr><td>21</td><td><code>toUint32(appSoftwarePartNumber) [byte 3]</code></td></tr>
+ <tr><td>22</td><td><code>toUint32(appSoftwareDashNumber) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>toUint32(appSoftwareDashNumber) [byte 1]</code></td></tr>
+ <tr><td>24</td><td><code>toUint32(appSoftwareDashNumber) [byte 2]</code></td></tr>
+ <tr><td>25</td><td><code>toUint32(appSoftwareDashNumber) [byte 3]</code></td></tr>
+ <tr><td>26</td><td><code>toUint32(appSoftwarePartRevisionNumber) [byte 0]</code></td></tr>
+ <tr><td>27</td><td><code>toUint32(appSoftwarePartRevisionNumber) [byte 1]</code></td></tr>
+ <tr><td>28</td><td><code>toUint32(appSoftwarePartRevisionNumber) [byte 2]</code></td></tr>
+ <tr><td>29</td><td><code>toUint32(appSoftwarePartRevisionNumber) [byte 3]</code></td></tr>
+ <tr><td>30</td><td><code>writeString(bootloaderVersion, 17) [byte 0]</code></td></tr>
+ <tr><td>31</td><td><code>writeString(bootloaderVersion, 17) [byte 1]</code></td></tr>
+ <tr><td>32</td><td><code>writeString(bootloaderVersion, 17) [byte 2]</code></td></tr>
+ <tr><td>33</td><td><code>writeString(bootloaderVersion, 17) [byte 3]</code></td></tr>
+ <tr><td>34</td><td><code>writeString(bootloaderVersion, 17) [byte 4]</code></td></tr>
+ <tr><td>35</td><td><code>writeString(bootloaderVersion, 17) [byte 5]</code></td></tr>
+ <tr><td>36</td><td><code>writeString(bootloaderVersion, 17) [byte 6]</code></td></tr>
+ <tr><td>37</td><td><code>writeString(bootloaderVersion, 17) [byte 7]</code></td></tr>
+ <tr><td>38</td><td><code>writeString(bootloaderVersion, 17) [byte 8]</code></td></tr>
+ <tr><td>39</td><td><code>writeString(bootloaderVersion, 17) [byte 9]</code></td></tr>
+ <tr><td>40</td><td><code>writeString(bootloaderVersion, 17) [byte 10]</code></td></tr>
+ <tr><td>41</td><td><code>writeString(bootloaderVersion, 17) [byte 11]</code></td></tr>
+ <tr><td>42</td><td><code>writeString(bootloaderVersion, 17) [byte 12]</code></td></tr>
+ <tr><td>43</td><td><code>writeString(bootloaderVersion, 17) [byte 13]</code></td></tr>
+ <tr><td>44</td><td><code>writeString(bootloaderVersion, 17) [byte 14]</code></td></tr>
+ <tr><td>45</td><td><code>writeString(bootloaderVersion, 17) [byte 15]</code></td></tr>
+ <tr><td>46</td><td><code>writeString(bootloaderVersion, 17) [byte 16]</code></td></tr>
+ <tr><td>47</td><td><code>toUint32(bootloaderPartNumber) [byte 0]</code></td></tr>
+ <tr><td>48</td><td><code>toUint32(bootloaderPartNumber) [byte 1]</code></td></tr>
+ <tr><td>49</td><td><code>toUint32(bootloaderPartNumber) [byte 2]</code></td></tr>
+ <tr><td>50</td><td><code>toUint32(bootloaderPartNumber) [byte 3]</code></td></tr>
+ <tr><td>51</td><td><code>toUint32(bootloaderPartDashNumber) [byte 0]</code></td></tr>
+ <tr><td>52</td><td><code>toUint32(bootloaderPartDashNumber) [byte 1]</code></td></tr>
+ <tr><td>53</td><td><code>toUint32(bootloaderPartDashNumber) [byte 2]</code></td></tr>
+ <tr><td>54</td><td><code>toUint32(bootloaderPartDashNumber) [byte 3]</code></td></tr>
+ <tr><td>55</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 0]</code></td></tr>
+ <tr><td>56</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 1]</code></td></tr>
+ <tr><td>57</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 2]</code></td></tr>
+ <tr><td>58</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getAppSoftwareVersion()">
@@ -370,7 +533,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwareVersion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.71">getAppSoftwareVersion</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.164">getAppSoftwareVersion</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartNumber()">
@@ -379,7 +542,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.74">getAppSoftwarePartNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.167">getAppSoftwarePartNumber</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartDashNumber()">
@@ -388,7 +551,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartDashNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.77">getAppSoftwarePartDashNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.170">getAppSoftwarePartDashNumber</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartRevisionNumber()">
@@ -397,7 +560,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartRevisionNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.80">getAppSoftwarePartRevisionNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.173">getAppSoftwarePartRevisionNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderVersion()">
@@ -406,7 +569,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderVersion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.83">getBootloaderVersion</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.176">getBootloaderVersion</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartNumber()">
@@ -415,7 +578,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderPartNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.86">getBootloaderPartNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.179">getBootloaderPartNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartDashNumber()">
@@ -424,7 +587,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderPartDashNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.89">getBootloaderPartDashNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.182">getBootloaderPartDashNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartRevisionNumber()">
@@ -433,7 +596,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBootloaderPartRevisionNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.92">getBootloaderPartRevisionNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.185">getBootloaderPartRevisionNumber</a>()</pre>
 </li>
 </ul>
 </li>

@@ -141,8 +141,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.12">SetG6TransmitterIdRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.29">SetG6TransmitterIdRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Request message for <a href="../../response/control/SetG6TransmitterIdResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetG6TransmitterIdResponse</code></a>, opCode -80, size 16
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-80</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>16</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/SetG6TransmitterIdResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetG6TransmitterIdResponse</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#MOBI_API_V3_5"><code>KnownApiVersion.MOBI_API_V3_5</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -225,7 +240,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(java.lang.String)">buildCargo</a></span>&#8203;(java.lang.String&nbsp;txId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for SetG6TransmitterIdRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>writeString(txId, 6) [byte 0]</code>
+ 1<code>writeString(txId, 6) [byte 1]</code>
+ 2<code>writeString(txId, 6) [byte 2]</code>
+ 3<code>writeString(txId, 6) [byte 3]</code>
+ 4<code>writeString(txId, 6) [byte 4]</code>
+ 5<code>writeString(txId, 6) [byte 5]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -235,7 +261,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for SetG6TransmitterIdRequest:
+ <code>txId</code><code>Bytes.readString(raw, 0, TXID_LENGTH)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -274,7 +305,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TXID_LENGTH</h4>
-<pre>public static final&nbsp;int <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.22">TXID_LENGTH</a></pre>
+<pre>public static final&nbsp;int <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.39">TXID_LENGTH</a></pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../../constant-values.html#com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest.TXID_LENGTH">Constant Field Values</a></dd>
@@ -297,7 +328,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetG6TransmitterIdRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.26">SetG6TransmitterIdRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.43">SetG6TransmitterIdRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -306,7 +337,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetG6TransmitterIdRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.30">SetG6TransmitterIdRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.47">SetG6TransmitterIdRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.lang.String)">
@@ -315,7 +346,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SetG6TransmitterIdRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.35">SetG6TransmitterIdRequest</a>&#8203;(java.lang.String&nbsp;txId)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.52">SetG6TransmitterIdRequest</a>&#8203;(java.lang.String&nbsp;txId)</pre>
 </li>
 </ul>
 </li>
@@ -334,7 +365,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.40">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.63">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for SetG6TransmitterIdRequest:</caption>
+ <tr><td><code>txId</code></td><td><code>Bytes.readString(raw, 0, TXID_LENGTH)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -347,7 +382,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.48">buildCargo</a>&#8203;(java.lang.String&nbsp;txId)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.83">buildCargo</a>&#8203;(java.lang.String&nbsp;txId)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for SetG6TransmitterIdRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>writeString(txId, 6) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>writeString(txId, 6) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>writeString(txId, 6) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>writeString(txId, 6) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>writeString(txId, 6) [byte 4]</code></td></tr>
+ <tr><td>5</td><td><code>writeString(txId, 6) [byte 5]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getTxId()">
@@ -356,7 +401,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTxId</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.55">getTxId</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetG6TransmitterIdRequest.html#line.90">getTxId</a>()</pre>
 </li>
 </ul>
 </li>

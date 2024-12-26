@@ -224,7 +224,38 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
           int&nbsp;bg,
           float&nbsp;iob,
           long&nbsp;carbRatio)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for BolusRequestedMsg1HistoryLog.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 4<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 5<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 6<code>toUint32(sequenceNum) [byte 0]</code>
+ 7<code>toUint32(sequenceNum) [byte 1]</code>
+ 8<code>toUint32(sequenceNum) [byte 2]</code>
+ 9<code>toUint32(sequenceNum) [byte 3]</code>
+ 10<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 11<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 12<code>new byte[]{...} [element 0]</code>
+ 13<code>new byte[]{...} [element 0]</code>
+ 14<code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code>
+ 15<code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code>
+ 16<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
+ 17<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
+ 18<code>toFloat(iob) [byte 0]</code>
+ 19<code>toFloat(iob) [byte 1]</code>
+ 20<code>toFloat(iob) [byte 2]</code>
+ 21<code>toFloat(iob) [byte 3]</code>
+ 22<code>toUint32(carbRatio) [byte 0]</code>
+ 23<code>toUint32(carbRatio) [byte 1]</code>
+ 24<code>toUint32(carbRatio) [byte 2]</code>
+ 25<code>toUint32(carbRatio) [byte 3]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -269,7 +300,18 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for BolusRequestedMsg1HistoryLog:
+ <code>bolusId</code><code>Bytes.readShort(raw, 10)</code>
+ <code>bolusTypeId</code><code>raw[12]</code>
+ <code>correctionBolusIncluded</code><code>raw[13] != 0</code>
+ <code>carbAmount</code><code>Bytes.readShort(raw, 14)</code>
+ <code>bg</code><code>Bytes.readShort(raw, 16)</code>
+ <code>iob</code><code>Bytes.readFloat(raw, 18)</code>
+ <code>carbRatio</code><code>Bytes.readUint32(raw, 22)</code>
+ </div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -362,7 +404,17 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.44">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.56">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for BolusRequestedMsg1HistoryLog:</caption>
+ <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>bolusTypeId</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>correctionBolusIncluded</code></td><td><code>raw[13] != 0</code></td></tr>
+ <tr><td><code>carbAmount</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>bg</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>iob</code></td><td><code>Bytes.readFloat(raw, 18)</code></td></tr>
+ <tr><td><code>carbRatio</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -375,7 +427,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.59">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.103">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;bolusId,
                                 int&nbsp;bolusType,
@@ -384,6 +436,36 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
                                 int&nbsp;bg,
                                 float&nbsp;iob,
                                 long&nbsp;carbRatio)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for BolusRequestedMsg1HistoryLog.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>11</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>12</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>13</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>14</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code></td></tr>
+ <tr><td>15</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code></td></tr>
+ <tr><td>16</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>toFloat(iob) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>toFloat(iob) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>toFloat(iob) [byte 2]</code></td></tr>
+ <tr><td>21</td><td><code>toFloat(iob) [byte 3]</code></td></tr>
+ <tr><td>22</td><td><code>toUint32(carbRatio) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>toUint32(carbRatio) [byte 1]</code></td></tr>
+ <tr><td>24</td><td><code>toUint32(carbRatio) [byte 2]</code></td></tr>
+ <tr><td>25</td><td><code>toUint32(carbRatio) [byte 3]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBolusId()">
@@ -392,7 +474,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.76">getBolusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.120">getBolusId</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the ID of the bolus operation</dd>
@@ -405,7 +487,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusTypeId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.80">getBolusTypeId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.124">getBolusTypeId</a>()</pre>
 </li>
 </ul>
 <a id="getBolusType()">
@@ -414,7 +496,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusType</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.87">getBolusType</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.131">getBolusType</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Bolus types</dd>
@@ -427,7 +509,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCorrectionBolusIncluded</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.94">getCorrectionBolusIncluded</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.138">getCorrectionBolusIncluded</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>if the correction bolus is included</dd>
@@ -440,7 +522,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCarbAmount</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.101">getCarbAmount</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.145">getCarbAmount</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>carbs in grams</dd>
@@ -453,7 +535,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBg</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.108">getBg</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.152">getBg</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>BG in mg/dL</dd>
@@ -466,7 +548,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIob</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.115">getIob</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.159">getIob</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>current insulin on board</dd>
@@ -479,7 +561,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCarbRatio</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.122">getCarbRatio</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line.166">getCarbRatio</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>carb ratio from the insulin delivery profile</dd>

@@ -274,7 +274,17 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for DailyBasalHistoryLog:
+ <code>dailyTotalBasal</code><code>Bytes.readFloat(raw, 10)</code>
+ <code>lastBasalRate</code><code>Bytes.readFloat(raw, 14)</code>
+ <code>iob</code><code>Bytes.readFloat(raw, 18)</code>
+ <code>finalEventForDay</code><code>raw[22] == 1</code>
+ <code>batteryChargeRaw</code><code>raw[23]</code>
+ <code>lipoMv</code><code>Bytes.readShort(raw, 24)</code>
+ </div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -380,7 +390,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.47">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.58">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for DailyBasalHistoryLog:</caption>
+ <tr><td><code>dailyTotalBasal</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
+ <tr><td><code>lastBasalRate</code></td><td><code>Bytes.readFloat(raw, 14)</code></td></tr>
+ <tr><td><code>iob</code></td><td><code>Bytes.readFloat(raw, 18)</code></td></tr>
+ <tr><td><code>finalEventForDay</code></td><td><code>raw[22] == 1</code></td></tr>
+ <tr><td><code>batteryChargeRaw</code></td><td><code>raw[23]</code></td></tr>
+ <tr><td><code>lipoMv</code></td><td><code>Bytes.readShort(raw, 24)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -393,7 +412,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.60">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.71">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 float&nbsp;dailyTotalBasal,
                                 float&nbsp;lastBasalRate,
@@ -409,7 +428,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getDailyTotalBasal</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.76">getDailyTotalBasal</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.87">getDailyTotalBasal</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the total basal amount delivered in the gap between this message and the previous</dd>
@@ -422,7 +441,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastBasalRate</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.83">getLastBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.94">getLastBasalRate</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the last basal rate used as of this message</dd>
@@ -435,7 +454,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIob</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.90">getIob</a>()</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.101">getIob</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the current IOB</dd>
@@ -448,7 +467,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getFinalEventForDay</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.97">getFinalEventForDay</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.108">getFinalEventForDay</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TODO(confirm): whether this is the final event of the day</dd>
@@ -461,7 +480,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBatteryChargeRaw</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.102">getBatteryChargeRaw</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.113">getBatteryChargeRaw</a>()</pre>
 </li>
 </ul>
 <a id="getBatteryChargePercent()">
@@ -470,7 +489,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getBatteryChargePercent</h4>
-<pre class="methodSignature">public&nbsp;double&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.109">getBatteryChargePercent</a>()</pre>
+<pre class="methodSignature">public&nbsp;double&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.120">getBatteryChargePercent</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the reported battery charge in percent</dd>
@@ -483,7 +502,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getLipoMv</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.116">getLipoMv</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line.127">getLipoMv</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the reported LIPO battery amount in millivolts</dd>

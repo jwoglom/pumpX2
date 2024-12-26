@@ -228,7 +228,38 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
           long&nbsp;timeStampSeconds,
           int&nbsp;egvInfoBitmask,
           int&nbsp;interval)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CGMHistoryLog.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 4<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 5<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 6<code>toUint32(sequenceNum) [byte 0]</code>
+ 7<code>toUint32(sequenceNum) [byte 1]</code>
+ 8<code>toUint32(sequenceNum) [byte 2]</code>
+ 9<code>toUint32(sequenceNum) [byte 3]</code>
+ 10<code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 0]</code>
+ 11<code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 1]</code>
+ 12<code>new byte[]{...} [element 0]</code>
+ 13<code>new byte[]{...} [element 0]</code>
+ 14<code>new byte[]{...} [element 0]</code>
+ 15<code>new byte[]{...} [element 0]</code>
+ 16<code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 0]</code>
+ 17<code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 1]</code>
+ 18<code>toUint32(timeStampSeconds) [byte 0]</code>
+ 19<code>toUint32(timeStampSeconds) [byte 1]</code>
+ 20<code>toUint32(timeStampSeconds) [byte 2]</code>
+ 21<code>toUint32(timeStampSeconds) [byte 3]</code>
+ 22<code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 0]</code>
+ 23<code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 1]</code>
+ 24<code>new byte[]{...} [element 0]</code>
+ 25<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -278,7 +309,20 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CGMHistoryLog:
+ <code>glucoseValueStatus</code><code>Bytes.readShort(raw, 10)</code>
+ <code>cgmDataType</code><code>raw[12]</code>
+ <code>rate</code><code>raw[13]</code>
+ <code>algorithmState</code><code>raw[14]</code>
+ <code>rssi</code><code>raw[15]</code>
+ <code>currentGlucoseDisplayValue</code><code>Bytes.readShort(raw, 16)</code>
+ <code>timeStampSeconds</code><code>Bytes.readUint32(raw, 18)</code>
+ <code>egvInfoBitmask</code><code>Bytes.readShort(raw, 22)</code>
+ <code>interval</code><code>raw[24]</code>
+ </div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -373,7 +417,19 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.46">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.60">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CGMHistoryLog:</caption>
+ <tr><td><code>glucoseValueStatus</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>cgmDataType</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>rate</code></td><td><code>raw[13]</code></td></tr>
+ <tr><td><code>algorithmState</code></td><td><code>raw[14]</code></td></tr>
+ <tr><td><code>rssi</code></td><td><code>raw[15]</code></td></tr>
+ <tr><td><code>currentGlucoseDisplayValue</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>timeStampSeconds</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
+ <tr><td><code>egvInfoBitmask</code></td><td><code>Bytes.readShort(raw, 22)</code></td></tr>
+ <tr><td><code>interval</code></td><td><code>raw[24]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -386,7 +442,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.63">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.109">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;glucoseValueStatus,
                                 int&nbsp;cgmDataType,
@@ -397,6 +453,36 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
                                 long&nbsp;timeStampSeconds,
                                 int&nbsp;egvInfoBitmask,
                                 int&nbsp;interval)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CGMHistoryLog.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 0]</code></td></tr>
+ <tr><td>11</td><td><code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 1]</code></td></tr>
+ <tr><td>12</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>13</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>14</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>15</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>16</td><td><code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>toUint32(timeStampSeconds) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>toUint32(timeStampSeconds) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(timeStampSeconds) [byte 2]</code></td></tr>
+ <tr><td>21</td><td><code>toUint32(timeStampSeconds) [byte 3]</code></td></tr>
+ <tr><td>22</td><td><code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 1]</code></td></tr>
+ <tr><td>24</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>25</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getGlucoseValueStatus()">
@@ -405,7 +491,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getGlucoseValueStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.80">getGlucoseValueStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.126">getGlucoseValueStatus</a>()</pre>
 </li>
 </ul>
 <a id="getCgmDataType()">
@@ -414,7 +500,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCgmDataType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.83">getCgmDataType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.129">getCgmDataType</a>()</pre>
 </li>
 </ul>
 <a id="getRate()">
@@ -423,7 +509,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.86">getRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.132">getRate</a>()</pre>
 </li>
 </ul>
 <a id="getAlgorithmState()">
@@ -432,7 +518,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getAlgorithmState</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.89">getAlgorithmState</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.135">getAlgorithmState</a>()</pre>
 </li>
 </ul>
 <a id="getRssi()">
@@ -441,7 +527,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getRssi</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.92">getRssi</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.138">getRssi</a>()</pre>
 </li>
 </ul>
 <a id="getCurrentGlucoseDisplayValue()">
@@ -450,7 +536,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentGlucoseDisplayValue</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.95">getCurrentGlucoseDisplayValue</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.141">getCurrentGlucoseDisplayValue</a>()</pre>
 </li>
 </ul>
 <a id="getTimeStampSeconds()">
@@ -459,7 +545,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimeStampSeconds</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.98">getTimeStampSeconds</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.144">getTimeStampSeconds</a>()</pre>
 </li>
 </ul>
 <a id="getEgvInfoBitmask()">
@@ -468,7 +554,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getEgvInfoBitmask</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.101">getEgvInfoBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.147">getEgvInfoBitmask</a>()</pre>
 </li>
 </ul>
 <a id="getInterval()">
@@ -477,7 +563,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getInterval</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.104">getInterval</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#line.150">getInterval</a>()</pre>
 </li>
 </ul>
 </li>

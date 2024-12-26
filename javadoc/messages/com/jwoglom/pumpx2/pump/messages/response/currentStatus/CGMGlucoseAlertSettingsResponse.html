@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.10">CGMGlucoseAlertSettingsResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.24">CGMGlucoseAlertSettingsResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/CGMGlucoseAlertSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CGMGlucoseAlertSettingsRequest</code></a>, opCode 91, size 12
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>91</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>12</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CGMGlucoseAlertSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CGMGlucoseAlertSettingsRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -222,7 +234,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;byte8,
           int&nbsp;byte9short,
           int&nbsp;byte11)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CGMGlucoseAlertSettingsResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(byte0short) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(byte0short) [byte 1]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>firstTwoBytesLittleEndian(byte3short) [byte 0]</code>
+ 4<code>firstTwoBytesLittleEndian(byte3short) [byte 1]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>firstTwoBytesLittleEndian(byte6short) [byte 0]</code>
+ 7<code>firstTwoBytesLittleEndian(byte6short) [byte 1]</code>
+ 8<code>new byte[]{...} [element 0]</code>
+ 9<code>firstTwoBytesLittleEndian(byte9short) [byte 0]</code>
+ 10<code>firstTwoBytesLittleEndian(byte9short) [byte 1]</code>
+ 11<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -267,7 +296,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CGMGlucoseAlertSettingsResponse:
+ <code>highGlucoseAlertThreshold</code><code>Bytes.readShort(raw, 0)</code>
+ <code>highGlucoseAlertEnabled</code><code>raw[2]</code>
+ <code>highGlucoseRepeatDuration</code><code>Bytes.readShort(raw, 3)</code>
+ <code>highGlucoseAlertDefaultBitmask</code><code>raw[5]</code>
+ <code>lowGlucoseAlertThreshold</code><code>Bytes.readShort(raw, 6)</code>
+ <code>lowGlucoseAlertEnabled</code><code>raw[8]</code>
+ <code>lowGlucoseRepeatDuration</code><code>Bytes.readShort(raw, 9)</code>
+ <code>lowGlucoseAlertDefaultBitmask</code><code>raw[11]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -306,7 +347,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CGMGlucoseAlertSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.27">CGMGlucoseAlertSettingsResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.41">CGMGlucoseAlertSettingsResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int,int)">
@@ -315,7 +356,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CGMGlucoseAlertSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.29">CGMGlucoseAlertSettingsResponse</a>&#8203;(int&nbsp;highGlucoseAlertThreshold,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.43">CGMGlucoseAlertSettingsResponse</a>&#8203;(int&nbsp;highGlucoseAlertThreshold,
                                        int&nbsp;highGlucoseAlertEnabled,
                                        int&nbsp;highGlucoseRepeatDuration,
                                        int&nbsp;highGlucoseAlertDefaultBitmask,
@@ -341,7 +382,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.42">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.69">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CGMGlucoseAlertSettingsResponse:</caption>
+ <tr><td><code>highGlucoseAlertThreshold</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>highGlucoseAlertEnabled</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>highGlucoseRepeatDuration</code></td><td><code>Bytes.readShort(raw, 3)</code></td></tr>
+ <tr><td><code>highGlucoseAlertDefaultBitmask</code></td><td><code>raw[5]</code></td></tr>
+ <tr><td><code>lowGlucoseAlertThreshold</code></td><td><code>Bytes.readShort(raw, 6)</code></td></tr>
+ <tr><td><code>lowGlucoseAlertEnabled</code></td><td><code>raw[8]</code></td></tr>
+ <tr><td><code>lowGlucoseRepeatDuration</code></td><td><code>Bytes.readShort(raw, 9)</code></td></tr>
+ <tr><td><code>lowGlucoseAlertDefaultBitmask</code></td><td><code>raw[11]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -354,7 +406,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.57">buildCargo</a>&#8203;(int&nbsp;byte0short,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.102">buildCargo</a>&#8203;(int&nbsp;byte0short,
                                 int&nbsp;byte2,
                                 int&nbsp;byte3short,
                                 int&nbsp;byte5,
@@ -362,6 +414,22 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;byte8,
                                 int&nbsp;byte9short,
                                 int&nbsp;byte11)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CGMGlucoseAlertSettingsResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(byte0short) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(byte0short) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(byte3short) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(byte3short) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>firstTwoBytesLittleEndian(byte6short) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>firstTwoBytesLittleEndian(byte6short) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(byte9short) [byte 0]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(byte9short) [byte 1]</code></td></tr>
+ <tr><td>11</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getHighGlucoseAlertThreshold()">
@@ -370,7 +438,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighGlucoseAlertThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.69">getHighGlucoseAlertThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.114">getHighGlucoseAlertThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getHighGlucoseAlertEnabled()">
@@ -379,7 +447,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighGlucoseAlertEnabled</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.72">getHighGlucoseAlertEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.117">getHighGlucoseAlertEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getHighGlucoseRepeatDuration()">
@@ -388,7 +456,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighGlucoseRepeatDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.75">getHighGlucoseRepeatDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.120">getHighGlucoseRepeatDuration</a>()</pre>
 </li>
 </ul>
 <a id="getHighGlucoseAlertDefaultBitmask()">
@@ -397,7 +465,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighGlucoseAlertDefaultBitmask</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.78">getHighGlucoseAlertDefaultBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.123">getHighGlucoseAlertDefaultBitmask</a>()</pre>
 </li>
 </ul>
 <a id="getLowGlucoseAlertThreshold()">
@@ -406,7 +474,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowGlucoseAlertThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.81">getLowGlucoseAlertThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.126">getLowGlucoseAlertThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getLowGlucoseAlertEnabled()">
@@ -415,7 +483,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowGlucoseAlertEnabled</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.84">getLowGlucoseAlertEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.129">getLowGlucoseAlertEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getLowGlucoseRepeatDuration()">
@@ -424,7 +492,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowGlucoseRepeatDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.87">getLowGlucoseRepeatDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.132">getLowGlucoseRepeatDuration</a>()</pre>
 </li>
 </ul>
 <a id="getLowGlucoseAlertDefaultBitmask()">
@@ -433,7 +501,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getLowGlucoseAlertDefaultBitmask</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.90">getLowGlucoseAlertDefaultBitmask</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMGlucoseAlertSettingsResponse.html#line.135">getLowGlucoseAlertDefaultBitmask</a>()</pre>
 </li>
 </ul>
 </li>

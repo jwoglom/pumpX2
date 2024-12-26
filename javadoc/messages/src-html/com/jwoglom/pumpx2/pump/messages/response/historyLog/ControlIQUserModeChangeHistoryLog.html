@@ -42,31 +42,38 @@
 <span class="sourceLineNo">033</span><a id="line.33">        return 229;</a>
 <span class="sourceLineNo">034</span><a id="line.34">    }</a>
 <span class="sourceLineNo">035</span><a id="line.35"></a>
-<span class="sourceLineNo">036</span><a id="line.36">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">037</span><a id="line.37">        Preconditions.checkArgument(raw.length == 26);</a>
-<span class="sourceLineNo">038</span><a id="line.38">        this.cargo = raw;</a>
-<span class="sourceLineNo">039</span><a id="line.39">        parseBase(raw);</a>
-<span class="sourceLineNo">040</span><a id="line.40">        this.currentUserMode = raw[10];</a>
-<span class="sourceLineNo">041</span><a id="line.41">        this.previousUserMode = raw[11];</a>
-<span class="sourceLineNo">042</span><a id="line.42">        </a>
-<span class="sourceLineNo">043</span><a id="line.43">    }</a>
-<span class="sourceLineNo">044</span><a id="line.44"></a>
-<span class="sourceLineNo">045</span><a id="line.45">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode) {</a>
-<span class="sourceLineNo">046</span><a id="line.46">        return HistoryLog.fillCargo(Bytes.combine(</a>
-<span class="sourceLineNo">047</span><a id="line.47">            new byte[]{-27, 0}, // (byte) 229</a>
-<span class="sourceLineNo">048</span><a id="line.48">            Bytes.toUint32(pumpTimeSec),</a>
-<span class="sourceLineNo">049</span><a id="line.49">            Bytes.toUint32(sequenceNum),</a>
-<span class="sourceLineNo">050</span><a id="line.50">            new byte[]{ (byte) currentUserMode }, </a>
-<span class="sourceLineNo">051</span><a id="line.51">            new byte[]{ (byte) previousUserMode }));</a>
-<span class="sourceLineNo">052</span><a id="line.52">    }</a>
-<span class="sourceLineNo">053</span><a id="line.53">    public int getCurrentUserMode() {</a>
-<span class="sourceLineNo">054</span><a id="line.54">        return currentUserMode;</a>
-<span class="sourceLineNo">055</span><a id="line.55">    }</a>
-<span class="sourceLineNo">056</span><a id="line.56">    public int getPreviousUserMode() {</a>
-<span class="sourceLineNo">057</span><a id="line.57">        return previousUserMode;</a>
-<span class="sourceLineNo">058</span><a id="line.58">    }</a>
-<span class="sourceLineNo">059</span><a id="line.59">    </a>
-<span class="sourceLineNo">060</span><a id="line.60">}</a>
+<span class="sourceLineNo">036</span><a id="line.36">    /**</a>
+<span class="sourceLineNo">037</span><a id="line.37">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38">     * &lt;caption&gt;Parsed fields for ControlIQUserModeChangeHistoryLog:&lt;/caption&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">040</span><a id="line.40">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">041</span><a id="line.41">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">042</span><a id="line.42">     */</a>
+<span class="sourceLineNo">043</span><a id="line.43">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">044</span><a id="line.44">        Preconditions.checkArgument(raw.length == 26);</a>
+<span class="sourceLineNo">045</span><a id="line.45">        this.cargo = raw;</a>
+<span class="sourceLineNo">046</span><a id="line.46">        parseBase(raw);</a>
+<span class="sourceLineNo">047</span><a id="line.47">        this.currentUserMode = raw[10];</a>
+<span class="sourceLineNo">048</span><a id="line.48">        this.previousUserMode = raw[11];</a>
+<span class="sourceLineNo">049</span><a id="line.49">        </a>
+<span class="sourceLineNo">050</span><a id="line.50">    }</a>
+<span class="sourceLineNo">051</span><a id="line.51"></a>
+<span class="sourceLineNo">052</span><a id="line.52">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode) {</a>
+<span class="sourceLineNo">053</span><a id="line.53">        return HistoryLog.fillCargo(Bytes.combine(</a>
+<span class="sourceLineNo">054</span><a id="line.54">            new byte[]{-27, 0}, // (byte) 229</a>
+<span class="sourceLineNo">055</span><a id="line.55">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">056</span><a id="line.56">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">057</span><a id="line.57">            new byte[]{ (byte) currentUserMode }, </a>
+<span class="sourceLineNo">058</span><a id="line.58">            new byte[]{ (byte) previousUserMode }));</a>
+<span class="sourceLineNo">059</span><a id="line.59">    }</a>
+<span class="sourceLineNo">060</span><a id="line.60">    public int getCurrentUserMode() {</a>
+<span class="sourceLineNo">061</span><a id="line.61">        return currentUserMode;</a>
+<span class="sourceLineNo">062</span><a id="line.62">    }</a>
+<span class="sourceLineNo">063</span><a id="line.63">    public int getPreviousUserMode() {</a>
+<span class="sourceLineNo">064</span><a id="line.64">        return previousUserMode;</a>
+<span class="sourceLineNo">065</span><a id="line.65">    }</a>
+<span class="sourceLineNo">066</span><a id="line.66">    </a>
+<span class="sourceLineNo">067</span><a id="line.67">}</a>
 
 
 

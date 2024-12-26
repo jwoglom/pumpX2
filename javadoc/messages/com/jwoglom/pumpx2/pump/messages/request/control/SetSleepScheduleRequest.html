@@ -141,8 +141,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.14">SetSleepScheduleRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.32">SetSleepScheduleRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Request message for <a href="../../response/control/SetSleepScheduleResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSleepScheduleResponse</code></a>, opCode -50, size 8
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-50</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>8</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#MOBI_API_V3_5"><code>KnownApiVersion.MOBI_API_V3_5</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>supportedDevices</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/SupportedDevices.html#MOBI_ONLY"><code>SupportedDevices.MOBI_ONLY</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/SetSleepScheduleResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSleepScheduleResponse</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -222,7 +238,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,byte%5B%5D,int)">buildCargo</a></span>&#8203;(int&nbsp;slot,
           byte[]&nbsp;schedule,
           int&nbsp;flag)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for SetSleepScheduleRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -247,7 +270,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for SetSleepScheduleRequest:
+ <code>slot</code><code>raw[0]</code>
+ <code>rawSchedule</code><code>Bytes.dropLastN(Bytes.dropFirstN(raw, 1), 1)</code>
+ <code>flag</code><code>raw[7]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -286,7 +316,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetSleepScheduleRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.30">SetSleepScheduleRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.48">SetSleepScheduleRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,byte[],int)">
@@ -295,7 +325,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetSleepScheduleRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.32">SetSleepScheduleRequest</a>&#8203;(int&nbsp;slot,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.50">SetSleepScheduleRequest</a>&#8203;(int&nbsp;slot,
                                byte[]&nbsp;rawSchedule,
                                int&nbsp;flag)</pre>
 </li>
@@ -306,7 +336,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>SetSleepScheduleRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.36">SetSleepScheduleRequest</a>&#8203;(int&nbsp;slot,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.54">SetSleepScheduleRequest</a>&#8203;(int&nbsp;slot,
                                <a href="../../response/currentStatus/ControlIQSleepScheduleResponse.SleepSchedule.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQSleepScheduleResponse.SleepSchedule</a>&nbsp;schedule,
                                int&nbsp;flag)</pre>
 </li>
@@ -317,7 +347,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SetSleepScheduleRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.40">SetSleepScheduleRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.58">SetSleepScheduleRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 </li>
@@ -336,7 +366,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.45">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.71">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for SetSleepScheduleRequest:</caption>
+ <tr><td><code>slot</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>rawSchedule</code></td><td><code>Bytes.dropLastN(Bytes.dropFirstN(raw, 1), 1)</code></td></tr>
+ <tr><td><code>flag</code></td><td><code>raw[7]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -349,9 +385,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.56">buildCargo</a>&#8203;(int&nbsp;slot,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.90">buildCargo</a>&#8203;(int&nbsp;slot,
                                 byte[]&nbsp;schedule,
                                 int&nbsp;flag)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for SetSleepScheduleRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getSlot()">
@@ -360,7 +402,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSlot</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.64">getSlot</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.98">getSlot</a>()</pre>
 </li>
 </ul>
 <a id="getRawSchedule()">
@@ -369,7 +411,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getRawSchedule</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.68">getRawSchedule</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.102">getRawSchedule</a>()</pre>
 </li>
 </ul>
 <a id="getSleepSchedule()">
@@ -378,7 +420,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSleepSchedule</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../response/currentStatus/ControlIQSleepScheduleResponse.SleepSchedule.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQSleepScheduleResponse.SleepSchedule</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.72">getSleepSchedule</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../../response/currentStatus/ControlIQSleepScheduleResponse.SleepSchedule.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQSleepScheduleResponse.SleepSchedule</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.106">getSleepSchedule</a>()</pre>
 </li>
 </ul>
 <a id="getFlag()">
@@ -387,7 +429,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getFlag</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.76">getFlag</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSleepScheduleRequest.html#line.110">getFlag</a>()</pre>
 </li>
 </ul>
 </li>

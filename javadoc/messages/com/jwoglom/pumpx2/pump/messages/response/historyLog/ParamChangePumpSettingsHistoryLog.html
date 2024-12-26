@@ -282,7 +282,19 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ParamChangePumpSettingsHistoryLog:
+ <code>modification</code><code>raw[10]</code>
+ <code>status</code><code>Bytes.readShort(raw, 12)</code>
+ <code>lowInsulinThreshold</code><code>raw[14]</code>
+ <code>cannulaPrimeSize</code><code>raw[15]</code>
+ <code>isFeatureLocked</code><code>raw[16]</code>
+ <code>autoShutdownEnabled</code><code>raw[17]</code>
+ <code>oledTimeout</code><code>raw[19]</code>
+ <code>autoShutdownDuration</code><code>Bytes.readShort(raw, 20)</code>
+ </div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -392,7 +404,18 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.46">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.59">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ParamChangePumpSettingsHistoryLog:</caption>
+ <tr><td><code>modification</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
+ <tr><td><code>lowInsulinThreshold</code></td><td><code>raw[14]</code></td></tr>
+ <tr><td><code>cannulaPrimeSize</code></td><td><code>raw[15]</code></td></tr>
+ <tr><td><code>isFeatureLocked</code></td><td><code>raw[16]</code></td></tr>
+ <tr><td><code>autoShutdownEnabled</code></td><td><code>raw[17]</code></td></tr>
+ <tr><td><code>oledTimeout</code></td><td><code>raw[19]</code></td></tr>
+ <tr><td><code>autoShutdownDuration</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -405,7 +428,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.61">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.74">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;modification,
                                 int&nbsp;status,
@@ -423,7 +446,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getModification</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.75">getModification</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.88">getModification</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -432,7 +455,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.78">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.91">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getLowInsulinThreshold()">
@@ -441,7 +464,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowInsulinThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.81">getLowInsulinThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.94">getLowInsulinThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getCannulaPrimeSize()">
@@ -450,7 +473,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getCannulaPrimeSize</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.84">getCannulaPrimeSize</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.97">getCannulaPrimeSize</a>()</pre>
 </li>
 </ul>
 <a id="getIsFeatureLocked()">
@@ -459,7 +482,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getIsFeatureLocked</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.87">getIsFeatureLocked</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.100">getIsFeatureLocked</a>()</pre>
 </li>
 </ul>
 <a id="getAutoShutdownEnabled()">
@@ -468,7 +491,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getAutoShutdownEnabled</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.90">getAutoShutdownEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.103">getAutoShutdownEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getOledTimeout()">
@@ -477,7 +500,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getOledTimeout</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.93">getOledTimeout</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.106">getOledTimeout</a>()</pre>
 </li>
 </ul>
 <a id="getAutoShutdownDuration()">
@@ -486,7 +509,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getAutoShutdownDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.96">getAutoShutdownDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#line.109">getAutoShutdownDuration</a>()</pre>
 </li>
 </ul>
 </li>

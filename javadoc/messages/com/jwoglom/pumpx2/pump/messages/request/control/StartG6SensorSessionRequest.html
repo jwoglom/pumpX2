@@ -141,8 +141,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.11">StartG6SensorSessionRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.27">StartG6SensorSessionRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Request message for <a href="../../response/control/StartG6SensorSessionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StartG6SensorSessionResponse</code></a>, opCode -78, size 2
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-78</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>2</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/StartG6SensorSessionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StartG6SensorSessionResponse</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -221,7 +235,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int)">buildCargo</a></span>&#8203;(int&nbsp;sensorCode)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for StartG6SensorSessionRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(sensorCode) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(sensorCode) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -231,7 +252,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for StartG6SensorSessionRequest:
+ <code>sensorCode</code><code>Bytes.readShort(raw, 0)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -270,7 +296,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>NO_CODE</h4>
-<pre>public static final&nbsp;int <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.20">NO_CODE</a></pre>
+<pre>public static final&nbsp;int <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.36">NO_CODE</a></pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../../../constant-values.html#com.jwoglom.pumpx2.pump.messages.request.control.StartG6SensorSessionRequest.NO_CODE">Constant Field Values</a></dd>
@@ -293,7 +319,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>StartG6SensorSessionRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.24">StartG6SensorSessionRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.40">StartG6SensorSessionRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int)">
@@ -302,7 +328,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>StartG6SensorSessionRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.29">StartG6SensorSessionRequest</a>&#8203;(int&nbsp;sensorCode)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.45">StartG6SensorSessionRequest</a>&#8203;(int&nbsp;sensorCode)</pre>
 </li>
 </ul>
 </li>
@@ -321,7 +347,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.34">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.56">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for StartG6SensorSessionRequest:</caption>
+ <tr><td><code>sensorCode</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -334,7 +364,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.42">buildCargo</a>&#8203;(int&nbsp;sensorCode)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.72">buildCargo</a>&#8203;(int&nbsp;sensorCode)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for StartG6SensorSessionRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(sensorCode) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(sensorCode) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getSensorCode()">
@@ -343,7 +379,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSensorCode</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.48">getSensorCode</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StartG6SensorSessionRequest.html#line.78">getSensorCode</a>()</pre>
 </li>
 </ul>
 </li>

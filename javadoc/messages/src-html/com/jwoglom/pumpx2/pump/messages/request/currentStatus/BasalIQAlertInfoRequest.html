@@ -18,25 +18,44 @@
 <span class="sourceLineNo">009</span><a id="line.9">/**</a>
 <span class="sourceLineNo">010</span><a id="line.10"> * On a non-BasalIQ pump returns BAD_OPCODE</a>
 <span class="sourceLineNo">011</span><a id="line.11"> */</a>
-<span class="sourceLineNo">012</span><a id="line.12">@MessageProps(</a>
-<span class="sourceLineNo">013</span><a id="line.13">    opCode=102,</a>
-<span class="sourceLineNo">014</span><a id="line.14">    size=0,</a>
-<span class="sourceLineNo">015</span><a id="line.15">    type=MessageType.REQUEST,</a>
-<span class="sourceLineNo">016</span><a id="line.16">    response=BasalIQAlertInfoResponse.class</a>
-<span class="sourceLineNo">017</span><a id="line.17">)</a>
-<span class="sourceLineNo">018</span><a id="line.18">public class BasalIQAlertInfoRequest extends Message { </a>
-<span class="sourceLineNo">019</span><a id="line.19">    public BasalIQAlertInfoRequest() {</a>
-<span class="sourceLineNo">020</span><a id="line.20">        this.cargo = EMPTY;</a>
-<span class="sourceLineNo">021</span><a id="line.21">    }</a>
-<span class="sourceLineNo">022</span><a id="line.22"></a>
-<span class="sourceLineNo">023</span><a id="line.23">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">024</span><a id="line.24">        Preconditions.checkArgument(raw.length == props().size());</a>
-<span class="sourceLineNo">025</span><a id="line.25">        this.cargo = raw;</a>
-<span class="sourceLineNo">026</span><a id="line.26">        </a>
-<span class="sourceLineNo">027</span><a id="line.27">    }</a>
-<span class="sourceLineNo">028</span><a id="line.28"></a>
-<span class="sourceLineNo">029</span><a id="line.29">    </a>
-<span class="sourceLineNo">030</span><a id="line.30">}</a>
+<span class="sourceLineNo">012</span><a id="line.12">/**</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * On a non-BasalIQ pump returns BAD_OPCODE</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"></a>
+<span class="sourceLineNo">016</span><a id="line.16"> *</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * &lt;br&gt;</a>
+<span class="sourceLineNo">018</span><a id="line.18"> *</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQAlertInfoResponse}, opCode 102, size 0</a>
+<span class="sourceLineNo">020</span><a id="line.20"> *</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * &lt;br&gt;</a>
+<span class="sourceLineNo">022</span><a id="line.22"> *</a>
+<span class="sourceLineNo">023</span><a id="line.23"> * </a>
+<span class="sourceLineNo">024</span><a id="line.24"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">025</span><a id="line.25"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">026</span><a id="line.26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;102&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">027</span><a id="line.27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">028</span><a id="line.28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">029</span><a id="line.29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQAlertInfoResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">030</span><a id="line.30"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">031</span><a id="line.31"> */@MessageProps(</a>
+<span class="sourceLineNo">032</span><a id="line.32">    opCode=102,</a>
+<span class="sourceLineNo">033</span><a id="line.33">    size=0,</a>
+<span class="sourceLineNo">034</span><a id="line.34">    type=MessageType.REQUEST,</a>
+<span class="sourceLineNo">035</span><a id="line.35">    response=BasalIQAlertInfoResponse.class</a>
+<span class="sourceLineNo">036</span><a id="line.36">)</a>
+<span class="sourceLineNo">037</span><a id="line.37">public class BasalIQAlertInfoRequest extends Message { </a>
+<span class="sourceLineNo">038</span><a id="line.38">    public BasalIQAlertInfoRequest() {</a>
+<span class="sourceLineNo">039</span><a id="line.39">        this.cargo = EMPTY;</a>
+<span class="sourceLineNo">040</span><a id="line.40">    }</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">043</span><a id="line.43">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">044</span><a id="line.44">        this.cargo = raw;</a>
+<span class="sourceLineNo">045</span><a id="line.45">        </a>
+<span class="sourceLineNo">046</span><a id="line.46">    }</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">    </a>
+<span class="sourceLineNo">049</span><a id="line.49">}</a>
 
 
 

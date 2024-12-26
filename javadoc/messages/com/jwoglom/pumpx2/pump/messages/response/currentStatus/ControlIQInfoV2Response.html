@@ -146,8 +146,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.10">ControlIQInfoV2Response</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.24">ControlIQInfoV2Response</a>
 extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQInfoAbstractResponse</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/ControlIQInfoV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ControlIQInfoV2Request</code></a>, opCode -77, size 19
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-77</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>19</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/ControlIQInfoV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ControlIQInfoV2Request</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -250,7 +262,24 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
           int&nbsp;controlStateType,
           int&nbsp;exerciseChoice,
           int&nbsp;exerciseDuration)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for ControlIQInfoV2Response.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>firstTwoBytesLittleEndian(weight) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(weight) [byte 1]</code>
+ 3<code>new byte[]{...} [element 0]</code>
+ 4<code>new byte[]{...} [element 0]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ 7<code>new byte[]{...} [element 0]</code>
+ 8<code>new byte[]{...} [element 0]</code>
+ 9<code>new byte[]{...} [element 0]</code>
+ 10<code>new byte[]{...} [element 0]</code>
+ 11<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -310,7 +339,22 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ControlIQInfoV2Response:
+ <code>closedLoopEnabled</code><code>raw[0] != 0</code>
+ <code>weight</code><code>Bytes.readShort(raw, 1)</code>
+ <code>weightUnit</code><code>raw[3]</code>
+ <code>totalDailyInsulin</code><code>raw[4]</code>
+ <code>currentUserModeType</code><code>raw[5]</code>
+ <code>byte6</code><code>raw[6]</code>
+ <code>byte7</code><code>raw[7]</code>
+ <code>byte8</code><code>raw[8]</code>
+ <code>controlStateType</code><code>raw[9]</code>
+ <code>exerciseChoice</code><code>raw[10]</code>
+ <code>exerciseDuration</code><code>raw[11]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -356,7 +400,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>ControlIQInfoV2Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.30">ControlIQInfoV2Response</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.44">ControlIQInfoV2Response</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(boolean,int,int,int,int,int,int,int,int,int,int)">
@@ -365,7 +409,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ControlIQInfoV2Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.32">ControlIQInfoV2Response</a>&#8203;(boolean&nbsp;closedLoopEnabled,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.46">ControlIQInfoV2Response</a>&#8203;(boolean&nbsp;closedLoopEnabled,
                                int&nbsp;weight,
                                int&nbsp;weightUnit,
                                int&nbsp;totalDailyInsulin,
@@ -394,7 +438,21 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.48">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.78">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ControlIQInfoV2Response:</caption>
+ <tr><td><code>closedLoopEnabled</code></td><td><code>raw[0] != 0</code></td></tr>
+ <tr><td><code>weight</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>weightUnit</code></td><td><code>raw[3]</code></td></tr>
+ <tr><td><code>totalDailyInsulin</code></td><td><code>raw[4]</code></td></tr>
+ <tr><td><code>currentUserModeType</code></td><td><code>raw[5]</code></td></tr>
+ <tr><td><code>byte6</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>byte7</code></td><td><code>raw[7]</code></td></tr>
+ <tr><td><code>byte8</code></td><td><code>raw[8]</code></td></tr>
+ <tr><td><code>controlStateType</code></td><td><code>raw[9]</code></td></tr>
+ <tr><td><code>exerciseChoice</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>exerciseDuration</code></td><td><code>raw[11]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -407,7 +465,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.66">buildCargo</a>&#8203;(boolean&nbsp;closedLoopEnabled,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.114">buildCargo</a>&#8203;(boolean&nbsp;closedLoopEnabled,
                                 int&nbsp;weight,
                                 int&nbsp;weightUnit,
                                 int&nbsp;totalDailyInsulin,
@@ -418,6 +476,22 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
                                 int&nbsp;controlStateType,
                                 int&nbsp;exerciseChoice,
                                 int&nbsp;exerciseDuration)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for ControlIQInfoV2Response.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(weight) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(weight) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>7</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>8</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>9</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>10</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>11</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getClosedLoopEnabled()">
@@ -426,7 +500,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getClosedLoopEnabled</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.82">getClosedLoopEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.130">getClosedLoopEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getWeight()">
@@ -435,7 +509,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getWeight</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.85">getWeight</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.133">getWeight</a>()</pre>
 </li>
 </ul>
 <a id="getWeightUnitId()">
@@ -444,7 +518,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getWeightUnitId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.88">getWeightUnitId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.136">getWeightUnitId</a>()</pre>
 </li>
 </ul>
 <a id="getTotalDailyInsulin()">
@@ -453,7 +527,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getTotalDailyInsulin</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.91">getTotalDailyInsulin</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.139">getTotalDailyInsulin</a>()</pre>
 </li>
 </ul>
 <a id="getCurrentUserModeTypeId()">
@@ -462,7 +536,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentUserModeTypeId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.94">getCurrentUserModeTypeId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.142">getCurrentUserModeTypeId</a>()</pre>
 </li>
 </ul>
 <a id="getByte6()">
@@ -471,7 +545,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getByte6</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.97">getByte6</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.145">getByte6</a>()</pre>
 </li>
 </ul>
 <a id="getByte7()">
@@ -480,7 +554,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getByte7</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.100">getByte7</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.148">getByte7</a>()</pre>
 </li>
 </ul>
 <a id="getByte8()">
@@ -489,7 +563,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getByte8</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.103">getByte8</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.151">getByte8</a>()</pre>
 </li>
 </ul>
 <a id="getControlStateType()">
@@ -498,7 +572,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getControlStateType</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.106">getControlStateType</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.154">getControlStateType</a>()</pre>
 </li>
 </ul>
 <a id="getExerciseChoice()">
@@ -507,7 +581,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockList">
 <li class="blockList">
 <h4>getExerciseChoice</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.109">getExerciseChoice</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.157">getExerciseChoice</a>()</pre>
 </li>
 </ul>
 <a id="getExerciseDuration()">
@@ -516,7 +590,7 @@ extends <a href="ControlIQInfoAbstractResponse.html" title="class in com.jwoglom
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getExerciseDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.112">getExerciseDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line.160">getExerciseDuration</a>()</pre>
 </li>
 </ul>
 </li>

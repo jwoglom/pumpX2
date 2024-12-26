@@ -141,11 +141,31 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.17">CancelBolusRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.41">CancelBolusRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">also known as BolusTerminationRequest.
  Can be used on boluses which are initiated from the phone as well as the pump.
- Works for extended boluses.</div>
+ Works for extended boluses.
+
+
+
+ <br>
+
+ Request message for <a href="../../response/control/CancelBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CancelBolusResponse</code></a>, opCode -96, size 4
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-96</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>4</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/CancelBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CancelBolusResponse</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V2_5"><code>KnownApiVersion.API_V2_5</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -211,7 +231,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int)">buildCargo</a></span>&#8203;(int&nbsp;bolusId)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CancelBolusRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>new byte[]{...} [element 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -221,7 +250,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CancelBolusRequest:
+ <code>bolusId</code><code>Bytes.readShort(raw, 0)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -260,7 +294,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CancelBolusRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.29">CancelBolusRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.53">CancelBolusRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int)">
@@ -269,7 +303,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CancelBolusRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.31">CancelBolusRequest</a>&#8203;(int&nbsp;bolusId)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.55">CancelBolusRequest</a>&#8203;(int&nbsp;bolusId)</pre>
 </li>
 </ul>
 </li>
@@ -288,7 +322,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.37">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.67">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CancelBolusRequest:</caption>
+ <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -301,7 +339,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.45">buildCargo</a>&#8203;(int&nbsp;bolusId)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.85">buildCargo</a>&#8203;(int&nbsp;bolusId)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CancelBolusRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBolusId()">
@@ -310,7 +356,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBolusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.52">getBolusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#line.92">getBolusId</a>()</pre>
 </li>
 </ul>
 </li>

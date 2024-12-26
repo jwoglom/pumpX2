@@ -141,13 +141,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.19">IDPSegmentResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.41">IDPSegmentResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">If the segment index is invalid, returns ErrorResponse with INVALID_PARAMETER, which causes the
  pump to terminate the Bluetooth connection, so do NOT arbitrarily query for all segments.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../builders/InsulinDeliveryProfileRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders"><code>InsulinDeliveryProfileRequestBuilder</code></a></dd>
+<dd><a href="../../builders/InsulinDeliveryProfileRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders"><code>
+
+ Response message for , opCode 67, size 15
+
+ 
+
+ 
+ 
+ Message properties:
+ opCode67
+ size15
+ type
+ request
+ </code></a></dd>
 </dl>
 </li>
 </ul>
@@ -251,7 +264,27 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;profileTargetBG,
           int&nbsp;profileISF,
           int&nbsp;status)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for IDPSegmentResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>firstTwoBytesLittleEndian(profileStartTime) [byte 0]</code>
+ 3<code>firstTwoBytesLittleEndian(profileStartTime) [byte 1]</code>
+ 4<code>firstTwoBytesLittleEndian(profileBasalRate) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(profileBasalRate) [byte 1]</code>
+ 6<code>toUint32(profileCarbRatio) [byte 0]</code>
+ 7<code>toUint32(profileCarbRatio) [byte 1]</code>
+ 8<code>toUint32(profileCarbRatio) [byte 2]</code>
+ 9<code>toUint32(profileCarbRatio) [byte 3]</code>
+ 10<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 0]</code>
+ 11<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code>
+ 12<code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code>
+ 13<code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code>
+ 14<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -301,7 +334,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for IDPSegmentResponse:
+ <code>idpId</code><code>raw[0]</code>
+ <code>segmentIndex</code><code>raw[1]</code>
+ <code>profileStartTime</code><code>Bytes.readShort(raw, 2)</code>
+ <code>profileBasalRate</code><code>Bytes.readShort(raw, 4)</code>
+ <code>profileCarbRatio</code><code>Bytes.readUint32(raw, 6)</code>
+ <code>profileTargetBG</code><code>Bytes.readShort(raw, 10)</code>
+ <code>profileISF</code><code>Bytes.readShort(raw, 12)</code>
+ <code>statusId</code><code>raw[14]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -340,7 +385,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>IDPSegmentResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.36">IDPSegmentResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.58">IDPSegmentResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,long,int,int,int)">
@@ -349,7 +394,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>IDPSegmentResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.38">IDPSegmentResponse</a>&#8203;(int&nbsp;idpId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.60">IDPSegmentResponse</a>&#8203;(int&nbsp;idpId,
                           int&nbsp;segmentIndex,
                           int&nbsp;profileStartTime,
                           int&nbsp;profileBasalRate,
@@ -375,7 +420,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.51">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.86">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for IDPSegmentResponse:</caption>
+ <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>segmentIndex</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>profileStartTime</code></td><td><code>Bytes.readShort(raw, 2)</code></td></tr>
+ <tr><td><code>profileBasalRate</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ <tr><td><code>profileCarbRatio</code></td><td><code>Bytes.readUint32(raw, 6)</code></td></tr>
+ <tr><td><code>profileTargetBG</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>profileISF</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
+ <tr><td><code>statusId</code></td><td><code>raw[14]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -388,7 +444,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.66">buildCargo</a>&#8203;(int&nbsp;idpId,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.122">buildCargo</a>&#8203;(int&nbsp;idpId,
                                 int&nbsp;segmentIndex,
                                 int&nbsp;profileStartTime,
                                 int&nbsp;profileBasalRate,
@@ -396,6 +452,25 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;profileTargetBG,
                                 int&nbsp;profileISF,
                                 int&nbsp;status)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for IDPSegmentResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(profileStartTime) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(profileStartTime) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(profileBasalRate) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>firstTwoBytesLittleEndian(profileBasalRate) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(profileCarbRatio) [byte 0]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(profileCarbRatio) [byte 1]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(profileCarbRatio) [byte 2]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(profileCarbRatio) [byte 3]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(profileTargetBG) [byte 0]</code></td></tr>
+ <tr><td>11</td><td><code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code></td></tr>
+ <tr><td>12</td><td><code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code></td></tr>
+ <tr><td>13</td><td><code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code></td></tr>
+ <tr><td>14</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIdpId()">
@@ -404,7 +479,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.78">getIdpId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.134">getIdpId</a>()</pre>
 </li>
 </ul>
 <a id="getSegmentIndex()">
@@ -413,7 +488,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSegmentIndex</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.81">getSegmentIndex</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.137">getSegmentIndex</a>()</pre>
 </li>
 </ul>
 <a id="getProfileStartTime()">
@@ -422,7 +497,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileStartTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.84">getProfileStartTime</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.140">getProfileStartTime</a>()</pre>
 </li>
 </ul>
 <a id="getProfileBasalRate()">
@@ -431,7 +506,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileBasalRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.87">getProfileBasalRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.143">getProfileBasalRate</a>()</pre>
 </li>
 </ul>
 <a id="getProfileCarbRatio()">
@@ -440,7 +515,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileCarbRatio</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.90">getProfileCarbRatio</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.146">getProfileCarbRatio</a>()</pre>
 </li>
 </ul>
 <a id="getProfileTargetBG()">
@@ -449,7 +524,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileTargetBG</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.93">getProfileTargetBG</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.149">getProfileTargetBG</a>()</pre>
 </li>
 </ul>
 <a id="getProfileISF()">
@@ -458,7 +533,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getProfileISF</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.96">getProfileISF</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.152">getProfileISF</a>()</pre>
 </li>
 </ul>
 <a id="getStatusId()">
@@ -467,7 +542,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.99">getStatusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.155">getStatusId</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -476,7 +551,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.102">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line.158">getStatus</a>()</pre>
 </li>
 </ul>
 </li>

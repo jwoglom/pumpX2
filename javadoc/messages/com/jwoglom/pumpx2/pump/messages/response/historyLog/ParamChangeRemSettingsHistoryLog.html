@@ -258,7 +258,16 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ParamChangeRemSettingsHistoryLog:
+ <code>modification</code><code>raw[10]</code>
+ <code>status</code><code>raw[11]</code>
+ <code>lowBgThreshold</code><code>Bytes.readShort(raw, 14)</code>
+ <code>highBgThreshold</code><code>Bytes.readShort(raw, 16)</code>
+ <code>siteChangeDays</code><code>raw[18]</code>
+ </div>
+</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -362,7 +371,15 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.42">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.52">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ParamChangeRemSettingsHistoryLog:</caption>
+ <tr><td><code>modification</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>lowBgThreshold</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>highBgThreshold</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>siteChangeDays</code></td><td><code>raw[18]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -375,7 +392,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.54">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.64">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;modification,
                                 int&nbsp;status,
@@ -390,7 +407,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getModification</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.65">getModification</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.75">getModification</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -399,7 +416,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.68">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.78">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getLowBgThreshold()">
@@ -408,7 +425,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowBgThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.71">getLowBgThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.81">getLowBgThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getHighBgThreshold()">
@@ -417,7 +434,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighBgThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.74">getHighBgThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.84">getHighBgThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getSiteChangeDays()">
@@ -426,7 +443,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSiteChangeDays</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.77">getSiteChangeDays</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeRemSettingsHistoryLog.html#line.87">getSiteChangeDays</a>()</pre>
 </li>
 </ul>
 </li>

@@ -141,9 +141,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.13">ExtendedBolusStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.32">ExtendedBolusStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
-<div class="block">Returns information on the current extended bolus.</div>
+<div class="block">Returns information on the current extended bolus.
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/ExtendedBolusStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ExtendedBolusStatusRequest</code></a>, opCode 47, size 18
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>47</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>18</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/ExtendedBolusStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ExtendedBolusStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -219,7 +236,30 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           long&nbsp;requestedVolume,
           long&nbsp;duration,
           int&nbsp;bolusSource)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for ExtendedBolusStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 3<code>toUint32(timestamp) [byte 0]</code>
+ 4<code>toUint32(timestamp) [byte 1]</code>
+ 5<code>toUint32(timestamp) [byte 2]</code>
+ 6<code>toUint32(timestamp) [byte 3]</code>
+ 7<code>toUint32(requestedVolume) [byte 0]</code>
+ 8<code>toUint32(requestedVolume) [byte 1]</code>
+ 9<code>toUint32(requestedVolume) [byte 2]</code>
+ 10<code>toUint32(requestedVolume) [byte 3]</code>
+ 11<code>toUint32(duration) [byte 0]</code>
+ 12<code>toUint32(duration) [byte 1]</code>
+ 13<code>toUint32(duration) [byte 2]</code>
+ 14<code>toUint32(duration) [byte 3]</code>
+ 15<code>new byte[]{...} [element 0]</code>
+ 16<code>new byte[]{...} [element 0]</code>
+ 17<code>new byte[]{...} [element 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -254,7 +294,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ExtendedBolusStatusResponse:
+ <code>bolusStatus</code><code>raw[0]</code>
+ <code>bolusId</code><code>Bytes.readShort(raw, 1)</code>
+ <code>timestamp</code><code>Bytes.readUint32(raw, 5)</code>
+ <code>requestedVolume</code><code>Bytes.readUint32(raw, 9)</code>
+ <code>duration</code><code>Bytes.readUint32(raw, 13)</code>
+ <code>bolusSource</code><code>raw[17]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -293,7 +343,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>ExtendedBolusStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.28">ExtendedBolusStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.47">ExtendedBolusStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,long,long,long,int)">
@@ -302,7 +352,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ExtendedBolusStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.30">ExtendedBolusStatusResponse</a>&#8203;(int&nbsp;bolusStatus,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.49">ExtendedBolusStatusResponse</a>&#8203;(int&nbsp;bolusStatus,
                                    int&nbsp;bolusId,
                                    long&nbsp;timestamp,
                                    long&nbsp;requestedVolume,
@@ -326,7 +376,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.41">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.71">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ExtendedBolusStatusResponse:</caption>
+ <tr><td><code>bolusStatus</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>timestamp</code></td><td><code>Bytes.readUint32(raw, 5)</code></td></tr>
+ <tr><td><code>requestedVolume</code></td><td><code>Bytes.readUint32(raw, 9)</code></td></tr>
+ <tr><td><code>duration</code></td><td><code>Bytes.readUint32(raw, 13)</code></td></tr>
+ <tr><td><code>bolusSource</code></td><td><code>raw[17]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -339,12 +398,34 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.54">buildCargo</a>&#8203;(int&nbsp;bolusStatus,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.108">buildCargo</a>&#8203;(int&nbsp;bolusStatus,
                                 int&nbsp;bolusId,
                                 long&nbsp;timestamp,
                                 long&nbsp;requestedVolume,
                                 long&nbsp;duration,
                                 int&nbsp;bolusSource)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for ExtendedBolusStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(timestamp) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(timestamp) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(timestamp) [byte 2]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(timestamp) [byte 3]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(requestedVolume) [byte 0]</code></td></tr>
+ <tr><td>8</td><td><code>toUint32(requestedVolume) [byte 1]</code></td></tr>
+ <tr><td>9</td><td><code>toUint32(requestedVolume) [byte 2]</code></td></tr>
+ <tr><td>10</td><td><code>toUint32(requestedVolume) [byte 3]</code></td></tr>
+ <tr><td>11</td><td><code>toUint32(duration) [byte 0]</code></td></tr>
+ <tr><td>12</td><td><code>toUint32(duration) [byte 1]</code></td></tr>
+ <tr><td>13</td><td><code>toUint32(duration) [byte 2]</code></td></tr>
+ <tr><td>14</td><td><code>toUint32(duration) [byte 3]</code></td></tr>
+ <tr><td>15</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>16</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>17</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBolusStatus()">
@@ -353,7 +434,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.65">getBolusStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.119">getBolusStatus</a>()</pre>
 </li>
 </ul>
 <a id="getBolusId()">
@@ -362,7 +443,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBolusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.68">getBolusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.122">getBolusId</a>()</pre>
 </li>
 </ul>
 <a id="getTimestamp()">
@@ -371,7 +452,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.71">getTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.125">getTimestamp</a>()</pre>
 </li>
 </ul>
 <a id="getRequestedVolume()">
@@ -380,7 +461,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getRequestedVolume</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.74">getRequestedVolume</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.128">getRequestedVolume</a>()</pre>
 </li>
 </ul>
 <a id="getDuration()">
@@ -389,7 +470,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getDuration</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.77">getDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.131">getDuration</a>()</pre>
 </li>
 </ul>
 <a id="getBolusSource()">
@@ -398,7 +479,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBolusSource</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.80">getBolusSource</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ExtendedBolusStatusResponse.html#line.134">getBolusSource</a>()</pre>
 </li>
 </ul>
 </li>

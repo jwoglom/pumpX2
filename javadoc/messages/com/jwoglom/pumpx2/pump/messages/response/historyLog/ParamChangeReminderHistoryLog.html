@@ -282,7 +282,19 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ParamChangeReminderHistoryLog:
+ <code>modification</code><code>raw[10]</code>
+ <code>reminderId</code><code>raw[11]</code>
+ <code>status</code><code>raw[12]</code>
+ <code>enable</code><code>raw[13]</code>
+ <code>frequencyMinutes</code><code>Bytes.readUint32(raw, 14)</code>
+ <code>startTime</code><code>Bytes.readShort(raw, 18)</code>
+ <code>endTime</code><code>Bytes.readShort(raw, 20)</code>
+ <code>activeDays</code><code>raw[22]</code>
+ </div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -392,7 +404,18 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.48">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.61">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ParamChangeReminderHistoryLog:</caption>
+ <tr><td><code>modification</code></td><td><code>raw[10]</code></td></tr>
+ <tr><td><code>reminderId</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>enable</code></td><td><code>raw[13]</code></td></tr>
+ <tr><td><code>frequencyMinutes</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
+ <tr><td><code>startTime</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>endTime</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ <tr><td><code>activeDays</code></td><td><code>raw[22]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -405,7 +428,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.63">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.76">buildCargo</a>&#8203;(long&nbsp;pumpTimeSec,
                                 long&nbsp;sequenceNum,
                                 int&nbsp;modification,
                                 int&nbsp;reminderId,
@@ -423,7 +446,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getModification</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.77">getModification</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.90">getModification</a>()</pre>
 </li>
 </ul>
 <a id="getReminderId()">
@@ -432,7 +455,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getReminderId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.80">getReminderId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.93">getReminderId</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -441,7 +464,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.83">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.96">getStatus</a>()</pre>
 </li>
 </ul>
 <a id="getEnable()">
@@ -450,7 +473,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getEnable</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.86">getEnable</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.99">getEnable</a>()</pre>
 </li>
 </ul>
 <a id="getFrequencyMinutes()">
@@ -459,7 +482,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getFrequencyMinutes</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.89">getFrequencyMinutes</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.102">getFrequencyMinutes</a>()</pre>
 </li>
 </ul>
 <a id="getStartTime()">
@@ -468,7 +491,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getStartTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.92">getStartTime</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.105">getStartTime</a>()</pre>
 </li>
 </ul>
 <a id="getEndTime()">
@@ -477,7 +500,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockList">
 <li class="blockList">
 <h4>getEndTime</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.95">getEndTime</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.108">getEndTime</a>()</pre>
 </li>
 </ul>
 <a id="getActiveDays()">
@@ -486,7 +509,7 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getActiveDays</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.98">getActiveDays</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeReminderHistoryLog.html#line.111">getActiveDays</a>()</pre>
 </li>
 </ul>
 </li>

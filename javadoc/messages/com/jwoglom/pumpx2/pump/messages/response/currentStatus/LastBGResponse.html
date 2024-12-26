@@ -141,10 +141,27 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.17">LastBGResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.37">LastBGResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">This message ONLY returns BGs entered via the Bolus Calculator, and NOT the most recent CGM
- reading.</div>
+ reading.
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/LastBGRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBGRequest</code></a>, opCode 51, size 7
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>51</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>7</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/LastBGRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBGRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -237,7 +254,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(long,int,int)">buildCargo</a></span>&#8203;(long&nbsp;bgTimestamp,
           int&nbsp;bgValue,
           int&nbsp;bgSource)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for LastBGResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(bgTimestamp) [byte 0]</code>
+ 1<code>toUint32(bgTimestamp) [byte 1]</code>
+ 2<code>toUint32(bgTimestamp) [byte 2]</code>
+ 3<code>toUint32(bgTimestamp) [byte 3]</code>
+ 4<code>firstTwoBytesLittleEndian(bgValue) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(bgValue) [byte 1]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="LastBGResponse.BgSource.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></code></td>
@@ -267,7 +296,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for LastBGResponse:
+ <code>bgTimestamp</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>bgValue</code><code>Bytes.readShort(raw, 4)</code>
+ <code>bgSourceId</code><code>raw[6]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -306,7 +342,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>LastBGResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.29">LastBGResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.49">LastBGResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,int,int)">
@@ -315,7 +351,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>LastBGResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.31">LastBGResponse</a>&#8203;(long&nbsp;bgTimestamp,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.51">LastBGResponse</a>&#8203;(long&nbsp;bgTimestamp,
                       int&nbsp;bgValue,
                       int&nbsp;bgSourceId)</pre>
 </li>
@@ -336,7 +372,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.39">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.67">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for LastBGResponse:</caption>
+ <tr><td><code>bgTimestamp</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>bgValue</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ <tr><td><code>bgSourceId</code></td><td><code>raw[6]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -349,9 +391,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.49">buildCargo</a>&#8203;(long&nbsp;bgTimestamp,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.90">buildCargo</a>&#8203;(long&nbsp;bgTimestamp,
                                 int&nbsp;bgValue,
                                 int&nbsp;bgSource)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for LastBGResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(bgTimestamp) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(bgTimestamp) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(bgTimestamp) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(bgTimestamp) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(bgValue) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>firstTwoBytesLittleEndian(bgValue) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getBgTimestamp()">
@@ -360,7 +413,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBgTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.56">getBgTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.97">getBgTimestamp</a>()</pre>
 </li>
 </ul>
 <a id="getBgTimestampInstant()">
@@ -369,7 +422,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBgTimestampInstant</h4>
-<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.60">getBgTimestampInstant</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.101">getBgTimestampInstant</a>()</pre>
 </li>
 </ul>
 <a id="getBgValue()">
@@ -378,7 +431,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBgValue</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.64">getBgValue</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.105">getBgValue</a>()</pre>
 </li>
 </ul>
 <a id="getBgSourceId()">
@@ -387,7 +440,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBgSourceId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.67">getBgSourceId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.108">getBgSourceId</a>()</pre>
 </li>
 </ul>
 <a id="getBgSource()">
@@ -396,7 +449,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBgSource</h4>
-<pre class="methodSignature">public&nbsp;<a href="LastBGResponse.BgSource.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.70">getBgSource</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="LastBGResponse.BgSource.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line.111">getBgSource</a>()</pre>
 </li>
 </ul>
 </li>

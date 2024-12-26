@@ -146,8 +146,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.13">PumpFeaturesV1Response</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.27">PumpFeaturesV1Response</a>
 extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesAbstractResponse</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/PumpFeaturesV1Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpFeaturesV1Request</code></a>, opCode 79, size 8
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>79</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>8</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/PumpFeaturesV1Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpFeaturesV1Request</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -236,7 +248,20 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(java.math.BigInteger)">buildCargo</a></span>&#8203;(java.math.BigInteger&nbsp;intMap)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpFeaturesV1Response.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint64(intMap.longValue()) [byte 0]</code>
+ 1<code>toUint64(intMap.longValue()) [byte 1]</code>
+ 2<code>toUint64(intMap.longValue()) [byte 2]</code>
+ 3<code>toUint64(intMap.longValue()) [byte 3]</code>
+ 4<code>toUint64(intMap.longValue()) [byte 4]</code>
+ 5<code>toUint64(intMap.longValue()) [byte 5]</code>
+ 6<code>toUint64(intMap.longValue()) [byte 6]</code>
+ 7<code>toUint64(intMap.longValue()) [byte 7]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.math.BigInteger</code></td>
@@ -251,7 +276,13 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpFeaturesV1Response:
+ <code>intMap</code><code>Bytes.readUint64(raw, 0)</code>
+ <code>features</code><code>PumpFeatureType.fromBitmask(intMap)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -290,7 +321,7 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpFeaturesV1Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.24">PumpFeaturesV1Response</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.38">PumpFeaturesV1Response</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.math.BigInteger)">
@@ -299,7 +330,7 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpFeaturesV1Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.26">PumpFeaturesV1Response</a>&#8203;(java.math.BigInteger&nbsp;intMap)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.40">PumpFeaturesV1Response</a>&#8203;(java.math.BigInteger&nbsp;intMap)</pre>
 </li>
 </ul>
 </li>
@@ -318,7 +349,12 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.32">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.53">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpFeaturesV1Response:</caption>
+ <tr><td><code>intMap</code></td><td><code>Bytes.readUint64(raw, 0)</code></td></tr>
+ <tr><td><code>features</code></td><td><code>PumpFeatureType.fromBitmask(intMap)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -331,7 +367,19 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.40">buildCargo</a>&#8203;(java.math.BigInteger&nbsp;intMap)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.75">buildCargo</a>&#8203;(java.math.BigInteger&nbsp;intMap)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpFeaturesV1Response.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint64(intMap.longValue()) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint64(intMap.longValue()) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint64(intMap.longValue()) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint64(intMap.longValue()) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint64(intMap.longValue()) [byte 4]</code></td></tr>
+ <tr><td>5</td><td><code>toUint64(intMap.longValue()) [byte 5]</code></td></tr>
+ <tr><td>6</td><td><code>toUint64(intMap.longValue()) [byte 6]</code></td></tr>
+ <tr><td>7</td><td><code>toUint64(intMap.longValue()) [byte 7]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIntMap()">
@@ -340,7 +388,7 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockList">
 <li class="blockList">
 <h4>getIntMap</h4>
-<pre class="methodSignature">public&nbsp;java.math.BigInteger&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.46">getIntMap</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.math.BigInteger&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.81">getIntMap</a>()</pre>
 </li>
 </ul>
 <a id="getPrimaryFeatures()">
@@ -349,7 +397,7 @@ extends <a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPrimaryFeatures</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="PumpFeaturesV1Response.PumpFeatureType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.97">getPrimaryFeatures</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="PumpFeaturesV1Response.PumpFeatureType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#line.132">getPrimaryFeatures</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="PumpFeaturesAbstractResponse.html#getPrimaryFeatures()">getPrimaryFeatures</a></code>&nbsp;in class&nbsp;<code><a href="PumpFeaturesAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesAbstractResponse</a></code></dd>

@@ -40,26 +40,32 @@
 <span class="sourceLineNo">031</span><a id="line.31">        return 0;</a>
 <span class="sourceLineNo">032</span><a id="line.32">    }</a>
 <span class="sourceLineNo">033</span><a id="line.33"></a>
-<span class="sourceLineNo">034</span><a id="line.34">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">035</span><a id="line.35">        Preconditions.checkArgument(raw.length == 26, "was " + raw.length);</a>
-<span class="sourceLineNo">036</span><a id="line.36">        this.cargo = raw;</a>
-<span class="sourceLineNo">037</span><a id="line.37">        parseBase(raw);</a>
-<span class="sourceLineNo">038</span><a id="line.38">        this.numErased = Bytes.readUint32(raw, 10);</a>
-<span class="sourceLineNo">039</span><a id="line.39">        </a>
-<span class="sourceLineNo">040</span><a id="line.40">    }</a>
-<span class="sourceLineNo">041</span><a id="line.41"></a>
-<span class="sourceLineNo">042</span><a id="line.42">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long numErased) {</a>
-<span class="sourceLineNo">043</span><a id="line.43">        return HistoryLog.fillCargo(Bytes.combine(</a>
-<span class="sourceLineNo">044</span><a id="line.44">            new byte[]{0, 0},</a>
-<span class="sourceLineNo">045</span><a id="line.45">            Bytes.toUint32(pumpTimeSec),</a>
-<span class="sourceLineNo">046</span><a id="line.46">            Bytes.toUint32(sequenceNum),</a>
-<span class="sourceLineNo">047</span><a id="line.47">            Bytes.toUint32(numErased)));</a>
-<span class="sourceLineNo">048</span><a id="line.48">    }</a>
-<span class="sourceLineNo">049</span><a id="line.49">    public long getNumErased() {</a>
-<span class="sourceLineNo">050</span><a id="line.50">        return numErased;</a>
-<span class="sourceLineNo">051</span><a id="line.51">    }</a>
-<span class="sourceLineNo">052</span><a id="line.52">    </a>
-<span class="sourceLineNo">053</span><a id="line.53">}</a>
+<span class="sourceLineNo">034</span><a id="line.34">    /**</a>
+<span class="sourceLineNo">035</span><a id="line.35">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">036</span><a id="line.36">     * &lt;caption&gt;Parsed fields for LogErasedHistoryLog:&lt;/caption&gt;</a>
+<span class="sourceLineNo">037</span><a id="line.37">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numErased&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">038</span><a id="line.38">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">039</span><a id="line.39">     */</a>
+<span class="sourceLineNo">040</span><a id="line.40">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">041</span><a id="line.41">        Preconditions.checkArgument(raw.length == 26, "was " + raw.length);</a>
+<span class="sourceLineNo">042</span><a id="line.42">        this.cargo = raw;</a>
+<span class="sourceLineNo">043</span><a id="line.43">        parseBase(raw);</a>
+<span class="sourceLineNo">044</span><a id="line.44">        this.numErased = Bytes.readUint32(raw, 10);</a>
+<span class="sourceLineNo">045</span><a id="line.45">        </a>
+<span class="sourceLineNo">046</span><a id="line.46">    }</a>
+<span class="sourceLineNo">047</span><a id="line.47"></a>
+<span class="sourceLineNo">048</span><a id="line.48">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long numErased) {</a>
+<span class="sourceLineNo">049</span><a id="line.49">        return HistoryLog.fillCargo(Bytes.combine(</a>
+<span class="sourceLineNo">050</span><a id="line.50">            new byte[]{0, 0},</a>
+<span class="sourceLineNo">051</span><a id="line.51">            Bytes.toUint32(pumpTimeSec),</a>
+<span class="sourceLineNo">052</span><a id="line.52">            Bytes.toUint32(sequenceNum),</a>
+<span class="sourceLineNo">053</span><a id="line.53">            Bytes.toUint32(numErased)));</a>
+<span class="sourceLineNo">054</span><a id="line.54">    }</a>
+<span class="sourceLineNo">055</span><a id="line.55">    public long getNumErased() {</a>
+<span class="sourceLineNo">056</span><a id="line.56">        return numErased;</a>
+<span class="sourceLineNo">057</span><a id="line.57">    }</a>
+<span class="sourceLineNo">058</span><a id="line.58">    </a>
+<span class="sourceLineNo">059</span><a id="line.59">}</a>
 
 
 

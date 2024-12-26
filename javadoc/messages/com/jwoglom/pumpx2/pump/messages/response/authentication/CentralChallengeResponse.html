@@ -146,8 +146,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.12">CentralChallengeResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.27">CentralChallengeResponse</a>
 extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractCentralChallengeResponse</a></pre>
+<div class="block">Response message for <a href="../../request/authentication/AbstractCentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>AbstractCentralChallengeRequest</code></a>, opCode 17, size 30
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>17</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>30</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/authentication/AbstractCentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>AbstractCentralChallengeRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -217,7 +230,14 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(int,byte%5B%5D,byte%5B%5D)">buildCargo</a></span>&#8203;(int&nbsp;byte0short,
           byte[]&nbsp;bytes2to22,
           byte[]&nbsp;bytes22to30)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CentralChallengeResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(byte0short) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(byte0short) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -276,7 +296,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockList">
 <li class="blockList">
 <h4>CentralChallengeResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.24">CentralChallengeResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.39">CentralChallengeResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,byte[],byte[])">
@@ -285,7 +305,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CentralChallengeResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.26">CentralChallengeResponse</a>&#8203;(int&nbsp;appInstanceId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.41">CentralChallengeResponse</a>&#8203;(int&nbsp;appInstanceId,
                                 byte[]&nbsp;centralChallengeHash,
                                 byte[]&nbsp;hmacKey)</pre>
 </li>
@@ -306,7 +326,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.33">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.48">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractCentralChallengeResponse.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCentralChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractCentralChallengeResponse</a></code></dd>
@@ -319,9 +339,15 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.41">buildCargo</a>&#8203;(int&nbsp;byte0short,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.64">buildCargo</a>&#8203;(int&nbsp;byte0short,
                                 byte[]&nbsp;bytes2to22,
                                 byte[]&nbsp;bytes22to30)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CentralChallengeResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(byte0short) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(byte0short) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getAppInstanceId()">
@@ -330,7 +356,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppInstanceId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.45">getAppInstanceId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.68">getAppInstanceId</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AbstractCentralChallengeResponse.html#getAppInstanceId()">getAppInstanceId</a></code>&nbsp;in class&nbsp;<code><a href="AbstractCentralChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">AbstractCentralChallengeResponse</a></code></dd>
@@ -343,7 +369,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockList">
 <li class="blockList">
 <h4>getCentralChallengeHash</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.49">getCentralChallengeHash</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.72">getCentralChallengeHash</a>()</pre>
 </li>
 </ul>
 <a id="getHmacKey()">
@@ -352,7 +378,7 @@ extends <a href="AbstractCentralChallengeResponse.html" title="class in com.jwog
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getHmacKey</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.53">getHmacKey</a>()</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#line.76">getHmacKey</a>()</pre>
 </li>
 </ul>
 </li>

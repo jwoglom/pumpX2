@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.16">RemindersResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.30">RemindersResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/RemindersRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>RemindersRequest</code></a>, opCode 89, size 105
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>89</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>105</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/RemindersRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>RemindersRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -255,7 +267,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;highBGThreshold,
           int&nbsp;siteChangeDays,
           int&nbsp;status)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for RemindersResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(lowBGThreshold) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(lowBGThreshold) [byte 1]</code>
+ 2<code>firstTwoBytesLittleEndian(highBGThreshold) [byte 0]</code>
+ 3<code>firstTwoBytesLittleEndian(highBGThreshold) [byte 1]</code>
+ 4<code>new byte[]{...} [element 0]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a></code></td>
@@ -325,7 +348,24 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for RemindersResponse:
+ <code>lowBGReminder</code><code>new Reminder(raw, 0)</code>
+ <code>highBGReminder</code><code>new Reminder(raw, 11)</code>
+ <code>siteChangeReminder</code><code>new Reminder(raw, 22)</code>
+ <code>missedBolusReminder0</code><code>new Reminder(raw, 33)</code>
+ <code>missedBolusReminder1</code><code>new Reminder(raw, 44)</code>
+ <code>missedBolusReminder2</code><code>new Reminder(raw, 55)</code>
+ <code>missedBolusReminder3</code><code>new Reminder(raw, 66)</code>
+ <code>afterBolusReminder</code><code>new Reminder(raw, 77)</code>
+ <code>additionalBolusReminder</code><code>new Reminder(raw, 88)</code>
+ <code>lowBGThreshold</code><code>Bytes.readShort(raw, 99)</code>
+ <code>highBGThreshold</code><code>Bytes.readShort(raw, 101)</code>
+ <code>siteChangeDays</code><code>raw[103]</code>
+ <code>status</code><code>raw[104]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -364,7 +404,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>RemindersResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.38">RemindersResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.52">RemindersResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse.Reminder,int,int,int,int)">
@@ -373,7 +413,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RemindersResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.40">RemindersResponse</a>&#8203;(<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;lowBGReminder,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.54">RemindersResponse</a>&#8203;(<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;lowBGReminder,
                          <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;highBGReminder,
                          <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;siteChangeReminder,
                          <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;missedBolusReminder0,
@@ -404,7 +444,23 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.58">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.90">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for RemindersResponse:</caption>
+ <tr><td><code>lowBGReminder</code></td><td><code>new Reminder(raw, 0)</code></td></tr>
+ <tr><td><code>highBGReminder</code></td><td><code>new Reminder(raw, 11)</code></td></tr>
+ <tr><td><code>siteChangeReminder</code></td><td><code>new Reminder(raw, 22)</code></td></tr>
+ <tr><td><code>missedBolusReminder0</code></td><td><code>new Reminder(raw, 33)</code></td></tr>
+ <tr><td><code>missedBolusReminder1</code></td><td><code>new Reminder(raw, 44)</code></td></tr>
+ <tr><td><code>missedBolusReminder2</code></td><td><code>new Reminder(raw, 55)</code></td></tr>
+ <tr><td><code>missedBolusReminder3</code></td><td><code>new Reminder(raw, 66)</code></td></tr>
+ <tr><td><code>afterBolusReminder</code></td><td><code>new Reminder(raw, 77)</code></td></tr>
+ <tr><td><code>additionalBolusReminder</code></td><td><code>new Reminder(raw, 88)</code></td></tr>
+ <tr><td><code>lowBGThreshold</code></td><td><code>Bytes.readShort(raw, 99)</code></td></tr>
+ <tr><td><code>highBGThreshold</code></td><td><code>Bytes.readShort(raw, 101)</code></td></tr>
+ <tr><td><code>siteChangeDays</code></td><td><code>raw[103]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>raw[104]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -417,7 +473,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.78">buildCargo</a>&#8203;(<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;lowBGReminder,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.122">buildCargo</a>&#8203;(<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;lowBGReminder,
                                 <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;highBGReminder,
                                 <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;siteChangeReminder,
                                 <a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;missedBolusReminder0,
@@ -430,6 +486,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;highBGThreshold,
                                 int&nbsp;siteChangeDays,
                                 int&nbsp;status)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for RemindersResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(lowBGThreshold) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(lowBGThreshold) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(highBGThreshold) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(highBGThreshold) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getLowBGReminder()">
@@ -438,7 +504,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowBGReminder</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.95">getLowBGReminder</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.139">getLowBGReminder</a>()</pre>
 </li>
 </ul>
 <a id="getHighBGReminder()">
@@ -447,7 +513,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighBGReminder</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.98">getHighBGReminder</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.142">getHighBGReminder</a>()</pre>
 </li>
 </ul>
 <a id="getSiteChangeReminder()">
@@ -456,7 +522,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSiteChangeReminder</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.101">getSiteChangeReminder</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.145">getSiteChangeReminder</a>()</pre>
 </li>
 </ul>
 <a id="getMissedBolusReminder0()">
@@ -465,7 +531,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMissedBolusReminder0</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.104">getMissedBolusReminder0</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.148">getMissedBolusReminder0</a>()</pre>
 </li>
 </ul>
 <a id="getMissedBolusReminder1()">
@@ -474,7 +540,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMissedBolusReminder1</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.107">getMissedBolusReminder1</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.151">getMissedBolusReminder1</a>()</pre>
 </li>
 </ul>
 <a id="getMissedBolusReminder2()">
@@ -483,7 +549,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMissedBolusReminder2</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.110">getMissedBolusReminder2</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.154">getMissedBolusReminder2</a>()</pre>
 </li>
 </ul>
 <a id="getMissedBolusReminder3()">
@@ -492,7 +558,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getMissedBolusReminder3</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.113">getMissedBolusReminder3</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.157">getMissedBolusReminder3</a>()</pre>
 </li>
 </ul>
 <a id="getAfterBolusReminder()">
@@ -501,7 +567,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAfterBolusReminder</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.116">getAfterBolusReminder</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.160">getAfterBolusReminder</a>()</pre>
 </li>
 </ul>
 <a id="getAdditionalBolusReminder()">
@@ -510,7 +576,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdditionalBolusReminder</h4>
-<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.119">getAdditionalBolusReminder</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="RemindersResponse.Reminder.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">RemindersResponse.Reminder</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.163">getAdditionalBolusReminder</a>()</pre>
 </li>
 </ul>
 <a id="getLowBGThreshold()">
@@ -519,7 +585,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowBGThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.122">getLowBGThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.166">getLowBGThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getHighBGThreshold()">
@@ -528,7 +594,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getHighBGThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.125">getHighBGThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.169">getHighBGThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getSiteChangeDays()">
@@ -537,7 +603,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSiteChangeDays</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.128">getSiteChangeDays</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.172">getSiteChangeDays</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -546,7 +612,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.131">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/RemindersResponse.html#line.175">getStatus</a>()</pre>
 </li>
 </ul>
 </li>

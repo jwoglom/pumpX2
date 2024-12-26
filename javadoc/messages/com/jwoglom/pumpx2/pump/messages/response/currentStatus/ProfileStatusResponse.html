@@ -141,7 +141,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.21">ProfileStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.45">ProfileStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">The returned idp (insulin delivery profile) slots have a value of -1 if the slot is not present.
  Otherwise, an IDPSettingsRequest with that IDP id will return the details of that slot.
@@ -149,7 +149,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
  -1 in which case no delivery profiles exist.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../builders/InsulinDeliveryProfileRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders"><code>InsulinDeliveryProfileRequestBuilder</code></a></dd>
+<dd><a href="../../builders/InsulinDeliveryProfileRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders"><code>
+
+ Response message for , opCode 63, size 8
+
+ 
+
+ 
+ 
+ Message properties:
+ opCode63
+ size8
+ type
+ request
+ </code></a></dd>
 </dl>
 </li>
 </ul>
@@ -230,7 +243,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;idpSlot4Id,
           int&nbsp;idpSlot5Id,
           int&nbsp;activeSegmentIndex)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for ProfileStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>new byte[]{...} [element 0]</code>
+ 4<code>new byte[]{...} [element 0]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ 7<code>new byte[]{...} [element 0]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -285,7 +311,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ProfileStatusResponse:
+ <code>numberOfProfiles</code><code>raw[0]</code>
+ <code>idpSlot0Id</code><code>raw[1]</code>
+ <code>idpSlot1Id</code><code>raw[2]</code>
+ <code>idpSlot2Id</code><code>raw[3]</code>
+ <code>idpSlot3Id</code><code>raw[4]</code>
+ <code>idpSlot4Id</code><code>raw[5]</code>
+ <code>idpSlot5Id</code><code>raw[6]</code>
+ <code>activeSegmentIndex</code><code>raw[7]</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -324,7 +362,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>ProfileStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.38">ProfileStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.62">ProfileStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int,int)">
@@ -333,7 +371,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ProfileStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.40">ProfileStatusResponse</a>&#8203;(int&nbsp;numberOfProfiles,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.64">ProfileStatusResponse</a>&#8203;(int&nbsp;numberOfProfiles,
                              int&nbsp;idpSlot0Id,
                              int&nbsp;idpSlot1Id,
                              int&nbsp;idpSlot2Id,
@@ -359,7 +397,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.53">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.90">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ProfileStatusResponse:</caption>
+ <tr><td><code>numberOfProfiles</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>idpSlot0Id</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>idpSlot1Id</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>idpSlot2Id</code></td><td><code>raw[3]</code></td></tr>
+ <tr><td><code>idpSlot3Id</code></td><td><code>raw[4]</code></td></tr>
+ <tr><td><code>idpSlot4Id</code></td><td><code>raw[5]</code></td></tr>
+ <tr><td><code>idpSlot5Id</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>activeSegmentIndex</code></td><td><code>raw[7]</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -372,7 +421,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.68">buildCargo</a>&#8203;(int&nbsp;numberOfProfiles,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.119">buildCargo</a>&#8203;(int&nbsp;numberOfProfiles,
                                 int&nbsp;idpSlot0Id,
                                 int&nbsp;idpSlot1Id,
                                 int&nbsp;idpSlot2Id,
@@ -380,6 +429,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                 int&nbsp;idpSlot4Id,
                                 int&nbsp;idpSlot5Id,
                                 int&nbsp;activeSegmentIndex)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for ProfileStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>7</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getNumberOfProfiles()">
@@ -388,7 +449,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getNumberOfProfiles</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.80">getNumberOfProfiles</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.131">getNumberOfProfiles</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot0Id()">
@@ -397,7 +458,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot0Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.83">getIdpSlot0Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.134">getIdpSlot0Id</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot1Id()">
@@ -406,7 +467,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot1Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.86">getIdpSlot1Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.137">getIdpSlot1Id</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot2Id()">
@@ -415,7 +476,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot2Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.89">getIdpSlot2Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.140">getIdpSlot2Id</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot3Id()">
@@ -424,7 +485,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot3Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.92">getIdpSlot3Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.143">getIdpSlot3Id</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot4Id()">
@@ -433,7 +494,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot4Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.95">getIdpSlot4Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.146">getIdpSlot4Id</a>()</pre>
 </li>
 </ul>
 <a id="getIdpSlot5Id()">
@@ -442,7 +503,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdpSlot5Id</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.98">getIdpSlot5Id</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.149">getIdpSlot5Id</a>()</pre>
 </li>
 </ul>
 <a id="getActiveSegmentIndex()">
@@ -451,7 +512,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getActiveSegmentIndex</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.101">getActiveSegmentIndex</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.152">getActiveSegmentIndex</a>()</pre>
 </li>
 </ul>
 <a id="getActiveIdpSlotId()">
@@ -460,7 +521,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getActiveIdpSlotId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.108">getActiveIdpSlotId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.159">getActiveIdpSlotId</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the active insulin delivery profile ID, which is always slot 0</dd>
@@ -473,7 +534,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getIdpSlotIds</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.115">getIdpSlotIds</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Integer&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#line.166">getIdpSlotIds</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>all IDP slots in order restricted to the total number of profiles.</dd>

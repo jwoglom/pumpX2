@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.10">PumpSettingsResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.24">PumpSettingsResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/PumpSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpSettingsRequest</code></a>, opCode 83, size 9
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>83</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>9</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/PumpSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpSettingsRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -220,7 +232,21 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
           int&nbsp;featureLock,
           int&nbsp;oledTimeout,
           int&nbsp;status)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for PumpSettingsResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>firstTwoBytesLittleEndian(autoShutdownDuration) [byte 0]</code>
+ 4<code>firstTwoBytesLittleEndian(autoShutdownDuration) [byte 1]</code>
+ 5<code>new byte[]{...} [element 0]</code>
+ 6<code>new byte[]{...} [element 0]</code>
+ 7<code>firstTwoBytesLittleEndian(status) [byte 0]</code>
+ 8<code>firstTwoBytesLittleEndian(status) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -260,7 +286,18 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for PumpSettingsResponse:
+ <code>lowInsulinThreshold</code><code>raw[0]</code>
+ <code>cannulaPrimeSize</code><code>raw[1]</code>
+ <code>autoShutdownEnabled</code><code>raw[2]</code>
+ <code>autoShutdownDuration</code><code>Bytes.readShort(raw, 3)</code>
+ <code>featureLock</code><code>raw[5]</code>
+ <code>oledTimeout</code><code>raw[6]</code>
+ <code>status</code><code>Bytes.readShort(raw, 7)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -299,7 +336,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>PumpSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.26">PumpSettingsResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.40">PumpSettingsResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int)">
@@ -308,7 +345,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PumpSettingsResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.28">PumpSettingsResponse</a>&#8203;(int&nbsp;lowInsulinThreshold,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.42">PumpSettingsResponse</a>&#8203;(int&nbsp;lowInsulinThreshold,
                             int&nbsp;cannulaPrimeSize,
                             int&nbsp;autoShutdownEnabled,
                             int&nbsp;autoShutdownDuration,
@@ -333,7 +370,17 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.40">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.66">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PumpSettingsResponse:</caption>
+ <tr><td><code>lowInsulinThreshold</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>cannulaPrimeSize</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>autoShutdownEnabled</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>autoShutdownDuration</code></td><td><code>Bytes.readShort(raw, 3)</code></td></tr>
+ <tr><td><code>featureLock</code></td><td><code>raw[5]</code></td></tr>
+ <tr><td><code>oledTimeout</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>status</code></td><td><code>Bytes.readShort(raw, 7)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -346,13 +393,26 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.54">buildCargo</a>&#8203;(int&nbsp;lowInsulinThreshold,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.95">buildCargo</a>&#8203;(int&nbsp;lowInsulinThreshold,
                                 int&nbsp;cannulaPrimeSize,
                                 int&nbsp;autoShutdownEnabled,
                                 int&nbsp;autoShutdownDuration,
                                 int&nbsp;featureLock,
                                 int&nbsp;oledTimeout,
                                 int&nbsp;status)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for PumpSettingsResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(autoShutdownDuration) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(autoShutdownDuration) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>7</td><td><code>firstTwoBytesLittleEndian(status) [byte 0]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(status) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getLowInsulinThreshold()">
@@ -361,7 +421,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLowInsulinThreshold</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.65">getLowInsulinThreshold</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.106">getLowInsulinThreshold</a>()</pre>
 </li>
 </ul>
 <a id="getCannulaPrimeSize()">
@@ -370,7 +430,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCannulaPrimeSize</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.68">getCannulaPrimeSize</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.109">getCannulaPrimeSize</a>()</pre>
 </li>
 </ul>
 <a id="getAutoShutdownEnabled()">
@@ -379,7 +439,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAutoShutdownEnabled</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.71">getAutoShutdownEnabled</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.112">getAutoShutdownEnabled</a>()</pre>
 </li>
 </ul>
 <a id="getAutoShutdownDuration()">
@@ -388,7 +448,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAutoShutdownDuration</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.74">getAutoShutdownDuration</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.115">getAutoShutdownDuration</a>()</pre>
 </li>
 </ul>
 <a id="getFeatureLock()">
@@ -397,7 +457,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatureLock</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.77">getFeatureLock</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.118">getFeatureLock</a>()</pre>
 </li>
 </ul>
 <a id="getOledTimeout()">
@@ -406,7 +466,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getOledTimeout</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.80">getOledTimeout</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.121">getOledTimeout</a>()</pre>
 </li>
 </ul>
 <a id="getStatus()">
@@ -415,7 +475,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.83">getStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line.124">getStatus</a>()</pre>
 </li>
 </ul>
 </li>

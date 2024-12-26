@@ -146,7 +146,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.20">CurrentBatteryV2Response</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.46">CurrentBatteryV2Response</a>
 extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryAbstractResponse</a></pre>
 <div class="block">Battery information from the pump. The additional data from the V2 API is not known, and it
  always seems to have value 0.
@@ -154,7 +154,25 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 
  To get the standard battery percent use getCurrentBatteryIbc() or getBatteryPercent() as a convenience
 
- Use <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CurrentBatteryAbstractResponse</code></a></div>
+ Use <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CurrentBatteryAbstractResponse</code></a>
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/CurrentBatteryV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentBatteryV2Request</code></a>, opCode -111, size 11
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-111</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>11</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CurrentBatteryV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentBatteryV2Request</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V2_5"><code>KnownApiVersion.API_V2_5</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -232,7 +250,23 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
           int&nbsp;unknown2,
           int&nbsp;unknown3,
           int&nbsp;unknown4)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for CurrentBatteryV2Response.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{...} [element 0]</code>
+ 1<code>new byte[]{...} [element 0]</code>
+ 2<code>new byte[]{...} [element 0]</code>
+ 3<code>firstTwoBytesLittleEndian(unknown1) [byte 0]</code>
+ 4<code>firstTwoBytesLittleEndian(unknown1) [byte 1]</code>
+ 5<code>firstTwoBytesLittleEndian(unknown2) [byte 0]</code>
+ 6<code>firstTwoBytesLittleEndian(unknown2) [byte 1]</code>
+ 7<code>firstTwoBytesLittleEndian(unknown3) [byte 0]</code>
+ 8<code>firstTwoBytesLittleEndian(unknown3) [byte 1]</code>
+ 9<code>firstTwoBytesLittleEndian(unknown4) [byte 0]</code>
+ 10<code>firstTwoBytesLittleEndian(unknown4) [byte 1]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -277,7 +311,18 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for CurrentBatteryV2Response:
+ <code>currentBatteryAbc</code><code>raw[0]</code>
+ <code>currentBatteryIbc</code><code>raw[1]</code>
+ <code>chargingStatus</code><code>raw[2]</code>
+ <code>unknown1</code><code>Bytes.readShort(raw, 3)</code>
+ <code>unknown2</code><code>Bytes.readShort(raw, 5)</code>
+ <code>unknown3</code><code>Bytes.readShort(raw, 7)</code>
+ <code>unknown4</code><code>Bytes.readShort(raw, 9)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -323,7 +368,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>CurrentBatteryV2Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.38">CurrentBatteryV2Response</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.64">CurrentBatteryV2Response</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,int,int,int,int,int,int)">
@@ -332,7 +377,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CurrentBatteryV2Response</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.40">CurrentBatteryV2Response</a>&#8203;(int&nbsp;currentBatteryAbc,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.66">CurrentBatteryV2Response</a>&#8203;(int&nbsp;currentBatteryAbc,
                                 int&nbsp;currentBatteryIbc,
                                 int&nbsp;chargingStatus,
                                 int&nbsp;unknown1,
@@ -357,7 +402,17 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.52">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.90">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CurrentBatteryV2Response:</caption>
+ <tr><td><code>currentBatteryAbc</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>currentBatteryIbc</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>chargingStatus</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>unknown1</code></td><td><code>Bytes.readShort(raw, 3)</code></td></tr>
+ <tr><td><code>unknown2</code></td><td><code>Bytes.readShort(raw, 5)</code></td></tr>
+ <tr><td><code>unknown3</code></td><td><code>Bytes.readShort(raw, 7)</code></td></tr>
+ <tr><td><code>unknown4</code></td><td><code>Bytes.readShort(raw, 9)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -370,13 +425,28 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.66">buildCargo</a>&#8203;(int&nbsp;currentBatteryAbc,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.121">buildCargo</a>&#8203;(int&nbsp;currentBatteryAbc,
                                 int&nbsp;currentBatteryIbc,
                                 int&nbsp;chargingStatus,
                                 int&nbsp;unknown1,
                                 int&nbsp;unknown2,
                                 int&nbsp;unknown3,
                                 int&nbsp;unknown4)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for CurrentBatteryV2Response.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>2</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(unknown1) [byte 0]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(unknown1) [byte 1]</code></td></tr>
+ <tr><td>5</td><td><code>firstTwoBytesLittleEndian(unknown2) [byte 0]</code></td></tr>
+ <tr><td>6</td><td><code>firstTwoBytesLittleEndian(unknown2) [byte 1]</code></td></tr>
+ <tr><td>7</td><td><code>firstTwoBytesLittleEndian(unknown3) [byte 0]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(unknown3) [byte 1]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(unknown4) [byte 0]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(unknown4) [byte 1]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getCurrentBatteryAbc()">
@@ -385,7 +455,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentBatteryAbc</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.77">getCurrentBatteryAbc</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.132">getCurrentBatteryAbc</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CurrentBatteryAbstractResponse.html#getCurrentBatteryAbc()">getCurrentBatteryAbc</a></code>&nbsp;in class&nbsp;<code><a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryAbstractResponse</a></code></dd>
@@ -398,7 +468,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getCurrentBatteryIbc</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.80">getCurrentBatteryIbc</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.135">getCurrentBatteryIbc</a>()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="CurrentBatteryAbstractResponse.html#getCurrentBatteryIbc()">getCurrentBatteryIbc</a></code>&nbsp;in class&nbsp;<code><a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryAbstractResponse</a></code></dd>
@@ -411,7 +481,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getChargingStatus</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.83">getChargingStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.138">getChargingStatus</a>()</pre>
 </li>
 </ul>
 <a id="isCharging()">
@@ -420,7 +490,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>isCharging</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.87">isCharging</a>()</pre>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.142">isCharging</a>()</pre>
 </li>
 </ul>
 <a id="getUnknown1()">
@@ -429,7 +499,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getUnknown1</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.91">getUnknown1</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.146">getUnknown1</a>()</pre>
 </li>
 </ul>
 <a id="getUnknown2()">
@@ -438,7 +508,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getUnknown2</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.94">getUnknown2</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.149">getUnknown2</a>()</pre>
 </li>
 </ul>
 <a id="getUnknown3()">
@@ -447,7 +517,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockList">
 <li class="blockList">
 <h4>getUnknown3</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.97">getUnknown3</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.152">getUnknown3</a>()</pre>
 </li>
 </ul>
 <a id="getUnknown4()">
@@ -456,7 +526,7 @@ extends <a href="CurrentBatteryAbstractResponse.html" title="class in com.jwoglo
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getUnknown4</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.100">getUnknown4</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#line.155">getUnknown4</a>()</pre>
 </li>
 </ul>
 </li>

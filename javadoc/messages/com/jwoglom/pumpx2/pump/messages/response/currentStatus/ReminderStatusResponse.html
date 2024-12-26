@@ -141,8 +141,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.14">ReminderStatusResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.28">ReminderStatusResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
+<div class="block">Response message for <a href="../../request/currentStatus/ReminderStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ReminderStatusRequest</code></a>, opCode 73, size 8
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>73</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>8</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/ReminderStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>ReminderStatusRequest</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -231,7 +243,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(java.math.BigInteger)">buildCargo</a></span>&#8203;(java.math.BigInteger&nbsp;reminderBitmask)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Byte layout for ReminderStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint64(reminderBitmask.longValue()) [byte 0]</code>
+ 1<code>toUint64(reminderBitmask.longValue()) [byte 1]</code>
+ 2<code>toUint64(reminderBitmask.longValue()) [byte 2]</code>
+ 3<code>toUint64(reminderBitmask.longValue()) [byte 3]</code>
+ 4<code>toUint64(reminderBitmask.longValue()) [byte 4]</code>
+ 5<code>toUint64(reminderBitmask.longValue()) [byte 5]</code>
+ 6<code>toUint64(reminderBitmask.longValue()) [byte 6]</code>
+ 7<code>toUint64(reminderBitmask.longValue()) [byte 7]</code>
+ </div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>long</code></td>
@@ -251,7 +276,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for ReminderStatusResponse:
+ <code>intMap</code><code>Bytes.readUint64(raw, 0)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -290,7 +320,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>ReminderStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.24">ReminderStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.38">ReminderStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.math.BigInteger)">
@@ -299,7 +329,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ReminderStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.26">ReminderStatusResponse</a>&#8203;(java.math.BigInteger&nbsp;reminderBitmask)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.40">ReminderStatusResponse</a>&#8203;(java.math.BigInteger&nbsp;reminderBitmask)</pre>
 </li>
 </ul>
 </li>
@@ -318,7 +348,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.32">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.52">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for ReminderStatusResponse:</caption>
+ <tr><td><code>intMap</code></td><td><code>Bytes.readUint64(raw, 0)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -331,7 +365,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.40">buildCargo</a>&#8203;(java.math.BigInteger&nbsp;reminderBitmask)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.74">buildCargo</a>&#8203;(java.math.BigInteger&nbsp;reminderBitmask)</pre>
+<div class="block"><table border="1">
+ <caption>Byte layout for ReminderStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint64(reminderBitmask.longValue()) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint64(reminderBitmask.longValue()) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint64(reminderBitmask.longValue()) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint64(reminderBitmask.longValue()) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint64(reminderBitmask.longValue()) [byte 4]</code></td></tr>
+ <tr><td>5</td><td><code>toUint64(reminderBitmask.longValue()) [byte 5]</code></td></tr>
+ <tr><td>6</td><td><code>toUint64(reminderBitmask.longValue()) [byte 6]</code></td></tr>
+ <tr><td>7</td><td><code>toUint64(reminderBitmask.longValue()) [byte 7]</code></td></tr>
+ </table></div>
 </li>
 </ul>
 <a id="getIntMap()">
@@ -340,7 +386,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getIntMap</h4>
-<pre class="methodSignature">public&nbsp;java.math.BigInteger&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.45">getIntMap</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.math.BigInteger&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.79">getIntMap</a>()</pre>
 </li>
 </ul>
 <a id="getBitMap()">
@@ -349,7 +395,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBitMap</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.48">getBitMap</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.82">getBitMap</a>()</pre>
 </li>
 </ul>
 <a id="getReminders()">
@@ -358,7 +404,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getReminders</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="ReminderStatusResponse.ReminderType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.53">getReminders</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="ReminderStatusResponse.ReminderType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a>&gt;&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.html#line.87">getReminders</a>()</pre>
 </li>
 </ul>
 </li>

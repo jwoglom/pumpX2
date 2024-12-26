@@ -16,71 +16,101 @@
 <span class="sourceLineNo">007</span><a id="line.7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</a>
 <span class="sourceLineNo">008</span><a id="line.8">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest;</a>
 <span class="sourceLineNo">009</span><a id="line.9"></a>
-<span class="sourceLineNo">010</span><a id="line.10">@MessageProps(</a>
-<span class="sourceLineNo">011</span><a id="line.11">    opCode=103,</a>
-<span class="sourceLineNo">012</span><a id="line.12">    size=4,</a>
-<span class="sourceLineNo">013</span><a id="line.13">    type=MessageType.RESPONSE,</a>
-<span class="sourceLineNo">014</span><a id="line.14">    request=BasalIQAlertInfoRequest.class</a>
-<span class="sourceLineNo">015</span><a id="line.15">)</a>
-<span class="sourceLineNo">016</span><a id="line.16">public class BasalIQAlertInfoResponse extends Message {</a>
-<span class="sourceLineNo">017</span><a id="line.17">    </a>
-<span class="sourceLineNo">018</span><a id="line.18">    private long alertId;</a>
-<span class="sourceLineNo">019</span><a id="line.19">    </a>
-<span class="sourceLineNo">020</span><a id="line.20">    public BasalIQAlertInfoResponse() {}</a>
-<span class="sourceLineNo">021</span><a id="line.21">    </a>
-<span class="sourceLineNo">022</span><a id="line.22">    public BasalIQAlertInfoResponse(long alertId) {</a>
-<span class="sourceLineNo">023</span><a id="line.23">        this.cargo = buildCargo(alertId);</a>
-<span class="sourceLineNo">024</span><a id="line.24">        this.alertId = alertId;</a>
-<span class="sourceLineNo">025</span><a id="line.25">        </a>
-<span class="sourceLineNo">026</span><a id="line.26">    }</a>
-<span class="sourceLineNo">027</span><a id="line.27"></a>
-<span class="sourceLineNo">028</span><a id="line.28">    public void parse(byte[] raw) {</a>
-<span class="sourceLineNo">029</span><a id="line.29">        Preconditions.checkArgument(raw.length == props().size());</a>
-<span class="sourceLineNo">030</span><a id="line.30">        this.cargo = raw;</a>
-<span class="sourceLineNo">031</span><a id="line.31">        this.alertId = Bytes.readUint32(raw, 0);</a>
-<span class="sourceLineNo">032</span><a id="line.32">        </a>
-<span class="sourceLineNo">033</span><a id="line.33">    }</a>
-<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">010</span><a id="line.10">/**</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest}, opCode 103, size 4</a>
+<span class="sourceLineNo">012</span><a id="line.12"> *</a>
+<span class="sourceLineNo">013</span><a id="line.13"> * &lt;br&gt;</a>
+<span class="sourceLineNo">014</span><a id="line.14"> *</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * </a>
+<span class="sourceLineNo">016</span><a id="line.16"> * &lt;table border='1'&gt;</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;103&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;4&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">020</span><a id="line.20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">021</span><a id="line.21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">022</span><a id="line.22"> * &lt;/table&gt;</a>
+<span class="sourceLineNo">023</span><a id="line.23"> */</a>
+<span class="sourceLineNo">024</span><a id="line.24">@MessageProps(</a>
+<span class="sourceLineNo">025</span><a id="line.25">    opCode=103,</a>
+<span class="sourceLineNo">026</span><a id="line.26">    size=4,</a>
+<span class="sourceLineNo">027</span><a id="line.27">    type=MessageType.RESPONSE,</a>
+<span class="sourceLineNo">028</span><a id="line.28">    request=BasalIQAlertInfoRequest.class</a>
+<span class="sourceLineNo">029</span><a id="line.29">)</a>
+<span class="sourceLineNo">030</span><a id="line.30">public class BasalIQAlertInfoResponse extends Message {</a>
+<span class="sourceLineNo">031</span><a id="line.31">    </a>
+<span class="sourceLineNo">032</span><a id="line.32">    private long alertId;</a>
+<span class="sourceLineNo">033</span><a id="line.33">    </a>
+<span class="sourceLineNo">034</span><a id="line.34">    public BasalIQAlertInfoResponse() {}</a>
 <span class="sourceLineNo">035</span><a id="line.35">    </a>
-<span class="sourceLineNo">036</span><a id="line.36">    public static byte[] buildCargo(long alertId) {</a>
-<span class="sourceLineNo">037</span><a id="line.37">        return Bytes.combine(</a>
-<span class="sourceLineNo">038</span><a id="line.38">            Bytes.toUint32(alertId));</a>
-<span class="sourceLineNo">039</span><a id="line.39">    }</a>
-<span class="sourceLineNo">040</span><a id="line.40">    </a>
-<span class="sourceLineNo">041</span><a id="line.41">    public long getAlertId() {</a>
-<span class="sourceLineNo">042</span><a id="line.42">        return alertId;</a>
-<span class="sourceLineNo">043</span><a id="line.43">    }</a>
-<span class="sourceLineNo">044</span><a id="line.44">    public BasalIQAlert getAlert() {</a>
-<span class="sourceLineNo">045</span><a id="line.45">        return BasalIQAlert.fromId(alertId);</a>
-<span class="sourceLineNo">046</span><a id="line.46">    }</a>
-<span class="sourceLineNo">047</span><a id="line.47"></a>
-<span class="sourceLineNo">048</span><a id="line.48">    public enum BasalIQAlert {</a>
-<span class="sourceLineNo">049</span><a id="line.49">        NO_ALERT(0),</a>
-<span class="sourceLineNo">050</span><a id="line.50">        INSULIN_SUSPENDED_ALERT(24576),</a>
-<span class="sourceLineNo">051</span><a id="line.51">        INSULIN_RESUMED_ALERT(24577),</a>
-<span class="sourceLineNo">052</span><a id="line.52">        INSULIN_RESUMED_TIMEOUT(24578),</a>
-<span class="sourceLineNo">053</span><a id="line.53">        ;</a>
+<span class="sourceLineNo">036</span><a id="line.36">    public BasalIQAlertInfoResponse(long alertId) {</a>
+<span class="sourceLineNo">037</span><a id="line.37">        this.cargo = buildCargo(alertId);</a>
+<span class="sourceLineNo">038</span><a id="line.38">        this.alertId = alertId;</a>
+<span class="sourceLineNo">039</span><a id="line.39">        </a>
+<span class="sourceLineNo">040</span><a id="line.40">    }</a>
+<span class="sourceLineNo">041</span><a id="line.41"></a>
+<span class="sourceLineNo">042</span><a id="line.42">    /**</a>
+<span class="sourceLineNo">043</span><a id="line.43">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">044</span><a id="line.44">     * &lt;caption&gt;Parsed fields for BasalIQAlertInfoResponse:&lt;/caption&gt;</a>
+<span class="sourceLineNo">045</span><a id="line.45">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alertId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">046</span><a id="line.46">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">047</span><a id="line.47">     */</a>
+<span class="sourceLineNo">048</span><a id="line.48">    public void parse(byte[] raw) {</a>
+<span class="sourceLineNo">049</span><a id="line.49">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">050</span><a id="line.50">        this.cargo = raw;</a>
+<span class="sourceLineNo">051</span><a id="line.51">        this.alertId = Bytes.readUint32(raw, 0);</a>
+<span class="sourceLineNo">052</span><a id="line.52">        </a>
+<span class="sourceLineNo">053</span><a id="line.53">    }</a>
 <span class="sourceLineNo">054</span><a id="line.54"></a>
-<span class="sourceLineNo">055</span><a id="line.55">        private final long id;</a>
-<span class="sourceLineNo">056</span><a id="line.56">        BasalIQAlert(long id) {</a>
-<span class="sourceLineNo">057</span><a id="line.57">            this.id = id;</a>
-<span class="sourceLineNo">058</span><a id="line.58">        }</a>
-<span class="sourceLineNo">059</span><a id="line.59"></a>
-<span class="sourceLineNo">060</span><a id="line.60">        public long id() {</a>
-<span class="sourceLineNo">061</span><a id="line.61">            return id;</a>
-<span class="sourceLineNo">062</span><a id="line.62">        }</a>
-<span class="sourceLineNo">063</span><a id="line.63"></a>
-<span class="sourceLineNo">064</span><a id="line.64">        public static BasalIQAlert fromId(long id) {</a>
-<span class="sourceLineNo">065</span><a id="line.65">            for (BasalIQAlert a : values()) {</a>
-<span class="sourceLineNo">066</span><a id="line.66">                if (a.id() == id) {</a>
-<span class="sourceLineNo">067</span><a id="line.67">                    return a;</a>
-<span class="sourceLineNo">068</span><a id="line.68">                }</a>
-<span class="sourceLineNo">069</span><a id="line.69">            }</a>
-<span class="sourceLineNo">070</span><a id="line.70">            return null;</a>
-<span class="sourceLineNo">071</span><a id="line.71">        }</a>
-<span class="sourceLineNo">072</span><a id="line.72">    }</a>
-<span class="sourceLineNo">073</span><a id="line.73">    </a>
-<span class="sourceLineNo">074</span><a id="line.74">}</a>
+<span class="sourceLineNo">055</span><a id="line.55">    </a>
+<span class="sourceLineNo">056</span><a id="line.56">    /**</a>
+<span class="sourceLineNo">057</span><a id="line.57">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">058</span><a id="line.58">     * &lt;caption&gt;Byte layout for BasalIQAlertInfoResponse.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">059</span><a id="line.59">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">060</span><a id="line.60">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(alertId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(alertId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(alertId) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(alertId) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65">     */</a>
+<span class="sourceLineNo">066</span><a id="line.66">    public static byte[] buildCargo(long alertId) {</a>
+<span class="sourceLineNo">067</span><a id="line.67">        return Bytes.combine(</a>
+<span class="sourceLineNo">068</span><a id="line.68">            Bytes.toUint32(alertId));</a>
+<span class="sourceLineNo">069</span><a id="line.69">    }</a>
+<span class="sourceLineNo">070</span><a id="line.70">    </a>
+<span class="sourceLineNo">071</span><a id="line.71">    public long getAlertId() {</a>
+<span class="sourceLineNo">072</span><a id="line.72">        return alertId;</a>
+<span class="sourceLineNo">073</span><a id="line.73">    }</a>
+<span class="sourceLineNo">074</span><a id="line.74">    public BasalIQAlert getAlert() {</a>
+<span class="sourceLineNo">075</span><a id="line.75">        return BasalIQAlert.fromId(alertId);</a>
+<span class="sourceLineNo">076</span><a id="line.76">    }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">    public enum BasalIQAlert {</a>
+<span class="sourceLineNo">079</span><a id="line.79">        NO_ALERT(0),</a>
+<span class="sourceLineNo">080</span><a id="line.80">        INSULIN_SUSPENDED_ALERT(24576),</a>
+<span class="sourceLineNo">081</span><a id="line.81">        INSULIN_RESUMED_ALERT(24577),</a>
+<span class="sourceLineNo">082</span><a id="line.82">        INSULIN_RESUMED_TIMEOUT(24578),</a>
+<span class="sourceLineNo">083</span><a id="line.83">        ;</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">        private final long id;</a>
+<span class="sourceLineNo">086</span><a id="line.86">        BasalIQAlert(long id) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">            this.id = id;</a>
+<span class="sourceLineNo">088</span><a id="line.88">        }</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">        public long id() {</a>
+<span class="sourceLineNo">091</span><a id="line.91">            return id;</a>
+<span class="sourceLineNo">092</span><a id="line.92">        }</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">        public static BasalIQAlert fromId(long id) {</a>
+<span class="sourceLineNo">095</span><a id="line.95">            for (BasalIQAlert a : values()) {</a>
+<span class="sourceLineNo">096</span><a id="line.96">                if (a.id() == id) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">                    return a;</a>
+<span class="sourceLineNo">098</span><a id="line.98">                }</a>
+<span class="sourceLineNo">099</span><a id="line.99">            }</a>
+<span class="sourceLineNo">100</span><a id="line.100">            return null;</a>
+<span class="sourceLineNo">101</span><a id="line.101">        }</a>
+<span class="sourceLineNo">102</span><a id="line.102">    }</a>
+<span class="sourceLineNo">103</span><a id="line.103">    </a>
+<span class="sourceLineNo">104</span><a id="line.104">}</a>
 
 
 

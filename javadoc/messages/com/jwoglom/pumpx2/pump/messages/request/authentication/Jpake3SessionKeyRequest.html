@@ -141,13 +141,32 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.20">Jpake3SessionKeyRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.45">Jpake3SessionKeyRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">The fourth authorization message sent to the pump with V2 authorization style which triggers
  Jpake session validation. Input is always '0'
 
  When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth
- connection initialization as part of performing the initial pump pairing process.</div>
+ connection initialization as part of performing the initial pump pairing process.
+
+
+
+ <br>
+
+ Request message for <a href="../../response/authentication/Jpake3SessionKeyResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication"><code>Jpake3SessionKeyResponse</code></a>, opCode 38, size 2
+
+ <br>
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>38</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>2</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_V3_2"><code>KnownApiVersion.API_V3_2</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/authentication/Jpake3SessionKeyResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication"><code>Jpake3SessionKeyResponse</code></a></code>&nbsp;</td></tr>
+ </table></div>
 </li>
 </ul>
 </div>
@@ -222,7 +241,12 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for Jpake3SessionKeyRequest:
+ <code>challengeParam</code><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -261,7 +285,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake3SessionKeyRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.31">Jpake3SessionKeyRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.56">Jpake3SessionKeyRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int)">
@@ -270,7 +294,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>Jpake3SessionKeyRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.33">Jpake3SessionKeyRequest</a>&#8203;(int&nbsp;challengeParam)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.58">Jpake3SessionKeyRequest</a>&#8203;(int&nbsp;challengeParam)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -279,7 +303,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Jpake3SessionKeyRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.38">Jpake3SessionKeyRequest</a>&#8203;(byte[]&nbsp;rawCargo)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.63">Jpake3SessionKeyRequest</a>&#8203;(byte[]&nbsp;rawCargo)</pre>
 </li>
 </ul>
 </li>
@@ -298,7 +322,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getChallengeParam</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.42">getChallengeParam</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.67">getChallengeParam</a>()</pre>
 </li>
 </ul>
 <a id="parse(byte[])">
@@ -307,7 +331,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.53">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake3SessionKeyRequest.html#line.84">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for Jpake3SessionKeyRequest:</caption>
+ <tr><td><code>challengeParam</code></td><td><code>Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
