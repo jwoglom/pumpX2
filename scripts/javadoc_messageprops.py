@@ -64,7 +64,7 @@ def convert_message_props(java_file):
             javadoc += f"{indentation} * <table border='1'>"
             javadoc += f"{indentation} * <caption>Message properties:</caption>"
             for name, value in props.items():
-                javadoc += f"{indentation} * <tr><th>&nbsp;{name}&nbsp;</th><td>&nbsp;{value}&nbsp;</td></tr>"
+                javadoc += f"{indentation} * <tr><th>&nbsp;<code>{name}</code>&nbsp;</th><td>&nbsp;<code>{value}</code>&nbsp;</td></tr>"
             javadoc += f"{indentation} * </table>"
             javadoc += f"{indentation} */"
             return javadoc + match.group(0)
