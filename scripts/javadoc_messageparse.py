@@ -52,7 +52,7 @@ def add_parse_javadoc(java_file):
             existing_javadoc = re.sub(r'\s*\*\/\s*$', '', javadoc_text)
             javadoc = existing_javadoc
             javadoc += f"{indent} *"
-            javadoc += f"{indent} * <br />"
+            javadoc += f"{indent} * <br>"
             javadoc += f"{indent} *"
         else:
             javadoc = f"{indent}/**\n"

@@ -45,7 +45,7 @@ def convert_message_props(java_file):
             if javadoc_match and javadoc_match.span(0) < match.span(0):
                 javadoc = javadoc_match.group(0).replace('*/', '*')
                 javadoc += f"{indentation} *"
-                javadoc += f"{indentation} * <br />"
+                javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
             else:
                 javadoc = f"{indentation}/**"
@@ -53,12 +53,12 @@ def convert_message_props(java_file):
             if 'MessageType#REQUEST' in props.get('type'):
                 javadoc += f"{indentation} * Request message for {props.get('response')}, opCode {props.get('opCode')}, size {props.get('size')}"
                 javadoc += f"{indentation} *"
-                javadoc += f"{indentation} * <br />"
+                javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
             elif 'MessageType#RESPONSE' in props.get('type'):
                 javadoc += f"{indentation} * Response message for {props.get('request')}, opCode {props.get('opCode')}, size {props.get('size')}"
                 javadoc += f"{indentation} *"
-                javadoc += f"{indentation} * <br />"
+                javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
             javadoc += f"{indentation} * "
             javadoc += f"{indentation} * <table border='1'>"

@@ -257,7 +257,7 @@ def add_buildcargo_javadoc(java_file):
             # merge with existing javadoc
             merged = old_javadoc.rstrip()
             merged = re.sub(r'\s*\*/\s*$', '', merged)  # remove trailing "*/"
-            merged += f"\n{indent} * <br />\n"
+            merged += f"\n{indent} * <br>\n"
             merged += new_table + "\n"
             merged += f"{indent} */\n"
             return merged
