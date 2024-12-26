@@ -16,6 +16,13 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v3
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: run javadoc_messageprops.py
+        run: python3 scripts/javadoc_messageprops.py messages/src/main/java/com/jwoglom/pumpx2/pump/messages/
+
       - name: set up JDK 11
         uses: actions/setup-java@v3
         with:
