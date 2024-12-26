@@ -15,12 +15,12 @@ public class DismissNotificationResponseTest {
         initPumpState("authenticationKey", 0L);
         
         DismissNotificationResponse expected = new DismissNotificationResponse(
-            // 
+            0
         );
 
         DismissNotificationResponse parsedRes = (DismissNotificationResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "001eb91e19003ba8f21fe16f0c1b71446a28fadaa20c0304576230243bfe5a5d",
+                30,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

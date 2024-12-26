@@ -23,7 +23,6 @@ import java.math.BigInteger;
 public class SetG6TransmitterIdResponse extends Message {
     private int status;
 
-
     public SetG6TransmitterIdResponse() {
         this.cargo = EMPTY;
         
@@ -51,7 +50,4 @@ public class SetG6TransmitterIdResponse extends Message {
     public int getStatus() {
         return status;
     }
-
-    
-    
 }

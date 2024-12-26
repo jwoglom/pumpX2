@@ -12,27 +12,40 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-71,
-    size=0,
+    size=1,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
     request=DismissNotificationRequest.class
 )
 public class DismissNotificationResponse extends Message {
-    
-    
+    private int status;
+
     public DismissNotificationResponse() {
         this.cargo = EMPTY;
-        
+
     }
 
-    public void parse(byte[] raw) { 
+    public DismissNotificationResponse(int status) {
+        this.cargo = buildCargo(status);
+        this.status = status;
+
+    }
+
+    public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        
+        this.status = raw[0];
+
     }
 
-    
-    
+    public static byte[] buildCargo(int status) {
+        return Bytes.combine(
+                new byte[]{ (byte) status });
+    }
+
+    public int getStatus() {
+        return status;
+    }
 }

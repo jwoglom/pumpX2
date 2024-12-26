@@ -15,12 +15,12 @@ public class StartG6SensorSessionResponseTest {
         initPumpState("authenticationKey", 0L);
         
         StartG6SensorSessionResponse expected = new StartG6SensorSessionResponse(
-            // int status
+            0
         );
 
         StartG6SensorSessionResponse parsedRes = (StartG6SensorSessionResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "002eb32e1900cbc3f21f0a67a11d39b6d34d4936e72c6cfb468c9a4b768c6115",
+                46,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected
