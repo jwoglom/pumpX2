@@ -24,6 +24,9 @@ public class TempRateResponse extends Message {
     private long duration;
     
     public TempRateResponse() {}
+    public TempRateResponse(byte[] raw) {
+        parse(raw);
+    }
     
     public TempRateResponse(boolean active, int percentage, long startTimeRaw, long duration) {
         this.cargo = buildCargo(active, percentage, startTimeRaw, duration);
@@ -38,7 +41,7 @@ public class TempRateResponse extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.active = raw[0] != 0;
-        this.percentage = raw[1];
+        this.percentage = (int) (raw[1] & 255);
         this.startTimeRaw = Bytes.readUint32(raw, 2);
         this.duration = Bytes.readUint32(raw, 6);
         
