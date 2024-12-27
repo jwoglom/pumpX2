@@ -232,8 +232,8 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <div class="block">
  Byte layout for CGMHistoryLog.buildCargo(...):
  OffsetDescription
- 0<code>new byte[]{...} [element 0]</code>
- 1<code>new byte[]{...} [element 1]</code>
+ 0<code>new byte[]{0} [element 0]</code>
+ 1<code>new byte[]{1} [element 1]</code>
  2<code>toUint32(pumpTimeSec) [byte 0]</code>
  3<code>toUint32(pumpTimeSec) [byte 1]</code>
  4<code>toUint32(pumpTimeSec) [byte 2]</code>
@@ -244,10 +244,10 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
  9<code>toUint32(sequenceNum) [byte 3]</code>
  10<code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 0]</code>
  11<code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 1]</code>
- 12<code>new byte[]{...} [element 0]</code>
- 13<code>new byte[]{...} [element 0]</code>
- 14<code>new byte[]{...} [element 0]</code>
- 15<code>new byte[]{...} [element 0]</code>
+ 12<code>new byte[]{(byte) cgmDataType} [element 0]</code>
+ 13<code>new byte[]{(byte) rate} [element 0]</code>
+ 14<code>new byte[]{(byte) algorithmState} [element 0]</code>
+ 15<code>new byte[]{(byte) rssi} [element 0]</code>
  16<code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 0]</code>
  17<code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 1]</code>
  18<code>toUint32(timeStampSeconds) [byte 0]</code>
@@ -256,8 +256,8 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
  21<code>toUint32(timeStampSeconds) [byte 3]</code>
  22<code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 0]</code>
  23<code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 1]</code>
- 24<code>new byte[]{...} [element 0]</code>
- 25<code>new byte[]{...} [element 0]</code>
+ 24<code>new byte[]{(byte) interval} [element 0]</code>
+ 25<code>new byte[]{1} [element 0]</code>
  </div>
 </td>
 </tr>
@@ -456,8 +456,8 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
 <div class="block"><table border="1">
  <caption>Byte layout for CGMHistoryLog.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>new byte[]{...} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{...} [element 1]</code></td></tr>
+ <tr><td>0</td><td><code>new byte[]{0} [element 0]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{1} [element 1]</code></td></tr>
  <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
  <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
  <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
@@ -468,10 +468,10 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
  <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
  <tr><td>10</td><td><code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 0]</code></td></tr>
  <tr><td>11</td><td><code>firstTwoBytesLittleEndian(glucoseValueStatus) [byte 1]</code></td></tr>
- <tr><td>12</td><td><code>new byte[]{...} [element 0]</code></td></tr>
- <tr><td>13</td><td><code>new byte[]{...} [element 0]</code></td></tr>
- <tr><td>14</td><td><code>new byte[]{...} [element 0]</code></td></tr>
- <tr><td>15</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>12</td><td><code>new byte[]{(byte) cgmDataType} [element 0]</code></td></tr>
+ <tr><td>13</td><td><code>new byte[]{(byte) rate} [element 0]</code></td></tr>
+ <tr><td>14</td><td><code>new byte[]{(byte) algorithmState} [element 0]</code></td></tr>
+ <tr><td>15</td><td><code>new byte[]{(byte) rssi} [element 0]</code></td></tr>
  <tr><td>16</td><td><code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 0]</code></td></tr>
  <tr><td>17</td><td><code>firstTwoBytesLittleEndian(currentGlucoseDisplayValue) [byte 1]</code></td></tr>
  <tr><td>18</td><td><code>toUint32(timeStampSeconds) [byte 0]</code></td></tr>
@@ -480,8 +480,8 @@ extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messag
  <tr><td>21</td><td><code>toUint32(timeStampSeconds) [byte 3]</code></td></tr>
  <tr><td>22</td><td><code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 0]</code></td></tr>
  <tr><td>23</td><td><code>firstTwoBytesLittleEndian(egvInfoBitmask) [byte 1]</code></td></tr>
- <tr><td>24</td><td><code>new byte[]{...} [element 0]</code></td></tr>
- <tr><td>25</td><td><code>new byte[]{...} [element 0]</code></td></tr>
+ <tr><td>24</td><td><code>new byte[]{(byte) interval} [element 0]</code></td></tr>
+ <tr><td>25</td><td><code>new byte[]{1} [element 0]</code></td></tr>
  </table></div>
 </li>
 </ul>

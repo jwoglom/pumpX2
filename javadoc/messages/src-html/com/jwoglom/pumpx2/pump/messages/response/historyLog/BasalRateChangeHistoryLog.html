@@ -72,8 +72,8 @@
 <span class="sourceLineNo">063</span><a id="line.63">     * &lt;table border="1"&gt;</a>
 <span class="sourceLineNo">064</span><a id="line.64">     * &lt;caption&gt;Byte layout for BasalRateChangeHistoryLog.buildCargo(...):&lt;/caption&gt;</a>
 <span class="sourceLineNo">065</span><a id="line.65">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">066</span><a id="line.66">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">067</span><a id="line.67">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{3} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">068</span><a id="line.68">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">069</span><a id="line.69">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">070</span><a id="line.70">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
@@ -96,8 +96,8 @@
 <span class="sourceLineNo">087</span><a id="line.87">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">088</span><a id="line.88">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">089</span><a id="line.89">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">090</span><a id="line.90">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">091</span><a id="line.91">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">090</span><a id="line.90">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) changeType} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">092</span><a id="line.92">     * &lt;/table&gt;</a>
 <span class="sourceLineNo">093</span><a id="line.93">     */</a>
 <span class="sourceLineNo">094</span><a id="line.94">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType) {</a>

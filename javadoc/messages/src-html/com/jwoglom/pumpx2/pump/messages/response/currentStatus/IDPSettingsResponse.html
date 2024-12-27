@@ -100,7 +100,7 @@
 <span class="sourceLineNo">091</span><a id="line.91">     * &lt;table border="1"&gt;</a>
 <span class="sourceLineNo">092</span><a id="line.92">     * &lt;caption&gt;Byte layout for IDPSettingsResponse.buildCargo(...):&lt;/caption&gt;</a>
 <span class="sourceLineNo">093</span><a id="line.93">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">094</span><a id="line.94">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">094</span><a id="line.94">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) idpId} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
@@ -117,12 +117,12 @@
 <span class="sourceLineNo">108</span><a id="line.108">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">109</span><a id="line.109">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">110</span><a id="line.110">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">111</span><a id="line.111">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">111</span><a id="line.111">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) numberOfProfileSegments} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">112</span><a id="line.112">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">113</span><a id="line.113">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">114</span><a id="line.114">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">115</span><a id="line.115">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">116</span><a id="line.116">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">116</span><a id="line.116">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (carbEntry ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">117</span><a id="line.117">     * &lt;/table&gt;</a>
 <span class="sourceLineNo">118</span><a id="line.118">     */</a>
 <span class="sourceLineNo">119</span><a id="line.119">    public static byte[] buildCargo(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {</a>

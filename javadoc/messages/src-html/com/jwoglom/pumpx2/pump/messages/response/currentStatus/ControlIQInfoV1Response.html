@@ -98,16 +98,16 @@
 <span class="sourceLineNo">089</span><a id="line.89">     * &lt;table border="1"&gt;</a>
 <span class="sourceLineNo">090</span><a id="line.90">     * &lt;caption&gt;Byte layout for ControlIQInfoV1Response.buildCargo(...):&lt;/caption&gt;</a>
 <span class="sourceLineNo">091</span><a id="line.91">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">092</span><a id="line.92">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">092</span><a id="line.92">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (closedLoopEnabled ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">093</span><a id="line.93">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">094</span><a id="line.94">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">099</span><a id="line.99">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">100</span><a id="line.100">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">101</span><a id="line.101">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{...} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) weightUnit} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) totalDailyInsulin} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) currentUserModeType} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) byte6} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) byte7} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">100</span><a id="line.100">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) byte8} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) controlStateType} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">102</span><a id="line.102">     * &lt;/table&gt;</a>
 <span class="sourceLineNo">103</span><a id="line.103">     */</a>
 <span class="sourceLineNo">104</span><a id="line.104">    public static byte[] buildCargo(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType) {</a>
