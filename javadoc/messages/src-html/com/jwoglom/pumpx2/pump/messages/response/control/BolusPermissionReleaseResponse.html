@@ -93,35 +93,38 @@
 <span class="sourceLineNo">084</span><a id="line.84">    }</a>
 <span class="sourceLineNo">085</span><a id="line.85"></a>
 <span class="sourceLineNo">086</span><a id="line.86"></a>
-<span class="sourceLineNo">087</span><a id="line.87">    public int getStatus() {</a>
-<span class="sourceLineNo">088</span><a id="line.88">        return status;</a>
-<span class="sourceLineNo">089</span><a id="line.89">    }</a>
-<span class="sourceLineNo">090</span><a id="line.90"></a>
-<span class="sourceLineNo">091</span><a id="line.91">    public ReleaseStatus getReleaseStatus() {</a>
-<span class="sourceLineNo">092</span><a id="line.92">        return ReleaseStatus.fromId(status);</a>
-<span class="sourceLineNo">093</span><a id="line.93">    }</a>
-<span class="sourceLineNo">094</span><a id="line.94"></a>
-<span class="sourceLineNo">095</span><a id="line.95">    public enum ReleaseStatus {</a>
-<span class="sourceLineNo">096</span><a id="line.96">        SUCCESS(0),</a>
-<span class="sourceLineNo">097</span><a id="line.97">        FAILURE(1),</a>
-<span class="sourceLineNo">098</span><a id="line.98"></a>
-<span class="sourceLineNo">099</span><a id="line.99">        ;</a>
-<span class="sourceLineNo">100</span><a id="line.100"></a>
-<span class="sourceLineNo">101</span><a id="line.101">        private final int id;</a>
-<span class="sourceLineNo">102</span><a id="line.102">        ReleaseStatus(int id) {</a>
-<span class="sourceLineNo">103</span><a id="line.103">            this.id = id;</a>
-<span class="sourceLineNo">104</span><a id="line.104">        }</a>
-<span class="sourceLineNo">105</span><a id="line.105"></a>
-<span class="sourceLineNo">106</span><a id="line.106">        public static ReleaseStatus fromId(int id) {</a>
-<span class="sourceLineNo">107</span><a id="line.107">            for (ReleaseStatus r : values()) {</a>
-<span class="sourceLineNo">108</span><a id="line.108">                if (r.id == id) {</a>
-<span class="sourceLineNo">109</span><a id="line.109">                    return r;</a>
-<span class="sourceLineNo">110</span><a id="line.110">                }</a>
-<span class="sourceLineNo">111</span><a id="line.111">            }</a>
-<span class="sourceLineNo">112</span><a id="line.112">            return null;</a>
-<span class="sourceLineNo">113</span><a id="line.113">        }</a>
-<span class="sourceLineNo">114</span><a id="line.114">    }</a>
-<span class="sourceLineNo">115</span><a id="line.115">}</a>
+<span class="sourceLineNo">087</span><a id="line.87">    /**</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * @return 0 if successful</a>
+<span class="sourceLineNo">089</span><a id="line.89">     */</a>
+<span class="sourceLineNo">090</span><a id="line.90">    public int getStatus() {</a>
+<span class="sourceLineNo">091</span><a id="line.91">        return status;</a>
+<span class="sourceLineNo">092</span><a id="line.92">    }</a>
+<span class="sourceLineNo">093</span><a id="line.93"></a>
+<span class="sourceLineNo">094</span><a id="line.94">    public ReleaseStatus getReleaseStatus() {</a>
+<span class="sourceLineNo">095</span><a id="line.95">        return ReleaseStatus.fromId(status);</a>
+<span class="sourceLineNo">096</span><a id="line.96">    }</a>
+<span class="sourceLineNo">097</span><a id="line.97"></a>
+<span class="sourceLineNo">098</span><a id="line.98">    public enum ReleaseStatus {</a>
+<span class="sourceLineNo">099</span><a id="line.99">        SUCCESS(0),</a>
+<span class="sourceLineNo">100</span><a id="line.100">        FAILURE(1),</a>
+<span class="sourceLineNo">101</span><a id="line.101"></a>
+<span class="sourceLineNo">102</span><a id="line.102">        ;</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">        private final int id;</a>
+<span class="sourceLineNo">105</span><a id="line.105">        ReleaseStatus(int id) {</a>
+<span class="sourceLineNo">106</span><a id="line.106">            this.id = id;</a>
+<span class="sourceLineNo">107</span><a id="line.107">        }</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">        public static ReleaseStatus fromId(int id) {</a>
+<span class="sourceLineNo">110</span><a id="line.110">            for (ReleaseStatus r : values()) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">                if (r.id == id) {</a>
+<span class="sourceLineNo">112</span><a id="line.112">                    return r;</a>
+<span class="sourceLineNo">113</span><a id="line.113">                }</a>
+<span class="sourceLineNo">114</span><a id="line.114">            }</a>
+<span class="sourceLineNo">115</span><a id="line.115">            return null;</a>
+<span class="sourceLineNo">116</span><a id="line.116">        }</a>
+<span class="sourceLineNo">117</span><a id="line.117">    }</a>
+<span class="sourceLineNo">118</span><a id="line.118">}</a>
 
 
 

@@ -154,42 +154,45 @@
 <span class="sourceLineNo">145</span><a id="line.145">            Bytes.toUint32(extendedBolusDuration),</a>
 <span class="sourceLineNo">146</span><a id="line.146">            Bytes.toUint32(requestedVolume));</a>
 <span class="sourceLineNo">147</span><a id="line.147">    }</a>
-<span class="sourceLineNo">148</span><a id="line.148">    </a>
-<span class="sourceLineNo">149</span><a id="line.149">    public int getStatus() {</a>
-<span class="sourceLineNo">150</span><a id="line.150">        return status;</a>
-<span class="sourceLineNo">151</span><a id="line.151">    }</a>
-<span class="sourceLineNo">152</span><a id="line.152">    public int getBolusId() {</a>
-<span class="sourceLineNo">153</span><a id="line.153">        return bolusId;</a>
+<span class="sourceLineNo">148</span><a id="line.148"></a>
+<span class="sourceLineNo">149</span><a id="line.149">    /**</a>
+<span class="sourceLineNo">150</span><a id="line.150">     * @return 0 if successful</a>
+<span class="sourceLineNo">151</span><a id="line.151">     */</a>
+<span class="sourceLineNo">152</span><a id="line.152">    public int getStatus() {</a>
+<span class="sourceLineNo">153</span><a id="line.153">        return status;</a>
 <span class="sourceLineNo">154</span><a id="line.154">    }</a>
-<span class="sourceLineNo">155</span><a id="line.155">    public long getTimestamp() {</a>
-<span class="sourceLineNo">156</span><a id="line.156">        return timestamp;</a>
+<span class="sourceLineNo">155</span><a id="line.155">    public int getBolusId() {</a>
+<span class="sourceLineNo">156</span><a id="line.156">        return bolusId;</a>
 <span class="sourceLineNo">157</span><a id="line.157">    }</a>
-<span class="sourceLineNo">158</span><a id="line.158"></a>
-<span class="sourceLineNo">159</span><a id="line.159">    @Override</a>
-<span class="sourceLineNo">160</span><a id="line.160">    public Instant getTimestampInstant() {</a>
-<span class="sourceLineNo">161</span><a id="line.161">        return Dates.fromJan12008EpochSecondsToDate(timestamp);</a>
-<span class="sourceLineNo">162</span><a id="line.162">    }</a>
-<span class="sourceLineNo">163</span><a id="line.163"></a>
-<span class="sourceLineNo">164</span><a id="line.164">    public long getDeliveredVolume() {</a>
-<span class="sourceLineNo">165</span><a id="line.165">        return deliveredVolume;</a>
-<span class="sourceLineNo">166</span><a id="line.166">    }</a>
-<span class="sourceLineNo">167</span><a id="line.167">    public int getBolusStatusId() {</a>
-<span class="sourceLineNo">168</span><a id="line.168">        return bolusStatusId;</a>
+<span class="sourceLineNo">158</span><a id="line.158">    public long getTimestamp() {</a>
+<span class="sourceLineNo">159</span><a id="line.159">        return timestamp;</a>
+<span class="sourceLineNo">160</span><a id="line.160">    }</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">    @Override</a>
+<span class="sourceLineNo">163</span><a id="line.163">    public Instant getTimestampInstant() {</a>
+<span class="sourceLineNo">164</span><a id="line.164">        return Dates.fromJan12008EpochSecondsToDate(timestamp);</a>
+<span class="sourceLineNo">165</span><a id="line.165">    }</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">    public long getDeliveredVolume() {</a>
+<span class="sourceLineNo">168</span><a id="line.168">        return deliveredVolume;</a>
 <span class="sourceLineNo">169</span><a id="line.169">    }</a>
-<span class="sourceLineNo">170</span><a id="line.170">    public int getBolusSourceId() {</a>
-<span class="sourceLineNo">171</span><a id="line.171">        return bolusSourceId;</a>
+<span class="sourceLineNo">170</span><a id="line.170">    public int getBolusStatusId() {</a>
+<span class="sourceLineNo">171</span><a id="line.171">        return bolusStatusId;</a>
 <span class="sourceLineNo">172</span><a id="line.172">    }</a>
-<span class="sourceLineNo">173</span><a id="line.173">    public int getBolusTypeBitmask() {</a>
-<span class="sourceLineNo">174</span><a id="line.174">        return bolusTypeBitmask;</a>
+<span class="sourceLineNo">173</span><a id="line.173">    public int getBolusSourceId() {</a>
+<span class="sourceLineNo">174</span><a id="line.174">        return bolusSourceId;</a>
 <span class="sourceLineNo">175</span><a id="line.175">    }</a>
-<span class="sourceLineNo">176</span><a id="line.176">    public long getExtendedBolusDuration() {</a>
-<span class="sourceLineNo">177</span><a id="line.177">        return extendedBolusDuration;</a>
+<span class="sourceLineNo">176</span><a id="line.176">    public int getBolusTypeBitmask() {</a>
+<span class="sourceLineNo">177</span><a id="line.177">        return bolusTypeBitmask;</a>
 <span class="sourceLineNo">178</span><a id="line.178">    }</a>
-<span class="sourceLineNo">179</span><a id="line.179">    public long getRequestedVolume() {</a>
-<span class="sourceLineNo">180</span><a id="line.180">        return requestedVolume;</a>
+<span class="sourceLineNo">179</span><a id="line.179">    public long getExtendedBolusDuration() {</a>
+<span class="sourceLineNo">180</span><a id="line.180">        return extendedBolusDuration;</a>
 <span class="sourceLineNo">181</span><a id="line.181">    }</a>
-<span class="sourceLineNo">182</span><a id="line.182">    </a>
-<span class="sourceLineNo">183</span><a id="line.183">}</a>
+<span class="sourceLineNo">182</span><a id="line.182">    public long getRequestedVolume() {</a>
+<span class="sourceLineNo">183</span><a id="line.183">        return requestedVolume;</a>
+<span class="sourceLineNo">184</span><a id="line.184">    }</a>
+<span class="sourceLineNo">185</span><a id="line.185">    </a>
+<span class="sourceLineNo">186</span><a id="line.186">}</a>
 
 
 

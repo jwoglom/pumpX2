@@ -97,50 +97,53 @@
 <span class="sourceLineNo">088</span><a id="line.88">            new byte[]{ 0, 0},</a>
 <span class="sourceLineNo">089</span><a id="line.89">            new byte[]{ (byte) statusType });</a>
 <span class="sourceLineNo">090</span><a id="line.90">    }</a>
-<span class="sourceLineNo">091</span><a id="line.91">    </a>
-<span class="sourceLineNo">092</span><a id="line.92">    public int getStatus() {</a>
-<span class="sourceLineNo">093</span><a id="line.93">        return status;</a>
-<span class="sourceLineNo">094</span><a id="line.94">    }</a>
-<span class="sourceLineNo">095</span><a id="line.95">    public int getBolusId() {</a>
-<span class="sourceLineNo">096</span><a id="line.96">        return bolusId;</a>
+<span class="sourceLineNo">091</span><a id="line.91"></a>
+<span class="sourceLineNo">092</span><a id="line.92">    /**</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * @return 0 if successful</a>
+<span class="sourceLineNo">094</span><a id="line.94">     */</a>
+<span class="sourceLineNo">095</span><a id="line.95">    public int getStatus() {</a>
+<span class="sourceLineNo">096</span><a id="line.96">        return status;</a>
 <span class="sourceLineNo">097</span><a id="line.97">    }</a>
-<span class="sourceLineNo">098</span><a id="line.98">    public int getStatusTypeId() {</a>
-<span class="sourceLineNo">099</span><a id="line.99">        return statusTypeId;</a>
+<span class="sourceLineNo">098</span><a id="line.98">    public int getBolusId() {</a>
+<span class="sourceLineNo">099</span><a id="line.99">        return bolusId;</a>
 <span class="sourceLineNo">100</span><a id="line.100">    }</a>
-<span class="sourceLineNo">101</span><a id="line.101">    public BolusResponseStatus getStatusType() {</a>
-<span class="sourceLineNo">102</span><a id="line.102">        return BolusResponseStatus.fromId(statusTypeId);</a>
+<span class="sourceLineNo">101</span><a id="line.101">    public int getStatusTypeId() {</a>
+<span class="sourceLineNo">102</span><a id="line.102">        return statusTypeId;</a>
 <span class="sourceLineNo">103</span><a id="line.103">    }</a>
-<span class="sourceLineNo">104</span><a id="line.104"></a>
-<span class="sourceLineNo">105</span><a id="line.105"></a>
-<span class="sourceLineNo">106</span><a id="line.106">    // identical to ChangeReason??</a>
-<span class="sourceLineNo">107</span><a id="line.107">    public enum BolusResponseStatus {</a>
-<span class="sourceLineNo">108</span><a id="line.108">        SUCCESS(0), // 0 = successBolusIsPending</a>
-<span class="sourceLineNo">109</span><a id="line.109">        REVOKED_PRIORITY(2)</a>
-<span class="sourceLineNo">110</span><a id="line.110"></a>
-<span class="sourceLineNo">111</span><a id="line.111">        ;</a>
-<span class="sourceLineNo">112</span><a id="line.112"></a>
-<span class="sourceLineNo">113</span><a id="line.113">        private final int id;</a>
-<span class="sourceLineNo">114</span><a id="line.114">        BolusResponseStatus(int id) {</a>
-<span class="sourceLineNo">115</span><a id="line.115">            this.id = id;</a>
-<span class="sourceLineNo">116</span><a id="line.116">        }</a>
-<span class="sourceLineNo">117</span><a id="line.117"></a>
-<span class="sourceLineNo">118</span><a id="line.118">        public static BolusResponseStatus fromId(int id) {</a>
-<span class="sourceLineNo">119</span><a id="line.119">            for (BolusResponseStatus s : values()) {</a>
-<span class="sourceLineNo">120</span><a id="line.120">                if (s.id == id) {</a>
-<span class="sourceLineNo">121</span><a id="line.121">                    return s;</a>
-<span class="sourceLineNo">122</span><a id="line.122">                }</a>
-<span class="sourceLineNo">123</span><a id="line.123">            }</a>
-<span class="sourceLineNo">124</span><a id="line.124">            return null;</a>
-<span class="sourceLineNo">125</span><a id="line.125">        }</a>
-<span class="sourceLineNo">126</span><a id="line.126">    }</a>
-<span class="sourceLineNo">127</span><a id="line.127"></a>
-<span class="sourceLineNo">128</span><a id="line.128">    /**</a>
-<span class="sourceLineNo">129</span><a id="line.129">     * @return true when bolus was initiated</a>
-<span class="sourceLineNo">130</span><a id="line.130">     */</a>
-<span class="sourceLineNo">131</span><a id="line.131">    public boolean wasBolusInitiated() {</a>
-<span class="sourceLineNo">132</span><a id="line.132">        return status == 0 &amp;&amp; getStatusType() == BolusResponseStatus.SUCCESS;</a>
-<span class="sourceLineNo">133</span><a id="line.133">    }</a>
-<span class="sourceLineNo">134</span><a id="line.134">}</a>
+<span class="sourceLineNo">104</span><a id="line.104">    public BolusResponseStatus getStatusType() {</a>
+<span class="sourceLineNo">105</span><a id="line.105">        return BolusResponseStatus.fromId(statusTypeId);</a>
+<span class="sourceLineNo">106</span><a id="line.106">    }</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">    // identical to ChangeReason??</a>
+<span class="sourceLineNo">110</span><a id="line.110">    public enum BolusResponseStatus {</a>
+<span class="sourceLineNo">111</span><a id="line.111">        SUCCESS(0), // 0 = successBolusIsPending</a>
+<span class="sourceLineNo">112</span><a id="line.112">        REVOKED_PRIORITY(2)</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">        ;</a>
+<span class="sourceLineNo">115</span><a id="line.115"></a>
+<span class="sourceLineNo">116</span><a id="line.116">        private final int id;</a>
+<span class="sourceLineNo">117</span><a id="line.117">        BolusResponseStatus(int id) {</a>
+<span class="sourceLineNo">118</span><a id="line.118">            this.id = id;</a>
+<span class="sourceLineNo">119</span><a id="line.119">        }</a>
+<span class="sourceLineNo">120</span><a id="line.120"></a>
+<span class="sourceLineNo">121</span><a id="line.121">        public static BolusResponseStatus fromId(int id) {</a>
+<span class="sourceLineNo">122</span><a id="line.122">            for (BolusResponseStatus s : values()) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">                if (s.id == id) {</a>
+<span class="sourceLineNo">124</span><a id="line.124">                    return s;</a>
+<span class="sourceLineNo">125</span><a id="line.125">                }</a>
+<span class="sourceLineNo">126</span><a id="line.126">            }</a>
+<span class="sourceLineNo">127</span><a id="line.127">            return null;</a>
+<span class="sourceLineNo">128</span><a id="line.128">        }</a>
+<span class="sourceLineNo">129</span><a id="line.129">    }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">    /**</a>
+<span class="sourceLineNo">132</span><a id="line.132">     * @return true when bolus was initiated</a>
+<span class="sourceLineNo">133</span><a id="line.133">     */</a>
+<span class="sourceLineNo">134</span><a id="line.134">    public boolean wasBolusInitiated() {</a>
+<span class="sourceLineNo">135</span><a id="line.135">        return status == 0 &amp;&amp; getStatusType() == BolusResponseStatus.SUCCESS;</a>
+<span class="sourceLineNo">136</span><a id="line.136">    }</a>
+<span class="sourceLineNo">137</span><a id="line.137">}</a>
 
 
 
