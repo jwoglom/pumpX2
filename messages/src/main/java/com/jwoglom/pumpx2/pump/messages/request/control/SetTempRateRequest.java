@@ -10,6 +10,9 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetTempRateResponse;
 
+/**
+ * Sets a temp rate for basal delivery. Note that ControlIQ must be off before setting a temp rate.
+ */
 @MessageProps(
     opCode=-92,
     size=6, // 30 with signed
@@ -32,6 +35,12 @@ public class SetTempRateRequest extends Message {
         parse(raw);
     }
 
+    /**
+     * Sets a temp rate for basal delivery.
+     *
+     * @param minutes between 15 minutes and 72 hours. durations shorter than 15 minutes are not supported and the pump will return an error
+     * @param percent between 0 percent and 250 percent. values above 250% are not supported and the pump will return an error
+     */
     public SetTempRateRequest(int minutes, int percent) {
         Preconditions.checkArgument(minutes >= 15 && minutes <= 72*60, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");
         Preconditions.checkArgument(percent >= 0 && percent <= 250, "percent temp rate must be between 0-250%");
