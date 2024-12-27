@@ -41,7 +41,10 @@ public class HistoryLogResponse extends Message {
             new byte[]{ (byte) status }, 
             new byte[]{ (byte) streamId });
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

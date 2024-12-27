@@ -40,6 +40,9 @@ public class StopTempRateResponse extends Message {
         
     }
 
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

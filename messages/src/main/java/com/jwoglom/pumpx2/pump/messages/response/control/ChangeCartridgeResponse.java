@@ -56,7 +56,10 @@ public class ChangeCartridgeResponse extends Message {
             new byte[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0}
         );
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

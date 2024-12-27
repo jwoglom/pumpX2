@@ -128,6 +128,9 @@ public class RemindersResponse extends Message {
     public int getSiteChangeDays() {
         return siteChangeDays;
     }
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

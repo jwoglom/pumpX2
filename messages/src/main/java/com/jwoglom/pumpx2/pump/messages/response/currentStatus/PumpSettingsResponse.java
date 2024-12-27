@@ -80,6 +80,9 @@ public class PumpSettingsResponse extends Message {
     public int getOledTimeout() {
         return oledTimeout;
     }
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

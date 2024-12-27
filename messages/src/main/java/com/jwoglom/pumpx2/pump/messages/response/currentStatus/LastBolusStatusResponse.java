@@ -80,6 +80,9 @@ public class LastBolusStatusResponse extends LastBolusStatusAbstractResponse {
         );
     }
 
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

@@ -42,6 +42,9 @@ public class SetQuickBolusSettingsResponse extends Message {
     }
 
 
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

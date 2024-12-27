@@ -81,7 +81,10 @@ public class LastBolusStatusV2Response extends LastBolusStatusAbstractResponse {
             Bytes.toUint32(extendedBolusDuration),
             Bytes.toUint32(requestedVolume));
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

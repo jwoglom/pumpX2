@@ -49,6 +49,7 @@ public class UnknownMobiOpcodeNeg124Response extends Message {
         return new byte[]{(byte) status};
     }
 
+
     public int getStatus() {
         return status;
     }

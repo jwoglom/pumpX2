@@ -51,7 +51,10 @@ public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
             new byte[]{ (byte) supportedFeaturesIndex }, 
             Bytes.toUint32(pumpFeaturesBitmask));
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

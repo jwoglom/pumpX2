@@ -50,6 +50,9 @@ public class SetModesResponse extends Message {
             new byte[]{(byte) status});
     }
 
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

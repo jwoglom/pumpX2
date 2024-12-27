@@ -41,6 +41,9 @@ public class RemoteCarbEntryResponse extends Message {
         this.status = raw[0];
     }
 
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

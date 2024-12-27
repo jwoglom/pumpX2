@@ -53,7 +53,10 @@ public class BolusPermissionResponse extends Message {
             new byte[]{ (byte) nackReason }
         );
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

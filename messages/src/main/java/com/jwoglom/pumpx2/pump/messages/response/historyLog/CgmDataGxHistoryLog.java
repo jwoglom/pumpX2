@@ -70,6 +70,7 @@ public class CgmDataGxHistoryLog extends HistoryLog {
             Bytes.toUint32(timestamp), 
             Bytes.toUint32(transmitterTimestamp)));
     }
+
     public int getStatus() {
         return status;
     }

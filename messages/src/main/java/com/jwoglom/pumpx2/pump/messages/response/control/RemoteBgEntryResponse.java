@@ -46,7 +46,9 @@ public class RemoteBgEntryResponse extends Message {
             new byte[]{ (byte) status });
     }
 
-    // 0 = success
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

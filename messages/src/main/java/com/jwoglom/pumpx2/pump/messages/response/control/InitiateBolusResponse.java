@@ -51,7 +51,10 @@ public class InitiateBolusResponse extends Message {
             new byte[]{ 0, 0},
             new byte[]{ (byte) statusType });
     }
-    
+
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }

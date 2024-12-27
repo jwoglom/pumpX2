@@ -45,7 +45,9 @@ public class StopG6SensorSessionResponse extends Message {
     }
 
 
-    // 0 = success
+    /**
+     * @return 0 if successful
+     */
     public int getStatus() {
         return status;
     }
