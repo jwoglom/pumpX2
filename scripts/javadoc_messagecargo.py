@@ -137,8 +137,8 @@ def add_buildcargo_javadoc(java_file):
             if inside:
                 elems = [x.strip() for x in inside.group(1).split(',') if x.strip()]
                 lines = []
-                for i, _ in enumerate(elems):
-                    desc = f"new byte[]{{...}} [element {i}]"
+                for i, v in enumerate(elems):
+                    desc = f"new byte[]{{{v}}} [element {i}]"
                     lines.append((start_offset + i, desc))
                 return lines
             return []
