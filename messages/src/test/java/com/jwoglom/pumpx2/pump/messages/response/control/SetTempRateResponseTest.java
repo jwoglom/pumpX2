@@ -3,6 +3,8 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
+import static org.junit.Assert.assertEquals;
+
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -39,5 +41,17 @@ public class SetTempRateResponseTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+
+    @Test
+    public void testSetTempRateResponse_failed() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        SetTempRateResponse expected = new SetTempRateResponse(
+                new byte[]{1,0,0,1}
+        );
+
+        assertEquals(1, expected.getStatus());
     }
 }

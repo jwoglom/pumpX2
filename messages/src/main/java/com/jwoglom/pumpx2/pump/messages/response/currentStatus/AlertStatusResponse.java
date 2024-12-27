@@ -27,6 +27,10 @@ public class AlertStatusResponse extends Message {
         this.intMap = intMap;
     }
 
+    public AlertStatusResponse(byte[] raw) {
+        parse(raw);
+    }
+
     private static byte[] buildCargo(BigInteger byte0uint64) {
         return Bytes.toUint64(byte0uint64.longValue());
     }

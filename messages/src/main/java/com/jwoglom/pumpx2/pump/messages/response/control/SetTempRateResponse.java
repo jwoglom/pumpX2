@@ -50,6 +50,9 @@ public class SetTempRateResponse extends Message {
     }
 
 
+    /**
+     * @return 0 if successful otherwise unsuccessful
+     */
     public int getStatus() {
         return status;
     }
