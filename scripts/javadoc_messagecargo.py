@@ -141,7 +141,7 @@ def add_buildcargo_javadoc(java_file):
                     if v.strip().startswith("(byte)"):
                         lines.append((start_offset, v))
                     else:
-                        lines.append((start_offset, f"(byte) ({v})")
+                        lines.append((start_offset, f"(byte) ({v})"))
                 else:
                     for i, v in enumerate(elems):
                         desc = f"new byte[]{{{v}}} [element {i}]"
