@@ -91,7 +91,7 @@
 <span class="sourceLineNo">082</span><a id="line.82">     * &lt;table border="1"&gt;</a>
 <span class="sourceLineNo">083</span><a id="line.83">     * &lt;caption&gt;Byte layout for CurrentBolusStatusResponse.buildCargo(...):&lt;/caption&gt;</a>
 <span class="sourceLineNo">084</span><a id="line.84">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">085</span><a id="line.85">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) status} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">086</span><a id="line.86">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">087</span><a id="line.87">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">088</span><a id="line.88">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
@@ -104,8 +104,8 @@
 <span class="sourceLineNo">095</span><a id="line.95">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(requestedVolume) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">096</span><a id="line.96">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(requestedVolume) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">097</span><a id="line.97">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(requestedVolume) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) bolusSource} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">099</span><a id="line.99">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) bolusTypeBitmask} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bolusSource&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bolusTypeBitmask&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">100</span><a id="line.100">     * &lt;/table&gt;</a>
 <span class="sourceLineNo">101</span><a id="line.101">     */</a>
 <span class="sourceLineNo">102</span><a id="line.102">    public static byte[] buildCargo(int status, int bolusId, long timestamp, long requestedVolume, int bolusSource, int bolusTypeBitmask) {</a>

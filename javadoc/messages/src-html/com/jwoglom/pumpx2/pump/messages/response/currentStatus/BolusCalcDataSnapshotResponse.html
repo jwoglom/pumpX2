@@ -123,7 +123,7 @@
 <span class="sourceLineNo">114</span><a id="line.114">     * &lt;table border="1"&gt;</a>
 <span class="sourceLineNo">115</span><a id="line.115">     * &lt;caption&gt;Byte layout for BolusCalcDataSnapshotResponse.buildCargo(...):&lt;/caption&gt;</a>
 <span class="sourceLineNo">116</span><a id="line.116">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">117</span><a id="line.117">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (isUnacked ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">117</span><a id="line.117">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (isUnacked ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">118</span><a id="line.118">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(correctionFactor) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">119</span><a id="line.119">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(correctionFactor) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">120</span><a id="line.120">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(iob) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
@@ -136,7 +136,7 @@
 <span class="sourceLineNo">127</span><a id="line.127">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">128</span><a id="line.128">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">129</span><a id="line.129">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">130</span><a id="line.130">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (carbEntryEnabled ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">130</span><a id="line.130">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (carbEntryEnabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">131</span><a id="line.131">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(carbRatio) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">132</span><a id="line.132">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(carbRatio) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">133</span><a id="line.133">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(carbRatio) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
@@ -147,9 +147,9 @@
 <span class="sourceLineNo">138</span><a id="line.138">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(maxBolusHourlyTotal) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">139</span><a id="line.139">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(maxBolusHourlyTotal) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">140</span><a id="line.140">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(maxBolusHourlyTotal) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">141</span><a id="line.141">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (maxBolusEventsExceeded ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">142</span><a id="line.142">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (maxIobEventsExceeded ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">143</span><a id="line.143">     * &lt;tr&gt;&lt;td&gt;26&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) (isAutopopAllowed ? 1 : 0)} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">141</span><a id="line.141">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (maxBolusEventsExceeded ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">142</span><a id="line.142">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (maxIobEventsExceeded ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">143</span><a id="line.143">     * &lt;tr&gt;&lt;td&gt;26&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (isAutopopAllowed ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
 <span class="sourceLineNo">144</span><a id="line.144">     * &lt;/table&gt;</a>
 <span class="sourceLineNo">145</span><a id="line.145">     */</a>
 <span class="sourceLineNo">146</span><a id="line.146">    public static byte[] buildCargo(boolean isUnacked, int correctionFactor, long iob, int cartridgeRemainingInsulin, int targetBg, int isf, boolean carbEntryEnabled, long carbRatio, int maxBolusAmount, long maxBolusHourlyTotal, boolean maxBolusEventsExceeded, boolean maxIobEventsExceeded, boolean isAutopopAllowed, byte[] unknown11bytes, byte[] unknown8bytes) {</a>
