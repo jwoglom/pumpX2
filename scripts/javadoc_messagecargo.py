@@ -138,6 +138,7 @@ def add_buildcargo_javadoc(java_file):
                 elems = [x.strip() for x in inside.group(1).split(',') if x.strip()]
                 lines = []
                 if len(elems) == 1:
+                    v = elems[0]
                     if v.strip().startswith("(byte)"):
                         lines.append((start_offset, v))
                     else:
