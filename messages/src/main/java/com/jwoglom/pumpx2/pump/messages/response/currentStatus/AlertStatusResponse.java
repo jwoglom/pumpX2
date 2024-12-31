@@ -74,7 +74,9 @@ public class AlertStatusResponse extends Message {
         SENSOR_EXPIRING_ALERT(22),
         PUMP_REBOOTING_ALERT(23),
         DEVICE_CONNECTION_ERROR(24),
-        CGM_GRAPH_REMOVED(25),
+        CGM_GRAPH_REMOVED(25,
+                "It has been 24 hours since your last sensor session ended, so your " +
+                          "current glucose reading now displays the last glucose value entered in the bolus calculator."),
         MIN_BASAL_ALERT2(26),
         INCOMPLETE_CALIBRATION(27),
         CALIBRATION_TIMEOUT(28),
@@ -115,12 +117,23 @@ public class AlertStatusResponse extends Message {
         ;
 
         private final int bitmask;
+        private final String description;
         AlertResponseType(int bitmask) {
             this.bitmask = bitmask;
+            this.description = null;
+        }
+
+        AlertResponseType(int bitmask, String description) {
+            this.bitmask = bitmask;
+            this.description = description;
         }
 
         public int bitmask() {
             return bitmask;
+        }
+
+        public String getDescription() {
+            return description;
         }
 
         public String toString() {

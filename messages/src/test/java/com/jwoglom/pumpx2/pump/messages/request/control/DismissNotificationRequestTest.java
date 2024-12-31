@@ -31,4 +31,25 @@ public class DismissNotificationRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
+
+    @Test
+    public void testDismissNotificationRequest_alert_CGM_GRAPH_REMOVED() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        DismissNotificationRequest expected = new DismissNotificationRequest(
+                new byte[]{25,0,0,0,1,0}
+        );
+
+        DismissNotificationRequest parsedReq = (DismissNotificationRequest) MessageTester.test(
+                "01ddb8dd1e1900000001001b92f41f4ebdd42d94",
+                -35,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "00dd71575252fcc1476112db4196041031cf27"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }
