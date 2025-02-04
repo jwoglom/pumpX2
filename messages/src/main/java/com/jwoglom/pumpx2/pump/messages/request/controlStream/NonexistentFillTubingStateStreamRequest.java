@@ -5,10 +5,9 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;
-import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 
 /**
- * This message is used as a paired request message for PumpingStateStreamResponse,
+ * This message is used as a paired request message for ControlStreamNeg27Response,
  * which does not have an originating request.
  */
 @MessageProps(
@@ -20,9 +19,9 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResp
         stream=true,
         signed=true
 )
-public class NonexistentPumpingStateStreamRequest extends Message {
+public class NonexistentFillTubingStateStreamRequest extends Message {
 
-    public NonexistentPumpingStateStreamRequest() {
+    public NonexistentFillTubingStateStreamRequest() {
         this.cargo = EMPTY;
     }
 

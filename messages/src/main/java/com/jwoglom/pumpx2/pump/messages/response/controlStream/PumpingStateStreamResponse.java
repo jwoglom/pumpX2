@@ -35,6 +35,7 @@ public class PumpingStateStreamResponse extends Message {
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.isPumpingStateSetAfterStartUp = raw[0] != 0;

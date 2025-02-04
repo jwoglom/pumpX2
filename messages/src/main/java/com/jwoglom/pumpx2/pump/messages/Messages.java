@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyR
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillTubingStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -172,6 +173,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.PlaySoundRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -268,6 +270,7 @@ public enum Messages {
     STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
     DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
+    CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
     // MESSAGES_END
     ;
 

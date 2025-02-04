@@ -66,6 +66,8 @@ public class Main {
         String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");
         if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
+        } else {
+            PumpStateSupplier.pumpTimeSinceReset = () -> 0L;
         }
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
 

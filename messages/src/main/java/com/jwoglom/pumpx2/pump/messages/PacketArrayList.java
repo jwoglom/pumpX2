@@ -95,7 +95,7 @@ public class PacketArrayList {
             ok = false;
         }
         // the fullCargo size is 2 + the message length.
-        L.d(TAG, "validate fullCargo size="+fullCargo.length);
+        L.d(TAG, "validate fullCargo size="+fullCargo.length+" ok="+ok);
         if (!ok) {
             if (shouldIgnoreInvalidHmac(authKey)) {
                 L.e(TAG, "CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
@@ -109,15 +109,13 @@ public class PacketArrayList {
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, authKey);
             if (!Arrays.equals(expectedHmac, hmacSha)) {
+                L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
                 if (shouldIgnoreInvalidHmac(authKey)) {
                     return true;
                 }
-                L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
 
-                // TEMPORARY
-                return true;
-                //throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
-                //return false;
+
+                throw new InvalidSignedMessageHMACSignatureException("Pump response invalid: SIGNATURE");
             }
         }
         return ok;

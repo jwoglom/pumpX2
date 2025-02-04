@@ -14,9 +14,9 @@ public class StreamPacketArrayList extends PacketArrayList {
 
     private byte[] originalMessageData = new byte[0];
 
-    // Streams don't have transaction IDs
+    // Streams sometimes(?) have transaction IDs
     public StreamPacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
-        super(expectedopCode, expectedCargoSize, (byte) 0, isSigned);
+        super(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
     }
 
     public void validatePacket(byte[] packetData) {
@@ -61,7 +61,7 @@ public class StreamPacketArrayList extends PacketArrayList {
     }
 
     protected void parse(byte[] bArr) {
-        L.d(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));
+        L.d(TAG, String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
         if (opCode == this.expectedOpCode) {
@@ -69,30 +69,46 @@ public class StreamPacketArrayList extends PacketArrayList {
             this.opCode = bArr[2];
             byte txId = bArr[3];
 
-            // Replace cargo size
-            expectedCargoSize = cargoSize;
             if (txId != this.expectedTxId) {
                 throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
-            } else if (cargoSize <= 255) {
-                byte numHistoryLogs = bArr[5];
-                if (cargoSize == (numHistoryLogs*26) + 2) {
-                    this.fullCargo = Bytes.dropFirstN(bArr, 5);
-                    this.empty = false;
-                    return;
+            } else if (cargoSize != this.actualExpectedCargoSize) {
+                if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
+                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    this.expectedCargoSize += 24;
+                    this.actualExpectedCargoSize += 24;
+                } else {
+                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);
                 }
-                throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");
-            } else {
-                throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
+            }
+            this.fullCargo = Bytes.dropFirstN(bArr, 5);
+
+            // specific checks for HistoryLog stream
+            if ((byte) opCode == -127) {
+                if (cargoSize <= 255) {
+                    byte numHistoryLogs = bArr[5];
+                    if (cargoSize == (numHistoryLogs * 26) + 2) {
+                        this.fullCargo = Bytes.dropFirstN(bArr, 5);
+                        this.empty = false;
+                        return;
+                    }
+                    throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");
+                } else {
+                    throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
+                }
+
             }
         } else {
             throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);
         }
+
+        L.d(TAG, "StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
+
     }
 
 
     private boolean moreHistoryLogsRemaining() {
         if (firstByteMod15 == 0) {
-            return !validate("");
+            return !validate(new byte[0]);
         }
         return firstByteMod15 > 0;
     }
@@ -113,16 +129,19 @@ public class StreamPacketArrayList extends PacketArrayList {
         }
     }
 
-    public boolean validate(String authKey) {
-        createMessageData();
-        setExpectedCRC();
-
-        byte[] crcOut = Bytes.calculateCRC16(messageData);
-        if (crcOut[0] == expectedCrc[0] && crcOut[1] == expectedCrc[1]) {
-            return true;
-        }
-
-        throw new IllegalArgumentException("CRC error with history log: originalMessageData: "+ Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));
-
-    }
+//    public boolean validate(String authKey) {
+//        if (needsMorePacket()) {
+//            return false;
+//        }
+//
+//        createMessageData();
+//        setExpectedCRC();
+//
+//        byte[] crcOut = Bytes.calculateCRC16(messageData);
+//        if (crcOut[0] == expectedCrc[0] && crcOut[1] == expectedCrc[1]) {
+//            return true;
+//        }
+//
+//        throw new IllegalArgumentException("CRC error for stream packet: originalMessageData: "+ Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));
+//    }
 }
