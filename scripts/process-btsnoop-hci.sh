@@ -16,8 +16,9 @@ else
   exit 1
 fi
 
-if [[ -f "$keyfile" ]]; then
+if [[ -f "$keyfile" && "$PUMP_AUTHENTICATION_KEY" == "" ]]; then
   echo "Using existent keyfile $keyfile: $(cat $keyfile)"
+  PUMP_AUTHENTICATION_KEY=$(cat $keyfile)
 elif [[ "$PUMP_AUTHENTICATION_KEY" == "" ]]; then
   echo "============================================">&2
   echo "WARNING: PUMP_AUTHENTICATION_KEY is not set.">&2
@@ -44,4 +45,4 @@ fi
 tshark -r $log -T fields -E separator=, -E quote=d -e frame.number -e btatt.opcode -e btatt.value -e btatt.uuid128 -e frame.time_epoch 'btatt.value' > $csv
 
 echo Parsing...
-$repoRoot/scripts/wireshark-csv-to-jsonl.py $csv > $jsonl 2> $stderr
+PUMP_AUTHENTICATION_KEY=$PUMP_AUTHENTICATION_KEY $repoRoot/scripts/wireshark-csv-to-jsonl.py $csv > $jsonl 2> $stderr
