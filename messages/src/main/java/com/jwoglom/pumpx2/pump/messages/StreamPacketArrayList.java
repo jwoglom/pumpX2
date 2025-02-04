@@ -105,43 +105,4 @@ public class StreamPacketArrayList extends PacketArrayList {
 
     }
 
-
-    private boolean moreHistoryLogsRemaining() {
-        if (firstByteMod15 == 0) {
-            return !validate(new byte[0]);
-        }
-        return firstByteMod15 > 0;
-    }
-
-//    private void rebuildMessageDataForCRC() {
-//        originalMessageData = messageData;
-//        messageData = Bytes.combine(
-//                new byte[]{ (byte) Messages.HISTORY_LOG_STREAM.responseOpCode() },
-//                new byte[]{ 0 },
-//                new byte[]{ expectedCargoSize },
-//                CollectionsKt.toByteArray(ArraysKt.dropLast(fullCargo, 2))
-//        );
-//    }
-
-    private void setExpectedCRC() {
-        if (this.fullCargo.length >= 2) {
-            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
-        }
-    }
-
-//    public boolean validate(String authKey) {
-//        if (needsMorePacket()) {
-//            return false;
-//        }
-//
-//        createMessageData();
-//        setExpectedCRC();
-//
-//        byte[] crcOut = Bytes.calculateCRC16(messageData);
-//        if (crcOut[0] == expectedCrc[0] && crcOut[1] == expectedCrc[1]) {
-//            return true;
-//        }
-//
-//        throw new IllegalArgumentException("CRC error for stream packet: originalMessageData: "+ Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));
-//    }
 }
