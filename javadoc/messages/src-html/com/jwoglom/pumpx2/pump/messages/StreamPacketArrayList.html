@@ -23,9 +23,9 @@
 <span class="sourceLineNo">014</span><a id="line.14"></a>
 <span class="sourceLineNo">015</span><a id="line.15">    private byte[] originalMessageData = new byte[0];</a>
 <span class="sourceLineNo">016</span><a id="line.16"></a>
-<span class="sourceLineNo">017</span><a id="line.17">    // Streams don't have transaction IDs</a>
+<span class="sourceLineNo">017</span><a id="line.17">    // Streams sometimes(?) have transaction IDs</a>
 <span class="sourceLineNo">018</span><a id="line.18">    public StreamPacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {</a>
-<span class="sourceLineNo">019</span><a id="line.19">        super(expectedopCode, expectedCargoSize, (byte) 0, isSigned);</a>
+<span class="sourceLineNo">019</span><a id="line.19">        super(expectedopCode, expectedCargoSize, expectedTxId, isSigned);</a>
 <span class="sourceLineNo">020</span><a id="line.20">    }</a>
 <span class="sourceLineNo">021</span><a id="line.21"></a>
 <span class="sourceLineNo">022</span><a id="line.22">    public void validatePacket(byte[] packetData) {</a>
@@ -70,7 +70,7 @@
 <span class="sourceLineNo">061</span><a id="line.61">    }</a>
 <span class="sourceLineNo">062</span><a id="line.62"></a>
 <span class="sourceLineNo">063</span><a id="line.63">    protected void parse(byte[] bArr) {</a>
-<span class="sourceLineNo">064</span><a id="line.64">        L.d(TAG, String.format("Parsing historyLog byte array: %s", Hex.encodeHexString(bArr)));</a>
+<span class="sourceLineNo">064</span><a id="line.64">        L.d(TAG, String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));</a>
 <span class="sourceLineNo">065</span><a id="line.65">        byte opCode = bArr[2];</a>
 <span class="sourceLineNo">066</span><a id="line.66">        byte cargoSize = bArr[4];</a>
 <span class="sourceLineNo">067</span><a id="line.67">        if (opCode == this.expectedOpCode) {</a>
@@ -78,63 +78,43 @@
 <span class="sourceLineNo">069</span><a id="line.69">            this.opCode = bArr[2];</a>
 <span class="sourceLineNo">070</span><a id="line.70">            byte txId = bArr[3];</a>
 <span class="sourceLineNo">071</span><a id="line.71"></a>
-<span class="sourceLineNo">072</span><a id="line.72">            // Replace cargo size</a>
-<span class="sourceLineNo">073</span><a id="line.73">            expectedCargoSize = cargoSize;</a>
-<span class="sourceLineNo">074</span><a id="line.74">            if (txId != this.expectedTxId) {</a>
-<span class="sourceLineNo">075</span><a id="line.75">                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);</a>
-<span class="sourceLineNo">076</span><a id="line.76">            } else if (cargoSize &lt;= 255) {</a>
-<span class="sourceLineNo">077</span><a id="line.77">                byte numHistoryLogs = bArr[5];</a>
-<span class="sourceLineNo">078</span><a id="line.78">                if (cargoSize == (numHistoryLogs*26) + 2) {</a>
-<span class="sourceLineNo">079</span><a id="line.79">                    this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
-<span class="sourceLineNo">080</span><a id="line.80">                    this.empty = false;</a>
-<span class="sourceLineNo">081</span><a id="line.81">                    return;</a>
-<span class="sourceLineNo">082</span><a id="line.82">                }</a>
-<span class="sourceLineNo">083</span><a id="line.83">                throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");</a>
-<span class="sourceLineNo">084</span><a id="line.84">            } else {</a>
-<span class="sourceLineNo">085</span><a id="line.85">                throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));</a>
-<span class="sourceLineNo">086</span><a id="line.86">            }</a>
-<span class="sourceLineNo">087</span><a id="line.87">        } else {</a>
-<span class="sourceLineNo">088</span><a id="line.88">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</a>
-<span class="sourceLineNo">089</span><a id="line.89">        }</a>
-<span class="sourceLineNo">090</span><a id="line.90">    }</a>
-<span class="sourceLineNo">091</span><a id="line.91"></a>
-<span class="sourceLineNo">092</span><a id="line.92"></a>
-<span class="sourceLineNo">093</span><a id="line.93">    private boolean moreHistoryLogsRemaining() {</a>
-<span class="sourceLineNo">094</span><a id="line.94">        if (firstByteMod15 == 0) {</a>
-<span class="sourceLineNo">095</span><a id="line.95">            return !validate("");</a>
-<span class="sourceLineNo">096</span><a id="line.96">        }</a>
-<span class="sourceLineNo">097</span><a id="line.97">        return firstByteMod15 &gt; 0;</a>
-<span class="sourceLineNo">098</span><a id="line.98">    }</a>
-<span class="sourceLineNo">099</span><a id="line.99"></a>
-<span class="sourceLineNo">100</span><a id="line.100">//    private void rebuildMessageDataForCRC() {</a>
-<span class="sourceLineNo">101</span><a id="line.101">//        originalMessageData = messageData;</a>
-<span class="sourceLineNo">102</span><a id="line.102">//        messageData = Bytes.combine(</a>
-<span class="sourceLineNo">103</span><a id="line.103">//                new byte[]{ (byte) Messages.HISTORY_LOG_STREAM.responseOpCode() },</a>
-<span class="sourceLineNo">104</span><a id="line.104">//                new byte[]{ 0 },</a>
-<span class="sourceLineNo">105</span><a id="line.105">//                new byte[]{ expectedCargoSize },</a>
-<span class="sourceLineNo">106</span><a id="line.106">//                CollectionsKt.toByteArray(ArraysKt.dropLast(fullCargo, 2))</a>
-<span class="sourceLineNo">107</span><a id="line.107">//        );</a>
-<span class="sourceLineNo">108</span><a id="line.108">//    }</a>
-<span class="sourceLineNo">109</span><a id="line.109"></a>
-<span class="sourceLineNo">110</span><a id="line.110">    private void setExpectedCRC() {</a>
-<span class="sourceLineNo">111</span><a id="line.111">        if (this.fullCargo.length &gt;= 2) {</a>
-<span class="sourceLineNo">112</span><a id="line.112">            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);</a>
-<span class="sourceLineNo">113</span><a id="line.113">        }</a>
-<span class="sourceLineNo">114</span><a id="line.114">    }</a>
-<span class="sourceLineNo">115</span><a id="line.115"></a>
-<span class="sourceLineNo">116</span><a id="line.116">    public boolean validate(String authKey) {</a>
-<span class="sourceLineNo">117</span><a id="line.117">        createMessageData();</a>
-<span class="sourceLineNo">118</span><a id="line.118">        setExpectedCRC();</a>
-<span class="sourceLineNo">119</span><a id="line.119"></a>
-<span class="sourceLineNo">120</span><a id="line.120">        byte[] crcOut = Bytes.calculateCRC16(messageData);</a>
-<span class="sourceLineNo">121</span><a id="line.121">        if (crcOut[0] == expectedCrc[0] &amp;&amp; crcOut[1] == expectedCrc[1]) {</a>
-<span class="sourceLineNo">122</span><a id="line.122">            return true;</a>
-<span class="sourceLineNo">123</span><a id="line.123">        }</a>
-<span class="sourceLineNo">124</span><a id="line.124"></a>
-<span class="sourceLineNo">125</span><a id="line.125">        throw new IllegalArgumentException("CRC error with history log: originalMessageData: "+ Hex.encodeHexString(originalMessageData)+" messageData: "+Hex.encodeHexString(messageData)+" expectedCrc: "+Hex.encodeHexString(expectedCrc)+" crcOut: "+Hex.encodeHexString(crcOut));</a>
-<span class="sourceLineNo">126</span><a id="line.126"></a>
-<span class="sourceLineNo">127</span><a id="line.127">    }</a>
-<span class="sourceLineNo">128</span><a id="line.128">}</a>
+<span class="sourceLineNo">072</span><a id="line.72">            if (txId != this.expectedTxId) {</a>
+<span class="sourceLineNo">073</span><a id="line.73">                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);</a>
+<span class="sourceLineNo">074</span><a id="line.74">            } else if (cargoSize != this.actualExpectedCargoSize) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">                if (cargoSize == this.actualExpectedCargoSize + 24 &amp;&amp; isSigned) {</a>
+<span class="sourceLineNo">076</span><a id="line.76">                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");</a>
+<span class="sourceLineNo">077</span><a id="line.77">                    this.expectedCargoSize += 24;</a>
+<span class="sourceLineNo">078</span><a id="line.78">                    this.actualExpectedCargoSize += 24;</a>
+<span class="sourceLineNo">079</span><a id="line.79">                } else {</a>
+<span class="sourceLineNo">080</span><a id="line.80">                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);</a>
+<span class="sourceLineNo">081</span><a id="line.81">                }</a>
+<span class="sourceLineNo">082</span><a id="line.82">            }</a>
+<span class="sourceLineNo">083</span><a id="line.83">            this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">            // specific checks for HistoryLog stream</a>
+<span class="sourceLineNo">086</span><a id="line.86">            if ((byte) opCode == -127) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">                if (cargoSize &lt;= 255) {</a>
+<span class="sourceLineNo">088</span><a id="line.88">                    byte numHistoryLogs = bArr[5];</a>
+<span class="sourceLineNo">089</span><a id="line.89">                    if (cargoSize == (numHistoryLogs * 26) + 2) {</a>
+<span class="sourceLineNo">090</span><a id="line.90">                        this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
+<span class="sourceLineNo">091</span><a id="line.91">                        this.empty = false;</a>
+<span class="sourceLineNo">092</span><a id="line.92">                        return;</a>
+<span class="sourceLineNo">093</span><a id="line.93">                    }</a>
+<span class="sourceLineNo">094</span><a id="line.94">                    throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");</a>
+<span class="sourceLineNo">095</span><a id="line.95">                } else {</a>
+<span class="sourceLineNo">096</span><a id="line.96">                    throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));</a>
+<span class="sourceLineNo">097</span><a id="line.97">                }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99">            }</a>
+<span class="sourceLineNo">100</span><a id="line.100">        } else {</a>
+<span class="sourceLineNo">101</span><a id="line.101">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</a>
+<span class="sourceLineNo">102</span><a id="line.102">        }</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">        L.d(TAG, "StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);</a>
+<span class="sourceLineNo">105</span><a id="line.105"></a>
+<span class="sourceLineNo">106</span><a id="line.106">    }</a>
+<span class="sourceLineNo">107</span><a id="line.107"></a>
+<span class="sourceLineNo">108</span><a id="line.108">}</a>
 
 
 

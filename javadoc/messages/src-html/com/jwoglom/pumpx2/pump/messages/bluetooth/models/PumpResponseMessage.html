@@ -11,35 +11,49 @@
 <span class="sourceLineNo">002</span><a id="line.2"></a>
 <span class="sourceLineNo">003</span><a id="line.3">import com.jwoglom.pumpx2.pump.messages.Message;</a>
 <span class="sourceLineNo">004</span><a id="line.4"></a>
-<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.shared.Hex;</a>
-<span class="sourceLineNo">006</span><a id="line.6"></a>
-<span class="sourceLineNo">007</span><a id="line.7">import java.util.Optional;</a>
-<span class="sourceLineNo">008</span><a id="line.8"></a>
-<span class="sourceLineNo">009</span><a id="line.9">public class PumpResponseMessage {</a>
-<span class="sourceLineNo">010</span><a id="line.10">    private final byte[] data;</a>
-<span class="sourceLineNo">011</span><a id="line.11">    private final Optional&lt;Message&gt; message;</a>
-<span class="sourceLineNo">012</span><a id="line.12"></a>
-<span class="sourceLineNo">013</span><a id="line.13">    public PumpResponseMessage(byte[] data) {</a>
-<span class="sourceLineNo">014</span><a id="line.14">        this.data = data;</a>
-<span class="sourceLineNo">015</span><a id="line.15">        this.message = Optional.empty();</a>
-<span class="sourceLineNo">016</span><a id="line.16">    }</a>
-<span class="sourceLineNo">017</span><a id="line.17">    public PumpResponseMessage(byte[] data, Message message) {</a>
-<span class="sourceLineNo">018</span><a id="line.18">        this.data = data;</a>
-<span class="sourceLineNo">019</span><a id="line.19">        this.message = Optional.of(message);</a>
+<span class="sourceLineNo">005</span><a id="line.5">import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;</a>
+<span class="sourceLineNo">006</span><a id="line.6">import com.jwoglom.pumpx2.shared.Hex;</a>
+<span class="sourceLineNo">007</span><a id="line.7"></a>
+<span class="sourceLineNo">008</span><a id="line.8">import java.util.Optional;</a>
+<span class="sourceLineNo">009</span><a id="line.9">import java.util.Set;</a>
+<span class="sourceLineNo">010</span><a id="line.10"></a>
+<span class="sourceLineNo">011</span><a id="line.11">public class PumpResponseMessage {</a>
+<span class="sourceLineNo">012</span><a id="line.12">    private final byte[] data;</a>
+<span class="sourceLineNo">013</span><a id="line.13">    private final Optional&lt;Message&gt; message;</a>
+<span class="sourceLineNo">014</span><a id="line.14">    private final Optional&lt;Set&lt;QualifyingEvent&gt;&gt; qualifyingEvents;</a>
+<span class="sourceLineNo">015</span><a id="line.15"></a>
+<span class="sourceLineNo">016</span><a id="line.16">    public PumpResponseMessage(byte[] data) {</a>
+<span class="sourceLineNo">017</span><a id="line.17">        this.data = data;</a>
+<span class="sourceLineNo">018</span><a id="line.18">        this.message = Optional.empty();</a>
+<span class="sourceLineNo">019</span><a id="line.19">        this.qualifyingEvents = Optional.empty();</a>
 <span class="sourceLineNo">020</span><a id="line.20">    }</a>
-<span class="sourceLineNo">021</span><a id="line.21"></a>
-<span class="sourceLineNo">022</span><a id="line.22">    public byte[] data() {</a>
-<span class="sourceLineNo">023</span><a id="line.23">        return data;</a>
-<span class="sourceLineNo">024</span><a id="line.24">    }</a>
-<span class="sourceLineNo">025</span><a id="line.25"></a>
-<span class="sourceLineNo">026</span><a id="line.26">    public Optional&lt;Message&gt; message() {</a>
-<span class="sourceLineNo">027</span><a id="line.27">        return message;</a>
-<span class="sourceLineNo">028</span><a id="line.28">    }</a>
-<span class="sourceLineNo">029</span><a id="line.29"></a>
-<span class="sourceLineNo">030</span><a id="line.30">    public String toString() {</a>
-<span class="sourceLineNo">031</span><a id="line.31">        return "PumpResponseMessage(data=" + Hex.encodeHexString(data) + ", message=" + message + ")";</a>
-<span class="sourceLineNo">032</span><a id="line.32">    }</a>
-<span class="sourceLineNo">033</span><a id="line.33">}</a>
+<span class="sourceLineNo">021</span><a id="line.21">    public PumpResponseMessage(byte[] data, Message message) {</a>
+<span class="sourceLineNo">022</span><a id="line.22">        this.data = data;</a>
+<span class="sourceLineNo">023</span><a id="line.23">        this.message = Optional.of(message);</a>
+<span class="sourceLineNo">024</span><a id="line.24">        this.qualifyingEvents = Optional.empty();</a>
+<span class="sourceLineNo">025</span><a id="line.25">    }</a>
+<span class="sourceLineNo">026</span><a id="line.26">    public PumpResponseMessage(byte[] data, Set&lt;QualifyingEvent&gt; qualifyingEvents) {</a>
+<span class="sourceLineNo">027</span><a id="line.27">        this.data = data;</a>
+<span class="sourceLineNo">028</span><a id="line.28">        this.message = Optional.empty();</a>
+<span class="sourceLineNo">029</span><a id="line.29">        this.qualifyingEvents = Optional.of(qualifyingEvents);</a>
+<span class="sourceLineNo">030</span><a id="line.30">    }</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">    public byte[] data() {</a>
+<span class="sourceLineNo">033</span><a id="line.33">        return data;</a>
+<span class="sourceLineNo">034</span><a id="line.34">    }</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">    public Optional&lt;Message&gt; message() {</a>
+<span class="sourceLineNo">037</span><a id="line.37">        return message;</a>
+<span class="sourceLineNo">038</span><a id="line.38">    }</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">    public Optional&lt;Set&lt;QualifyingEvent&gt;&gt; qualifyingEvents() {</a>
+<span class="sourceLineNo">041</span><a id="line.41">        return qualifyingEvents;</a>
+<span class="sourceLineNo">042</span><a id="line.42">    }</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">    public String toString() {</a>
+<span class="sourceLineNo">045</span><a id="line.45">        return "PumpResponseMessage(data=" + Hex.encodeHexString(data) + ", message=" + message + ", event=" + qualifyingEvents + ")";</a>
+<span class="sourceLineNo">046</span><a id="line.46">    }</a>
+<span class="sourceLineNo">047</span><a id="line.47">}</a>
 
 
 

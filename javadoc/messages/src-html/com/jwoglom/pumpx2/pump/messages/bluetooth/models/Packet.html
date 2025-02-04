@@ -13,38 +13,44 @@
 <span class="sourceLineNo">004</span><a id="line.4"></a>
 <span class="sourceLineNo">005</span><a id="line.5">import kotlin.collections.ArraysKt;</a>
 <span class="sourceLineNo">006</span><a id="line.6"></a>
-<span class="sourceLineNo">007</span><a id="line.7">public class Packet {</a>
-<span class="sourceLineNo">008</span><a id="line.8">    private final byte packetsRemaining;</a>
-<span class="sourceLineNo">009</span><a id="line.9">    private final byte transactionId;</a>
-<span class="sourceLineNo">010</span><a id="line.10">    private final byte[] internalCargo;</a>
-<span class="sourceLineNo">011</span><a id="line.11"></a>
-<span class="sourceLineNo">012</span><a id="line.12">    public Packet(byte packetsRemaining, byte transactionId, byte[] internalCargo) {</a>
-<span class="sourceLineNo">013</span><a id="line.13">        this.packetsRemaining = packetsRemaining;</a>
-<span class="sourceLineNo">014</span><a id="line.14">        this.transactionId = transactionId;</a>
-<span class="sourceLineNo">015</span><a id="line.15">        this.internalCargo = internalCargo;</a>
-<span class="sourceLineNo">016</span><a id="line.16">    }</a>
+<span class="sourceLineNo">007</span><a id="line.7">/**</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * Packet represents the raw byte string included within a single Bluetooth response packet</a>
+<span class="sourceLineNo">009</span><a id="line.9"> *</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * A combination of Packet's sent over a Bluetooth characteristic by one end of the BT communication</a>
+<span class="sourceLineNo">011</span><a id="line.11"> * represents one {@link com.jwoglom.pumpx2.pump.messages.Message}.</a>
+<span class="sourceLineNo">012</span><a id="line.12"> */</a>
+<span class="sourceLineNo">013</span><a id="line.13">public class Packet {</a>
+<span class="sourceLineNo">014</span><a id="line.14">    private final byte packetsRemaining;</a>
+<span class="sourceLineNo">015</span><a id="line.15">    private final byte transactionId;</a>
+<span class="sourceLineNo">016</span><a id="line.16">    private final byte[] internalCargo;</a>
 <span class="sourceLineNo">017</span><a id="line.17"></a>
-<span class="sourceLineNo">018</span><a id="line.18">    public byte[] build() {</a>
-<span class="sourceLineNo">019</span><a id="line.19">        byte[] ret = new byte[internalCargo.length + 2];</a>
-<span class="sourceLineNo">020</span><a id="line.20">        ret[0] = (byte)packetsRemaining;</a>
-<span class="sourceLineNo">021</span><a id="line.21">        ret[1] = transactionId;</a>
-<span class="sourceLineNo">022</span><a id="line.22">        System.arraycopy(internalCargo, 0, ret, 2, internalCargo.length);</a>
-<span class="sourceLineNo">023</span><a id="line.23">        return ret;</a>
-<span class="sourceLineNo">024</span><a id="line.24">    }</a>
-<span class="sourceLineNo">025</span><a id="line.25"></a>
-<span class="sourceLineNo">026</span><a id="line.26">    public byte transactionId() {</a>
-<span class="sourceLineNo">027</span><a id="line.27">        return transactionId;</a>
-<span class="sourceLineNo">028</span><a id="line.28">    }</a>
-<span class="sourceLineNo">029</span><a id="line.29"></a>
-<span class="sourceLineNo">030</span><a id="line.30">    public byte[] internalCargo() {</a>
-<span class="sourceLineNo">031</span><a id="line.31">        return internalCargo;</a>
-<span class="sourceLineNo">032</span><a id="line.32">    }</a>
-<span class="sourceLineNo">033</span><a id="line.33"></a>
-<span class="sourceLineNo">034</span><a id="line.34">    public Packet merge(Packet newPacket) {</a>
-<span class="sourceLineNo">035</span><a id="line.35">        return new Packet(newPacket.packetsRemaining, transactionId, Bytes.combine(this.internalCargo, newPacket.internalCargo));</a>
-<span class="sourceLineNo">036</span><a id="line.36">    }</a>
-<span class="sourceLineNo">037</span><a id="line.37"></a>
-<span class="sourceLineNo">038</span><a id="line.38">}</a>
+<span class="sourceLineNo">018</span><a id="line.18">    public Packet(byte packetsRemaining, byte transactionId, byte[] internalCargo) {</a>
+<span class="sourceLineNo">019</span><a id="line.19">        this.packetsRemaining = packetsRemaining;</a>
+<span class="sourceLineNo">020</span><a id="line.20">        this.transactionId = transactionId;</a>
+<span class="sourceLineNo">021</span><a id="line.21">        this.internalCargo = internalCargo;</a>
+<span class="sourceLineNo">022</span><a id="line.22">    }</a>
+<span class="sourceLineNo">023</span><a id="line.23"></a>
+<span class="sourceLineNo">024</span><a id="line.24">    public byte[] build() {</a>
+<span class="sourceLineNo">025</span><a id="line.25">        byte[] ret = new byte[internalCargo.length + 2];</a>
+<span class="sourceLineNo">026</span><a id="line.26">        ret[0] = (byte)packetsRemaining;</a>
+<span class="sourceLineNo">027</span><a id="line.27">        ret[1] = transactionId;</a>
+<span class="sourceLineNo">028</span><a id="line.28">        System.arraycopy(internalCargo, 0, ret, 2, internalCargo.length);</a>
+<span class="sourceLineNo">029</span><a id="line.29">        return ret;</a>
+<span class="sourceLineNo">030</span><a id="line.30">    }</a>
+<span class="sourceLineNo">031</span><a id="line.31"></a>
+<span class="sourceLineNo">032</span><a id="line.32">    public byte transactionId() {</a>
+<span class="sourceLineNo">033</span><a id="line.33">        return transactionId;</a>
+<span class="sourceLineNo">034</span><a id="line.34">    }</a>
+<span class="sourceLineNo">035</span><a id="line.35"></a>
+<span class="sourceLineNo">036</span><a id="line.36">    public byte[] internalCargo() {</a>
+<span class="sourceLineNo">037</span><a id="line.37">        return internalCargo;</a>
+<span class="sourceLineNo">038</span><a id="line.38">    }</a>
+<span class="sourceLineNo">039</span><a id="line.39"></a>
+<span class="sourceLineNo">040</span><a id="line.40">    public Packet merge(Packet newPacket) {</a>
+<span class="sourceLineNo">041</span><a id="line.41">        return new Packet(newPacket.packetsRemaining, transactionId, Bytes.combine(this.internalCargo, newPacket.internalCargo));</a>
+<span class="sourceLineNo">042</span><a id="line.42">    }</a>
+<span class="sourceLineNo">043</span><a id="line.43"></a>
+<span class="sourceLineNo">044</span><a id="line.44">}</a>
 
 
 

@@ -76,55 +76,63 @@
 <span class="sourceLineNo">067</span><a id="line.67">            return HISTORY_LOG_CHARACTERISTICS;</a>
 <span class="sourceLineNo">068</span><a id="line.68">        }</a>
 <span class="sourceLineNo">069</span><a id="line.69"></a>
-<span class="sourceLineNo">070</span><a id="line.70">        if (message.signed() || message.getCharacteristic() == Characteristic.CONTROL) {</a>
+<span class="sourceLineNo">070</span><a id="line.70">        if (message.getCharacteristic() == Characteristic.CONTROL) {</a>
 <span class="sourceLineNo">071</span><a id="line.71">            return CONTROL_CHARACTERISTICS;</a>
 <span class="sourceLineNo">072</span><a id="line.72">        }</a>
 <span class="sourceLineNo">073</span><a id="line.73"></a>
-<span class="sourceLineNo">074</span><a id="line.74">        return CURRENT_STATUS_CHARACTERISTICS;</a>
-<span class="sourceLineNo">075</span><a id="line.75">    }</a>
-<span class="sourceLineNo">076</span><a id="line.76"></a>
-<span class="sourceLineNo">077</span><a id="line.77">    public static String which(UUID uuid) {</a>
-<span class="sourceLineNo">078</span><a id="line.78">        if (CURRENT_STATUS_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">079</span><a id="line.79">            return "CURRENT_STATUS";</a>
-<span class="sourceLineNo">080</span><a id="line.80">        } else if (QUALIFYING_EVENTS_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">081</span><a id="line.81">            return "QUALIFYING_EVENTS";</a>
-<span class="sourceLineNo">082</span><a id="line.82">        } else if (HISTORY_LOG_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">083</span><a id="line.83">            return "HISTORY_LOG";</a>
-<span class="sourceLineNo">084</span><a id="line.84">        } else if (AUTHORIZATION_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">085</span><a id="line.85">            return "AUTHORIZATION";</a>
-<span class="sourceLineNo">086</span><a id="line.86">        } else if (CONTROL_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">087</span><a id="line.87">            return "CONTROL";</a>
-<span class="sourceLineNo">088</span><a id="line.88">        } else if (CONTROL_STREAM_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">089</span><a id="line.89">            return "CONTROL_STREAM";</a>
-<span class="sourceLineNo">090</span><a id="line.90">        } else if (SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {</a>
-<span class="sourceLineNo">091</span><a id="line.91">            return "SERVICE_CHANGED";</a>
-<span class="sourceLineNo">092</span><a id="line.92">        } else if (NOTIFICATION_CCCD.equals(uuid)) {</a>
-<span class="sourceLineNo">093</span><a id="line.93">            return "NOTIFICATION";</a>
-<span class="sourceLineNo">094</span><a id="line.94"></a>
-<span class="sourceLineNo">095</span><a id="line.95">        // DIS_SERVICE_UUID</a>
-<span class="sourceLineNo">096</span><a id="line.96">        } else if (MANUFACTURER_NAME_CHARACTERISTIC_UUID.equals(uuid)) {</a>
-<span class="sourceLineNo">097</span><a id="line.97">            return "MANUFACTURER_NAME";</a>
-<span class="sourceLineNo">098</span><a id="line.98">        } else if (MODEL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {</a>
-<span class="sourceLineNo">099</span><a id="line.99">            return "MODEL_NUMBER";</a>
-<span class="sourceLineNo">100</span><a id="line.100">        } else if (SERIAL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {</a>
-<span class="sourceLineNo">101</span><a id="line.101">            return "SERIAL_NUMBER";</a>
-<span class="sourceLineNo">102</span><a id="line.102">        } else if (SOFTWARE_REV_CHARACTERISTIC_UUID.equals(uuid)) {</a>
-<span class="sourceLineNo">103</span><a id="line.103">            return "SOFTWARE_REV";</a>
-<span class="sourceLineNo">104</span><a id="line.104"></a>
-<span class="sourceLineNo">105</span><a id="line.105">        // GENERIC_ACCESS_SERVICE</a>
-<span class="sourceLineNo">106</span><a id="line.106">        } else if (GENERIC_ACCESS_DEVICE_NAME.equals(uuid)) {</a>
-<span class="sourceLineNo">107</span><a id="line.107">            return "DEVICE_NAME";</a>
-<span class="sourceLineNo">108</span><a id="line.108">        } else if (GENERIC_ACCESS_APPEARANCE.equals(uuid)) {</a>
-<span class="sourceLineNo">109</span><a id="line.109">            return "APPEARANCE";</a>
-<span class="sourceLineNo">110</span><a id="line.110">        } else if (GENERIC_ACCESS_PREFERRED_CONN_PARAMETERS.equals(uuid)) {</a>
-<span class="sourceLineNo">111</span><a id="line.111">            return "PREFERRED_CONN_PARAMETERS";</a>
-<span class="sourceLineNo">112</span><a id="line.112">        } else if (GENERIC_ACCESS_CENTRAL_ADDRESS_RESOLUTION.equals(uuid)) {</a>
-<span class="sourceLineNo">113</span><a id="line.113">            return "CENTRAL_ADDRESS_RESOLUTION";</a>
-<span class="sourceLineNo">114</span><a id="line.114">        }</a>
-<span class="sourceLineNo">115</span><a id="line.115"></a>
-<span class="sourceLineNo">116</span><a id="line.116">        return "unknown (" + uuid + ")";</a>
-<span class="sourceLineNo">117</span><a id="line.117">    }</a>
-<span class="sourceLineNo">118</span><a id="line.118">}</a>
+<span class="sourceLineNo">074</span><a id="line.74">        if (message.getCharacteristic() == Characteristic.CONTROL_STREAM) {</a>
+<span class="sourceLineNo">075</span><a id="line.75">            return CONTROL_STREAM_CHARACTERISTICS;</a>
+<span class="sourceLineNo">076</span><a id="line.76">        }</a>
+<span class="sourceLineNo">077</span><a id="line.77"></a>
+<span class="sourceLineNo">078</span><a id="line.78">        if (message.signed()) {</a>
+<span class="sourceLineNo">079</span><a id="line.79">            return CONTROL_CHARACTERISTICS;</a>
+<span class="sourceLineNo">080</span><a id="line.80">        }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">        return CURRENT_STATUS_CHARACTERISTICS;</a>
+<span class="sourceLineNo">083</span><a id="line.83">    }</a>
+<span class="sourceLineNo">084</span><a id="line.84"></a>
+<span class="sourceLineNo">085</span><a id="line.85">    public static String which(UUID uuid) {</a>
+<span class="sourceLineNo">086</span><a id="line.86">        if (CURRENT_STATUS_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">087</span><a id="line.87">            return "CURRENT_STATUS";</a>
+<span class="sourceLineNo">088</span><a id="line.88">        } else if (QUALIFYING_EVENTS_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">089</span><a id="line.89">            return "QUALIFYING_EVENTS";</a>
+<span class="sourceLineNo">090</span><a id="line.90">        } else if (HISTORY_LOG_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">            return "HISTORY_LOG";</a>
+<span class="sourceLineNo">092</span><a id="line.92">        } else if (AUTHORIZATION_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">093</span><a id="line.93">            return "AUTHORIZATION";</a>
+<span class="sourceLineNo">094</span><a id="line.94">        } else if (CONTROL_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">095</span><a id="line.95">            return "CONTROL";</a>
+<span class="sourceLineNo">096</span><a id="line.96">        } else if (CONTROL_STREAM_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">097</span><a id="line.97">            return "CONTROL_STREAM";</a>
+<span class="sourceLineNo">098</span><a id="line.98">        } else if (SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {</a>
+<span class="sourceLineNo">099</span><a id="line.99">            return "SERVICE_CHANGED";</a>
+<span class="sourceLineNo">100</span><a id="line.100">        } else if (NOTIFICATION_CCCD.equals(uuid)) {</a>
+<span class="sourceLineNo">101</span><a id="line.101">            return "NOTIFICATION";</a>
+<span class="sourceLineNo">102</span><a id="line.102"></a>
+<span class="sourceLineNo">103</span><a id="line.103">        // DIS_SERVICE_UUID</a>
+<span class="sourceLineNo">104</span><a id="line.104">        } else if (MANUFACTURER_NAME_CHARACTERISTIC_UUID.equals(uuid)) {</a>
+<span class="sourceLineNo">105</span><a id="line.105">            return "MANUFACTURER_NAME";</a>
+<span class="sourceLineNo">106</span><a id="line.106">        } else if (MODEL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {</a>
+<span class="sourceLineNo">107</span><a id="line.107">            return "MODEL_NUMBER";</a>
+<span class="sourceLineNo">108</span><a id="line.108">        } else if (SERIAL_NUMBER_CHARACTERISTIC_UUID.equals(uuid)) {</a>
+<span class="sourceLineNo">109</span><a id="line.109">            return "SERIAL_NUMBER";</a>
+<span class="sourceLineNo">110</span><a id="line.110">        } else if (SOFTWARE_REV_CHARACTERISTIC_UUID.equals(uuid)) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">            return "SOFTWARE_REV";</a>
+<span class="sourceLineNo">112</span><a id="line.112"></a>
+<span class="sourceLineNo">113</span><a id="line.113">        // GENERIC_ACCESS_SERVICE</a>
+<span class="sourceLineNo">114</span><a id="line.114">        } else if (GENERIC_ACCESS_DEVICE_NAME.equals(uuid)) {</a>
+<span class="sourceLineNo">115</span><a id="line.115">            return "DEVICE_NAME";</a>
+<span class="sourceLineNo">116</span><a id="line.116">        } else if (GENERIC_ACCESS_APPEARANCE.equals(uuid)) {</a>
+<span class="sourceLineNo">117</span><a id="line.117">            return "APPEARANCE";</a>
+<span class="sourceLineNo">118</span><a id="line.118">        } else if (GENERIC_ACCESS_PREFERRED_CONN_PARAMETERS.equals(uuid)) {</a>
+<span class="sourceLineNo">119</span><a id="line.119">            return "PREFERRED_CONN_PARAMETERS";</a>
+<span class="sourceLineNo">120</span><a id="line.120">        } else if (GENERIC_ACCESS_CENTRAL_ADDRESS_RESOLUTION.equals(uuid)) {</a>
+<span class="sourceLineNo">121</span><a id="line.121">            return "CENTRAL_ADDRESS_RESOLUTION";</a>
+<span class="sourceLineNo">122</span><a id="line.122">        }</a>
+<span class="sourceLineNo">123</span><a id="line.123"></a>
+<span class="sourceLineNo">124</span><a id="line.124">        return "unknown (" + uuid + ")";</a>
+<span class="sourceLineNo">125</span><a id="line.125">    }</a>
+<span class="sourceLineNo">126</span><a id="line.126">}</a>
 
 
 
