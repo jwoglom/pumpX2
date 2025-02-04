@@ -4,6 +4,12 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import kotlin.collections.ArraysKt;
 
+/**
+ * Packet represents the raw byte string included within a single Bluetooth response packet
+ *
+ * A combination of Packet's sent over a Bluetooth characteristic by one end of the BT communication
+ * represents one {@link com.jwoglom.pumpx2.pump.messages.Message}.
+ */
 public class Packet {
     private final byte packetsRemaining;
     private final byte transactionId;

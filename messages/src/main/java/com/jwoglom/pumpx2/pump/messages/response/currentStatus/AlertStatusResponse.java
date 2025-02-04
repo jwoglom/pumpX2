@@ -20,11 +20,14 @@ import java.util.Set;
 public class AlertStatusResponse extends Message {
     private BigInteger intMap;
 
+    // private val unused, but placed to force java tostring to include the formatted alerts set
+    private Set<AlertResponseType> alerts;
+
     public AlertStatusResponse() {}
 
     public AlertStatusResponse(BigInteger intMap) {
         this.cargo = buildCargo(intMap);
-        this.intMap = intMap;
+        parse(cargo);
     }
 
     public AlertStatusResponse(byte[] raw) {
@@ -39,6 +42,7 @@ public class AlertStatusResponse extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         intMap = Bytes.readUint64(raw, 0);
         cargo = raw;
+        alerts = getAlerts();
     }
 
     public BigInteger getIntMap() {

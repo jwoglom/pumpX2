@@ -61,6 +61,7 @@ public class AlertStatusResponseTest {
 
         MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
+
     @Test
     public void testAlertStatusWithCgmGraphRemoved() {
         AlertStatusResponse parsed = new AlertStatusResponse(

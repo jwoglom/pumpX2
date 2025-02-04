@@ -33,7 +33,17 @@ public class BTResponseParser {
 
         packetArrayList.validatePacket(output);
         if (!packetArrayList.needsMorePacket()) {
-            if (packetArrayList.validate(message.signed() ? PumpStateSupplier.authenticationKey.get() : new byte[0])) {
+            byte[] authKeyVal = new byte[0];
+            if (message.signed()) {
+                authKeyVal = PumpStateSupplier.authenticationKey.get();
+            } else {
+                try {
+                    authKeyVal = PumpStateSupplier.authenticationKey.get();
+                } catch (IllegalStateException ignore) {
+                    authKeyVal = new byte[0];
+                }
+            }
+            if (packetArrayList.validate(authKeyVal)) {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
@@ -126,7 +136,7 @@ public class BTResponseParser {
             throw new NotImplementedException("Service changed characteristic: " + Hex.encodeHexString(output));
         } else if (CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS.equals(uuid)) {
             // Control stream (opcodes: -27, -25, -23)
-            throw new NotImplementedException("Control stream characteristic: " + Hex.encodeHexString(output));
+            //throw new NotImplementedException("Control stream characteristic: " + Hex.encodeHexString(output));
         } else {
             throw new NotImplementedException("Unsupported UUID: " + uuid + " output: " + Hex.encodeHexString(output));
         }

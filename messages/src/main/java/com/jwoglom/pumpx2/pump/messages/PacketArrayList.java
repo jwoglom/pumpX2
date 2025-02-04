@@ -100,7 +100,7 @@ public class PacketArrayList {
             if (shouldIgnoreInvalidHmac(authKey)) {
                 L.e(TAG, "CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
             } else {
-                throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
+                throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode+" authKey="+new String(authKey));
             }
         } else if (this.isSigned) {
             L.d(TAG, "validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);

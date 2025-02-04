@@ -56,6 +56,11 @@ public class Main {
         String pumpPairingCode = System.getenv("PUMP_PAIRING_CODE");
         if (!Strings.isNullOrEmpty(pumpPairingCode)) {
             PumpStateSupplier.pumpPairingCode = () -> pumpPairingCode;
+        } else if (!Strings.isNullOrEmpty(pumpAuthenticationKey)) {
+            PumpStateSupplier.pumpPairingCode = () -> pumpAuthenticationKey;
+        } else {
+            PumpStateSupplier.pumpPairingCode = () -> "IGNORE_HMAC_SIGNATURE_EXCEPTION";
+            System.err.println("Using null pumpPairingCode - signature validation disabled");
         }
 
         String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");

@@ -104,7 +104,7 @@ public class JsonMessageParser {
             String ts = json.getString("ts");
 
             PumpResponseMessage resp = PumpResponseMessageBuilder.build(valueStr, btChar, extraValueStr);
-            if (resp.message().isEmpty()) {
+            if (resp == null || resp.message().isEmpty()) {
                 return null;
             }
 
