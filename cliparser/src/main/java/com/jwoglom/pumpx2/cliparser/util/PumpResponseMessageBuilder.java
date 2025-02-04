@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
+import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -27,6 +28,10 @@ public class PumpResponseMessageBuilder {
 
     public static PumpResponseMessage build(String valueStr, String btChar, String... extraValueStr) throws NoMessageMatch {
         PumpResponseMessage resp = makeMessage(valueStr, btChar, extraValueStr);
+        if (resp != null && resp.qualifyingEvents().isPresent()) {
+            return resp;
+        }
+
         if ((resp == null || !resp.message().isPresent()) && (extraValueStr == null || extraValueStr.length == 0)) {
             L.d(TAG, "Message not fully formed");
 
@@ -78,12 +83,21 @@ public class PumpResponseMessageBuilder {
         }
 
         if (Strings.isNullOrEmpty(btChar)) {
-            Characteristic guessedCharacteristic = CharacteristicGuesser.guessBestCharacteristic(valueStr, value[2]);
-            L.i(TAG, "guessed characteristic for opCode "+value[2]+": "+guessedCharacteristic);
-            if (guessedCharacteristic == null) {
-                throw new NoMessageMatch.NoOpCodeForCharacteristicException(value[2], null, null, valueStr, null);
+            if (valueStr.length() == 8) {
+                // event
+                btChar = CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.toString();
+            } else {
+                Characteristic guessedCharacteristic = CharacteristicGuesser.guessBestCharacteristic(valueStr, value[2]);
+                L.i(TAG, "guessed characteristic for opCode " + value[2] + ": " + guessedCharacteristic);
+                if (guessedCharacteristic == null) {
+                    throw new NoMessageMatch.NoOpCodeForCharacteristicException(value[2], null, null, valueStr, null);
+                }
+                btChar = guessedCharacteristic.getUuid().toString().replace("-", "");
             }
-            btChar = guessedCharacteristic.getUuid().toString().replace("-", "");
+        }
+
+        if (btChar.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.toString())) {
+            return new PumpResponseMessage(value, QualifyingEvent.fromRawBtBytes(value));
         }
 
         UUID uuid = btCharToUuid(btChar);
@@ -97,6 +111,9 @@ public class PumpResponseMessageBuilder {
             }
             throw new NoMessageMatch.NonPumpBtMessage(null, null, valueStr);
         }
+
+
+
         Characteristic characteristic = Characteristic.of(uuid);
         if (characteristic == null) {
             throw new NoMessageMatch.NonPumpBtMessage(uuid, CharacteristicUUID.which(uuid), valueStr);

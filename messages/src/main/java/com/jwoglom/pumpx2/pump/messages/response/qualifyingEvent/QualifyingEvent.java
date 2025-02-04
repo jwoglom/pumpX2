@@ -26,6 +26,10 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusReque
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
+import com.jwoglom.pumpx2.shared.Hex;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
+
+import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -161,6 +165,18 @@ public enum QualifyingEvent {
             bitmask |= e.getId();
         }
         return bitmask;
+    }
+
+    public String jsonToString() {
+        JSONObject obj = new JSONObject();
+        obj.put("event", name());
+        return obj.toString(0);
+    }
+
+    public JSONObject asJsonObject() {
+        JSONObject obj = new JSONObject();
+        obj.put("event", name());
+        return obj;
     }
 
 }

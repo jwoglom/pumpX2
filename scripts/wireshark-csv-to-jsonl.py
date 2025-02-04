@@ -34,22 +34,27 @@ currentWrite = []
 lastSeqNum = {'READ': None, 'WRITE': None}
 
 for rline in reader:
+    btId = ''
+    btOp = ''
+    value = ''
+    btChar = ''
+    ts = ''
     type = ''
 
-    btChar = ''
     if len(rline) == 3:
         btId, btOp, value = rline
         ts = ''
     elif len(rline) == 4:
         btId, btOp, value, ts = rline
+        btChar = ''
     elif len(rline) == 5:
         btId, btOp, value, btChar, ts = rline
 
-    if btOp == '0x1b':
+    if btOp.lower() == '0x1b':
         type = 'READ'
-    elif btOp == '0x52': # android btsnoop
+    elif btOp.lower() == '0x52': # android btsnoop
         type = 'WRITE'
-    elif btOp == '0x12': # iOS packetlogger
+    elif btOp.lower() == '0x12': # iOS packetlogger
         type = 'WRITE'
     
     
@@ -68,6 +73,11 @@ for rline in reader:
     #if seqNum == 0:
     #    # SKIP stream messages
     #    continue
+
+    if len(value) == 8:
+        remainingPackets = 0
+        seqNum = 0
+
 
     if lastSeqNum[type] is None or lastSeqNum[type] == seqNum:
         if type == 'READ':

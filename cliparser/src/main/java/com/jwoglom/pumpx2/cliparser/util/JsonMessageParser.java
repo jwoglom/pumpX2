@@ -1,16 +1,18 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
 import com.google.common.base.Strings;
-import com.jwoglom.pumpx2.cliparser.util.PumpResponseMessageBuilder;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.stream.Collector;
 
 public class JsonMessageParser {
     private static final String TAG = "JsonMessageParser";
@@ -62,9 +64,22 @@ public class JsonMessageParser {
             comment = parts[1];
         }
         JSONObject rawJson = new JSONObject(rawLine);
-        Message message = messageFromString(rawLine);
+        PumpResponseMessage resp = parsedMessageFromString(rawLine);
         JSONObject parsed = null;
-        if (message != null) {
+
+        if (resp != null && resp.qualifyingEvents().isPresent()) {
+            JSONArray events = resp.qualifyingEvents().get().stream()
+                    .map(QualifyingEvent::asJsonObject)
+                    .collect(Collector.of(JSONArray::new, JSONArray::put, JSONArray::put));
+
+            parsed = new JSONObject();
+            parsed.put("name", "QualifyingEvents");
+            JSONObject params = new JSONObject();
+            params.put("events", events);
+            parsed.put("params", params);
+
+        } else if (resp != null && resp.message().isPresent()) {
+            Message message = resp.message().get();
             parsed = new JSONObject(message.jsonToString());
 
             // Auto-update pumpTimeSinceReset
@@ -78,7 +93,8 @@ public class JsonMessageParser {
         if (comment != null) {
             rawJson.put("comment", comment);
         }
-        if (Strings.isNullOrEmpty(rawJson.getString("btChar")) && message != null) {
+        if (Strings.isNullOrEmpty(rawJson.getString("btChar")) && resp != null && resp.message().isPresent()) {
+            Message message = resp.message().get();
             rawJson.put("guessedBtChar", CharacteristicGuesser.guessBestCharacteristic(rawLine, message.opCode()).getUuid().toString().replace("-", ""));
         }
         ret.put("raw", rawJson);
@@ -86,7 +102,7 @@ public class JsonMessageParser {
         return ret.toString(0);
     }
 
-    public static Message messageFromString(String str) {
+    private static PumpResponseMessage parsedMessageFromString(String str) {
         JSONObject json = null;
         try {
             json = new JSONObject(str);
@@ -103,12 +119,7 @@ public class JsonMessageParser {
             }
             String ts = json.getString("ts");
 
-            PumpResponseMessage resp = PumpResponseMessageBuilder.build(valueStr, btChar, extraValueStr);
-            if (resp == null || resp.message().isEmpty()) {
-                return null;
-            }
-
-            return resp.message().get();
+            return PumpResponseMessageBuilder.build(valueStr, btChar, extraValueStr);
         } catch (JSONException e) {
             L.d(TAG, e.getMessage());
             return null;

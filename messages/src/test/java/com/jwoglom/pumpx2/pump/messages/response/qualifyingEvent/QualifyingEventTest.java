@@ -81,4 +81,11 @@ public class QualifyingEventTest {
         assertEquals(events, ImmutableSet.of(PUMP_RESUME, BATTERY, ALERT, ALARM, PUMP_SUSPEND, BASAL_CHANGE, BOLUS_CHANGE, HOME_SCREEN_CHANGE, IOB_CHANGE, CONTROL_IQ_INFO, BG));
         System.out.println(events);
     }
+
+    @Test
+    public void testQualifyingEvent_startChangeCart() throws DecoderException {
+        Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(Hex.decodeHex("00000404"));
+        assertEquals(events, ImmutableSet.of(REMAINING_INSULIN));
+        System.out.println(events);
+    }
 }
