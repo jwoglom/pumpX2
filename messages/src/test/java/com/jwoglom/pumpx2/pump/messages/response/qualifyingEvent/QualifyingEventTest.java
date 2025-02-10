@@ -88,4 +88,11 @@ public class QualifyingEventTest {
         assertEquals(events, ImmutableSet.of(REMAINING_INSULIN));
         System.out.println(events);
     }
+
+    @Test
+    public void testQualifyingEvent_malfunction() throws DecoderException {
+        Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(Hex.decodeHex("08000100"));
+        assertEquals(events, ImmutableSet.of(MALFUNCTION, BATTERY));
+        System.out.println(events);
+    }
 }

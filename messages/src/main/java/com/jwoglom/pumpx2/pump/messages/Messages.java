@@ -174,6 +174,10 @@ import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -271,6 +275,8 @@ public enum Messages {
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
     DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
     CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
+    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),
+    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
     // MESSAGES_END
     ;
 

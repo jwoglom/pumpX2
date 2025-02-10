@@ -26,8 +26,6 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusReque
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
-import com.jwoglom.pumpx2.shared.Hex;
-import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import org.json.JSONObject;
 
@@ -54,7 +52,7 @@ public enum QualifyingEvent {
             AlarmStatusRequest::new)),
     REMINDER(4, ImmutableSet.of(
             ReminderStatusRequest::new)),
-    RESERVED(8),
+    MALFUNCTION(8),
     CGM_ALERT(16, ImmutableSet.of(
             CGMAlertStatusRequest::new)),
     HOME_SCREEN_CHANGE(32, ImmutableSet.of(
