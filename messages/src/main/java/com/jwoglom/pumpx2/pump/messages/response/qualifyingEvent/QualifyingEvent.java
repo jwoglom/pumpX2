@@ -22,6 +22,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatu
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
@@ -52,7 +53,8 @@ public enum QualifyingEvent {
             AlarmStatusRequest::new)),
     REMINDER(4, ImmutableSet.of(
             ReminderStatusRequest::new)),
-    MALFUNCTION(8),
+    MALFUNCTION(8, ImmutableSet.of(
+            MalfunctionStatusRequest::new)),
     CGM_ALERT(16, ImmutableSet.of(
             CGMAlertStatusRequest::new)),
     HOME_SCREEN_CHANGE(32, ImmutableSet.of(
