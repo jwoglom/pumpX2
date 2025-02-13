@@ -6,6 +6,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
@@ -14,7 +15,7 @@ import org.junit.Test;
 public class EnterFillTubingModeResponseTest {
     @Test
     public void testEnterFillTubingModeResponse() throws DecoderException { 
-        initPumpState("authenticationKey", 0L);
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         EnterFillTubingModeResponse expected = new EnterFillTubingModeResponse(
             0

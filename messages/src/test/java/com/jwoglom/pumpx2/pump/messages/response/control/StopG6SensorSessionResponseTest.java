@@ -4,6 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
@@ -12,7 +13,7 @@ import org.junit.Test;
 public class StopG6SensorSessionResponseTest {
     @Test
     public void testStopG6SensorSessionResponse() throws DecoderException { 
-        initPumpState("authenticationKey", 0L);
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         StopG6SensorSessionResponse expected = new StopG6SensorSessionResponse(
             0

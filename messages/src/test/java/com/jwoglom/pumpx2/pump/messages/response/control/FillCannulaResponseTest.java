@@ -21,7 +21,7 @@ public class FillCannulaResponseTest {
 
         FillCannulaResponse parsedRes = (FillCannulaResponse) MessageTester.test(
                 "006d996d1900d4ce2720d38b10afb8f57ab650c6682172ef1f0af1e8d4e59e0c",
-                3,
+                109,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

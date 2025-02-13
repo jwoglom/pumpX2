@@ -13,7 +13,7 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-101,
-    size=25,
+    size=1,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
@@ -23,6 +23,8 @@ import java.math.BigInteger;
 )
 public class ResumePumpingResponse extends Message {
 
+    private int status;
+
     public ResumePumpingResponse() {
         this.cargo = EMPTY;
     }
@@ -31,11 +33,25 @@ public class ResumePumpingResponse extends Message {
         this.cargo = cargo;
     }
 
+    public ResumePumpingResponse(int status) {
+        this.cargo = buildCargo(status);
+        parse(cargo);
+    }
+
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         
+    }
+    public static byte[] buildCargo(int status) {
+        return Bytes.combine(
+                new byte[]{(byte) status}
+        );
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     

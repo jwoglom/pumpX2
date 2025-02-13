@@ -4,6 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.shared.Hex;
 
@@ -13,10 +14,10 @@ import org.junit.Test;
 public class ResumePumpingResponseTest {
     @Test
     public void testResumePumpingResponse() throws DecoderException { 
-        initPumpState("authenticationKey", 0L);
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         ResumePumpingResponse expected = new ResumePumpingResponse(
-                new byte[]{0,-75,-93,-18,31,22,-60,30,-83,-18,-104,71,-85,-122,28,-46,70,4,-95,30,74,104,-48,-89,-35}
+                0
         );
 
         ResumePumpingResponse parsedRes = (ResumePumpingResponse) MessageTester.test(
