@@ -12,17 +12,16 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-111,
-    size=11,
+    size=1,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
-    signed=false, // NOT signed (?)
+    signed=true, // NOT signed (?)
     modifiesInsulinDelivery=true,
     request=ChangeCartridgeRequest.class
 )
 public class ChangeCartridgeResponse extends Message {
     
     private int status;
-    private int unknown1;
     
     public ChangeCartridgeResponse() {}
 
@@ -33,27 +32,24 @@ public class ChangeCartridgeResponse extends Message {
 
     }
     
-    public ChangeCartridgeResponse(int status, int unknown1) {
-        this.cargo = buildCargo(status, unknown1);
+    public ChangeCartridgeResponse(int status) {
+        this.cargo = buildCargo(status);
         this.status = status;
-        this.unknown1 = unknown1;
         
     }
 
     public void parse(byte[] raw) {
+        raw = removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
-        this.unknown1 = raw[1];
         
     }
 
     
-    public static byte[] buildCargo(int status, int unknown1) {
+    public static byte[] buildCargo(int status) {
         return Bytes.combine(
-            new byte[]{ (byte) status },
-            new byte[]{ (byte) unknown1 },
-            new byte[]{ 0, 0, 0, 0, 0, 0, 0, 0, 0}
+            new byte[]{ (byte) status }
         );
     }
 

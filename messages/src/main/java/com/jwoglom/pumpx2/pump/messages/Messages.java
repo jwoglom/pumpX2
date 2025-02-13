@@ -180,6 +180,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusR
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -280,6 +282,7 @@ public enum Messages {
     OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
     SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),
+    FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
     // MESSAGES_END
     ;
 

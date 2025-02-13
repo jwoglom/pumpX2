@@ -10,12 +10,18 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;
 
+/**
+ * Enable or disable sleep mode or exercise mode.
+ *
+ * Precondition: ControlIQ must be enabled.
+ */
 @MessageProps(
     opCode=-52,
     size=1,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     signed=true,
+    modifiesInsulinDelivery=true,
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY,
     response=SetModesResponse.class
@@ -68,6 +74,12 @@ public class SetModesRequest extends Message {
         SLEEP_MODE_OFF(2),
         EXERCISE_MODE_ON(3),
         EXERCISE_MODE_OFF(4),
+
+
+        // NOT SUPPORTED IN CURRENT FIRMWARE (referenced in Tandem Source event schema)
+        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_ALL(5),
+        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__START_EATING_SOON(6),
+        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_EATING_SOON(7),
         ;
 
         private int bitmap;

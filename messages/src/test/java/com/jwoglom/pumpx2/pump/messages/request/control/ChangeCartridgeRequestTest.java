@@ -2,8 +2,10 @@ package com.jwoglom.pumpx2.pump.messages.request.control;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
+import static com.jwoglom.pumpx2.pump.messages.PacketArrayList.IGNORE_INVALID_HMAC;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
 
@@ -12,19 +14,39 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class ChangeCartridgeRequestTest {
+    // invalid
+//    @Test
+//    public void testChangeCartridgeRequest() throws DecoderException {
+//        initPumpState("authenticationKey", 0L);
+//
+//        // empty cargo
+//        ChangeCartridgeRequest expected = new ChangeCartridgeRequest();
+//
+//        ChangeCartridgeRequest parsedReq = (ChangeCartridgeRequest) MessageTester.test(
+//                "00769076005a16",
+//                118,
+//                1,
+//                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+//                expected
+//        );
+//
+//        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+//    }
+
     @Test
     public void testChangeCartridgeRequest() throws DecoderException {
-        initPumpState("authenticationKey", 0L);
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
         // empty cargo
         ChangeCartridgeRequest expected = new ChangeCartridgeRequest();
 
         ChangeCartridgeRequest parsedReq = (ChangeCartridgeRequest) MessageTester.test(
-                "00769076005a16",
-                118,
+                "01369036181d142820db51e5fa626a7df87fc2cf",
+                54,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
-                expected
+                expected,
+                "003621097bdd2395333e5d7d63"
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());

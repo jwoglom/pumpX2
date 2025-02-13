@@ -187,10 +187,12 @@ public class PumpResponseMessageBuilder {
     }
 
     private static UUID btCharToUuid(String btChar) {
-        btChar = btChar.replace("-", "");
         for (Characteristic c : Characteristic.values()) {
+            if (c.getUuid().toString().equalsIgnoreCase(btChar)) {
+                return c.getUuid();
+            }
             String cChar = c.getUuid().toString().replace("-", "");
-            if (cChar.toLowerCase().equals(btChar.toLowerCase())) {
+            if (cChar.equalsIgnoreCase(btChar.replace("-", ""))) {
                 return c.getUuid();
             }
         }
@@ -199,6 +201,7 @@ public class PumpResponseMessageBuilder {
     }
 
     private static UUID addDashesToUuid(String btChar) {
+        if (btChar.length() > 32) return UUID.fromString(btChar);
         return UUID.fromString(btChar.substring(0, 8) + "-" +
                 btChar.substring(8, 12) + "-" +
                 btChar.substring(12, 16) + "-" +

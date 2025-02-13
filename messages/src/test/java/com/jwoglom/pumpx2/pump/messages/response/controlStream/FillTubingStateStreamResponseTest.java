@@ -15,6 +15,7 @@ public class FillTubingStateStreamResponseTest {
     public void testFillTubingRequest_1() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
+        // button pressed down
         FillTubingStateStreamResponse expected = new FillTubingStateStreamResponse(
             new byte[]{1}
         );
@@ -33,6 +34,7 @@ public class FillTubingStateStreamResponseTest {
     public void testFillTubingRequest_2() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
+        // button released
         FillTubingStateStreamResponse expected = new FillTubingStateStreamResponse(
                 new byte[]{0}
         );

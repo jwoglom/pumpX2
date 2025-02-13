@@ -8,36 +8,34 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
-import com.jwoglom.pumpx2.pump.messages.request.control.SetModesRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 
 import java.math.BigInteger;
 
 @MessageProps(
-    opCode=-51,
-    size=1,
+    opCode=-103,
+    size=1, // +24
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    modifiesInsulinDelivery=true,
-    minApi=KnownApiVersion.MOBI_API_V3_5,
+    request=FillCannulaRequest.class,
     supportedDevices=SupportedDevices.MOBI_ONLY,
-    request=SetModesRequest.class
+    minApi=KnownApiVersion.MOBI_API_V3_5,
+    modifiesInsulinDelivery=true
 )
-public class SetModesResponse extends Message {
-
+public class FillCannulaResponse extends Message {
+    
     private int status;
     
-    public SetModesResponse() {}
+    public FillCannulaResponse() {}
     
-    public SetModesResponse(int status) {
+    public FillCannulaResponse(int status) {
         this.cargo = buildCargo(status);
+        this.status = status;
+        
     }
 
-    public SetModesResponse(byte[] raw) {
-        parse(raw);
-    }
-
-    public void parse(byte[] raw) {
+    public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
@@ -48,13 +46,12 @@ public class SetModesResponse extends Message {
     
     public static byte[] buildCargo(int status) {
         return Bytes.combine(
-            new byte[]{(byte) status});
+            new byte[]{ (byte) status });
     }
 
-    /**
-     * @return 0 if successful
-     */
+    // 0 = ok
     public int getStatus() {
         return status;
     }
+    
 }

@@ -21,6 +21,9 @@ public abstract class ControlIQInfoAbstractResponse extends Message {
         STANDARD(0),
         SLEEP(1),
         EXERCISE(2),
+
+        // NOT SUPPORTED IN CURRENT FIRMWARE (referenced in Tandem Source event schema)
+        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__EATING_SOON(3),
         ;
 
         private final int id;
