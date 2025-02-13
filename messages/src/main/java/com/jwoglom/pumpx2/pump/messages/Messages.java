@@ -178,6 +178,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -277,6 +279,7 @@ public enum Messages {
     CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
     OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
+    SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),
     // MESSAGES_END
     ;
 

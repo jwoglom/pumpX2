@@ -11,6 +11,7 @@ import kotlin.jvm.internal.Intrinsics;
 
 public class StreamPacketArrayList extends PacketArrayList {
     protected static final String TAG = "StreamPacketArrayList";
+    private static final int HISTORY_LOG_STREAM_OPCODE = -127;
 
     private byte[] originalMessageData = new byte[0];
 
@@ -76,22 +77,23 @@ public class StreamPacketArrayList extends PacketArrayList {
                     L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     this.expectedCargoSize += 24;
                     this.actualExpectedCargoSize += 24;
-                } else {
+                } else if (opCode != HISTORY_LOG_STREAM_OPCODE) {
                     throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);
                 }
             }
             this.fullCargo = Bytes.dropFirstN(bArr, 5);
 
             // specific checks for HistoryLog stream
-            if ((byte) opCode == -127) {
+            if ((byte) opCode == HISTORY_LOG_STREAM_OPCODE) {
                 if (cargoSize <= 255) {
                     byte numHistoryLogs = bArr[5];
-                    if (cargoSize == (numHistoryLogs * 26) + 2) {
-                        this.fullCargo = Bytes.dropFirstN(bArr, 5);
-                        this.empty = false;
-                        return;
+                    L.d(TAG, "StreamPacketArrayParse check: opCode="+opCode+" numHistoryLogs="+numHistoryLogs+" expHistoryLogs="+((numHistoryLogs * 26) + 2)+" cargoSize="+cargoSize);
+                    L.d(TAG, "StreamPacketArrayParse bArr="+Hex.encodeHexString(bArr)+" oldFullCargo="+Hex.encodeHexString(fullCargo)+" newFullCargo="+Hex.encodeHexString(Bytes.dropFirstN(bArr, 5)));
+                    if (cargoSize != (numHistoryLogs * 26) + 2) {
+                        throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");
+                    } else {
+                        expectedCargoSize = cargoSize;
                     }
-                    throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");
                 } else {
                     throw new IllegalArgumentException("Cargo size beyond maximum: " + ((int) cargoSize));
                 }

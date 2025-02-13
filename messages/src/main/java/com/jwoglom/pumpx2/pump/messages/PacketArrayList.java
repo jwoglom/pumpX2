@@ -78,15 +78,19 @@ public class PacketArrayList {
         return b >= 0;
     }
 
+    private void createExpectedCrc() {
+        if (this.fullCargo.length >= 2) {
+            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
+        }
+    }
+
     public boolean validate(byte[] authKey) {
         Intrinsics.checkParameterIsNotNull(authKey, "ak");
         if (needsMorePacket()) {
             return false;
         }
         createMessageData();
-        if (this.fullCargo.length >= 2) {
-            System.arraycopy(this.fullCargo, this.fullCargo.length - 2, this.expectedCrc, 0, 2);
-        }
+        createExpectedCrc();
         byte[] a = Bytes.calculateCRC16(this.messageData);
         byte[] lastTwoB = this.expectedCrc;
         boolean ok = true;
