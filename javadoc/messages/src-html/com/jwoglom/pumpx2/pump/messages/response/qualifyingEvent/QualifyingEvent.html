@@ -31,162 +31,164 @@
 <span class="sourceLineNo">022</span><a id="line.22">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;</a>
 <span class="sourceLineNo">023</span><a id="line.23">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;</a>
 <span class="sourceLineNo">024</span><a id="line.24">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;</a>
-<span class="sourceLineNo">025</span><a id="line.25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</a>
-<span class="sourceLineNo">026</span><a id="line.26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</a>
-<span class="sourceLineNo">027</span><a id="line.27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</a>
-<span class="sourceLineNo">028</span><a id="line.28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</a>
-<span class="sourceLineNo">029</span><a id="line.29"></a>
-<span class="sourceLineNo">030</span><a id="line.30">import org.json.JSONObject;</a>
-<span class="sourceLineNo">031</span><a id="line.31"></a>
-<span class="sourceLineNo">032</span><a id="line.32">import java.util.HashSet;</a>
-<span class="sourceLineNo">033</span><a id="line.33">import java.util.Set;</a>
-<span class="sourceLineNo">034</span><a id="line.34">import java.util.function.Supplier;</a>
-<span class="sourceLineNo">035</span><a id="line.35">import java.util.stream.Collectors;</a>
-<span class="sourceLineNo">036</span><a id="line.36"></a>
-<span class="sourceLineNo">037</span><a id="line.37">/**</a>
-<span class="sourceLineNo">038</span><a id="line.38"> * A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request</a>
-<span class="sourceLineNo">039</span><a id="line.39"> * messages which can be sent (via `sendPumpCommand`) to receive more information about the event</a>
-<span class="sourceLineNo">040</span><a id="line.40"> * which just occurred, in logic matching the Tandem mobile app, is included. To get these</a>
-<span class="sourceLineNo">041</span><a id="line.41"> * instantiated request messages, you can invoke:</a>
-<span class="sourceLineNo">042</span><a id="line.42"> *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)</a>
-<span class="sourceLineNo">043</span><a id="line.43"> *</a>
-<span class="sourceLineNo">044</span><a id="line.44"> * Note that if t:connect app connection sharing is enabled and the t:connect app is running,</a>
-<span class="sourceLineNo">045</span><a id="line.45"> * you can use enableSendSharedConnectionResponseMessages and get the response from these callbacks</a>
-<span class="sourceLineNo">046</span><a id="line.46"> * for free, without duplicating requests.</a>
-<span class="sourceLineNo">047</span><a id="line.47"> */</a>
-<span class="sourceLineNo">048</span><a id="line.48">public enum QualifyingEvent {</a>
-<span class="sourceLineNo">049</span><a id="line.49">    ALERT(1, ImmutableSet.of(</a>
-<span class="sourceLineNo">050</span><a id="line.50">            AlertStatusRequest::new)),</a>
-<span class="sourceLineNo">051</span><a id="line.51">    ALARM(2, ImmutableSet.of(</a>
-<span class="sourceLineNo">052</span><a id="line.52">            AlarmStatusRequest::new)),</a>
-<span class="sourceLineNo">053</span><a id="line.53">    REMINDER(4, ImmutableSet.of(</a>
-<span class="sourceLineNo">054</span><a id="line.54">            ReminderStatusRequest::new)),</a>
-<span class="sourceLineNo">055</span><a id="line.55">    MALFUNCTION(8),</a>
-<span class="sourceLineNo">056</span><a id="line.56">    CGM_ALERT(16, ImmutableSet.of(</a>
-<span class="sourceLineNo">057</span><a id="line.57">            CGMAlertStatusRequest::new)),</a>
-<span class="sourceLineNo">058</span><a id="line.58">    HOME_SCREEN_CHANGE(32, ImmutableSet.of(</a>
-<span class="sourceLineNo">059</span><a id="line.59">            CurrentBasalStatusRequest::new,</a>
-<span class="sourceLineNo">060</span><a id="line.60">            CurrentEGVGuiDataRequest::new,</a>
-<span class="sourceLineNo">061</span><a id="line.61">            HomeScreenMirrorRequest::new,</a>
-<span class="sourceLineNo">062</span><a id="line.62">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
-<span class="sourceLineNo">063</span><a id="line.63">    PUMP_SUSPEND(64, ImmutableSet.of(</a>
-<span class="sourceLineNo">064</span><a id="line.64">            InsulinStatusRequest::new,</a>
-<span class="sourceLineNo">065</span><a id="line.65">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</a>
-<span class="sourceLineNo">066</span><a id="line.66">    PUMP_RESUME(128, ImmutableSet.of(</a>
-<span class="sourceLineNo">067</span><a id="line.67">            InsulinStatusRequest::new,</a>
-<span class="sourceLineNo">068</span><a id="line.68">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
-<span class="sourceLineNo">069</span><a id="line.69">            CurrentEGVGuiDataRequest::new,</a>
-<span class="sourceLineNo">070</span><a id="line.70">            ProfileStatusRequest::new)),</a>
-<span class="sourceLineNo">071</span><a id="line.71">    TIME_CHANGE(256, ImmutableSet.of(</a>
-<span class="sourceLineNo">072</span><a id="line.72">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
-<span class="sourceLineNo">073</span><a id="line.73">            CGMStatusRequest::new,</a>
-<span class="sourceLineNo">074</span><a id="line.74">            TimeSinceResetRequest::new)),</a>
-<span class="sourceLineNo">075</span><a id="line.75">    BASAL_CHANGE(512, ImmutableSet.of(</a>
-<span class="sourceLineNo">076</span><a id="line.76">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
-<span class="sourceLineNo">077</span><a id="line.77">            HomeScreenMirrorRequest::new,</a>
-<span class="sourceLineNo">078</span><a id="line.78">            CurrentBasalStatusRequest::new,</a>
-<span class="sourceLineNo">079</span><a id="line.79">            TempRateRequest::new)),</a>
-<span class="sourceLineNo">080</span><a id="line.80">    BOLUS_CHANGE(1024, ImmutableSet.of(</a>
-<span class="sourceLineNo">081</span><a id="line.81">            CurrentBolusStatusRequest::new,</a>
-<span class="sourceLineNo">082</span><a id="line.82">            ExtendedBolusStatusRequest::new,</a>
-<span class="sourceLineNo">083</span><a id="line.83">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
-<span class="sourceLineNo">084</span><a id="line.84">    IOB_CHANGE(2048, ImmutableSet.of(</a>
-<span class="sourceLineNo">085</span><a id="line.85">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</a>
-<span class="sourceLineNo">086</span><a id="line.86">    EXTENDED_BOLUS_CHANGE(4096, ImmutableSet.of(</a>
-<span class="sourceLineNo">087</span><a id="line.87">            ExtendedBolusStatusRequest::new,</a>
-<span class="sourceLineNo">088</span><a id="line.88">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
-<span class="sourceLineNo">089</span><a id="line.89">    PROFILE_CHANGE(8192, ImmutableSet.of(</a>
-<span class="sourceLineNo">090</span><a id="line.90">            ProfileStatusRequest::new)),</a>
-<span class="sourceLineNo">091</span><a id="line.91">    BG(16384, ImmutableSet.of(</a>
-<span class="sourceLineNo">092</span><a id="line.92">            LastBGRequest::new)),</a>
-<span class="sourceLineNo">093</span><a id="line.93">    CGM_CHANGE(32768, ImmutableSet.of(</a>
-<span class="sourceLineNo">094</span><a id="line.94">            CGMStatusRequest::new,</a>
-<span class="sourceLineNo">095</span><a id="line.95">            CurrentEGVGuiDataRequest::new,</a>
-<span class="sourceLineNo">096</span><a id="line.96">            HomeScreenMirrorRequest::new)),</a>
-<span class="sourceLineNo">097</span><a id="line.97">    BATTERY(65536, ImmutableSet.of(</a>
-<span class="sourceLineNo">098</span><a id="line.98">            () -&gt; CurrentBatteryRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
-<span class="sourceLineNo">099</span><a id="line.99">    BASAL_IQ(131072, ImmutableSet.of(</a>
-<span class="sourceLineNo">100</span><a id="line.100">            BasalIQSettingsRequest::new)),</a>
-<span class="sourceLineNo">101</span><a id="line.101">    REMAINING_INSULIN(262144, ImmutableSet.of(</a>
-<span class="sourceLineNo">102</span><a id="line.102">            InsulinStatusRequest::new)),</a>
-<span class="sourceLineNo">103</span><a id="line.103">    SUSPEND_COMM(524288),</a>
-<span class="sourceLineNo">104</span><a id="line.104">    ACTIVE_SEGMENT_CHANGE(1048576, ImmutableSet.of(</a>
-<span class="sourceLineNo">105</span><a id="line.105">            ProfileStatusRequest::new)),</a>
-<span class="sourceLineNo">106</span><a id="line.106">    BASAL_IQ_STATUS(2097152, ImmutableSet.of(</a>
-<span class="sourceLineNo">107</span><a id="line.107">            BasalIQSettingsRequest::new,</a>
-<span class="sourceLineNo">108</span><a id="line.108">            BasalIQStatusRequest::new)),</a>
-<span class="sourceLineNo">109</span><a id="line.109">    CONTROL_IQ_INFO(4194304, ImmutableSet.of(</a>
-<span class="sourceLineNo">110</span><a id="line.110">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
-<span class="sourceLineNo">111</span><a id="line.111">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()),</a>
-<span class="sourceLineNo">112</span><a id="line.112">            ControlIQSleepScheduleRequest::new)),</a>
-<span class="sourceLineNo">113</span><a id="line.113">    CONTROL_IQ_SLEEP(8388608, ImmutableSet.of(</a>
+<span class="sourceLineNo">025</span><a id="line.25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</a>
+<span class="sourceLineNo">030</span><a id="line.30"></a>
+<span class="sourceLineNo">031</span><a id="line.31">import org.json.JSONObject;</a>
+<span class="sourceLineNo">032</span><a id="line.32"></a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.HashSet;</a>
+<span class="sourceLineNo">034</span><a id="line.34">import java.util.Set;</a>
+<span class="sourceLineNo">035</span><a id="line.35">import java.util.function.Supplier;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import java.util.stream.Collectors;</a>
+<span class="sourceLineNo">037</span><a id="line.37"></a>
+<span class="sourceLineNo">038</span><a id="line.38">/**</a>
+<span class="sourceLineNo">039</span><a id="line.39"> * A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * messages which can be sent (via `sendPumpCommand`) to receive more information about the event</a>
+<span class="sourceLineNo">041</span><a id="line.41"> * which just occurred, in logic matching the Tandem mobile app, is included. To get these</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * instantiated request messages, you can invoke:</a>
+<span class="sourceLineNo">043</span><a id="line.43"> *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)</a>
+<span class="sourceLineNo">044</span><a id="line.44"> *</a>
+<span class="sourceLineNo">045</span><a id="line.45"> * Note that if t:connect app connection sharing is enabled and the t:connect app is running,</a>
+<span class="sourceLineNo">046</span><a id="line.46"> * you can use enableSendSharedConnectionResponseMessages and get the response from these callbacks</a>
+<span class="sourceLineNo">047</span><a id="line.47"> * for free, without duplicating requests.</a>
+<span class="sourceLineNo">048</span><a id="line.48"> */</a>
+<span class="sourceLineNo">049</span><a id="line.49">public enum QualifyingEvent {</a>
+<span class="sourceLineNo">050</span><a id="line.50">    ALERT(1, ImmutableSet.of(</a>
+<span class="sourceLineNo">051</span><a id="line.51">            AlertStatusRequest::new)),</a>
+<span class="sourceLineNo">052</span><a id="line.52">    ALARM(2, ImmutableSet.of(</a>
+<span class="sourceLineNo">053</span><a id="line.53">            AlarmStatusRequest::new)),</a>
+<span class="sourceLineNo">054</span><a id="line.54">    REMINDER(4, ImmutableSet.of(</a>
+<span class="sourceLineNo">055</span><a id="line.55">            ReminderStatusRequest::new)),</a>
+<span class="sourceLineNo">056</span><a id="line.56">    MALFUNCTION(8, ImmutableSet.of(</a>
+<span class="sourceLineNo">057</span><a id="line.57">            MalfunctionStatusRequest::new)),</a>
+<span class="sourceLineNo">058</span><a id="line.58">    CGM_ALERT(16, ImmutableSet.of(</a>
+<span class="sourceLineNo">059</span><a id="line.59">            CGMAlertStatusRequest::new)),</a>
+<span class="sourceLineNo">060</span><a id="line.60">    HOME_SCREEN_CHANGE(32, ImmutableSet.of(</a>
+<span class="sourceLineNo">061</span><a id="line.61">            CurrentBasalStatusRequest::new,</a>
+<span class="sourceLineNo">062</span><a id="line.62">            CurrentEGVGuiDataRequest::new,</a>
+<span class="sourceLineNo">063</span><a id="line.63">            HomeScreenMirrorRequest::new,</a>
+<span class="sourceLineNo">064</span><a id="line.64">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
+<span class="sourceLineNo">065</span><a id="line.65">    PUMP_SUSPEND(64, ImmutableSet.of(</a>
+<span class="sourceLineNo">066</span><a id="line.66">            InsulinStatusRequest::new,</a>
+<span class="sourceLineNo">067</span><a id="line.67">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</a>
+<span class="sourceLineNo">068</span><a id="line.68">    PUMP_RESUME(128, ImmutableSet.of(</a>
+<span class="sourceLineNo">069</span><a id="line.69">            InsulinStatusRequest::new,</a>
+<span class="sourceLineNo">070</span><a id="line.70">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
+<span class="sourceLineNo">071</span><a id="line.71">            CurrentEGVGuiDataRequest::new,</a>
+<span class="sourceLineNo">072</span><a id="line.72">            ProfileStatusRequest::new)),</a>
+<span class="sourceLineNo">073</span><a id="line.73">    TIME_CHANGE(256, ImmutableSet.of(</a>
+<span class="sourceLineNo">074</span><a id="line.74">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
+<span class="sourceLineNo">075</span><a id="line.75">            CGMStatusRequest::new,</a>
+<span class="sourceLineNo">076</span><a id="line.76">            TimeSinceResetRequest::new)),</a>
+<span class="sourceLineNo">077</span><a id="line.77">    BASAL_CHANGE(512, ImmutableSet.of(</a>
+<span class="sourceLineNo">078</span><a id="line.78">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
+<span class="sourceLineNo">079</span><a id="line.79">            HomeScreenMirrorRequest::new,</a>
+<span class="sourceLineNo">080</span><a id="line.80">            CurrentBasalStatusRequest::new,</a>
+<span class="sourceLineNo">081</span><a id="line.81">            TempRateRequest::new)),</a>
+<span class="sourceLineNo">082</span><a id="line.82">    BOLUS_CHANGE(1024, ImmutableSet.of(</a>
+<span class="sourceLineNo">083</span><a id="line.83">            CurrentBolusStatusRequest::new,</a>
+<span class="sourceLineNo">084</span><a id="line.84">            ExtendedBolusStatusRequest::new,</a>
+<span class="sourceLineNo">085</span><a id="line.85">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
+<span class="sourceLineNo">086</span><a id="line.86">    IOB_CHANGE(2048, ImmutableSet.of(</a>
+<span class="sourceLineNo">087</span><a id="line.87">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</a>
+<span class="sourceLineNo">088</span><a id="line.88">    EXTENDED_BOLUS_CHANGE(4096, ImmutableSet.of(</a>
+<span class="sourceLineNo">089</span><a id="line.89">            ExtendedBolusStatusRequest::new,</a>
+<span class="sourceLineNo">090</span><a id="line.90">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
+<span class="sourceLineNo">091</span><a id="line.91">    PROFILE_CHANGE(8192, ImmutableSet.of(</a>
+<span class="sourceLineNo">092</span><a id="line.92">            ProfileStatusRequest::new)),</a>
+<span class="sourceLineNo">093</span><a id="line.93">    BG(16384, ImmutableSet.of(</a>
+<span class="sourceLineNo">094</span><a id="line.94">            LastBGRequest::new)),</a>
+<span class="sourceLineNo">095</span><a id="line.95">    CGM_CHANGE(32768, ImmutableSet.of(</a>
+<span class="sourceLineNo">096</span><a id="line.96">            CGMStatusRequest::new,</a>
+<span class="sourceLineNo">097</span><a id="line.97">            CurrentEGVGuiDataRequest::new,</a>
+<span class="sourceLineNo">098</span><a id="line.98">            HomeScreenMirrorRequest::new)),</a>
+<span class="sourceLineNo">099</span><a id="line.99">    BATTERY(65536, ImmutableSet.of(</a>
+<span class="sourceLineNo">100</span><a id="line.100">            () -&gt; CurrentBatteryRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</a>
+<span class="sourceLineNo">101</span><a id="line.101">    BASAL_IQ(131072, ImmutableSet.of(</a>
+<span class="sourceLineNo">102</span><a id="line.102">            BasalIQSettingsRequest::new)),</a>
+<span class="sourceLineNo">103</span><a id="line.103">    REMAINING_INSULIN(262144, ImmutableSet.of(</a>
+<span class="sourceLineNo">104</span><a id="line.104">            InsulinStatusRequest::new)),</a>
+<span class="sourceLineNo">105</span><a id="line.105">    SUSPEND_COMM(524288),</a>
+<span class="sourceLineNo">106</span><a id="line.106">    ACTIVE_SEGMENT_CHANGE(1048576, ImmutableSet.of(</a>
+<span class="sourceLineNo">107</span><a id="line.107">            ProfileStatusRequest::new)),</a>
+<span class="sourceLineNo">108</span><a id="line.108">    BASAL_IQ_STATUS(2097152, ImmutableSet.of(</a>
+<span class="sourceLineNo">109</span><a id="line.109">            BasalIQSettingsRequest::new,</a>
+<span class="sourceLineNo">110</span><a id="line.110">            BasalIQStatusRequest::new)),</a>
+<span class="sourceLineNo">111</span><a id="line.111">    CONTROL_IQ_INFO(4194304, ImmutableSet.of(</a>
+<span class="sourceLineNo">112</span><a id="line.112">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</a>
+<span class="sourceLineNo">113</span><a id="line.113">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()),</a>
 <span class="sourceLineNo">114</span><a id="line.114">            ControlIQSleepScheduleRequest::new)),</a>
-<span class="sourceLineNo">115</span><a id="line.115">    BOLUS_PERMISSION_REVOKED(2147483648L),</a>
-<span class="sourceLineNo">116</span><a id="line.116"></a>
-<span class="sourceLineNo">117</span><a id="line.117">    ;</a>
-<span class="sourceLineNo">118</span><a id="line.118">    private final long id;</a>
-<span class="sourceLineNo">119</span><a id="line.119">    private final Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers;</a>
-<span class="sourceLineNo">120</span><a id="line.120">    QualifyingEvent(long id) {</a>
-<span class="sourceLineNo">121</span><a id="line.121">        this.id = id;</a>
-<span class="sourceLineNo">122</span><a id="line.122">        this.suggestedHandlers = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">123</span><a id="line.123">    }</a>
-<span class="sourceLineNo">124</span><a id="line.124"></a>
-<span class="sourceLineNo">125</span><a id="line.125">    QualifyingEvent(long id, Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers) {</a>
-<span class="sourceLineNo">126</span><a id="line.126">        this.id = id;</a>
-<span class="sourceLineNo">127</span><a id="line.127">        this.suggestedHandlers = suggestedHandlers;</a>
-<span class="sourceLineNo">128</span><a id="line.128">    }</a>
-<span class="sourceLineNo">129</span><a id="line.129"></a>
-<span class="sourceLineNo">130</span><a id="line.130">    public final long getId() {</a>
-<span class="sourceLineNo">131</span><a id="line.131">        return id;</a>
-<span class="sourceLineNo">132</span><a id="line.132">    }</a>
-<span class="sourceLineNo">133</span><a id="line.133"></a>
-<span class="sourceLineNo">134</span><a id="line.134">    public final Set&lt;Supplier&lt;? extends Message&gt;&gt; getSuggestedHandlers() {</a>
-<span class="sourceLineNo">135</span><a id="line.135">        return suggestedHandlers;</a>
-<span class="sourceLineNo">136</span><a id="line.136">    }</a>
-<span class="sourceLineNo">137</span><a id="line.137"></a>
-<span class="sourceLineNo">138</span><a id="line.138">    public static Set&lt;QualifyingEvent&gt; fromBitmask(long bitmask) {</a>
-<span class="sourceLineNo">139</span><a id="line.139">        Set&lt;QualifyingEvent&gt; ret = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">140</span><a id="line.140">        for (QualifyingEvent e : values()) {</a>
-<span class="sourceLineNo">141</span><a id="line.141">            if ((bitmask &amp; e.getId()) != 0) {</a>
-<span class="sourceLineNo">142</span><a id="line.142">                ret.add(e);</a>
-<span class="sourceLineNo">143</span><a id="line.143">            }</a>
-<span class="sourceLineNo">144</span><a id="line.144">        }</a>
-<span class="sourceLineNo">145</span><a id="line.145">        return ret;</a>
-<span class="sourceLineNo">146</span><a id="line.146">    }</a>
-<span class="sourceLineNo">147</span><a id="line.147"></a>
-<span class="sourceLineNo">148</span><a id="line.148">    public static Set&lt;QualifyingEvent&gt; fromRawBtBytes(byte[] raw) {</a>
-<span class="sourceLineNo">149</span><a id="line.149">        return fromBitmask(Bytes.readUint32(raw, 0));</a>
-<span class="sourceLineNo">150</span><a id="line.150">    }</a>
-<span class="sourceLineNo">151</span><a id="line.151"></a>
-<span class="sourceLineNo">152</span><a id="line.152">    public static Set&lt;? extends Message&gt; groupSuggestedHandlers(Set&lt;QualifyingEvent&gt; events) {</a>
-<span class="sourceLineNo">153</span><a id="line.153">        Set&lt;Supplier&lt;? extends Message&gt;&gt; messages = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">154</span><a id="line.154">        for (QualifyingEvent e : events) {</a>
-<span class="sourceLineNo">155</span><a id="line.155">            messages.addAll(e.suggestedHandlers);</a>
-<span class="sourceLineNo">156</span><a id="line.156">        }</a>
-<span class="sourceLineNo">157</span><a id="line.157">        return messages.stream().map(Supplier::get).collect(Collectors.toSet());</a>
-<span class="sourceLineNo">158</span><a id="line.158">    }</a>
-<span class="sourceLineNo">159</span><a id="line.159"></a>
-<span class="sourceLineNo">160</span><a id="line.160">    public static int toBitmask(QualifyingEvent...states) {</a>
-<span class="sourceLineNo">161</span><a id="line.161">        int bitmask = 0;</a>
-<span class="sourceLineNo">162</span><a id="line.162">        for (QualifyingEvent e : states) {</a>
-<span class="sourceLineNo">163</span><a id="line.163">            bitmask |= e.getId();</a>
-<span class="sourceLineNo">164</span><a id="line.164">        }</a>
-<span class="sourceLineNo">165</span><a id="line.165">        return bitmask;</a>
-<span class="sourceLineNo">166</span><a id="line.166">    }</a>
-<span class="sourceLineNo">167</span><a id="line.167"></a>
-<span class="sourceLineNo">168</span><a id="line.168">    public String jsonToString() {</a>
-<span class="sourceLineNo">169</span><a id="line.169">        JSONObject obj = new JSONObject();</a>
-<span class="sourceLineNo">170</span><a id="line.170">        obj.put("event", name());</a>
-<span class="sourceLineNo">171</span><a id="line.171">        return obj.toString(0);</a>
-<span class="sourceLineNo">172</span><a id="line.172">    }</a>
-<span class="sourceLineNo">173</span><a id="line.173"></a>
-<span class="sourceLineNo">174</span><a id="line.174">    public JSONObject asJsonObject() {</a>
-<span class="sourceLineNo">175</span><a id="line.175">        JSONObject obj = new JSONObject();</a>
-<span class="sourceLineNo">176</span><a id="line.176">        obj.put("event", name());</a>
-<span class="sourceLineNo">177</span><a id="line.177">        return obj;</a>
-<span class="sourceLineNo">178</span><a id="line.178">    }</a>
-<span class="sourceLineNo">179</span><a id="line.179"></a>
-<span class="sourceLineNo">180</span><a id="line.180">}</a>
+<span class="sourceLineNo">115</span><a id="line.115">    CONTROL_IQ_SLEEP(8388608, ImmutableSet.of(</a>
+<span class="sourceLineNo">116</span><a id="line.116">            ControlIQSleepScheduleRequest::new)),</a>
+<span class="sourceLineNo">117</span><a id="line.117">    BOLUS_PERMISSION_REVOKED(2147483648L),</a>
+<span class="sourceLineNo">118</span><a id="line.118"></a>
+<span class="sourceLineNo">119</span><a id="line.119">    ;</a>
+<span class="sourceLineNo">120</span><a id="line.120">    private final long id;</a>
+<span class="sourceLineNo">121</span><a id="line.121">    private final Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers;</a>
+<span class="sourceLineNo">122</span><a id="line.122">    QualifyingEvent(long id) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">        this.id = id;</a>
+<span class="sourceLineNo">124</span><a id="line.124">        this.suggestedHandlers = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">125</span><a id="line.125">    }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">    QualifyingEvent(long id, Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers) {</a>
+<span class="sourceLineNo">128</span><a id="line.128">        this.id = id;</a>
+<span class="sourceLineNo">129</span><a id="line.129">        this.suggestedHandlers = suggestedHandlers;</a>
+<span class="sourceLineNo">130</span><a id="line.130">    }</a>
+<span class="sourceLineNo">131</span><a id="line.131"></a>
+<span class="sourceLineNo">132</span><a id="line.132">    public final long getId() {</a>
+<span class="sourceLineNo">133</span><a id="line.133">        return id;</a>
+<span class="sourceLineNo">134</span><a id="line.134">    }</a>
+<span class="sourceLineNo">135</span><a id="line.135"></a>
+<span class="sourceLineNo">136</span><a id="line.136">    public final Set&lt;Supplier&lt;? extends Message&gt;&gt; getSuggestedHandlers() {</a>
+<span class="sourceLineNo">137</span><a id="line.137">        return suggestedHandlers;</a>
+<span class="sourceLineNo">138</span><a id="line.138">    }</a>
+<span class="sourceLineNo">139</span><a id="line.139"></a>
+<span class="sourceLineNo">140</span><a id="line.140">    public static Set&lt;QualifyingEvent&gt; fromBitmask(long bitmask) {</a>
+<span class="sourceLineNo">141</span><a id="line.141">        Set&lt;QualifyingEvent&gt; ret = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">142</span><a id="line.142">        for (QualifyingEvent e : values()) {</a>
+<span class="sourceLineNo">143</span><a id="line.143">            if ((bitmask &amp; e.getId()) != 0) {</a>
+<span class="sourceLineNo">144</span><a id="line.144">                ret.add(e);</a>
+<span class="sourceLineNo">145</span><a id="line.145">            }</a>
+<span class="sourceLineNo">146</span><a id="line.146">        }</a>
+<span class="sourceLineNo">147</span><a id="line.147">        return ret;</a>
+<span class="sourceLineNo">148</span><a id="line.148">    }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">    public static Set&lt;QualifyingEvent&gt; fromRawBtBytes(byte[] raw) {</a>
+<span class="sourceLineNo">151</span><a id="line.151">        return fromBitmask(Bytes.readUint32(raw, 0));</a>
+<span class="sourceLineNo">152</span><a id="line.152">    }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">    public static Set&lt;? extends Message&gt; groupSuggestedHandlers(Set&lt;QualifyingEvent&gt; events) {</a>
+<span class="sourceLineNo">155</span><a id="line.155">        Set&lt;Supplier&lt;? extends Message&gt;&gt; messages = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">156</span><a id="line.156">        for (QualifyingEvent e : events) {</a>
+<span class="sourceLineNo">157</span><a id="line.157">            messages.addAll(e.suggestedHandlers);</a>
+<span class="sourceLineNo">158</span><a id="line.158">        }</a>
+<span class="sourceLineNo">159</span><a id="line.159">        return messages.stream().map(Supplier::get).collect(Collectors.toSet());</a>
+<span class="sourceLineNo">160</span><a id="line.160">    }</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">    public static int toBitmask(QualifyingEvent...states) {</a>
+<span class="sourceLineNo">163</span><a id="line.163">        int bitmask = 0;</a>
+<span class="sourceLineNo">164</span><a id="line.164">        for (QualifyingEvent e : states) {</a>
+<span class="sourceLineNo">165</span><a id="line.165">            bitmask |= e.getId();</a>
+<span class="sourceLineNo">166</span><a id="line.166">        }</a>
+<span class="sourceLineNo">167</span><a id="line.167">        return bitmask;</a>
+<span class="sourceLineNo">168</span><a id="line.168">    }</a>
+<span class="sourceLineNo">169</span><a id="line.169"></a>
+<span class="sourceLineNo">170</span><a id="line.170">    public String jsonToString() {</a>
+<span class="sourceLineNo">171</span><a id="line.171">        JSONObject obj = new JSONObject();</a>
+<span class="sourceLineNo">172</span><a id="line.172">        obj.put("event", name());</a>
+<span class="sourceLineNo">173</span><a id="line.173">        return obj.toString(0);</a>
+<span class="sourceLineNo">174</span><a id="line.174">    }</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">    public JSONObject asJsonObject() {</a>
+<span class="sourceLineNo">177</span><a id="line.177">        JSONObject obj = new JSONObject();</a>
+<span class="sourceLineNo">178</span><a id="line.178">        obj.put("event", name());</a>
+<span class="sourceLineNo">179</span><a id="line.179">        return obj;</a>
+<span class="sourceLineNo">180</span><a id="line.180">    }</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">}</a>
 
 
 
