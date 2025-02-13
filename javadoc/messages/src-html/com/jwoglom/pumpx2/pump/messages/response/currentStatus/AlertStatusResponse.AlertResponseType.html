@@ -107,91 +107,92 @@
 <span class="sourceLineNo">098</span><a id="line.98">        MIN_BASAL_ALERT2(26),</a>
 <span class="sourceLineNo">099</span><a id="line.99">        INCOMPLETE_CALIBRATION(27),</a>
 <span class="sourceLineNo">100</span><a id="line.100">        CALIBRATION_TIMEOUT(28),</a>
-<span class="sourceLineNo">101</span><a id="line.101">        INVALID_TRANSMITTER_ID(29),</a>
-<span class="sourceLineNo">102</span><a id="line.102">        DEFAULT_ALERT_30(30),</a>
-<span class="sourceLineNo">103</span><a id="line.103">        DEFAULT_ALERT_32(32),</a>
-<span class="sourceLineNo">104</span><a id="line.104">        BUTTON_ALERT(33),</a>
-<span class="sourceLineNo">105</span><a id="line.105">        QUICK_BOLUS_ALERT(34),</a>
-<span class="sourceLineNo">106</span><a id="line.106">        BASAL_IQ_ALERT(35),</a>
-<span class="sourceLineNo">107</span><a id="line.107">        DEFAULT_ALERT_36(36),</a>
-<span class="sourceLineNo">108</span><a id="line.108">        DEFAULT_ALERT_37(37),</a>
-<span class="sourceLineNo">109</span><a id="line.109">        DEFAULT_ALERT_38(38),</a>
-<span class="sourceLineNo">110</span><a id="line.110">        TRANSMITTER_END_OF_LIFE(39),</a>
-<span class="sourceLineNo">111</span><a id="line.111">        CGM_ERROR(40),</a>
-<span class="sourceLineNo">112</span><a id="line.112">        CGM_ERROR2(41),</a>
-<span class="sourceLineNo">113</span><a id="line.113">        CGM_ERROR3(42),</a>
-<span class="sourceLineNo">114</span><a id="line.114">        DEFAULT_ALERT_43(43),</a>
-<span class="sourceLineNo">115</span><a id="line.115">        TRANSMITTER_EXPIRING_ALERT(44),</a>
-<span class="sourceLineNo">116</span><a id="line.116">        TRANSMITTER_EXPIRING_ALERT2(45),</a>
-<span class="sourceLineNo">117</span><a id="line.117">        TRANSMITTER_EXPIRING_ALERT3(46),</a>
-<span class="sourceLineNo">118</span><a id="line.118">        DEFAULT_ALERT_47(47),</a>
-<span class="sourceLineNo">119</span><a id="line.119">        CGM_UNAVAILABLE(48),</a>
-<span class="sourceLineNo">120</span><a id="line.120">        DEFAULT_ALERT_49(49),</a>
-<span class="sourceLineNo">121</span><a id="line.121">        DEFAULT_ALERT_50(50),</a>
-<span class="sourceLineNo">122</span><a id="line.122">        DEFAULT_ALERT_51(51),</a>
-<span class="sourceLineNo">123</span><a id="line.123">        DEFAULT_ALERT_52(52),</a>
-<span class="sourceLineNo">124</span><a id="line.124">        DEFAULT_ALERT_53(53),</a>
-<span class="sourceLineNo">125</span><a id="line.125">        DEVICE_PAIRED(54),</a>
-<span class="sourceLineNo">126</span><a id="line.126">        DEFAULT_ALERT_55(55),</a>
-<span class="sourceLineNo">127</span><a id="line.127">        DEFAULT_ALERT_56(56),</a>
-<span class="sourceLineNo">128</span><a id="line.128">        DEFAULT_ALERT_57(57),</a>
-<span class="sourceLineNo">129</span><a id="line.129">        DEFAULT_ALERT_58(58),</a>
-<span class="sourceLineNo">130</span><a id="line.130">        DEFAULT_ALERT_59(59),</a>
-<span class="sourceLineNo">131</span><a id="line.131">        DEFAULT_ALERT_60(60),</a>
-<span class="sourceLineNo">132</span><a id="line.132">        DEFAULT_ALERT_61(61),</a>
-<span class="sourceLineNo">133</span><a id="line.133">        DEFAULT_ALERT_62(62),</a>
-<span class="sourceLineNo">134</span><a id="line.134">        DEFAULT_ALERT_63(63)</a>
-<span class="sourceLineNo">135</span><a id="line.135">        ;</a>
-<span class="sourceLineNo">136</span><a id="line.136"></a>
-<span class="sourceLineNo">137</span><a id="line.137">        private final int bitmask;</a>
-<span class="sourceLineNo">138</span><a id="line.138">        private final String description;</a>
-<span class="sourceLineNo">139</span><a id="line.139">        AlertResponseType(int bitmask) {</a>
-<span class="sourceLineNo">140</span><a id="line.140">            this.bitmask = bitmask;</a>
-<span class="sourceLineNo">141</span><a id="line.141">            this.description = null;</a>
-<span class="sourceLineNo">142</span><a id="line.142">        }</a>
-<span class="sourceLineNo">143</span><a id="line.143"></a>
-<span class="sourceLineNo">144</span><a id="line.144">        AlertResponseType(int bitmask, String description) {</a>
-<span class="sourceLineNo">145</span><a id="line.145">            this.bitmask = bitmask;</a>
-<span class="sourceLineNo">146</span><a id="line.146">            this.description = description;</a>
-<span class="sourceLineNo">147</span><a id="line.147">        }</a>
-<span class="sourceLineNo">148</span><a id="line.148"></a>
-<span class="sourceLineNo">149</span><a id="line.149">        public int bitmask() {</a>
-<span class="sourceLineNo">150</span><a id="line.150">            return bitmask;</a>
-<span class="sourceLineNo">151</span><a id="line.151">        }</a>
-<span class="sourceLineNo">152</span><a id="line.152"></a>
-<span class="sourceLineNo">153</span><a id="line.153">        public String getDescription() {</a>
-<span class="sourceLineNo">154</span><a id="line.154">            return description;</a>
-<span class="sourceLineNo">155</span><a id="line.155">        }</a>
-<span class="sourceLineNo">156</span><a id="line.156"></a>
-<span class="sourceLineNo">157</span><a id="line.157">        public String toString() {</a>
-<span class="sourceLineNo">158</span><a id="line.158">            return name();</a>
-<span class="sourceLineNo">159</span><a id="line.159">        }</a>
-<span class="sourceLineNo">160</span><a id="line.160"></a>
-<span class="sourceLineNo">161</span><a id="line.161">        public BigInteger withBit() {</a>
-<span class="sourceLineNo">162</span><a id="line.162">            return BigInteger.ZERO.setBit(bitmask);</a>
-<span class="sourceLineNo">163</span><a id="line.163">        }</a>
-<span class="sourceLineNo">164</span><a id="line.164"></a>
-<span class="sourceLineNo">165</span><a id="line.165">        public static AlertResponseType fromSingularId(long id) {</a>
-<span class="sourceLineNo">166</span><a id="line.166">            for (AlertResponseType type : values()) {</a>
-<span class="sourceLineNo">167</span><a id="line.167">                if (type.bitmask == id) {</a>
-<span class="sourceLineNo">168</span><a id="line.168">                    return type;</a>
-<span class="sourceLineNo">169</span><a id="line.169">                }</a>
-<span class="sourceLineNo">170</span><a id="line.170">            }</a>
-<span class="sourceLineNo">171</span><a id="line.171">            return null;</a>
-<span class="sourceLineNo">172</span><a id="line.172">        }</a>
-<span class="sourceLineNo">173</span><a id="line.173">    }</a>
-<span class="sourceLineNo">174</span><a id="line.174"></a>
-<span class="sourceLineNo">175</span><a id="line.175">    public Set&lt;AlertResponseType&gt; getAlerts() {</a>
-<span class="sourceLineNo">176</span><a id="line.176">        Set&lt;AlertResponseType&gt; current = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">177</span><a id="line.177">        for (AlertResponseType type : AlertResponseType.values()) {</a>
-<span class="sourceLineNo">178</span><a id="line.178">            if (intMap.testBit(type.bitmask())) {</a>
-<span class="sourceLineNo">179</span><a id="line.179">                current.add(type);</a>
-<span class="sourceLineNo">180</span><a id="line.180">            }</a>
-<span class="sourceLineNo">181</span><a id="line.181">        }</a>
-<span class="sourceLineNo">182</span><a id="line.182"></a>
-<span class="sourceLineNo">183</span><a id="line.183">        return current;</a>
-<span class="sourceLineNo">184</span><a id="line.184">    }</a>
-<span class="sourceLineNo">185</span><a id="line.185">}</a>
+<span class="sourceLineNo">101</span><a id="line.101">        INVALID_TRANSMITTER_ID(29,</a>
+<span class="sourceLineNo">102</span><a id="line.102">                "The Dexcom G6 or G7 transmitter ID is invalid."),</a>
+<span class="sourceLineNo">103</span><a id="line.103">        DEFAULT_ALERT_30(30),</a>
+<span class="sourceLineNo">104</span><a id="line.104">        DEFAULT_ALERT_32(32),</a>
+<span class="sourceLineNo">105</span><a id="line.105">        BUTTON_ALERT(33),</a>
+<span class="sourceLineNo">106</span><a id="line.106">        QUICK_BOLUS_ALERT(34),</a>
+<span class="sourceLineNo">107</span><a id="line.107">        BASAL_IQ_ALERT(35),</a>
+<span class="sourceLineNo">108</span><a id="line.108">        DEFAULT_ALERT_36(36),</a>
+<span class="sourceLineNo">109</span><a id="line.109">        DEFAULT_ALERT_37(37),</a>
+<span class="sourceLineNo">110</span><a id="line.110">        DEFAULT_ALERT_38(38),</a>
+<span class="sourceLineNo">111</span><a id="line.111">        TRANSMITTER_END_OF_LIFE(39),</a>
+<span class="sourceLineNo">112</span><a id="line.112">        CGM_ERROR(40),</a>
+<span class="sourceLineNo">113</span><a id="line.113">        CGM_ERROR2(41),</a>
+<span class="sourceLineNo">114</span><a id="line.114">        CGM_ERROR3(42),</a>
+<span class="sourceLineNo">115</span><a id="line.115">        DEFAULT_ALERT_43(43),</a>
+<span class="sourceLineNo">116</span><a id="line.116">        TRANSMITTER_EXPIRING_ALERT(44),</a>
+<span class="sourceLineNo">117</span><a id="line.117">        TRANSMITTER_EXPIRING_ALERT2(45),</a>
+<span class="sourceLineNo">118</span><a id="line.118">        TRANSMITTER_EXPIRING_ALERT3(46),</a>
+<span class="sourceLineNo">119</span><a id="line.119">        DEFAULT_ALERT_47(47),</a>
+<span class="sourceLineNo">120</span><a id="line.120">        CGM_UNAVAILABLE(48),</a>
+<span class="sourceLineNo">121</span><a id="line.121">        DEFAULT_ALERT_49(49),</a>
+<span class="sourceLineNo">122</span><a id="line.122">        DEFAULT_ALERT_50(50),</a>
+<span class="sourceLineNo">123</span><a id="line.123">        DEFAULT_ALERT_51(51),</a>
+<span class="sourceLineNo">124</span><a id="line.124">        DEFAULT_ALERT_52(52),</a>
+<span class="sourceLineNo">125</span><a id="line.125">        DEFAULT_ALERT_53(53),</a>
+<span class="sourceLineNo">126</span><a id="line.126">        DEVICE_PAIRED(54),</a>
+<span class="sourceLineNo">127</span><a id="line.127">        DEFAULT_ALERT_55(55),</a>
+<span class="sourceLineNo">128</span><a id="line.128">        DEFAULT_ALERT_56(56),</a>
+<span class="sourceLineNo">129</span><a id="line.129">        DEFAULT_ALERT_57(57),</a>
+<span class="sourceLineNo">130</span><a id="line.130">        DEFAULT_ALERT_58(58),</a>
+<span class="sourceLineNo">131</span><a id="line.131">        DEFAULT_ALERT_59(59),</a>
+<span class="sourceLineNo">132</span><a id="line.132">        DEFAULT_ALERT_60(60),</a>
+<span class="sourceLineNo">133</span><a id="line.133">        DEFAULT_ALERT_61(61),</a>
+<span class="sourceLineNo">134</span><a id="line.134">        DEFAULT_ALERT_62(62),</a>
+<span class="sourceLineNo">135</span><a id="line.135">        DEFAULT_ALERT_63(63)</a>
+<span class="sourceLineNo">136</span><a id="line.136">        ;</a>
+<span class="sourceLineNo">137</span><a id="line.137"></a>
+<span class="sourceLineNo">138</span><a id="line.138">        private final int bitmask;</a>
+<span class="sourceLineNo">139</span><a id="line.139">        private final String description;</a>
+<span class="sourceLineNo">140</span><a id="line.140">        AlertResponseType(int bitmask) {</a>
+<span class="sourceLineNo">141</span><a id="line.141">            this.bitmask = bitmask;</a>
+<span class="sourceLineNo">142</span><a id="line.142">            this.description = null;</a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144"></a>
+<span class="sourceLineNo">145</span><a id="line.145">        AlertResponseType(int bitmask, String description) {</a>
+<span class="sourceLineNo">146</span><a id="line.146">            this.bitmask = bitmask;</a>
+<span class="sourceLineNo">147</span><a id="line.147">            this.description = description;</a>
+<span class="sourceLineNo">148</span><a id="line.148">        }</a>
+<span class="sourceLineNo">149</span><a id="line.149"></a>
+<span class="sourceLineNo">150</span><a id="line.150">        public int bitmask() {</a>
+<span class="sourceLineNo">151</span><a id="line.151">            return bitmask;</a>
+<span class="sourceLineNo">152</span><a id="line.152">        }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">        public String getDescription() {</a>
+<span class="sourceLineNo">155</span><a id="line.155">            return description;</a>
+<span class="sourceLineNo">156</span><a id="line.156">        }</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        public String toString() {</a>
+<span class="sourceLineNo">159</span><a id="line.159">            return name();</a>
+<span class="sourceLineNo">160</span><a id="line.160">        }</a>
+<span class="sourceLineNo">161</span><a id="line.161"></a>
+<span class="sourceLineNo">162</span><a id="line.162">        public BigInteger withBit() {</a>
+<span class="sourceLineNo">163</span><a id="line.163">            return BigInteger.ZERO.setBit(bitmask);</a>
+<span class="sourceLineNo">164</span><a id="line.164">        }</a>
+<span class="sourceLineNo">165</span><a id="line.165"></a>
+<span class="sourceLineNo">166</span><a id="line.166">        public static AlertResponseType fromSingularId(long id) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">            for (AlertResponseType type : values()) {</a>
+<span class="sourceLineNo">168</span><a id="line.168">                if (type.bitmask == id) {</a>
+<span class="sourceLineNo">169</span><a id="line.169">                    return type;</a>
+<span class="sourceLineNo">170</span><a id="line.170">                }</a>
+<span class="sourceLineNo">171</span><a id="line.171">            }</a>
+<span class="sourceLineNo">172</span><a id="line.172">            return null;</a>
+<span class="sourceLineNo">173</span><a id="line.173">        }</a>
+<span class="sourceLineNo">174</span><a id="line.174">    }</a>
+<span class="sourceLineNo">175</span><a id="line.175"></a>
+<span class="sourceLineNo">176</span><a id="line.176">    public Set&lt;AlertResponseType&gt; getAlerts() {</a>
+<span class="sourceLineNo">177</span><a id="line.177">        Set&lt;AlertResponseType&gt; current = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">178</span><a id="line.178">        for (AlertResponseType type : AlertResponseType.values()) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">            if (intMap.testBit(type.bitmask())) {</a>
+<span class="sourceLineNo">180</span><a id="line.180">                current.add(type);</a>
+<span class="sourceLineNo">181</span><a id="line.181">            }</a>
+<span class="sourceLineNo">182</span><a id="line.182">        }</a>
+<span class="sourceLineNo">183</span><a id="line.183"></a>
+<span class="sourceLineNo">184</span><a id="line.184">        return current;</a>
+<span class="sourceLineNo">185</span><a id="line.185">    }</a>
+<span class="sourceLineNo">186</span><a id="line.186">}</a>
 
 
 

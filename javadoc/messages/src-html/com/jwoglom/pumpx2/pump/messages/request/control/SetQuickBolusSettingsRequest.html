@@ -47,146 +47,152 @@
 <span class="sourceLineNo">038</span><a id="line.38"></a>
 <span class="sourceLineNo">039</span><a id="line.39">    private boolean enabled;</a>
 <span class="sourceLineNo">040</span><a id="line.40">    private int modeRaw;</a>
-<span class="sourceLineNo">041</span><a id="line.41">    private byte[] magic;</a>
-<span class="sourceLineNo">042</span><a id="line.42"></a>
-<span class="sourceLineNo">043</span><a id="line.43">    public SetQuickBolusSettingsRequest() {</a>
-<span class="sourceLineNo">044</span><a id="line.44">        this.cargo = EMPTY;</a>
-<span class="sourceLineNo">045</span><a id="line.45">    }</a>
-<span class="sourceLineNo">046</span><a id="line.46"></a>
-<span class="sourceLineNo">047</span><a id="line.47">    public SetQuickBolusSettingsRequest(byte[] raw) {</a>
-<span class="sourceLineNo">048</span><a id="line.48">        parse(raw);</a>
-<span class="sourceLineNo">049</span><a id="line.49">    }</a>
-<span class="sourceLineNo">050</span><a id="line.50"></a>
-<span class="sourceLineNo">051</span><a id="line.51">    public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {</a>
-<span class="sourceLineNo">052</span><a id="line.52">        this.cargo = buildCargo(enabled, mode.getRaw(), increment.getMagic());</a>
-<span class="sourceLineNo">053</span><a id="line.53">        this.enabled = enabled;</a>
-<span class="sourceLineNo">054</span><a id="line.54">        this.modeRaw = mode.getRaw();</a>
-<span class="sourceLineNo">055</span><a id="line.55">        this.magic = increment.getMagic();</a>
-<span class="sourceLineNo">056</span><a id="line.56">    }</a>
-<span class="sourceLineNo">057</span><a id="line.57"></a>
-<span class="sourceLineNo">058</span><a id="line.58">    /**</a>
-<span class="sourceLineNo">059</span><a id="line.59">     * &lt;table border="1"&gt;</a>
-<span class="sourceLineNo">060</span><a id="line.60">     * &lt;caption&gt;Parsed fields for SetQuickBolusSettingsRequest:&lt;/caption&gt;</a>
-<span class="sourceLineNo">061</span><a id="line.61">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] == 1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">062</span><a id="line.62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">063</span><a id="line.63">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;magic&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.dropFirstN(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">064</span><a id="line.64">     * &lt;/table&gt;</a>
-<span class="sourceLineNo">065</span><a id="line.65">     */</a>
-<span class="sourceLineNo">066</span><a id="line.66">    public void parse(byte[] raw) { </a>
-<span class="sourceLineNo">067</span><a id="line.67">        raw = this.removeSignedRequestHmacBytes(raw);</a>
-<span class="sourceLineNo">068</span><a id="line.68">        Preconditions.checkArgument(raw.length == props().size());</a>
-<span class="sourceLineNo">069</span><a id="line.69">        this.cargo = raw;</a>
-<span class="sourceLineNo">070</span><a id="line.70">        this.enabled = raw[0] == 1;</a>
-<span class="sourceLineNo">071</span><a id="line.71">        this.modeRaw = raw[1];</a>
-<span class="sourceLineNo">072</span><a id="line.72">        this.magic = Bytes.dropFirstN(raw, 2);</a>
-<span class="sourceLineNo">073</span><a id="line.73">        checkValidIncrement();</a>
-<span class="sourceLineNo">074</span><a id="line.74">    }</a>
-<span class="sourceLineNo">075</span><a id="line.75"></a>
-<span class="sourceLineNo">076</span><a id="line.76">    /**</a>
-<span class="sourceLineNo">077</span><a id="line.77">     * &lt;table border="1"&gt;</a>
-<span class="sourceLineNo">078</span><a id="line.78">     * &lt;caption&gt;Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):&lt;/caption&gt;</a>
-<span class="sourceLineNo">079</span><a id="line.79">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">080</span><a id="line.80">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">081</span><a id="line.81">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) modeRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
-<span class="sourceLineNo">082</span><a id="line.82">     * &lt;/table&gt;</a>
-<span class="sourceLineNo">083</span><a id="line.83">     */</a>
-<span class="sourceLineNo">084</span><a id="line.84">    public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {</a>
-<span class="sourceLineNo">085</span><a id="line.85">        Preconditions.checkArgument(magic.length == 5);</a>
-<span class="sourceLineNo">086</span><a id="line.86">        return Bytes.combine(</a>
-<span class="sourceLineNo">087</span><a id="line.87">                new byte[]{(byte) (enabled ? 1 : 0)},</a>
-<span class="sourceLineNo">088</span><a id="line.88">                new byte[]{(byte) modeRaw},</a>
-<span class="sourceLineNo">089</span><a id="line.89">                magic</a>
-<span class="sourceLineNo">090</span><a id="line.90">        );</a>
-<span class="sourceLineNo">091</span><a id="line.91">    }</a>
-<span class="sourceLineNo">092</span><a id="line.92"></a>
-<span class="sourceLineNo">093</span><a id="line.93"></a>
-<span class="sourceLineNo">094</span><a id="line.94">    public boolean isEnabled() {</a>
-<span class="sourceLineNo">095</span><a id="line.95">        return enabled;</a>
-<span class="sourceLineNo">096</span><a id="line.96">    }</a>
-<span class="sourceLineNo">097</span><a id="line.97"></a>
-<span class="sourceLineNo">098</span><a id="line.98">    public byte[] getMagic() {</a>
-<span class="sourceLineNo">099</span><a id="line.99">        return magic;</a>
-<span class="sourceLineNo">100</span><a id="line.100">    }</a>
-<span class="sourceLineNo">101</span><a id="line.101"></a>
-<span class="sourceLineNo">102</span><a id="line.102">    public enum QuickBolusIncrement {</a>
-<span class="sourceLineNo">103</span><a id="line.103">        UNITS_0_5(QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),</a>
-<span class="sourceLineNo">104</span><a id="line.104">        UNITS_1_0(QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),</a>
-<span class="sourceLineNo">105</span><a id="line.105">        UNITS_2_O(QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),</a>
-<span class="sourceLineNo">106</span><a id="line.106">        UNITS_5_0(QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),</a>
+<span class="sourceLineNo">041</span><a id="line.41">    private QuickBolusMode mode;</a>
+<span class="sourceLineNo">042</span><a id="line.42">    private byte[] magic;</a>
+<span class="sourceLineNo">043</span><a id="line.43">    private QuickBolusIncrement increment;</a>
+<span class="sourceLineNo">044</span><a id="line.44"></a>
+<span class="sourceLineNo">045</span><a id="line.45">    public SetQuickBolusSettingsRequest() {</a>
+<span class="sourceLineNo">046</span><a id="line.46">        this.cargo = EMPTY;</a>
+<span class="sourceLineNo">047</span><a id="line.47">    }</a>
+<span class="sourceLineNo">048</span><a id="line.48"></a>
+<span class="sourceLineNo">049</span><a id="line.49">    public SetQuickBolusSettingsRequest(byte[] raw) {</a>
+<span class="sourceLineNo">050</span><a id="line.50">        parse(raw);</a>
+<span class="sourceLineNo">051</span><a id="line.51">    }</a>
+<span class="sourceLineNo">052</span><a id="line.52"></a>
+<span class="sourceLineNo">053</span><a id="line.53">    public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {</a>
+<span class="sourceLineNo">054</span><a id="line.54">        this.cargo = buildCargo(enabled, mode.getRaw(), increment.getMagic());</a>
+<span class="sourceLineNo">055</span><a id="line.55">        this.enabled = enabled;</a>
+<span class="sourceLineNo">056</span><a id="line.56">        this.modeRaw = mode.getRaw();</a>
+<span class="sourceLineNo">057</span><a id="line.57">        this.magic = increment.getMagic();</a>
+<span class="sourceLineNo">058</span><a id="line.58">    }</a>
+<span class="sourceLineNo">059</span><a id="line.59"></a>
+<span class="sourceLineNo">060</span><a id="line.60">    /**</a>
+<span class="sourceLineNo">061</span><a id="line.61">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">062</span><a id="line.62">     * &lt;caption&gt;Parsed fields for SetQuickBolusSettingsRequest:&lt;/caption&gt;</a>
+<span class="sourceLineNo">063</span><a id="line.63">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] == 1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">064</span><a id="line.64">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">065</span><a id="line.65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getMode()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">066</span><a id="line.66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;magic&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.dropFirstN(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">067</span><a id="line.67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;increment&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getIncrement()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">068</span><a id="line.68">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">069</span><a id="line.69">     */</a>
+<span class="sourceLineNo">070</span><a id="line.70">    public void parse(byte[] raw) { </a>
+<span class="sourceLineNo">071</span><a id="line.71">        raw = this.removeSignedRequestHmacBytes(raw);</a>
+<span class="sourceLineNo">072</span><a id="line.72">        Preconditions.checkArgument(raw.length == props().size());</a>
+<span class="sourceLineNo">073</span><a id="line.73">        this.cargo = raw;</a>
+<span class="sourceLineNo">074</span><a id="line.74">        this.enabled = raw[0] == 1;</a>
+<span class="sourceLineNo">075</span><a id="line.75">        this.modeRaw = raw[1];</a>
+<span class="sourceLineNo">076</span><a id="line.76">        this.mode = getMode();</a>
+<span class="sourceLineNo">077</span><a id="line.77">        this.magic = Bytes.dropFirstN(raw, 2);</a>
+<span class="sourceLineNo">078</span><a id="line.78">        this.increment = getIncrement();</a>
+<span class="sourceLineNo">079</span><a id="line.79">        checkValidIncrement();</a>
+<span class="sourceLineNo">080</span><a id="line.80">    }</a>
+<span class="sourceLineNo">081</span><a id="line.81"></a>
+<span class="sourceLineNo">082</span><a id="line.82">    /**</a>
+<span class="sourceLineNo">083</span><a id="line.83">     * &lt;table border="1"&gt;</a>
+<span class="sourceLineNo">084</span><a id="line.84">     * &lt;caption&gt;Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):&lt;/caption&gt;</a>
+<span class="sourceLineNo">085</span><a id="line.85">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">086</span><a id="line.86">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">087</span><a id="line.87">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) modeRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</a>
+<span class="sourceLineNo">088</span><a id="line.88">     * &lt;/table&gt;</a>
+<span class="sourceLineNo">089</span><a id="line.89">     */</a>
+<span class="sourceLineNo">090</span><a id="line.90">    public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {</a>
+<span class="sourceLineNo">091</span><a id="line.91">        Preconditions.checkArgument(magic.length == 5);</a>
+<span class="sourceLineNo">092</span><a id="line.92">        return Bytes.combine(</a>
+<span class="sourceLineNo">093</span><a id="line.93">                new byte[]{(byte) (enabled ? 1 : 0)},</a>
+<span class="sourceLineNo">094</span><a id="line.94">                new byte[]{(byte) modeRaw},</a>
+<span class="sourceLineNo">095</span><a id="line.95">                magic</a>
+<span class="sourceLineNo">096</span><a id="line.96">        );</a>
+<span class="sourceLineNo">097</span><a id="line.97">    }</a>
+<span class="sourceLineNo">098</span><a id="line.98"></a>
+<span class="sourceLineNo">099</span><a id="line.99"></a>
+<span class="sourceLineNo">100</span><a id="line.100">    public boolean isEnabled() {</a>
+<span class="sourceLineNo">101</span><a id="line.101">        return enabled;</a>
+<span class="sourceLineNo">102</span><a id="line.102">    }</a>
+<span class="sourceLineNo">103</span><a id="line.103"></a>
+<span class="sourceLineNo">104</span><a id="line.104">    public byte[] getMagic() {</a>
+<span class="sourceLineNo">105</span><a id="line.105">        return magic;</a>
+<span class="sourceLineNo">106</span><a id="line.106">    }</a>
 <span class="sourceLineNo">107</span><a id="line.107"></a>
-<span class="sourceLineNo">108</span><a id="line.108">        CARBS_2G(QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),</a>
-<span class="sourceLineNo">109</span><a id="line.109">        CARBS_5G(QuickBolusMode.CARBS, new byte[]{-120,19,-120,19,8}),</a>
-<span class="sourceLineNo">110</span><a id="line.110">        CARBS_10G(QuickBolusMode.CARBS, new byte[]{-120,19,16,39,8}),</a>
-<span class="sourceLineNo">111</span><a id="line.111">        CARBS_15G(QuickBolusMode.CARBS, new byte[]{-120,19,-104,58,8}),</a>
-<span class="sourceLineNo">112</span><a id="line.112">        ;</a>
+<span class="sourceLineNo">108</span><a id="line.108">    public enum QuickBolusIncrement {</a>
+<span class="sourceLineNo">109</span><a id="line.109">        UNITS_0_5(QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),</a>
+<span class="sourceLineNo">110</span><a id="line.110">        UNITS_1_0(QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),</a>
+<span class="sourceLineNo">111</span><a id="line.111">        UNITS_2_O(QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),</a>
+<span class="sourceLineNo">112</span><a id="line.112">        UNITS_5_0(QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),</a>
 <span class="sourceLineNo">113</span><a id="line.113"></a>
-<span class="sourceLineNo">114</span><a id="line.114">        private final QuickBolusMode mode;</a>
-<span class="sourceLineNo">115</span><a id="line.115">        private final byte[] magic;</a>
-<span class="sourceLineNo">116</span><a id="line.116">        QuickBolusIncrement(QuickBolusMode mode, byte[] magic) {</a>
-<span class="sourceLineNo">117</span><a id="line.117">            this.mode = mode;</a>
-<span class="sourceLineNo">118</span><a id="line.118">            this.magic = magic;</a>
-<span class="sourceLineNo">119</span><a id="line.119">        }</a>
-<span class="sourceLineNo">120</span><a id="line.120"></a>
-<span class="sourceLineNo">121</span><a id="line.121">        public QuickBolusMode getMode() {</a>
-<span class="sourceLineNo">122</span><a id="line.122">            return mode;</a>
-<span class="sourceLineNo">123</span><a id="line.123">        }</a>
-<span class="sourceLineNo">124</span><a id="line.124"></a>
-<span class="sourceLineNo">125</span><a id="line.125">        public byte[] getMagic() {</a>
-<span class="sourceLineNo">126</span><a id="line.126">            return magic;</a>
-<span class="sourceLineNo">127</span><a id="line.127">        }</a>
-<span class="sourceLineNo">128</span><a id="line.128"></a>
-<span class="sourceLineNo">129</span><a id="line.129">        public static QuickBolusIncrement forMagic(byte[] magic) {</a>
-<span class="sourceLineNo">130</span><a id="line.130">            for (QuickBolusIncrement i : values()) {</a>
-<span class="sourceLineNo">131</span><a id="line.131">                if (Arrays.equals(i.magic, magic)) return i;</a>
-<span class="sourceLineNo">132</span><a id="line.132">            }</a>
-<span class="sourceLineNo">133</span><a id="line.133">            return null;</a>
-<span class="sourceLineNo">134</span><a id="line.134">        }</a>
-<span class="sourceLineNo">135</span><a id="line.135">    }</a>
-<span class="sourceLineNo">136</span><a id="line.136"></a>
-<span class="sourceLineNo">137</span><a id="line.137">    public QuickBolusIncrement getIncrement() {</a>
-<span class="sourceLineNo">138</span><a id="line.138">        checkValidIncrement();</a>
-<span class="sourceLineNo">139</span><a id="line.139">        return QuickBolusIncrement.forMagic(this.magic);</a>
-<span class="sourceLineNo">140</span><a id="line.140">    }</a>
-<span class="sourceLineNo">141</span><a id="line.141"></a>
-<span class="sourceLineNo">142</span><a id="line.142">    public int getModeRaw() {</a>
-<span class="sourceLineNo">143</span><a id="line.143">        return modeRaw;</a>
-<span class="sourceLineNo">144</span><a id="line.144">    }</a>
-<span class="sourceLineNo">145</span><a id="line.145"></a>
-<span class="sourceLineNo">146</span><a id="line.146">    public enum QuickBolusMode {</a>
-<span class="sourceLineNo">147</span><a id="line.147">        UNITS(0),</a>
-<span class="sourceLineNo">148</span><a id="line.148">        CARBS(1),</a>
-<span class="sourceLineNo">149</span><a id="line.149"></a>
-<span class="sourceLineNo">150</span><a id="line.150">        ;</a>
+<span class="sourceLineNo">114</span><a id="line.114">        CARBS_2G(QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),</a>
+<span class="sourceLineNo">115</span><a id="line.115">        CARBS_5G(QuickBolusMode.CARBS, new byte[]{-120,19,-120,19,8}),</a>
+<span class="sourceLineNo">116</span><a id="line.116">        CARBS_10G(QuickBolusMode.CARBS, new byte[]{-120,19,16,39,8}),</a>
+<span class="sourceLineNo">117</span><a id="line.117">        CARBS_15G(QuickBolusMode.CARBS, new byte[]{-120,19,-104,58,8}),</a>
+<span class="sourceLineNo">118</span><a id="line.118">        ;</a>
+<span class="sourceLineNo">119</span><a id="line.119"></a>
+<span class="sourceLineNo">120</span><a id="line.120">        private final QuickBolusMode mode;</a>
+<span class="sourceLineNo">121</span><a id="line.121">        private final byte[] magic;</a>
+<span class="sourceLineNo">122</span><a id="line.122">        QuickBolusIncrement(QuickBolusMode mode, byte[] magic) {</a>
+<span class="sourceLineNo">123</span><a id="line.123">            this.mode = mode;</a>
+<span class="sourceLineNo">124</span><a id="line.124">            this.magic = magic;</a>
+<span class="sourceLineNo">125</span><a id="line.125">        }</a>
+<span class="sourceLineNo">126</span><a id="line.126"></a>
+<span class="sourceLineNo">127</span><a id="line.127">        public QuickBolusMode getMode() {</a>
+<span class="sourceLineNo">128</span><a id="line.128">            return mode;</a>
+<span class="sourceLineNo">129</span><a id="line.129">        }</a>
+<span class="sourceLineNo">130</span><a id="line.130"></a>
+<span class="sourceLineNo">131</span><a id="line.131">        public byte[] getMagic() {</a>
+<span class="sourceLineNo">132</span><a id="line.132">            return magic;</a>
+<span class="sourceLineNo">133</span><a id="line.133">        }</a>
+<span class="sourceLineNo">134</span><a id="line.134"></a>
+<span class="sourceLineNo">135</span><a id="line.135">        public static QuickBolusIncrement forMagic(byte[] magic) {</a>
+<span class="sourceLineNo">136</span><a id="line.136">            for (QuickBolusIncrement i : values()) {</a>
+<span class="sourceLineNo">137</span><a id="line.137">                if (Arrays.equals(i.magic, magic)) return i;</a>
+<span class="sourceLineNo">138</span><a id="line.138">            }</a>
+<span class="sourceLineNo">139</span><a id="line.139">            return null;</a>
+<span class="sourceLineNo">140</span><a id="line.140">        }</a>
+<span class="sourceLineNo">141</span><a id="line.141">    }</a>
+<span class="sourceLineNo">142</span><a id="line.142"></a>
+<span class="sourceLineNo">143</span><a id="line.143">    public QuickBolusIncrement getIncrement() {</a>
+<span class="sourceLineNo">144</span><a id="line.144">        checkValidIncrement();</a>
+<span class="sourceLineNo">145</span><a id="line.145">        return QuickBolusIncrement.forMagic(this.magic);</a>
+<span class="sourceLineNo">146</span><a id="line.146">    }</a>
+<span class="sourceLineNo">147</span><a id="line.147"></a>
+<span class="sourceLineNo">148</span><a id="line.148">    public int getModeRaw() {</a>
+<span class="sourceLineNo">149</span><a id="line.149">        return modeRaw;</a>
+<span class="sourceLineNo">150</span><a id="line.150">    }</a>
 <span class="sourceLineNo">151</span><a id="line.151"></a>
-<span class="sourceLineNo">152</span><a id="line.152">        private final int raw;</a>
-<span class="sourceLineNo">153</span><a id="line.153">        QuickBolusMode(int raw) {</a>
-<span class="sourceLineNo">154</span><a id="line.154">            this.raw = raw;</a>
-<span class="sourceLineNo">155</span><a id="line.155">        }</a>
-<span class="sourceLineNo">156</span><a id="line.156"></a>
-<span class="sourceLineNo">157</span><a id="line.157">        public int getRaw() {</a>
-<span class="sourceLineNo">158</span><a id="line.158">            return raw;</a>
-<span class="sourceLineNo">159</span><a id="line.159">        }</a>
-<span class="sourceLineNo">160</span><a id="line.160"></a>
-<span class="sourceLineNo">161</span><a id="line.161">        public static QuickBolusMode forRaw(int raw) {</a>
-<span class="sourceLineNo">162</span><a id="line.162">            for (QuickBolusMode m : values()) {</a>
-<span class="sourceLineNo">163</span><a id="line.163">                if (m.raw == raw) return m;</a>
-<span class="sourceLineNo">164</span><a id="line.164">            }</a>
-<span class="sourceLineNo">165</span><a id="line.165">            return null;</a>
-<span class="sourceLineNo">166</span><a id="line.166">        }</a>
-<span class="sourceLineNo">167</span><a id="line.167">    }</a>
-<span class="sourceLineNo">168</span><a id="line.168"></a>
-<span class="sourceLineNo">169</span><a id="line.169">    public QuickBolusMode getMode() {</a>
-<span class="sourceLineNo">170</span><a id="line.170">        return QuickBolusMode.forRaw(this.modeRaw);</a>
-<span class="sourceLineNo">171</span><a id="line.171">    }</a>
-<span class="sourceLineNo">172</span><a id="line.172"></a>
-<span class="sourceLineNo">173</span><a id="line.173">    private void checkValidIncrement() {</a>
-<span class="sourceLineNo">174</span><a id="line.174">        QuickBolusIncrement increment = QuickBolusIncrement.forMagic(this.magic);</a>
-<span class="sourceLineNo">175</span><a id="line.175">        if (increment != null) {</a>
-<span class="sourceLineNo">176</span><a id="line.176">            Preconditions.checkState(increment.getMode().getRaw() == getModeRaw(),</a>
-<span class="sourceLineNo">177</span><a id="line.177">                    "invalid mode selection: increment=" + increment + " mode=" + getMode());</a>
-<span class="sourceLineNo">178</span><a id="line.178">        }</a>
-<span class="sourceLineNo">179</span><a id="line.179">    }</a>
-<span class="sourceLineNo">180</span><a id="line.180">}</a>
+<span class="sourceLineNo">152</span><a id="line.152">    public enum QuickBolusMode {</a>
+<span class="sourceLineNo">153</span><a id="line.153">        UNITS(0),</a>
+<span class="sourceLineNo">154</span><a id="line.154">        CARBS(1),</a>
+<span class="sourceLineNo">155</span><a id="line.155"></a>
+<span class="sourceLineNo">156</span><a id="line.156">        ;</a>
+<span class="sourceLineNo">157</span><a id="line.157"></a>
+<span class="sourceLineNo">158</span><a id="line.158">        private final int raw;</a>
+<span class="sourceLineNo">159</span><a id="line.159">        QuickBolusMode(int raw) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">            this.raw = raw;</a>
+<span class="sourceLineNo">161</span><a id="line.161">        }</a>
+<span class="sourceLineNo">162</span><a id="line.162"></a>
+<span class="sourceLineNo">163</span><a id="line.163">        public int getRaw() {</a>
+<span class="sourceLineNo">164</span><a id="line.164">            return raw;</a>
+<span class="sourceLineNo">165</span><a id="line.165">        }</a>
+<span class="sourceLineNo">166</span><a id="line.166"></a>
+<span class="sourceLineNo">167</span><a id="line.167">        public static QuickBolusMode forRaw(int raw) {</a>
+<span class="sourceLineNo">168</span><a id="line.168">            for (QuickBolusMode m : values()) {</a>
+<span class="sourceLineNo">169</span><a id="line.169">                if (m.raw == raw) return m;</a>
+<span class="sourceLineNo">170</span><a id="line.170">            }</a>
+<span class="sourceLineNo">171</span><a id="line.171">            return null;</a>
+<span class="sourceLineNo">172</span><a id="line.172">        }</a>
+<span class="sourceLineNo">173</span><a id="line.173">    }</a>
+<span class="sourceLineNo">174</span><a id="line.174"></a>
+<span class="sourceLineNo">175</span><a id="line.175">    public QuickBolusMode getMode() {</a>
+<span class="sourceLineNo">176</span><a id="line.176">        return QuickBolusMode.forRaw(this.modeRaw);</a>
+<span class="sourceLineNo">177</span><a id="line.177">    }</a>
+<span class="sourceLineNo">178</span><a id="line.178"></a>
+<span class="sourceLineNo">179</span><a id="line.179">    private void checkValidIncrement() {</a>
+<span class="sourceLineNo">180</span><a id="line.180">        QuickBolusIncrement increment = QuickBolusIncrement.forMagic(this.magic);</a>
+<span class="sourceLineNo">181</span><a id="line.181">        if (increment != null) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">            Preconditions.checkState(increment.getMode().getRaw() == getModeRaw(),</a>
+<span class="sourceLineNo">183</span><a id="line.183">                    "invalid mode selection: increment=" + increment + " mode=" + getMode());</a>
+<span class="sourceLineNo">184</span><a id="line.184">        }</a>
+<span class="sourceLineNo">185</span><a id="line.185">    }</a>
+<span class="sourceLineNo">186</span><a id="line.186">}</a>
 
 
 

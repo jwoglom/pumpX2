@@ -32,7 +32,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -141,7 +141,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.27">DismissNotificationRequest</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.28">DismissNotificationRequest</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
 <div class="block">Request message for <a href="../../response/control/DismissNotificationResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>DismissNotificationResponse</code></a>, opCode -72, size 6
 
@@ -163,6 +163,29 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DismissNotificationRequest.NotificationType.html" title="enum in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- =========== FIELD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -220,9 +243,31 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNotificationId()">getNotificationId</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="DismissNotificationRequest.NotificationType.html" title="enum in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNotificationType()">getNotificationType</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNotificationTypeId()">getNotificationTypeId</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">
+ Parsed fields for DismissNotificationRequest:
+ <code>notificationId</code><code>Bytes.readShort(raw, 0)</code>
+ <code>notificationTypeId</code><code>Bytes.readShort(raw, 4)</code>
+ <code>notificationType</code><code>getNotificationType()</code>
+ </div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -261,7 +306,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>DismissNotificationRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.36">DismissNotificationRequest</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.42">DismissNotificationRequest</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(byte[])">
@@ -270,7 +315,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DismissNotificationRequest</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.40">DismissNotificationRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.46">DismissNotificationRequest</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 </li>
@@ -286,14 +331,47 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <a id="parse(byte[])">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.45">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.59">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<div class="block"><table border="1">
+ <caption>Parsed fields for DismissNotificationRequest:</caption>
+ <tr><td><code>notificationId</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>notificationTypeId</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ <tr><td><code>notificationType</code></td><td><code>getNotificationType()</code></td></tr>
+ </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
 </dl>
+</li>
+</ul>
+<a id="getNotificationId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNotificationId</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.69">getNotificationId</a>()</pre>
+</li>
+</ul>
+<a id="getNotificationTypeId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNotificationTypeId</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.73">getNotificationTypeId</a>()</pre>
+</li>
+</ul>
+<a id="getNotificationType()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getNotificationType</h4>
+<pre class="methodSignature">public&nbsp;<a href="DismissNotificationRequest.NotificationType.html" title="enum in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line.77">getNotificationType</a>()</pre>
 </li>
 </ul>
 </li>
@@ -347,7 +425,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

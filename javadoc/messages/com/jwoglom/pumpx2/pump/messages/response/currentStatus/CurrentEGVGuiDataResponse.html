@@ -32,7 +32,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -227,7 +227,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(long,int,int,int)">CurrentEGVGuiDataResponse</a></span>&#8203;(long&nbsp;bgReadingTimestampSeconds,
                          int&nbsp;cgmReading,
-                         int&nbsp;egvStatus,
+                         int&nbsp;egvStatusId,
                          int&nbsp;trendRate)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -287,10 +287,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTrendRate()">getTrendRate</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEgvStatusId()">getEgvStatusId</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTrendRate()">getTrendRate</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parse(byte%5B%5D)">parse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
 <td class="colLast">
@@ -298,7 +303,8 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
  Parsed fields for CurrentEGVGuiDataResponse:
  <code>bgReadingTimestampSeconds</code><code>Bytes.readUint32(raw, 0)</code>
  <code>cgmReading</code><code>Bytes.readShort(raw, 4)</code>
- <code>egvStatus</code><code>raw[6]</code>
+ <code>egvStatusId</code><code>raw[6]</code>
+ <code>egvStatus</code><code>getEgvStatus()</code>
  <code>trendRate</code><code>raw[7]</code>
  </div>
 </td>
@@ -340,7 +346,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CurrentEGVGuiDataResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.45">CurrentEGVGuiDataResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.46">CurrentEGVGuiDataResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(long,int,int,int)">
@@ -349,9 +355,9 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CurrentEGVGuiDataResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.47">CurrentEGVGuiDataResponse</a>&#8203;(long&nbsp;bgReadingTimestampSeconds,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.48">CurrentEGVGuiDataResponse</a>&#8203;(long&nbsp;bgReadingTimestampSeconds,
                                  int&nbsp;cgmReading,
-                                 int&nbsp;egvStatus,
+                                 int&nbsp;egvStatusId,
                                  int&nbsp;trendRate)</pre>
 </li>
 </ul>
@@ -371,12 +377,13 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.65">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.68">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
 <div class="block"><table border="1">
  <caption>Parsed fields for CurrentEGVGuiDataResponse:</caption>
  <tr><td><code>bgReadingTimestampSeconds</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
  <tr><td><code>cgmReading</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
- <tr><td><code>egvStatus</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>egvStatusId</code></td><td><code>raw[6]</code></td></tr>
+ <tr><td><code>egvStatus</code></td><td><code>getEgvStatus()</code></td></tr>
  <tr><td><code>trendRate</code></td><td><code>raw[7]</code></td></tr>
  </table></div>
 <dl>
@@ -391,7 +398,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.90">buildCargo</a>&#8203;(long&nbsp;bgReadingTimestampSeconds,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.94">buildCargo</a>&#8203;(long&nbsp;bgReadingTimestampSeconds,
                                 int&nbsp;cgmReading,
                                 int&nbsp;egvStatus,
                                 int&nbsp;trendRate)</pre>
@@ -415,7 +422,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBgReadingTimestampSeconds</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.98">getBgReadingTimestampSeconds</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.102">getBgReadingTimestampSeconds</a>()</pre>
 </li>
 </ul>
 <a id="getCgmReading()">
@@ -424,7 +431,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getCgmReading</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.101">getCgmReading</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.105">getCgmReading</a>()</pre>
 </li>
 </ul>
 <a id="getEgvStatus()">
@@ -433,7 +440,16 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getEgvStatus</h4>
-<pre class="methodSignature">public&nbsp;<a href="CurrentEGVGuiDataResponse.EGVStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentEGVGuiDataResponse.EGVStatus</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.104">getEgvStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="CurrentEGVGuiDataResponse.EGVStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentEGVGuiDataResponse.EGVStatus</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.108">getEgvStatus</a>()</pre>
+</li>
+</ul>
+<a id="getEgvStatusId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEgvStatusId</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.112">getEgvStatusId</a>()</pre>
 </li>
 </ul>
 <a id="getTrendRate()">
@@ -442,7 +458,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTrendRate</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.107">getTrendRate</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#line.115">getTrendRate</a>()</pre>
 </li>
 </ul>
 </li>

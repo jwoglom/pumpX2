@@ -189,225 +189,228 @@
 <span class="sourceLineNo">180</span><a id="line.180">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;</a>
 <span class="sourceLineNo">181</span><a id="line.181">import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;</a>
 <span class="sourceLineNo">182</span><a id="line.182">import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;</a>
-<span class="sourceLineNo">183</span><a id="line.183">// IMPORT_END</a>
-<span class="sourceLineNo">184</span><a id="line.184">import com.jwoglom.pumpx2.shared.L;</a>
-<span class="sourceLineNo">185</span><a id="line.185"></a>
-<span class="sourceLineNo">186</span><a id="line.186">import com.jwoglom.pumpx2.shared.Hex;</a>
-<span class="sourceLineNo">187</span><a id="line.187">import org.apache.commons.lang3.tuple.Pair;</a>
-<span class="sourceLineNo">188</span><a id="line.188"></a>
-<span class="sourceLineNo">189</span><a id="line.189">import java.util.HashMap;</a>
-<span class="sourceLineNo">190</span><a id="line.190">import java.util.HashSet;</a>
-<span class="sourceLineNo">191</span><a id="line.191">import java.util.Map;</a>
-<span class="sourceLineNo">192</span><a id="line.192">import java.util.Set;</a>
-<span class="sourceLineNo">193</span><a id="line.193"></a>
-<span class="sourceLineNo">194</span><a id="line.194">public enum Messages {</a>
-<span class="sourceLineNo">195</span><a id="line.195">    API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),</a>
-<span class="sourceLineNo">196</span><a id="line.196">    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy</a>
-<span class="sourceLineNo">197</span><a id="line.197">    JPAKE_ROUND1A(Jpake1aRequest.class, Jpake1aResponse.class), // jpake</a>
-<span class="sourceLineNo">198</span><a id="line.198">    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy</a>
-<span class="sourceLineNo">199</span><a id="line.199">    JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake</a>
-<span class="sourceLineNo">200</span><a id="line.200">    JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake</a>
-<span class="sourceLineNo">201</span><a id="line.201">    JPAKE_3_SESSION_KEY(Jpake3SessionKeyRequest.class, Jpake3SessionKeyResponse.class), // jpake</a>
-<span class="sourceLineNo">202</span><a id="line.202">    JPAKE_4_KEY_CONFIRMATION(Jpake4KeyConfirmationRequest.class, Jpake4KeyConfirmationResponse.class), // jpake</a>
-<span class="sourceLineNo">203</span><a id="line.203">    ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),</a>
-<span class="sourceLineNo">204</span><a id="line.204">    ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),</a>
-<span class="sourceLineNo">205</span><a id="line.205">    CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),</a>
-<span class="sourceLineNo">206</span><a id="line.206">    CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),</a>
-<span class="sourceLineNo">207</span><a id="line.207">    NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),</a>
-<span class="sourceLineNo">208</span><a id="line.208">    PUMP_FEATURES(PumpFeaturesV1Request.class, PumpFeaturesV1Response.class),</a>
-<span class="sourceLineNo">209</span><a id="line.209">    PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),</a>
-<span class="sourceLineNo">210</span><a id="line.210">    PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),</a>
-<span class="sourceLineNo">211</span><a id="line.211">    CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),</a>
-<span class="sourceLineNo">212</span><a id="line.212">    CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),</a>
-<span class="sourceLineNo">213</span><a id="line.213">    CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),</a>
-<span class="sourceLineNo">214</span><a id="line.214">    INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),</a>
-<span class="sourceLineNo">215</span><a id="line.215">    LAST_BG(LastBGRequest.class, LastBGResponse.class),</a>
-<span class="sourceLineNo">216</span><a id="line.216">    CURRENT_BOLUS_STATUS(CurrentBolusStatusRequest.class, CurrentBolusStatusResponse.class),</a>
-<span class="sourceLineNo">217</span><a id="line.217">    CURRENT_BASAL_STATUS(CurrentBasalStatusRequest.class, CurrentBasalStatusResponse.class),</a>
-<span class="sourceLineNo">218</span><a id="line.218">    CONTROL_IQ_SLEEP_SCHEDULE(ControlIQSleepScheduleRequest.class, ControlIQSleepScheduleResponse.class),</a>
-<span class="sourceLineNo">219</span><a id="line.219">    CONTROL_IQ_INFO_V1(ControlIQInfoV1Request.class, ControlIQInfoV1Response.class),</a>
-<span class="sourceLineNo">220</span><a id="line.220">    CONTROL_IQ_INFO_V2(ControlIQInfoV2Request.class, ControlIQInfoV2Response.class),</a>
-<span class="sourceLineNo">221</span><a id="line.221">    CGM_ALERT_STATUS(CGMAlertStatusRequest.class, CGMAlertStatusResponse.class),</a>
-<span class="sourceLineNo">222</span><a id="line.222">    CGM_GLUCOSE_ALERT_SETTINGS(CGMGlucoseAlertSettingsRequest.class, CGMGlucoseAlertSettingsResponse.class),</a>
-<span class="sourceLineNo">223</span><a id="line.223">    CGMOOR_ALERT_SETTINGS(CGMOORAlertSettingsRequest.class, CGMOORAlertSettingsResponse.class),</a>
-<span class="sourceLineNo">224</span><a id="line.224">    CGM_RATE_ALERT_SETTINGS(CGMRateAlertSettingsRequest.class, CGMRateAlertSettingsResponse.class),</a>
-<span class="sourceLineNo">225</span><a id="line.225">    CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),</a>
-<span class="sourceLineNo">226</span><a id="line.226">    GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),</a>
-<span class="sourceLineNo">227</span><a id="line.227">    BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),</a>
-<span class="sourceLineNo">228</span><a id="line.228">    PUMP_VERSION(PumpVersionRequest.class, PumpVersionResponse.class),</a>
-<span class="sourceLineNo">229</span><a id="line.229">    PUMP_SUPPORTED_FEATURES(PumpFeaturesV2Request.class, PumpFeaturesV2Response.class),</a>
-<span class="sourceLineNo">230</span><a id="line.230">    REMINDER_STATUS(ReminderStatusRequest.class, ReminderStatusResponse.class),</a>
-<span class="sourceLineNo">231</span><a id="line.231">    REMINDERS(RemindersRequest.class, RemindersResponse.class),</a>
-<span class="sourceLineNo">232</span><a id="line.232">    TEMP_RATE(TempRateRequest.class, TempRateResponse.class),</a>
-<span class="sourceLineNo">233</span><a id="line.233">    TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),</a>
-<span class="sourceLineNo">234</span><a id="line.234">    HOME_SCREEN_MIRROR(HomeScreenMirrorRequest.class, HomeScreenMirrorResponse.class),</a>
-<span class="sourceLineNo">235</span><a id="line.235">    PROFILE_STATUS(ProfileStatusRequest.class, ProfileStatusResponse.class),</a>
-<span class="sourceLineNo">236</span><a id="line.236">    IDP_SEGMENT(IDPSegmentRequest.class, IDPSegmentResponse.class),</a>
-<span class="sourceLineNo">237</span><a id="line.237">    EXTENDED_BOLUS_STATUS(ExtendedBolusStatusRequest.class, ExtendedBolusStatusResponse.class),</a>
-<span class="sourceLineNo">238</span><a id="line.238">    BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),</a>
-<span class="sourceLineNo">239</span><a id="line.239">    BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),</a>
-<span class="sourceLineNo">240</span><a id="line.240">    BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),</a>
-<span class="sourceLineNo">241</span><a id="line.241">    HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),</a>
-<span class="sourceLineNo">242</span><a id="line.242">    HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),</a>
-<span class="sourceLineNo">243</span><a id="line.243">    HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),</a>
-<span class="sourceLineNo">244</span><a id="line.244">    BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),</a>
-<span class="sourceLineNo">245</span><a id="line.245">    BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),</a>
-<span class="sourceLineNo">246</span><a id="line.246">    LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),</a>
-<span class="sourceLineNo">247</span><a id="line.247">    IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),</a>
-<span class="sourceLineNo">248</span><a id="line.248">    CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),</a>
-<span class="sourceLineNo">249</span><a id="line.249">    INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),</a>
-<span class="sourceLineNo">250</span><a id="line.250">    BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),</a>
-<span class="sourceLineNo">251</span><a id="line.251">    COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),</a>
-<span class="sourceLineNo">252</span><a id="line.252">    SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),</a>
-<span class="sourceLineNo">253</span><a id="line.253">    CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),</a>
-<span class="sourceLineNo">254</span><a id="line.254">    PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),</a>
-<span class="sourceLineNo">255</span><a id="line.255">    LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),</a>
-<span class="sourceLineNo">256</span><a id="line.256">    REMOTE_BG_ENTRY(RemoteBgEntryRequest.class, RemoteBgEntryResponse.class),</a>
-<span class="sourceLineNo">257</span><a id="line.257">    REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),</a>
-<span class="sourceLineNo">258</span><a id="line.258">    LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),</a>
-<span class="sourceLineNo">259</span><a id="line.259">    BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),</a>
-<span class="sourceLineNo">260</span><a id="line.260">    UNKNOWN_MOBI_OPCODE_NEG70(UnknownMobiOpcodeNeg70Request.class, UnknownMobiOpcodeNeg70Response.class),</a>
-<span class="sourceLineNo">261</span><a id="line.261">    UNKNOWN_MOBI_OPCODE110(UnknownMobiOpcode110Request.class, UnknownMobiOpcode110Response.class),</a>
-<span class="sourceLineNo">262</span><a id="line.262">    UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),</a>
-<span class="sourceLineNo">263</span><a id="line.263">    UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),</a>
-<span class="sourceLineNo">264</span><a id="line.264">    SET_MODES(SetModesRequest.class, SetModesResponse.class),</a>
-<span class="sourceLineNo">265</span><a id="line.265">    SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),</a>
-<span class="sourceLineNo">266</span><a id="line.266">    SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),</a>
-<span class="sourceLineNo">267</span><a id="line.267">    STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),</a>
-<span class="sourceLineNo">268</span><a id="line.268">    RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),</a>
-<span class="sourceLineNo">269</span><a id="line.269">    CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),</a>
-<span class="sourceLineNo">270</span><a id="line.270">    ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),</a>
-<span class="sourceLineNo">271</span><a id="line.271">    SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),</a>
-<span class="sourceLineNo">272</span><a id="line.272">    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),</a>
-<span class="sourceLineNo">273</span><a id="line.273">    DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),</a>
-<span class="sourceLineNo">274</span><a id="line.274">    SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),</a>
-<span class="sourceLineNo">275</span><a id="line.275">    START_G6_SENSOR_SESSION(StartG6SensorSessionRequest.class, StartG6SensorSessionResponse.class),</a>
-<span class="sourceLineNo">276</span><a id="line.276">    STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),</a>
-<span class="sourceLineNo">277</span><a id="line.277">    PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),</a>
-<span class="sourceLineNo">278</span><a id="line.278">    DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),</a>
-<span class="sourceLineNo">279</span><a id="line.279">    CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),</a>
-<span class="sourceLineNo">280</span><a id="line.280">    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),</a>
-<span class="sourceLineNo">281</span><a id="line.281">    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),</a>
-<span class="sourceLineNo">282</span><a id="line.282">    SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),</a>
-<span class="sourceLineNo">283</span><a id="line.283">    // MESSAGES_END</a>
-<span class="sourceLineNo">284</span><a id="line.284">    ;</a>
-<span class="sourceLineNo">285</span><a id="line.285"></a>
-<span class="sourceLineNo">286</span><a id="line.286">    private static final String TAG = "Messages";</a>
-<span class="sourceLineNo">287</span><a id="line.287"></a>
-<span class="sourceLineNo">288</span><a id="line.288">    public static Map&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; OPCODES = new HashMap&lt;&gt;();</a>
-<span class="sourceLineNo">289</span><a id="line.289">    public static Map&lt;Integer, Messages&gt; REQUESTS = new HashMap&lt;&gt;();</a>
-<span class="sourceLineNo">290</span><a id="line.290">    public static Map&lt;Integer, Messages&gt; RESPONSES = new HashMap&lt;&gt;();</a>
-<span class="sourceLineNo">291</span><a id="line.291"></a>
-<span class="sourceLineNo">292</span><a id="line.292">    static {</a>
-<span class="sourceLineNo">293</span><a id="line.293">        for (Messages m : Messages.values()) {</a>
-<span class="sourceLineNo">294</span><a id="line.294">            OPCODES.put(Pair.of(m.requestProps().characteristic(), m.requestOpCode), m.requestClass);</a>
-<span class="sourceLineNo">295</span><a id="line.295">            REQUESTS.put(m.requestOpCode, m);</a>
-<span class="sourceLineNo">296</span><a id="line.296"></a>
-<span class="sourceLineNo">297</span><a id="line.297">            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);</a>
-<span class="sourceLineNo">298</span><a id="line.298">            RESPONSES.put(m.responseOpCode, m);</a>
+<span class="sourceLineNo">183</span><a id="line.183">import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;</a>
+<span class="sourceLineNo">184</span><a id="line.184">import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;</a>
+<span class="sourceLineNo">185</span><a id="line.185">// IMPORT_END</a>
+<span class="sourceLineNo">186</span><a id="line.186">import com.jwoglom.pumpx2.shared.L;</a>
+<span class="sourceLineNo">187</span><a id="line.187"></a>
+<span class="sourceLineNo">188</span><a id="line.188">import com.jwoglom.pumpx2.shared.Hex;</a>
+<span class="sourceLineNo">189</span><a id="line.189">import org.apache.commons.lang3.tuple.Pair;</a>
+<span class="sourceLineNo">190</span><a id="line.190"></a>
+<span class="sourceLineNo">191</span><a id="line.191">import java.util.HashMap;</a>
+<span class="sourceLineNo">192</span><a id="line.192">import java.util.HashSet;</a>
+<span class="sourceLineNo">193</span><a id="line.193">import java.util.Map;</a>
+<span class="sourceLineNo">194</span><a id="line.194">import java.util.Set;</a>
+<span class="sourceLineNo">195</span><a id="line.195"></a>
+<span class="sourceLineNo">196</span><a id="line.196">public enum Messages {</a>
+<span class="sourceLineNo">197</span><a id="line.197">    API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),</a>
+<span class="sourceLineNo">198</span><a id="line.198">    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy</a>
+<span class="sourceLineNo">199</span><a id="line.199">    JPAKE_ROUND1A(Jpake1aRequest.class, Jpake1aResponse.class), // jpake</a>
+<span class="sourceLineNo">200</span><a id="line.200">    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy</a>
+<span class="sourceLineNo">201</span><a id="line.201">    JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake</a>
+<span class="sourceLineNo">202</span><a id="line.202">    JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake</a>
+<span class="sourceLineNo">203</span><a id="line.203">    JPAKE_3_SESSION_KEY(Jpake3SessionKeyRequest.class, Jpake3SessionKeyResponse.class), // jpake</a>
+<span class="sourceLineNo">204</span><a id="line.204">    JPAKE_4_KEY_CONFIRMATION(Jpake4KeyConfirmationRequest.class, Jpake4KeyConfirmationResponse.class), // jpake</a>
+<span class="sourceLineNo">205</span><a id="line.205">    ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),</a>
+<span class="sourceLineNo">206</span><a id="line.206">    ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),</a>
+<span class="sourceLineNo">207</span><a id="line.207">    CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),</a>
+<span class="sourceLineNo">208</span><a id="line.208">    CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),</a>
+<span class="sourceLineNo">209</span><a id="line.209">    NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),</a>
+<span class="sourceLineNo">210</span><a id="line.210">    PUMP_FEATURES(PumpFeaturesV1Request.class, PumpFeaturesV1Response.class),</a>
+<span class="sourceLineNo">211</span><a id="line.211">    PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),</a>
+<span class="sourceLineNo">212</span><a id="line.212">    PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),</a>
+<span class="sourceLineNo">213</span><a id="line.213">    CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),</a>
+<span class="sourceLineNo">214</span><a id="line.214">    CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),</a>
+<span class="sourceLineNo">215</span><a id="line.215">    CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),</a>
+<span class="sourceLineNo">216</span><a id="line.216">    INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),</a>
+<span class="sourceLineNo">217</span><a id="line.217">    LAST_BG(LastBGRequest.class, LastBGResponse.class),</a>
+<span class="sourceLineNo">218</span><a id="line.218">    CURRENT_BOLUS_STATUS(CurrentBolusStatusRequest.class, CurrentBolusStatusResponse.class),</a>
+<span class="sourceLineNo">219</span><a id="line.219">    CURRENT_BASAL_STATUS(CurrentBasalStatusRequest.class, CurrentBasalStatusResponse.class),</a>
+<span class="sourceLineNo">220</span><a id="line.220">    CONTROL_IQ_SLEEP_SCHEDULE(ControlIQSleepScheduleRequest.class, ControlIQSleepScheduleResponse.class),</a>
+<span class="sourceLineNo">221</span><a id="line.221">    CONTROL_IQ_INFO_V1(ControlIQInfoV1Request.class, ControlIQInfoV1Response.class),</a>
+<span class="sourceLineNo">222</span><a id="line.222">    CONTROL_IQ_INFO_V2(ControlIQInfoV2Request.class, ControlIQInfoV2Response.class),</a>
+<span class="sourceLineNo">223</span><a id="line.223">    CGM_ALERT_STATUS(CGMAlertStatusRequest.class, CGMAlertStatusResponse.class),</a>
+<span class="sourceLineNo">224</span><a id="line.224">    CGM_GLUCOSE_ALERT_SETTINGS(CGMGlucoseAlertSettingsRequest.class, CGMGlucoseAlertSettingsResponse.class),</a>
+<span class="sourceLineNo">225</span><a id="line.225">    CGMOOR_ALERT_SETTINGS(CGMOORAlertSettingsRequest.class, CGMOORAlertSettingsResponse.class),</a>
+<span class="sourceLineNo">226</span><a id="line.226">    CGM_RATE_ALERT_SETTINGS(CGMRateAlertSettingsRequest.class, CGMRateAlertSettingsResponse.class),</a>
+<span class="sourceLineNo">227</span><a id="line.227">    CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),</a>
+<span class="sourceLineNo">228</span><a id="line.228">    GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),</a>
+<span class="sourceLineNo">229</span><a id="line.229">    BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),</a>
+<span class="sourceLineNo">230</span><a id="line.230">    PUMP_VERSION(PumpVersionRequest.class, PumpVersionResponse.class),</a>
+<span class="sourceLineNo">231</span><a id="line.231">    PUMP_SUPPORTED_FEATURES(PumpFeaturesV2Request.class, PumpFeaturesV2Response.class),</a>
+<span class="sourceLineNo">232</span><a id="line.232">    REMINDER_STATUS(ReminderStatusRequest.class, ReminderStatusResponse.class),</a>
+<span class="sourceLineNo">233</span><a id="line.233">    REMINDERS(RemindersRequest.class, RemindersResponse.class),</a>
+<span class="sourceLineNo">234</span><a id="line.234">    TEMP_RATE(TempRateRequest.class, TempRateResponse.class),</a>
+<span class="sourceLineNo">235</span><a id="line.235">    TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),</a>
+<span class="sourceLineNo">236</span><a id="line.236">    HOME_SCREEN_MIRROR(HomeScreenMirrorRequest.class, HomeScreenMirrorResponse.class),</a>
+<span class="sourceLineNo">237</span><a id="line.237">    PROFILE_STATUS(ProfileStatusRequest.class, ProfileStatusResponse.class),</a>
+<span class="sourceLineNo">238</span><a id="line.238">    IDP_SEGMENT(IDPSegmentRequest.class, IDPSegmentResponse.class),</a>
+<span class="sourceLineNo">239</span><a id="line.239">    EXTENDED_BOLUS_STATUS(ExtendedBolusStatusRequest.class, ExtendedBolusStatusResponse.class),</a>
+<span class="sourceLineNo">240</span><a id="line.240">    BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),</a>
+<span class="sourceLineNo">241</span><a id="line.241">    BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),</a>
+<span class="sourceLineNo">242</span><a id="line.242">    BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),</a>
+<span class="sourceLineNo">243</span><a id="line.243">    HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),</a>
+<span class="sourceLineNo">244</span><a id="line.244">    HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),</a>
+<span class="sourceLineNo">245</span><a id="line.245">    HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),</a>
+<span class="sourceLineNo">246</span><a id="line.246">    BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),</a>
+<span class="sourceLineNo">247</span><a id="line.247">    BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),</a>
+<span class="sourceLineNo">248</span><a id="line.248">    LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),</a>
+<span class="sourceLineNo">249</span><a id="line.249">    IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),</a>
+<span class="sourceLineNo">250</span><a id="line.250">    CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),</a>
+<span class="sourceLineNo">251</span><a id="line.251">    INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),</a>
+<span class="sourceLineNo">252</span><a id="line.252">    BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),</a>
+<span class="sourceLineNo">253</span><a id="line.253">    COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),</a>
+<span class="sourceLineNo">254</span><a id="line.254">    SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),</a>
+<span class="sourceLineNo">255</span><a id="line.255">    CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),</a>
+<span class="sourceLineNo">256</span><a id="line.256">    PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),</a>
+<span class="sourceLineNo">257</span><a id="line.257">    LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),</a>
+<span class="sourceLineNo">258</span><a id="line.258">    REMOTE_BG_ENTRY(RemoteBgEntryRequest.class, RemoteBgEntryResponse.class),</a>
+<span class="sourceLineNo">259</span><a id="line.259">    REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),</a>
+<span class="sourceLineNo">260</span><a id="line.260">    LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),</a>
+<span class="sourceLineNo">261</span><a id="line.261">    BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),</a>
+<span class="sourceLineNo">262</span><a id="line.262">    UNKNOWN_MOBI_OPCODE_NEG70(UnknownMobiOpcodeNeg70Request.class, UnknownMobiOpcodeNeg70Response.class),</a>
+<span class="sourceLineNo">263</span><a id="line.263">    UNKNOWN_MOBI_OPCODE110(UnknownMobiOpcode110Request.class, UnknownMobiOpcode110Response.class),</a>
+<span class="sourceLineNo">264</span><a id="line.264">    UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),</a>
+<span class="sourceLineNo">265</span><a id="line.265">    UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),</a>
+<span class="sourceLineNo">266</span><a id="line.266">    SET_MODES(SetModesRequest.class, SetModesResponse.class),</a>
+<span class="sourceLineNo">267</span><a id="line.267">    SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),</a>
+<span class="sourceLineNo">268</span><a id="line.268">    SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),</a>
+<span class="sourceLineNo">269</span><a id="line.269">    STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),</a>
+<span class="sourceLineNo">270</span><a id="line.270">    RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),</a>
+<span class="sourceLineNo">271</span><a id="line.271">    CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),</a>
+<span class="sourceLineNo">272</span><a id="line.272">    ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),</a>
+<span class="sourceLineNo">273</span><a id="line.273">    SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),</a>
+<span class="sourceLineNo">274</span><a id="line.274">    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),</a>
+<span class="sourceLineNo">275</span><a id="line.275">    DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),</a>
+<span class="sourceLineNo">276</span><a id="line.276">    SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),</a>
+<span class="sourceLineNo">277</span><a id="line.277">    START_G6_SENSOR_SESSION(StartG6SensorSessionRequest.class, StartG6SensorSessionResponse.class),</a>
+<span class="sourceLineNo">278</span><a id="line.278">    STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),</a>
+<span class="sourceLineNo">279</span><a id="line.279">    PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),</a>
+<span class="sourceLineNo">280</span><a id="line.280">    DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),</a>
+<span class="sourceLineNo">281</span><a id="line.281">    CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),</a>
+<span class="sourceLineNo">282</span><a id="line.282">    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),</a>
+<span class="sourceLineNo">283</span><a id="line.283">    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),</a>
+<span class="sourceLineNo">284</span><a id="line.284">    SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),</a>
+<span class="sourceLineNo">285</span><a id="line.285">    FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),</a>
+<span class="sourceLineNo">286</span><a id="line.286">    // MESSAGES_END</a>
+<span class="sourceLineNo">287</span><a id="line.287">    ;</a>
+<span class="sourceLineNo">288</span><a id="line.288"></a>
+<span class="sourceLineNo">289</span><a id="line.289">    private static final String TAG = "Messages";</a>
+<span class="sourceLineNo">290</span><a id="line.290"></a>
+<span class="sourceLineNo">291</span><a id="line.291">    public static Map&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; OPCODES = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">292</span><a id="line.292">    public static Map&lt;Integer, Messages&gt; REQUESTS = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">293</span><a id="line.293">    public static Map&lt;Integer, Messages&gt; RESPONSES = new HashMap&lt;&gt;();</a>
+<span class="sourceLineNo">294</span><a id="line.294"></a>
+<span class="sourceLineNo">295</span><a id="line.295">    static {</a>
+<span class="sourceLineNo">296</span><a id="line.296">        for (Messages m : Messages.values()) {</a>
+<span class="sourceLineNo">297</span><a id="line.297">            OPCODES.put(Pair.of(m.requestProps().characteristic(), m.requestOpCode), m.requestClass);</a>
+<span class="sourceLineNo">298</span><a id="line.298">            REQUESTS.put(m.requestOpCode, m);</a>
 <span class="sourceLineNo">299</span><a id="line.299"></a>
-<span class="sourceLineNo">300</span><a id="line.300">            Preconditions.checkArgument(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</a>
-<span class="sourceLineNo">301</span><a id="line.301">        }</a>
+<span class="sourceLineNo">300</span><a id="line.300">            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);</a>
+<span class="sourceLineNo">301</span><a id="line.301">            RESPONSES.put(m.responseOpCode, m);</a>
 <span class="sourceLineNo">302</span><a id="line.302"></a>
-<span class="sourceLineNo">303</span><a id="line.303">        for (Characteristic c : Characteristic.values()) {</a>
-<span class="sourceLineNo">304</span><a id="line.304">            int errorOpcode = new ErrorResponse().opCode();</a>
-<span class="sourceLineNo">305</span><a id="line.305">            if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {</a>
-<span class="sourceLineNo">306</span><a id="line.306">                OPCODES.put(Pair.of(c, errorOpcode), ErrorResponse.class);</a>
-<span class="sourceLineNo">307</span><a id="line.307">            }</a>
-<span class="sourceLineNo">308</span><a id="line.308">        }</a>
-<span class="sourceLineNo">309</span><a id="line.309">    }</a>
-<span class="sourceLineNo">310</span><a id="line.310"></a>
-<span class="sourceLineNo">311</span><a id="line.311">    public static Message parse(byte[] data, int opCode, Characteristic characteristic) {</a>
-<span class="sourceLineNo">312</span><a id="line.312">        try {</a>
-<span class="sourceLineNo">313</span><a id="line.313">            Class&lt;? extends Message&gt; clazz = OPCODES.get(Pair.of(characteristic, opCode));</a>
-<span class="sourceLineNo">314</span><a id="line.314">            if (clazz == null) {</a>
-<span class="sourceLineNo">315</span><a id="line.315">                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));</a>
-<span class="sourceLineNo">316</span><a id="line.316">                return null;</a>
-<span class="sourceLineNo">317</span><a id="line.317">            }</a>
-<span class="sourceLineNo">318</span><a id="line.318">            Message msg = clazz.newInstance();</a>
-<span class="sourceLineNo">319</span><a id="line.319">            msg.parse(data);</a>
-<span class="sourceLineNo">320</span><a id="line.320">            return msg;</a>
-<span class="sourceLineNo">321</span><a id="line.321">        } catch (Exception e) {</a>
-<span class="sourceLineNo">322</span><a id="line.322">            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);</a>
-<span class="sourceLineNo">323</span><a id="line.323">            e.printStackTrace();</a>
-<span class="sourceLineNo">324</span><a id="line.324">            return null;</a>
-<span class="sourceLineNo">325</span><a id="line.325">        }</a>
-<span class="sourceLineNo">326</span><a id="line.326">    }</a>
-<span class="sourceLineNo">327</span><a id="line.327"></a>
-<span class="sourceLineNo">328</span><a id="line.328">    public static Set&lt;Characteristic&gt; findPossibleCharacteristicsForOpcode(int opCode) {</a>
-<span class="sourceLineNo">329</span><a id="line.329">        Set&lt;Characteristic&gt; items = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">330</span><a id="line.330">        for (Pair&lt;Characteristic, Integer&gt; entry : OPCODES.keySet()) {</a>
-<span class="sourceLineNo">331</span><a id="line.331">            if (entry.getRight().equals(opCode)) {</a>
-<span class="sourceLineNo">332</span><a id="line.332">                items.add(entry.getLeft());</a>
-<span class="sourceLineNo">333</span><a id="line.333">            }</a>
-<span class="sourceLineNo">334</span><a id="line.334">        }</a>
-<span class="sourceLineNo">335</span><a id="line.335"></a>
-<span class="sourceLineNo">336</span><a id="line.336">        return items;</a>
-<span class="sourceLineNo">337</span><a id="line.337">    }</a>
+<span class="sourceLineNo">303</span><a id="line.303">            Preconditions.checkArgument(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</a>
+<span class="sourceLineNo">304</span><a id="line.304">        }</a>
+<span class="sourceLineNo">305</span><a id="line.305"></a>
+<span class="sourceLineNo">306</span><a id="line.306">        for (Characteristic c : Characteristic.values()) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">            int errorOpcode = new ErrorResponse().opCode();</a>
+<span class="sourceLineNo">308</span><a id="line.308">            if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {</a>
+<span class="sourceLineNo">309</span><a id="line.309">                OPCODES.put(Pair.of(c, errorOpcode), ErrorResponse.class);</a>
+<span class="sourceLineNo">310</span><a id="line.310">            }</a>
+<span class="sourceLineNo">311</span><a id="line.311">        }</a>
+<span class="sourceLineNo">312</span><a id="line.312">    }</a>
+<span class="sourceLineNo">313</span><a id="line.313"></a>
+<span class="sourceLineNo">314</span><a id="line.314">    public static Message parse(byte[] data, int opCode, Characteristic characteristic) {</a>
+<span class="sourceLineNo">315</span><a id="line.315">        try {</a>
+<span class="sourceLineNo">316</span><a id="line.316">            Class&lt;? extends Message&gt; clazz = OPCODES.get(Pair.of(characteristic, opCode));</a>
+<span class="sourceLineNo">317</span><a id="line.317">            if (clazz == null) {</a>
+<span class="sourceLineNo">318</span><a id="line.318">                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));</a>
+<span class="sourceLineNo">319</span><a id="line.319">                return null;</a>
+<span class="sourceLineNo">320</span><a id="line.320">            }</a>
+<span class="sourceLineNo">321</span><a id="line.321">            Message msg = clazz.newInstance();</a>
+<span class="sourceLineNo">322</span><a id="line.322">            msg.parse(data);</a>
+<span class="sourceLineNo">323</span><a id="line.323">            return msg;</a>
+<span class="sourceLineNo">324</span><a id="line.324">        } catch (Exception e) {</a>
+<span class="sourceLineNo">325</span><a id="line.325">            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);</a>
+<span class="sourceLineNo">326</span><a id="line.326">            e.printStackTrace();</a>
+<span class="sourceLineNo">327</span><a id="line.327">            return null;</a>
+<span class="sourceLineNo">328</span><a id="line.328">        }</a>
+<span class="sourceLineNo">329</span><a id="line.329">    }</a>
+<span class="sourceLineNo">330</span><a id="line.330"></a>
+<span class="sourceLineNo">331</span><a id="line.331">    public static Set&lt;Characteristic&gt; findPossibleCharacteristicsForOpcode(int opCode) {</a>
+<span class="sourceLineNo">332</span><a id="line.332">        Set&lt;Characteristic&gt; items = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">333</span><a id="line.333">        for (Pair&lt;Characteristic, Integer&gt; entry : OPCODES.keySet()) {</a>
+<span class="sourceLineNo">334</span><a id="line.334">            if (entry.getRight().equals(opCode)) {</a>
+<span class="sourceLineNo">335</span><a id="line.335">                items.add(entry.getLeft());</a>
+<span class="sourceLineNo">336</span><a id="line.336">            }</a>
+<span class="sourceLineNo">337</span><a id="line.337">        }</a>
 <span class="sourceLineNo">338</span><a id="line.338"></a>
-<span class="sourceLineNo">339</span><a id="line.339">    public static Set&lt;Class&lt;? extends Message&gt;&gt; findPossibleMessagesForCharacteristic(Characteristic characteristic) {</a>
-<span class="sourceLineNo">340</span><a id="line.340">        Set&lt;Class&lt;? extends Message&gt;&gt; items = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">341</span><a id="line.341">        for (Map.Entry&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; entry : OPCODES.entrySet()) {</a>
-<span class="sourceLineNo">342</span><a id="line.342">            if (entry.getKey().getLeft().equals(characteristic)) {</a>
-<span class="sourceLineNo">343</span><a id="line.343">                items.add(entry.getValue());</a>
-<span class="sourceLineNo">344</span><a id="line.344">            }</a>
-<span class="sourceLineNo">345</span><a id="line.345">        }</a>
-<span class="sourceLineNo">346</span><a id="line.346"></a>
-<span class="sourceLineNo">347</span><a id="line.347">        return items;</a>
-<span class="sourceLineNo">348</span><a id="line.348">    }</a>
+<span class="sourceLineNo">339</span><a id="line.339">        return items;</a>
+<span class="sourceLineNo">340</span><a id="line.340">    }</a>
+<span class="sourceLineNo">341</span><a id="line.341"></a>
+<span class="sourceLineNo">342</span><a id="line.342">    public static Set&lt;Class&lt;? extends Message&gt;&gt; findPossibleMessagesForCharacteristic(Characteristic characteristic) {</a>
+<span class="sourceLineNo">343</span><a id="line.343">        Set&lt;Class&lt;? extends Message&gt;&gt; items = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">344</span><a id="line.344">        for (Map.Entry&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; entry : OPCODES.entrySet()) {</a>
+<span class="sourceLineNo">345</span><a id="line.345">            if (entry.getKey().getLeft().equals(characteristic)) {</a>
+<span class="sourceLineNo">346</span><a id="line.346">                items.add(entry.getValue());</a>
+<span class="sourceLineNo">347</span><a id="line.347">            }</a>
+<span class="sourceLineNo">348</span><a id="line.348">        }</a>
 <span class="sourceLineNo">349</span><a id="line.349"></a>
-<span class="sourceLineNo">350</span><a id="line.350">    public static Class&lt;? extends Message&gt; fromOpcode(int opCode, Characteristic characteristic) {</a>
-<span class="sourceLineNo">351</span><a id="line.351">        return OPCODES.get(Pair.of(characteristic, opCode));</a>
-<span class="sourceLineNo">352</span><a id="line.352">    }</a>
-<span class="sourceLineNo">353</span><a id="line.353"></a>
-<span class="sourceLineNo">354</span><a id="line.354">    private final int requestOpCode;</a>
-<span class="sourceLineNo">355</span><a id="line.355">    private final Class&lt;? extends Message&gt; requestClass;</a>
-<span class="sourceLineNo">356</span><a id="line.356">    private final int responseOpCode;</a>
-<span class="sourceLineNo">357</span><a id="line.357">    private final Class&lt;? extends Message&gt; responseClass;</a>
-<span class="sourceLineNo">358</span><a id="line.358">    Messages(Class&lt;? extends Message&gt; requestClass, Class&lt;? extends Message&gt; responseClass) {</a>
-<span class="sourceLineNo">359</span><a id="line.359">        this.requestClass = requestClass;</a>
-<span class="sourceLineNo">360</span><a id="line.360">        this.requestOpCode = requestProps().opCode();</a>
-<span class="sourceLineNo">361</span><a id="line.361">        this.responseClass = responseClass;</a>
-<span class="sourceLineNo">362</span><a id="line.362">        this.responseOpCode = responseProps().opCode();</a>
-<span class="sourceLineNo">363</span><a id="line.363">    }</a>
-<span class="sourceLineNo">364</span><a id="line.364"></a>
-<span class="sourceLineNo">365</span><a id="line.365">    public int requestOpCode() {</a>
-<span class="sourceLineNo">366</span><a id="line.366">        return requestOpCode;</a>
-<span class="sourceLineNo">367</span><a id="line.367">    }</a>
-<span class="sourceLineNo">368</span><a id="line.368">    public Class&lt;? extends Message&gt; requestClass() {</a>
-<span class="sourceLineNo">369</span><a id="line.369">        return requestClass;</a>
+<span class="sourceLineNo">350</span><a id="line.350">        return items;</a>
+<span class="sourceLineNo">351</span><a id="line.351">    }</a>
+<span class="sourceLineNo">352</span><a id="line.352"></a>
+<span class="sourceLineNo">353</span><a id="line.353">    public static Class&lt;? extends Message&gt; fromOpcode(int opCode, Characteristic characteristic) {</a>
+<span class="sourceLineNo">354</span><a id="line.354">        return OPCODES.get(Pair.of(characteristic, opCode));</a>
+<span class="sourceLineNo">355</span><a id="line.355">    }</a>
+<span class="sourceLineNo">356</span><a id="line.356"></a>
+<span class="sourceLineNo">357</span><a id="line.357">    private final int requestOpCode;</a>
+<span class="sourceLineNo">358</span><a id="line.358">    private final Class&lt;? extends Message&gt; requestClass;</a>
+<span class="sourceLineNo">359</span><a id="line.359">    private final int responseOpCode;</a>
+<span class="sourceLineNo">360</span><a id="line.360">    private final Class&lt;? extends Message&gt; responseClass;</a>
+<span class="sourceLineNo">361</span><a id="line.361">    Messages(Class&lt;? extends Message&gt; requestClass, Class&lt;? extends Message&gt; responseClass) {</a>
+<span class="sourceLineNo">362</span><a id="line.362">        this.requestClass = requestClass;</a>
+<span class="sourceLineNo">363</span><a id="line.363">        this.requestOpCode = requestProps().opCode();</a>
+<span class="sourceLineNo">364</span><a id="line.364">        this.responseClass = responseClass;</a>
+<span class="sourceLineNo">365</span><a id="line.365">        this.responseOpCode = responseProps().opCode();</a>
+<span class="sourceLineNo">366</span><a id="line.366">    }</a>
+<span class="sourceLineNo">367</span><a id="line.367"></a>
+<span class="sourceLineNo">368</span><a id="line.368">    public int requestOpCode() {</a>
+<span class="sourceLineNo">369</span><a id="line.369">        return requestOpCode;</a>
 <span class="sourceLineNo">370</span><a id="line.370">    }</a>
-<span class="sourceLineNo">371</span><a id="line.371">    public MessageProps requestProps() {</a>
-<span class="sourceLineNo">372</span><a id="line.372">        return requestClass.getAnnotation(MessageProps.class);</a>
+<span class="sourceLineNo">371</span><a id="line.371">    public Class&lt;? extends Message&gt; requestClass() {</a>
+<span class="sourceLineNo">372</span><a id="line.372">        return requestClass;</a>
 <span class="sourceLineNo">373</span><a id="line.373">    }</a>
-<span class="sourceLineNo">374</span><a id="line.374"></a>
-<span class="sourceLineNo">375</span><a id="line.375">    public int responseOpCode() {</a>
-<span class="sourceLineNo">376</span><a id="line.376">        return responseOpCode;</a>
-<span class="sourceLineNo">377</span><a id="line.377">    }</a>
-<span class="sourceLineNo">378</span><a id="line.378">    public Class&lt;? extends Message&gt; responseClass() {</a>
-<span class="sourceLineNo">379</span><a id="line.379">        return responseClass;</a>
+<span class="sourceLineNo">374</span><a id="line.374">    public MessageProps requestProps() {</a>
+<span class="sourceLineNo">375</span><a id="line.375">        return requestClass.getAnnotation(MessageProps.class);</a>
+<span class="sourceLineNo">376</span><a id="line.376">    }</a>
+<span class="sourceLineNo">377</span><a id="line.377"></a>
+<span class="sourceLineNo">378</span><a id="line.378">    public int responseOpCode() {</a>
+<span class="sourceLineNo">379</span><a id="line.379">        return responseOpCode;</a>
 <span class="sourceLineNo">380</span><a id="line.380">    }</a>
-<span class="sourceLineNo">381</span><a id="line.381">    public MessageProps responseProps() {</a>
-<span class="sourceLineNo">382</span><a id="line.382">        return responseClass.getAnnotation(MessageProps.class);</a>
+<span class="sourceLineNo">381</span><a id="line.381">    public Class&lt;? extends Message&gt; responseClass() {</a>
+<span class="sourceLineNo">382</span><a id="line.382">        return responseClass;</a>
 <span class="sourceLineNo">383</span><a id="line.383">    }</a>
-<span class="sourceLineNo">384</span><a id="line.384"></a>
-<span class="sourceLineNo">385</span><a id="line.385">    public Message request() {</a>
-<span class="sourceLineNo">386</span><a id="line.386">        try {</a>
-<span class="sourceLineNo">387</span><a id="line.387">            return requestClass.newInstance();</a>
-<span class="sourceLineNo">388</span><a id="line.388">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</a>
-<span class="sourceLineNo">389</span><a id="line.389">            e.printStackTrace();</a>
-<span class="sourceLineNo">390</span><a id="line.390">            return null;</a>
-<span class="sourceLineNo">391</span><a id="line.391">        }</a>
-<span class="sourceLineNo">392</span><a id="line.392">    }</a>
-<span class="sourceLineNo">393</span><a id="line.393">    public Message response() {</a>
-<span class="sourceLineNo">394</span><a id="line.394">        try {</a>
-<span class="sourceLineNo">395</span><a id="line.395">            return responseClass.newInstance();</a>
-<span class="sourceLineNo">396</span><a id="line.396">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</a>
-<span class="sourceLineNo">397</span><a id="line.397">            e.printStackTrace();</a>
-<span class="sourceLineNo">398</span><a id="line.398">            return null;</a>
-<span class="sourceLineNo">399</span><a id="line.399">        }</a>
-<span class="sourceLineNo">400</span><a id="line.400">    }</a>
-<span class="sourceLineNo">401</span><a id="line.401">}</a>
+<span class="sourceLineNo">384</span><a id="line.384">    public MessageProps responseProps() {</a>
+<span class="sourceLineNo">385</span><a id="line.385">        return responseClass.getAnnotation(MessageProps.class);</a>
+<span class="sourceLineNo">386</span><a id="line.386">    }</a>
+<span class="sourceLineNo">387</span><a id="line.387"></a>
+<span class="sourceLineNo">388</span><a id="line.388">    public Message request() {</a>
+<span class="sourceLineNo">389</span><a id="line.389">        try {</a>
+<span class="sourceLineNo">390</span><a id="line.390">            return requestClass.newInstance();</a>
+<span class="sourceLineNo">391</span><a id="line.391">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</a>
+<span class="sourceLineNo">392</span><a id="line.392">            e.printStackTrace();</a>
+<span class="sourceLineNo">393</span><a id="line.393">            return null;</a>
+<span class="sourceLineNo">394</span><a id="line.394">        }</a>
+<span class="sourceLineNo">395</span><a id="line.395">    }</a>
+<span class="sourceLineNo">396</span><a id="line.396">    public Message response() {</a>
+<span class="sourceLineNo">397</span><a id="line.397">        try {</a>
+<span class="sourceLineNo">398</span><a id="line.398">            return responseClass.newInstance();</a>
+<span class="sourceLineNo">399</span><a id="line.399">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</a>
+<span class="sourceLineNo">400</span><a id="line.400">            e.printStackTrace();</a>
+<span class="sourceLineNo">401</span><a id="line.401">            return null;</a>
+<span class="sourceLineNo">402</span><a id="line.402">        }</a>
+<span class="sourceLineNo">403</span><a id="line.403">    }</a>
+<span class="sourceLineNo">404</span><a id="line.404">}</a>
 
 
 
