@@ -33,13 +33,13 @@ jobs:
 
 
     - name: Upload debug APK
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: sampleapp-debug.apk
         path: sampleapp/build/outputs/apk/debug/sampleapp-debug.apk
 
     - name: Upload release (unsigned) APK
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: sampleapp-release-unsigned.apk
         path: sampleapp/build/outputs/apk/release/sampleapp-release-unsigned.apk
@@ -54,49 +54,49 @@ jobs:
       run: find ~/.m2
 
     - name: Upload m2 androidLib AAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-android.aar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-android/*/pumpx2-android-[0-9.]*.aar
 
     - name: Upload m2 androidLib source JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-android-sources.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-android/*/pumpx2-android-[0-9.]*-sources.jar
 
     - name: Upload m2 messages JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-messages.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-messages/*/pumpx2-messages-[0-9.]*.jar
 
     - name: Upload m2 shared JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-shared.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-shared/*/pumpx2-shared-[0-9.]*.jar
 
     - name: Upload m2 messages fat JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-messages-all.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-messages/*/pumpx2-messages-[0-9.]*-all.jar
 
     - name: Upload m2 messages source JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-messages-sources.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-messages/*/pumpx2-messages-[0-9.]*-sources.jar
 
     - name: Upload m2 cliparser fat JAR
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: pumpx2-cliparser-all.jar
         path: ~/.m2/repository/com/jwoglom/pumpx2/pumpx2-cliparser/*/pumpx2-cliparser-[0-9.]*-all.jar
 
     - name: Upload generated m2 repository
-      uses: actions/upload-artifact@v3.1.0
+      uses: actions/upload-artifact@v4
       with:
         name: maven-repository.zip
         path: |
