@@ -20,16 +20,18 @@ public class CurrentEGVGuiDataResponse extends Message {
     
     private long bgReadingTimestampSeconds;
     private int cgmReading;
-    private int egvStatus;
+    private int egvStatusId;
+    private EGVStatus egvStatus;
     private int trendRate;
     
     public CurrentEGVGuiDataResponse() {}
     
-    public CurrentEGVGuiDataResponse(long bgReadingTimestampSeconds, int cgmReading, int egvStatus, int trendRate) {
-        this.cargo = buildCargo(bgReadingTimestampSeconds, cgmReading, egvStatus, trendRate);
+    public CurrentEGVGuiDataResponse(long bgReadingTimestampSeconds, int cgmReading, int egvStatusId, int trendRate) {
+        this.cargo = buildCargo(bgReadingTimestampSeconds, cgmReading, egvStatusId, trendRate);
         this.bgReadingTimestampSeconds = bgReadingTimestampSeconds;
         this.cgmReading = cgmReading;
-        this.egvStatus = egvStatus;
+        this.egvStatusId = egvStatusId;
+        this.egvStatus = getEgvStatus();
         this.trendRate = trendRate;
         
     }
@@ -39,7 +41,8 @@ public class CurrentEGVGuiDataResponse extends Message {
         this.cargo = raw;
         this.bgReadingTimestampSeconds = Bytes.readUint32(raw, 0);
         this.cgmReading = Bytes.readShort(raw, 4);
-        this.egvStatus = raw[6];
+        this.egvStatusId = raw[6];
+        this.egvStatus = getEgvStatus();
         this.trendRate = raw[7];
         
     }
@@ -60,7 +63,11 @@ public class CurrentEGVGuiDataResponse extends Message {
         return cgmReading;
     }
     public EGVStatus getEgvStatus() {
-        return EGVStatus.fromId(egvStatus);
+        return EGVStatus.fromId(egvStatusId);
+    }
+
+    public int getEgvStatusId() {
+        return egvStatusId;
     }
     public int getTrendRate() {
         return trendRate;

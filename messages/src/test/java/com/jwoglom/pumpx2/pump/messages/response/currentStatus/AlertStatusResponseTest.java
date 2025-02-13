@@ -70,4 +70,21 @@ public class AlertStatusResponseTest {
 
         assertEquals(ImmutableSet.of(AlertStatusResponse.AlertResponseType.CGM_GRAPH_REMOVED), parsed.getAlerts());
     }
+
+
+    @Test
+    public void testAlertStatusWithInvalidG7TxId() throws DecoderException {
+        AlertStatusResponse expected = new AlertStatusResponse(
+                AlertStatusResponse.AlertResponseType.INVALID_TRANSMITTER_ID.withBit());
+
+        AlertStatusResponse parsedReq = (AlertStatusResponse) MessageTester.test(
+                "000c450c080000002000000000e1df",
+                12,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        MessageTester.assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
 }

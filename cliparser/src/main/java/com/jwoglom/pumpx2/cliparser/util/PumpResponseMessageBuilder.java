@@ -187,6 +187,7 @@ public class PumpResponseMessageBuilder {
     }
 
     private static UUID btCharToUuid(String btChar) {
+        btChar = btChar.replace("-", "");
         for (Characteristic c : Characteristic.values()) {
             String cChar = c.getUuid().toString().replace("-", "");
             if (cChar.toLowerCase().equals(btChar.toLowerCase())) {

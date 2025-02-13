@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.cliparser.util;
 
 import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
@@ -108,6 +109,14 @@ public class JsonMessageParser {
             json = new JSONObject(str);
             String type = json.getString("type");
             String btChar = json.getString("btChar");
+            switch (btChar.toLowerCase()) {
+                case "control":
+                    btChar = CharacteristicUUID.CONTROL_CHARACTERISTICS.toString();
+                    break;
+                case "current_status":
+                    btChar = CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS.toString();
+                    break;
+            }
             String valueStr = json.getString("value");
             String[] extraValueStr = null;
             if (json.has("extraValueStr")) {

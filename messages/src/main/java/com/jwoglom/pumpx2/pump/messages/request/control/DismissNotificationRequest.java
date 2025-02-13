@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 
 @MessageProps(
     opCode=-72,
@@ -16,7 +17,12 @@ import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResp
     signed=true,
     response=DismissNotificationResponse.class
 )
-public class DismissNotificationRequest extends Message { 
+public class DismissNotificationRequest extends Message {
+
+    private int notificationId;
+    private int notificationTypeId;
+    private NotificationType notificationType;
+
     public DismissNotificationRequest() {
         this.cargo = EMPTY;
     }
@@ -30,8 +36,42 @@ public class DismissNotificationRequest extends Message {
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        
+        this.notificationId = Bytes.readShort(raw, 0);
+        this.notificationTypeId = Bytes.readShort(raw, 4);
+        this.notificationType = getNotificationType();
     }
 
-    
+
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public int getNotificationTypeId() {
+        return notificationTypeId;
+    }
+
+    public NotificationType getNotificationType() {
+        return NotificationType.fromId(notificationTypeId);
+    }
+
+    public enum NotificationType {
+        REMINDER(0),
+        ALERT(1),
+
+        ;
+
+        private final int id;
+        NotificationType(int id) {
+            this.id = id;
+        }
+
+        public static NotificationType fromId(int id) {
+            for (NotificationType type : values()) {
+                if (type.id == id) {
+                    return type;
+                }
+            }
+            return null;
+        }
+    }
 }

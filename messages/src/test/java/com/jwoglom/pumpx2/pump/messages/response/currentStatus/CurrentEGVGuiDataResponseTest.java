@@ -2,6 +2,8 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
+import static org.junit.Assert.assertEquals;
+
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -25,6 +27,7 @@ public class CurrentEGVGuiDataResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(CurrentEGVGuiDataResponse.EGVStatus.UNAVAILABLE, parsedRes.getEgvStatus());
     }
 
 
