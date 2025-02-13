@@ -78,8 +78,17 @@ for rline in reader:
         remainingPackets = 0
         seqNum = 0
 
+    # split combined historylog packets
+    isCombined = False
+
 
     if lastSeqNum[type] is None or lastSeqNum[type] == seqNum:
+        isCombined = True
+
+    if value[:6] == '000081':
+        isCombined = False
+
+    if isCombined:
         if type == 'READ':
             currentRead.append(value)
         elif type == 'WRITE':
