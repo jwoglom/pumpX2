@@ -22,6 +22,7 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;
 )
 public class SetModesRequest extends Message { 
     private int bitmap;
+    private ModeCommand command;
     
     public SetModesRequest() {}
 
@@ -35,7 +36,7 @@ public class SetModesRequest extends Message {
 
     public SetModesRequest(byte[] raw) {
         this.cargo = raw;
-        this.bitmap = raw[0];
+        parse(raw);
     }
 
     public void parse(byte[] raw) {
@@ -43,6 +44,7 @@ public class SetModesRequest extends Message {
         Preconditions.checkArgument(raw.length == props().size(), "got "+raw.length);
         this.cargo = raw;
         this.bitmap = raw[0];
+        this.command = getCommand();
     }
 
     

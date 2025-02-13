@@ -75,8 +75,7 @@ for rline in reader:
     #    continue
 
     if len(value) == 8:
-        remainingPackets = 0
-        seqNum = 0
+        isCombined = False
 
     # split combined historylog packets
     isCombined = False

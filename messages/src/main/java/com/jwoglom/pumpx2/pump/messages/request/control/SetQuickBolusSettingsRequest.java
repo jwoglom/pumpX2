@@ -22,7 +22,9 @@ public class SetQuickBolusSettingsRequest extends Message {
 
     private boolean enabled;
     private int modeRaw;
+    private QuickBolusMode mode;
     private byte[] magic;
+    private QuickBolusIncrement increment;
 
     public SetQuickBolusSettingsRequest() {
         this.cargo = EMPTY;
@@ -45,7 +47,9 @@ public class SetQuickBolusSettingsRequest extends Message {
         this.cargo = raw;
         this.enabled = raw[0] == 1;
         this.modeRaw = raw[1];
+        this.mode = getMode();
         this.magic = Bytes.dropFirstN(raw, 2);
+        this.increment = getIncrement();
         checkValidIncrement();
     }
 

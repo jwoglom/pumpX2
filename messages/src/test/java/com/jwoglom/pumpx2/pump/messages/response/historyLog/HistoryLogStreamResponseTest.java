@@ -315,4 +315,28 @@ public class HistoryLogStreamResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+    @Test
+    public void testHistoryLogStreamResponse_MultiStream_5() throws DecoderException {
+        // seq number 2875
+        HistoryLogStreamResponse expected = new HistoryLogStreamResponse(
+                // int numberOfHistoryLogs, int streamId, List<byte[]> historyLogStreams
+                3, 40,
+                new ArrayList<>(ImmutableList.of(
+                        new byte[]{-37, 16, -98, -51, 39, 32, 73, -98, 1, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0},
+                        new byte[]{44, 17, -98, -51, 39, 32, 72, -98, 1, 0, -123, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        new byte[]{34, 17, -98, -51, 39, 32, 71, -98, 1, 0, -39, 19, 40, 32, -124, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                ))
+        );
+
+        HistoryLogStreamResponse parsedRes = (HistoryLogStreamResponse) MessageTester.test(
+                "00008100500328db109ecd2720499e0100020000000200000000000000050000002c119ecd2720489e01008500000000000000000000000000000022119ecd2720479e0100d9132820840000000000000000000000676e",
+                0,
+                5,
+                CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }
