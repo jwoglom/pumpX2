@@ -31,4 +31,25 @@ public class MalfunctionStatusResponseTest {
         assertEquals(0x2071, parsedRes.getCodeB());
         assertEquals("12-0x2071", parsedRes.getErrorString());
     }
+
+    // 3-0x2026 - unknown
+    @Test
+    public void testMalfunction2StatusResponse_3_0x2026_unknown() throws DecoderException {
+        MalfunctionStatusResponse expected = new MalfunctionStatusResponse(
+                3, 8230, new byte[]{2,-1,-1}
+        );
+
+        MalfunctionStatusResponse parsedRes = (MalfunctionStatusResponse) MessageTester.test(
+                "001079100b030000002620000002ffff2ab0",
+                16,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(3, parsedRes.getCodeA());
+        assertEquals(0x2026, parsedRes.getCodeB());
+        assertEquals("3-0x2026", parsedRes.getErrorString());
+    }
 }

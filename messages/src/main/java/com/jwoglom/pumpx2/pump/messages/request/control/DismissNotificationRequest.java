@@ -19,12 +19,16 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusRespon
 )
 public class DismissNotificationRequest extends Message {
 
-    private int notificationId;
+    private long notificationId;
     private int notificationTypeId;
     private NotificationType notificationType;
 
     public DismissNotificationRequest() {
         this.cargo = EMPTY;
+    }
+
+    public DismissNotificationRequest(NotificationType notificationType, long notificationId) {
+        parse(buildCargo(notificationId, notificationType.id));
     }
 
     public DismissNotificationRequest(byte[] raw) {
@@ -36,13 +40,21 @@ public class DismissNotificationRequest extends Message {
         raw = this.removeSignedRequestHmacBytes(raw);
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.notificationId = Bytes.readShort(raw, 0);
+        this.notificationId = Bytes.readUint32(raw, 0);
         this.notificationTypeId = Bytes.readShort(raw, 4);
         this.notificationType = getNotificationType();
     }
 
+    public static byte[] buildCargo(long notificationId, int notificationTypeId) {
+        return Bytes.combine(
+                Bytes.toUint32(notificationId),
+                Bytes.firstTwoBytesLittleEndian(notificationTypeId)
+        );
+    }
 
-    public int getNotificationId() {
+
+
+    public long getNotificationId() {
         return notificationId;
     }
 

@@ -48,31 +48,31 @@ public class AlarmStatusResponse extends Message {
     public enum AlarmResponseType {
         CARTRIDGE_ALARM(0),
         CARTRIDGE_ALARM2(1),
-        OCCLUSION_ALARM(2),
-        PUMP_RESET_ALARM(3),
+        OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
+        PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),
         DEFAULT_ALARM_4(4),
         CARTRIDGE_ALARM3(5),
         CARTRIDGE_ALARM4(6),
-        AUTO_OFF_ALARM(7),
-        EMPTY_CARTRIDGE_ALARM(8),
+        AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),
+        EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),
         CARTRIDGE_ALARM5(9),
         TEMPERATURE_ALARM(10),
         TEMPERATURE_ALARM2(11),
-        BATTERY_SHUTDOWN_ALARM(12),
+        BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),
         DEFAULT_ALARM_13(13),
         INVALID_DATE_ALARM(14),
         TEMPERATURE_ALARM3(15),
         CARTRIDGE_ALARM6(16),
         DEFAULT_ALARM_17(17),
-        RESUME_PUMP_ALARM(18),
+        RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),
         DEFAULT_ALARM_19(19),
         CARTRIDGE_ALARM7(20),
         ALTITUDE_ALARM(21),
         STUCK_BUTTON_ALARM(22),
-        RESUME_PUMP_ALARM2(23),
+        RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),
         ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),
-        CARTRIDGE_REMOVED_ALARM(25),
-        OCCLUSION_ALARM2(26),
+        CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),
+        OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
         DEFAULT_ALARM_27(27),
         DEFAULT_ALARM_28(28),
         CARTRIDGE_ALARM10(29),
@@ -114,12 +114,21 @@ public class AlarmStatusResponse extends Message {
         ;
 
         private final int bitmask;
+        private final String description;
         AlarmResponseType(int bitmask) {
             this.bitmask = bitmask;
+            this.description = null;
+        }
+        AlarmResponseType(int bitmask, String description) {
+            this.bitmask = bitmask;
+            this.description = description;
         }
 
         public int bitmask() {
             return bitmask;
+        }
+        public String getDescription() {
+            return description;
         }
 
         public static BigInteger toBitmask(AlarmResponseType ...types) {

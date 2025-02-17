@@ -182,6 +182,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -283,6 +285,7 @@ public enum Messages {
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
     SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
+    UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),
     // MESSAGES_END
     ;
 

@@ -157,6 +157,19 @@ public class PacketArrayList {
             this.expectedCargoSize = 0;
             this.actualExpectedCargoSize = 0;
         }
+        // CommonSoftwareInfoRequest can have cargo size 0 or 1
+        else if (-114 == opCode && 1 == cargoSize) {
+            this.expectedCargoSize = 1;
+            this.actualExpectedCargoSize = 1;
+        }
+        // CommonSoftwareInfoResponse can have cargo size 60 or 51
+        else if (-113 == opCode && 51 == cargoSize) {
+            this.expectedCargoSize = 51;
+            this.actualExpectedCargoSize = 51;
+        }
+
+
+
         if (opCode == this.expectedOpCode) {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];

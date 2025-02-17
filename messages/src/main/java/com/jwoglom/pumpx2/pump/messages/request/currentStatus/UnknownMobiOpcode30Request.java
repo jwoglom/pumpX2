@@ -6,29 +6,22 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CommonSoftwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;
 
-/**
- * TODO: size may always be 1 and not 0, collect more samples
- */
 @MessageProps(
-    opCode=-114,
-    size=0, // OR 1
-    variableSize=true,
+    opCode=30,
+    size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
-    response=CommonSoftwareInfoResponse.class
+    response=UnknownMobiOpcode30Response.class
 )
-public class CommonSoftwareInfoRequest extends Message { 
-    public CommonSoftwareInfoRequest() {
+public class UnknownMobiOpcode30Request extends Message { 
+    public UnknownMobiOpcode30Request() {
         this.cargo = EMPTY;
     }
-    public CommonSoftwareInfoRequest(byte[] raw) {
-        this.cargo = raw;
-    }
 
-    public void parse(byte[] raw) {
-        //Preconditions.checkArgument(raw.length == props().size());
+    public void parse(byte[] raw) { 
+        Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         
     }
