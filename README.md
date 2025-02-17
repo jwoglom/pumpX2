@@ -5,7 +5,7 @@
 
 # PumpX2
 
-API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X2.
+API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X2 and Mobi insulin pumps.
 
 ### :warning: Are you looking to control your pump from your phone and not a developer? You are in the wrong place.
 

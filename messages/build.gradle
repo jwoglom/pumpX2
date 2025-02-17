@@ -9,12 +9,12 @@ apply plugin: 'java-library'
 dependencies {
     implementation project(':shared')
 
-    implementation "commons-codec:commons-codec:1.15"
-    implementation "org.apache.commons:commons-lang3:3.12.0"
-    implementation "com.google.guava:guava:31.0.1-android"
+    implementation "commons-codec:commons-codec:1.18.0"
+    implementation "org.apache.commons:commons-lang3:3.17.0"
+    implementation "com.google.guava:guava:33.3.1-android"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.7.10"
-    implementation 'junit:junit:4.12'
-    implementation 'org.json:json:20180813'
+    implementation 'junit:junit:4.13.2'
+    implementation 'org.json:json:20230618'
 
     // https://github.com/particle-iot/ecjpake-java
     //implementation files('libs/ecjpake-java-ffd72ac.jar')
@@ -42,7 +42,7 @@ publishing {
             from components.java
             pom {
                 name = "PumpX2 Messages"
-                description = "A Java library for converting between known messages and byte streams for the Tandem t:slim X2 insulin pump."
+                description = "A Java library for converting between known messages and byte streams for the Tandem t:slim X2 and Mobi insulin pumps."
                 url = "https://github.com/jwoglom/pumpX2"
                 licenses {
                     license {
