@@ -115,7 +115,7 @@ public class GetG6TransmitterHardwareInfoResponseTest {
         GetG6TransmitterHardwareInfoResponse parsedRes = (GetG6TransmitterHardwareInfoResponse) MessageTester.test(
                 "001ac51a60322e32372e322e3130330000000000003078464600322e3130330000000000003136373035002e3130330000000000005357313230393700303300000000000000000000000000000000000000000000000000000000000000000000000000004b61",
                 26,
-                1,
+                6,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 expected
         );
