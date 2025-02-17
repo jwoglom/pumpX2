@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.IOException;
+import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,9 +83,14 @@ public class JavaHelpers {
         if (ignoredPropertyNames == null) {
             ignoredPropertyNames = new HashSet<>();
         }
-        return new ReflectionToStringBuilder(bean, ToStringStyle.SHORT_PREFIX_STYLE)
-                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
-                .build();
+        try {
+            return new ReflectionToStringBuilder(bean, ToStringStyle.SHORT_PREFIX_STYLE)
+                    .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                    .build();
+        } catch (Exception e) {
+            L.e(TAG, "Unable to autoToString: " + e);
+            return bean.toString();
+        }
 //        Map<String, Object> properties = getProperties(bean);
 //        String propertiesStr = properties.entrySet().stream()
 //                .sorted(Comparator.comparing(Map.Entry::getKey))
@@ -95,9 +101,14 @@ public class JavaHelpers {
     }
 
     public static String autoToStringVerbose(Object bean, Set<String> ignoredPropertyNames) {
-        return new ReflectionToStringBuilder(bean, new MultiLineNoHashcodeToStringStyle())
-                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
-                .build();
+        try {
+            return new ReflectionToStringBuilder(bean, new MultiLineNoHashcodeToStringStyle())
+                    .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                    .build();
+        } catch (Exception e) {
+            L.e(TAG, "Unable to autoToStringVerbose: " + e);
+            return bean.toString();
+        }
     }
 
     private static final class MultiLineNoHashcodeToStringStyle extends RecursiveToStringStyle {
@@ -115,8 +126,13 @@ public class JavaHelpers {
     }
 
     public static String autoToStringJson(Object bean, Set<String> ignoredPropertyNames) {
-        return new ReflectionToStringBuilder(bean, ToStringStyle.JSON_STYLE)
-                .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
-                .build();
+        try {
+            return new ReflectionToStringBuilder(bean, ToStringStyle.JSON_STYLE)
+                    .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
+                    .build();
+        } catch (Exception e) {
+            L.e(TAG, "Unable to autoToStringJson: " + e);
+            return bean.toString();
+        }
     }
 }
