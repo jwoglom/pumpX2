@@ -28,6 +28,12 @@ jobs:
         with:
           api-level: 29
           script: ./gradlew connectedCheck
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report.html
+          path: pumpX2/messages/build/reports/tests/test/index.html
       - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: false
