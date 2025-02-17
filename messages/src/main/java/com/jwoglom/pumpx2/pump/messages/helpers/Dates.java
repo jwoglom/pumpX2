@@ -16,6 +16,10 @@ public class Dates {
         return Instant.ofEpochSecond(fromJan12008ToUnixEpochSeconds(seconds));
     }
 
+    public static long fromInstantToJan12008EpochSeconds(Instant instant) {
+        return instant.getEpochSecond() - JANUARY_1_2008_UNIX_EPOCH;
+    }
+
     private static final long SECONDS_IN_DAY = 60 * 60 * 24;
 
     public static Instant fromJan12008EpochDaysToDate(long days) {

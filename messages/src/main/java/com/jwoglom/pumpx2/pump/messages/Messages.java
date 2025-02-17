@@ -188,6 +188,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetSavedG7PairingC
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetSavedG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHardwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetG6TransmitterHardwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ChangeTimeDateRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ChangeTimeDateResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -292,6 +294,7 @@ public enum Messages {
     UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),
     GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),
     GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),
+    CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),
     // MESSAGES_END
     ;
 

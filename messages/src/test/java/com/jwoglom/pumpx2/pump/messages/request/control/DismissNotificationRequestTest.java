@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
 
 import org.apache.commons.codec.DecoderException;
@@ -83,5 +84,32 @@ public class DismissNotificationRequestTest {
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertEquals(AlertStatusResponse.AlertResponseType.INVALID_TRANSMITTER_ID.bitmask(), parsedReq.getNotificationId());
         assertEquals(DismissNotificationRequest.NotificationType.ALERT, parsedReq.getNotificationType());
+    }
+
+    @Test
+    public void testDismissNotificationRequest_g6CgmSensorFailed() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        DismissNotificationRequest expected = new DismissNotificationRequest(
+                new byte[]{11,
+                        0,
+                        0,
+                        0,
+                        3,
+                        0}
+        );
+
+        DismissNotificationRequest parsedReq = (DismissNotificationRequest) MessageTester.test(
+                "01e9b8e91e0b0000000300de6e392075306d24bb",
+                -23,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "00e92094d6d88830447aa4c9d10af3196a91a1"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        assertEquals(CGMAlertStatusResponse.CGMAlert.SENSOR_FAILED_CGM_ALERT.id(), parsedReq.getNotificationId());
+        assertEquals(DismissNotificationRequest.NotificationType.CGM_ALERT, parsedReq.getNotificationType());
     }
 }
