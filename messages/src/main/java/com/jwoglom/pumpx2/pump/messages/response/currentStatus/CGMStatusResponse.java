@@ -19,18 +19,17 @@ import java.time.Instant;
 public class CGMStatusResponse extends Message {
     
     private int sessionStateId;
+    private SessionState sessionState;
     private long lastCalibrationTimestamp;
     private long sensorStartedTimestamp;
     private int transmitterBatteryStatusId;
+    private TransmitterBatteryStatus transmitterBatteryStatus;
     
     public CGMStatusResponse() {}
     
     public CGMStatusResponse(int sessionStateId, long lastCalibrationTimestamp, long sensorStartedTimestamp, int transmitterBatteryStatusId) {
         this.cargo = buildCargo(sessionStateId, lastCalibrationTimestamp, sensorStartedTimestamp, transmitterBatteryStatusId);
-        this.sessionStateId = sessionStateId;
-        this.lastCalibrationTimestamp = lastCalibrationTimestamp;
-        this.sensorStartedTimestamp = sensorStartedTimestamp;
-        this.transmitterBatteryStatusId = transmitterBatteryStatusId;
+        parse(cargo);
         
     }
 
@@ -38,9 +37,11 @@ public class CGMStatusResponse extends Message {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
         this.sessionStateId = raw[0];
+        this.sessionState = getSessionState();
         this.lastCalibrationTimestamp = Bytes.readUint32(raw, 1);
         this.sensorStartedTimestamp = Bytes.readUint32(raw, 5);
         this.transmitterBatteryStatusId = raw[9];
+        this.transmitterBatteryStatus = getTransmitterBatteryStatus();
         
     }
 

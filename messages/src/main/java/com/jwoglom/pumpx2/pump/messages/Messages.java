@@ -184,6 +184,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetSavedG7PairingCodeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetSavedG7PairingCodeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHardwareInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetG6TransmitterHardwareInfoResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -286,6 +290,8 @@ public enum Messages {
     SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
     UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),
+    GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),
+    GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),
     // MESSAGES_END
     ;
 

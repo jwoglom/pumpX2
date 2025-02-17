@@ -9,7 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoRe
         opCode=96,
         size=0,
         type= MessageType.REQUEST,
-        response= CGMHardwareInfoResponse.class
+        response=CGMHardwareInfoResponse.class
 )
 public class CGMHardwareInfoRequest extends Message {
     public CGMHardwareInfoRequest() {

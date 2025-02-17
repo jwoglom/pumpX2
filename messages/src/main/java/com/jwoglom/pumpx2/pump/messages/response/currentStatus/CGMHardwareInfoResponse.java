@@ -6,17 +6,21 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest;
 
 /**
- * Returns the CGM transmitter ID.
+ * Returns the G6 CGM transmitter ID.
  */
 @MessageProps(
         opCode=97,
         size=17,
         type=MessageType.RESPONSE,
-        request=ApiVersionRequest.class
+        request=CGMHardwareInfoRequest.class
 )
 public class CGMHardwareInfoResponse extends Message {
+    /**
+     * G6 transmitter ID
+     */
     private String hardwareInfoString;
     private int lastByte;
 

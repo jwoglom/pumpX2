@@ -15,44 +15,52 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRe
 )
 public class HomeScreenMirrorResponse extends Message {
     
-    private int cgmTrendIcon;
-    private int cgmAlertIcon;
-    private int statusIcon0;
-    private int statusIcon1;
-    private int bolusStatusIcon;
-    private int basalStatusIcon;
-    private int apControlStateIcon;
+    private int cgmTrendIconId;
+    private int cgmAlertIconId;
+    private int statusIcon0Id;
+    private int statusIcon1Id;
+    private int bolusStatusIconId;
+    private int basalStatusIconId;
+    private int apControlStateIconId;
+    private CGMTrendIcon cgmTrendIcon;
+    private CGMAlertIcon cgmAlertIcon;
+    private StatusIcon0 statusIcon0;
+    private StatusIcon1 statusIcon1;
+    private BolusStatusIcon bolusStatusIcon;
+    private BasalStatusIcon basalStatusIcon;
+    private ApControlStateIcon apControlStateIcon;
     private boolean remainingInsulinPlusIcon;
     private boolean cgmDisplayData;
     
     public HomeScreenMirrorResponse() {}
     
-    public HomeScreenMirrorResponse(int cgmTrendIcon, int cgmAlertIcon, int statusIcon0, int statusIcon1, int bolusStatusIcon, int basalStatusIcon, int apControlStateIcon, boolean remainingInsulinPlusIcon, boolean cgmDisplayData) {
-        this.cargo = buildCargo(cgmTrendIcon, cgmAlertIcon, statusIcon0, statusIcon1, bolusStatusIcon, basalStatusIcon, apControlStateIcon, remainingInsulinPlusIcon, cgmDisplayData);
-        this.cgmTrendIcon = cgmTrendIcon;
-        this.cgmAlertIcon = cgmAlertIcon;
-        this.statusIcon0 = statusIcon0;
-        this.statusIcon1 = statusIcon1;
-        this.bolusStatusIcon = bolusStatusIcon;
-        this.basalStatusIcon = basalStatusIcon;
-        this.apControlStateIcon = apControlStateIcon;
-        this.remainingInsulinPlusIcon = remainingInsulinPlusIcon;
-        this.cgmDisplayData = cgmDisplayData;
+    public HomeScreenMirrorResponse(int cgmTrendIconId, int cgmAlertIconId, int statusIcon0Id, int statusIcon1Id, int bolusStatusIconId, int basalStatusIconId, int apControlStateIconId, boolean remainingInsulinPlusIcon, boolean cgmDisplayData) {
+        this.cargo = buildCargo(cgmTrendIconId, cgmAlertIconId, statusIcon0Id, statusIcon1Id, bolusStatusIconId, basalStatusIconId, apControlStateIconId, remainingInsulinPlusIcon, cgmDisplayData);
+        parse(cargo);
         
     }
 
     public void parse(byte[] raw) {
         Preconditions.checkArgument(raw.length == props().size());
         this.cargo = raw;
-        this.cgmTrendIcon = Byte.toUnsignedInt(raw[0]);
-        this.cgmAlertIcon = Byte.toUnsignedInt(raw[1]);
-        this.statusIcon0 = Byte.toUnsignedInt(raw[2]);
-        this.statusIcon1 = Byte.toUnsignedInt(raw[3]);
-        this.bolusStatusIcon = Byte.toUnsignedInt(raw[4]);
-        this.basalStatusIcon = Byte.toUnsignedInt(raw[5]);
-        this.apControlStateIcon = Byte.toUnsignedInt(raw[6]);
+        this.cgmTrendIconId = Byte.toUnsignedInt(raw[0]);
+        this.cgmAlertIconId = Byte.toUnsignedInt(raw[1]);
+        this.statusIcon0Id = Byte.toUnsignedInt(raw[2]);
+        this.statusIcon1Id = Byte.toUnsignedInt(raw[3]);
+        this.bolusStatusIconId = Byte.toUnsignedInt(raw[4]);
+        this.basalStatusIconId = Byte.toUnsignedInt(raw[5]);
+        this.apControlStateIconId = Byte.toUnsignedInt(raw[6]);
         this.remainingInsulinPlusIcon = raw[7] != 0;
         this.cgmDisplayData = raw[8] != 0;
+
+
+        this.cgmTrendIcon = getCgmTrendIcon();
+        this.cgmAlertIcon = getCgmAlertIcon();
+        this.statusIcon0 = getStatusIcon0();
+        this.statusIcon1 = getStatusIcon1();
+        this.bolusStatusIcon = getBolusStatusIcon();
+        this.basalStatusIcon = getBasalStatusIcon();
+        this.apControlStateIcon = getApControlStateIcon();
         
     }
 
@@ -71,25 +79,25 @@ public class HomeScreenMirrorResponse extends Message {
     }
 
     public CGMTrendIcon getCgmTrendIcon() {
-        return CGMTrendIcon.fromId(cgmTrendIcon);
+        return CGMTrendIcon.fromId(cgmTrendIconId);
     }
     public CGMAlertIcon getCgmAlertIcon() {
-        return CGMAlertIcon.fromId(cgmAlertIcon);
+        return CGMAlertIcon.fromId(cgmAlertIconId);
     }
     public StatusIcon0 getStatusIcon0() {
-        return StatusIcon0.fromId(statusIcon0);
+        return StatusIcon0.fromId(statusIcon0Id);
     }
     public StatusIcon1 getStatusIcon1() {
-        return StatusIcon1.fromId(statusIcon1);
+        return StatusIcon1.fromId(statusIcon1Id);
     }
     public BolusStatusIcon getBolusStatusIcon() {
-        return BolusStatusIcon.fromId(bolusStatusIcon);
+        return BolusStatusIcon.fromId(bolusStatusIconId);
     }
     public BasalStatusIcon getBasalStatusIcon() {
-        return BasalStatusIcon.fromId(basalStatusIcon);
+        return BasalStatusIcon.fromId(basalStatusIconId);
     }
     public ApControlStateIcon getApControlStateIcon() {
-        return ApControlStateIcon.fromId(apControlStateIcon);
+        return ApControlStateIcon.fromId(apControlStateIconId);
     }
     public boolean getRemainingInsulinPlusIcon() {
         return remainingInsulinPlusIcon;
