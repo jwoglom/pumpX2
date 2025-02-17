@@ -302,7 +302,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CGMHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMHardwareInfoResponse</a></th>
 <td class="colLast">
-<div class="block">Returns the CGM transmitter ID.</div>
+<div class="block">Returns the G6 CGM transmitter ID.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -359,7 +359,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></th>
 <td class="colLast">
-<div class="block">Response message for <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
+<div class="block">TODO: size may always be 51 and not 60, collect more samples
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
 
  <br>
 
@@ -368,6 +374,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Message properties:
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-113</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>60</code>&nbsp;
+ &nbsp;<code>variableSize</code>&nbsp;&nbsp;<code>true</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
  &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a></code>&nbsp;
@@ -531,6 +538,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colFirst" scope="row"><a href="ExtendedBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ExtendedBolusStatusResponse</a></th>
 <td class="colLast">
 <div class="block">Returns information on the current extended bolus.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></th>
+<td class="colLast">
+<div class="block">Response message for <a href="../../request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetG6TransmitterHardwareInfoRequest</code></a>, opCode -59, size 96
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-59</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>96</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="../../request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetG6TransmitterHardwareInfoRequest</code></a></code>&nbsp;
+ </div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></th>
+<td class="colLast">
+<div class="block">Response message for <a href="../../request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetSavedG7PairingCodeRequest</code></a>, opCode 117, size 2
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>117</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="../../request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetSavedG7PairingCodeRequest</code></a></code>&nbsp;
+ </div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -968,6 +1011,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></th>
+<td class="colLast">
+<div class="block">Response message for <a href="../../request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcode30Request</code></a>, opCode 31, size 16
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>31</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>16</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="../../request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcode30Request</code></a></code>&nbsp;
+ </div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="UnknownMobiOpcodeNeg124Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcodeNeg124Response</a></th>
 <td class="colLast">
 <div class="block">Response message for <a href="../../request/currentStatus/UnknownMobiOpcodeNeg124Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcodeNeg124Request</code></a>, opCode -123, size 1
@@ -988,7 +1049,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  </div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="UnknownMobiOpcodeNeg66Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcodeNeg66Response</a></th>
 <td class="colLast">
 <div class="block">Response message for <a href="../../request/currentStatus/UnknownMobiOpcodeNeg66Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcodeNeg66Request</code></a>, opCode -65, size 20
@@ -1008,7 +1069,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="UnknownMobiOpcodeNeg70Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcodeNeg70Response</a></th>
 <td class="colLast">
 <div class="block">Response message for <a href="../../request/currentStatus/UnknownMobiOpcodeNeg70Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcodeNeg70Request</code></a>, opCode -69, size 53

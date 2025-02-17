@@ -166,100 +166,113 @@
 <span class="sourceLineNo">157</span><a id="line.157">            this.expectedCargoSize = 0;</a>
 <span class="sourceLineNo">158</span><a id="line.158">            this.actualExpectedCargoSize = 0;</a>
 <span class="sourceLineNo">159</span><a id="line.159">        }</a>
-<span class="sourceLineNo">160</span><a id="line.160">        if (opCode == this.expectedOpCode) {</a>
-<span class="sourceLineNo">161</span><a id="line.161">            this.firstByteMod15 = (byte) (bArr[0] &amp; 15);</a>
-<span class="sourceLineNo">162</span><a id="line.162">            this.opCode = bArr[2];</a>
-<span class="sourceLineNo">163</span><a id="line.163">            byte txId = bArr[3];</a>
-<span class="sourceLineNo">164</span><a id="line.164">            L.d(TAG, "PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));</a>
-<span class="sourceLineNo">165</span><a id="line.165">            if (txId != this.expectedTxId) {</a>
-<span class="sourceLineNo">166</span><a id="line.166">                throwUnexpectedTransactionIdException(txId);</a>
-<span class="sourceLineNo">167</span><a id="line.167">            } else if (cargoSize != this.actualExpectedCargoSize) {</a>
-<span class="sourceLineNo">168</span><a id="line.168">                if (cargoSize == this.actualExpectedCargoSize + 24 &amp;&amp; isSigned) {</a>
-<span class="sourceLineNo">169</span><a id="line.169">                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");</a>
-<span class="sourceLineNo">170</span><a id="line.170">                    expectedCargoSize += 24;</a>
-<span class="sourceLineNo">171</span><a id="line.171">                    actualExpectedCargoSize += 24;</a>
-<span class="sourceLineNo">172</span><a id="line.172">                } else {</a>
-<span class="sourceLineNo">173</span><a id="line.173">                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);</a>
-<span class="sourceLineNo">174</span><a id="line.174">                }</a>
-<span class="sourceLineNo">175</span><a id="line.175">            }</a>
-<span class="sourceLineNo">176</span><a id="line.176">            this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
-<span class="sourceLineNo">177</span><a id="line.177">        } else {</a>
-<span class="sourceLineNo">178</span><a id="line.178">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</a>
-<span class="sourceLineNo">179</span><a id="line.179">        }</a>
-<span class="sourceLineNo">180</span><a id="line.180">        L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);</a>
-<span class="sourceLineNo">181</span><a id="line.181">    }</a>
-<span class="sourceLineNo">182</span><a id="line.182"></a>
-<span class="sourceLineNo">183</span><a id="line.183"></a>
-<span class="sourceLineNo">184</span><a id="line.184">    public void validatePacket(byte[] packetData) {</a>
-<span class="sourceLineNo">185</span><a id="line.185">        Intrinsics.checkParameterIsNotNull(packetData, "packetData");</a>
-<span class="sourceLineNo">186</span><a id="line.186">        if (packetData.length == 0) {</a>
-<span class="sourceLineNo">187</span><a id="line.187">            throw new IllegalArgumentException("Empty data");</a>
-<span class="sourceLineNo">188</span><a id="line.188">        } else if (packetData.length &gt;= 3) {</a>
-<span class="sourceLineNo">189</span><a id="line.189">            byte firstByteMod15 = (byte) (packetData[0] &amp; 15);</a>
-<span class="sourceLineNo">190</span><a id="line.190">            byte secondByte = packetData[1];</a>
-<span class="sourceLineNo">191</span><a id="line.191">            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);</a>
-<span class="sourceLineNo">192</span><a id="line.192">            if (secondByte == this.expectedTxId) {</a>
-<span class="sourceLineNo">193</span><a id="line.193">                if (this.empty) {</a>
-<span class="sourceLineNo">194</span><a id="line.194">                    this.firstByteMod15 = firstByteMod15;</a>
-<span class="sourceLineNo">195</span><a id="line.195">                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");</a>
-<span class="sourceLineNo">196</span><a id="line.196">                    parse(packetData);</a>
-<span class="sourceLineNo">197</span><a id="line.197">                } else if (((byte) 0) == firstByteMod15) {</a>
-<span class="sourceLineNo">198</span><a id="line.198">                    L.d(TAG, "firstByteMod15=0");</a>
-<span class="sourceLineNo">199</span><a id="line.199">                    if (this.firstByteMod15 == firstByteMod15) {</a>
-<span class="sourceLineNo">200</span><a id="line.200">                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
-<span class="sourceLineNo">201</span><a id="line.201">                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));</a>
-<span class="sourceLineNo">202</span><a id="line.202">                    } else {</a>
-<span class="sourceLineNo">203</span><a id="line.203">                        throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
-<span class="sourceLineNo">204</span><a id="line.204">                    }</a>
-<span class="sourceLineNo">205</span><a id="line.205">                } else if (this.firstByteMod15 == firstByteMod15) {</a>
-<span class="sourceLineNo">206</span><a id="line.206">                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
-<span class="sourceLineNo">207</span><a id="line.207">                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));</a>
-<span class="sourceLineNo">208</span><a id="line.208">                } else {</a>
-<span class="sourceLineNo">209</span><a id="line.209">                    throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
-<span class="sourceLineNo">210</span><a id="line.210">                }</a>
-<span class="sourceLineNo">211</span><a id="line.211">                this.empty = false;</a>
-<span class="sourceLineNo">212</span><a id="line.212">                this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);</a>
-<span class="sourceLineNo">213</span><a id="line.213">                L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);</a>
-<span class="sourceLineNo">214</span><a id="line.214">                return;</a>
-<span class="sourceLineNo">215</span><a id="line.215">            }</a>
-<span class="sourceLineNo">216</span><a id="line.216">            throwUnexpectedTransactionIdException(secondByte);</a>
-<span class="sourceLineNo">217</span><a id="line.217">        } else {</a>
-<span class="sourceLineNo">218</span><a id="line.218">            throw new IllegalArgumentException("Invalid data size: " + packetData.length);</a>
-<span class="sourceLineNo">219</span><a id="line.219">        }</a>
-<span class="sourceLineNo">220</span><a id="line.220">    }</a>
-<span class="sourceLineNo">221</span><a id="line.221"></a>
-<span class="sourceLineNo">222</span><a id="line.222">    private void throwUnexpectedTransactionIdException(byte foundTxId) {</a>
-<span class="sourceLineNo">223</span><a id="line.223">        RuntimeException ex = new UnexpectedTransactionIdException(foundTxId, this.expectedTxId, this.expectedOpCode);</a>
-<span class="sourceLineNo">224</span><a id="line.224">        if (ignoreInvalidTxId) {</a>
-<span class="sourceLineNo">225</span><a id="line.225">            L.e(TAG, ex);</a>
-<span class="sourceLineNo">226</span><a id="line.226">            return;</a>
-<span class="sourceLineNo">227</span><a id="line.227">        }</a>
-<span class="sourceLineNo">228</span><a id="line.228">        throw ex;</a>
-<span class="sourceLineNo">229</span><a id="line.229">    }</a>
-<span class="sourceLineNo">230</span><a id="line.230"></a>
-<span class="sourceLineNo">231</span><a id="line.231">    private boolean shouldIgnoreInvalidHmac(byte[] authKey) {</a>
-<span class="sourceLineNo">232</span><a id="line.232">        return Arrays.equals(</a>
-<span class="sourceLineNo">233</span><a id="line.233">                Arrays.copyOfRange(authKey, 0, IGNORE_INVALID_HMAC.length()),</a>
-<span class="sourceLineNo">234</span><a id="line.234">                Arrays.copyOfRange(IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8), 0, IGNORE_INVALID_HMAC.length())</a>
-<span class="sourceLineNo">235</span><a id="line.235">        );</a>
-<span class="sourceLineNo">236</span><a id="line.236">    }</a>
-<span class="sourceLineNo">237</span><a id="line.237"></a>
-<span class="sourceLineNo">238</span><a id="line.238">    public String toString() {</a>
-<span class="sourceLineNo">239</span><a id="line.239">        return JavaHelpers.autoToString(this, ImmutableSet.of());</a>
-<span class="sourceLineNo">240</span><a id="line.240">    }</a>
-<span class="sourceLineNo">241</span><a id="line.241"></a>
-<span class="sourceLineNo">242</span><a id="line.242">    public static class InvalidCRCException extends RuntimeException {</a>
-<span class="sourceLineNo">243</span><a id="line.243">        InvalidCRCException(String message) {</a>
-<span class="sourceLineNo">244</span><a id="line.244">            super(message);</a>
-<span class="sourceLineNo">245</span><a id="line.245">        }</a>
-<span class="sourceLineNo">246</span><a id="line.246">    }</a>
-<span class="sourceLineNo">247</span><a id="line.247"></a>
-<span class="sourceLineNo">248</span><a id="line.248">    public static class InvalidSignedMessageHMACSignatureException extends RuntimeException {</a>
-<span class="sourceLineNo">249</span><a id="line.249">        InvalidSignedMessageHMACSignatureException(String message) {</a>
-<span class="sourceLineNo">250</span><a id="line.250">            super(message);</a>
-<span class="sourceLineNo">251</span><a id="line.251">        }</a>
-<span class="sourceLineNo">252</span><a id="line.252">    }</a>
-<span class="sourceLineNo">253</span><a id="line.253">}</a>
+<span class="sourceLineNo">160</span><a id="line.160">        // CommonSoftwareInfoRequest can have cargo size 0 or 1</a>
+<span class="sourceLineNo">161</span><a id="line.161">        else if (-114 == opCode &amp;&amp; 1 == cargoSize) {</a>
+<span class="sourceLineNo">162</span><a id="line.162">            this.expectedCargoSize = 1;</a>
+<span class="sourceLineNo">163</span><a id="line.163">            this.actualExpectedCargoSize = 1;</a>
+<span class="sourceLineNo">164</span><a id="line.164">        }</a>
+<span class="sourceLineNo">165</span><a id="line.165">        // CommonSoftwareInfoResponse can have cargo size 60 or 51</a>
+<span class="sourceLineNo">166</span><a id="line.166">        else if (-113 == opCode &amp;&amp; 51 == cargoSize) {</a>
+<span class="sourceLineNo">167</span><a id="line.167">            this.expectedCargoSize = 51;</a>
+<span class="sourceLineNo">168</span><a id="line.168">            this.actualExpectedCargoSize = 51;</a>
+<span class="sourceLineNo">169</span><a id="line.169">        }</a>
+<span class="sourceLineNo">170</span><a id="line.170"></a>
+<span class="sourceLineNo">171</span><a id="line.171"></a>
+<span class="sourceLineNo">172</span><a id="line.172"></a>
+<span class="sourceLineNo">173</span><a id="line.173">        if (opCode == this.expectedOpCode) {</a>
+<span class="sourceLineNo">174</span><a id="line.174">            this.firstByteMod15 = (byte) (bArr[0] &amp; 15);</a>
+<span class="sourceLineNo">175</span><a id="line.175">            this.opCode = bArr[2];</a>
+<span class="sourceLineNo">176</span><a id="line.176">            byte txId = bArr[3];</a>
+<span class="sourceLineNo">177</span><a id="line.177">            L.d(TAG, "PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));</a>
+<span class="sourceLineNo">178</span><a id="line.178">            if (txId != this.expectedTxId) {</a>
+<span class="sourceLineNo">179</span><a id="line.179">                throwUnexpectedTransactionIdException(txId);</a>
+<span class="sourceLineNo">180</span><a id="line.180">            } else if (cargoSize != this.actualExpectedCargoSize) {</a>
+<span class="sourceLineNo">181</span><a id="line.181">                if (cargoSize == this.actualExpectedCargoSize + 24 &amp;&amp; isSigned) {</a>
+<span class="sourceLineNo">182</span><a id="line.182">                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");</a>
+<span class="sourceLineNo">183</span><a id="line.183">                    expectedCargoSize += 24;</a>
+<span class="sourceLineNo">184</span><a id="line.184">                    actualExpectedCargoSize += 24;</a>
+<span class="sourceLineNo">185</span><a id="line.185">                } else {</a>
+<span class="sourceLineNo">186</span><a id="line.186">                    throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);</a>
+<span class="sourceLineNo">187</span><a id="line.187">                }</a>
+<span class="sourceLineNo">188</span><a id="line.188">            }</a>
+<span class="sourceLineNo">189</span><a id="line.189">            this.fullCargo = Bytes.dropFirstN(bArr, 5);</a>
+<span class="sourceLineNo">190</span><a id="line.190">        } else {</a>
+<span class="sourceLineNo">191</span><a id="line.191">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</a>
+<span class="sourceLineNo">192</span><a id="line.192">        }</a>
+<span class="sourceLineNo">193</span><a id="line.193">        L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);</a>
+<span class="sourceLineNo">194</span><a id="line.194">    }</a>
+<span class="sourceLineNo">195</span><a id="line.195"></a>
+<span class="sourceLineNo">196</span><a id="line.196"></a>
+<span class="sourceLineNo">197</span><a id="line.197">    public void validatePacket(byte[] packetData) {</a>
+<span class="sourceLineNo">198</span><a id="line.198">        Intrinsics.checkParameterIsNotNull(packetData, "packetData");</a>
+<span class="sourceLineNo">199</span><a id="line.199">        if (packetData.length == 0) {</a>
+<span class="sourceLineNo">200</span><a id="line.200">            throw new IllegalArgumentException("Empty data");</a>
+<span class="sourceLineNo">201</span><a id="line.201">        } else if (packetData.length &gt;= 3) {</a>
+<span class="sourceLineNo">202</span><a id="line.202">            byte firstByteMod15 = (byte) (packetData[0] &amp; 15);</a>
+<span class="sourceLineNo">203</span><a id="line.203">            byte secondByte = packetData[1];</a>
+<span class="sourceLineNo">204</span><a id="line.204">            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);</a>
+<span class="sourceLineNo">205</span><a id="line.205">            if (secondByte == this.expectedTxId) {</a>
+<span class="sourceLineNo">206</span><a id="line.206">                if (this.empty) {</a>
+<span class="sourceLineNo">207</span><a id="line.207">                    this.firstByteMod15 = firstByteMod15;</a>
+<span class="sourceLineNo">208</span><a id="line.208">                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");</a>
+<span class="sourceLineNo">209</span><a id="line.209">                    parse(packetData);</a>
+<span class="sourceLineNo">210</span><a id="line.210">                } else if (((byte) 0) == firstByteMod15) {</a>
+<span class="sourceLineNo">211</span><a id="line.211">                    L.d(TAG, "firstByteMod15=0");</a>
+<span class="sourceLineNo">212</span><a id="line.212">                    if (this.firstByteMod15 == firstByteMod15) {</a>
+<span class="sourceLineNo">213</span><a id="line.213">                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
+<span class="sourceLineNo">214</span><a id="line.214">                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));</a>
+<span class="sourceLineNo">215</span><a id="line.215">                    } else {</a>
+<span class="sourceLineNo">216</span><a id="line.216">                        throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
+<span class="sourceLineNo">217</span><a id="line.217">                    }</a>
+<span class="sourceLineNo">218</span><a id="line.218">                } else if (this.firstByteMod15 == firstByteMod15) {</a>
+<span class="sourceLineNo">219</span><a id="line.219">                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</a>
+<span class="sourceLineNo">220</span><a id="line.220">                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));</a>
+<span class="sourceLineNo">221</span><a id="line.221">                } else {</a>
+<span class="sourceLineNo">222</span><a id="line.222">                    throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</a>
+<span class="sourceLineNo">223</span><a id="line.223">                }</a>
+<span class="sourceLineNo">224</span><a id="line.224">                this.empty = false;</a>
+<span class="sourceLineNo">225</span><a id="line.225">                this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);</a>
+<span class="sourceLineNo">226</span><a id="line.226">                L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);</a>
+<span class="sourceLineNo">227</span><a id="line.227">                return;</a>
+<span class="sourceLineNo">228</span><a id="line.228">            }</a>
+<span class="sourceLineNo">229</span><a id="line.229">            throwUnexpectedTransactionIdException(secondByte);</a>
+<span class="sourceLineNo">230</span><a id="line.230">        } else {</a>
+<span class="sourceLineNo">231</span><a id="line.231">            throw new IllegalArgumentException("Invalid data size: " + packetData.length);</a>
+<span class="sourceLineNo">232</span><a id="line.232">        }</a>
+<span class="sourceLineNo">233</span><a id="line.233">    }</a>
+<span class="sourceLineNo">234</span><a id="line.234"></a>
+<span class="sourceLineNo">235</span><a id="line.235">    private void throwUnexpectedTransactionIdException(byte foundTxId) {</a>
+<span class="sourceLineNo">236</span><a id="line.236">        RuntimeException ex = new UnexpectedTransactionIdException(foundTxId, this.expectedTxId, this.expectedOpCode);</a>
+<span class="sourceLineNo">237</span><a id="line.237">        if (ignoreInvalidTxId) {</a>
+<span class="sourceLineNo">238</span><a id="line.238">            L.e(TAG, ex);</a>
+<span class="sourceLineNo">239</span><a id="line.239">            return;</a>
+<span class="sourceLineNo">240</span><a id="line.240">        }</a>
+<span class="sourceLineNo">241</span><a id="line.241">        throw ex;</a>
+<span class="sourceLineNo">242</span><a id="line.242">    }</a>
+<span class="sourceLineNo">243</span><a id="line.243"></a>
+<span class="sourceLineNo">244</span><a id="line.244">    private boolean shouldIgnoreInvalidHmac(byte[] authKey) {</a>
+<span class="sourceLineNo">245</span><a id="line.245">        return Arrays.equals(</a>
+<span class="sourceLineNo">246</span><a id="line.246">                Arrays.copyOfRange(authKey, 0, IGNORE_INVALID_HMAC.length()),</a>
+<span class="sourceLineNo">247</span><a id="line.247">                Arrays.copyOfRange(IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8), 0, IGNORE_INVALID_HMAC.length())</a>
+<span class="sourceLineNo">248</span><a id="line.248">        );</a>
+<span class="sourceLineNo">249</span><a id="line.249">    }</a>
+<span class="sourceLineNo">250</span><a id="line.250"></a>
+<span class="sourceLineNo">251</span><a id="line.251">    public String toString() {</a>
+<span class="sourceLineNo">252</span><a id="line.252">        return JavaHelpers.autoToString(this, ImmutableSet.of());</a>
+<span class="sourceLineNo">253</span><a id="line.253">    }</a>
+<span class="sourceLineNo">254</span><a id="line.254"></a>
+<span class="sourceLineNo">255</span><a id="line.255">    public static class InvalidCRCException extends RuntimeException {</a>
+<span class="sourceLineNo">256</span><a id="line.256">        InvalidCRCException(String message) {</a>
+<span class="sourceLineNo">257</span><a id="line.257">            super(message);</a>
+<span class="sourceLineNo">258</span><a id="line.258">        }</a>
+<span class="sourceLineNo">259</span><a id="line.259">    }</a>
+<span class="sourceLineNo">260</span><a id="line.260"></a>
+<span class="sourceLineNo">261</span><a id="line.261">    public static class InvalidSignedMessageHMACSignatureException extends RuntimeException {</a>
+<span class="sourceLineNo">262</span><a id="line.262">        InvalidSignedMessageHMACSignatureException(String message) {</a>
+<span class="sourceLineNo">263</span><a id="line.263">            super(message);</a>
+<span class="sourceLineNo">264</span><a id="line.264">        }</a>
+<span class="sourceLineNo">265</span><a id="line.265">    }</a>
+<span class="sourceLineNo">266</span><a id="line.266">}</a>
 
 
 

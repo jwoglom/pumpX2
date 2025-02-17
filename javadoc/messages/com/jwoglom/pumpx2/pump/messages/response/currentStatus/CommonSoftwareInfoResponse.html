@@ -141,9 +141,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <hr>
-<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.26">CommonSoftwareInfoResponse</a>
+<pre>public class <a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.35">CommonSoftwareInfoResponse</a>
 extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></pre>
-<div class="block">Response message for <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
+<div class="block">TODO: size may always be 51 and not 60, collect more samples
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
 
  <br>
 
@@ -152,6 +158,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-113</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>60</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>variableSize</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a></code>&nbsp;</td></tr>
@@ -197,6 +204,19 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">CommonSoftwareInfoResponse</a></span>&#8203;(byte[]&nbsp;raw)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long)">CommonSoftwareInfoResponse</a></span>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+                          long&nbsp;appSoftwarePartNumber,
+                          long&nbsp;appSoftwarePartDashNumber,
+                          long&nbsp;appSoftwarePartRevisionNumber,
+                          java.lang.String&nbsp;bootloaderVersion,
+                          long&nbsp;bootloaderPartNumber)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long,long,long)">CommonSoftwareInfoResponse</a></span>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
                           long&nbsp;appSoftwarePartNumber,
                           long&nbsp;appSoftwarePartDashNumber,
@@ -227,14 +247,14 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(java.lang.String,long,long,long,java.lang.String,long,long,long)">buildCargo</a></span>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildCargo(java.lang.String,long,long,long,java.lang.String,long,java.lang.Long,java.lang.Long)">buildCargo</a></span>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
           long&nbsp;appSoftwarePartNumber,
           long&nbsp;appSoftwareDashNumber,
           long&nbsp;appSoftwarePartRevisionNumber,
           java.lang.String&nbsp;bootloaderVersion,
           long&nbsp;bootloaderPartNumber,
-          long&nbsp;bootloaderPartDashNumber,
-          long&nbsp;bootloaderPartRevisionNumber)</code></th>
+          java.lang.Long&nbsp;bootloaderPartDashNumber,
+          java.lang.Long&nbsp;bootloaderPartRevisionNumber)</code></th>
 <td class="colLast">
 <div class="block">
  Byte layout for CommonSoftwareInfoResponse.buildCargo(...):
@@ -290,14 +310,6 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
  48<code>toUint32(bootloaderPartNumber) [byte 1]</code>
  49<code>toUint32(bootloaderPartNumber) [byte 2]</code>
  50<code>toUint32(bootloaderPartNumber) [byte 3]</code>
- 51<code>toUint32(bootloaderPartDashNumber) [byte 0]</code>
- 52<code>toUint32(bootloaderPartDashNumber) [byte 1]</code>
- 53<code>toUint32(bootloaderPartDashNumber) [byte 2]</code>
- 54<code>toUint32(bootloaderPartDashNumber) [byte 3]</code>
- 55<code>toUint32(bootloaderPartRevisionNumber) [byte 0]</code>
- 56<code>toUint32(bootloaderPartRevisionNumber) [byte 1]</code>
- 57<code>toUint32(bootloaderPartRevisionNumber) [byte 2]</code>
- 58<code>toUint32(bootloaderPartRevisionNumber) [byte 3]</code>
  </div>
 </td>
 </tr>
@@ -322,7 +334,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>long</code></td>
+<td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBootloaderPartDashNumber()">getBootloaderPartDashNumber</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -332,7 +344,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>long</code></td>
+<td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBootloaderPartRevisionNumber()">getBootloaderPartRevisionNumber</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -395,16 +407,25 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CommonSoftwareInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.44">CommonSoftwareInfoResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.54">CommonSoftwareInfoResponse</a>()</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(byte[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CommonSoftwareInfoResponse</h4>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.56">CommonSoftwareInfoResponse</a>&#8203;(byte[]&nbsp;raw)</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(java.lang.String,long,long,long,java.lang.String,long,long,long)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>CommonSoftwareInfoResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.46">CommonSoftwareInfoResponse</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.61">CommonSoftwareInfoResponse</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
                                   long&nbsp;appSoftwarePartNumber,
                                   long&nbsp;appSoftwarePartDashNumber,
                                   long&nbsp;appSoftwarePartRevisionNumber,
@@ -412,6 +433,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
                                   long&nbsp;bootloaderPartNumber,
                                   long&nbsp;bootloaderPartDashNumber,
                                   long&nbsp;bootloaderPartRevisionNumber)</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(java.lang.String,long,long,long,java.lang.String,long)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>CommonSoftwareInfoResponse</h4>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.74">CommonSoftwareInfoResponse</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+                                  long&nbsp;appSoftwarePartNumber,
+                                  long&nbsp;appSoftwarePartDashNumber,
+                                  long&nbsp;appSoftwarePartRevisionNumber,
+                                  java.lang.String&nbsp;bootloaderVersion,
+                                  long&nbsp;bootloaderPartNumber)</pre>
 </li>
 </ul>
 </li>
@@ -430,7 +465,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.72">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.100">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
 <div class="block"><table border="1">
  <caption>Parsed fields for CommonSoftwareInfoResponse:</caption>
  <tr><td><code>appSoftwareVersion</code></td><td><code>Bytes.readString(raw, 0, 18)</code></td></tr>
@@ -448,20 +483,20 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 </dl>
 </li>
 </ul>
-<a id="buildCargo(java.lang.String,long,long,long,java.lang.String,long,long,long)">
+<a id="buildCargo(java.lang.String,long,long,long,java.lang.String,long,java.lang.Long,java.lang.Long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.152">buildCargo</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.174">buildCargo</a>&#8203;(java.lang.String&nbsp;appSoftwareVersion,
                                 long&nbsp;appSoftwarePartNumber,
                                 long&nbsp;appSoftwareDashNumber,
                                 long&nbsp;appSoftwarePartRevisionNumber,
                                 java.lang.String&nbsp;bootloaderVersion,
                                 long&nbsp;bootloaderPartNumber,
-                                long&nbsp;bootloaderPartDashNumber,
-                                long&nbsp;bootloaderPartRevisionNumber)</pre>
+                                java.lang.Long&nbsp;bootloaderPartDashNumber,
+                                java.lang.Long&nbsp;bootloaderPartRevisionNumber)</pre>
 <div class="block"><table border="1">
  <caption>Byte layout for CommonSoftwareInfoResponse.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
@@ -516,14 +551,6 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
  <tr><td>48</td><td><code>toUint32(bootloaderPartNumber) [byte 1]</code></td></tr>
  <tr><td>49</td><td><code>toUint32(bootloaderPartNumber) [byte 2]</code></td></tr>
  <tr><td>50</td><td><code>toUint32(bootloaderPartNumber) [byte 3]</code></td></tr>
- <tr><td>51</td><td><code>toUint32(bootloaderPartDashNumber) [byte 0]</code></td></tr>
- <tr><td>52</td><td><code>toUint32(bootloaderPartDashNumber) [byte 1]</code></td></tr>
- <tr><td>53</td><td><code>toUint32(bootloaderPartDashNumber) [byte 2]</code></td></tr>
- <tr><td>54</td><td><code>toUint32(bootloaderPartDashNumber) [byte 3]</code></td></tr>
- <tr><td>55</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 0]</code></td></tr>
- <tr><td>56</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 1]</code></td></tr>
- <tr><td>57</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 2]</code></td></tr>
- <tr><td>58</td><td><code>toUint32(bootloaderPartRevisionNumber) [byte 3]</code></td></tr>
  </table></div>
 </li>
 </ul>
@@ -533,7 +560,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwareVersion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.164">getAppSoftwareVersion</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.188">getAppSoftwareVersion</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartNumber()">
@@ -542,7 +569,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.167">getAppSoftwarePartNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.191">getAppSoftwarePartNumber</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartDashNumber()">
@@ -551,7 +578,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartDashNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.170">getAppSoftwarePartDashNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.194">getAppSoftwarePartDashNumber</a>()</pre>
 </li>
 </ul>
 <a id="getAppSoftwarePartRevisionNumber()">
@@ -560,7 +587,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getAppSoftwarePartRevisionNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.173">getAppSoftwarePartRevisionNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.197">getAppSoftwarePartRevisionNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderVersion()">
@@ -569,7 +596,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderVersion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.176">getBootloaderVersion</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.200">getBootloaderVersion</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartNumber()">
@@ -578,7 +605,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderPartNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.179">getBootloaderPartNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.203">getBootloaderPartNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartDashNumber()">
@@ -587,7 +614,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootloaderPartDashNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.182">getBootloaderPartDashNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.206">getBootloaderPartDashNumber</a>()</pre>
 </li>
 </ul>
 <a id="getBootloaderPartRevisionNumber()">
@@ -596,7 +623,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getBootloaderPartRevisionNumber</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.185">getBootloaderPartRevisionNumber</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line.209">getBootloaderPartRevisionNumber</a>()</pre>
 </li>
 </ul>
 </li>

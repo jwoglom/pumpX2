@@ -318,9 +318,11 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <div class="block">
  Parsed fields for CGMStatusResponse:
  <code>sessionStateId</code><code>raw[0]</code>
+ <code>sessionState</code><code>getSessionState()</code>
  <code>lastCalibrationTimestamp</code><code>Bytes.readUint32(raw, 1)</code>
  <code>sensorStartedTimestamp</code><code>Bytes.readUint32(raw, 5)</code>
  <code>transmitterBatteryStatusId</code><code>raw[9]</code>
+ <code>transmitterBatteryStatus</code><code>getTransmitterBatteryStatus()</code>
  </div>
 </td>
 </tr>
@@ -361,7 +363,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>CGMStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.40">CGMStatusResponse</a>()</pre>
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.42">CGMStatusResponse</a>()</pre>
 </li>
 </ul>
 <a id="&lt;init&gt;(int,long,long,int)">
@@ -370,7 +372,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CGMStatusResponse</h4>
-<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.42">CGMStatusResponse</a>&#8203;(int&nbsp;sessionStateId,
+<pre>public&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.44">CGMStatusResponse</a>&#8203;(int&nbsp;sessionStateId,
                          long&nbsp;lastCalibrationTimestamp,
                          long&nbsp;sensorStartedTimestamp,
                          int&nbsp;transmitterBatteryStatusId)</pre>
@@ -392,13 +394,15 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>parse</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.60">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.61">parse</a>&#8203;(byte[]&nbsp;raw)</pre>
 <div class="block"><table border="1">
  <caption>Parsed fields for CGMStatusResponse:</caption>
  <tr><td><code>sessionStateId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>sessionState</code></td><td><code>getSessionState()</code></td></tr>
  <tr><td><code>lastCalibrationTimestamp</code></td><td><code>Bytes.readUint32(raw, 1)</code></td></tr>
  <tr><td><code>sensorStartedTimestamp</code></td><td><code>Bytes.readUint32(raw, 5)</code></td></tr>
  <tr><td><code>transmitterBatteryStatusId</code></td><td><code>raw[9]</code></td></tr>
+ <tr><td><code>transmitterBatteryStatus</code></td><td><code>getTransmitterBatteryStatus()</code></td></tr>
  </table></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -412,7 +416,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>buildCargo</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.87">buildCargo</a>&#8203;(int&nbsp;sessionState,
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.90">buildCargo</a>&#8203;(int&nbsp;sessionState,
                                 long&nbsp;lastCalibrationTimestamp,
                                 long&nbsp;sensorStartedTimestamp,
                                 int&nbsp;transmitterBatteryStatus)</pre>
@@ -438,7 +442,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSessionStateId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.95">getSessionStateId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.98">getSessionStateId</a>()</pre>
 </li>
 </ul>
 <a id="getSessionState()">
@@ -447,7 +451,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSessionState</h4>
-<pre class="methodSignature">public&nbsp;<a href="CGMStatusResponse.SessionState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.102">getSessionState</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="CGMStatusResponse.SessionState.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.105">getSessionState</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the state of the Dexcom CGM session</dd>
@@ -460,7 +464,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastCalibrationTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.128">getLastCalibrationTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.131">getLastCalibrationTimestamp</a>()</pre>
 </li>
 </ul>
 <a id="getLastCalibrationTimestampInstant()">
@@ -469,7 +473,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getLastCalibrationTimestampInstant</h4>
-<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.131">getLastCalibrationTimestampInstant</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.134">getLastCalibrationTimestampInstant</a>()</pre>
 </li>
 </ul>
 <a id="getSensorStartedTimestamp()">
@@ -478,7 +482,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSensorStartedTimestamp</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.135">getSensorStartedTimestamp</a>()</pre>
+<pre class="methodSignature">public&nbsp;long&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.138">getSensorStartedTimestamp</a>()</pre>
 </li>
 </ul>
 <a id="getSensorStartedTimestampInstant()">
@@ -487,7 +491,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getSensorStartedTimestampInstant</h4>
-<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.138">getSensorStartedTimestampInstant</a>()</pre>
+<pre class="methodSignature">public&nbsp;java.time.Instant&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.141">getSensorStartedTimestampInstant</a>()</pre>
 </li>
 </ul>
 <a id="getTransmitterBatteryStatusId()">
@@ -496,7 +500,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockList">
 <li class="blockList">
 <h4>getTransmitterBatteryStatusId</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.142">getTransmitterBatteryStatusId</a>()</pre>
+<pre class="methodSignature">public&nbsp;int&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.145">getTransmitterBatteryStatusId</a>()</pre>
 </li>
 </ul>
 <a id="getTransmitterBatteryStatus()">
@@ -505,7 +509,7 @@ extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.mes
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTransmitterBatteryStatus</h4>
-<pre class="methodSignature">public&nbsp;<a href="CGMStatusResponse.TransmitterBatteryStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.149">getTransmitterBatteryStatus</a>()</pre>
+<pre class="methodSignature">public&nbsp;<a href="CGMStatusResponse.TransmitterBatteryStatus.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a>&nbsp;<a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#line.152">getTransmitterBatteryStatus</a>()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the battery status of the Dexcom CGM transmitter</dd>

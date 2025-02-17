@@ -126,6 +126,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#actualExpectedCargoSize">actualExpectedCargoSize</a></span> - Variable in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#add(com.jwoglom.pumpx2.pump.messages.Message)">add(Message)</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html#ADDITIONAL_BOLUS_REMINDER">ADDITIONAL_BOLUS_REMINDER</a></span> - com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html#AFTER_BOLUS_BG_REMINDER">AFTER_BOLUS_BG_REMINDER</a></span> - com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a></dt>
@@ -237,6 +239,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html#ALL">ALL</a></span> - com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html" title="enum in com.jwoglom.pumpx2.pump.messages.models">SupportedDevices</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html#ALL_DAYS">ALL_DAYS</a></span> - Static variable in enum com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html" title="enum in com.jwoglom.pumpx2.pump.messages.models">MultiDay</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#allRequests()">allRequests()</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/crypto/AllZeroSecureRandom.html" title="class in com.jwoglom.pumpx2.pump.messages.builders.crypto"><span class="typeNameLink">AllZeroSecureRandom</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/builders/crypto/package-summary.html">com.jwoglom.pumpx2.pump.messages.builders.crypto</a></dt>
 <dd>&nbsp;</dd>
@@ -1093,6 +1097,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  0<code>(byte) status</code>
  </div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#buildCargo(int)">buildCargo(int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for ChangeTimeDateResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html#buildCargo(int)">buildCargo(int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DisconnectPumpResponse</a></dt>
 <dd>
 <div class="block">
@@ -1212,6 +1224,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Byte layout for FillTubingStateStreamResponse.buildCargo(...):
  OffsetDescription
  0<code>(byte) status</code>
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html#buildCargo(int)">buildCargo(int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for GetSavedG7PairingCodeResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(pairingCode) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(pairingCode) [byte 1]</code>
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcodeNeg124Response.html#buildCargo(int)">buildCargo(int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcodeNeg124Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcodeNeg124Response</a></dt>
@@ -1794,6 +1815,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  3<code>toUint32(bolusId) [byte 3]</code>
  </div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#buildCargo(long)">buildCargo(long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for ChangeTimeDateRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(tandemEpochTime) [byte 0]</code>
+ 1<code>toUint32(tandemEpochTime) [byte 1]</code>
+ 2<code>toUint32(tandemEpochTime) [byte 2]</code>
+ 3<code>toUint32(tandemEpochTime) [byte 3]</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html#buildCargo(long)">buildCargo(long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQAlertInfoResponse</a></dt>
 <dd>
 <div class="block">
@@ -1818,6 +1850,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  5<code>toUint64(cgmAlertBitmask) [byte 5]</code>
  6<code>toUint64(cgmAlertBitmask) [byte 6]</code>
  7<code>toUint64(cgmAlertBitmask) [byte 7]</code>
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#buildCargo(long,int)">buildCargo(long, int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for DismissNotificationRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>toUint32(notificationId) [byte 0]</code>
+ 1<code>toUint32(notificationId) [byte 1]</code>
+ 2<code>toUint32(notificationId) [byte 2]</code>
+ 3<code>toUint32(notificationId) [byte 3]</code>
+ 4<code>firstTwoBytesLittleEndian(notificationTypeId) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(notificationTypeId) [byte 1]</code>
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html#buildCargo(long,int)">buildCargo(long, int)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">HistoryLogRequest</a></dt>
@@ -2489,7 +2534,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  5<code>writeString(txId, 6) [byte 5]</code>
  </div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#buildCargo(java.lang.String,long,long,long,java.lang.String,long,long,long)">buildCargo(String, long, long, long, String, long, long, long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#buildCargo(java.lang.String,long,long,long,java.lang.String,long,java.lang.Long,java.lang.Long)">buildCargo(String, long, long, long, String, long, Long, Long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
 <dd>
 <div class="block">
  Byte layout for CommonSoftwareInfoResponse.buildCargo(...):
@@ -2545,14 +2590,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  48<code>toUint32(bootloaderPartNumber) [byte 1]</code>
  49<code>toUint32(bootloaderPartNumber) [byte 2]</code>
  50<code>toUint32(bootloaderPartNumber) [byte 3]</code>
- 51<code>toUint32(bootloaderPartDashNumber) [byte 0]</code>
- 52<code>toUint32(bootloaderPartDashNumber) [byte 1]</code>
- 53<code>toUint32(bootloaderPartDashNumber) [byte 2]</code>
- 54<code>toUint32(bootloaderPartDashNumber) [byte 3]</code>
- 55<code>toUint32(bootloaderPartRevisionNumber) [byte 0]</code>
- 56<code>toUint32(bootloaderPartRevisionNumber) [byte 1]</code>
- 57<code>toUint32(bootloaderPartRevisionNumber) [byte 2]</code>
- 58<code>toUint32(bootloaderPartRevisionNumber) [byte 3]</code>
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html#buildCargo(java.math.BigInteger)">buildCargo(BigInteger)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response</a></dt>
@@ -2761,6 +2798,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.BgSource.html#CGM">CGM</a></span> - com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.BgSource.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html#CGM_ALERT">CGM_ALERT</a></span> - com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html" title="enum in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#CGM_ALERT">CGM_ALERT</a></span> - com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.<a href="com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CGM_ALERT_STATUS">CGM_ALERT_STATUS</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -2914,7 +2953,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><span class="typeNameLink">CGMHardwareInfoResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
 <dd>
-<div class="block">Returns the CGM transmitter ID.</div>
+<div class="block">Returns the G6 CGM transmitter ID.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html#%3Cinit%3E()">CGMHardwareInfoResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMHardwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -3044,6 +3083,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CHANGE_CONTROL_IQ_SETTINGS">CHANGE_CONTROL_IQ_SETTINGS</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CHANGE_TIME_DATE">CHANGE_TIME_DATE</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeCartridgeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><span class="typeNameLink">ChangeCartridgeRequest</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
 <div class="block">Enters change cartridge mode.</div>
@@ -3115,6 +3156,52 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html#%3Cinit%3E()">ChangeControlIQSettingsResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeControlIQSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html#%3Cinit%3E(byte%5B%5D)">ChangeControlIQSettingsResponse(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeControlIQSettingsResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><span class="typeNameLink">ChangeTimeDateRequest</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>ChangeTimeDateResponse</code></a>, opCode -42, size 4
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-42</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>4</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>ChangeTimeDateResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#%3Cinit%3E()">ChangeTimeDateRequest()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#%3Cinit%3E(byte%5B%5D)">ChangeTimeDateRequest(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#%3Cinit%3E(long)">ChangeTimeDateRequest(long)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#%3Cinit%3E(java.time.Instant)">ChangeTimeDateRequest(Instant)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><span class="typeNameLink">ChangeTimeDateResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>ChangeTimeDateRequest</code></a>, opCode -41, size 1
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-41</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>1</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>ChangeTimeDateRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#%3Cinit%3E()">ChangeTimeDateResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#%3Cinit%3E(int)">ChangeTimeDateResponse(int)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#characteristic()">characteristic()</a></span> - Method in annotation type com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
 <dd>&nbsp;</dd>
@@ -3200,7 +3287,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><span class="typeNameLink">CommonSoftwareInfoRequest</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a>, opCode -114, size 0
+<div class="block">TODO: size may always be 1 and not 0, collect more samples
+
+
+
+ <br>
+
+ Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a>, opCode -114, size 0
 
  <br>
 
@@ -3209,6 +3302,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Message properties:
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-114</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>variableSize</code>&nbsp;&nbsp;<code>true</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
  &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a></code>&nbsp;
@@ -3216,9 +3310,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#%3Cinit%3E()">CommonSoftwareInfoRequest()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#%3Cinit%3E(byte%5B%5D)">CommonSoftwareInfoRequest(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><span class="typeNameLink">CommonSoftwareInfoResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
 <dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
+<div class="block">TODO: size may always be 51 and not 60, collect more samples
+
+
+
+ <br>
+
+ Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>, opCode -113, size 60
 
  <br>
 
@@ -3227,12 +3329,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  Message properties:
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-113</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>60</code>&nbsp;
+ &nbsp;<code>variableSize</code>&nbsp;&nbsp;<code>true</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
  &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#%3Cinit%3E()">CommonSoftwareInfoResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#%3Cinit%3E(byte%5B%5D)">CommonSoftwareInfoResponse(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long)">CommonSoftwareInfoResponse(String, long, long, long, String, long)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long,long,long)">CommonSoftwareInfoResponse(String, long, long, long, String, long, long, long)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -4147,6 +4254,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#%3Cinit%3E(byte%5B%5D)">DismissNotificationRequest(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest.NotificationType,long)">DismissNotificationRequest(DismissNotificationRequest.NotificationType, long)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html" title="enum in com.jwoglom.pumpx2.pump.messages.request.control"><span class="typeNameLink">DismissNotificationRequest.NotificationType</span></a> - Enum in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/DismissNotificationResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><span class="typeNameLink">DismissNotificationResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
@@ -4547,6 +4656,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.BasalIQAlert.html#fromId(long)">fromId(long)</a></span> - Static method in enum com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQAlertInfoResponse.BasalIQAlert.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQAlertInfoResponse.BasalIQAlert</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html#fromInstantToJan12008EpochSeconds(java.time.Instant)">fromInstantToJan12008EpochSeconds(Instant)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Dates</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html#fromJan12008EpochDaysToDate(long)">fromJan12008EpochDaysToDate(long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Dates</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html#fromJan12008EpochSecondsToDate(long)">fromJan12008EpochSecondsToDate(long)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Dates</a></dt>
@@ -4589,7 +4700,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/KnownApiVersion.html#get()">get()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/KnownApiVersion.html" title="enum in com.jwoglom.pumpx2.pump.messages.models">KnownApiVersion</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#get()">get()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html#get()">get()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html" title="class in com.jwoglom.pumpx2.pump.messages">TransactionId</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#GET_G6_TRANSMITTER_HARDWARE_INFO">GET_G6_TRANSMITTER_HARDWARE_INFO</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#GET_SAVED_G7_PAIRING_CODE">GET_SAVED_G7_PAIRING_CODE</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#getActive()">getActive()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">TempRateResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -5091,6 +5208,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html#getDerivedSecret()">getDerivedSecret()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">JpakeAuthBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlarmStatusResponse.AlarmResponseType.html#getDescription()">getDescription()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlarmStatusResponse.AlarmResponseType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">AlarmStatusResponse.AlarmResponseType</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlertStatusResponse.AlertResponseType.html#getDescription()">getDescription()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlertStatusResponse.AlertResponseType.html" title="enum in com.jwoglom.pumpx2.pump.messages.response.currentStatus">AlertStatusResponse.AlertResponseType</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html#getDeviceKeyNonce()">getDeviceKeyNonce()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.authentication.<a href="com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake3SessionKeyResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">Jpake3SessionKeyResponse</a></dt>
@@ -5179,6 +5298,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcUnits.html#getFromUser()">getFromUser()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcUnits.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalcUnits</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><span class="typeNameLink">GetG6TransmitterHardwareInfoRequest</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>GetG6TransmitterHardwareInfoResponse</code></a>, opCode -60, size 0
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-60</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>GetG6TransmitterHardwareInfoResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html#%3Cinit%3E()">GetG6TransmitterHardwareInfoRequest()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">GetG6TransmitterHardwareInfoRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><span class="typeNameLink">GetG6TransmitterHardwareInfoResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetG6TransmitterHardwareInfoRequest</code></a>, opCode -59, size 96
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-59</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>96</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetG6TransmitterHardwareInfoRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#%3Cinit%3E()">GetG6TransmitterHardwareInfoResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#%3Cinit%3E(byte%5B%5D)">GetG6TransmitterHardwareInfoResponse(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#getGlucoseMgdl()">getGlucoseMgdl()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusParameters.html#getGlucoseMgdl()">getGlucoseMgdl()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusParameters.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusParameters</a></dt>
@@ -5264,6 +5421,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrement()">getIncrement()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html#getInstance()">getInstance()</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">JpakeAuthBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#getInstant()">getInstant()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFilledHistoryLog.html#getInsulinActual()">getInsulinActual()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFilledHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CartridgeFilledHistoryLog</a></dt>
 <dd>&nbsp;</dd>
@@ -5370,6 +5529,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html#getLastChangeReasonId()">getLastChangeReasonId()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#getLastSequenceNum()">getLastSequenceNum()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HistoryLogStatusResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#getLastUpdatedTimes()">getLastUpdatedTimes()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#getLipoMv()">getLipoMv()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DailyBasalHistoryLog</a></dt>
 <dd>&nbsp;</dd>
@@ -5510,6 +5671,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#getOptions()">getOptions()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetG7PairingCodeRequest.html#getPairingCode()">getPairingCode()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetG7PairingCodeRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html#getPairingCode()">getPairingCode()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#getPartNum()">getPartNum()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpVersionResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -5695,6 +5858,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html#getRssi()">getRssi()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CGMHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CGMHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><span class="typeNameLink">GetSavedG7PairingCodeRequest</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>GetSavedG7PairingCodeResponse</code></a>, opCode 116, size 0
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>116</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>GetSavedG7PairingCodeResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html#%3Cinit%3E()">GetSavedG7PairingCodeRequest()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">GetSavedG7PairingCodeRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><span class="typeNameLink">GetSavedG7PairingCodeResponse</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetSavedG7PairingCodeRequest</code></a>, opCode 117, size 2
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>117</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>GetSavedG7PairingCodeRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html#%3Cinit%3E()">GetSavedG7PairingCodeResponse()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html#%3Cinit%3E(int)">GetSavedG7PairingCodeResponse(int)</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQSleepScheduleResponse.html#getSchedule0()">getSchedule0()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQSleepScheduleResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQSleepScheduleResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQSleepScheduleResponse.html#getSchedule1()">getSchedule1()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQSleepScheduleResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQSleepScheduleResponse</a></dt>
@@ -5796,6 +5997,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html#getStatus()">getStatus()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CancelBolusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeCartridgeResponse.html#getStatus()">getStatus()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeCartridgeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeCartridgeResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#getStatus()">getStatus()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html#getStatus()">getStatus()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DisconnectPumpResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -5901,6 +6104,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQIOBResponse.html#getSwan6hrIOB()">getSwan6hrIOB()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQIOBResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#getTandemEpochTime()">getTandemEpochTime()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#getTargetBg()">getTargetBg()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusCalcDataSnapshotResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html#getTargetBg()">getTargetBg()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CorrectionDeclinedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CorrectionDeclinedHistoryLog</a></dt>
@@ -5969,6 +6174,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getTransmitterBatteryStatusId()">getTransmitterBatteryStatusId()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getTransmitterBleHardwareId()">getTransmitterBleHardwareId()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getTransmitterFirmwareVersion()">getTransmitterFirmwareVersion()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getTransmitterHardwareRevision()">getTransmitterHardwareRevision()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getTransmitterSoftwareNumber()">getTransmitterSoftwareNumber()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html#getTransmitterTimestamp()">getTransmitterTimestamp()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmDataGxHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmDataGxHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html#getTrendRate()">getTrendRate()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEGVGuiDataResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentEGVGuiDataResponse</a></dt>
@@ -5987,11 +6200,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#getUnknown1()">getUnknown1()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryV2Response</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#getUnknown1()">getUnknown1()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#getUnknown2()">getUnknown2()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#getUnknown2()">getUnknown2()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#getUnknown3()">getUnknown3()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryV2Response</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#getUnknown3()">getUnknown3()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#getUnknown4()">getUnknown4()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#getUnknown4()">getUnknown4()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getUnusedRemaining()">getUnusedRemaining()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#getUserOverride()">getUserOverride()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog</a></dt>
 <dd>&nbsp;</dd>
@@ -6603,6 +6826,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeControlIQSettingsRequest.html#isEnabled()">isEnabled()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeControlIQSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeControlIQSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#isEnabled()">isEnabled()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#isNotificationResponse(com.jwoglom.pumpx2.pump.messages.Message)">isNotificationResponse(Message)</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculator.html#isOverriddenByUser()">isOverriddenByUser()</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculator.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculator</a></dt>
 <dd>&nbsp;</dd>
@@ -7329,6 +7554,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html#NOTIFICATION_CCCD">NOTIFICATION_CCCD</a></span> - Static variable in class com.jwoglom.pumpx2.pump.messages.bluetooth.<a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html" title="class in com.jwoglom.pumpx2.pump.messages.bluetooth">CharacteristicUUID</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models"><span class="typeNameLink">NotificationBundle</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/models/package-summary.html">com.jwoglom.pumpx2.pump.messages.models</a></dt>
+<dd>
+<div class="block">Bundle of notification related responses for easier processing</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#%3Cinit%3E()">NotificationBundle()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:O">
 <!--   -->
@@ -7644,13 +7875,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  <code>totalDailyInsulinUnits</code><code>raw[4]</code>
  </div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for ChangeTimeDateRequest:
+ <code>tandemEpochTime</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>instant</code><code>getInstant()</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DisconnectPumpRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DisconnectPumpRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DisconnectPumpRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest</a></dt>
 <dd>
 <div class="block">
  Parsed fields for DismissNotificationRequest:
- <code>notificationId</code><code>Bytes.readShort(raw, 0)</code>
+ <code>notificationId</code><code>Bytes.readUint32(raw, 0)</code>
  <code>notificationTypeId</code><code>Bytes.readShort(raw, 4)</code>
  <code>notificationType</code><code>getNotificationType()</code>
  </div>
@@ -7814,6 +8053,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/ExtendedBolusStatusRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/ExtendedBolusStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">ExtendedBolusStatusRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetG6TransmitterHardwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">GetG6TransmitterHardwareInfoRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GetSavedG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">GetSavedG7PairingCodeRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GlobalMaxBolusSettingsRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/GlobalMaxBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">GlobalMaxBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">HistoryLogRequest</a></dt>
@@ -7882,6 +8125,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/TimeSinceResetRequest.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/TimeSinceResetRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">TimeSinceResetRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode110Request.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode110Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">UnknownMobiOpcode110Request</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">UnknownMobiOpcode30Request</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcodeNeg124Request.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcodeNeg124Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">UnknownMobiOpcodeNeg124Request</a></dt>
 <dd>&nbsp;</dd>
@@ -7960,6 +8205,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeControlIQSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeControlIQSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for ChangeTimeDateResponse:
+ <code>status</code><code>raw[0]</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DisconnectPumpResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DisconnectPumpResponse</a></dt>
 <dd>
 <div class="block">
@@ -8218,9 +8470,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">
  Parsed fields for CGMStatusResponse:
  <code>sessionStateId</code><code>raw[0]</code>
+ <code>sessionState</code><code>getSessionState()</code>
  <code>lastCalibrationTimestamp</code><code>Bytes.readUint32(raw, 1)</code>
  <code>sensorStartedTimestamp</code><code>Bytes.readUint32(raw, 5)</code>
  <code>transmitterBatteryStatusId</code><code>raw[9]</code>
+ <code>transmitterBatteryStatus</code><code>getTransmitterBatteryStatus()</code>
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
@@ -8346,6 +8600,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  <code>bolusSource</code><code>raw[17]</code>
  </div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for GetG6TransmitterHardwareInfoResponse:
+ <code>transmitterFirmwareVersion</code><code>Bytes.readString(raw, 0, 16)</code>
+ <code>transmitterHardwareRevision</code><code>Bytes.readString(raw, 16, 16)</code>
+ <code>transmitterBleHardwareId</code><code>Bytes.readString(raw, 32, 16)</code>
+ <code>transmitterSoftwareNumber</code><code>Bytes.readString(raw, 48, 16)</code>
+ <code>unusedRemaining</code><code>Bytes.dropFirstN(raw, 64)</code>
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetSavedG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetSavedG7PairingCodeResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for GetSavedG7PairingCodeResponse:
+ <code>pairingCode</code><code>Bytes.readShort(raw, 0)</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GlobalMaxBolusSettingsResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GlobalMaxBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GlobalMaxBolusSettingsResponse</a></dt>
 <dd>
 <div class="block">
@@ -8375,15 +8647,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">
  Parsed fields for HomeScreenMirrorResponse:
- <code>cgmTrendIcon</code><code>Byte.toUnsignedInt(raw[0])</code>
- <code>cgmAlertIcon</code><code>Byte.toUnsignedInt(raw[1])</code>
- <code>statusIcon0</code><code>Byte.toUnsignedInt(raw[2])</code>
- <code>statusIcon1</code><code>Byte.toUnsignedInt(raw[3])</code>
- <code>bolusStatusIcon</code><code>Byte.toUnsignedInt(raw[4])</code>
- <code>basalStatusIcon</code><code>Byte.toUnsignedInt(raw[5])</code>
- <code>apControlStateIcon</code><code>Byte.toUnsignedInt(raw[6])</code>
+ <code>cgmTrendIconId</code><code>Byte.toUnsignedInt(raw[0])</code>
+ <code>cgmAlertIconId</code><code>Byte.toUnsignedInt(raw[1])</code>
+ <code>statusIcon0Id</code><code>Byte.toUnsignedInt(raw[2])</code>
+ <code>statusIcon1Id</code><code>Byte.toUnsignedInt(raw[3])</code>
+ <code>bolusStatusIconId</code><code>Byte.toUnsignedInt(raw[4])</code>
+ <code>basalStatusIconId</code><code>Byte.toUnsignedInt(raw[5])</code>
+ <code>apControlStateIconId</code><code>Byte.toUnsignedInt(raw[6])</code>
  <code>remainingInsulinPlusIcon</code><code>raw[7] != 0</code>
  <code>cgmDisplayData</code><code>raw[8] != 0</code>
+ <code>cgmTrendIcon</code><code>getCgmTrendIcon()</code>
+ <code>cgmAlertIcon</code><code>getCgmAlertIcon()</code>
+ <code>statusIcon0</code><code>getStatusIcon0()</code>
+ <code>statusIcon1</code><code>getStatusIcon1()</code>
+ <code>bolusStatusIcon</code><code>getBolusStatusIcon()</code>
+ <code>basalStatusIcon</code><code>getBasalStatusIcon()</code>
+ <code>apControlStateIcon</code><code>getApControlStateIcon()</code>
  </div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
@@ -8616,6 +8895,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode110Response</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for UnknownMobiOpcode30Response:
+ <code>unknown1</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>unknown2</code><code>Bytes.readUint32(raw, 4)</code>
+ <code>unknown3</code><code>Bytes.readUint32(raw, 8)</code>
+ <code>unknown4</code><code>Bytes.readUint32(raw, 12)</code>
+ </div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcodeNeg124Response.html#parse(byte%5B%5D)">parse(byte[])</a></span> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcodeNeg124Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcodeNeg124Response</a></dt>
 <dd>
 <div class="block">
@@ -9834,6 +10123,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#responseClass()">responseClass()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html#responseClasses()">responseClasses()</a></span> - Static method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/NotificationBundle.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationBundle</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#responseOpCode()">responseOpCode()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#responseProps()">responseProps()</a></span> - Method in enum com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -10906,6 +11197,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#UNKNOWN_MOBI_OPCODE110">UNKNOWN_MOBI_OPCODE110</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#UNKNOWN_MOBI_OPCODE30">UNKNOWN_MOBI_OPCODE30</a></span> - com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UnknownHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><span class="typeNameLink">UnknownHistoryLog</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.historyLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UnknownHistoryLog.html#%3Cinit%3E()">UnknownHistoryLog()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UnknownHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UnknownHistoryLog</a></dt>
@@ -10953,6 +11246,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html#%3Cinit%3E()">UnknownMobiOpcode110Response()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode110Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html#%3Cinit%3E(byte%5B%5D)">UnknownMobiOpcode110Response(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode110Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode110Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><span class="typeNameLink">UnknownMobiOpcode30Request</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>UnknownMobiOpcode30Response</code></a>, opCode 30, size 0
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>30</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>UnknownMobiOpcode30Response</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html#%3Cinit%3E()">UnknownMobiOpcode30Request()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">UnknownMobiOpcode30Request</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><span class="typeNameLink">UnknownMobiOpcode30Response</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcode30Request</code></a>, opCode 31, size 16
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>31</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>16</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcode30Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>UnknownMobiOpcode30Request</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#%3Cinit%3E()">UnknownMobiOpcode30Response()</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#%3Cinit%3E(byte%5B%5D)">UnknownMobiOpcode30Response(byte[])</a></span> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/UnknownMobiOpcodeNeg124Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><span class="typeNameLink">UnknownMobiOpcodeNeg124Request</span></a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>

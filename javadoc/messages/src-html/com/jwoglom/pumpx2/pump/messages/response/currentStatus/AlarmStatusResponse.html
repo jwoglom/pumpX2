@@ -71,31 +71,31 @@
 <span class="sourceLineNo">062</span><a id="line.62">    public enum AlarmResponseType {</a>
 <span class="sourceLineNo">063</span><a id="line.63">        CARTRIDGE_ALARM(0),</a>
 <span class="sourceLineNo">064</span><a id="line.64">        CARTRIDGE_ALARM2(1),</a>
-<span class="sourceLineNo">065</span><a id="line.65">        OCCLUSION_ALARM(2),</a>
-<span class="sourceLineNo">066</span><a id="line.66">        PUMP_RESET_ALARM(3),</a>
+<span class="sourceLineNo">065</span><a id="line.65">        OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</a>
+<span class="sourceLineNo">066</span><a id="line.66">        PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),</a>
 <span class="sourceLineNo">067</span><a id="line.67">        DEFAULT_ALARM_4(4),</a>
 <span class="sourceLineNo">068</span><a id="line.68">        CARTRIDGE_ALARM3(5),</a>
 <span class="sourceLineNo">069</span><a id="line.69">        CARTRIDGE_ALARM4(6),</a>
-<span class="sourceLineNo">070</span><a id="line.70">        AUTO_OFF_ALARM(7),</a>
-<span class="sourceLineNo">071</span><a id="line.71">        EMPTY_CARTRIDGE_ALARM(8),</a>
+<span class="sourceLineNo">070</span><a id="line.70">        AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),</a>
+<span class="sourceLineNo">071</span><a id="line.71">        EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),</a>
 <span class="sourceLineNo">072</span><a id="line.72">        CARTRIDGE_ALARM5(9),</a>
 <span class="sourceLineNo">073</span><a id="line.73">        TEMPERATURE_ALARM(10),</a>
 <span class="sourceLineNo">074</span><a id="line.74">        TEMPERATURE_ALARM2(11),</a>
-<span class="sourceLineNo">075</span><a id="line.75">        BATTERY_SHUTDOWN_ALARM(12),</a>
+<span class="sourceLineNo">075</span><a id="line.75">        BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),</a>
 <span class="sourceLineNo">076</span><a id="line.76">        DEFAULT_ALARM_13(13),</a>
 <span class="sourceLineNo">077</span><a id="line.77">        INVALID_DATE_ALARM(14),</a>
 <span class="sourceLineNo">078</span><a id="line.78">        TEMPERATURE_ALARM3(15),</a>
 <span class="sourceLineNo">079</span><a id="line.79">        CARTRIDGE_ALARM6(16),</a>
 <span class="sourceLineNo">080</span><a id="line.80">        DEFAULT_ALARM_17(17),</a>
-<span class="sourceLineNo">081</span><a id="line.81">        RESUME_PUMP_ALARM(18),</a>
+<span class="sourceLineNo">081</span><a id="line.81">        RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),</a>
 <span class="sourceLineNo">082</span><a id="line.82">        DEFAULT_ALARM_19(19),</a>
 <span class="sourceLineNo">083</span><a id="line.83">        CARTRIDGE_ALARM7(20),</a>
 <span class="sourceLineNo">084</span><a id="line.84">        ALTITUDE_ALARM(21),</a>
 <span class="sourceLineNo">085</span><a id="line.85">        STUCK_BUTTON_ALARM(22),</a>
-<span class="sourceLineNo">086</span><a id="line.86">        RESUME_PUMP_ALARM2(23),</a>
+<span class="sourceLineNo">086</span><a id="line.86">        RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),</a>
 <span class="sourceLineNo">087</span><a id="line.87">        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),</a>
-<span class="sourceLineNo">088</span><a id="line.88">        CARTRIDGE_REMOVED_ALARM(25),</a>
-<span class="sourceLineNo">089</span><a id="line.89">        OCCLUSION_ALARM2(26),</a>
+<span class="sourceLineNo">088</span><a id="line.88">        CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),</a>
+<span class="sourceLineNo">089</span><a id="line.89">        OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</a>
 <span class="sourceLineNo">090</span><a id="line.90">        DEFAULT_ALARM_27(27),</a>
 <span class="sourceLineNo">091</span><a id="line.91">        DEFAULT_ALARM_28(28),</a>
 <span class="sourceLineNo">092</span><a id="line.92">        CARTRIDGE_ALARM10(29),</a>
@@ -137,52 +137,61 @@
 <span class="sourceLineNo">128</span><a id="line.128">        ;</a>
 <span class="sourceLineNo">129</span><a id="line.129"></a>
 <span class="sourceLineNo">130</span><a id="line.130">        private final int bitmask;</a>
-<span class="sourceLineNo">131</span><a id="line.131">        AlarmResponseType(int bitmask) {</a>
-<span class="sourceLineNo">132</span><a id="line.132">            this.bitmask = bitmask;</a>
-<span class="sourceLineNo">133</span><a id="line.133">        }</a>
-<span class="sourceLineNo">134</span><a id="line.134"></a>
-<span class="sourceLineNo">135</span><a id="line.135">        public int bitmask() {</a>
-<span class="sourceLineNo">136</span><a id="line.136">            return bitmask;</a>
-<span class="sourceLineNo">137</span><a id="line.137">        }</a>
-<span class="sourceLineNo">138</span><a id="line.138"></a>
-<span class="sourceLineNo">139</span><a id="line.139">        public static BigInteger toBitmask(AlarmResponseType ...types) {</a>
-<span class="sourceLineNo">140</span><a id="line.140">            BigInteger ret = BigInteger.ZERO;</a>
-<span class="sourceLineNo">141</span><a id="line.141">            for (AlarmResponseType type : types) {</a>
-<span class="sourceLineNo">142</span><a id="line.142">                ret = ret.setBit(type.bitmask());</a>
-<span class="sourceLineNo">143</span><a id="line.143">            }</a>
-<span class="sourceLineNo">144</span><a id="line.144"></a>
-<span class="sourceLineNo">145</span><a id="line.145">            return ret;</a>
+<span class="sourceLineNo">131</span><a id="line.131">        private final String description;</a>
+<span class="sourceLineNo">132</span><a id="line.132">        AlarmResponseType(int bitmask) {</a>
+<span class="sourceLineNo">133</span><a id="line.133">            this.bitmask = bitmask;</a>
+<span class="sourceLineNo">134</span><a id="line.134">            this.description = null;</a>
+<span class="sourceLineNo">135</span><a id="line.135">        }</a>
+<span class="sourceLineNo">136</span><a id="line.136">        AlarmResponseType(int bitmask, String description) {</a>
+<span class="sourceLineNo">137</span><a id="line.137">            this.bitmask = bitmask;</a>
+<span class="sourceLineNo">138</span><a id="line.138">            this.description = description;</a>
+<span class="sourceLineNo">139</span><a id="line.139">        }</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">        public int bitmask() {</a>
+<span class="sourceLineNo">142</span><a id="line.142">            return bitmask;</a>
+<span class="sourceLineNo">143</span><a id="line.143">        }</a>
+<span class="sourceLineNo">144</span><a id="line.144">        public String getDescription() {</a>
+<span class="sourceLineNo">145</span><a id="line.145">            return description;</a>
 <span class="sourceLineNo">146</span><a id="line.146">        }</a>
 <span class="sourceLineNo">147</span><a id="line.147"></a>
-<span class="sourceLineNo">148</span><a id="line.148">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</a>
-<span class="sourceLineNo">149</span><a id="line.149">            Set&lt;AlarmResponseType&gt; current = new HashSet&lt;&gt;();</a>
-<span class="sourceLineNo">150</span><a id="line.150">            for (AlarmResponseType type : AlarmResponseType.values()) {</a>
-<span class="sourceLineNo">151</span><a id="line.151">                if (intMap.testBit(type.bitmask())) {</a>
-<span class="sourceLineNo">152</span><a id="line.152">                    current.add(type);</a>
-<span class="sourceLineNo">153</span><a id="line.153">                }</a>
-<span class="sourceLineNo">154</span><a id="line.154">            }</a>
-<span class="sourceLineNo">155</span><a id="line.155"></a>
-<span class="sourceLineNo">156</span><a id="line.156">            return current;</a>
-<span class="sourceLineNo">157</span><a id="line.157">        }</a>
-<span class="sourceLineNo">158</span><a id="line.158"></a>
-<span class="sourceLineNo">159</span><a id="line.159">        public static AlarmResponseType fromSingularId(long id) {</a>
-<span class="sourceLineNo">160</span><a id="line.160">            for (AlarmResponseType type : AlarmResponseType.values()) {</a>
-<span class="sourceLineNo">161</span><a id="line.161">                if (id == type.bitmask()) {</a>
-<span class="sourceLineNo">162</span><a id="line.162">                    return type;</a>
-<span class="sourceLineNo">163</span><a id="line.163">                }</a>
-<span class="sourceLineNo">164</span><a id="line.164">            }</a>
-<span class="sourceLineNo">165</span><a id="line.165">            return null;</a>
+<span class="sourceLineNo">148</span><a id="line.148">        public static BigInteger toBitmask(AlarmResponseType ...types) {</a>
+<span class="sourceLineNo">149</span><a id="line.149">            BigInteger ret = BigInteger.ZERO;</a>
+<span class="sourceLineNo">150</span><a id="line.150">            for (AlarmResponseType type : types) {</a>
+<span class="sourceLineNo">151</span><a id="line.151">                ret = ret.setBit(type.bitmask());</a>
+<span class="sourceLineNo">152</span><a id="line.152">            }</a>
+<span class="sourceLineNo">153</span><a id="line.153"></a>
+<span class="sourceLineNo">154</span><a id="line.154">            return ret;</a>
+<span class="sourceLineNo">155</span><a id="line.155">        }</a>
+<span class="sourceLineNo">156</span><a id="line.156"></a>
+<span class="sourceLineNo">157</span><a id="line.157">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</a>
+<span class="sourceLineNo">158</span><a id="line.158">            Set&lt;AlarmResponseType&gt; current = new HashSet&lt;&gt;();</a>
+<span class="sourceLineNo">159</span><a id="line.159">            for (AlarmResponseType type : AlarmResponseType.values()) {</a>
+<span class="sourceLineNo">160</span><a id="line.160">                if (intMap.testBit(type.bitmask())) {</a>
+<span class="sourceLineNo">161</span><a id="line.161">                    current.add(type);</a>
+<span class="sourceLineNo">162</span><a id="line.162">                }</a>
+<span class="sourceLineNo">163</span><a id="line.163">            }</a>
+<span class="sourceLineNo">164</span><a id="line.164"></a>
+<span class="sourceLineNo">165</span><a id="line.165">            return current;</a>
 <span class="sourceLineNo">166</span><a id="line.166">        }</a>
 <span class="sourceLineNo">167</span><a id="line.167"></a>
-<span class="sourceLineNo">168</span><a id="line.168">        public String toString() {</a>
-<span class="sourceLineNo">169</span><a id="line.169">            return name();</a>
-<span class="sourceLineNo">170</span><a id="line.170">        }</a>
-<span class="sourceLineNo">171</span><a id="line.171">    }</a>
-<span class="sourceLineNo">172</span><a id="line.172"></a>
-<span class="sourceLineNo">173</span><a id="line.173">    public Set&lt;AlarmResponseType&gt; getAlarms() {</a>
-<span class="sourceLineNo">174</span><a id="line.174">        return AlarmResponseType.fromBitmask(getIntMap());</a>
-<span class="sourceLineNo">175</span><a id="line.175">    }</a>
-<span class="sourceLineNo">176</span><a id="line.176">}</a>
+<span class="sourceLineNo">168</span><a id="line.168">        public static AlarmResponseType fromSingularId(long id) {</a>
+<span class="sourceLineNo">169</span><a id="line.169">            for (AlarmResponseType type : AlarmResponseType.values()) {</a>
+<span class="sourceLineNo">170</span><a id="line.170">                if (id == type.bitmask()) {</a>
+<span class="sourceLineNo">171</span><a id="line.171">                    return type;</a>
+<span class="sourceLineNo">172</span><a id="line.172">                }</a>
+<span class="sourceLineNo">173</span><a id="line.173">            }</a>
+<span class="sourceLineNo">174</span><a id="line.174">            return null;</a>
+<span class="sourceLineNo">175</span><a id="line.175">        }</a>
+<span class="sourceLineNo">176</span><a id="line.176"></a>
+<span class="sourceLineNo">177</span><a id="line.177">        public String toString() {</a>
+<span class="sourceLineNo">178</span><a id="line.178">            return name();</a>
+<span class="sourceLineNo">179</span><a id="line.179">        }</a>
+<span class="sourceLineNo">180</span><a id="line.180">    }</a>
+<span class="sourceLineNo">181</span><a id="line.181"></a>
+<span class="sourceLineNo">182</span><a id="line.182">    public Set&lt;AlarmResponseType&gt; getAlarms() {</a>
+<span class="sourceLineNo">183</span><a id="line.183">        return AlarmResponseType.fromBitmask(getIntMap());</a>
+<span class="sourceLineNo">184</span><a id="line.184">    }</a>
+<span class="sourceLineNo">185</span><a id="line.185">}</a>
 
 
 

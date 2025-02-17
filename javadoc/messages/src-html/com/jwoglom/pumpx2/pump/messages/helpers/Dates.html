@@ -25,12 +25,16 @@
 <span class="sourceLineNo">016</span><a id="line.16">        return Instant.ofEpochSecond(fromJan12008ToUnixEpochSeconds(seconds));</a>
 <span class="sourceLineNo">017</span><a id="line.17">    }</a>
 <span class="sourceLineNo">018</span><a id="line.18"></a>
-<span class="sourceLineNo">019</span><a id="line.19">    private static final long SECONDS_IN_DAY = 60 * 60 * 24;</a>
-<span class="sourceLineNo">020</span><a id="line.20"></a>
-<span class="sourceLineNo">021</span><a id="line.21">    public static Instant fromJan12008EpochDaysToDate(long days) {</a>
-<span class="sourceLineNo">022</span><a id="line.22">        return Instant.ofEpochSecond(fromJan12008ToUnixEpochSeconds(days * SECONDS_IN_DAY));</a>
-<span class="sourceLineNo">023</span><a id="line.23">    }</a>
-<span class="sourceLineNo">024</span><a id="line.24">}</a>
+<span class="sourceLineNo">019</span><a id="line.19">    public static long fromInstantToJan12008EpochSeconds(Instant instant) {</a>
+<span class="sourceLineNo">020</span><a id="line.20">        return instant.getEpochSecond() - JANUARY_1_2008_UNIX_EPOCH;</a>
+<span class="sourceLineNo">021</span><a id="line.21">    }</a>
+<span class="sourceLineNo">022</span><a id="line.22"></a>
+<span class="sourceLineNo">023</span><a id="line.23">    private static final long SECONDS_IN_DAY = 60 * 60 * 24;</a>
+<span class="sourceLineNo">024</span><a id="line.24"></a>
+<span class="sourceLineNo">025</span><a id="line.25">    public static Instant fromJan12008EpochDaysToDate(long days) {</a>
+<span class="sourceLineNo">026</span><a id="line.26">        return Instant.ofEpochSecond(fromJan12008ToUnixEpochSeconds(days * SECONDS_IN_DAY));</a>
+<span class="sourceLineNo">027</span><a id="line.27">    }</a>
+<span class="sourceLineNo">028</span><a id="line.28">}</a>
 
 
 
