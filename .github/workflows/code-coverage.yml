@@ -32,8 +32,13 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-report.html
-          path: pumpX2/messages/build/reports/tests/test/index.html
+          name: test-reports
+          path: |
+            messages/build/reports/*
+            androidLib/build/reports/*
+            cliparser/build/reports/*
+            sampleapp/build/reports/*
+            shared/build/reports/*
       - uses: codecov/codecov-action@v5
         with:
           fail_ci_if_error: false
