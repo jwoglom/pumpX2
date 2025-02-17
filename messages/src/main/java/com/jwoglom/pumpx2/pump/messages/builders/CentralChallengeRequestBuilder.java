@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;
 

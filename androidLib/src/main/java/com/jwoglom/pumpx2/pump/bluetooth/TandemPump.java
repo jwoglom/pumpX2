@@ -51,6 +51,7 @@ public abstract class TandemPump {
     final Optional<String> filterToBluetoothMac;
     /** for KnownApiVersion.API_V3_2 and above, use instanceId=1 and not 0 */
     private int appInstanceId = 1;
+    private KnownDeviceModel deviceModel;
 
     public TandemPump(Context context, TandemConfig config) {
         this.context = context;
@@ -84,8 +85,11 @@ public abstract class TandemPump {
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
         Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
         if (!PumpState.relyOnConnectionSharingForAuthentication) {
+
+            // send CentralChallengeRequest for old-firmware tslim X2 only.
+            // otherwise directly invoke onWaitingForPairingCode
             AbstractCentralChallengeRequest request = CentralChallengeRequestBuilder.create(appInstanceId);
-            if (request != null) {
+            if (request != null && deviceModel != KnownDeviceModel.MOBI) {
                 sendCommand(peripheral, request);
             } else {
                 onWaitingForPairingCode(peripheral, null);
@@ -217,13 +221,15 @@ public abstract class TandemPump {
      */
     public void onPumpModel(BluetoothPeripheral peripheral, KnownDeviceModel model) {
         Timber.i("TandemPump: onPumpModel: %s", model);
+        this.deviceModel = model;
     }
 
     /**
      * Callback invoked when the CentralChallengeResponse is received, and pair() can be invoked
      * with a pairing code displayed on the pump to instantiate the pump-to-device connection.
      * @param peripheral the BluetoothPeripheral representing the pump
-     * @param centralChallenge the CentralChallengeResponse which should be passed to pair()
+     * @param centralChallenge deprecated: the CentralChallengeResponse which should be passed to pair().
+     *                         This is only used for old-firmware tslim X2.
      */
     public abstract void onWaitingForPairingCode(BluetoothPeripheral peripheral, @Nullable AbstractCentralChallengeResponse centralChallenge);
 
@@ -239,16 +245,7 @@ public abstract class TandemPump {
      *                    displayed on the pump screen.
      */
     public void pair(BluetoothPeripheral peripheral, @Nullable AbstractCentralChallengeResponse centralChallenge, String pairingCode) {
-        if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
-            Timber.i("TandemPump: pair(LONG_16CHAR, " + pairingCode + ")");
-            try {
-                Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
-                sendCommand(peripheral, message);
-            } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
-                Timber.e(e);
-                onInvalidPairingCode(peripheral, null);
-            }
-        } else if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR) {
+        if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR || deviceModel == KnownDeviceModel.MOBI) {
             String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
             PumpState.setJpakeServerNonce(context, "");
             if (Strings.isNullOrEmpty(jpakeSecretHex)) {
@@ -267,6 +264,15 @@ public abstract class TandemPump {
                     onInvalidPairingCode(peripheral, null);
                     PumpState.setJpakeDerivedSecret(context, "");
                 }
+            }
+        } else if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
+            Timber.i("TandemPump: pair(LONG_16CHAR, " + pairingCode + ")");
+            try {
+                Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
+                sendCommand(peripheral, message);
+            } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
+                Timber.e(e);
+                onInvalidPairingCode(peripheral, null);
             }
         } else {
             throw new IllegalArgumentException("no pairingCodeType");
