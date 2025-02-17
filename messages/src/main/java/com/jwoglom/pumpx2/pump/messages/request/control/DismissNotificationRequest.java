@@ -69,7 +69,7 @@ public class DismissNotificationRequest extends Message {
     public enum NotificationType {
         REMINDER(0),
         ALERT(1),
-        // TODO (2)
+        ALARM(2),
         CGM_ALERT(3),
 
         ;

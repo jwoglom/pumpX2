@@ -9,6 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
@@ -111,5 +112,33 @@ public class DismissNotificationRequestTest {
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertEquals(CGMAlertStatusResponse.CGMAlert.SENSOR_FAILED_CGM_ALERT.id(), parsedReq.getNotificationId());
         assertEquals(DismissNotificationRequest.NotificationType.CGM_ALERT, parsedReq.getNotificationType());
+    }
+
+
+    @Test
+    public void testDismissNotificationRequest_pumpResetAlarm() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        DismissNotificationRequest expected = new DismissNotificationRequest(
+                new byte[]{3,
+                        0,
+                        0,
+                        0,
+                        2,
+                        0}
+        );
+
+        DismissNotificationRequest parsedReq = (DismissNotificationRequest) MessageTester.test(
+                "01a6b8a61e03000000020058e93920faf75ae477",
+                -90,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "00a674346fb57c95916f8fde8e2e79f605dee3"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        assertEquals(AlarmStatusResponse.AlarmResponseType.PUMP_RESET_ALARM.bitmask(), parsedReq.getNotificationId());
+        assertEquals(DismissNotificationRequest.NotificationType.ALARM, parsedReq.getNotificationType());
     }
 }
