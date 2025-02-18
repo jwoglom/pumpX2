@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.example;
 
+import static com.jwoglom.pumpx2.example.MainActivity.INTENT_PACKAGE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -78,6 +80,7 @@ public class PumpX2TandemPump extends TandemPump {
         super.onInitialPumpConnection(peripheral);
 
         Intent intent = new Intent(PUMP_CONNECTED_STAGE1_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("address", peripheral.getAddress());
         intent.putExtra("name", peripheral.getName());
         context.sendBroadcast(intent);
@@ -86,6 +89,7 @@ public class PumpX2TandemPump extends TandemPump {
     @Override
     public void onInvalidPairingCode(BluetoothPeripheral peripheral, AbstractPumpChallengeResponse resp) {
         Intent intent = new Intent(PUMP_INVALID_CHALLENGE_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("address", peripheral.getAddress());
         intent.putExtra("appInstanceId", resp.getAppInstanceId());
         context.sendBroadcast(intent);
@@ -105,6 +109,7 @@ public class PumpX2TandemPump extends TandemPump {
             if (message instanceof HistoryLogStatusResponse) {
                 HistoryLogStatusResponse resp = (HistoryLogStatusResponse) message;
                 Intent intent = new Intent(GOT_HISTORY_LOG_STATUS_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("numEntries", resp.getNumEntries());
                 intent.putExtra("firstSequenceNum", resp.getFirstSequenceNum());
@@ -126,6 +131,7 @@ public class PumpX2TandemPump extends TandemPump {
                 historyLogStreamIdToLastEventId.put(resp.getStreamId(), lastEventId);
 
                 Intent intent = new Intent(GOT_HISTORY_LOG_STREAM_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("numberOfHistoryLogs", resp.getNumberOfHistoryLogs());
                 context.sendBroadcast(intent);
@@ -134,6 +140,7 @@ public class PumpX2TandemPump extends TandemPump {
             if (message instanceof BolusPermissionResponse && bolusInProgress) {
                 BolusPermissionResponse resp = (BolusPermissionResponse) message;
                 Intent intent = new Intent(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("status", resp.getStatus());
@@ -143,6 +150,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof BolusCalcDataSnapshotResponse && bolusInProgress) {
                 BolusCalcDataSnapshotResponse resp = (BolusCalcDataSnapshotResponse) message;
                 Intent intent = new Intent(GOT_BOLUS_CALC_RESPONSE_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 Preconditions.checkState(!resp.getIsUnacked(), "bolusCalcDataSnapshot: " + resp);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("carbEntryEnabled", resp.getCarbEntryEnabled());
@@ -161,6 +169,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof LastBGResponse && bolusInProgress) {
                 LastBGResponse resp = (LastBGResponse) message;
                 Intent intent = new Intent(GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("timestamp", resp.getBgTimestamp());
                 intent.putExtra("sourceId", resp.getBgSourceId());
@@ -170,6 +179,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof InitiateBolusResponse && bolusInProgress) {
                 InitiateBolusResponse resp = (InitiateBolusResponse) message;
                 Intent intent = new Intent(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("status", resp.getStatus());
@@ -180,6 +190,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof CancelBolusResponse && bolusInProgress) {
                 CancelBolusResponse resp = (CancelBolusResponse) message;
                 Intent intent = new Intent(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("status", resp.getStatusId());
@@ -189,6 +200,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof LastBolusStatusV2Response && bolusInProgress) {
                 LastBolusStatusV2Response resp = (LastBolusStatusV2Response) message;
                 Intent intent = new Intent(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("status", String.valueOf(resp.getBolusStatus()));
@@ -202,6 +214,7 @@ public class PumpX2TandemPump extends TandemPump {
             } else if (message instanceof BolusPermissionChangeReasonResponse && bolusInProgress) {
                 BolusPermissionChangeReasonResponse resp = (BolusPermissionChangeReasonResponse) message;
                 Intent intent = new Intent(GOT_BOLUS_PERMISSION_REVOKED);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("bolusId", resp.getBolusId());
                 intent.putExtra("changeReason", resp.getLastChangeReason() != null ? resp.getLastChangeReason().name() : "null");
@@ -214,40 +227,48 @@ public class PumpX2TandemPump extends TandemPump {
             if (message instanceof AlarmStatusResponse) {
                 AlarmStatusResponse resp = (AlarmStatusResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "Alarms: "+resp.getAlarms().toString());
                 context.sendBroadcast(intent);
             } else if (message instanceof AlertStatusResponse) {
                 AlertStatusResponse resp = (AlertStatusResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "Alerts: "+resp.getAlerts().toString());
                 context.sendBroadcast(intent);
             } else if (message instanceof CGMHardwareInfoResponse) {
                 CGMHardwareInfoResponse resp = (CGMHardwareInfoResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "CGMHardware: "+resp.getHardwareInfoString());
                 context.sendBroadcast(intent);
             } else if (message instanceof ControlIQIOBResponse) {
                 ControlIQIOBResponse resp = (ControlIQIOBResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "ControlIQIOB: "+resp);
                 context.sendBroadcast(intent);
             } else if (message instanceof NonControlIQIOBResponse) {
                 NonControlIQIOBResponse resp = (NonControlIQIOBResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "NonControlIQIOB: "+resp);
                 context.sendBroadcast(intent);
             } else if (message instanceof PumpFeaturesV1Response) {
                 PumpFeaturesV1Response resp = (PumpFeaturesV1Response) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "Features: "+resp);
                 context.sendBroadcast(intent);
             } else if (message instanceof PumpGlobalsResponse) {
                 PumpGlobalsResponse resp = (PumpGlobalsResponse) message;
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", "Globals: "+resp);
                 context.sendBroadcast(intent);
             } else {
                 Intent intent = new Intent(UPDATE_TEXT_RECEIVER);
+                intent.setPackage(INTENT_PACKAGE);
                 intent.putExtra("text", message.toString());
                 context.sendBroadcast(intent);
             }
@@ -268,6 +289,7 @@ public class PumpX2TandemPump extends TandemPump {
         // checkHmac(authKey, centralChallenge we sent, new byte[0])
         // doHmacSha1(10 bytes from central challenge request, bytes from authKey/pairing code) == 2-22 of response
         Intent intent = new Intent(PUMP_CONNECTED_STAGE2_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("address", peripheral.getAddress());
         intent.putExtra("centralChallengeCargo", Hex.encodeHexString(centralChallenge.getCargo()));
         context.sendBroadcast(intent);
@@ -278,6 +300,7 @@ public class PumpX2TandemPump extends TandemPump {
         super.onPumpConnected(peripheral);
 
         Intent intent = new Intent(PUMP_CONNECTED_STAGE3_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("address", peripheral.getAddress());
         context.sendBroadcast(intent);
     }
@@ -295,6 +318,7 @@ public class PumpX2TandemPump extends TandemPump {
         }
 
         Intent intent = new Intent(PUMP_CONNECTED_COMPLETE_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("address", peripheral.getAddress());
         context.sendBroadcast(intent);
     }
@@ -302,6 +326,7 @@ public class PumpX2TandemPump extends TandemPump {
     @Override
     public void onPumpCriticalError(BluetoothPeripheral peripheral, TandemError reason) {
         Intent intent = new Intent(PUMP_ERROR_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
         intent.putExtra("reason", reason.name());
         intent.putExtra("message", reason.getMessage());
         intent.putExtra("extra", reason.getExtra());

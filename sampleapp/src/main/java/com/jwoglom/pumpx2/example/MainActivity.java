@@ -89,6 +89,7 @@ import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
+import com.jwoglom.pumpx2.example.R;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
 import com.welie.blessed.BluetoothCentralManager;
@@ -112,6 +113,8 @@ import java.util.UUID;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String INTENT_PACKAGE = "com.jwoglom.pumpx2.example";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int ACCESS_LOCATION_REQUEST = 2;
 
@@ -173,22 +176,22 @@ public class MainActivity extends AppCompatActivity {
 
         initWearUIFixes();
 
-        registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT));
-        registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT));
-        registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT));
-        registerReceiver(pumpConnectedCompleteReceiver, new IntentFilter(PUMP_CONNECTED_COMPLETE_INTENT));
-        registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER));
-        registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER));
-        registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER));
-        registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER));
-        registerReceiver(gotBolusCalcResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_RESPONSE_RECEIVER));
-        registerReceiver(gotBolusCalcLastBgResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER));
-        registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER));
-        registerReceiver(gotCancelBolusResponseReceiver, new IntentFilter(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER));
-        registerReceiver(gotLastBolusStatusResponseAfterCancelReceiver, new IntentFilter(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER));
-        registerReceiver(gotBolusPermissionRevokedReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_REVOKED));
-        registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT));
-        registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT));
+        registerReceiver(pumpConnectedStage1Receiver, new IntentFilter(PUMP_CONNECTED_STAGE1_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpConnectedStage2Receiver, new IntentFilter(PUMP_CONNECTED_STAGE2_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpConnectedStage3Receiver, new IntentFilter(PUMP_CONNECTED_STAGE3_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpConnectedCompleteReceiver, new IntentFilter(PUMP_CONNECTED_COMPLETE_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(updateTextReceiver, new IntentFilter(UPDATE_TEXT_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotHistoryLogStatusReceiver, new IntentFilter(GOT_HISTORY_LOG_STATUS_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotHistoryLogStreamReceiver, new IntentFilter(GOT_HISTORY_LOG_STREAM_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotBolusPermissionResponseReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_RESPONSE_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotBolusCalcResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_RESPONSE_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotBolusCalcLastBgResponseReceiver, new IntentFilter(GOT_BOLUS_CALC_LAST_BG_RESPONSE_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotInitiateBolusResponseReceiver, new IntentFilter(GOT_INITIATE_BOLUS_RESPONSE_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotCancelBolusResponseReceiver, new IntentFilter(GOT_CANCEL_BOLUS_RESPONSE_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotLastBolusStatusResponseAfterCancelReceiver, new IntentFilter(GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(gotBolusPermissionRevokedReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_REVOKED), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT), Context.RECEIVER_NOT_EXPORTED);
 
         L.i("MainActivity", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
     }
@@ -664,6 +667,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(PUMP_CONNECTED_STAGE1_INTENT);
+                            intent.setPackage(INTENT_PACKAGE);
                             intent.putExtra("address", peripheral.getAddress());
                             intent.putExtra("name", peripheral.getName());
                             context.sendBroadcast(intent);
@@ -807,7 +811,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.cancel();
-                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS).setPackage(INTENT_PACKAGE));
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
