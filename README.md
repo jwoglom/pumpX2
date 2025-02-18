@@ -3,7 +3,7 @@
 <img src="https://github.com/jwoglom/pumpx2/actions/workflows/android.yml/badge.svg" />
 </a>
 
-![](https://jitpack.io/v/com.jwoglom/pumpX2.svg)
+![](https://jitpack.io/v/jwoglom/pumpX2.svg)
 
 # PumpX2
 
