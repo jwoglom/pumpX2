@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
-import com.google.common.base.Preconditions;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -14,6 +13,8 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
+
+import org.apache.commons.lang3.Validate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -165,7 +166,7 @@ public class PumpState {
         synchronized (requestMessages) {
             Pair<Characteristic, Byte> key = Pair.create(c, txId);
             Pair<Boolean, Message> pair = requestMessages.get(key);
-            Preconditions.checkState(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
+            Validate.notNull(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
             if (pair.first) {
                 Timber.w("txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
             }
@@ -185,7 +186,7 @@ public class PumpState {
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
     public static synchronized void savePacketArrayList(Characteristic c, byte txId, PacketArrayList l) {
         Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Preconditions.checkState(!savedPacketArrayList.containsKey(key));
+        Validate.isTrue(!savedPacketArrayList.containsKey(key));
         savedPacketArrayList.put(key, l);
     }
 
