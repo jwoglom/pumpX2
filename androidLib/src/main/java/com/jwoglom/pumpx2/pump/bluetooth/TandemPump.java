@@ -245,9 +245,11 @@ public abstract class TandemPump {
      *                    displayed on the pump screen.
      */
     public void pair(BluetoothPeripheral peripheral, @Nullable AbstractCentralChallengeResponse centralChallenge, String pairingCode) {
-        if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR || deviceModel == KnownDeviceModel.MOBI) {
+        if (PumpState.pairingCodeType == PairingCodeType.SHORT_6CHAR || deviceModel == KnownDeviceModel.MOBI || pairingCode.length() == 6) {
+            PumpState.pairingCodeType = PairingCodeType.SHORT_6CHAR;
             String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
             PumpState.setJpakeServerNonce(context, "");
+            PumpState.setPairingCode(context, pairingCode);
             if (Strings.isNullOrEmpty(jpakeSecretHex)) {
                 Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", BOOTSTRAP)");
                 JpakeAuthBuilder.clearInstance();
@@ -268,6 +270,7 @@ public abstract class TandemPump {
         } else if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
             Timber.i("TandemPump: pair(LONG_16CHAR, " + pairingCode + ")");
             try {
+                PumpState.setPairingCode(context, pairingCode);
                 Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);
                 sendCommand(peripheral, message);
             } catch (PumpChallengeRequestBuilder.InvalidPairingCodeFormat e) {
