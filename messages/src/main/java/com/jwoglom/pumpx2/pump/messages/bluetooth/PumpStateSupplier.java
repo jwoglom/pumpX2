@@ -50,6 +50,9 @@ public class PumpStateSupplier {
 
         L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code);
 
+
+        if (code == null) return new byte[0];
+
         // pairing code is passed as raw ascii to hmac
         return code.getBytes(StandardCharsets.UTF_8);
     }
