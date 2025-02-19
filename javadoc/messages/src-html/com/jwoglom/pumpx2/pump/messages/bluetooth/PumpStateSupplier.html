@@ -67,10 +67,13 @@
 <span class="source-line-no">050</span><span id="line-50"></span>
 <span class="source-line-no">051</span><span id="line-51">        L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code);</span>
 <span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">        // pairing code is passed as raw ascii to hmac</span>
-<span class="source-line-no">054</span><span id="line-54">        return code.getBytes(StandardCharsets.UTF_8);</span>
-<span class="source-line-no">055</span><span id="line-55">    }</span>
-<span class="source-line-no">056</span><span id="line-56">}</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">        if (code == null) return new byte[0];</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">        // pairing code is passed as raw ascii to hmac</span>
+<span class="source-line-no">057</span><span id="line-57">        return code.getBytes(StandardCharsets.UTF_8);</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59">}</span>
 
 
 
