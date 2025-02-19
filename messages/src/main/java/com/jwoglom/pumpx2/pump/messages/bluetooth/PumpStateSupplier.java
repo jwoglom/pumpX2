@@ -29,7 +29,7 @@ public class PumpStateSupplier {
         String serverNonce = jpakeServerNonceHex == null ? null : jpakeServerNonceHex.get();
         String code = pumpPairingCode == null ? null : pumpPairingCode.get();
 
-        if (derivedSecret == null && code == null) {
+        if (Strings.isNullOrEmpty(derivedSecret) && Strings.isNullOrEmpty(code)) {
             throw new IllegalStateException("no pump authenticationKey");
         }
 
