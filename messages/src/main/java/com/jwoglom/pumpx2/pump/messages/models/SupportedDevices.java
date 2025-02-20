@@ -1,11 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.models;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public enum SupportedDevices {

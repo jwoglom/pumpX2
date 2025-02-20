@@ -3,7 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.helpers;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class BytesTest {
     @Test
     public void testFloats() {
-        List<Float> tests = ImmutableList.of(
+        List<Float> tests = Arrays.asList(
                 0.0F,
                 1.0F,
                 1.11F,

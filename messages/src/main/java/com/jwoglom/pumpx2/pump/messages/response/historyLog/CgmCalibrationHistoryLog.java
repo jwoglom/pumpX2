@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
@@ -40,7 +40,7 @@ public class CgmCalibrationHistoryLog extends HistoryLog {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == 26);
+        Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
         this.currentTime = Bytes.readUint32(raw, 10);

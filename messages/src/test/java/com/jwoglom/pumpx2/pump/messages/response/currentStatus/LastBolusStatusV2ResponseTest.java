@@ -4,7 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
@@ -53,7 +53,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
 
     @Test
@@ -101,7 +101,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
 
     @Test
@@ -147,7 +147,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
 
     @Test
@@ -172,7 +172,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.EXTENDED), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.EXTENDED), parsedRes.getBolusType());
     }
 
     @Test
@@ -195,7 +195,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.QUICK_BOLUS, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
     }
 
 
@@ -218,6 +218,6 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.CONTROL_IQ_AUTO_BOLUS, parsedRes.getBolusSource());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 }

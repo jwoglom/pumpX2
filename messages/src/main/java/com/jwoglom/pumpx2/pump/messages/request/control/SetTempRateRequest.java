@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -42,8 +42,8 @@ public class SetTempRateRequest extends Message {
      * @param percent between 0 percent and 250 percent. values above 250% are not supported and the pump will return an error
      */
     public SetTempRateRequest(int minutes, int percent) {
-        Preconditions.checkArgument(minutes >= 15 && minutes <= 72*60, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");
-        Preconditions.checkArgument(percent >= 0 && percent <= 250, "percent temp rate must be between 0-250%");
+        Validate.isTrue(minutes >= 15 && minutes <= 72*60, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");
+        Validate.isTrue(percent >= 0 && percent <= 250, "percent temp rate must be between 0-250%");
         this.cargo = buildCargo(minutes, percent);
         this.minutes = minutes;
         this.percent = percent;
@@ -51,7 +51,7 @@ public class SetTempRateRequest extends Message {
 
     public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.minutes = Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60);
         this.percent = Bytes.readShort(raw, 4);

@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.helpers;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -68,12 +68,12 @@ public class Bytes {
     }
 
     public static int readShort(byte[] raw, int i) {
-        Preconditions.checkArgument(i >= 0 && i + 1 < raw.length);
+        Validate.isTrue(i >= 0 && i + 1 < raw.length);
         return ((andWithMaxValue(raw[i+1]) & 255) << 8) | (andWithMaxValue(raw[i]) & 255);
     }
 
     public static float readFloat(byte[] raw, int i) {
-        Preconditions.checkArgument(i >= 0 && i + 3 < raw.length);
+        Validate.isTrue(i >= 0 && i + 3 < raw.length);
         return ByteBuffer.wrap(Arrays.copyOfRange(raw, i, i+4)).order(ByteOrder.LITTLE_ENDIAN).getFloat();
 //        int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
 //        L.w("ReadFloat", "bytes: " + Hex.encodeHexString(Arrays.copyOfRange(raw, i, i + 4)) + " intValue: " + intValue);

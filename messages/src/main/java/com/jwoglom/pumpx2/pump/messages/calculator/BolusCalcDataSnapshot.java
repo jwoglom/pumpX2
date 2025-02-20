@@ -1,6 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
 
@@ -62,17 +61,17 @@ class BolusCalcDataSnapshot {
         this.maxBolusHourlyTotal = maxBolusHourlyTotal;
     }
 
-    @VisibleForTesting
+
     public BolusCalcDataSnapshot withIOB(double newIob) {
         return new BolusCalcDataSnapshot(carbEntryEnabled, carbRatio, InsulinUnit.from1To1000(newIob), cartridgeRemainingInsulin, correctionFactor, isf, isAutopopAllowed, targetBg, exceeded, maxBolusAmount, maxBolusHourlyTotal);
     }
 
-    @VisibleForTesting
+
     public BolusCalcDataSnapshot withCorrectionFactor(int newCorrectionFactor) {
         return new BolusCalcDataSnapshot(carbEntryEnabled, carbRatio, InsulinUnit.from1To1000(iob), cartridgeRemainingInsulin, newCorrectionFactor, isf, isAutopopAllowed, targetBg, exceeded, maxBolusAmount, maxBolusHourlyTotal);
     }
 
-    @VisibleForTesting
+
     public BolusCalcDataSnapshotResponse toRawResponse() {
         return new BolusCalcDataSnapshotResponse(false, correctionFactor, InsulinUnit.from1To1000(iob), cartridgeRemainingInsulin, targetBg, isf, carbEntryEnabled, carbRatio, maxBolusAmount, maxBolusHourlyTotal, exceeded, exceeded, isAutopopAllowed);
     }

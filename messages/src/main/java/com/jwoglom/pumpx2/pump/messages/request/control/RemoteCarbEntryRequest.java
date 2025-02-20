@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -51,7 +51,7 @@ public class RemoteCarbEntryRequest extends Message {
     }
 
     public RemoteCarbEntryRequest(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {
-        Preconditions.checkArgument(pumpTimeSecondsSinceBoot < Dates.JANUARY_1_2008_UNIX_EPOCH, "pumpTimeSecondsSinceBoot ("+pumpTimeSecondsSinceBoot+") should be seconds since boot; a unix epoch was provided instead");
+        Validate.isTrue(pumpTimeSecondsSinceBoot < Dates.JANUARY_1_2008_UNIX_EPOCH, "pumpTimeSecondsSinceBoot ("+pumpTimeSecondsSinceBoot+") should be seconds since boot; a unix epoch was provided instead");
         this.cargo = buildCargo(carbs, unknown, pumpTimeSecondsSinceBoot, bolusId);
         this.carbs = carbs;
         this.unknown = unknown; // from examples, always 1
@@ -70,7 +70,7 @@ public class RemoteCarbEntryRequest extends Message {
 
     public void parse(byte[] raw) {
         raw = removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size(), "size " + raw.length);
+        Validate.isTrue(raw.length == props().size(), "size " + raw.length);
         this.cargo = raw;
         this.carbs = Bytes.readShort(raw, 0);
         this.unknown = raw[2];

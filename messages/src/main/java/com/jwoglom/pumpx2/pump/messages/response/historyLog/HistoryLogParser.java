@@ -1,6 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
@@ -14,7 +13,7 @@ import java.util.Set;
 public class HistoryLogParser {
     private static final String TAG = "HistoryLogParser";
 
-    public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = ImmutableSet.of(
+    public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = Set.of(
         DateChangeHistoryLog.class,
         BGHistoryLog.class,
         CGMHistoryLog.class,

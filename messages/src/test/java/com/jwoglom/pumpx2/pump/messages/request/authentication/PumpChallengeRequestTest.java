@@ -3,7 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.request.authentication;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -17,7 +17,7 @@ public class PumpChallengeRequestTest {
         });
 
         PumpChallengeRequest parsedReq = (PumpChallengeRequest) MessageTester.testMultiplePackets(
-                ImmutableList.of(
+                Arrays.asList(
                         "010112011601000194a8f98ca49cddf70c2c1331",
                         "0001730290bca3df079967"
                 ),

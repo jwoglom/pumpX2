@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.shared.L;
@@ -17,13 +17,13 @@ public class CharacteristicGuesser {
             possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
             if (possibilities.contains(Characteristic.CONTROL)) {
                 log += "Using CONTROL";
-                possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                possibilities = Set.of(Characteristic.CONTROL);
             } else if (possibilities.contains(Characteristic.AUTHORIZATION)) {
                 log += "Using AUTHORIZATION";
-                possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
+                possibilities = Set.of(Characteristic.AUTHORIZATION);
             } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
                 log += "Using CURRENT_STATUS";
-                possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                possibilities = Set.of(Characteristic.CURRENT_STATUS);
             }
             L.w(TAG, log);
         }
@@ -42,7 +42,7 @@ public class CharacteristicGuesser {
                         (opCode == 35 && len == 30) || // CurrentEGVGuiDataResponse
                         (opCode == 37 && len == 22) // InsulinStatusResponse
         ) {
-            possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+            possibilities = Set.of(Characteristic.CURRENT_STATUS);
         } else if (
                 (opCode == 37 && len == 148) || // InitiateBolusRequest
                         (opCode == -92 && len == 78) || // SetTempRateRequest
@@ -50,7 +50,7 @@ public class CharacteristicGuesser {
                         (opCode == -90 && len == 66) || // StopTempRateRequest
                         (opCode == -89 && len == 68) // StopTempRateResponse
         ) {
-            possibilities = ImmutableSet.of(Characteristic.CONTROL);
+            possibilities = Set.of(Characteristic.CONTROL);
         } else if (
                 (opCode == 32 && len == 384) || // Jpake1aRequest
                         (opCode == 33 && len == 384) || // Jpake1aResponse
@@ -59,7 +59,7 @@ public class CharacteristicGuesser {
                         (opCode == 36 && len == 384) || // Jpake2Request
                         (opCode == 37 && len == 354) // Jpake2Response
         ) {
-            possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
+            possibilities = Set.of(Characteristic.AUTHORIZATION);
         }
 
         return possibilities;

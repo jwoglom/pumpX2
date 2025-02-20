@@ -1,12 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
@@ -34,7 +35,7 @@ public class PumpStateSupplier {
         }
 
         // stored jpake raw derived secret is decoded from hex for use in hmac
-        if (!Strings.isNullOrEmpty(derivedSecret) && !Strings.isNullOrEmpty(serverNonce)) {
+        if (!StringUtils.isBlank(derivedSecret) && !StringUtils.isBlank(serverNonce)) {
             try {
                 L.i(TAG, "PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
                 byte[] jpakeSecret = Hex.decodeHex(derivedSecret);

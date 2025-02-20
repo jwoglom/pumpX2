@@ -48,7 +48,7 @@ public class HistoryLogStreamResponse extends Message {
 
     public void parse(byte[] raw) {
         // We do NOT want this check, the size is variable!
-        //Preconditions.checkArgument(raw.length == props().size());
+        //Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.numberOfHistoryLogs = raw[0];
         this.streamId = raw[1];

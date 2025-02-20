@@ -1,6 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent;
 
-import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.builders.ControlIQInfoRequestBuilder;
@@ -47,72 +46,72 @@ import java.util.stream.Collectors;
  * for free, without duplicating requests.
  */
 public enum QualifyingEvent {
-    ALERT(1, ImmutableSet.of(
+    ALERT(1, Set.of(
             AlertStatusRequest::new)),
-    ALARM(2, ImmutableSet.of(
+    ALARM(2, Set.of(
             AlarmStatusRequest::new)),
-    REMINDER(4, ImmutableSet.of(
+    REMINDER(4, Set.of(
             ReminderStatusRequest::new)),
-    MALFUNCTION(8, ImmutableSet.of(
+    MALFUNCTION(8, Set.of(
             MalfunctionStatusRequest::new)),
-    CGM_ALERT(16, ImmutableSet.of(
+    CGM_ALERT(16, Set.of(
             CGMAlertStatusRequest::new)),
-    HOME_SCREEN_CHANGE(32, ImmutableSet.of(
+    HOME_SCREEN_CHANGE(32, Set.of(
             CurrentBasalStatusRequest::new,
             CurrentEGVGuiDataRequest::new,
             HomeScreenMirrorRequest::new,
             () -> ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),
-    PUMP_SUSPEND(64, ImmutableSet.of(
+    PUMP_SUSPEND(64, Set.of(
             InsulinStatusRequest::new,
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),
-    PUMP_RESUME(128, ImmutableSet.of(
+    PUMP_RESUME(128, Set.of(
             InsulinStatusRequest::new,
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),
             CurrentEGVGuiDataRequest::new,
             ProfileStatusRequest::new)),
-    TIME_CHANGE(256, ImmutableSet.of(
+    TIME_CHANGE(256, Set.of(
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),
             CGMStatusRequest::new,
             TimeSinceResetRequest::new)),
-    BASAL_CHANGE(512, ImmutableSet.of(
+    BASAL_CHANGE(512, Set.of(
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),
             HomeScreenMirrorRequest::new,
             CurrentBasalStatusRequest::new,
             TempRateRequest::new)),
-    BOLUS_CHANGE(1024, ImmutableSet.of(
+    BOLUS_CHANGE(1024, Set.of(
             CurrentBolusStatusRequest::new,
             ExtendedBolusStatusRequest::new,
             () -> LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),
-    IOB_CHANGE(2048, ImmutableSet.of(
+    IOB_CHANGE(2048, Set.of(
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),
-    EXTENDED_BOLUS_CHANGE(4096, ImmutableSet.of(
+    EXTENDED_BOLUS_CHANGE(4096, Set.of(
             ExtendedBolusStatusRequest::new,
             () -> LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),
-    PROFILE_CHANGE(8192, ImmutableSet.of(
+    PROFILE_CHANGE(8192, Set.of(
             ProfileStatusRequest::new)),
-    BG(16384, ImmutableSet.of(
+    BG(16384, Set.of(
             LastBGRequest::new)),
-    CGM_CHANGE(32768, ImmutableSet.of(
+    CGM_CHANGE(32768, Set.of(
             CGMStatusRequest::new,
             CurrentEGVGuiDataRequest::new,
             HomeScreenMirrorRequest::new)),
-    BATTERY(65536, ImmutableSet.of(
+    BATTERY(65536, Set.of(
             () -> CurrentBatteryRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),
-    BASAL_IQ(131072, ImmutableSet.of(
+    BASAL_IQ(131072, Set.of(
             BasalIQSettingsRequest::new)),
-    REMAINING_INSULIN(262144, ImmutableSet.of(
+    REMAINING_INSULIN(262144, Set.of(
             InsulinStatusRequest::new)),
     SUSPEND_COMM(524288),
-    ACTIVE_SEGMENT_CHANGE(1048576, ImmutableSet.of(
+    ACTIVE_SEGMENT_CHANGE(1048576, Set.of(
             ProfileStatusRequest::new)),
-    BASAL_IQ_STATUS(2097152, ImmutableSet.of(
+    BASAL_IQ_STATUS(2097152, Set.of(
             BasalIQSettingsRequest::new,
             BasalIQStatusRequest::new)),
-    CONTROL_IQ_INFO(4194304, ImmutableSet.of(
+    CONTROL_IQ_INFO(4194304, Set.of(
             () -> IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),
             () -> ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()),
             ControlIQSleepScheduleRequest::new)),
-    CONTROL_IQ_SLEEP(8388608, ImmutableSet.of(
+    CONTROL_IQ_SLEEP(8388608, Set.of(
             ControlIQSleepScheduleRequest::new)),
     BOLUS_PERMISSION_REVOKED(2147483648L),
 

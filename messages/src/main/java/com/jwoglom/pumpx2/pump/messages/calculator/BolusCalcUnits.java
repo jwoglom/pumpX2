@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.shared.L;
 
 import java.math.RoundingMode;

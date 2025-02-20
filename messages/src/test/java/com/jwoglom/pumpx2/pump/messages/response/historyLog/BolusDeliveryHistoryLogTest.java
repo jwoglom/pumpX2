@@ -2,7 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -20,7 +20,7 @@ public class BolusDeliveryHistoryLogTest {
                 446066139L, 183687L,
                 1044,
                 0,
-                ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
+                Set.of(BolusType.FOOD1, BolusType.FOOD2),
                 BolusSource.CONTROL_IQ_AUTO_BOLUS,
                 20,
                 1001,
@@ -45,7 +45,7 @@ public class BolusDeliveryHistoryLogTest {
                 446175714L, 187031L,
                 1063,
                 0,
-                ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
+                Set.of(BolusType.FOOD1, BolusType.FOOD2),
                 BolusSource.GUI,
                 39,
                 210,
@@ -70,7 +70,7 @@ public class BolusDeliveryHistoryLogTest {
                 446175382L, 186993L,
                 1062,
                 1,
-                ImmutableSet.of(BolusType.FOOD1, BolusType.FOOD2),
+                Set.of(BolusType.FOOD1, BolusType.FOOD2),
                 BolusSource.GUI,
                 38,
                 920,

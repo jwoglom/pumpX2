@@ -1,9 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
-import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +44,7 @@ public class CharacteristicUUID {
 
 
 
-    public static final List<UUID> ENABLED_NOTIFICATIONS = ImmutableList.of(
+    public static final List<UUID> ENABLED_NOTIFICATIONS = Arrays.asList(
             CURRENT_STATUS_CHARACTERISTICS,
             QUALIFYING_EVENTS_CHARACTERISTICS,
             HISTORY_LOG_CHARACTERISTICS,

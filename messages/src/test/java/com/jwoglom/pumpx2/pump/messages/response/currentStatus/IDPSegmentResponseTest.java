@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse.IDPSegmentStatus;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -32,7 +32,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(ImmutableSet.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getStatus());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
     }
 
 
@@ -138,7 +138,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
     }
 
     // Response to IDPSegmentRequest(1, 2) when there are only 2 IDP segments (e.g. an invalid entry)
@@ -174,13 +174,13 @@ public class IDPSegmentResponseTest {
         assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.TARGET_BG) & 4) == 0);
         assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CORRECTION_FACTOR) & 8) == 0);
 
-        assertEquals(IDPSegmentStatus.fromBitmask(1), ImmutableSet.of(IDPSegmentStatus.BASAL_RATE));
-        assertEquals(IDPSegmentStatus.fromBitmask(2), ImmutableSet.of(IDPSegmentStatus.CARB_RATIO));
-        assertEquals(IDPSegmentStatus.fromBitmask(3), ImmutableSet.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO));
-        assertEquals(IDPSegmentStatus.fromBitmask(4), ImmutableSet.of(IDPSegmentStatus.TARGET_BG));
-        assertEquals(IDPSegmentStatus.fromBitmask(5), ImmutableSet.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.BASAL_RATE));
-        assertEquals(IDPSegmentStatus.fromBitmask(6), ImmutableSet.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO));
-        assertEquals(IDPSegmentStatus.fromBitmask(7), ImmutableSet.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE));
+        assertEquals(IDPSegmentStatus.fromBitmask(1), Set.of(IDPSegmentStatus.BASAL_RATE));
+        assertEquals(IDPSegmentStatus.fromBitmask(2), Set.of(IDPSegmentStatus.CARB_RATIO));
+        assertEquals(IDPSegmentStatus.fromBitmask(3), Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO));
+        assertEquals(IDPSegmentStatus.fromBitmask(4), Set.of(IDPSegmentStatus.TARGET_BG));
+        assertEquals(IDPSegmentStatus.fromBitmask(5), Set.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.BASAL_RATE));
+        assertEquals(IDPSegmentStatus.fromBitmask(6), Set.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO));
+        assertEquals(IDPSegmentStatus.fromBitmask(7), Set.of(IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
@@ -94,7 +94,7 @@ public class JsonMessageParser {
         if (comment != null) {
             rawJson.put("comment", comment);
         }
-        if (Strings.isNullOrEmpty(rawJson.getString("btChar")) && resp != null && resp.message().isPresent()) {
+        if (StringUtils.isBlank(rawJson.getString("btChar")) && resp != null && resp.message().isPresent()) {
             Message message = resp.message().get();
             rawJson.put("guessedBtChar", CharacteristicGuesser.guessBestCharacteristic(rawLine, message.opCode()).getUuid().toString().replace("-", ""));
         }

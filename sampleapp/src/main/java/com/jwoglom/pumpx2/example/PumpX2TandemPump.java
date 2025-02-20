@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
@@ -151,7 +151,7 @@ public class PumpX2TandemPump extends TandemPump {
                 BolusCalcDataSnapshotResponse resp = (BolusCalcDataSnapshotResponse) message;
                 Intent intent = new Intent(GOT_BOLUS_CALC_RESPONSE_RECEIVER);
                 intent.setPackage(INTENT_PACKAGE);
-                Preconditions.checkState(!resp.getIsUnacked(), "bolusCalcDataSnapshot: " + resp);
+                Validate.isTrue(!resp.getIsUnacked(), "bolusCalcDataSnapshot: " + resp);
                 intent.putExtra("address", peripheral.getAddress());
                 intent.putExtra("carbEntryEnabled", resp.getCarbEntryEnabled());
                 intent.putExtra("carbRatio", resp.getCarbRatio());

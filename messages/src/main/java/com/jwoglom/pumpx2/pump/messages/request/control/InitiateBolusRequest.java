@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -82,13 +82,13 @@ public class InitiateBolusRequest extends Message {
      * @param extended3        TODO unknown, set as 0
      */
     public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {
-        Preconditions.checkArgument(totalVolume >= MIN_BOLUS_MILLIUNITS);
-        Preconditions.checkArgument(bolusID > 0);
-        Preconditions.checkArgument(foodVolume >= 0);
-        Preconditions.checkArgument(correctionVolume >= 0);
-        Preconditions.checkArgument(bolusCarbs >= 0);
-        Preconditions.checkArgument(bolusBG >= 0);
-        Preconditions.checkArgument(bolusIOB >= 0);
+        Validate.isTrue(totalVolume >= MIN_BOLUS_MILLIUNITS);
+        Validate.isTrue(bolusID > 0);
+        Validate.isTrue(foodVolume >= 0);
+        Validate.isTrue(correctionVolume >= 0);
+        Validate.isTrue(bolusCarbs >= 0);
+        Validate.isTrue(bolusBG >= 0);
+        Validate.isTrue(bolusIOB >= 0);
         this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, extendedVolume, extendedSeconds, extended3);
         this.totalVolume = totalVolume; //
         this.bolusID = bolusID;
@@ -105,7 +105,7 @@ public class InitiateBolusRequest extends Message {
 
     public void parse(byte[] raw) {
         raw = removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         // argument positions are guesses!!
         // 1u bolus

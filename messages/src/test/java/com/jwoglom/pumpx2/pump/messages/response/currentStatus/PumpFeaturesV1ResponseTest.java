@@ -2,7 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -33,7 +33,7 @@ public class PumpFeaturesV1ResponseTest {
         );
 
         // The only parsed values.
-        assertEquals(ImmutableSet.of(
+        assertEquals(Set.of(
             PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED,
             PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED,
             PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED
@@ -58,7 +58,7 @@ public class PumpFeaturesV1ResponseTest {
         );
 
         // The only parsed values.
-        assertEquals(ImmutableSet.of(
+        assertEquals(Set.of(
                 PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.BASAL_LIMIT_SUPPORTED,
@@ -85,7 +85,7 @@ public class PumpFeaturesV1ResponseTest {
         );
 
         // The only parsed values.
-        assertEquals(ImmutableSet.of(
+        assertEquals(Set.of(
                 PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED,
                 PumpFeaturesV1Response.PumpFeatureType.BASAL_LIMIT_SUPPORTED,

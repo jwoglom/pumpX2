@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -25,13 +25,13 @@ public class CentralChallengeResponse extends AbstractCentralChallengeResponse {
 
     public CentralChallengeResponse(int appInstanceId, byte[] centralChallengeHash, byte[] hmacKey) {
         parse(buildCargo(appInstanceId, centralChallengeHash, hmacKey));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
-        Preconditions.checkState(Arrays.equals(this.hmacKey, hmacKey));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
+        Validate.isTrue(Arrays.equals(this.hmacKey, hmacKey));
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
         centralChallengeHash = Arrays.copyOfRange(raw, 2, 22); // len=10 == Request.centralChallenge

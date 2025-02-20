@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -36,16 +36,16 @@ public class FillCannulaRequest extends Message {
      * @param primeSizeMilliUnits insulin prime amount in milliunits
      */
     public FillCannulaRequest(int primeSizeMilliUnits) {
-        Preconditions.checkArgument(primeSizeMilliUnits > 0, "must have positive prime size");
+        Validate.isTrue(primeSizeMilliUnits > 0, "must have positive prime size");
         // haven't tested this limitation, just a sanity check
-        Preconditions.checkArgument(primeSizeMilliUnits <= 3000, "cannot prime more than 3 units");
+        Validate.isTrue(primeSizeMilliUnits <= 3000, "cannot prime more than 3 units");
         this.cargo = buildCargo(primeSizeMilliUnits);
         this.primeSizeMilliUnits = primeSizeMilliUnits;
     }
 
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.primeSizeMilliUnits = Bytes.readShort(raw, 0);
         

@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.TimeChangedHistoryLog;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class TimeChangedHistoryLogTest {
         HistoryLogStreamResponse parsedMessage = HistoryLogMessageTester.test(
                 "000081001c01100d001ccab31a3b0b000073425d0060216000059f60320000000033f9",
                 16,
-                ImmutableList.of(expected)
+                Arrays.asList(expected)
         );
 
         TimeChangedHistoryLog parsedRes = (TimeChangedHistoryLog) parsedMessage.getHistoryLogs().stream().findFirst().get();

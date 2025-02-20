@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -59,9 +59,9 @@ public class Jpake4KeyConfirmationResponse extends AbstractPumpChallengeResponse
     }
 
     private static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {
-        Preconditions.checkArgument(nonce.length == 8, "nonce was " + nonce.length + " not 8");
-        Preconditions.checkArgument(reserved.length == 8);
-        Preconditions.checkArgument(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");
+        Validate.isTrue(nonce.length == 8, "nonce was " + nonce.length + " not 8");
+        Validate.isTrue(reserved.length == 8);
+        Validate.isTrue(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");
         byte[] cargo = new byte[50];
         System.arraycopy(Bytes.combine(
                 Bytes.firstTwoBytesLittleEndian(appInstanceId),

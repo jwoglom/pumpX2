@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -33,8 +33,8 @@ public class PumpChallengeRequest extends Message {
 
     public PumpChallengeRequest(int appInstanceId, byte[] pumpChallengeHash) {
         parse(buildCargo(appInstanceId, pumpChallengeHash));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));
     }
 
     public int getAppInstanceId() {

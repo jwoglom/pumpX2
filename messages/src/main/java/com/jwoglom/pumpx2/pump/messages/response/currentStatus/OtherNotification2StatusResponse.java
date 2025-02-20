@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -29,7 +29,7 @@ public class OtherNotification2StatusResponse extends Message {
     }
 
     public void parse(byte[] raw) { 
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.codeA = Bytes.readUint32(raw, 0);
         this.codeB = Bytes.readUint32(raw, 4);

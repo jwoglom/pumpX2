@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -39,7 +39,7 @@ public class SetG6TransmitterIdRequest extends Message {
 
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.txId = Bytes.readString(raw, 0, TXID_LENGTH);
     }

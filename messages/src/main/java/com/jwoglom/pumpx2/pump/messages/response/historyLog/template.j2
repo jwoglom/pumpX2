@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
@@ -35,7 +35,7 @@ public class {{responseName}} extends HistoryLog {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == 26);
+        Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
         {% for arg in responseArgs %}this.{{ arg.name }} = {% if arg.size == 1 %}raw[{{ arg.index }}]{% if arg.type == "boolean" %} != 0{% endif %};

@@ -1,15 +1,12 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
+import org.apache.commons.lang3.Validate;
 import org.json.JSONObject;
 
 import java.util.Set;
@@ -41,12 +38,12 @@ public abstract class Message {
     }
 
     public Class<? extends Message> getResponseClass() {
-        Preconditions.checkState(type() == MessageType.REQUEST);
+        Validate.isTrue(type() == MessageType.REQUEST);
         return props().response();
     }
 
     public MessageProps getResponseProps() {
-        Preconditions.checkState(type() == MessageType.REQUEST);
+        Validate.isTrue(type() == MessageType.REQUEST);
         return props().response().getAnnotation(MessageProps.class);
     }
 
@@ -65,12 +62,12 @@ public abstract class Message {
     }
 
     public Class<? extends Message> getRequestClass() {
-        Preconditions.checkState(type() == MessageType.RESPONSE);
+        Validate.isTrue(type() == MessageType.RESPONSE);
         return props().request();
     }
 
     public MessageProps getRequestProps() {
-        Preconditions.checkState(type() == MessageType.RESPONSE);
+        Validate.isTrue(type() == MessageType.RESPONSE);
         return props().request().getAnnotation(MessageProps.class);
     }
 
@@ -93,7 +90,7 @@ public abstract class Message {
         return raw;
     }
 
-    private static final Set<String> IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");
+    private static final Set<String> IGNORED_PROPERTY_NAMES = Set.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");
 
     public String toString() {
         return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);

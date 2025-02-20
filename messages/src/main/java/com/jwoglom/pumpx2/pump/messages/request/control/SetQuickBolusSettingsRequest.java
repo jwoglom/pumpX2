@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.control;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -43,7 +43,7 @@ public class SetQuickBolusSettingsRequest extends Message {
 
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.enabled = raw[0] == 1;
         this.modeRaw = raw[1];
@@ -54,7 +54,7 @@ public class SetQuickBolusSettingsRequest extends Message {
     }
 
     public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {
-        Preconditions.checkArgument(magic.length == 5);
+        Validate.isTrue(magic.length == 5);
         return Bytes.combine(
                 new byte[]{(byte) (enabled ? 1 : 0)},
                 new byte[]{(byte) modeRaw},
@@ -145,7 +145,7 @@ public class SetQuickBolusSettingsRequest extends Message {
     private void checkValidIncrement() {
         QuickBolusIncrement increment = QuickBolusIncrement.forMagic(this.magic);
         if (increment != null) {
-            Preconditions.checkState(increment.getMode().getRaw() == getModeRaw(),
+            Validate.isTrue(increment.getMode().getRaw() == getModeRaw(),
                     "invalid mode selection: increment=" + increment + " mode=" + getMode());
         }
     }

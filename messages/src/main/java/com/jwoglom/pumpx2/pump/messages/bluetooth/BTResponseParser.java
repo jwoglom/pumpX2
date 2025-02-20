@@ -1,22 +1,18 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
-import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.Validate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 public class BTResponseParser {
@@ -96,7 +92,7 @@ public class BTResponseParser {
     }
 
     public static Byte parseTxId(byte[] output) {
-        Preconditions.checkState(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
+        Validate.isTrue(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
         /*
         output[0] = packet index mod 15
         output[1] = transaction ID
@@ -106,7 +102,7 @@ public class BTResponseParser {
     }
 
     public static Byte parseOpcode(byte[] output) {
-        Preconditions.checkState(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
+        Validate.isTrue(output.length >= 3, "BT-returned data should contain at least 3 bytes: '%s'", Hex.encodeHexString(output));
         /*
         output[0] = packet index mod 15
         output[1] = transaction ID
@@ -117,7 +113,7 @@ public class BTResponseParser {
 
     private static void checkCharacteristicUuid(UUID uuid, byte[] output) {
         // if (Intrinsics.areEqual(uuid, TAllowedCharacteristics.authorizationCharacteristics()) || Intrinsics.areEqual(uuid, TAllowedCharacteristics.currentStatusCharacteristics()) || Intrinsics.areEqual(uuid, TAllowedCharacteristics.controlCharacteristics())) {
-        List<UUID> rawBleNotifyUuids = ImmutableList.of(
+        List<UUID> rawBleNotifyUuids = Arrays.asList(
                 CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS,
                 CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS);
