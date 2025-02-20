@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
 
-import kotlin.collections.ArraysKt;
-
 @MessageProps(
     opCode=33,
     size=4,

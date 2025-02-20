@@ -16,8 +16,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Set;
 
-import kotlin.jvm.internal.Intrinsics;
-import kotlin.text.Charsets;
 
 public class PacketArrayList {
     protected static final String TAG = "PacketArrayList";
@@ -85,7 +83,7 @@ public class PacketArrayList {
     }
 
     public boolean validate(byte[] authKey) {
-        Intrinsics.checkParameterIsNotNull(authKey, "ak");
+        Validate.notNull(authKey, "ak");
         if (needsMorePacket()) {
             return false;
         }
@@ -195,7 +193,7 @@ public class PacketArrayList {
 
 
     public void validatePacket(byte[] packetData) {
-        Intrinsics.checkParameterIsNotNull(packetData, "packetData");
+        Validate.notNull(packetData, "packetData");
         if (packetData.length == 0) {
             throw new IllegalArgumentException("Empty data");
         } else if (packetData.length >= 3) {

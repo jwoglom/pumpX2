@@ -10,7 +10,6 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeRes
 
 import java.util.Arrays;
 
-import kotlin.collections.ArraysKt;
 
 /**
  * The second authorization message sent to the pump which contains the HMACed pairing code.

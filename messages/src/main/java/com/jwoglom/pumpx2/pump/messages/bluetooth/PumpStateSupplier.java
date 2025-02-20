@@ -30,7 +30,7 @@ public class PumpStateSupplier {
         String serverNonce = jpakeServerNonceHex == null ? null : jpakeServerNonceHex.get();
         String code = pumpPairingCode == null ? null : pumpPairingCode.get();
 
-        if (derivedSecret == null && code == null) {
+        if (StringUtils.isBlank(derivedSecret) && StringUtils.isBlank(code)) {
             throw new IllegalStateException("no pump authenticationKey");
         }
 
@@ -50,6 +50,9 @@ public class PumpStateSupplier {
         }
 
         L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code);
+
+
+        if (code == null) return new byte[0];
 
         // pairing code is passed as raw ascii to hmac
         return code.getBytes(StandardCharsets.UTF_8);

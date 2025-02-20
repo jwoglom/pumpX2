@@ -1,8 +1,10 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
+import androidx.annotation.Nullable;
+
 import java.util.Objects;
 
-import javax.annotation.Nullable;
+
 
 public interface BolusCalcCondition {
     BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target",

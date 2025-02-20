@@ -3,6 +3,8 @@
 <img src="https://github.com/jwoglom/pumpx2/actions/workflows/android.yml/badge.svg" />
 </a>
 
+![](https://jitpack.io/v/jwoglom/pumpX2.svg)
+
 # PumpX2
 
 API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X2 and Mobi insulin pumps.

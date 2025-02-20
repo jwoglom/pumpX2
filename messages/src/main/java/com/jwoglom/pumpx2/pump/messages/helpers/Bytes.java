@@ -7,15 +7,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import kotlin.UByte;
-import kotlin.collections.ArraysKt;
-import kotlin.text.Charsets;
 
 public class Bytes {
+
+    public static int UByteMaxValue = 255; // taken from kotlin
 
     public static byte[] dropFirstN(byte[] bytes, int n) {
         byte[] ret = new byte[bytes.length - n];
@@ -85,10 +82,11 @@ public class Bytes {
     }
 
     public static long readUint32(byte[] bArr, int i) {
+
         if (i >= 0) {
             int i2 = i + 3;
             if (i2 < bArr.length) {
-                return ((long) (((bArr[i] & UByte.MAX_VALUE) & 255) | ((bArr[i2] & UByte.MAX_VALUE) << 24) | (((bArr[i + 2] & UByte.MAX_VALUE) & 255) << 16) | (((bArr[i + 1] & UByte.MAX_VALUE) & 255) << 8))) & 4294967295L;
+                return ((long) (((bArr[i] & UByteMaxValue) & 255) | ((bArr[i2] & UByteMaxValue) << 24) | (((bArr[i + 2] & UByteMaxValue) & 255) << 16) | (((bArr[i + 1] & UByteMaxValue) & 255) << 8))) & 4294967295L;
             }
             throw new ArrayIndexOutOfBoundsException();
         }
@@ -107,7 +105,7 @@ public class Bytes {
     }
 
     private static int andWithMaxValue(byte b) {
-        return b & UByte.MAX_VALUE;
+        return b & UByteMaxValue;
     }
 
     public static byte[] toUint32(long j) {
@@ -148,7 +146,7 @@ public class Bytes {
                 }
                 i++;
             }
-            return new String(strBytes, Charsets.UTF_8);
+            return new String(strBytes, StandardCharsets.UTF_8);
         }
         throw new ArrayIndexOutOfBoundsException(i);
     }
