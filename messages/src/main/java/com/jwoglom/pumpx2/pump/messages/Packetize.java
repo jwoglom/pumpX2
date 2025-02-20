@@ -103,6 +103,10 @@ public class Packetize {
             subList.add(b);
         }
 
+        if (!subList.isEmpty()) {
+            partitions.add(subList);
+        }
+
         return partitions;
     }
 

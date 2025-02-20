@@ -81,7 +81,8 @@ public class BTResponseParserTest {
         Packetize.txId = new TransactionId();
         TronMessageWrapper wrapper = new TronMessageWrapper(request, (byte) 0);
 
-        assertEquals("000010000a0000670b42de65985e97f1ce", Hex.encodeHexString(wrapper.packets().get(0).build()));
+        assertEquals("000010000a0000670b42de65985e97f1ce",
+                Hex.encodeHexString(wrapper.packets().get(0).build()));
     }
 
     @Test
