@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -93,7 +93,7 @@
 <span class="source-line-no">076</span><span id="line-76">     * &lt;/table&gt;</span>
 <span class="source-line-no">077</span><span id="line-77">     */</span>
 <span class="source-line-no">078</span><span id="line-78">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">079</span><span id="line-79">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">079</span><span id="line-79">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">080</span><span id="line-80">        this.cargo = raw;</span>
 <span class="source-line-no">081</span><span id="line-81">        this.cgmTrendIconId = Byte.toUnsignedInt(raw[0]);</span>
 <span class="source-line-no">082</span><span id="line-82">        this.cgmAlertIconId = Byte.toUnsignedInt(raw[1]);</span>

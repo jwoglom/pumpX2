@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.authentication;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -106,9 +106,9 @@
 <span class="source-line-no">089</span><span id="line-89">    }</span>
 <span class="source-line-no">090</span><span id="line-90"></span>
 <span class="source-line-no">091</span><span id="line-91">    private static byte[] buildCargo(int appInstanceId, byte[] nonce, byte[] reserved, byte[] hashDigest) {</span>
-<span class="source-line-no">092</span><span id="line-92">        Preconditions.checkArgument(nonce.length == 8, "nonce was " + nonce.length + " not 8");</span>
-<span class="source-line-no">093</span><span id="line-93">        Preconditions.checkArgument(reserved.length == 8);</span>
-<span class="source-line-no">094</span><span id="line-94">        Preconditions.checkArgument(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");</span>
+<span class="source-line-no">092</span><span id="line-92">        Validate.isTrue(nonce.length == 8, "nonce was " + nonce.length + " not 8");</span>
+<span class="source-line-no">093</span><span id="line-93">        Validate.isTrue(reserved.length == 8);</span>
+<span class="source-line-no">094</span><span id="line-94">        Validate.isTrue(hashDigest.length == 32, "hashDigest was " + hashDigest.length + " not 32");</span>
 <span class="source-line-no">095</span><span id="line-95">        byte[] cargo = new byte[50];</span>
 <span class="source-line-no">096</span><span id="line-96">        System.arraycopy(Bytes.combine(</span>
 <span class="source-line-no">097</span><span id="line-97">                Bytes.firstTwoBytesLittleEndian(appInstanceId),</span>

@@ -99,7 +99,7 @@
 <span class="source-line-no">082</span><span id="line-82">     */</span>
 <span class="source-line-no">083</span><span id="line-83">    public void parse(byte[] raw) {</span>
 <span class="source-line-no">084</span><span id="line-84">        // We do NOT want this check, the size is variable!</span>
-<span class="source-line-no">085</span><span id="line-85">        //Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">085</span><span id="line-85">        //Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">086</span><span id="line-86">        this.cargo = raw;</span>
 <span class="source-line-no">087</span><span id="line-87">        this.numberOfHistoryLogs = raw[0];</span>
 <span class="source-line-no">088</span><span id="line-88">        this.streamId = raw[1];</span>

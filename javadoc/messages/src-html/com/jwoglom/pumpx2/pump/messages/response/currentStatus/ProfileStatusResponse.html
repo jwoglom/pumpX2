@@ -17,8 +17,8 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.google.common.collect.ImmutableList;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">004</span><span id="line-4">import java.util.Arrays;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -105,7 +105,7 @@
 <span class="source-line-no">088</span><span id="line-88">     * &lt;/table&gt;</span>
 <span class="source-line-no">089</span><span id="line-89">     */</span>
 <span class="source-line-no">090</span><span id="line-90">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">091</span><span id="line-91">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">091</span><span id="line-91">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">092</span><span id="line-92">        this.cargo = raw;</span>
 <span class="source-line-no">093</span><span id="line-93">        this.numberOfProfiles = raw[0];</span>
 <span class="source-line-no">094</span><span id="line-94">        this.idpSlot0Id = raw[1];</span>
@@ -181,7 +181,7 @@
 <span class="source-line-no">164</span><span id="line-164">     * @return all IDP slots in order restricted to the total number of profiles.</span>
 <span class="source-line-no">165</span><span id="line-165">     */</span>
 <span class="source-line-no">166</span><span id="line-166">    public List&lt;Integer&gt; getIdpSlotIds() {</span>
-<span class="source-line-no">167</span><span id="line-167">        return ImmutableList.of(</span>
+<span class="source-line-no">167</span><span id="line-167">        return Arrays.asList(</span>
 <span class="source-line-no">168</span><span id="line-168">                getIdpSlot0Id(),</span>
 <span class="source-line-no">169</span><span id="line-169">                getIdpSlot1Id(),</span>
 <span class="source-line-no">170</span><span id="line-170">                getIdpSlot2Id(),</span>

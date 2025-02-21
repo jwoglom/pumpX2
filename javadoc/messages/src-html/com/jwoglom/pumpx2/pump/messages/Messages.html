@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;</span>
@@ -329,7 +329,7 @@
 <span class="source-line-no">312</span><span id="line-312">            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);</span>
 <span class="source-line-no">313</span><span id="line-313">            RESPONSES.put(m.responseOpCode, m);</span>
 <span class="source-line-no">314</span><span id="line-314"></span>
-<span class="source-line-no">315</span><span id="line-315">            Preconditions.checkArgument(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</span>
+<span class="source-line-no">315</span><span id="line-315">            Validate.isTrue(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</span>
 <span class="source-line-no">316</span><span id="line-316">        }</span>
 <span class="source-line-no">317</span><span id="line-317"></span>
 <span class="source-line-no">318</span><span id="line-318">        for (Characteristic c : Characteristic.values()) {</span>

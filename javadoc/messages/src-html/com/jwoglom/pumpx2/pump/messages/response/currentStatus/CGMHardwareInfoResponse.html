@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -75,7 +75,7 @@
 <span class="source-line-no">058</span><span id="line-58">    }</span>
 <span class="source-line-no">059</span><span id="line-59"></span>
 <span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">061</span><span id="line-61">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">062</span><span id="line-62">        hardwareInfoString = Bytes.readString(raw, 0, 16);</span>
 <span class="source-line-no">063</span><span id="line-63">        lastByte = raw[16];</span>
 <span class="source-line-no">064</span><span id="line-64">        cargo = raw;</span>

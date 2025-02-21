@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.calculator;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.collect.ImmutableList;</span>
+<span class="source-line-no">003</span><span id="line-3">import java.util.Arrays;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
@@ -25,54 +25,55 @@
 <span class="source-line-no">008</span><span id="line-8"></span>
 <span class="source-line-no">009</span><span id="line-9">import java.time.Instant;</span>
 <span class="source-line-no">010</span><span id="line-10">import java.time.temporal.ChronoUnit;</span>
-<span class="source-line-no">011</span><span id="line-11">import java.util.List;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">public class BolusCalcLastBG {</span>
-<span class="source-line-no">014</span><span id="line-14">    private final BolusCalcDataSnapshotResponse dataSnapshot;</span>
-<span class="source-line-no">015</span><span id="line-15">    private final LastBGResponse lastBGResponse;</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
+<span class="source-line-no">011</span><span id="line-11">import java.util.Arrays;</span>
+<span class="source-line-no">012</span><span id="line-12">import java.util.List;</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">public class BolusCalcLastBG {</span>
+<span class="source-line-no">015</span><span id="line-15">    private final BolusCalcDataSnapshotResponse dataSnapshot;</span>
+<span class="source-line-no">016</span><span id="line-16">    private final LastBGResponse lastBGResponse;</span>
 <span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    BolusCalcLastBG(BolusCalcDataSnapshotResponse dataSnapshot, LastBGResponse lastBGResponse) {</span>
-<span class="source-line-no">019</span><span id="line-19">        this.dataSnapshot = dataSnapshot;</span>
-<span class="source-line-no">020</span><span id="line-20">        this.lastBGResponse = lastBGResponse;</span>
-<span class="source-line-no">021</span><span id="line-21">    }</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    public Pair&lt;Integer, List&lt;BolusCalcCondition&gt;&gt; determineLastBG() {</span>
-<span class="source-line-no">024</span><span id="line-24">        Integer bgValue = null;</span>
-<span class="source-line-no">025</span><span id="line-25"></span>
-<span class="source-line-no">026</span><span id="line-26">        // Correction factor from BolusCalcDataSnapshot, aka the most recent CGM reading if it qualifies</span>
-<span class="source-line-no">027</span><span id="line-27">        if (dataSnapshot != null) {</span>
-<span class="source-line-no">028</span><span id="line-28">            if (dataSnapshot.getCorrectionFactor() &gt; 0 &amp;&amp; dataSnapshot.getIsAutopopAllowed()) {</span>
-<span class="source-line-no">029</span><span id="line-29">                bgValue = dataSnapshot.getCorrectionFactor();</span>
-<span class="source-line-no">030</span><span id="line-30">            }</span>
-<span class="source-line-no">031</span><span id="line-31">        }</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">        // If the data from LastBGResponse is empty, then we rely on the correctionFactor.</span>
-<span class="source-line-no">034</span><span id="line-34">        if (lastBGResponse == null || lastBGResponse.getBgValue() == 0) {</span>
-<span class="source-line-no">035</span><span id="line-35">            if (bgValue == null) {</span>
-<span class="source-line-no">036</span><span id="line-36">                return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not filling BG", "not present in data snapshot or LastBGResponse")));</span>
-<span class="source-line-no">037</span><span id="line-37">            } else {</span>
-<span class="source-line-no">038</span><span id="line-38">                return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from CGM")));</span>
-<span class="source-line-no">039</span><span id="line-39">            }</span>
-<span class="source-line-no">040</span><span id="line-40">        }</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">        long durationMins = ChronoUnit.MINUTES.between(lastBGResponse.getBgTimestampInstant(), Instant.now());</span>
-<span class="source-line-no">043</span><span id="line-43">        if (bgValue == null &amp;&amp; durationMins &gt;= 15) {</span>
-<span class="source-line-no">044</span><span id="line-44">            return Pair.of(null, ImmutableList.of(new BolusCalcCondition.DataDecision("not filling BG", "no BG in data snapshot and LastBGResponse BG is too old")));</span>
-<span class="source-line-no">045</span><span id="line-45">        }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">        if (bgValue == null) {</span>
-<span class="source-line-no">048</span><span id="line-48">            if (lastBGResponse.getBgValue() &gt;= 40 &amp;&amp; lastBGResponse.getBgValue() &lt;= 400) {</span>
-<span class="source-line-no">049</span><span id="line-49">                return Pair.of(lastBGResponse.getBgValue(), ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from " + lastBGResponse.getBgSource().name())));</span>
-<span class="source-line-no">050</span><span id="line-50">            } else {</span>
-<span class="source-line-no">051</span><span id="line-51">                return Pair.of(null, ImmutableList.of(new BolusCalcCondition.FailedSanityCheck("LastBGResponse BG not within interval")));</span>
-<span class="source-line-no">052</span><span id="line-52">            }</span>
-<span class="source-line-no">053</span><span id="line-53">        }</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">        // Default to using BolusCalcDataSnapshot correctionFactor if it exists</span>
-<span class="source-line-no">056</span><span id="line-56">        return Pair.of(bgValue, ImmutableList.of(new BolusCalcCondition.DataDecision("filling BG from CGM")));</span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58">}</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">    BolusCalcLastBG(BolusCalcDataSnapshotResponse dataSnapshot, LastBGResponse lastBGResponse) {</span>
+<span class="source-line-no">020</span><span id="line-20">        this.dataSnapshot = dataSnapshot;</span>
+<span class="source-line-no">021</span><span id="line-21">        this.lastBGResponse = lastBGResponse;</span>
+<span class="source-line-no">022</span><span id="line-22">    }</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">    public Pair&lt;Integer, List&lt;BolusCalcCondition&gt;&gt; determineLastBG() {</span>
+<span class="source-line-no">025</span><span id="line-25">        Integer bgValue = null;</span>
+<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">027</span><span id="line-27">        // Correction factor from BolusCalcDataSnapshot, aka the most recent CGM reading if it qualifies</span>
+<span class="source-line-no">028</span><span id="line-28">        if (dataSnapshot != null) {</span>
+<span class="source-line-no">029</span><span id="line-29">            if (dataSnapshot.getCorrectionFactor() &gt; 0 &amp;&amp; dataSnapshot.getIsAutopopAllowed()) {</span>
+<span class="source-line-no">030</span><span id="line-30">                bgValue = dataSnapshot.getCorrectionFactor();</span>
+<span class="source-line-no">031</span><span id="line-31">            }</span>
+<span class="source-line-no">032</span><span id="line-32">        }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">        // If the data from LastBGResponse is empty, then we rely on the correctionFactor.</span>
+<span class="source-line-no">035</span><span id="line-35">        if (lastBGResponse == null || lastBGResponse.getBgValue() == 0) {</span>
+<span class="source-line-no">036</span><span id="line-36">            if (bgValue == null) {</span>
+<span class="source-line-no">037</span><span id="line-37">                return Pair.of(null, Arrays.asList(new BolusCalcCondition.DataDecision("not filling BG", "not present in data snapshot or LastBGResponse")));</span>
+<span class="source-line-no">038</span><span id="line-38">            } else {</span>
+<span class="source-line-no">039</span><span id="line-39">                return Pair.of(bgValue, Arrays.asList(new BolusCalcCondition.DataDecision("filling BG from CGM")));</span>
+<span class="source-line-no">040</span><span id="line-40">            }</span>
+<span class="source-line-no">041</span><span id="line-41">        }</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">        long durationMins = ChronoUnit.MINUTES.between(lastBGResponse.getBgTimestampInstant(), Instant.now());</span>
+<span class="source-line-no">044</span><span id="line-44">        if (bgValue == null &amp;&amp; durationMins &gt;= 15) {</span>
+<span class="source-line-no">045</span><span id="line-45">            return Pair.of(null, Arrays.asList(new BolusCalcCondition.DataDecision("not filling BG", "no BG in data snapshot and LastBGResponse BG is too old")));</span>
+<span class="source-line-no">046</span><span id="line-46">        }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">        if (bgValue == null) {</span>
+<span class="source-line-no">049</span><span id="line-49">            if (lastBGResponse.getBgValue() &gt;= 40 &amp;&amp; lastBGResponse.getBgValue() &lt;= 400) {</span>
+<span class="source-line-no">050</span><span id="line-50">                return Pair.of(lastBGResponse.getBgValue(), Arrays.asList(new BolusCalcCondition.DataDecision("filling BG from " + lastBGResponse.getBgSource().name())));</span>
+<span class="source-line-no">051</span><span id="line-51">            } else {</span>
+<span class="source-line-no">052</span><span id="line-52">                return Pair.of(null, Arrays.asList(new BolusCalcCondition.FailedSanityCheck("LastBGResponse BG not within interval")));</span>
+<span class="source-line-no">053</span><span id="line-53">            }</span>
+<span class="source-line-no">054</span><span id="line-54">        }</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">        // Default to using BolusCalcDataSnapshot correctionFactor if it exists</span>
+<span class="source-line-no">057</span><span id="line-57">        return Pair.of(bgValue, Arrays.asList(new BolusCalcCondition.DataDecision("filling BG from CGM")));</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59">}</span>
 
 
 

@@ -17,148 +17,145 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.google.common.collect.ImmutableSet;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.shared.Hex;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.shared.JavaHelpers;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">import org.json.JSONObject;</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">import java.util.Set;</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
-<span class="source-line-no">017</span><span id="line-17">public abstract class Message {</span>
-<span class="source-line-no">018</span><span id="line-18">    public static final byte[] EMPTY = new byte[]{};</span>
-<span class="source-line-no">019</span><span id="line-19">    protected byte[] cargo = null;</span>
-<span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">    public abstract void parse(byte[] raw);</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    public MessageProps props() {</span>
-<span class="source-line-no">024</span><span id="line-24">        return getClass().getAnnotation(MessageProps.class);</span>
-<span class="source-line-no">025</span><span id="line-25">    }</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    public byte opCode() {</span>
-<span class="source-line-no">028</span><span id="line-28">        return props().opCode();</span>
-<span class="source-line-no">029</span><span id="line-29">    }</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    public boolean signed() {</span>
-<span class="source-line-no">032</span><span id="line-32">        return props().signed();</span>
-<span class="source-line-no">033</span><span id="line-33">    }</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">    public boolean stream() {</span>
-<span class="source-line-no">036</span><span id="line-36">        return props().stream();</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">    public MessageType type() {</span>
-<span class="source-line-no">040</span><span id="line-40">        return props().type();</span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public Class&lt;? extends Message&gt; getResponseClass() {</span>
-<span class="source-line-no">044</span><span id="line-44">        Preconditions.checkState(type() == MessageType.REQUEST);</span>
-<span class="source-line-no">045</span><span id="line-45">        return props().response();</span>
-<span class="source-line-no">046</span><span id="line-46">    }</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    public MessageProps getResponseProps() {</span>
-<span class="source-line-no">049</span><span id="line-49">        Preconditions.checkState(type() == MessageType.REQUEST);</span>
-<span class="source-line-no">050</span><span id="line-50">        return props().response().getAnnotation(MessageProps.class);</span>
-<span class="source-line-no">051</span><span id="line-51">    }</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">    public byte getResponseOpCode() {</span>
-<span class="source-line-no">054</span><span id="line-54">        if (type() == MessageType.REQUEST) {</span>
-<span class="source-line-no">055</span><span id="line-55">            return getResponseProps().opCode();</span>
-<span class="source-line-no">056</span><span id="line-56">        }</span>
-<span class="source-line-no">057</span><span id="line-57">        return opCode();</span>
-<span class="source-line-no">058</span><span id="line-58">    }</span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">    public int getResponseSize() {</span>
-<span class="source-line-no">061</span><span id="line-61">        if (type() == MessageType.REQUEST) {</span>
-<span class="source-line-no">062</span><span id="line-62">            return getResponseProps().size();</span>
-<span class="source-line-no">063</span><span id="line-63">        }</span>
-<span class="source-line-no">064</span><span id="line-64">        return props().size();</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    public Class&lt;? extends Message&gt; getRequestClass() {</span>
-<span class="source-line-no">068</span><span id="line-68">        Preconditions.checkState(type() == MessageType.RESPONSE);</span>
-<span class="source-line-no">069</span><span id="line-69">        return props().request();</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    public MessageProps getRequestProps() {</span>
-<span class="source-line-no">073</span><span id="line-73">        Preconditions.checkState(type() == MessageType.RESPONSE);</span>
-<span class="source-line-no">074</span><span id="line-74">        return props().request().getAnnotation(MessageProps.class);</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    public Characteristic getCharacteristic() {</span>
-<span class="source-line-no">078</span><span id="line-78">        return props().characteristic();</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    public byte[] getCargo() {</span>
-<span class="source-line-no">082</span><span id="line-82">        return this.cargo;</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    public void fillWithEmptyCargo() {</span>
-<span class="source-line-no">086</span><span id="line-86">        this.cargo = EMPTY;</span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    protected byte[] removeSignedRequestHmacBytes(byte[] raw) {</span>
-<span class="source-line-no">090</span><span id="line-90">        if (signed() &amp;&amp; raw.length == props().size() + 24) {</span>
-<span class="source-line-no">091</span><span id="line-91">            return Bytes.dropLastN(raw, 24);</span>
-<span class="source-line-no">092</span><span id="line-92">        }</span>
-<span class="source-line-no">093</span><span id="line-93">        return raw;</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">    private static final Set&lt;String&gt; IGNORED_PROPERTY_NAMES = ImmutableSet.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    public String toString() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">    public String verboseToString() {</span>
-<span class="source-line-no">103</span><span id="line-103">        return JavaHelpers.autoToStringVerbose(this, IGNORED_PROPERTY_NAMES);</span>
-<span class="source-line-no">104</span><span id="line-104">    }</span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">    public String messageName() {</span>
-<span class="source-line-no">107</span><span id="line-107">        return getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");</span>
-<span class="source-line-no">108</span><span id="line-108">    }</span>
-<span class="source-line-no">109</span><span id="line-109"></span>
-<span class="source-line-no">110</span><span id="line-110">    public String jsonToString() {</span>
-<span class="source-line-no">111</span><span id="line-111">        String generatedToString = JavaHelpers.autoToStringJson(this, IGNORED_PROPERTY_NAMES);</span>
-<span class="source-line-no">112</span><span id="line-112">        JSONObject obj = new JSONObject();</span>
-<span class="source-line-no">113</span><span id="line-113">        obj.put("name", messageName());</span>
-<span class="source-line-no">114</span><span id="line-114">        obj.put("messageProps", new JSONObject(propsJsonToString()));</span>
-<span class="source-line-no">115</span><span id="line-115">        obj.put("params", new JSONObject(generatedToString));</span>
-<span class="source-line-no">116</span><span id="line-116">        obj.put("cargoHex", Hex.encodeHexString(getCargo()));</span>
+<span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.shared.Hex;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.shared.JavaHelpers;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">010</span><span id="line-10">import org.json.JSONObject;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">import java.util.Set;</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">public abstract class Message {</span>
+<span class="source-line-no">015</span><span id="line-15">    public static final byte[] EMPTY = new byte[]{};</span>
+<span class="source-line-no">016</span><span id="line-16">    protected byte[] cargo = null;</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">    public abstract void parse(byte[] raw);</span>
+<span class="source-line-no">019</span><span id="line-19"></span>
+<span class="source-line-no">020</span><span id="line-20">    public MessageProps props() {</span>
+<span class="source-line-no">021</span><span id="line-21">        return getClass().getAnnotation(MessageProps.class);</span>
+<span class="source-line-no">022</span><span id="line-22">    }</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">    public byte opCode() {</span>
+<span class="source-line-no">025</span><span id="line-25">        return props().opCode();</span>
+<span class="source-line-no">026</span><span id="line-26">    }</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">    public boolean signed() {</span>
+<span class="source-line-no">029</span><span id="line-29">        return props().signed();</span>
+<span class="source-line-no">030</span><span id="line-30">    }</span>
+<span class="source-line-no">031</span><span id="line-31"></span>
+<span class="source-line-no">032</span><span id="line-32">    public boolean stream() {</span>
+<span class="source-line-no">033</span><span id="line-33">        return props().stream();</span>
+<span class="source-line-no">034</span><span id="line-34">    }</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36">    public MessageType type() {</span>
+<span class="source-line-no">037</span><span id="line-37">        return props().type();</span>
+<span class="source-line-no">038</span><span id="line-38">    }</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40">    public Class&lt;? extends Message&gt; getResponseClass() {</span>
+<span class="source-line-no">041</span><span id="line-41">        Validate.isTrue(type() == MessageType.REQUEST);</span>
+<span class="source-line-no">042</span><span id="line-42">        return props().response();</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    public MessageProps getResponseProps() {</span>
+<span class="source-line-no">046</span><span id="line-46">        Validate.isTrue(type() == MessageType.REQUEST);</span>
+<span class="source-line-no">047</span><span id="line-47">        return props().response().getAnnotation(MessageProps.class);</span>
+<span class="source-line-no">048</span><span id="line-48">    }</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">    public byte getResponseOpCode() {</span>
+<span class="source-line-no">051</span><span id="line-51">        if (type() == MessageType.REQUEST) {</span>
+<span class="source-line-no">052</span><span id="line-52">            return getResponseProps().opCode();</span>
+<span class="source-line-no">053</span><span id="line-53">        }</span>
+<span class="source-line-no">054</span><span id="line-54">        return opCode();</span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    public int getResponseSize() {</span>
+<span class="source-line-no">058</span><span id="line-58">        if (type() == MessageType.REQUEST) {</span>
+<span class="source-line-no">059</span><span id="line-59">            return getResponseProps().size();</span>
+<span class="source-line-no">060</span><span id="line-60">        }</span>
+<span class="source-line-no">061</span><span id="line-61">        return props().size();</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    public Class&lt;? extends Message&gt; getRequestClass() {</span>
+<span class="source-line-no">065</span><span id="line-65">        Validate.isTrue(type() == MessageType.RESPONSE);</span>
+<span class="source-line-no">066</span><span id="line-66">        return props().request();</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    public MessageProps getRequestProps() {</span>
+<span class="source-line-no">070</span><span id="line-70">        Validate.isTrue(type() == MessageType.RESPONSE);</span>
+<span class="source-line-no">071</span><span id="line-71">        return props().request().getAnnotation(MessageProps.class);</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    public Characteristic getCharacteristic() {</span>
+<span class="source-line-no">075</span><span id="line-75">        return props().characteristic();</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    public byte[] getCargo() {</span>
+<span class="source-line-no">079</span><span id="line-79">        return this.cargo;</span>
+<span class="source-line-no">080</span><span id="line-80">    }</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">    public void fillWithEmptyCargo() {</span>
+<span class="source-line-no">083</span><span id="line-83">        this.cargo = EMPTY;</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    protected byte[] removeSignedRequestHmacBytes(byte[] raw) {</span>
+<span class="source-line-no">087</span><span id="line-87">        if (signed() &amp;&amp; raw.length == props().size() + 24) {</span>
+<span class="source-line-no">088</span><span id="line-88">            return Bytes.dropLastN(raw, 24);</span>
+<span class="source-line-no">089</span><span id="line-89">        }</span>
+<span class="source-line-no">090</span><span id="line-90">        return raw;</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    private static final Set&lt;String&gt; IGNORED_PROPERTY_NAMES = Set.of("requestClass", "requestProps", "historyLogStreamBytes", "intMap");</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">    public String toString() {</span>
+<span class="source-line-no">096</span><span id="line-96">        return JavaHelpers.autoToString(this, IGNORED_PROPERTY_NAMES);</span>
+<span class="source-line-no">097</span><span id="line-97">    }</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">    public String verboseToString() {</span>
+<span class="source-line-no">100</span><span id="line-100">        return JavaHelpers.autoToStringVerbose(this, IGNORED_PROPERTY_NAMES);</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    public String messageName() {</span>
+<span class="source-line-no">104</span><span id="line-104">        return getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");</span>
+<span class="source-line-no">105</span><span id="line-105">    }</span>
+<span class="source-line-no">106</span><span id="line-106"></span>
+<span class="source-line-no">107</span><span id="line-107">    public String jsonToString() {</span>
+<span class="source-line-no">108</span><span id="line-108">        String generatedToString = JavaHelpers.autoToStringJson(this, IGNORED_PROPERTY_NAMES);</span>
+<span class="source-line-no">109</span><span id="line-109">        JSONObject obj = new JSONObject();</span>
+<span class="source-line-no">110</span><span id="line-110">        obj.put("name", messageName());</span>
+<span class="source-line-no">111</span><span id="line-111">        obj.put("messageProps", new JSONObject(propsJsonToString()));</span>
+<span class="source-line-no">112</span><span id="line-112">        obj.put("params", new JSONObject(generatedToString));</span>
+<span class="source-line-no">113</span><span id="line-113">        obj.put("cargoHex", Hex.encodeHexString(getCargo()));</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">        return obj.toString(0);</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
 <span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">        return obj.toString(0);</span>
-<span class="source-line-no">119</span><span id="line-119">    }</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">    private String propsJsonToString() {</span>
-<span class="source-line-no">122</span><span id="line-122">        JSONObject props = new JSONObject();</span>
-<span class="source-line-no">123</span><span id="line-123">        props.putOpt("opCode", props().opCode());</span>
-<span class="source-line-no">124</span><span id="line-124">        props.putOpt("size", props().size());</span>
-<span class="source-line-no">125</span><span id="line-125">        props.putOpt("variableSize", props().variableSize());</span>
-<span class="source-line-no">126</span><span id="line-126">        props.putOpt("stream", props().stream());</span>
-<span class="source-line-no">127</span><span id="line-127">        props.putOpt("signed", props().signed());</span>
-<span class="source-line-no">128</span><span id="line-128">        props.putOpt("type", props().type());</span>
-<span class="source-line-no">129</span><span id="line-129">        if (!props().response().equals(UndefinedMessage.class)) {</span>
-<span class="source-line-no">130</span><span id="line-130">            props.putOpt("responseName", props().response().getName().replace("com.jwoglom.pumpx2.pump.messages.", ""));</span>
-<span class="source-line-no">131</span><span id="line-131">            props.putOpt("responseOpCode", props().response().getAnnotation(MessageProps.class).opCode());</span>
-<span class="source-line-no">132</span><span id="line-132">        }</span>
-<span class="source-line-no">133</span><span id="line-133">        if (!props().request().equals(UndefinedMessage.class)) {</span>
-<span class="source-line-no">134</span><span id="line-134">            props.putOpt("requestName", props().request().getName().replace("com.jwoglom.pumpx2.pump.messages.", ""));</span>
-<span class="source-line-no">135</span><span id="line-135">            props.putOpt("requestOpCode", props().request().getAnnotation(MessageProps.class).opCode());</span>
-<span class="source-line-no">136</span><span id="line-136">        }</span>
-<span class="source-line-no">137</span><span id="line-137">        props.putOpt("minApi", props().minApi());</span>
-<span class="source-line-no">138</span><span id="line-138">        props.putOpt("supportedDevices", props().supportedDevices());</span>
-<span class="source-line-no">139</span><span id="line-139">        props.putOpt("characteristicUuid", props().characteristic().getUuid());</span>
-<span class="source-line-no">140</span><span id="line-140">        props.putOpt("characteristic", props().characteristic().name());</span>
-<span class="source-line-no">141</span><span id="line-141">        props.putOpt("modifiesInsulinDelivery", props().modifiesInsulinDelivery());</span>
-<span class="source-line-no">142</span><span id="line-142">        return props.toString(0);</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144">}</span>
+<span class="source-line-no">118</span><span id="line-118">    private String propsJsonToString() {</span>
+<span class="source-line-no">119</span><span id="line-119">        JSONObject props = new JSONObject();</span>
+<span class="source-line-no">120</span><span id="line-120">        props.putOpt("opCode", props().opCode());</span>
+<span class="source-line-no">121</span><span id="line-121">        props.putOpt("size", props().size());</span>
+<span class="source-line-no">122</span><span id="line-122">        props.putOpt("variableSize", props().variableSize());</span>
+<span class="source-line-no">123</span><span id="line-123">        props.putOpt("stream", props().stream());</span>
+<span class="source-line-no">124</span><span id="line-124">        props.putOpt("signed", props().signed());</span>
+<span class="source-line-no">125</span><span id="line-125">        props.putOpt("type", props().type());</span>
+<span class="source-line-no">126</span><span id="line-126">        if (!props().response().equals(UndefinedMessage.class)) {</span>
+<span class="source-line-no">127</span><span id="line-127">            props.putOpt("responseName", props().response().getName().replace("com.jwoglom.pumpx2.pump.messages.", ""));</span>
+<span class="source-line-no">128</span><span id="line-128">            props.putOpt("responseOpCode", props().response().getAnnotation(MessageProps.class).opCode());</span>
+<span class="source-line-no">129</span><span id="line-129">        }</span>
+<span class="source-line-no">130</span><span id="line-130">        if (!props().request().equals(UndefinedMessage.class)) {</span>
+<span class="source-line-no">131</span><span id="line-131">            props.putOpt("requestName", props().request().getName().replace("com.jwoglom.pumpx2.pump.messages.", ""));</span>
+<span class="source-line-no">132</span><span id="line-132">            props.putOpt("requestOpCode", props().request().getAnnotation(MessageProps.class).opCode());</span>
+<span class="source-line-no">133</span><span id="line-133">        }</span>
+<span class="source-line-no">134</span><span id="line-134">        props.putOpt("minApi", props().minApi());</span>
+<span class="source-line-no">135</span><span id="line-135">        props.putOpt("supportedDevices", props().supportedDevices());</span>
+<span class="source-line-no">136</span><span id="line-136">        props.putOpt("characteristicUuid", props().characteristic().getUuid());</span>
+<span class="source-line-no">137</span><span id="line-137">        props.putOpt("characteristic", props().characteristic().name());</span>
+<span class="source-line-no">138</span><span id="line-138">        props.putOpt("modifiesInsulinDelivery", props().modifiesInsulinDelivery());</span>
+<span class="source-line-no">139</span><span id="line-139">        return props.toString(0);</span>
+<span class="source-line-no">140</span><span id="line-140">    }</span>
+<span class="source-line-no">141</span><span id="line-141">}</span>
 
 
 

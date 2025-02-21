@@ -24,7 +24,7 @@
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.shared.Hex;</span>
 <span class="source-line-no">009</span><span id="line-9"></span>
-<span class="source-line-no">010</span><span id="line-10">import kotlin.jvm.internal.Intrinsics;</span>
+<span class="source-line-no">010</span><span id="line-10">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">011</span><span id="line-11"></span>
 <span class="source-line-no">012</span><span id="line-12">public class StreamPacketArrayList extends PacketArrayList {</span>
 <span class="source-line-no">013</span><span id="line-13">    protected static final String TAG = "StreamPacketArrayList";</span>
@@ -38,7 +38,7 @@
 <span class="source-line-no">021</span><span id="line-21">    }</span>
 <span class="source-line-no">022</span><span id="line-22"></span>
 <span class="source-line-no">023</span><span id="line-23">    public void validatePacket(byte[] packetData) {</span>
-<span class="source-line-no">024</span><span id="line-24">        Intrinsics.checkParameterIsNotNull(packetData, "packetData");</span>
+<span class="source-line-no">024</span><span id="line-24">        Validate.notNull(packetData, "packetData");</span>
 <span class="source-line-no">025</span><span id="line-25">        if (packetData.length == 0) {</span>
 <span class="source-line-no">026</span><span id="line-26">            throw new IllegalArgumentException("Empty data");</span>
 <span class="source-line-no">027</span><span id="line-27">        } else if (packetData.length &gt;= 3) {</span>

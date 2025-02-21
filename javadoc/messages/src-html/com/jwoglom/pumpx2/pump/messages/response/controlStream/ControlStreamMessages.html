@@ -17,14 +17,14 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.controlStream;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Messages;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
 <span class="source-line-no">008</span><span id="line-8">public class ControlStreamMessages {</span>
 <span class="source-line-no">009</span><span id="line-9">    public static Message determineRequestMessage(byte[] rawBtValue) throws InstantiationException, IllegalAccessException {</span>
-<span class="source-line-no">010</span><span id="line-10">        Preconditions.checkArgument(rawBtValue.length &gt;= 3);</span>
+<span class="source-line-no">010</span><span id="line-10">        Validate.isTrue(rawBtValue.length &gt;= 3);</span>
 <span class="source-line-no">011</span><span id="line-11">        byte opCode = rawBtValue[2];</span>
 <span class="source-line-no">012</span><span id="line-12">        return Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();</span>
 <span class="source-line-no">013</span><span id="line-13">    }</span>

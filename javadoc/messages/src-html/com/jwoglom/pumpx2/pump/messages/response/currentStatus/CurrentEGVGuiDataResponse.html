@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -83,7 +83,7 @@
 <span class="source-line-no">066</span><span id="line-66">     * &lt;/table&gt;</span>
 <span class="source-line-no">067</span><span id="line-67">     */</span>
 <span class="source-line-no">068</span><span id="line-68">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">069</span><span id="line-69">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">069</span><span id="line-69">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">070</span><span id="line-70">        this.cargo = raw;</span>
 <span class="source-line-no">071</span><span id="line-71">        this.bgReadingTimestampSeconds = Bytes.readUint32(raw, 0);</span>
 <span class="source-line-no">072</span><span id="line-72">        this.cgmReading = Bytes.readShort(raw, 4);</span>

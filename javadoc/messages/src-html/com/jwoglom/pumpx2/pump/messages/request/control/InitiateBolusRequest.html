@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
@@ -122,13 +122,13 @@
 <span class="source-line-no">105</span><span id="line-105">     * @param extended3        TODO unknown, set as 0</span>
 <span class="source-line-no">106</span><span id="line-106">     */</span>
 <span class="source-line-no">107</span><span id="line-107">    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {</span>
-<span class="source-line-no">108</span><span id="line-108">        Preconditions.checkArgument(totalVolume &gt;= MIN_BOLUS_MILLIUNITS);</span>
-<span class="source-line-no">109</span><span id="line-109">        Preconditions.checkArgument(bolusID &gt; 0);</span>
-<span class="source-line-no">110</span><span id="line-110">        Preconditions.checkArgument(foodVolume &gt;= 0);</span>
-<span class="source-line-no">111</span><span id="line-111">        Preconditions.checkArgument(correctionVolume &gt;= 0);</span>
-<span class="source-line-no">112</span><span id="line-112">        Preconditions.checkArgument(bolusCarbs &gt;= 0);</span>
-<span class="source-line-no">113</span><span id="line-113">        Preconditions.checkArgument(bolusBG &gt;= 0);</span>
-<span class="source-line-no">114</span><span id="line-114">        Preconditions.checkArgument(bolusIOB &gt;= 0);</span>
+<span class="source-line-no">108</span><span id="line-108">        Validate.isTrue(totalVolume &gt;= MIN_BOLUS_MILLIUNITS);</span>
+<span class="source-line-no">109</span><span id="line-109">        Validate.isTrue(bolusID &gt; 0);</span>
+<span class="source-line-no">110</span><span id="line-110">        Validate.isTrue(foodVolume &gt;= 0);</span>
+<span class="source-line-no">111</span><span id="line-111">        Validate.isTrue(correctionVolume &gt;= 0);</span>
+<span class="source-line-no">112</span><span id="line-112">        Validate.isTrue(bolusCarbs &gt;= 0);</span>
+<span class="source-line-no">113</span><span id="line-113">        Validate.isTrue(bolusBG &gt;= 0);</span>
+<span class="source-line-no">114</span><span id="line-114">        Validate.isTrue(bolusIOB &gt;= 0);</span>
 <span class="source-line-no">115</span><span id="line-115">        this.cargo = buildCargo(totalVolume, bolusID, bolusTypeBitmask, foodVolume, correctionVolume, bolusCarbs, bolusBG, bolusIOB, extendedVolume, extendedSeconds, extended3);</span>
 <span class="source-line-no">116</span><span id="line-116">        this.totalVolume = totalVolume; //</span>
 <span class="source-line-no">117</span><span id="line-117">        this.bolusID = bolusID;</span>
@@ -145,7 +145,7 @@
 <span class="source-line-no">128</span><span id="line-128"></span>
 <span class="source-line-no">129</span><span id="line-129">    public void parse(byte[] raw) {</span>
 <span class="source-line-no">130</span><span id="line-130">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">131</span><span id="line-131">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">131</span><span id="line-131">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">132</span><span id="line-132">        this.cargo = raw;</span>
 <span class="source-line-no">133</span><span id="line-133">        // argument positions are guesses!!</span>
 <span class="source-line-no">134</span><span id="line-134">        // 1u bolus</span>

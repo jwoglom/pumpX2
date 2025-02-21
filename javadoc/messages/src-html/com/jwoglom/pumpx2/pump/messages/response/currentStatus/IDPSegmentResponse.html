@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
@@ -101,7 +101,7 @@
 <span class="source-line-no">084</span><span id="line-84">     * &lt;/table&gt;</span>
 <span class="source-line-no">085</span><span id="line-85">     */</span>
 <span class="source-line-no">086</span><span id="line-86">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">087</span><span id="line-87">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">087</span><span id="line-87">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">088</span><span id="line-88">        this.cargo = raw;</span>
 <span class="source-line-no">089</span><span id="line-89">        this.idpId = raw[0];</span>
 <span class="source-line-no">090</span><span id="line-90">        this.segmentIndex = raw[1];</span>

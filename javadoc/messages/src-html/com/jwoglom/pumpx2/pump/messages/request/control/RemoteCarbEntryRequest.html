@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
@@ -96,7 +96,7 @@
 <span class="source-line-no">079</span><span id="line-79">    }</span>
 <span class="source-line-no">080</span><span id="line-80"></span>
 <span class="source-line-no">081</span><span id="line-81">    public RemoteCarbEntryRequest(int carbs, int unknown, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
-<span class="source-line-no">082</span><span id="line-82">        Preconditions.checkArgument(pumpTimeSecondsSinceBoot &lt; Dates.JANUARY_1_2008_UNIX_EPOCH, "pumpTimeSecondsSinceBoot ("+pumpTimeSecondsSinceBoot+") should be seconds since boot; a unix epoch was provided instead");</span>
+<span class="source-line-no">082</span><span id="line-82">        Validate.isTrue(pumpTimeSecondsSinceBoot &lt; Dates.JANUARY_1_2008_UNIX_EPOCH, "pumpTimeSecondsSinceBoot ("+pumpTimeSecondsSinceBoot+") should be seconds since boot; a unix epoch was provided instead");</span>
 <span class="source-line-no">083</span><span id="line-83">        this.cargo = buildCargo(carbs, unknown, pumpTimeSecondsSinceBoot, bolusId);</span>
 <span class="source-line-no">084</span><span id="line-84">        this.carbs = carbs;</span>
 <span class="source-line-no">085</span><span id="line-85">        this.unknown = unknown; // from examples, always 1</span>
@@ -139,7 +139,7 @@
 <span class="source-line-no">122</span><span id="line-122">     */</span>
 <span class="source-line-no">123</span><span id="line-123">    public void parse(byte[] raw) {</span>
 <span class="source-line-no">124</span><span id="line-124">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">125</span><span id="line-125">        Preconditions.checkArgument(raw.length == props().size(), "size " + raw.length);</span>
+<span class="source-line-no">125</span><span id="line-125">        Validate.isTrue(raw.length == props().size(), "size " + raw.length);</span>
 <span class="source-line-no">126</span><span id="line-126">        this.cargo = raw;</span>
 <span class="source-line-no">127</span><span id="line-127">        this.carbs = Bytes.readShort(raw, 0);</span>
 <span class="source-line-no">128</span><span id="line-128">        this.unknown = raw[2];</span>

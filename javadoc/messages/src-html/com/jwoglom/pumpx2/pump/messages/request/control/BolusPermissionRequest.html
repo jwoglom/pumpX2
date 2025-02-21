@@ -17,55 +17,69 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
+<span class="source-line-no">010</span><span id="line-10"></span>
 <span class="source-line-no">011</span><span id="line-11"></span>
-<span class="source-line-no">012</span><span id="line-12">import kotlin.collections.ArraysKt;</span>
-<span class="source-line-no">013</span><span id="line-13">import kotlin.collections.CollectionsKt;</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">/**</span>
-<span class="source-line-no">016</span><span id="line-16"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}, opCode -94, size 0</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}, opCode -94, size 0</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16"> *</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
 <span class="source-line-no">018</span><span id="line-18"> * &lt;br&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> *</span>
-<span class="source-line-no">020</span><span id="line-20"> * </span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-94&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">030</span><span id="line-30"> * &lt;/table&gt;</span>
-<span class="source-line-no">031</span><span id="line-31"> */</span>
-<span class="source-line-no">032</span><span id="line-32">@MessageProps(</span>
-<span class="source-line-no">033</span><span id="line-33">    opCode=-94,</span>
-<span class="source-line-no">034</span><span id="line-34">    size=0,</span>
-<span class="source-line-no">035</span><span id="line-35">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">036</span><span id="line-36">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">037</span><span id="line-37">    response=BolusPermissionResponse.class,</span>
-<span class="source-line-no">038</span><span id="line-38">    minApi=KnownApiVersion.API_V2_5,</span>
-<span class="source-line-no">039</span><span id="line-39">    signed=true</span>
-<span class="source-line-no">040</span><span id="line-40">)</span>
-<span class="source-line-no">041</span><span id="line-41">public class BolusPermissionRequest extends Message {</span>
-<span class="source-line-no">042</span><span id="line-42">    public BolusPermissionRequest() {</span>
-<span class="source-line-no">043</span><span id="line-43">        this.cargo = new byte[]{};</span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">019</span><span id="line-19"></span>
+<span class="source-line-no">020</span><span id="line-20"> *</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22"> * </span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-94&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"></span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;/table&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44"> */</span>
 <span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">047</span><span id="line-47">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">048</span><span id="line-48">        Preconditions.checkArgument(raw.length == props().size());</span>
-<span class="source-line-no">049</span><span id="line-49">        this.cargo = raw;</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51">}</span>
+<span class="source-line-no">046</span><span id="line-46">@MessageProps(</span>
+<span class="source-line-no">047</span><span id="line-47">    opCode=-94,</span>
+<span class="source-line-no">048</span><span id="line-48">    size=0,</span>
+<span class="source-line-no">049</span><span id="line-49">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">050</span><span id="line-50">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">051</span><span id="line-51">    response=BolusPermissionResponse.class,</span>
+<span class="source-line-no">052</span><span id="line-52">    minApi=KnownApiVersion.API_V2_5,</span>
+<span class="source-line-no">053</span><span id="line-53">    signed=true</span>
+<span class="source-line-no">054</span><span id="line-54">)</span>
+<span class="source-line-no">055</span><span id="line-55">public class BolusPermissionRequest extends Message {</span>
+<span class="source-line-no">056</span><span id="line-56">    public BolusPermissionRequest() {</span>
+<span class="source-line-no">057</span><span id="line-57">        this.cargo = new byte[]{};</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">061</span><span id="line-61">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">062</span><span id="line-62">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">063</span><span id="line-63">        this.cargo = raw;</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65">}</span>
 
 
 

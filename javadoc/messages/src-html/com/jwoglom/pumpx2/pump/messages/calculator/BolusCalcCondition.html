@@ -17,175 +17,177 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.calculator;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import java.util.Objects;</span>
+<span class="source-line-no">003</span><span id="line-3">import androidx.annotation.Nullable;</span>
 <span class="source-line-no">004</span><span id="line-4"></span>
-<span class="source-line-no">005</span><span id="line-5">import javax.annotation.Nullable;</span>
+<span class="source-line-no">005</span><span id="line-5">import java.util.Objects;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">public interface BolusCalcCondition {</span>
-<span class="source-line-no">008</span><span id="line-8">    BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target",</span>
-<span class="source-line-no">009</span><span id="line-9">            new BolusCalcPrompt("Your BG is above target: add correction bolus?", "Correction bolus added", "Correction bolus declined"));</span>
-<span class="source-line-no">010</span><span id="line-10">    BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new NonActionDecision("Not adding positive BG correction", "active IOB is greater than correction bolus while above target");</span>
-<span class="source-line-no">011</span><span id="line-11">    BolusCalcCondition SET_ZERO_INSULIN = new Decision("Setting zero insulin", "negative correction greater than carb amount",</span>
-<span class="source-line-no">012</span><span id="line-12">            new BolusCalcPrompt("Your BG is below target: reduce bolus calculation to zero?", "Bolus set to zero", "Zero bolus declined"));</span>
-<span class="source-line-no">013</span><span id="line-13">    BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("Adding negative BG correction", "below BG target",</span>
-<span class="source-line-no">014</span><span id="line-14">            new BolusCalcPrompt("Your BG is below target: reduce bolus calculation?", "Bolus reduced", "Bolus reduction declined"));</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">    class FailedPrecondition extends Condition implements BolusCalcCondition {</span>
-<span class="source-line-no">017</span><span id="line-17">        public final String reason;</span>
-<span class="source-line-no">018</span><span id="line-18">        FailedPrecondition(String reason) {</span>
-<span class="source-line-no">019</span><span id="line-19">            super(reason);</span>
-<span class="source-line-no">020</span><span id="line-20">            this.reason = reason;</span>
-<span class="source-line-no">021</span><span id="line-21">        }</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">        FailedPrecondition(String reason, Object was, Object expected) {</span>
-<span class="source-line-no">024</span><span id="line-24">            this(reason + ": was " + was + ", expected " + expected);</span>
-<span class="source-line-no">025</span><span id="line-25">        }</span>
-<span class="source-line-no">026</span><span id="line-26">    }</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    class FailedSanityCheck extends Condition implements BolusCalcCondition {</span>
-<span class="source-line-no">029</span><span id="line-29">        public final String reason;</span>
-<span class="source-line-no">030</span><span id="line-30">        FailedSanityCheck(String reason) {</span>
-<span class="source-line-no">031</span><span id="line-31">            super("Sanity check failed: " + reason);</span>
-<span class="source-line-no">032</span><span id="line-32">            this.reason = reason;</span>
-<span class="source-line-no">033</span><span id="line-33">        }</span>
-<span class="source-line-no">034</span><span id="line-34">    }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    class WaitingOnPrecondition extends Condition implements BolusCalcCondition {</span>
-<span class="source-line-no">037</span><span id="line-37">        public final String thing;</span>
-<span class="source-line-no">038</span><span id="line-38">        WaitingOnPrecondition(String thing) {</span>
-<span class="source-line-no">039</span><span id="line-39">            super("Waiting for: " + thing);</span>
-<span class="source-line-no">040</span><span id="line-40">            this.thing = thing;</span>
-<span class="source-line-no">041</span><span id="line-41">        }</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    class Decision extends Condition implements BolusCalcCondition {</span>
-<span class="source-line-no">045</span><span id="line-45">        Decision(String decision) {</span>
-<span class="source-line-no">046</span><span id="line-46">            super(decision);</span>
-<span class="source-line-no">047</span><span id="line-47">        }</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">        Decision(String decision, String because) {</span>
-<span class="source-line-no">050</span><span id="line-50">            super(decision, because);</span>
-<span class="source-line-no">051</span><span id="line-51">        }</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">        Decision(String decision, String because, BolusCalcPrompt prompt) {</span>
-<span class="source-line-no">054</span><span id="line-54">            super(decision, because, prompt);</span>
-<span class="source-line-no">055</span><span id="line-55">        }</span>
-<span class="source-line-no">056</span><span id="line-56">    }</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    class DataDecision extends Decision implements BolusCalcCondition {</span>
-<span class="source-line-no">060</span><span id="line-60">        DataDecision(String decision) {</span>
-<span class="source-line-no">061</span><span id="line-61">            super(decision);</span>
-<span class="source-line-no">062</span><span id="line-62">        }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
-<span class="source-line-no">064</span><span id="line-64">        DataDecision(String decision, String reason) {</span>
-<span class="source-line-no">065</span><span id="line-65">            super(decision, reason);</span>
-<span class="source-line-no">066</span><span id="line-66">        }</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    class NonActionDecision extends Decision implements BolusCalcCondition {</span>
-<span class="source-line-no">070</span><span id="line-70">        NonActionDecision(String decision, String reason) {</span>
-<span class="source-line-no">071</span><span id="line-71">            super(decision, reason);</span>
-<span class="source-line-no">072</span><span id="line-72">        }</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">    class IgnoredDecision extends Decision implements BolusCalcCondition {</span>
-<span class="source-line-no">076</span><span id="line-76">        IgnoredDecision(BolusCalcCondition decision) {</span>
-<span class="source-line-no">077</span><span id="line-77">            super("Ignoring '" + decision.getMsg() + "'", "ignored by user");</span>
-<span class="source-line-no">078</span><span id="line-78">        }</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    class BolusCalcPrompt {</span>
-<span class="source-line-no">082</span><span id="line-82">        private final String promptMessage;</span>
-<span class="source-line-no">083</span><span id="line-83">        private final String whenAcceptedNotice;</span>
-<span class="source-line-no">084</span><span id="line-84">        private final String whenIgnoredNotice;</span>
-<span class="source-line-no">085</span><span id="line-85">        BolusCalcPrompt(String promptMessage, String whenAcceptedNotice, String whenIgnoredNotice) {</span>
-<span class="source-line-no">086</span><span id="line-86">            this.promptMessage = promptMessage;</span>
-<span class="source-line-no">087</span><span id="line-87">            this.whenAcceptedNotice = whenAcceptedNotice;</span>
-<span class="source-line-no">088</span><span id="line-88">            this.whenIgnoredNotice = whenIgnoredNotice;</span>
-<span class="source-line-no">089</span><span id="line-89">        }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">        public String getPromptMessage() {</span>
-<span class="source-line-no">092</span><span id="line-92">            return promptMessage;</span>
-<span class="source-line-no">093</span><span id="line-93">        }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">        public String getWhenAcceptedNotice() {</span>
-<span class="source-line-no">096</span><span id="line-96">            return whenAcceptedNotice;</span>
-<span class="source-line-no">097</span><span id="line-97">        }</span>
-<span class="source-line-no">098</span><span id="line-98"></span>
-<span class="source-line-no">099</span><span id="line-99">        public String getWhenIgnoredNotice() {</span>
-<span class="source-line-no">100</span><span id="line-100">            return whenIgnoredNotice;</span>
-<span class="source-line-no">101</span><span id="line-101">        }</span>
-<span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">        @Override</span>
-<span class="source-line-no">104</span><span id="line-104">        public boolean equals(Object o) {</span>
-<span class="source-line-no">105</span><span id="line-105">            if (this == o) return true;</span>
-<span class="source-line-no">106</span><span id="line-106">            if (o == null || getClass() != o.getClass()) return false;</span>
-<span class="source-line-no">107</span><span id="line-107">            BolusCalcPrompt that = (BolusCalcPrompt) o;</span>
-<span class="source-line-no">108</span><span id="line-108">            return Objects.equals(promptMessage, that.promptMessage) &amp;&amp; Objects.equals(whenAcceptedNotice, that.whenAcceptedNotice) &amp;&amp; Objects.equals(whenIgnoredNotice, that.whenIgnoredNotice);</span>
-<span class="source-line-no">109</span><span id="line-109">        }</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">        @Override</span>
-<span class="source-line-no">112</span><span id="line-112">        public int hashCode() {</span>
-<span class="source-line-no">113</span><span id="line-113">            return Objects.hash(promptMessage, whenAcceptedNotice, whenIgnoredNotice);</span>
-<span class="source-line-no">114</span><span id="line-114">        }</span>
-<span class="source-line-no">115</span><span id="line-115">    }</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">    class Condition extends Exception {</span>
-<span class="source-line-no">118</span><span id="line-118">        private final String msg;</span>
-<span class="source-line-no">119</span><span id="line-119">        private final String reason;</span>
-<span class="source-line-no">120</span><span id="line-120">        private final BolusCalcPrompt prompt;</span>
-<span class="source-line-no">121</span><span id="line-121">        Condition(String msg) {</span>
-<span class="source-line-no">122</span><span id="line-122">            super(msg);</span>
-<span class="source-line-no">123</span><span id="line-123">            this.msg = msg;</span>
-<span class="source-line-no">124</span><span id="line-124">            this.reason = null;</span>
-<span class="source-line-no">125</span><span id="line-125">            this.prompt = null;</span>
-<span class="source-line-no">126</span><span id="line-126">        }</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">        Condition(String msg, String reason) {</span>
-<span class="source-line-no">129</span><span id="line-129">            super(msg + " because " + reason);</span>
-<span class="source-line-no">130</span><span id="line-130">            this.msg = msg;</span>
-<span class="source-line-no">131</span><span id="line-131">            this.reason = reason;</span>
-<span class="source-line-no">132</span><span id="line-132">            this.prompt = null;</span>
-<span class="source-line-no">133</span><span id="line-133">        }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">        Condition(String msg, String reason, BolusCalcPrompt prompt) {</span>
-<span class="source-line-no">136</span><span id="line-136">            super(msg + " because " + reason);</span>
-<span class="source-line-no">137</span><span id="line-137">            this.msg = msg;</span>
-<span class="source-line-no">138</span><span id="line-138">            this.reason = reason;</span>
-<span class="source-line-no">139</span><span id="line-139">            this.prompt = prompt;</span>
-<span class="source-line-no">140</span><span id="line-140">        }</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">        @Override</span>
-<span class="source-line-no">143</span><span id="line-143">        public boolean equals(Object o) {</span>
-<span class="source-line-no">144</span><span id="line-144">            if (this == o) return true;</span>
-<span class="source-line-no">145</span><span id="line-145">            if (!(o instanceof Condition)) return false;</span>
-<span class="source-line-no">146</span><span id="line-146">            Condition condition = (Condition) o;</span>
-<span class="source-line-no">147</span><span id="line-147">            return msg.equals(condition.msg);</span>
-<span class="source-line-no">148</span><span id="line-148">        }</span>
-<span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">        @Override</span>
-<span class="source-line-no">151</span><span id="line-151">        public int hashCode() {</span>
-<span class="source-line-no">152</span><span id="line-152">            return Objects.hash(msg);</span>
-<span class="source-line-no">153</span><span id="line-153">        }</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">        public String getMsg() {</span>
-<span class="source-line-no">156</span><span id="line-156">            return msg;</span>
-<span class="source-line-no">157</span><span id="line-157">        }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159">        public @Nullable String getReason() {</span>
-<span class="source-line-no">160</span><span id="line-160">            return reason;</span>
-<span class="source-line-no">161</span><span id="line-161">        }</span>
-<span class="source-line-no">162</span><span id="line-162"></span>
-<span class="source-line-no">163</span><span id="line-163">        public @Nullable BolusCalcPrompt getPrompt() {</span>
-<span class="source-line-no">164</span><span id="line-164">            return prompt;</span>
-<span class="source-line-no">165</span><span id="line-165">        }</span>
-<span class="source-line-no">166</span><span id="line-166">    }</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">    String getMsg();</span>
-<span class="source-line-no">169</span><span id="line-169">    @Nullable String getReason();</span>
-<span class="source-line-no">170</span><span id="line-170">    @Nullable BolusCalcPrompt getPrompt();</span>
-<span class="source-line-no">171</span><span id="line-171">}</span>
+<span class="source-line-no">007</span><span id="line-7"></span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">public interface BolusCalcCondition {</span>
+<span class="source-line-no">010</span><span id="line-10">    BolusCalcCondition POSITIVE_BG_CORRECTION = new Decision("Adding positive BG correction", "above BG target",</span>
+<span class="source-line-no">011</span><span id="line-11">            new BolusCalcPrompt("Your BG is above target: add correction bolus?", "Correction bolus added", "Correction bolus declined"));</span>
+<span class="source-line-no">012</span><span id="line-12">    BolusCalcCondition NO_POSITIVE_BG_CORRECTION = new NonActionDecision("Not adding positive BG correction", "active IOB is greater than correction bolus while above target");</span>
+<span class="source-line-no">013</span><span id="line-13">    BolusCalcCondition SET_ZERO_INSULIN = new Decision("Setting zero insulin", "negative correction greater than carb amount",</span>
+<span class="source-line-no">014</span><span id="line-14">            new BolusCalcPrompt("Your BG is below target: reduce bolus calculation to zero?", "Bolus set to zero", "Zero bolus declined"));</span>
+<span class="source-line-no">015</span><span id="line-15">    BolusCalcCondition NEGATIVE_BG_CORRECTION = new Decision("Adding negative BG correction", "below BG target",</span>
+<span class="source-line-no">016</span><span id="line-16">            new BolusCalcPrompt("Your BG is below target: reduce bolus calculation?", "Bolus reduced", "Bolus reduction declined"));</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">    class FailedPrecondition extends Condition implements BolusCalcCondition {</span>
+<span class="source-line-no">019</span><span id="line-19">        public final String reason;</span>
+<span class="source-line-no">020</span><span id="line-20">        FailedPrecondition(String reason) {</span>
+<span class="source-line-no">021</span><span id="line-21">            super(reason);</span>
+<span class="source-line-no">022</span><span id="line-22">            this.reason = reason;</span>
+<span class="source-line-no">023</span><span id="line-23">        }</span>
+<span class="source-line-no">024</span><span id="line-24"></span>
+<span class="source-line-no">025</span><span id="line-25">        FailedPrecondition(String reason, Object was, Object expected) {</span>
+<span class="source-line-no">026</span><span id="line-26">            this(reason + ": was " + was + ", expected " + expected);</span>
+<span class="source-line-no">027</span><span id="line-27">        }</span>
+<span class="source-line-no">028</span><span id="line-28">    }</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">    class FailedSanityCheck extends Condition implements BolusCalcCondition {</span>
+<span class="source-line-no">031</span><span id="line-31">        public final String reason;</span>
+<span class="source-line-no">032</span><span id="line-32">        FailedSanityCheck(String reason) {</span>
+<span class="source-line-no">033</span><span id="line-33">            super("Sanity check failed: " + reason);</span>
+<span class="source-line-no">034</span><span id="line-34">            this.reason = reason;</span>
+<span class="source-line-no">035</span><span id="line-35">        }</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    class WaitingOnPrecondition extends Condition implements BolusCalcCondition {</span>
+<span class="source-line-no">039</span><span id="line-39">        public final String thing;</span>
+<span class="source-line-no">040</span><span id="line-40">        WaitingOnPrecondition(String thing) {</span>
+<span class="source-line-no">041</span><span id="line-41">            super("Waiting for: " + thing);</span>
+<span class="source-line-no">042</span><span id="line-42">            this.thing = thing;</span>
+<span class="source-line-no">043</span><span id="line-43">        }</span>
+<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">    class Decision extends Condition implements BolusCalcCondition {</span>
+<span class="source-line-no">047</span><span id="line-47">        Decision(String decision) {</span>
+<span class="source-line-no">048</span><span id="line-48">            super(decision);</span>
+<span class="source-line-no">049</span><span id="line-49">        }</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">        Decision(String decision, String because) {</span>
+<span class="source-line-no">052</span><span id="line-52">            super(decision, because);</span>
+<span class="source-line-no">053</span><span id="line-53">        }</span>
+<span class="source-line-no">054</span><span id="line-54"></span>
+<span class="source-line-no">055</span><span id="line-55">        Decision(String decision, String because, BolusCalcPrompt prompt) {</span>
+<span class="source-line-no">056</span><span id="line-56">            super(decision, because, prompt);</span>
+<span class="source-line-no">057</span><span id="line-57">        }</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">    class DataDecision extends Decision implements BolusCalcCondition {</span>
+<span class="source-line-no">062</span><span id="line-62">        DataDecision(String decision) {</span>
+<span class="source-line-no">063</span><span id="line-63">            super(decision);</span>
+<span class="source-line-no">064</span><span id="line-64">        }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">        DataDecision(String decision, String reason) {</span>
+<span class="source-line-no">067</span><span id="line-67">            super(decision, reason);</span>
+<span class="source-line-no">068</span><span id="line-68">        }</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    class NonActionDecision extends Decision implements BolusCalcCondition {</span>
+<span class="source-line-no">072</span><span id="line-72">        NonActionDecision(String decision, String reason) {</span>
+<span class="source-line-no">073</span><span id="line-73">            super(decision, reason);</span>
+<span class="source-line-no">074</span><span id="line-74">        }</span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    class IgnoredDecision extends Decision implements BolusCalcCondition {</span>
+<span class="source-line-no">078</span><span id="line-78">        IgnoredDecision(BolusCalcCondition decision) {</span>
+<span class="source-line-no">079</span><span id="line-79">            super("Ignoring '" + decision.getMsg() + "'", "ignored by user");</span>
+<span class="source-line-no">080</span><span id="line-80">        }</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    class BolusCalcPrompt {</span>
+<span class="source-line-no">084</span><span id="line-84">        private final String promptMessage;</span>
+<span class="source-line-no">085</span><span id="line-85">        private final String whenAcceptedNotice;</span>
+<span class="source-line-no">086</span><span id="line-86">        private final String whenIgnoredNotice;</span>
+<span class="source-line-no">087</span><span id="line-87">        BolusCalcPrompt(String promptMessage, String whenAcceptedNotice, String whenIgnoredNotice) {</span>
+<span class="source-line-no">088</span><span id="line-88">            this.promptMessage = promptMessage;</span>
+<span class="source-line-no">089</span><span id="line-89">            this.whenAcceptedNotice = whenAcceptedNotice;</span>
+<span class="source-line-no">090</span><span id="line-90">            this.whenIgnoredNotice = whenIgnoredNotice;</span>
+<span class="source-line-no">091</span><span id="line-91">        }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">        public String getPromptMessage() {</span>
+<span class="source-line-no">094</span><span id="line-94">            return promptMessage;</span>
+<span class="source-line-no">095</span><span id="line-95">        }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">        public String getWhenAcceptedNotice() {</span>
+<span class="source-line-no">098</span><span id="line-98">            return whenAcceptedNotice;</span>
+<span class="source-line-no">099</span><span id="line-99">        }</span>
+<span class="source-line-no">100</span><span id="line-100"></span>
+<span class="source-line-no">101</span><span id="line-101">        public String getWhenIgnoredNotice() {</span>
+<span class="source-line-no">102</span><span id="line-102">            return whenIgnoredNotice;</span>
+<span class="source-line-no">103</span><span id="line-103">        }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">        @Override</span>
+<span class="source-line-no">106</span><span id="line-106">        public boolean equals(Object o) {</span>
+<span class="source-line-no">107</span><span id="line-107">            if (this == o) return true;</span>
+<span class="source-line-no">108</span><span id="line-108">            if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="source-line-no">109</span><span id="line-109">            BolusCalcPrompt that = (BolusCalcPrompt) o;</span>
+<span class="source-line-no">110</span><span id="line-110">            return Objects.equals(promptMessage, that.promptMessage) &amp;&amp; Objects.equals(whenAcceptedNotice, that.whenAcceptedNotice) &amp;&amp; Objects.equals(whenIgnoredNotice, that.whenIgnoredNotice);</span>
+<span class="source-line-no">111</span><span id="line-111">        }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">        @Override</span>
+<span class="source-line-no">114</span><span id="line-114">        public int hashCode() {</span>
+<span class="source-line-no">115</span><span id="line-115">            return Objects.hash(promptMessage, whenAcceptedNotice, whenIgnoredNotice);</span>
+<span class="source-line-no">116</span><span id="line-116">        }</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    class Condition extends Exception {</span>
+<span class="source-line-no">120</span><span id="line-120">        private final String msg;</span>
+<span class="source-line-no">121</span><span id="line-121">        private final String reason;</span>
+<span class="source-line-no">122</span><span id="line-122">        private final BolusCalcPrompt prompt;</span>
+<span class="source-line-no">123</span><span id="line-123">        Condition(String msg) {</span>
+<span class="source-line-no">124</span><span id="line-124">            super(msg);</span>
+<span class="source-line-no">125</span><span id="line-125">            this.msg = msg;</span>
+<span class="source-line-no">126</span><span id="line-126">            this.reason = null;</span>
+<span class="source-line-no">127</span><span id="line-127">            this.prompt = null;</span>
+<span class="source-line-no">128</span><span id="line-128">        }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">        Condition(String msg, String reason) {</span>
+<span class="source-line-no">131</span><span id="line-131">            super(msg + " because " + reason);</span>
+<span class="source-line-no">132</span><span id="line-132">            this.msg = msg;</span>
+<span class="source-line-no">133</span><span id="line-133">            this.reason = reason;</span>
+<span class="source-line-no">134</span><span id="line-134">            this.prompt = null;</span>
+<span class="source-line-no">135</span><span id="line-135">        }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">        Condition(String msg, String reason, BolusCalcPrompt prompt) {</span>
+<span class="source-line-no">138</span><span id="line-138">            super(msg + " because " + reason);</span>
+<span class="source-line-no">139</span><span id="line-139">            this.msg = msg;</span>
+<span class="source-line-no">140</span><span id="line-140">            this.reason = reason;</span>
+<span class="source-line-no">141</span><span id="line-141">            this.prompt = prompt;</span>
+<span class="source-line-no">142</span><span id="line-142">        }</span>
+<span class="source-line-no">143</span><span id="line-143"></span>
+<span class="source-line-no">144</span><span id="line-144">        @Override</span>
+<span class="source-line-no">145</span><span id="line-145">        public boolean equals(Object o) {</span>
+<span class="source-line-no">146</span><span id="line-146">            if (this == o) return true;</span>
+<span class="source-line-no">147</span><span id="line-147">            if (!(o instanceof Condition)) return false;</span>
+<span class="source-line-no">148</span><span id="line-148">            Condition condition = (Condition) o;</span>
+<span class="source-line-no">149</span><span id="line-149">            return msg.equals(condition.msg);</span>
+<span class="source-line-no">150</span><span id="line-150">        }</span>
+<span class="source-line-no">151</span><span id="line-151"></span>
+<span class="source-line-no">152</span><span id="line-152">        @Override</span>
+<span class="source-line-no">153</span><span id="line-153">        public int hashCode() {</span>
+<span class="source-line-no">154</span><span id="line-154">            return Objects.hash(msg);</span>
+<span class="source-line-no">155</span><span id="line-155">        }</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">        public String getMsg() {</span>
+<span class="source-line-no">158</span><span id="line-158">            return msg;</span>
+<span class="source-line-no">159</span><span id="line-159">        }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">        public @Nullable String getReason() {</span>
+<span class="source-line-no">162</span><span id="line-162">            return reason;</span>
+<span class="source-line-no">163</span><span id="line-163">        }</span>
+<span class="source-line-no">164</span><span id="line-164"></span>
+<span class="source-line-no">165</span><span id="line-165">        public @Nullable BolusCalcPrompt getPrompt() {</span>
+<span class="source-line-no">166</span><span id="line-166">            return prompt;</span>
+<span class="source-line-no">167</span><span id="line-167">        }</span>
+<span class="source-line-no">168</span><span id="line-168">    }</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">    String getMsg();</span>
+<span class="source-line-no">171</span><span id="line-171">    @Nullable String getReason();</span>
+<span class="source-line-no">172</span><span id="line-172">    @Nullable BolusCalcPrompt getPrompt();</span>
+<span class="source-line-no">173</span><span id="line-173">}</span>
 
 
 

@@ -17,7 +17,7 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.google.common.base.Preconditions;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
@@ -70,7 +70,7 @@
 <span class="source-line-no">053</span><span id="line-53"></span>
 <span class="source-line-no">054</span><span id="line-54">    public void parse(byte[] raw) {</span>
 <span class="source-line-no">055</span><span id="line-55">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">056</span><span id="line-56">        Preconditions.checkArgument(raw.length == props().size());</span>
+<span class="source-line-no">056</span><span id="line-56">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">057</span><span id="line-57">        this.cargo = raw;</span>
 <span class="source-line-no">058</span><span id="line-58">        </span>
 <span class="source-line-no">059</span><span id="line-59">    }</span>

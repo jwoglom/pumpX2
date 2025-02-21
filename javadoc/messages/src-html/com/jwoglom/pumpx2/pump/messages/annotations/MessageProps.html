@@ -17,43 +17,34 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.annotations;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import static java.util.Collections.EMPTY_SET;</span>
-<span class="source-line-no">004</span><span id="line-4"></span>
-<span class="source-line-no">005</span><span id="line-5">import com.google.common.collect.ImmutableList;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.google.common.collect.ImmutableSet;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.UndefinedMessage;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
-<span class="source-line-no">017</span><span id="line-17">import java.lang.annotation.ElementType;</span>
-<span class="source-line-no">018</span><span id="line-18">import java.lang.annotation.Retention;</span>
-<span class="source-line-no">019</span><span id="line-19">import java.lang.annotation.RetentionPolicy;</span>
-<span class="source-line-no">020</span><span id="line-20">import java.lang.annotation.Target;</span>
-<span class="source-line-no">021</span><span id="line-21">import java.util.List;</span>
-<span class="source-line-no">022</span><span id="line-22">import java.util.Set;</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">@Target(ElementType.TYPE)</span>
-<span class="source-line-no">025</span><span id="line-25">@Retention(RetentionPolicy.RUNTIME)</span>
-<span class="source-line-no">026</span><span id="line-26">public @interface MessageProps {</span>
-<span class="source-line-no">027</span><span id="line-27">    byte opCode();</span>
-<span class="source-line-no">028</span><span id="line-28">    int size() default 0;</span>
-<span class="source-line-no">029</span><span id="line-29">    boolean variableSize() default false;</span>
-<span class="source-line-no">030</span><span id="line-30">    boolean stream() default false;</span>
-<span class="source-line-no">031</span><span id="line-31">    boolean signed() default false;</span>
-<span class="source-line-no">032</span><span id="line-32">    MessageType type();</span>
-<span class="source-line-no">033</span><span id="line-33">    Class&lt;? extends Message&gt; response() default UndefinedMessage.class;</span>
-<span class="source-line-no">034</span><span id="line-34">    Class&lt;? extends Message&gt; request() default UndefinedMessage.class;</span>
-<span class="source-line-no">035</span><span id="line-35">    KnownApiVersion minApi() default KnownApiVersion.API_V2_1;</span>
-<span class="source-line-no">036</span><span id="line-36">    SupportedDevices supportedDevices() default SupportedDevices.ALL;</span>
-<span class="source-line-no">037</span><span id="line-37">    Characteristic characteristic() default Characteristic.CURRENT_STATUS;</span>
-<span class="source-line-no">038</span><span id="line-38">    boolean modifiesInsulinDelivery() default false;</span>
-<span class="source-line-no">039</span><span id="line-39">}</span>
+<span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.UndefinedMessage;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">import java.lang.annotation.ElementType;</span>
+<span class="source-line-no">011</span><span id="line-11">import java.lang.annotation.Retention;</span>
+<span class="source-line-no">012</span><span id="line-12">import java.lang.annotation.RetentionPolicy;</span>
+<span class="source-line-no">013</span><span id="line-13">import java.lang.annotation.Target;</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">@Target(ElementType.TYPE)</span>
+<span class="source-line-no">016</span><span id="line-16">@Retention(RetentionPolicy.RUNTIME)</span>
+<span class="source-line-no">017</span><span id="line-17">public @interface MessageProps {</span>
+<span class="source-line-no">018</span><span id="line-18">    byte opCode();</span>
+<span class="source-line-no">019</span><span id="line-19">    int size() default 0;</span>
+<span class="source-line-no">020</span><span id="line-20">    boolean variableSize() default false;</span>
+<span class="source-line-no">021</span><span id="line-21">    boolean stream() default false;</span>
+<span class="source-line-no">022</span><span id="line-22">    boolean signed() default false;</span>
+<span class="source-line-no">023</span><span id="line-23">    MessageType type();</span>
+<span class="source-line-no">024</span><span id="line-24">    Class&lt;? extends Message&gt; response() default UndefinedMessage.class;</span>
+<span class="source-line-no">025</span><span id="line-25">    Class&lt;? extends Message&gt; request() default UndefinedMessage.class;</span>
+<span class="source-line-no">026</span><span id="line-26">    KnownApiVersion minApi() default KnownApiVersion.API_V2_1;</span>
+<span class="source-line-no">027</span><span id="line-27">    SupportedDevices supportedDevices() default SupportedDevices.ALL;</span>
+<span class="source-line-no">028</span><span id="line-28">    Characteristic characteristic() default Characteristic.CURRENT_STATUS;</span>
+<span class="source-line-no">029</span><span id="line-29">    boolean modifiesInsulinDelivery() default false;</span>
+<span class="source-line-no">030</span><span id="line-30">}</span>
 
 
 
