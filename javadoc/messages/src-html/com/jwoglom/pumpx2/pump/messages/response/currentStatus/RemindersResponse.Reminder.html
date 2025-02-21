@@ -24,260 +24,269 @@
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.models.MinsTime;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.MultiDay;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.shared.JavaHelpers;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">import java.util.HashSet;</span>
-<span class="source-line-no">014</span><span id="line-14">import java.util.Set;</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">/**</span>
-<span class="source-line-no">017</span><span id="line-17"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest}, opCode 89, size 105</span>
-<span class="source-line-no">018</span><span id="line-18"> *</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;br&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> *</span>
-<span class="source-line-no">021</span><span id="line-21"> * </span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;89&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;105&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;/table&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> */</span>
-<span class="source-line-no">030</span><span id="line-30">@MessageProps(</span>
-<span class="source-line-no">031</span><span id="line-31">    opCode=89,</span>
-<span class="source-line-no">032</span><span id="line-32">    size=105,</span>
-<span class="source-line-no">033</span><span id="line-33">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">034</span><span id="line-34">    request=RemindersRequest.class</span>
-<span class="source-line-no">035</span><span id="line-35">)</span>
-<span class="source-line-no">036</span><span id="line-36">public class RemindersResponse extends Message {</span>
-<span class="source-line-no">037</span><span id="line-37">    </span>
-<span class="source-line-no">038</span><span id="line-38">    private Reminder lowBGReminder;</span>
-<span class="source-line-no">039</span><span id="line-39">    private Reminder highBGReminder;</span>
-<span class="source-line-no">040</span><span id="line-40">    private Reminder siteChangeReminder;</span>
-<span class="source-line-no">041</span><span id="line-41">    private Reminder missedBolusReminder0;</span>
-<span class="source-line-no">042</span><span id="line-42">    private Reminder missedBolusReminder1;</span>
-<span class="source-line-no">043</span><span id="line-43">    private Reminder missedBolusReminder2;</span>
-<span class="source-line-no">044</span><span id="line-44">    private Reminder missedBolusReminder3;</span>
-<span class="source-line-no">045</span><span id="line-45">    private Reminder afterBolusReminder;</span>
-<span class="source-line-no">046</span><span id="line-46">    private Reminder additionalBolusReminder;</span>
-<span class="source-line-no">047</span><span id="line-47">    private int lowBGThreshold;</span>
-<span class="source-line-no">048</span><span id="line-48">    private int highBGThreshold;</span>
-<span class="source-line-no">049</span><span id="line-49">    private int siteChangeDays;</span>
-<span class="source-line-no">050</span><span id="line-50">    private int status;</span>
-<span class="source-line-no">051</span><span id="line-51">    </span>
-<span class="source-line-no">052</span><span id="line-52">    public RemindersResponse() {}</span>
-<span class="source-line-no">053</span><span id="line-53">    </span>
-<span class="source-line-no">054</span><span id="line-54">    public RemindersResponse(Reminder lowBGReminder, Reminder highBGReminder, Reminder siteChangeReminder, Reminder missedBolusReminder0, Reminder missedBolusReminder1, Reminder missedBolusReminder2, Reminder missedBolusReminder3, Reminder afterBolusReminder, Reminder additionalBolusReminder, int lowBGThreshold, int highBGThreshold, int siteChangeDays, int status) {</span>
-<span class="source-line-no">055</span><span id="line-55">        this.cargo = buildCargo(lowBGReminder, highBGReminder, siteChangeReminder, missedBolusReminder0, missedBolusReminder1, missedBolusReminder2, missedBolusReminder3, afterBolusReminder, additionalBolusReminder, lowBGThreshold, highBGThreshold, siteChangeDays, status);</span>
-<span class="source-line-no">056</span><span id="line-56">        this.lowBGReminder = lowBGReminder;</span>
-<span class="source-line-no">057</span><span id="line-57">        this.highBGReminder = highBGReminder;</span>
-<span class="source-line-no">058</span><span id="line-58">        this.siteChangeReminder = siteChangeReminder;</span>
-<span class="source-line-no">059</span><span id="line-59">        this.missedBolusReminder0 = missedBolusReminder0;</span>
-<span class="source-line-no">060</span><span id="line-60">        this.missedBolusReminder1 = missedBolusReminder1;</span>
-<span class="source-line-no">061</span><span id="line-61">        this.missedBolusReminder2 = missedBolusReminder2;</span>
-<span class="source-line-no">062</span><span id="line-62">        this.missedBolusReminder3 = missedBolusReminder3;</span>
-<span class="source-line-no">063</span><span id="line-63">        this.afterBolusReminder = afterBolusReminder;</span>
-<span class="source-line-no">064</span><span id="line-64">        this.additionalBolusReminder = additionalBolusReminder;</span>
-<span class="source-line-no">065</span><span id="line-65">        this.lowBGThreshold = lowBGThreshold;</span>
-<span class="source-line-no">066</span><span id="line-66">        this.highBGThreshold = highBGThreshold;</span>
-<span class="source-line-no">067</span><span id="line-67">        this.siteChangeDays = siteChangeDays;</span>
-<span class="source-line-no">068</span><span id="line-68">        this.status = status;</span>
-<span class="source-line-no">069</span><span id="line-69">        </span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    /**</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;caption&gt;Parsed fields for RemindersResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lowBGReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;highBGReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 11)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;siteChangeReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder0&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 33)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 44)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 55)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder3&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 66)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;afterBolusReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 77)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;additionalBolusReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 88)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lowBGThreshold&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 99)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;highBGThreshold&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 101)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;siteChangeDays&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[103]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[104]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;/table&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     */</span>
-<span class="source-line-no">090</span><span id="line-90">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">091</span><span id="line-91">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">092</span><span id="line-92">        this.cargo = raw;</span>
-<span class="source-line-no">093</span><span id="line-93">        this.lowBGReminder = new Reminder(raw, 0);</span>
-<span class="source-line-no">094</span><span id="line-94">        this.highBGReminder = new Reminder(raw, 11);</span>
-<span class="source-line-no">095</span><span id="line-95">        this.siteChangeReminder = new Reminder(raw, 22);</span>
-<span class="source-line-no">096</span><span id="line-96">        this.missedBolusReminder0 = new Reminder(raw, 33);</span>
-<span class="source-line-no">097</span><span id="line-97">        this.missedBolusReminder1 = new Reminder(raw, 44);</span>
-<span class="source-line-no">098</span><span id="line-98">        this.missedBolusReminder2 = new Reminder(raw, 55);</span>
-<span class="source-line-no">099</span><span id="line-99">        this.missedBolusReminder3 = new Reminder(raw, 66);</span>
-<span class="source-line-no">100</span><span id="line-100">        this.afterBolusReminder = new Reminder(raw, 77);</span>
-<span class="source-line-no">101</span><span id="line-101">        this.additionalBolusReminder = new Reminder(raw, 88);</span>
-<span class="source-line-no">102</span><span id="line-102">        this.lowBGThreshold = Bytes.readShort(raw, 99);</span>
-<span class="source-line-no">103</span><span id="line-103">        this.highBGThreshold = Bytes.readShort(raw, 101);</span>
-<span class="source-line-no">104</span><span id="line-104">        this.siteChangeDays = raw[103];</span>
-<span class="source-line-no">105</span><span id="line-105">        this.status = raw[104];</span>
-<span class="source-line-no">106</span><span id="line-106">        </span>
-<span class="source-line-no">107</span><span id="line-107">    }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">    </span>
-<span class="source-line-no">110</span><span id="line-110">    /**</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;caption&gt;Byte layout for RemindersResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(lowBGThreshold) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(lowBGThreshold) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(highBGThreshold) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(highBGThreshold) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">118</span><span id="line-118">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) siteChangeDays&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">119</span><span id="line-119">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">120</span><span id="line-120">     * &lt;/table&gt;</span>
-<span class="source-line-no">121</span><span id="line-121">     */</span>
-<span class="source-line-no">122</span><span id="line-122">    public static byte[] buildCargo(Reminder lowBGReminder, Reminder highBGReminder, Reminder siteChangeReminder, Reminder missedBolusReminder0, Reminder missedBolusReminder1, Reminder missedBolusReminder2, Reminder missedBolusReminder3, Reminder afterBolusReminder, Reminder additionalBolusReminder, int lowBGThreshold, int highBGThreshold, int siteChangeDays, int status)  {</span>
-<span class="source-line-no">123</span><span id="line-123">        return Bytes.combine(</span>
-<span class="source-line-no">124</span><span id="line-124">            lowBGReminder.buildCargo(),</span>
-<span class="source-line-no">125</span><span id="line-125">            highBGReminder.buildCargo(),</span>
-<span class="source-line-no">126</span><span id="line-126">            siteChangeReminder.buildCargo(),</span>
-<span class="source-line-no">127</span><span id="line-127">            missedBolusReminder0.buildCargo(),</span>
-<span class="source-line-no">128</span><span id="line-128">            missedBolusReminder1.buildCargo(),</span>
-<span class="source-line-no">129</span><span id="line-129">            missedBolusReminder2.buildCargo(),</span>
-<span class="source-line-no">130</span><span id="line-130">            missedBolusReminder3.buildCargo(),</span>
-<span class="source-line-no">131</span><span id="line-131">            afterBolusReminder.buildCargo(),</span>
-<span class="source-line-no">132</span><span id="line-132">            additionalBolusReminder.buildCargo(),</span>
-<span class="source-line-no">133</span><span id="line-133">            Bytes.firstTwoBytesLittleEndian(lowBGThreshold), </span>
-<span class="source-line-no">134</span><span id="line-134">            Bytes.firstTwoBytesLittleEndian(highBGThreshold), </span>
-<span class="source-line-no">135</span><span id="line-135">            new byte[]{ (byte) siteChangeDays }, </span>
-<span class="source-line-no">136</span><span id="line-136">            new byte[]{ (byte) status });</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138">    </span>
-<span class="source-line-no">139</span><span id="line-139">    public Reminder getLowBGReminder() {</span>
-<span class="source-line-no">140</span><span id="line-140">        return lowBGReminder;</span>
-<span class="source-line-no">141</span><span id="line-141">    }</span>
-<span class="source-line-no">142</span><span id="line-142">    public Reminder getHighBGReminder() {</span>
-<span class="source-line-no">143</span><span id="line-143">        return highBGReminder;</span>
-<span class="source-line-no">144</span><span id="line-144">    }</span>
-<span class="source-line-no">145</span><span id="line-145">    public Reminder getSiteChangeReminder() {</span>
-<span class="source-line-no">146</span><span id="line-146">        return siteChangeReminder;</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148">    public Reminder getMissedBolusReminder0() {</span>
-<span class="source-line-no">149</span><span id="line-149">        return missedBolusReminder0;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.shared.JavaHelpers;</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">import java.util.HashSet;</span>
+<span class="source-line-no">015</span><span id="line-15">import java.util.Set;</span>
+<span class="source-line-no">016</span><span id="line-16"></span>
+<span class="source-line-no">017</span><span id="line-17">/**</span>
+<span class="source-line-no">018</span><span id="line-18"> * Returns reminders configured on the pump.</span>
+<span class="source-line-no">019</span><span id="line-19"> */</span>
+<span class="source-line-no">020</span><span id="line-20">/**</span>
+<span class="source-line-no">021</span><span id="line-21"> * Returns reminders configured on the pump.</span>
+<span class="source-line-no">022</span><span id="line-22"> *</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24"> *</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;br&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> *</span>
+<span class="source-line-no">027</span><span id="line-27"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest}, opCode 89, size 105</span>
+<span class="source-line-no">028</span><span id="line-28"> *</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;br&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> *</span>
+<span class="source-line-no">031</span><span id="line-31"> * </span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;89&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;105&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;/table&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> */@MessageProps(</span>
+<span class="source-line-no">040</span><span id="line-40">    opCode=89,</span>
+<span class="source-line-no">041</span><span id="line-41">    size=105,</span>
+<span class="source-line-no">042</span><span id="line-42">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">043</span><span id="line-43">    request=RemindersRequest.class</span>
+<span class="source-line-no">044</span><span id="line-44">)</span>
+<span class="source-line-no">045</span><span id="line-45">public class RemindersResponse extends StatusMessage {</span>
+<span class="source-line-no">046</span><span id="line-46">    </span>
+<span class="source-line-no">047</span><span id="line-47">    private Reminder lowBGReminder;</span>
+<span class="source-line-no">048</span><span id="line-48">    private Reminder highBGReminder;</span>
+<span class="source-line-no">049</span><span id="line-49">    private Reminder siteChangeReminder;</span>
+<span class="source-line-no">050</span><span id="line-50">    private Reminder missedBolusReminder0;</span>
+<span class="source-line-no">051</span><span id="line-51">    private Reminder missedBolusReminder1;</span>
+<span class="source-line-no">052</span><span id="line-52">    private Reminder missedBolusReminder2;</span>
+<span class="source-line-no">053</span><span id="line-53">    private Reminder missedBolusReminder3;</span>
+<span class="source-line-no">054</span><span id="line-54">    private Reminder afterBolusReminder;</span>
+<span class="source-line-no">055</span><span id="line-55">    private Reminder additionalBolusReminder;</span>
+<span class="source-line-no">056</span><span id="line-56">    private int lowBGThreshold;</span>
+<span class="source-line-no">057</span><span id="line-57">    private int highBGThreshold;</span>
+<span class="source-line-no">058</span><span id="line-58">    private int siteChangeDays;</span>
+<span class="source-line-no">059</span><span id="line-59">    private int status;</span>
+<span class="source-line-no">060</span><span id="line-60">    </span>
+<span class="source-line-no">061</span><span id="line-61">    public RemindersResponse() {}</span>
+<span class="source-line-no">062</span><span id="line-62">    </span>
+<span class="source-line-no">063</span><span id="line-63">    public RemindersResponse(Reminder lowBGReminder, Reminder highBGReminder, Reminder siteChangeReminder, Reminder missedBolusReminder0, Reminder missedBolusReminder1, Reminder missedBolusReminder2, Reminder missedBolusReminder3, Reminder afterBolusReminder, Reminder additionalBolusReminder, int lowBGThreshold, int highBGThreshold, int siteChangeDays, int status) {</span>
+<span class="source-line-no">064</span><span id="line-64">        this.cargo = buildCargo(lowBGReminder, highBGReminder, siteChangeReminder, missedBolusReminder0, missedBolusReminder1, missedBolusReminder2, missedBolusReminder3, afterBolusReminder, additionalBolusReminder, lowBGThreshold, highBGThreshold, siteChangeDays, status);</span>
+<span class="source-line-no">065</span><span id="line-65">        this.lowBGReminder = lowBGReminder;</span>
+<span class="source-line-no">066</span><span id="line-66">        this.highBGReminder = highBGReminder;</span>
+<span class="source-line-no">067</span><span id="line-67">        this.siteChangeReminder = siteChangeReminder;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.missedBolusReminder0 = missedBolusReminder0;</span>
+<span class="source-line-no">069</span><span id="line-69">        this.missedBolusReminder1 = missedBolusReminder1;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.missedBolusReminder2 = missedBolusReminder2;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.missedBolusReminder3 = missedBolusReminder3;</span>
+<span class="source-line-no">072</span><span id="line-72">        this.afterBolusReminder = afterBolusReminder;</span>
+<span class="source-line-no">073</span><span id="line-73">        this.additionalBolusReminder = additionalBolusReminder;</span>
+<span class="source-line-no">074</span><span id="line-74">        this.lowBGThreshold = lowBGThreshold;</span>
+<span class="source-line-no">075</span><span id="line-75">        this.highBGThreshold = highBGThreshold;</span>
+<span class="source-line-no">076</span><span id="line-76">        this.siteChangeDays = siteChangeDays;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.status = status;</span>
+<span class="source-line-no">078</span><span id="line-78">        </span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    /**</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;caption&gt;Parsed fields for RemindersResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lowBGReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;highBGReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 11)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;siteChangeReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder0&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 33)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 44)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 55)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;missedBolusReminder3&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 66)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;afterBolusReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 77)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;additionalBolusReminder&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;new Reminder(raw, 88)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lowBGThreshold&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 99)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;highBGThreshold&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 101)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;siteChangeDays&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[103]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[104]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;/table&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     */</span>
+<span class="source-line-no">099</span><span id="line-99">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">100</span><span id="line-100">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">101</span><span id="line-101">        this.cargo = raw;</span>
+<span class="source-line-no">102</span><span id="line-102">        this.lowBGReminder = new Reminder(raw, 0);</span>
+<span class="source-line-no">103</span><span id="line-103">        this.highBGReminder = new Reminder(raw, 11);</span>
+<span class="source-line-no">104</span><span id="line-104">        this.siteChangeReminder = new Reminder(raw, 22);</span>
+<span class="source-line-no">105</span><span id="line-105">        this.missedBolusReminder0 = new Reminder(raw, 33);</span>
+<span class="source-line-no">106</span><span id="line-106">        this.missedBolusReminder1 = new Reminder(raw, 44);</span>
+<span class="source-line-no">107</span><span id="line-107">        this.missedBolusReminder2 = new Reminder(raw, 55);</span>
+<span class="source-line-no">108</span><span id="line-108">        this.missedBolusReminder3 = new Reminder(raw, 66);</span>
+<span class="source-line-no">109</span><span id="line-109">        this.afterBolusReminder = new Reminder(raw, 77);</span>
+<span class="source-line-no">110</span><span id="line-110">        this.additionalBolusReminder = new Reminder(raw, 88);</span>
+<span class="source-line-no">111</span><span id="line-111">        this.lowBGThreshold = Bytes.readShort(raw, 99);</span>
+<span class="source-line-no">112</span><span id="line-112">        this.highBGThreshold = Bytes.readShort(raw, 101);</span>
+<span class="source-line-no">113</span><span id="line-113">        this.siteChangeDays = raw[103];</span>
+<span class="source-line-no">114</span><span id="line-114">        this.status = raw[104];</span>
+<span class="source-line-no">115</span><span id="line-115">        </span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">    </span>
+<span class="source-line-no">119</span><span id="line-119">    /**</span>
+<span class="source-line-no">120</span><span id="line-120">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">121</span><span id="line-121">     * &lt;caption&gt;Byte layout for RemindersResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(lowBGThreshold) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(lowBGThreshold) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(highBGThreshold) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(highBGThreshold) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) siteChangeDays&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">129</span><span id="line-129">     * &lt;/table&gt;</span>
+<span class="source-line-no">130</span><span id="line-130">     */</span>
+<span class="source-line-no">131</span><span id="line-131">    public static byte[] buildCargo(Reminder lowBGReminder, Reminder highBGReminder, Reminder siteChangeReminder, Reminder missedBolusReminder0, Reminder missedBolusReminder1, Reminder missedBolusReminder2, Reminder missedBolusReminder3, Reminder afterBolusReminder, Reminder additionalBolusReminder, int lowBGThreshold, int highBGThreshold, int siteChangeDays, int status)  {</span>
+<span class="source-line-no">132</span><span id="line-132">        return Bytes.combine(</span>
+<span class="source-line-no">133</span><span id="line-133">            lowBGReminder.buildCargo(),</span>
+<span class="source-line-no">134</span><span id="line-134">            highBGReminder.buildCargo(),</span>
+<span class="source-line-no">135</span><span id="line-135">            siteChangeReminder.buildCargo(),</span>
+<span class="source-line-no">136</span><span id="line-136">            missedBolusReminder0.buildCargo(),</span>
+<span class="source-line-no">137</span><span id="line-137">            missedBolusReminder1.buildCargo(),</span>
+<span class="source-line-no">138</span><span id="line-138">            missedBolusReminder2.buildCargo(),</span>
+<span class="source-line-no">139</span><span id="line-139">            missedBolusReminder3.buildCargo(),</span>
+<span class="source-line-no">140</span><span id="line-140">            afterBolusReminder.buildCargo(),</span>
+<span class="source-line-no">141</span><span id="line-141">            additionalBolusReminder.buildCargo(),</span>
+<span class="source-line-no">142</span><span id="line-142">            Bytes.firstTwoBytesLittleEndian(lowBGThreshold), </span>
+<span class="source-line-no">143</span><span id="line-143">            Bytes.firstTwoBytesLittleEndian(highBGThreshold), </span>
+<span class="source-line-no">144</span><span id="line-144">            new byte[]{ (byte) siteChangeDays }, </span>
+<span class="source-line-no">145</span><span id="line-145">            new byte[]{ (byte) status });</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147">    </span>
+<span class="source-line-no">148</span><span id="line-148">    public Reminder getLowBGReminder() {</span>
+<span class="source-line-no">149</span><span id="line-149">        return lowBGReminder;</span>
 <span class="source-line-no">150</span><span id="line-150">    }</span>
-<span class="source-line-no">151</span><span id="line-151">    public Reminder getMissedBolusReminder1() {</span>
-<span class="source-line-no">152</span><span id="line-152">        return missedBolusReminder1;</span>
+<span class="source-line-no">151</span><span id="line-151">    public Reminder getHighBGReminder() {</span>
+<span class="source-line-no">152</span><span id="line-152">        return highBGReminder;</span>
 <span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154">    public Reminder getMissedBolusReminder2() {</span>
-<span class="source-line-no">155</span><span id="line-155">        return missedBolusReminder2;</span>
+<span class="source-line-no">154</span><span id="line-154">    public Reminder getSiteChangeReminder() {</span>
+<span class="source-line-no">155</span><span id="line-155">        return siteChangeReminder;</span>
 <span class="source-line-no">156</span><span id="line-156">    }</span>
-<span class="source-line-no">157</span><span id="line-157">    public Reminder getMissedBolusReminder3() {</span>
-<span class="source-line-no">158</span><span id="line-158">        return missedBolusReminder3;</span>
+<span class="source-line-no">157</span><span id="line-157">    public Reminder getMissedBolusReminder0() {</span>
+<span class="source-line-no">158</span><span id="line-158">        return missedBolusReminder0;</span>
 <span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160">    public Reminder getAfterBolusReminder() {</span>
-<span class="source-line-no">161</span><span id="line-161">        return afterBolusReminder;</span>
+<span class="source-line-no">160</span><span id="line-160">    public Reminder getMissedBolusReminder1() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return missedBolusReminder1;</span>
 <span class="source-line-no">162</span><span id="line-162">    }</span>
-<span class="source-line-no">163</span><span id="line-163">    public Reminder getAdditionalBolusReminder() {</span>
-<span class="source-line-no">164</span><span id="line-164">        return additionalBolusReminder;</span>
+<span class="source-line-no">163</span><span id="line-163">    public Reminder getMissedBolusReminder2() {</span>
+<span class="source-line-no">164</span><span id="line-164">        return missedBolusReminder2;</span>
 <span class="source-line-no">165</span><span id="line-165">    }</span>
-<span class="source-line-no">166</span><span id="line-166">    public int getLowBGThreshold() {</span>
-<span class="source-line-no">167</span><span id="line-167">        return lowBGThreshold;</span>
+<span class="source-line-no">166</span><span id="line-166">    public Reminder getMissedBolusReminder3() {</span>
+<span class="source-line-no">167</span><span id="line-167">        return missedBolusReminder3;</span>
 <span class="source-line-no">168</span><span id="line-168">    }</span>
-<span class="source-line-no">169</span><span id="line-169">    public int getHighBGThreshold() {</span>
-<span class="source-line-no">170</span><span id="line-170">        return highBGThreshold;</span>
+<span class="source-line-no">169</span><span id="line-169">    public Reminder getAfterBolusReminder() {</span>
+<span class="source-line-no">170</span><span id="line-170">        return afterBolusReminder;</span>
 <span class="source-line-no">171</span><span id="line-171">    }</span>
-<span class="source-line-no">172</span><span id="line-172">    public int getSiteChangeDays() {</span>
-<span class="source-line-no">173</span><span id="line-173">        return siteChangeDays;</span>
+<span class="source-line-no">172</span><span id="line-172">    public Reminder getAdditionalBolusReminder() {</span>
+<span class="source-line-no">173</span><span id="line-173">        return additionalBolusReminder;</span>
 <span class="source-line-no">174</span><span id="line-174">    }</span>
-<span class="source-line-no">175</span><span id="line-175">    /**</span>
-<span class="source-line-no">176</span><span id="line-176">     * @return 0 if successful</span>
-<span class="source-line-no">177</span><span id="line-177">     */</span>
-<span class="source-line-no">178</span><span id="line-178">    public int getStatus() {</span>
-<span class="source-line-no">179</span><span id="line-179">        return status;</span>
+<span class="source-line-no">175</span><span id="line-175">    public int getLowBGThreshold() {</span>
+<span class="source-line-no">176</span><span id="line-176">        return lowBGThreshold;</span>
+<span class="source-line-no">177</span><span id="line-177">    }</span>
+<span class="source-line-no">178</span><span id="line-178">    public int getHighBGThreshold() {</span>
+<span class="source-line-no">179</span><span id="line-179">        return highBGThreshold;</span>
 <span class="source-line-no">180</span><span id="line-180">    }</span>
-<span class="source-line-no">181</span><span id="line-181"></span>
-<span class="source-line-no">182</span><span id="line-182">    public static class Reminder {</span>
-<span class="source-line-no">183</span><span id="line-183">        private final long frequency;</span>
-<span class="source-line-no">184</span><span id="line-184">        private final int startTime;</span>
-<span class="source-line-no">185</span><span id="line-185">        private final int endTime;</span>
-<span class="source-line-no">186</span><span id="line-186">        private final int activeDays;</span>
-<span class="source-line-no">187</span><span id="line-187">        private final int enabled;</span>
-<span class="source-line-no">188</span><span id="line-188">        private final int validityStatus;</span>
-<span class="source-line-no">189</span><span id="line-189"></span>
-<span class="source-line-no">190</span><span id="line-190">        public Reminder(long frequency, int startTime, int endTime, int activeDays, int enabled, int validityStatus) {</span>
-<span class="source-line-no">191</span><span id="line-191">            this.frequency = frequency;</span>
-<span class="source-line-no">192</span><span id="line-192">            this.startTime = startTime;</span>
-<span class="source-line-no">193</span><span id="line-193">            this.endTime = endTime;</span>
-<span class="source-line-no">194</span><span id="line-194">            this.activeDays = activeDays;</span>
-<span class="source-line-no">195</span><span id="line-195">            this.enabled = enabled;</span>
-<span class="source-line-no">196</span><span id="line-196">            this.validityStatus = validityStatus; // TODO: figure out what this represents</span>
-<span class="source-line-no">197</span><span id="line-197">        }</span>
+<span class="source-line-no">181</span><span id="line-181">    public int getSiteChangeDays() {</span>
+<span class="source-line-no">182</span><span id="line-182">        return siteChangeDays;</span>
+<span class="source-line-no">183</span><span id="line-183">    }</span>
+<span class="source-line-no">184</span><span id="line-184">    /**</span>
+<span class="source-line-no">185</span><span id="line-185">     * @return 0 if successful</span>
+<span class="source-line-no">186</span><span id="line-186">     */</span>
+<span class="source-line-no">187</span><span id="line-187">    public int getStatus() {</span>
+<span class="source-line-no">188</span><span id="line-188">        return status;</span>
+<span class="source-line-no">189</span><span id="line-189">    }</span>
+<span class="source-line-no">190</span><span id="line-190"></span>
+<span class="source-line-no">191</span><span id="line-191">    public static class Reminder {</span>
+<span class="source-line-no">192</span><span id="line-192">        private final long frequency;</span>
+<span class="source-line-no">193</span><span id="line-193">        private final int startTime;</span>
+<span class="source-line-no">194</span><span id="line-194">        private final int endTime;</span>
+<span class="source-line-no">195</span><span id="line-195">        private final int activeDays;</span>
+<span class="source-line-no">196</span><span id="line-196">        private final int enabled;</span>
+<span class="source-line-no">197</span><span id="line-197">        private final int validityStatus;</span>
 <span class="source-line-no">198</span><span id="line-198"></span>
-<span class="source-line-no">199</span><span id="line-199">        public Reminder(byte[] cargo, int i) {</span>
-<span class="source-line-no">200</span><span id="line-200">            this.frequency = Bytes.readUint32(cargo, i);</span>
-<span class="source-line-no">201</span><span id="line-201">            this.startTime = Bytes.readShort(cargo, i+4);</span>
-<span class="source-line-no">202</span><span id="line-202">            this.endTime = Bytes.readShort(cargo, i+6);</span>
-<span class="source-line-no">203</span><span id="line-203">            this.activeDays = cargo[i+8];</span>
-<span class="source-line-no">204</span><span id="line-204">            this.enabled = cargo[i+9];</span>
-<span class="source-line-no">205</span><span id="line-205">            this.validityStatus = cargo[i+10];</span>
+<span class="source-line-no">199</span><span id="line-199">        public Reminder(long frequency, int startTime, int endTime, int activeDays, int enabled, int validityStatus) {</span>
+<span class="source-line-no">200</span><span id="line-200">            this.frequency = frequency;</span>
+<span class="source-line-no">201</span><span id="line-201">            this.startTime = startTime;</span>
+<span class="source-line-no">202</span><span id="line-202">            this.endTime = endTime;</span>
+<span class="source-line-no">203</span><span id="line-203">            this.activeDays = activeDays;</span>
+<span class="source-line-no">204</span><span id="line-204">            this.enabled = enabled;</span>
+<span class="source-line-no">205</span><span id="line-205">            this.validityStatus = validityStatus; // TODO: figure out what this represents</span>
 <span class="source-line-no">206</span><span id="line-206">        }</span>
 <span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">        public byte[] buildCargo() {</span>
-<span class="source-line-no">209</span><span id="line-209">            return Bytes.combine(</span>
-<span class="source-line-no">210</span><span id="line-210">                Bytes.toUint32(frequency),</span>
-<span class="source-line-no">211</span><span id="line-211">                    Bytes.firstTwoBytesLittleEndian(startTime),</span>
-<span class="source-line-no">212</span><span id="line-212">                    Bytes.firstTwoBytesLittleEndian(endTime),</span>
-<span class="source-line-no">213</span><span id="line-213">                    new byte[]{ (byte) activeDays},</span>
-<span class="source-line-no">214</span><span id="line-214">                    new byte[]{ (byte) enabled},</span>
-<span class="source-line-no">215</span><span id="line-215">                    new byte[]{ (byte) validityStatus});</span>
-<span class="source-line-no">216</span><span id="line-216">        }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">        public long getFrequencyMins() {</span>
-<span class="source-line-no">219</span><span id="line-219">            return frequency;</span>
-<span class="source-line-no">220</span><span id="line-220">        }</span>
-<span class="source-line-no">221</span><span id="line-221"></span>
-<span class="source-line-no">222</span><span id="line-222">        public MinsTime getFrequency() {</span>
-<span class="source-line-no">223</span><span id="line-223">            return new MinsTime((int) frequency);</span>
-<span class="source-line-no">224</span><span id="line-224">        }</span>
-<span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">        public int getStartTimeMins() {</span>
-<span class="source-line-no">227</span><span id="line-227">            return startTime;</span>
-<span class="source-line-no">228</span><span id="line-228">        }</span>
-<span class="source-line-no">229</span><span id="line-229"></span>
-<span class="source-line-no">230</span><span id="line-230">        public MinsTime getStartTime() {</span>
-<span class="source-line-no">231</span><span id="line-231">            return new MinsTime(startTime);</span>
-<span class="source-line-no">232</span><span id="line-232">        }</span>
-<span class="source-line-no">233</span><span id="line-233"></span>
-<span class="source-line-no">234</span><span id="line-234">        public int getEndTimeMins() {</span>
-<span class="source-line-no">235</span><span id="line-235">            return endTime;</span>
-<span class="source-line-no">236</span><span id="line-236">        }</span>
-<span class="source-line-no">237</span><span id="line-237"></span>
-<span class="source-line-no">238</span><span id="line-238">        public MinsTime getEndTime() {</span>
-<span class="source-line-no">239</span><span id="line-239">            return new MinsTime(endTime);</span>
-<span class="source-line-no">240</span><span id="line-240">        }</span>
-<span class="source-line-no">241</span><span id="line-241"></span>
-<span class="source-line-no">242</span><span id="line-242">        public int getActiveDaysBitmask() {</span>
-<span class="source-line-no">243</span><span id="line-243">            return activeDays;</span>
-<span class="source-line-no">244</span><span id="line-244">        }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">        public Set&lt;MultiDay&gt; getActiveDays() {</span>
-<span class="source-line-no">247</span><span id="line-247">            return MultiDay.fromBitmask(activeDays);</span>
-<span class="source-line-no">248</span><span id="line-248">        }</span>
-<span class="source-line-no">249</span><span id="line-249"></span>
-<span class="source-line-no">250</span><span id="line-250">        public int getEnabled() {</span>
-<span class="source-line-no">251</span><span id="line-251">            return enabled;</span>
-<span class="source-line-no">252</span><span id="line-252">        }</span>
-<span class="source-line-no">253</span><span id="line-253"></span>
-<span class="source-line-no">254</span><span id="line-254">        public int getValidityStatus() {</span>
-<span class="source-line-no">255</span><span id="line-255">            return validityStatus;</span>
-<span class="source-line-no">256</span><span id="line-256">        }</span>
-<span class="source-line-no">257</span><span id="line-257"></span>
-<span class="source-line-no">258</span><span id="line-258">        public String toString() {</span>
-<span class="source-line-no">259</span><span id="line-259">            return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
-<span class="source-line-no">260</span><span id="line-260">        }</span>
-<span class="source-line-no">261</span><span id="line-261">    }</span>
-<span class="source-line-no">262</span><span id="line-262">    </span>
-<span class="source-line-no">263</span><span id="line-263">}</span>
+<span class="source-line-no">208</span><span id="line-208">        public Reminder(byte[] cargo, int i) {</span>
+<span class="source-line-no">209</span><span id="line-209">            this.frequency = Bytes.readUint32(cargo, i);</span>
+<span class="source-line-no">210</span><span id="line-210">            this.startTime = Bytes.readShort(cargo, i+4);</span>
+<span class="source-line-no">211</span><span id="line-211">            this.endTime = Bytes.readShort(cargo, i+6);</span>
+<span class="source-line-no">212</span><span id="line-212">            this.activeDays = cargo[i+8];</span>
+<span class="source-line-no">213</span><span id="line-213">            this.enabled = cargo[i+9];</span>
+<span class="source-line-no">214</span><span id="line-214">            this.validityStatus = cargo[i+10];</span>
+<span class="source-line-no">215</span><span id="line-215">        }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">        public byte[] buildCargo() {</span>
+<span class="source-line-no">218</span><span id="line-218">            return Bytes.combine(</span>
+<span class="source-line-no">219</span><span id="line-219">                Bytes.toUint32(frequency),</span>
+<span class="source-line-no">220</span><span id="line-220">                    Bytes.firstTwoBytesLittleEndian(startTime),</span>
+<span class="source-line-no">221</span><span id="line-221">                    Bytes.firstTwoBytesLittleEndian(endTime),</span>
+<span class="source-line-no">222</span><span id="line-222">                    new byte[]{ (byte) activeDays},</span>
+<span class="source-line-no">223</span><span id="line-223">                    new byte[]{ (byte) enabled},</span>
+<span class="source-line-no">224</span><span id="line-224">                    new byte[]{ (byte) validityStatus});</span>
+<span class="source-line-no">225</span><span id="line-225">        }</span>
+<span class="source-line-no">226</span><span id="line-226"></span>
+<span class="source-line-no">227</span><span id="line-227">        public long getFrequencyMins() {</span>
+<span class="source-line-no">228</span><span id="line-228">            return frequency;</span>
+<span class="source-line-no">229</span><span id="line-229">        }</span>
+<span class="source-line-no">230</span><span id="line-230"></span>
+<span class="source-line-no">231</span><span id="line-231">        public MinsTime getFrequency() {</span>
+<span class="source-line-no">232</span><span id="line-232">            return new MinsTime((int) frequency);</span>
+<span class="source-line-no">233</span><span id="line-233">        }</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">        public int getStartTimeMins() {</span>
+<span class="source-line-no">236</span><span id="line-236">            return startTime;</span>
+<span class="source-line-no">237</span><span id="line-237">        }</span>
+<span class="source-line-no">238</span><span id="line-238"></span>
+<span class="source-line-no">239</span><span id="line-239">        public MinsTime getStartTime() {</span>
+<span class="source-line-no">240</span><span id="line-240">            return new MinsTime(startTime);</span>
+<span class="source-line-no">241</span><span id="line-241">        }</span>
+<span class="source-line-no">242</span><span id="line-242"></span>
+<span class="source-line-no">243</span><span id="line-243">        public int getEndTimeMins() {</span>
+<span class="source-line-no">244</span><span id="line-244">            return endTime;</span>
+<span class="source-line-no">245</span><span id="line-245">        }</span>
+<span class="source-line-no">246</span><span id="line-246"></span>
+<span class="source-line-no">247</span><span id="line-247">        public MinsTime getEndTime() {</span>
+<span class="source-line-no">248</span><span id="line-248">            return new MinsTime(endTime);</span>
+<span class="source-line-no">249</span><span id="line-249">        }</span>
+<span class="source-line-no">250</span><span id="line-250"></span>
+<span class="source-line-no">251</span><span id="line-251">        public int getActiveDaysBitmask() {</span>
+<span class="source-line-no">252</span><span id="line-252">            return activeDays;</span>
+<span class="source-line-no">253</span><span id="line-253">        }</span>
+<span class="source-line-no">254</span><span id="line-254"></span>
+<span class="source-line-no">255</span><span id="line-255">        public Set&lt;MultiDay&gt; getActiveDays() {</span>
+<span class="source-line-no">256</span><span id="line-256">            return MultiDay.fromBitmask(activeDays);</span>
+<span class="source-line-no">257</span><span id="line-257">        }</span>
+<span class="source-line-no">258</span><span id="line-258"></span>
+<span class="source-line-no">259</span><span id="line-259">        public int getEnabled() {</span>
+<span class="source-line-no">260</span><span id="line-260">            return enabled;</span>
+<span class="source-line-no">261</span><span id="line-261">        }</span>
+<span class="source-line-no">262</span><span id="line-262"></span>
+<span class="source-line-no">263</span><span id="line-263">        public int getValidityStatus() {</span>
+<span class="source-line-no">264</span><span id="line-264">            return validityStatus;</span>
+<span class="source-line-no">265</span><span id="line-265">        }</span>
+<span class="source-line-no">266</span><span id="line-266"></span>
+<span class="source-line-no">267</span><span id="line-267">        public String toString() {</span>
+<span class="source-line-no">268</span><span id="line-268">            return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
+<span class="source-line-no">269</span><span id="line-269">        }</span>
+<span class="source-line-no">270</span><span id="line-270">    }</span>
+<span class="source-line-no">271</span><span id="line-271">    </span>
+<span class="source-line-no">272</span><span id="line-272">}</span>
 
 
 

@@ -76,13 +76,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">com.jwoglom.pumpx2.pump.messages.Message</a>
+<div class="inheritance"><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">com.jwoglom.pumpx2.pump.messages.models.StatusMessage</a>
 <div class="inheritance">com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-28">InitiateBolusResponse</a></span>
-<span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-29">InitiateBolusResponse</a></span>
+<span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
 <div class="block">Response message for <a href="../../request/control/InitiateBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>InitiateBolusRequest</code></a>, opCode -97, size 6
 
  <br>
@@ -198,6 +200,9 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.StatusMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></h3>
+<code><a href="../../models/StatusMessage.html#isStatusOK()">isStatusOK</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
@@ -217,13 +222,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>InitiateBolusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-43">InitiateBolusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-44">InitiateBolusResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int)">
 <h3>InitiateBolusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-45">InitiateBolusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-46">InitiateBolusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;bolusId,
  int&nbsp;statusTypeId)</span></div>
 </section>
@@ -239,7 +244,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-62">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for InitiateBolusResponse:</caption>
  <tr><td><code>status</code></td><td><code>raw[0]</code></td></tr>
@@ -255,7 +260,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-84">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-85">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;bolusId,
  int&nbsp;statusType)</span></div>
 <div class="block"><table border="1">
@@ -273,8 +278,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-95">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-96">getStatus</a></span>()</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
 <dt>Returns:</dt>
 <dd>0 if successful</dd>
 </dl>
@@ -283,25 +290,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-98">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-99">getBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStatusTypeId()">
 <h3>getStatusTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-101">getStatusTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-102">getStatusTypeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStatusType()">
 <h3>getStatusType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InitiateBolusResponse.BolusResponseStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">InitiateBolusResponse.BolusResponseStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-104">getStatusType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="InitiateBolusResponse.BolusResponseStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">InitiateBolusResponse.BolusResponseStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-105">getStatusType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="wasBolusInitiated()">
 <h3>wasBolusInitiated</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-134">wasBolusInitiated</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#line-135">wasBolusInitiated</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true when bolus was initiated</dd>

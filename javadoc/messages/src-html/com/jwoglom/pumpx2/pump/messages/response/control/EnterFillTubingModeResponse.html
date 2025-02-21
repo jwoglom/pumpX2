@@ -23,77 +23,78 @@
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">import java.math.BigInteger;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">/**</span>
-<span class="source-line-no">014</span><span id="line-14"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest}, opCode -107, size 1</span>
-<span class="source-line-no">015</span><span id="line-15"> *</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;br&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
-<span class="source-line-no">018</span><span id="line-18"> * </span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-107&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;1&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;modifiesInsulinDelivery&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;/table&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> */</span>
-<span class="source-line-no">030</span><span id="line-30">@MessageProps(</span>
-<span class="source-line-no">031</span><span id="line-31">    opCode=-107,</span>
-<span class="source-line-no">032</span><span id="line-32">    size=1,</span>
-<span class="source-line-no">033</span><span id="line-33">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">034</span><span id="line-34">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">035</span><span id="line-35">    signed=true,</span>
-<span class="source-line-no">036</span><span id="line-36">    modifiesInsulinDelivery=true,</span>
-<span class="source-line-no">037</span><span id="line-37">    request=EnterFillTubingModeRequest.class</span>
-<span class="source-line-no">038</span><span id="line-38">)</span>
-<span class="source-line-no">039</span><span id="line-39">public class EnterFillTubingModeResponse extends Message {</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    private int status;</span>
-<span class="source-line-no">042</span><span id="line-42">    </span>
-<span class="source-line-no">043</span><span id="line-43">    public EnterFillTubingModeResponse() {</span>
-<span class="source-line-no">044</span><span id="line-44">        this.cargo = EMPTY;</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    public EnterFillTubingModeResponse(int status) {</span>
-<span class="source-line-no">048</span><span id="line-48">        this.cargo = buildCargo(status);</span>
-<span class="source-line-no">049</span><span id="line-49">        this.status = status;</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    public void parse(byte[] raw) { </span>
-<span class="source-line-no">053</span><span id="line-53">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">054</span><span id="line-54">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">055</span><span id="line-55">        this.cargo = raw;</span>
-<span class="source-line-no">056</span><span id="line-56">    }</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">import java.math.BigInteger;</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">/**</span>
+<span class="source-line-no">015</span><span id="line-15"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest}, opCode -107, size 1</span>
+<span class="source-line-no">016</span><span id="line-16"> *</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;br&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * </span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-107&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;1&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;modifiesInsulinDelivery&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;/table&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> */</span>
+<span class="source-line-no">031</span><span id="line-31">@MessageProps(</span>
+<span class="source-line-no">032</span><span id="line-32">    opCode=-107,</span>
+<span class="source-line-no">033</span><span id="line-33">    size=1,</span>
+<span class="source-line-no">034</span><span id="line-34">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">035</span><span id="line-35">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">036</span><span id="line-36">    signed=true,</span>
+<span class="source-line-no">037</span><span id="line-37">    modifiesInsulinDelivery=true,</span>
+<span class="source-line-no">038</span><span id="line-38">    request=EnterFillTubingModeRequest.class</span>
+<span class="source-line-no">039</span><span id="line-39">)</span>
+<span class="source-line-no">040</span><span id="line-40">public class EnterFillTubingModeResponse extends StatusMessage {</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42">    private int status;</span>
+<span class="source-line-no">043</span><span id="line-43">    </span>
+<span class="source-line-no">044</span><span id="line-44">    public EnterFillTubingModeResponse() {</span>
+<span class="source-line-no">045</span><span id="line-45">        this.cargo = EMPTY;</span>
+<span class="source-line-no">046</span><span id="line-46">    }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">    public EnterFillTubingModeResponse(int status) {</span>
+<span class="source-line-no">049</span><span id="line-49">        this.cargo = buildCargo(status);</span>
+<span class="source-line-no">050</span><span id="line-50">        this.status = status;</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) { </span>
+<span class="source-line-no">054</span><span id="line-54">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">055</span><span id="line-55">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">056</span><span id="line-56">        this.cargo = raw;</span>
+<span class="source-line-no">057</span><span id="line-57">    }</span>
 <span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    /**</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;caption&gt;Byte layout for EnterFillTubingModeResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;/table&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     */</span>
-<span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(int status) {</span>
-<span class="source-line-no">067</span><span id="line-67">        return Bytes.combine(</span>
-<span class="source-line-no">068</span><span id="line-68">                new byte[]{ (byte) status }</span>
-<span class="source-line-no">069</span><span id="line-69">        );</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    /**</span>
+<span class="source-line-no">061</span><span id="line-61">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">062</span><span id="line-62">     * &lt;caption&gt;Byte layout for EnterFillTubingModeResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;/table&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     */</span>
+<span class="source-line-no">067</span><span id="line-67">    public static byte[] buildCargo(int status) {</span>
+<span class="source-line-no">068</span><span id="line-68">        return Bytes.combine(</span>
+<span class="source-line-no">069</span><span id="line-69">                new byte[]{ (byte) status }</span>
+<span class="source-line-no">070</span><span id="line-70">        );</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
 <span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    /**</span>
-<span class="source-line-no">074</span><span id="line-74">     * @return 0 if successful</span>
-<span class="source-line-no">075</span><span id="line-75">     */</span>
-<span class="source-line-no">076</span><span id="line-76">    public int getStatus() {</span>
-<span class="source-line-no">077</span><span id="line-77">        return status;</span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79">}</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    /**</span>
+<span class="source-line-no">075</span><span id="line-75">     * @return 0 if successful</span>
+<span class="source-line-no">076</span><span id="line-76">     */</span>
+<span class="source-line-no">077</span><span id="line-77">    public int getStatus() {</span>
+<span class="source-line-no">078</span><span id="line-78">        return status;</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80">}</span>
 
 
 

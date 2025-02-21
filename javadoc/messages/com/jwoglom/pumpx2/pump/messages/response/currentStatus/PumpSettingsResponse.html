@@ -76,13 +76,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">com.jwoglom.pumpx2.pump.messages.Message</a>
+<div class="inheritance"><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">com.jwoglom.pumpx2.pump.messages.models.StatusMessage</a>
 <div class="inheritance">com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpSettingsResponse</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-24">PumpSettingsResponse</a></span>
-<span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-25">PumpSettingsResponse</a></span>
+<span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
 <div class="block">Response message for <a href="../../request/currentStatus/PumpSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>PumpSettingsRequest</code></a>, opCode 83, size 9
 
  <br>
@@ -201,6 +203,9 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.StatusMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></h3>
+<code><a href="../../models/StatusMessage.html#isStatusOK()">isStatusOK</a></code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
@@ -220,13 +225,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PumpSettingsResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-40">PumpSettingsResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-41">PumpSettingsResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,int,int,int)">
 <h3>PumpSettingsResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-42">PumpSettingsResponse</a></span><wbr><span class="parameters">(int&nbsp;lowInsulinThreshold,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-43">PumpSettingsResponse</a></span><wbr><span class="parameters">(int&nbsp;lowInsulinThreshold,
  int&nbsp;cannulaPrimeSize,
  int&nbsp;autoShutdownEnabled,
  int&nbsp;autoShutdownDuration,
@@ -246,7 +251,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-66">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-67">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for PumpSettingsResponse:</caption>
  <tr><td><code>lowInsulinThreshold</code></td><td><code>raw[0]</code></td></tr>
@@ -266,7 +271,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-95">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;lowInsulinThreshold,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-96">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;lowInsulinThreshold,
  int&nbsp;cannulaPrimeSize,
  int&nbsp;autoShutdownEnabled,
  int&nbsp;autoShutdownDuration,
@@ -291,44 +296,46 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLowInsulinThreshold()">
 <h3>getLowInsulinThreshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-106">getLowInsulinThreshold</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-107">getLowInsulinThreshold</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCannulaPrimeSize()">
 <h3>getCannulaPrimeSize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-109">getCannulaPrimeSize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-110">getCannulaPrimeSize</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAutoShutdownEnabled()">
 <h3>getAutoShutdownEnabled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-112">getAutoShutdownEnabled</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-113">getAutoShutdownEnabled</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAutoShutdownDuration()">
 <h3>getAutoShutdownDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-115">getAutoShutdownDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-116">getAutoShutdownDuration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeatureLock()">
 <h3>getFeatureLock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-118">getFeatureLock</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-119">getFeatureLock</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getOledTimeout()">
 <h3>getOledTimeout</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-121">getOledTimeout</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-122">getOledTimeout</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-127">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#line-128">getStatus</a></span>()</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
 <dt>Returns:</dt>
 <dd>0 if successful</dd>
 </dl>
