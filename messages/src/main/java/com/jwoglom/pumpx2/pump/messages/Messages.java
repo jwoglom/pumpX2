@@ -196,6 +196,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.CreateNewIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.CreateNewIDPResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.RenameIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CreateDuplicateIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CreateDuplicateIDPResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -304,6 +308,8 @@ public enum Messages {
     SET_ACTIVE_IDP(SetActiveIDPRequest.class, SetActiveIDPResponse.class),
     CREATE_NEW_IDP(CreateNewIDPRequest.class, CreateNewIDPResponse.class),
     RENAME_IDP(RenameIDPRequest.class, RenameIDPResponse.class),
+    CREATE_DUPLICATE_IDP(CreateDuplicateIDPRequest.class, CreateDuplicateIDPResponse.class),
+    DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),
     // MESSAGES_END
     ;
 
