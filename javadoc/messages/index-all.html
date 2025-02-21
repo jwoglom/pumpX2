@@ -1637,6 +1637,30 @@ loadScripts(document, 'script');</script>
  13<code>(byte) fillTubingAnnun</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#buildCargo(int,int,int,int,int,long,int,int,int)" class="member-name-link">buildCargo(int, int, int, int, int, long, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetIDPSegmentRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{(byte) idpId} [element 0]</code>
+ 1<code>new byte[]{1} [element 1]</code>
+ 2<code>new byte[]{(byte) segmentIndex} [element 0]</code>
+ 3<code>new byte[]{(byte) operationId} [element 1]</code>
+ 4<code>firstTwoBytesLittleEndian(profileStartTime) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(profileStartTime) [byte 1]</code>
+ 6<code>firstTwoBytesLittleEndian(profileBasalRate) [byte 0]</code>
+ 7<code>firstTwoBytesLittleEndian(profileBasalRate) [byte 1]</code>
+ 8<code>toUint32(profileCarbRatio) [byte 0]</code>
+ 9<code>toUint32(profileCarbRatio) [byte 1]</code>
+ 10<code>toUint32(profileCarbRatio) [byte 2]</code>
+ 11<code>toUint32(profileCarbRatio) [byte 3]</code>
+ 12<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 0]</code>
+ 13<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code>
+ 14<code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code>
+ 15<code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code>
+ 16<code>(byte) idpStatusId</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#buildCargo(int,int,int,int,long,int,int,int)" class="member-name-link">buildCargo(int, int, int, int, long, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>
 <div class="block">
@@ -1656,7 +1680,7 @@ loadScripts(document, 'script');</script>
  11<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code>
  12<code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code>
  13<code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code>
- 14<code>(byte) status</code>
+ 14<code>(byte) idpStatusId</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#buildCargo(int,int,int,long)" class="member-name-link">buildCargo(int, int, int, long)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LocalizationResponse</a></dt>
@@ -3749,6 +3773,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html#create(com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse,java.lang.String)" class="member-name-link">create(AbstractCentralChallengeResponse, String)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">PumpChallengeRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#CREATE_AFTER" class="member-name-link">CREATE_AFTER</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>
+<div class="block">Creates a new segment AFTER the current segmentId</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_DUPLICATE_IDP" class="member-name-link">CREATE_DUPLICATE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_NEW_IDP" class="member-name-link">CREATE_NEW_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -4377,6 +4405,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html#DEFAULT_REMINDER_9" class="member-name-link">DEFAULT_REMINDER_9</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#DELETE" class="member-name-link">DELETE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>
+<div class="block">Deletes the given segmentId</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#DELETE_IDP" class="member-name-link">DELETE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DeleteIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
@@ -4867,6 +4899,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/ErrorResponse.ErrorCode.html#fromByte(int)" class="member-name-link">fromByte(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.<a href="com/jwoglom/pumpx2/pump/messages/response/ErrorResponse.ErrorCode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response">ErrorResponse.ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.ChangeType.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a></dt>
 <dd>&nbsp;</dd>
@@ -5651,6 +5685,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQSettingsResponse.html#getHypoMinimization()" class="member-name-link">getHypoMinimization()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#getId()" class="member-name-link">getId()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#getId()" class="member-name-link">getId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetTempRateResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/StopTempRateResponse.html#getId()" class="member-name-link">getId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/StopTempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">StopTempRateResponse</a></dt>
@@ -5679,6 +5715,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetActiveIDPRequest.html#getIdpId()" class="member-name-link">getIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetActiveIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetActiveIDPRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getIdpId()" class="member-name-link">getIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#getIdpId()" class="member-name-link">getIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html#getIdpId()" class="member-name-link">getIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">IDPSegmentRequest</a></dt>
@@ -5702,6 +5740,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#getIdpSlot5Id()" class="member-name-link">getIdpSlot5Id()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ProfileStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html#getIdpSlotIds()" class="member-name-link">getIdpSlotIds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ProfileStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ProfileStatusResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getIdpStatus()" class="member-name-link">getIdpStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getIdpStatus()" class="member-name-link">getIdpStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getIdpStatusId()" class="member-name-link">getIdpStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrement()" class="member-name-link">getIncrement()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -5957,6 +6001,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#getOledTimeout()" class="member-name-link">getOledTimeout()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangePumpSettingsHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getOperation()" class="member-name-link">getOperation()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getOperationId()" class="member-name-link">getOperationId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#getOptions()" class="member-name-link">getOptions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetG7PairingCodeRequest.html#getPairingCode()" class="member-name-link">getPairingCode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetG7PairingCodeRequest</a></dt>
@@ -5991,6 +6039,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/FillCannulaRequest.html#getPrimeSizeMilliUnits()" class="member-name-link">getPrimeSizeMilliUnits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/FillCannulaRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">FillCannulaRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getProfileBasalRate()" class="member-name-link">getProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html#getProfileBasalRate()" class="member-name-link">getProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBasalStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBasalStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileBasalRate()" class="member-name-link">getProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
@@ -6001,11 +6051,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#getProfileCarbEntry()" class="member-name-link">getProfileCarbEntry()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getProfileCarbRatio()" class="member-name-link">getProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileCarbRatio()" class="member-name-link">getProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getProfileISF()" class="member-name-link">getProfileISF()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileISF()" class="member-name-link">getProfileISF()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -6013,7 +6067,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#getProfileName()" class="member-name-link">getProfileName()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">RenameIDPRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getProfileStartTime()" class="member-name-link">getProfileStartTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileStartTime()" class="member-name-link">getProfileStartTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getProfileTargetBG()" class="member-name-link">getProfileTargetBG()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileTargetBG()" class="member-name-link">getProfileTargetBG()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -6209,6 +6267,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/helpers/Bytes.html#getSecureRandom8Bytes()" class="member-name-link">getSecureRandom8Bytes()</a> - Static method in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Bytes.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Bytes</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getSegmentIndex()" class="member-name-link">getSegmentIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html#getSegmentIndex()" class="member-name-link">getSegmentIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">IDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getSegmentIndex()" class="member-name-link">getSegmentIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
@@ -6357,8 +6417,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HistoryLogResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusAbstractResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusResponse</a></dt>
@@ -6391,11 +6449,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#getStatusIcon1()" class="member-name-link">getStatusIcon1()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getStatusId()" class="member-name-link">getStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html#getStatusId()" class="member-name-link">getStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CancelBolusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBolusStatusResponse.html#getStatusId()" class="member-name-link">getStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBolusStatusResponse</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getStatusId()" class="member-name-link">getStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SuspendPumpingResponse.html#getStatusOK()" class="member-name-link">getStatusOK()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SuspendPumpingResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SuspendPumpingResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -6907,7 +6965,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">IDPSegmentRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>IDPSegmentResponse</code></a>, opCode 66, size 2
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetIDPSegmentResponse</code></a>, opCode 66, size 2
 
  <br>
 
@@ -6917,7 +6975,7 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>66</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
- &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>IDPSegmentResponse</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetIDPSegmentResponse</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html#%3Cinit%3E()" class="member-name-link">IDPSegmentRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/IDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">IDPSegmentRequest</a></dt>
@@ -7721,6 +7779,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#modifiesInsulinDelivery()" class="member-name-link">modifiesInsulinDelivery()</a> - Element in annotation interface com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#MODIFY" class="member-name-link">MODIFY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>
+<div class="block">Modifies the given segmentId</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html#MONDAY" class="member-name-link">MONDAY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">MultiDay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/BolusPermissionResponse.NackReason.html#MPP_STATE_UNKNOWN_NACK_REASON" class="member-name-link">MPP_STATE_UNKNOWN_NACK_REASON</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/BolusPermissionResponse.NackReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">BolusPermissionResponse.NackReason</a></dt>
@@ -8276,6 +8338,23 @@ loadScripts(document, 'script');</script>
  <code>pairingCode</code><code>Bytes.readShort(raw, 0)</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetIDPSegmentRequest:
+ <code>idpId</code><code>raw[0]</code>
+ <code>segmentIndex</code><code>raw[2]</code>
+ <code>operationId</code><code>raw[3]</code>
+ <code>operation</code><code>getOperation()</code>
+ <code>profileStartTime</code><code>Bytes.readShort(raw, 4)</code>
+ <code>profileBasalRate</code><code>Bytes.readShort(raw, 6)</code>
+ <code>profileCarbRatio</code><code>Bytes.readUint32(raw, 8)</code>
+ <code>profileTargetBG</code><code>Bytes.readShort(raw, 12)</code>
+ <code>profileISF</code><code>Bytes.readShort(raw, 14)</code>
+ <code>idpStatusId</code><code>raw[16]</code>
+ <code>idpStatus</code><code>getIdpStatus()</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
 <dd>
 <div class="block">
@@ -8662,6 +8741,8 @@ loadScripts(document, 'script');</script>
  <code>status</code><code>raw[0]</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSettingsResponse</a></dt>
 <dd>
 <div class="block">
@@ -9064,7 +9145,8 @@ loadScripts(document, 'script');</script>
  <code>profileCarbRatio</code><code>Bytes.readUint32(raw, 6)</code>
  <code>profileTargetBG</code><code>Bytes.readShort(raw, 10)</code>
  <code>profileISF</code><code>Bytes.readShort(raw, 12)</code>
- <code>statusId</code><code>raw[14]</code>
+ <code>idpStatusId</code><code>raw[14]</code>
+ <code>idpStatus</code><code>getIdpStatus()</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSettingsResponse</a></dt>
@@ -10672,6 +10754,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_G7_PAIRING_CODE" class="member-name-link">SET_G7_PAIRING_CODE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_IDP_SEGMENT" class="member-name-link">SET_IDP_SEGMENT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_IDP_SETTINGS" class="member-name-link">SET_IDP_SETTINGS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_MODES" class="member-name-link">SET_MODES</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -10808,6 +10892,50 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetG7PairingCodeResponse.html#%3Cinit%3E(int)" class="member-name-link">SetG7PairingCodeResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetG7PairingCodeResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#setGlucoseMgdl(java.lang.Integer)" class="member-name-link">setGlucoseMgdl(Integer)</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetIDPSegmentResponse</code></a>, opCode -86, size 17
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-86</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>17</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetIDPSegmentResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E()" class="member-name-link">SetIDPSegmentRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetIDPSegmentRequest(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E(int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest.IDPSegmentOperation,int,int,long,int,int,int)" class="member-name-link">SetIDPSegmentRequest(int, int, SetIDPSegmentRequest.IDPSegmentOperation, int, int, long, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetIDPSegmentRequest</code></a>, opCode -85, size 0
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-85</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetIDPSegmentRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html#%3Cinit%3E()" class="member-name-link">SetIDPSegmentResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
@@ -11987,6 +12115,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.ChangeType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -12205,6 +12337,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

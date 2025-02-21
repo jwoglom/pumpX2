@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 <ul class="see-list-long">
 <li><a href="../../builders/InsulinDeliveryProfileRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders"><code><br>
 
- Response message for com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest, opCode 67, size 15
+ Response message for com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest, opCode 67, size 15
 
  <br>
 
@@ -101,7 +101,7 @@ loadScripts(document, 'script');</script>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>67</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>15</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest</code>&nbsp;</td></tr>
  </table></code></a></li>
 </ul>
 </dd>
@@ -174,7 +174,7 @@ loadScripts(document, 'script');</script>
  long&nbsp;profileCarbRatio,
  int&nbsp;profileTargetBG,
  int&nbsp;profileISF,
- int&nbsp;status)</code></div>
+ int&nbsp;idpStatusId)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for IDPSegmentResponse.buildCargo(...):
@@ -193,11 +193,17 @@ loadScripts(document, 'script');</script>
  11<code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code>
  12<code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code>
  13<code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code>
- 14<code>(byte) status</code>
+ 14<code>(byte) idpStatusId</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdpId()" class="member-name-link">getIdpId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdpStatus()" class="member-name-link">getIdpStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdpStatusId()" class="member-name-link">getIdpStatusId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileBasalRate()" class="member-name-link">getProfileBasalRate</a>()</code></div>
@@ -217,12 +223,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSegmentIndex()" class="member-name-link">getSegmentIndex</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatusId()" class="member-name-link">getStatusId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -235,7 +235,8 @@ loadScripts(document, 'script');</script>
  <code>profileCarbRatio</code><code>Bytes.readUint32(raw, 6)</code>
  <code>profileTargetBG</code><code>Bytes.readShort(raw, 10)</code>
  <code>profileISF</code><code>Bytes.readShort(raw, 12)</code>
- <code>statusId</code><code>raw[14]</code>
+ <code>idpStatusId</code><code>raw[14]</code>
+ <code>idpStatus</code><code>getIdpStatus()</code>
  </div>
 </div>
 </div>
@@ -261,13 +262,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>IDPSegmentResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-58">IDPSegmentResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-59">IDPSegmentResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,long,int,int,int)">
 <h3>IDPSegmentResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-60">IDPSegmentResponse</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-61">IDPSegmentResponse</a></span><wbr><span class="parameters">(int&nbsp;idpId,
  int&nbsp;segmentIndex,
  int&nbsp;profileStartTime,
  int&nbsp;profileBasalRate,
@@ -288,7 +289,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-86">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-89">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for IDPSegmentResponse:</caption>
  <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
@@ -298,7 +299,8 @@ loadScripts(document, 'script');</script>
  <tr><td><code>profileCarbRatio</code></td><td><code>Bytes.readUint32(raw, 6)</code></td></tr>
  <tr><td><code>profileTargetBG</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
  <tr><td><code>profileISF</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
- <tr><td><code>statusId</code></td><td><code>raw[14]</code></td></tr>
+ <tr><td><code>idpStatusId</code></td><td><code>raw[14]</code></td></tr>
+ <tr><td><code>idpStatus</code></td><td><code>getIdpStatus()</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -309,14 +311,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,int,long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-122">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-126">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
  int&nbsp;segmentIndex,
  int&nbsp;profileStartTime,
  int&nbsp;profileBasalRate,
  long&nbsp;profileCarbRatio,
  int&nbsp;profileTargetBG,
  int&nbsp;profileISF,
- int&nbsp;status)</span></div>
+ int&nbsp;idpStatusId)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for IDPSegmentResponse.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
@@ -334,62 +336,62 @@ loadScripts(document, 'script');</script>
  <tr><td>11</td><td><code>firstTwoBytesLittleEndian(profileTargetBG) [byte 1]</code></td></tr>
  <tr><td>12</td><td><code>firstTwoBytesLittleEndian(profileISF) [byte 0]</code></td></tr>
  <tr><td>13</td><td><code>firstTwoBytesLittleEndian(profileISF) [byte 1]</code></td></tr>
- <tr><td>14</td><td><code>(byte) status</code></td></tr>
+ <tr><td>14</td><td><code>(byte) idpStatusId</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIdpId()">
 <h3>getIdpId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-134">getIdpId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-138">getIdpId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSegmentIndex()">
 <h3>getSegmentIndex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-137">getSegmentIndex</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-141">getSegmentIndex</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileStartTime()">
 <h3>getProfileStartTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-140">getProfileStartTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-144">getProfileStartTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileBasalRate()">
 <h3>getProfileBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-143">getProfileBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-147">getProfileBasalRate</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileCarbRatio()">
 <h3>getProfileCarbRatio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-146">getProfileCarbRatio</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-150">getProfileCarbRatio</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileTargetBG()">
 <h3>getProfileTargetBG</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-149">getProfileTargetBG</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-153">getProfileTargetBG</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileISF()">
 <h3>getProfileISF</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-152">getProfileISF</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-156">getProfileISF</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getStatusId()">
-<h3>getStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-155">getStatusId</a></span>()</div>
+<section class="detail" id="getIdpStatusId()">
+<h3>getIdpStatusId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-159">getIdpStatusId</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getStatus()">
-<h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-158">getStatus</a></span>()</div>
+<section class="detail" id="getIdpStatus()">
+<h3>getIdpStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#line-162">getIdpStatus</a></span>()</div>
 </section>
 </li>
 </ul>
