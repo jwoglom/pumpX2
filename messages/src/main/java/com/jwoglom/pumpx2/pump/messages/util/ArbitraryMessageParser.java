@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.util;
 
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
@@ -24,7 +24,7 @@ import java.util.UUID;
 public class ArbitraryMessageParser {
 
     public static void setPumpTimeSinceReset(String pumpTimeSinceReset) {
-        if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){
+        if (!StringUtils.isBlank(pumpTimeSinceReset)){
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         }
     }

@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -10,7 +10,6 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeRes
 
 import java.util.Arrays;
 
-import kotlin.collections.ArraysKt;
 
 /**
  * The second authorization message sent to the pump which contains the HMACed pairing code.
@@ -33,8 +32,8 @@ public class PumpChallengeRequest extends Message {
 
     public PumpChallengeRequest(int appInstanceId, byte[] pumpChallengeHash) {
         parse(buildCargo(appInstanceId, pumpChallengeHash));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));
     }
 
     public int getAppInstanceId() {

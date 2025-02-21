@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
-import com.google.common.base.Strings;
+import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -82,7 +82,7 @@ public class PumpResponseMessageBuilder {
             return null;
         }
 
-        if (Strings.isNullOrEmpty(btChar)) {
+        if (StringUtils.isBlank(btChar)) {
             if (valueStr.length() == 8) {
                 // event
                 btChar = CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.toString();
@@ -105,7 +105,7 @@ public class PumpResponseMessageBuilder {
             if (btChar.length() == 32) {
                 UUID withDashes = addDashesToUuid(btChar);
                 String which = CharacteristicUUID.which(withDashes);
-                if (!Strings.isNullOrEmpty(which)) {
+                if (!StringUtils.isBlank(which)) {
                     throw new NoMessageMatch.NonPumpBtMessage(withDashes, which, valueStr);
                 }
             }
@@ -123,7 +123,7 @@ public class PumpResponseMessageBuilder {
         byte txId = value[3];
         L.d(TAG, "makeMessage(txId="+txId+", opCode="+opCode+")");
 
-        if (Strings.isNullOrEmpty(btChar)) {
+        if (StringUtils.isBlank(btChar)) {
             throw new RuntimeException("missing characteristic, cannot parse");
         }
 

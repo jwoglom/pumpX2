@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -30,7 +30,7 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.intMap = Bytes.readUint64(raw, 0);
         this.features = PumpFeatureType.fromBitmask(intMap);

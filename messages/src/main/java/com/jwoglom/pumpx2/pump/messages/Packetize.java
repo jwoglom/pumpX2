@@ -1,9 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import com.google.common.collect.Lists;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
@@ -16,8 +14,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import kotlin.text.Charsets;
 
 public class Packetize {
     public static final String TAG = "Packetize";
@@ -79,7 +77,7 @@ public class Packetize {
 
         // Fill Packet list with chunks of size 18 (maxChunkSize)
         List<Packet> packets = new ArrayList<>();
-        List<List<Byte>> chunked = Lists.partition(Arrays.asList(ArrayUtils.toObject(packetWithCRC)), maxChunkSize);
+        List<List<Byte>> chunked = partitionList(packetWithCRC, maxChunkSize);
 
         int b = chunked.size() - 1;
         for (List<Byte> bytes : chunked) {
@@ -90,6 +88,28 @@ public class Packetize {
 
         return packets;
     }
+
+
+    public static List<List<Byte>> partitionList(byte[] packetWithCRC, int partitionSize) {
+        List<List<Byte>> partitions = new ArrayList<>();
+        List<Byte> subList = new ArrayList<>();
+
+        for (byte b : packetWithCRC) {
+            if (subList.size() == partitionSize) {
+                partitions.add(subList);
+                subList = new ArrayList<>();
+            }
+
+            subList.add(b);
+        }
+
+        if (!subList.isEmpty()) {
+            partitions.add(subList);
+        }
+
+        return partitions;
+    }
+
 
     public static byte[] doHmacSha1(byte[] data, byte[] key) {
         return new HmacUtils(HmacAlgorithms.HMAC_SHA_1, key).hmac(data);

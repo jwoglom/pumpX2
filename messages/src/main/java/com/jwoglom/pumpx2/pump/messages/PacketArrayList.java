@@ -1,10 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
@@ -13,11 +10,12 @@ import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
+import org.apache.commons.lang3.Validate;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Set;
 
-import kotlin.jvm.internal.Intrinsics;
-import kotlin.text.Charsets;
 
 public class PacketArrayList {
     protected static final String TAG = "PacketArrayList";
@@ -38,8 +36,8 @@ public class PacketArrayList {
     protected final byte[] expectedCrc = {0, 0};
 
     protected PacketArrayList(byte expectedopCode, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
-        Preconditions.checkArgument(expectedopCode != 0);
-        Preconditions.checkArgument(expectedCargoSize >= 0 || (256 + (int)expectedCargoSize) >= 0);
+        Validate.isTrue(expectedopCode != 0);
+        Validate.isTrue(expectedCargoSize >= 0 || (256 + (int)expectedCargoSize) >= 0);
         this.expectedCargoSize = expectedCargoSize;
         if (expectedCargoSize < 0 && expectedCargoSize > -128) {
             this.actualExpectedCargoSize = 256 + expectedCargoSize;
@@ -85,7 +83,7 @@ public class PacketArrayList {
     }
 
     public boolean validate(byte[] authKey) {
-        Intrinsics.checkParameterIsNotNull(authKey, "ak");
+        Validate.notNull(authKey, "ak");
         if (needsMorePacket()) {
             return false;
         }
@@ -195,7 +193,7 @@ public class PacketArrayList {
 
 
     public void validatePacket(byte[] packetData) {
-        Intrinsics.checkParameterIsNotNull(packetData, "packetData");
+        Validate.notNull(packetData, "packetData");
         if (packetData.length == 0) {
             throw new IllegalArgumentException("Empty data");
         } else if (packetData.length >= 3) {
@@ -249,7 +247,7 @@ public class PacketArrayList {
     }
 
     public String toString() {
-        return JavaHelpers.autoToString(this, ImmutableSet.of());
+        return JavaHelpers.autoToString(this, Set.of());
     }
 
     public static class InvalidCRCException extends RuntimeException {

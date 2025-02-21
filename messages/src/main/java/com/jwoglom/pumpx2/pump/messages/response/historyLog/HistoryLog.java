@@ -1,7 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -11,6 +10,7 @@ import com.jwoglom.pumpx2.shared.JavaHelpers;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 public abstract class HistoryLog {
     protected byte[] cargo = null;
@@ -47,7 +47,7 @@ public abstract class HistoryLog {
     void parseBase(byte[] raw) {
         int typeId = Bytes.readShort(raw, 0) & 4095;
         // skipping due to inconsistencies around signed v unsigned
-        // Preconditions.checkState(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());
+        // Validate.isTrue(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());
 
         this.pumpTimeSec = Bytes.readUint32(raw, 2);
         this.sequenceNum = Bytes.readUint32(raw, 6);
@@ -74,7 +74,7 @@ public abstract class HistoryLog {
     }
 
     public String verboseToString() {
-        return JavaHelpers.autoToStringVerbose(this, ImmutableSet.of("cargo"));
+        return JavaHelpers.autoToStringVerbose(this, Set.of("cargo"));
     }
 
     public static byte[] fillCargo(byte[] cargo) {

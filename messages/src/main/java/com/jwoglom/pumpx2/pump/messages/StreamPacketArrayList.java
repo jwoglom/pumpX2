@@ -7,7 +7,7 @@ import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
-import kotlin.jvm.internal.Intrinsics;
+import org.apache.commons.lang3.Validate;
 
 public class StreamPacketArrayList extends PacketArrayList {
     protected static final String TAG = "StreamPacketArrayList";
@@ -21,7 +21,7 @@ public class StreamPacketArrayList extends PacketArrayList {
     }
 
     public void validatePacket(byte[] packetData) {
-        Intrinsics.checkParameterIsNotNull(packetData, "packetData");
+        Validate.notNull(packetData, "packetData");
         if (packetData.length == 0) {
             throw new IllegalArgumentException("Empty data");
         } else if (packetData.length >= 3) {

@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -42,7 +42,7 @@ public class ControlIQIOBResponse extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         mudaliarIOB = Bytes.readUint32(raw, 0);
         timeRemainingSeconds = Bytes.readUint32(raw, 4);
         mudaliarTotalIOB = Bytes.readUint32(raw, 8);

@@ -5,7 +5,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -14,6 +14,8 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistory
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
+
+import java.util.Set;
 
 public class InitiateBolusRequestTest {
     @Test
@@ -41,7 +43,7 @@ public class InitiateBolusRequestTest {
         assertEquals(1000, parsedReq.getTotalVolume()); // 1.000u
         assertEquals(10650, parsedReq.getBolusID());
         assertEquals(8, parsedReq.getBolusTypeBitmask());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedReq.getBolusTypes());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedReq.getBolusTypes());
         assertEquals(0, parsedReq.getFoodVolume()); // 0, since no carbs
         assertEquals(0, parsedReq.getCorrectionVolume());
         assertEquals(0, parsedReq.getBolusCarbs());
@@ -74,7 +76,7 @@ public class InitiateBolusRequestTest {
         assertEquals(130, parsedReq.getTotalVolume()); // 0.13u
         assertEquals(10652, parsedReq.getBolusID());
         assertEquals(1, parsedReq.getBolusTypeBitmask());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedReq.getBolusTypes());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedReq.getBolusTypes());
         assertEquals(130, parsedReq.getFoodVolume()); // 0.11u
         assertEquals(0, parsedReq.getCorrectionVolume());
         assertEquals(13, parsedReq.getBolusCarbs());
@@ -107,7 +109,7 @@ public class InitiateBolusRequestTest {
         assertEquals(110, parsedReq.getTotalVolume()); // 0.11u
         assertEquals(10653, parsedReq.getBolusID());
         assertEquals(1, parsedReq.getBolusTypeBitmask());
-        assertEquals(ImmutableSet.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedReq.getBolusTypes());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedReq.getBolusTypes());
         assertEquals(110, parsedReq.getFoodVolume()); // 0.11u
         assertEquals(0, parsedReq.getCorrectionVolume());
         assertEquals(11, parsedReq.getBolusCarbs());

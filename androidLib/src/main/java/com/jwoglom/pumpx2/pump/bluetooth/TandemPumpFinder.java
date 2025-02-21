@@ -9,7 +9,6 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
-import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.util.timber.DebugTree;
@@ -19,6 +18,7 @@ import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.ScanFailure;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -121,7 +121,7 @@ public abstract class TandemPumpFinder {
             String name = device.getName();
             @SuppressLint("MissingPermission")
             String address = device.getAddress();
-            if (!Strings.isNullOrEmpty(name) && BluetoothConstants.isTandemBluetoothDevice(name)) {
+            if (StringUtils.isNotBlank(name) && BluetoothConstants.isTandemBluetoothDevice(name)) {
                 BluetoothPeripheral peripheral = central.getPeripheral(address);
                 Timber.d("TandemPumpFinder: bondedDevice on adapter '%s' (%s) appears to be a Tandem device, returning", name, address);
                 return Optional.of(peripheral);

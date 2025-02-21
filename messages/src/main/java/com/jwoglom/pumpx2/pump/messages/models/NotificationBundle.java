@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.models;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
@@ -38,7 +38,7 @@ public class NotificationBundle {
     private Map<Class<? extends Message>, Instant> lastUpdatedTimes = new HashMap<>();
 
     public static List<Message> allRequests() {
-        return ImmutableList.of(
+        return Arrays.asList(
                 new AlertStatusRequest(),
                 new AlarmStatusRequest(),
                 new CGMAlertStatusRequest(),
@@ -50,7 +50,7 @@ public class NotificationBundle {
     }
 
     public static List<Class<? extends Message>> responseClasses() {
-        return ImmutableList.of(
+        return Arrays.asList(
                 AlertStatusResponse.class,
                 ReminderStatusResponse.class,
                 AlarmStatusResponse.class,
@@ -129,7 +129,7 @@ public class NotificationBundle {
             });
         }
         if (malfunctionStatusResponse != null) {
-            if (!Strings.isNullOrEmpty(malfunctionStatusResponse.getErrorString())) {
+            if (!StringUtils.isBlank(malfunctionStatusResponse.getErrorString())) {
                 slugs.add(malfunctionStatusResponse);
             }
         }

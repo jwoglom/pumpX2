@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -9,9 +9,6 @@ import com.jwoglom.pumpx2.pump.messages.request.NonexistentErrorRequest;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import kotlin.collections.ArraysKt;
-import kotlin.collections.CollectionsKt;
 
 /**
  * With an ErrorCode of INVALID_PARAMETER, requestCodeId contains the request opcode which failed
@@ -39,7 +36,7 @@ public class ErrorResponse extends Message {
 
     public void parse(byte[] raw) {
         // disabled for ErrorResponse since it can be of size 2 or 26
-        //Preconditions.checkArgument(raw.length == props().size());
+        //Validate.isTrue(raw.length == props().size());
         requestCodeId = raw[0];
         errorCodeId = raw[1];
         errorCode = ErrorCode.fromByte(errorCodeId);

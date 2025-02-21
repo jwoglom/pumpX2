@@ -7,8 +7,6 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 
-import com.google.common.base.Strings;
-
 public class EventService extends Service {
 
     @Nullable

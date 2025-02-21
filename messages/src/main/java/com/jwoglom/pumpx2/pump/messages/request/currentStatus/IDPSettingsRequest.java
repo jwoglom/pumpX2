@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -29,7 +29,7 @@ public class IDPSettingsRequest extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.idpId = raw[0];
         

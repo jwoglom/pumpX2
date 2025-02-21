@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -26,8 +26,8 @@ public class Jpake1aResponse extends AbstractCentralChallengeResponse {
 
     public Jpake1aResponse(int appInstanceId, byte[] centralChallengeHash) {
         parse(buildCargo(appInstanceId, centralChallengeHash));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
     }
 
     public Jpake1aResponse(byte[] raw) {
@@ -35,7 +35,7 @@ public class Jpake1aResponse extends AbstractCentralChallengeResponse {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size(), "size is "+raw.length+" not "+props().size());
+        Validate.isTrue(raw.length == props().size(), "size is "+raw.length+" not "+props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
         centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length

@@ -3,7 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import static com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse.AlertResponseType.CGM_GRAPH_REMOVED;
 import static org.junit.Assert.assertEquals;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
@@ -68,7 +68,7 @@ public class AlertStatusResponseTest {
                 new byte[]{0,0,0,2,0,0,0,0}
         );
 
-        assertEquals(ImmutableSet.of(AlertStatusResponse.AlertResponseType.CGM_GRAPH_REMOVED), parsed.getAlerts());
+        assertEquals(Set.of(AlertStatusResponse.AlertResponseType.CGM_GRAPH_REMOVED), parsed.getAlerts());
     }
 
 

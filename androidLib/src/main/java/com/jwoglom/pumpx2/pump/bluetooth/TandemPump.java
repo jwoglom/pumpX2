@@ -3,7 +3,6 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 
-import com.google.common.base.Strings;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -30,13 +29,14 @@ import com.welie.blessed.WriteType;
 import com.jwoglom.pumpx2.shared.Hex;
 
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import timber.log.Timber;
 
@@ -250,7 +250,7 @@ public abstract class TandemPump {
             String jpakeSecretHex = PumpState.getJpakeDerivedSecret(context);
             PumpState.setJpakeServerNonce(context, "");
             PumpState.setPairingCode(context, pairingCode);
-            if (Strings.isNullOrEmpty(jpakeSecretHex)) {
+            if (StringUtils.isBlank(jpakeSecretHex)) {
                 Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", BOOTSTRAP)");
                 JpakeAuthBuilder.clearInstance();
                 Message message = JpakeAuthBuilder.initializeWithPairingCode(pairingCode).nextRequest();

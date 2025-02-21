@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang3.Validate;
+import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -51,7 +51,7 @@ public class ProfileStatusResponse extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.numberOfProfiles = raw[0];
         this.idpSlot0Id = raw[1];
@@ -113,7 +113,7 @@ public class ProfileStatusResponse extends Message {
      * @return all IDP slots in order restricted to the total number of profiles.
      */
     public List<Integer> getIdpSlotIds() {
-        return ImmutableList.of(
+        return Arrays.asList(
                 getIdpSlot0Id(),
                 getIdpSlot1Id(),
                 getIdpSlot2Id(),

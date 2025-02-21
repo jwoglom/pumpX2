@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -27,8 +27,8 @@ public class Jpake2Response extends Message {
 
     public Jpake2Response(int appInstanceId, byte[] centralChallengeHash) {
         parse(buildCargo(appInstanceId, centralChallengeHash));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
     }
 
     public Jpake2Response(byte[] raw) {
@@ -36,7 +36,7 @@ public class Jpake2Response extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         appInstanceId = Bytes.readShort(raw, 0);
         centralChallengeHash = Arrays.copyOfRange(raw, 2, 170); // 168

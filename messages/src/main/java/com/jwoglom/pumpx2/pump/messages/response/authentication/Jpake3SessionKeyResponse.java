@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.authentication;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -35,13 +35,13 @@ public class Jpake3SessionKeyResponse extends Message {
 
     public Jpake3SessionKeyResponse(int appInstanceId, byte[] nonce, byte[] reserved) {
         parse(buildCargo(appInstanceId, nonce, reserved));
-        Preconditions.checkState(this.appInstanceId == appInstanceId);
-        Preconditions.checkState(Hex.encodeHexString(this.deviceKeyNonce).equals(Hex.encodeHexString(nonce)));
-        Preconditions.checkState(Hex.encodeHexString(this.deviceKeyReserved).equals(Hex.encodeHexString(reserved)));
+        Validate.isTrue(this.appInstanceId == appInstanceId);
+        Validate.isTrue(Hex.encodeHexString(this.deviceKeyNonce).equals(Hex.encodeHexString(nonce)));
+        Validate.isTrue(Hex.encodeHexString(this.deviceKeyReserved).equals(Hex.encodeHexString(reserved)));
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);
         this.deviceKeyNonce = Arrays.copyOfRange(raw, 2, 10); // 8

@@ -1,8 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.Validate;
+import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.shared.L;
 
@@ -129,7 +128,7 @@ public class BolusCalculator {
         if (userInputParameters.units != null) {
             return new BolusCalcDecision(
                     BolusCalcUnits.fromUser(userInputParameters.units),
-                    ImmutableSet.of(new BolusCalcCondition.DataDecision("using user-provided insulin amount")));
+                    Set.of(new BolusCalcCondition.DataDecision("using user-provided insulin amount")));
         }
 
         Set<BolusCalcCondition> ignored = Arrays.stream(ignoredConditions).collect(Collectors.toSet());
@@ -184,7 +183,7 @@ public class BolusCalculator {
         BolusCalcUnits bolusCalcUnits = new BolusCalcUnits(total, addedFromCarbs.getUnits(), addedFromBG.getUnits(), addedFromIOB.getUnits(), 0);
 
         L.d(TAG, "bolusCalculator: " + bolusCalcUnits + ", " + conditions);
-        Preconditions.checkState(bolusCalcUnits.getTotal() >= 0);
+        Validate.isTrue(bolusCalcUnits.getTotal() >= 0);
 
         // If there are any FailedPreconditions, then return 0 units regardless
         for (BolusCalcCondition condition : conditions) {
@@ -231,6 +230,10 @@ public class BolusCalculator {
     }
 
     private static BolusCalcComponent zeroWithCondition(BolusCalcCondition one, BolusCalcCondition... more) {
-        return new BolusCalcComponent(0.0, ImmutableList.<BolusCalcCondition>builder().add(one).addAll(Arrays.asList(more)).build());
+        List<BolusCalcCondition> list = new ArrayList<>();
+        list.add(one);
+        list.addAll(Arrays.asList(more));
+
+        return new BolusCalcComponent(0.0, list);
     }
 }

@@ -12,8 +12,6 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -57,8 +55,11 @@ import com.welie.blessed.ScanFailure;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -131,7 +132,7 @@ public class TandemBluetoothHandler {
     private final Set<UUID> remainingCharacteristicNotificationsInit = new HashSet<>();
 
     private synchronized void resetRemainingConnectionInitializationSteps() {
-        remainingConnectionInitializationSteps.addAll(ImmutableList.copyOf(ConnectionInitializationStep.values()));
+        remainingConnectionInitializationSteps.addAll(Arrays.asList(ConnectionInitializationStep.values()));
         remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.ALREADY_INITIALIZED);
         remainingCharacteristicNotificationsInit.addAll(CharacteristicUUID.ENABLED_NOTIFICATIONS);
     }
@@ -466,7 +467,7 @@ public class TandemBluetoothHandler {
                 } catch (PacketArrayList.InvalidSignedMessageHMACSignatureException e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
                     tandemPump.onPumpCriticalError(peripheral, TandemError.INVALID_SIGNED_HMAC_SIGNATURE.withExtra(
-                            Strings.isNullOrEmpty(PumpState.getPairingCodeCached()) ?
+                            StringUtils.isBlank(PumpState.getPairingCodeCached()) ?
                                     "pairing code not specified" : "provided pairing code is likely invalid"
                     ));
                     return;
@@ -696,7 +697,7 @@ public class TandemBluetoothHandler {
             String name = device.getName();
             @SuppressLint("MissingPermission")
             String address = device.getAddress();
-            if (!Strings.isNullOrEmpty(name) && BluetoothConstants.isTandemBluetoothDevice(name)) {
+            if (StringUtils.isNotBlank(name) && BluetoothConstants.isTandemBluetoothDevice(name)) {
                 BluetoothPeripheral peripheral = central.getPeripheral(address);
                 Timber.d("TandemBluetoothHandler: bondedDevice on adapter '%s' (%s) appears to be a Tandem device, returning", name, address);
                 return Optional.of(peripheral);

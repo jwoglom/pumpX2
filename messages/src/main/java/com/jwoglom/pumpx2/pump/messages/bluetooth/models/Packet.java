@@ -2,8 +2,6 @@ package com.jwoglom.pumpx2.pump.messages.bluetooth.models;
 
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import kotlin.collections.ArraysKt;
-
 /**
  * Packet represents the raw byte string included within a single Bluetooth response packet
  *

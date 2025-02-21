@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 

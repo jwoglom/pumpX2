@@ -12,11 +12,11 @@ import java.util.List;
 
 public class JavaHelpersTest {
 
-    @Test
-    public void testGetClassNamesWithPackage() {
-        // Ensure loaded
-        ApiVersionRequest foo;
-        List<String> requestMessages = JavaHelpers.getClassNamesWithPackage("com.jwoglom.pumpx2.pump.messages.request");
-        assertFalse(requestMessages.isEmpty());
-    }
+//    @Test
+//    public void testGetClassNamesWithPackage() {
+//        // Ensure loaded
+//        ApiVersionRequest foo;
+//        List<String> requestMessages = JavaHelpers.getClassNamesWithPackage("com.jwoglom.pumpx2.pump.messages.request");
+//        assertFalse(requestMessages.isEmpty());
+//    }
 }

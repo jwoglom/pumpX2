@@ -56,9 +56,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Set;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemBluetoothHandler;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -108,6 +108,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -685,7 +686,7 @@ public class MainActivity extends AppCompatActivity {
             String reason = intent.getStringExtra("reason");
             String message = intent.getStringExtra("message");
             String extra = intent.getStringExtra("extra");
-            if (Strings.isNullOrEmpty(extra)) {
+            if (StringUtils.isBlank(extra)) {
                 extra = "The pump is not responding as expected.";
             }
             new AlertDialog.Builder(context)
@@ -1170,7 +1171,7 @@ public class MainActivity extends AppCompatActivity {
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
 
         String savedPairingCode = PumpState.getPairingCode(getApplicationContext());
-        if (!Strings.isNullOrEmpty(savedPairingCode)) {
+        if (!StringUtils.isBlank(savedPairingCode)) {
             input.setText(savedPairingCode);
 
             if (PumpState.failedPumpConnectionAttempts == 0) {
@@ -1282,11 +1283,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public String toString() {
-            return JavaHelpers.autoToString(this, ImmutableSet.of());
+            return JavaHelpers.autoToString(this, Set.of());
         }
 
         public boolean invalid() {
-            return !Strings.isNullOrEmpty(invalidReason());
+            return !StringUtils.isBlank(invalidReason());
         }
 
         public String invalidReason() {
@@ -1363,19 +1364,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 String bolusUnitsStr = bolusUnitsView.getText().toString();
-                if (Strings.isNullOrEmpty(bolusUnitsStr)) {
+                if (StringUtils.isBlank(bolusUnitsStr)) {
                     bolusUnitsStr = "0.0";
                 }
                 double bolusUnits = Double.parseDouble(bolusUnitsStr);
 
                 String carbsGramsStr = carbsGramsView.getText().toString();
-                if (Strings.isNullOrEmpty(carbsGramsStr) || carbsGramsStr.equals("Disabled")) {
+                if (StringUtils.isBlank(carbsGramsStr) || carbsGramsStr.equals("Disabled")) {
                     carbsGramsStr = "0";
                 }
                 int carbsGrams = Integer.parseInt(carbsGramsStr);
 
                 String glucoseMgdlStr = glucoseMgdlView.getText().toString();
-                if (Strings.isNullOrEmpty(glucoseMgdlStr)) {
+                if (StringUtils.isBlank(glucoseMgdlStr)) {
                     glucoseMgdlStr = "0";
                 }
                 int glucoseMgdl = Integer.parseInt(glucoseMgdlStr);
@@ -1439,7 +1440,7 @@ public class MainActivity extends AppCompatActivity {
                 bolusParameters.carbsGrams = carbsGrams;
                 Timber.i("carbsGrams changed: " + carbsGrams);
                 double ratio = InsulinUnit.from1000To1(bolusParameters.carbRatio);
-                Preconditions.checkState(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
+                Validate.isTrue(ratio > 0, "ratio is invalid: " + bolusParameters.carbRatio);
                 // keep 2 decimal places
                 bolusParameters.calculatedUnitsFromCarbs = Double.parseDouble(String.format("%.2f", carbsGrams / ratio));
                 updateBolusParameterUnits();
@@ -1528,7 +1529,7 @@ public class MainActivity extends AppCompatActivity {
             boolean exceeded = intent.getBooleanExtra("exceeded", false);
             int maxBolusAmount = intent.getIntExtra("maxBolusAmount", -1);
 
-            Preconditions.checkState(bolusParameters != null);
+            Validate.isTrue(bolusParameters != null);
             bolusParameters.fillBolusCalcDataSnapshot(carbEntryEnabled, carbRatio, iob, remainingInsulin, correctionFactor, isf, autopopAllowed, targetBg, exceeded, maxBolusAmount);
             bolusCalcDetails.setText("");
             carbsGramsView.setEnabled(bolusParameters.carbEntryEnabled);
@@ -1592,10 +1593,10 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private final void checkAutomaticCorrection() {
-        Preconditions.checkState(bolusUnitsView != null && carbsGramsView != null && glucoseMgdlView != null);
+        Validate.isTrue(bolusUnitsView != null && carbsGramsView != null && glucoseMgdlView != null);
 
         String glucoseMgdlStr = glucoseMgdlView.getText().toString();
-        if (Strings.isNullOrEmpty(glucoseMgdlStr)) {
+        if (StringUtils.isBlank(glucoseMgdlStr)) {
             glucoseMgdlStr = "0";
         }
         int glucoseMgdl = Integer.parseInt(glucoseMgdlStr);
@@ -1724,7 +1725,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            Preconditions.checkState(bolusParameters != null && bolusParameters.hasData());
+            Validate.isTrue(bolusParameters != null && bolusParameters.hasData());
 
             long bolusMilliunits = InsulinUnit.from1To1000(bolusParameters.units);
             new AlertDialog.Builder(context)

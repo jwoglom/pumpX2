@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
@@ -37,7 +37,7 @@ public class ControlIQSleepScheduleResponse extends Message {
     }
 
     public void parse(byte[] raw) {
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.schedule0 = new SleepSchedule(raw, 0);
         this.schedule1 = new SleepSchedule(raw, 6);

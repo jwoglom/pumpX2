@@ -1,6 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
-import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -37,7 +37,7 @@ public class {{responseName}} extends Message {
 
     public void parse(byte[] raw) { {% if catUuid == "CONTROL" %}
         raw = this.removeSignedRequestHmacBytes(raw);{% endif %}
-        Preconditions.checkArgument(raw.length == props().size());
+        Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         {% for arg in responseArgs %}{% if arg.name != "raw" %}this.{{ arg.name }} = {% if arg.size == 1 %}raw{% if arg.type == "byte[]" %}{% else %}[{{ arg.index }}]{% endif %}{% if arg.type == "boolean" %} != 0{% endif %};
         {% elif arg.type == "String" %}Bytes.readString(raw, {{ arg.index }}, {{ arg.size }});

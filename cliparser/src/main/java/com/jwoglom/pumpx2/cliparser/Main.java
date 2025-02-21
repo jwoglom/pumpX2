@@ -1,7 +1,7 @@
 package com.jwoglom.pumpx2.cliparser;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableSet;
+import org.apache.commons.lang3.StringUtils;
+import java.util.Set;
 import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
 import com.jwoglom.pumpx2.cliparser.util.JsonMessageParser;
 import com.jwoglom.pumpx2.cliparser.util.NoMessageMatch;
@@ -54,9 +54,9 @@ public class Main {
 
         String pumpAuthenticationKey = System.getenv("PUMP_AUTHENTICATION_KEY");
         String pumpPairingCode = System.getenv("PUMP_PAIRING_CODE");
-        if (!Strings.isNullOrEmpty(pumpPairingCode)) {
+        if (!StringUtils.isBlank(pumpPairingCode)) {
             PumpStateSupplier.pumpPairingCode = () -> pumpPairingCode;
-        } else if (!Strings.isNullOrEmpty(pumpAuthenticationKey)) {
+        } else if (!StringUtils.isBlank(pumpAuthenticationKey)) {
             PumpStateSupplier.pumpPairingCode = () -> pumpAuthenticationKey;
         } else {
             PumpStateSupplier.pumpPairingCode = () -> "IGNORE_HMAC_SIGNATURE_EXCEPTION";
@@ -64,7 +64,7 @@ public class Main {
         }
 
         String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");
-        if (!Strings.isNullOrEmpty(pumpTimeSinceReset)){
+        if (!StringUtils.isBlank(pumpTimeSinceReset)){
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         } else {
             PumpStateSupplier.pumpTimeSinceReset = () -> 0L;
@@ -249,13 +249,13 @@ public class Main {
                 possibilities = CharacteristicGuesser.filterKnownPossibilities(rawHex, opCode, possibilities);
                 if (possibilities.contains(Characteristic.CONTROL)) {
                     System.err.print("Using CONTROL");
-                    possibilities = ImmutableSet.of(Characteristic.CONTROL);
+                    possibilities = Set.of(Characteristic.CONTROL);
                 } else if (possibilities.contains(Characteristic.AUTHORIZATION)) {
                     System.err.print("Using AUTHORIZATION");
-                    possibilities = ImmutableSet.of(Characteristic.AUTHORIZATION);
+                    possibilities = Set.of(Characteristic.AUTHORIZATION);
                 } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
                     System.err.print("Using CURRENT_STATUS");
-                    possibilities = ImmutableSet.of(Characteristic.CURRENT_STATUS);
+                    possibilities = Set.of(Characteristic.CURRENT_STATUS);
                 } else {
                     return null;
                 }
