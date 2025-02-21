@@ -16,12 +16,12 @@ public class SetIDPSegmentResponseTest {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         SetIDPSegmentResponse expected = new SetIDPSegmentResponse(
-            // 
+            new byte[]{0, 2}
         );
 
         SetIDPSegmentResponse parsedRes = (SetIDPSegmentResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "002dab2d1a000260033e205bc7dccaad0b38c91c4f40c451c67c31f90c26c1ccb4",
+                45,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

@@ -6,14 +6,13 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.control.CreateNewIDPRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class CreateNewIDPRequestTest {
+public class CreateIDPRequestTest {
     @Test
-    public void testCreateNewIDPRequest() throws DecoderException {
+    public void testCreateIDPRequest_new1() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         // IDPSettingsResponse(idpId=1)
@@ -30,7 +29,7 @@ public class CreateNewIDPRequestTest {
         //   "cargo":[1,0,0,0,-24,3,-72,11,0,0,100,0,2,0,15]
         // }
 
-        CreateNewIDPRequest expected = new CreateNewIDPRequest(
+        CreateIDPRequest expected = new CreateIDPRequest(
                 "testprofile",
                 3000,
                 1000,
@@ -40,7 +39,7 @@ public class CreateNewIDPRequestTest {
                 1
         );
 
-        CreateNewIDPRequest parsedReq = (CreateNewIDPRequest) MessageTester.test(
+        CreateIDPRequest parsedReq = (CreateIDPRequest) MessageTester.test(
                 "03c9e6c93b7465737470726f66696c6500000000",
                 -55,
                 4,
@@ -49,6 +48,27 @@ public class CreateNewIDPRequestTest {
                 "02c90000b80b00000000e803640002002c011f05",
                 "01c9ff01b5483e20f4256e953cbe7320b25c5de0",
                 "00c9f9e8fc891764dd51b865"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+
+    @Test
+    public void testCreateIDPRequest_duplicate1() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        CreateIDPRequest expected = new CreateIDPRequest("dup", 1);
+
+        CreateIDPRequest parsedReq = (CreateIDPRequest) MessageTester.test(
+                "0337e6373b647570000000000000000000000000",
+                55,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "0237000000000000000000000000000000000000",
+                "01370100b0493e20b795d5f162b92bbd30cd8823",
+                "00372bc754ba29764a5b4765"
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());

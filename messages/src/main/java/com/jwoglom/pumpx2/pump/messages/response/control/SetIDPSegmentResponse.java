@@ -12,7 +12,7 @@ import java.math.BigInteger;
 
 @MessageProps(
     opCode=-85,
-    size=0,
+    size=2,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
@@ -24,6 +24,12 @@ public class SetIDPSegmentResponse extends Message {
     public SetIDPSegmentResponse() {
         this.cargo = EMPTY;
         
+    }
+
+    public SetIDPSegmentResponse(byte[] raw) {
+        this.cargo = raw;
+        parse(raw);
+
     }
 
     public void parse(byte[] raw) { 

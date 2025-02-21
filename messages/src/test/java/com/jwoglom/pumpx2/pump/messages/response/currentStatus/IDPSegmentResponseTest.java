@@ -32,7 +32,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getIdpStatusId());
+        assertEquals(Set.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getIdpStatus());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatus());
     }
 
 
@@ -138,7 +138,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatus());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatus());
     }
 
     // Response to IDPSegmentRequest(1, 2) when there are only 2 IDP segments (e.g. an invalid entry)
@@ -169,10 +169,10 @@ public class IDPSegmentResponseTest {
 
     @Test
     public void testIDPSegmentStatus() {
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.BASAL_RATE) & 1) == 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CARB_RATIO) & 2) == 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.TARGET_BG) & 4) == 0);
-        assertTrue((IDPSegmentStatus.toBitmask(IDPSegmentStatus.CORRECTION_FACTOR) & 8) == 0);
+        assertEquals(1, IDPSegmentStatus.toBitmask(IDPSegmentStatus.BASAL_RATE));
+        assertEquals(2, IDPSegmentStatus.toBitmask(IDPSegmentStatus.CARB_RATIO));
+        assertEquals(4, IDPSegmentStatus.toBitmask(IDPSegmentStatus.TARGET_BG));
+        assertEquals(8, IDPSegmentStatus.toBitmask(IDPSegmentStatus.CORRECTION_FACTOR));
 
         assertEquals(IDPSegmentStatus.fromBitmask(1), Set.of(IDPSegmentStatus.BASAL_RATE));
         assertEquals(IDPSegmentStatus.fromBitmask(2), Set.of(IDPSegmentStatus.CARB_RATIO));

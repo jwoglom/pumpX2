@@ -192,12 +192,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.ChangeTimeDateRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ChangeTimeDateResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetActiveIDPResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.CreateNewIDPRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.CreateNewIDPResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CreateIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CreateIDPResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.RenameIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.CreateDuplicateIDPRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.CreateDuplicateIDPResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest;
@@ -310,9 +308,8 @@ public enum Messages {
     GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),
     CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),
     SET_ACTIVE_IDP(SetActiveIDPRequest.class, SetActiveIDPResponse.class),
-    CREATE_NEW_IDP(CreateNewIDPRequest.class, CreateNewIDPResponse.class),
+    CREATE_IDP(CreateIDPRequest.class, CreateIDPResponse.class),
     RENAME_IDP(RenameIDPRequest.class, RenameIDPResponse.class),
-    CREATE_DUPLICATE_IDP(CreateDuplicateIDPRequest.class, CreateDuplicateIDPResponse.class),
     DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),
     SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),
     SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),
