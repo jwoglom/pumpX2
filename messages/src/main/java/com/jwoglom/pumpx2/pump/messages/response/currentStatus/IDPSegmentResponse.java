@@ -31,7 +31,8 @@ public class IDPSegmentResponse extends Message {
     private long profileCarbRatio;
     private int profileTargetBG;
     private int profileISF;
-    private int statusId;
+    private int idpStatusId;
+    private Set<IDPSegmentStatus> idpStatus;
     
     public IDPSegmentResponse() {}
     
@@ -44,7 +45,8 @@ public class IDPSegmentResponse extends Message {
         this.profileCarbRatio = profileCarbRatio;
         this.profileTargetBG = profileTargetBG;
         this.profileISF = profileISF;
-        this.statusId = statusId;
+        this.idpStatusId = statusId;
+        this.idpStatus = getIdpStatus();
         
     }
 
@@ -58,12 +60,13 @@ public class IDPSegmentResponse extends Message {
         this.profileCarbRatio = Bytes.readUint32(raw, 6);
         this.profileTargetBG = Bytes.readShort(raw, 10);
         this.profileISF = Bytes.readShort(raw, 12);
-        this.statusId = raw[14];
+        this.idpStatusId = raw[14];
+        this.idpStatus = getIdpStatus();
         
     }
 
     
-    public static byte[] buildCargo(int idpId, int segmentIndex, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int status) {
+    public static byte[] buildCargo(int idpId, int segmentIndex, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int idpStatusId) {
         return Bytes.combine(
             new byte[]{ (byte) idpId }, 
             new byte[]{ (byte) segmentIndex }, 
@@ -72,7 +75,7 @@ public class IDPSegmentResponse extends Message {
             Bytes.toUint32(profileCarbRatio), 
             Bytes.firstTwoBytesLittleEndian(profileTargetBG), 
             Bytes.firstTwoBytesLittleEndian(profileISF), 
-            new byte[]{ (byte) status });
+            new byte[]{ (byte) idpStatusId });
     }
     
     public int getIdpId() {
@@ -96,11 +99,11 @@ public class IDPSegmentResponse extends Message {
     public int getProfileISF() {
         return profileISF;
     }
-    public int getStatusId() {
-        return statusId;
+    public int getIdpStatusId() {
+        return idpStatusId;
     }
-    public Set<IDPSegmentStatus> getStatus() {
-        return IDPSegmentStatus.fromBitmask(statusId);
+    public Set<IDPSegmentStatus> getIdpStatus() {
+        return IDPSegmentStatus.fromBitmask(idpStatusId);
     }
 
 
@@ -134,7 +137,7 @@ public class IDPSegmentResponse extends Message {
         public static int toBitmask(IDPSegmentStatus ...items) {
             int mask = 0;
             for (IDPSegmentStatus item : items) {
-                mask += Math.pow(2, item.getId());
+                mask += item.getId();
             }
             return mask;
         }

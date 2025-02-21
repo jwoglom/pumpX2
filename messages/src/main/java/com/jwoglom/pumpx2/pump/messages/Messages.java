@@ -202,6 +202,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSettingsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSegmentResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -313,6 +315,7 @@ public enum Messages {
     CREATE_DUPLICATE_IDP(CreateDuplicateIDPRequest.class, CreateDuplicateIDPResponse.class),
     DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),
     SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),
+    SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),
     // MESSAGES_END
     ;
 

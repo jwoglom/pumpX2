@@ -32,7 +32,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.CORRECTION_FACTOR, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.BASAL_RATE), parsedRes.getIdpStatusId());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
     }
 
 
@@ -138,7 +138,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class IDPSegmentResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getStatus());
+        assertEquals(Set.of(IDPSegmentStatus.BASAL_RATE, IDPSegmentStatus.CARB_RATIO, IDPSegmentStatus.TARGET_BG, IDPSegmentStatus.CORRECTION_FACTOR), parsedRes.getIdpStatusId());
     }
 
     // Response to IDPSegmentRequest(1, 2) when there are only 2 IDP segments (e.g. an invalid entry)
