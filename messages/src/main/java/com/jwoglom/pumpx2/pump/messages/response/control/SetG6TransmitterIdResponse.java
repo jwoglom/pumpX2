@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;
 
 import java.math.BigInteger;
@@ -20,7 +21,7 @@ import java.math.BigInteger;
     request=SetG6TransmitterIdRequest.class,
     minApi=KnownApiVersion.MOBI_API_V3_5
 )
-public class SetG6TransmitterIdResponse extends Message {
+public class SetG6TransmitterIdResponse extends StatusMessage {
     private int status;
 
     public SetG6TransmitterIdResponse() {

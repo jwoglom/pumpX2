@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.control.SuspendPumpingRequest;
 
@@ -22,7 +23,7 @@ import java.math.BigInteger;
     minApi=KnownApiVersion.MOBI_API_V3_5,
     supportedDevices=SupportedDevices.MOBI_ONLY
 )
-public class SuspendPumpingResponse extends Message {
+public class SuspendPumpingResponse extends StatusMessage {
     
     private int status;
     

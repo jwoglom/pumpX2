@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 
 @MessageProps(
@@ -18,7 +19,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
     minApi=KnownApiVersion.API_V2_5,
     signed=true
 )
-public class BolusPermissionResponse extends Message {
+public class BolusPermissionResponse extends StatusMessage {
     
     private int status;
     private int bolusId;

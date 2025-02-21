@@ -7,19 +7,23 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.MinsTime;
 import com.jwoglom.pumpx2.pump.messages.models.MultiDay;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Returns reminders configured on the pump.
+ */
 @MessageProps(
     opCode=89,
     size=105,
     type=MessageType.RESPONSE,
     request=RemindersRequest.class
 )
-public class RemindersResponse extends Message {
+public class RemindersResponse extends StatusMessage {
     
     private Reminder lowBGReminder;
     private Reminder highBGReminder;

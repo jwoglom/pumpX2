@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 
@@ -23,7 +24,7 @@ import java.math.BigInteger;
     minApi=KnownApiVersion.MOBI_API_V3_5,
     modifiesInsulinDelivery=true
 )
-public class FillCannulaResponse extends Message {
+public class FillCannulaResponse extends StatusMessage {
     
     private int status;
     

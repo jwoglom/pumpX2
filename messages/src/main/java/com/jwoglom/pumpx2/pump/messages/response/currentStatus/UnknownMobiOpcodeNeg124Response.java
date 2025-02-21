@@ -7,10 +7,9 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg124Request;
-
-import java.math.BigInteger;
 
 @MessageProps(
     opCode=-123,
@@ -22,7 +21,7 @@ import java.math.BigInteger;
     supportedDevices=SupportedDevices.MOBI_ONLY,
     request=UnknownMobiOpcodeNeg124Request.class
 )
-public class UnknownMobiOpcodeNeg124Response extends Message {
+public class UnknownMobiOpcodeNeg124Response extends StatusMessage {
 
     private int status;
     

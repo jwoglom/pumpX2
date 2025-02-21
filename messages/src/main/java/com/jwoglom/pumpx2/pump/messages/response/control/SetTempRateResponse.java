@@ -7,10 +7,9 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetTempRateRequest;
-
-import java.math.BigInteger;
 
 @MessageProps(
     opCode=-91,
@@ -22,7 +21,7 @@ import java.math.BigInteger;
     supportedDevices=SupportedDevices.MOBI_ONLY,
     request=SetTempRateRequest.class
 )
-public class SetTempRateResponse extends Message {
+public class SetTempRateResponse extends StatusMessage {
 
     private int status;
     private int id;

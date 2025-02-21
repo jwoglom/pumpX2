@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
 import java.time.Instant;
@@ -10,7 +11,7 @@ import java.util.Set;
  * Contains everything shared between {@link LastBolusStatusResponse} and {@link LastBolusStatusV2Response}
  * except that the latter contains requestedVolume
  */
-public abstract class LastBolusStatusAbstractResponse extends Message {
+public abstract class LastBolusStatusAbstractResponse extends StatusMessage {
     public abstract int getStatus();
     public abstract int getBolusId();
     public abstract long getTimestamp();

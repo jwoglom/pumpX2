@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;
 
 import java.math.BigInteger;
@@ -19,7 +20,7 @@ import java.math.BigInteger;
     modifiesInsulinDelivery=true,
     request=EnterFillTubingModeRequest.class
 )
-public class EnterFillTubingModeResponse extends Message {
+public class EnterFillTubingModeResponse extends StatusMessage {
 
     private int status;
     

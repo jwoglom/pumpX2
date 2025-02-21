@@ -6,10 +6,9 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.control.ResumePumpingRequest;
-
-import java.math.BigInteger;
 
 @MessageProps(
     opCode=-101,
@@ -21,7 +20,7 @@ import java.math.BigInteger;
     request=ResumePumpingRequest.class,
     supportedDevices=SupportedDevices.MOBI_ONLY
 )
-public class ResumePumpingResponse extends Message {
+public class ResumePumpingResponse extends StatusMessage {
 
     private int status;
 

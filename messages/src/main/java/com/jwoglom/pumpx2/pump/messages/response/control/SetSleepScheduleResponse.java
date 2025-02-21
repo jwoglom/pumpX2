@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetSleepScheduleRequest;
 
@@ -22,7 +23,7 @@ import java.math.BigInteger;
     supportedDevices=SupportedDevices.MOBI_ONLY,
     request=SetSleepScheduleRequest.class
 )
-public class SetSleepScheduleResponse extends Message {
+public class SetSleepScheduleResponse extends StatusMessage {
 
     private int status;
     
