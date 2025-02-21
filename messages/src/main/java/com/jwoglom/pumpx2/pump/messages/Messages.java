@@ -190,6 +190,12 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHa
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetG6TransmitterHardwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.ChangeTimeDateRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ChangeTimeDateResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetActiveIDPResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CreateNewIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CreateNewIDPResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.RenameIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -295,6 +301,9 @@ public enum Messages {
     GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),
     GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),
     CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),
+    SET_ACTIVE_IDP(SetActiveIDPRequest.class, SetActiveIDPResponse.class),
+    CREATE_NEW_IDP(CreateNewIDPRequest.class, CreateNewIDPResponse.class),
+    RENAME_IDP(RenameIDPRequest.class, RenameIDPResponse.class),
     // MESSAGES_END
     ;
 

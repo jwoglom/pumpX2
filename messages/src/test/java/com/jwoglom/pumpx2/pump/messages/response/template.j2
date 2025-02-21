@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.response.{{cat}};
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 {% if cat == 'control' %}import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 {% endif %}
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -12,7 +13,7 @@ import org.junit.Test;
 public class {{responseName}}Test {
     @Test
     public void test{{responseName}}() throws DecoderException { {% if cat == 'control' %}
-        initPumpState("authenticationKey", 0L);
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         {% endif %}
         {{responseName}} expected = new {{responseName}}(
             // {% for arg in responseArgs %}{{ arg.type }} {{ arg.name }}{{ ", " if not loop.last else "" }}{% endfor %}
