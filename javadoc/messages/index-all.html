@@ -1090,14 +1090,6 @@ loadScripts(document, 'script');</script>
  0<code>(byte) status</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a></dt>
-<dd>
-<div class="block">
- Byte layout for CreateNewIDPResponse.buildCargo(...):
- OffsetDescription
- 0<code>(byte) status</code>
- </div>
-</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DeleteIDPResponse</a></dt>
 <dd>
 <div class="block">
@@ -1381,13 +1373,13 @@ loadScripts(document, 'script');</script>
  1<code>(byte) segmentIndex</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
 <dd>
 <div class="block">
- Byte layout for CreateDuplicateIDPResponse.buildCargo(...):
+ Byte layout for CreateIDPResponse.buildCargo(...):
  OffsetDescription
- 0<code>(byte) status</code>
- 1<code>(byte) newIdpId</code>
+ 0<code>new byte[]{(byte) status} [element 0]</code>
+ 1<code>new byte[]{(byte) newIdpId} [element 1]</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/RenameIDPResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/RenameIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">RenameIDPResponse</a></dt>
@@ -2634,35 +2626,10 @@ loadScripts(document, 'script');</script>
  5<code>writeString(txId, 6) [byte 5]</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html#buildCargo(java.lang.String,int)" class="member-name-link">buildCargo(String, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateDuplicateIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#buildCargo(java.lang.String,int,int,int,int,int,int,int)" class="member-name-link">buildCargo(String, int, int, int, int, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>
 <div class="block">
- Byte layout for CreateDuplicateIDPRequest.buildCargo(...):
- OffsetDescription
- 0<code>writeString(newProfileName, 16) [byte 0]</code>
- 1<code>writeString(newProfileName, 16) [byte 1]</code>
- 2<code>writeString(newProfileName, 16) [byte 2]</code>
- 3<code>writeString(newProfileName, 16) [byte 3]</code>
- 4<code>writeString(newProfileName, 16) [byte 4]</code>
- 5<code>writeString(newProfileName, 16) [byte 5]</code>
- 6<code>writeString(newProfileName, 16) [byte 6]</code>
- 7<code>writeString(newProfileName, 16) [byte 7]</code>
- 8<code>writeString(newProfileName, 16) [byte 8]</code>
- 9<code>writeString(newProfileName, 16) [byte 9]</code>
- 10<code>writeString(newProfileName, 16) [byte 10]</code>
- 11<code>writeString(newProfileName, 16) [byte 11]</code>
- 12<code>writeString(newProfileName, 16) [byte 12]</code>
- 13<code>writeString(newProfileName, 16) [byte 13]</code>
- 14<code>writeString(newProfileName, 16) [byte 14]</code>
- 15<code>writeString(newProfileName, 16) [byte 15]</code>
- 16<code>(byte) sourceIdpId</code>
- 17<code>(byte) (0)</code>
- </div>
-</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#buildCargo(java.lang.String,int,int,int,int,int,int)" class="member-name-link">buildCargo(String, int, int, int, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
-<dd>
-<div class="block">
- Byte layout for CreateNewIDPRequest.buildCargo(...):
+ Byte layout for CreateIDPRequest.buildCargo(...):
  OffsetDescription
  0<code>writeString(name, 17) [byte 0]</code>
  1<code>writeString(name, 17) [byte 1]</code>
@@ -2695,10 +2662,8 @@ loadScripts(document, 'script');</script>
  28<code>firstTwoBytesLittleEndian(firstSegmentProfileISF) [byte 1]</code>
  29<code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 0]</code>
  30<code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 1]</code>
- 31<code>new byte[]{31} [element 0]</code>
- 32<code>new byte[]{5} [element 1]</code>
- 33<code>new byte[]{-1} [element 2]</code>
- 34<code>(byte) carbEntry</code>
+ 31<code>(byte) idpSourceId</code>
+ 32<code>(byte) carbEntry</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#buildCargo(java.lang.String,long,long,long,java.lang.String,long,java.lang.Long,java.lang.Long)" class="member-name-link">buildCargo(String, long, long, long, String, long, Long, Long)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CommonSoftwareInfoResponse</a></dt>
@@ -3777,46 +3742,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new segment AFTER the current segmentId</div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_DUPLICATE_IDP" class="member-name-link">CREATE_DUPLICATE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_IDP" class="member-name-link">CREATE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_NEW_IDP" class="member-name-link">CREATE_NEW_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateDuplicateIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
-<div class="block">Creates a new Insulin Delivery Profile from sourceIdpId with a new title.</div>
-</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html#%3Cinit%3E()" class="member-name-link">CreateDuplicateIDPRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateDuplicateIDPRequest</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html#%3Cinit%3E(java.lang.String,int)" class="member-name-link">CreateDuplicateIDPRequest(String, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateDuplicateIDPRequest</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
-<dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateDuplicateIDPRequest</code></a>, opCode -25, size 2
-
- <br>
-
- 
- 
- Message properties:
- &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-25</code>&nbsp;
- &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
- &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
- &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
- &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
- &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateDuplicateIDPRequest</code></a></code>&nbsp;
- &nbsp;<code>modifiesInsulinDelivery</code>&nbsp;&nbsp;<code>true</code>&nbsp;
- &nbsp;<code>supportedDevices</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html#MOBI_ONLY"><code>SupportedDevices.MOBI_ONLY</code></a></code>&nbsp;
- </div>
-</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#%3Cinit%3E()" class="member-name-link">CreateDuplicateIDPResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#%3Cinit%3E(int,int)" class="member-name-link">CreateDuplicateIDPResponse(int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#createMessageData()" class="member-name-link">createMessageData()</a> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
-<dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CreateNewIDPResponse</code></a>, opCode -26, size 35
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CreateIDPResponse</code></a>, opCode -26, size 35
 
  <br>
 
@@ -3828,18 +3758,24 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
  &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
- &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CreateNewIDPResponse</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CreateIDPResponse</code></a></code>&nbsp;
  &nbsp;<code>modifiesInsulinDelivery</code>&nbsp;&nbsp;<code>true</code>&nbsp;
  &nbsp;<code>supportedDevices</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html#MOBI_ONLY"><code>SupportedDevices.MOBI_ONLY</code></a></code>&nbsp;
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#%3Cinit%3E()" class="member-name-link">CreateNewIDPRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#%3Cinit%3E()" class="member-name-link">CreateIDPRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#%3Cinit%3E(java.lang.String,int,int,int,int,int,int)" class="member-name-link">CreateNewIDPRequest(String, int, int, int, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#%3Cinit%3E(java.lang.String,int)" class="member-name-link">CreateIDPRequest(String, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateNewIDPRequest</code></a>, opCode -25, size 1
+<div class="block">Duplicating an existing profile.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#%3Cinit%3E(java.lang.String,int,int,int,int,int,int)" class="member-name-link">CreateIDPRequest(String, int, int, int, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
+<dd>
+<div class="block">Creating a new profile.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateIDPRequest</code></a>, opCode -25, size 2
 
  <br>
 
@@ -3847,18 +3783,22 @@ loadScripts(document, 'script');</script>
  
  Message properties:
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-25</code>&nbsp;
- &nbsp;<code>size</code>&nbsp;&nbsp;<code>1</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
  &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
- &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateNewIDPRequest</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>CreateIDPRequest</code></a></code>&nbsp;
  &nbsp;<code>modifiesInsulinDelivery</code>&nbsp;&nbsp;<code>true</code>&nbsp;
  &nbsp;<code>supportedDevices</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html#MOBI_ONLY"><code>SupportedDevices.MOBI_ONLY</code></a></code>&nbsp;
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html#%3Cinit%3E()" class="member-name-link">CreateNewIDPResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#%3Cinit%3E()" class="member-name-link">CreateIDPResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html#%3Cinit%3E(int)" class="member-name-link">CreateNewIDPResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">CreateIDPResponse(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#%3Cinit%3E(int,int)" class="member-name-link">CreateIDPResponse(int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#createMessageData()" class="member-name-link">createMessageData()</a> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html#createV1(com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse,java.lang.String)" class="member-name-link">createV1(CentralChallengeResponse, String)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">PumpChallengeRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -5579,13 +5519,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#getFinalEventForDay()" class="member-name-link">getFinalEventForDay()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DailyBasalHistoryLog</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getFirstSegmentProfileBasalRate()" class="member-name-link">getFirstSegmentProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileBasalRate()" class="member-name-link">getFirstSegmentProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getFirstSegmentProfileCarbRatio()" class="member-name-link">getFirstSegmentProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileCarbRatio()" class="member-name-link">getFirstSegmentProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getFirstSegmentProfileISF()" class="member-name-link">getFirstSegmentProfileISF()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileISF()" class="member-name-link">getFirstSegmentProfileISF()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getFirstSegmentProfileTargetBG()" class="member-name-link">getFirstSegmentProfileTargetBG()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileTargetBG()" class="member-name-link">getFirstSegmentProfileTargetBG()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html#getFirstSequenceNum()" class="member-name-link">getFirstSequenceNum()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HistoryLogStatusResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -5969,7 +5909,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UsbEnumeratedHistoryLog.html#getNegotiatedCurrentMilliAmps()" class="member-name-link">getNegotiatedCurrentMilliAmps()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UsbEnumeratedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UsbEnumeratedHistoryLog</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#getNewIdpId()" class="member-name-link">getNewIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#getNewIdpId()" class="member-name-link">getNewIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake4KeyConfirmationRequest.html#getNonce()" class="member-name-link">getNonce()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.authentication.<a href="com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake4KeyConfirmationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication">Jpake4KeyConfirmationRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -6047,7 +5987,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#getProfileBasalRate()" class="member-name-link">getProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BasalDeliveryHistoryLog</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getProfileCarbEntry()" class="member-name-link">getProfileCarbEntry()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getProfileCarbEntry()" class="member-name-link">getProfileCarbEntry()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#getProfileCarbEntry()" class="member-name-link">getProfileCarbEntry()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -6055,7 +5995,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileCarbRatio()" class="member-name-link">getProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -6063,7 +6003,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getProfileISF()" class="member-name-link">getProfileISF()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#getProfileName()" class="member-name-link">getProfileName()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getProfileName()" class="member-name-link">getProfileName()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#getProfileName()" class="member-name-link">getProfileName()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">RenameIDPRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -6323,6 +6263,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html#getSourceIdp()" class="member-name-link">getSourceIdp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpActionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpActionHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getSourceIdpId()" class="member-name-link">getSourceIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#getSpare()" class="member-name-link">getSpare()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BGHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#getSpare()" class="member-name-link">getSpare()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg3HistoryLog</a></dt>
@@ -6363,9 +6305,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/ChangeTimeDateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">ChangeTimeDateResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DeleteIDPResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -8235,24 +8175,17 @@ loadScripts(document, 'script');</script>
  <code>instant</code><code>getInstant()</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateDuplicateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateDuplicateIDPRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>
 <div class="block">
- Parsed fields for CreateDuplicateIDPRequest:
- <code>newProfileName</code><code>Bytes.readString(raw, 0, 16)</code>
- <code>sourceIdpId</code><code>raw[33]</code>
- </div>
-</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateNewIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateNewIDPRequest</a></dt>
-<dd>
-<div class="block">
- Parsed fields for CreateNewIDPRequest:
+ Parsed fields for CreateIDPRequest:
  <code>profileName</code><code>Bytes.readString(raw, 0, 16)</code>
  <code>firstSegmentProfileCarbRatio</code><code>Bytes.readShort(raw, 17)</code>
  <code>firstSegmentProfileBasalRate</code><code>Bytes.readShort(raw, 23)</code>
  <code>firstSegmentProfileTargetBG</code><code>Bytes.readShort(raw, 25)</code>
  <code>firstSegmentProfileISF</code><code>Bytes.readShort(raw, 27)</code>
  <code>profileInsulinDuration</code><code>Bytes.readShort(raw, 29)</code>
+ <code>sourceIdpId</code><code>raw[33]</code>
  <code>profileCarbEntry</code><code>raw[34]</code>
  </div>
 </dd>
@@ -8635,19 +8568,12 @@ loadScripts(document, 'script');</script>
  <code>status</code><code>raw[0]</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateDuplicateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateDuplicateIDPResponse</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
 <dd>
 <div class="block">
- Parsed fields for CreateDuplicateIDPResponse:
+ Parsed fields for CreateIDPResponse:
  <code>status</code><code>raw[0]</code>
  <code>newIdpId</code><code>raw[1]</code>
- </div>
-</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateNewIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateNewIDPResponse</a></dt>
-<dd>
-<div class="block">
- Parsed fields for CreateNewIDPResponse:
- <code>status</code><code>raw[0]</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">DeleteIDPResponse</a></dt>
@@ -10920,7 +10846,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
 <dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetIDPSegmentRequest</code></a>, opCode -85, size 0
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetIDPSegmentRequest</code></a>, opCode -85, size 2
 
  <br>
 
@@ -10928,7 +10854,7 @@ loadScripts(document, 'script');</script>
  
  Message properties:
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-85</code>&nbsp;
- &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
  &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
@@ -10936,6 +10862,8 @@ loadScripts(document, 'script');</script>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html#%3Cinit%3E()" class="member-name-link">SetIDPSegmentResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetIDPSegmentResponse(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
