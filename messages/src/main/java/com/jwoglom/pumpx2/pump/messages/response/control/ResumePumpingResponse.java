@@ -25,11 +25,12 @@ public class ResumePumpingResponse extends StatusMessage {
     private int status;
 
     public ResumePumpingResponse() {
-        this.cargo = EMPTY;
+
     }
     
     public ResumePumpingResponse(byte[] cargo) {
         this.cargo = cargo;
+        parse(cargo);
     }
 
     public ResumePumpingResponse(int status) {
@@ -41,6 +42,7 @@ public class ResumePumpingResponse extends StatusMessage {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
+        this.status = raw[0];
         
     }
     public static byte[] buildCargo(int status) {

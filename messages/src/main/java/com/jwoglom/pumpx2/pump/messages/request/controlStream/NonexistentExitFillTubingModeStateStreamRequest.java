@@ -27,7 +27,7 @@ public class NonexistentExitFillTubingModeStateStreamRequest extends Message {
     }
 
     public void parse(byte[] raw) {
-        this.cargo = raw;
+
     }
 
 }

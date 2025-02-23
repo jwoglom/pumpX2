@@ -26,7 +26,7 @@ public class NonexistentEnterChangeCartridgeModeStateStreamRequest extends Messa
     }
 
     public void parse(byte[] raw) {
-        this.cargo = raw;
+
     }
 
 }
