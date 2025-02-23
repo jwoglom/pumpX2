@@ -16,12 +16,12 @@ public class ExitChangeCartridgeModeResponseTest {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         ExitChangeCartridgeModeResponse expected = new ExitChangeCartridgeModeResponse(
-            // int status
+            0
         );
 
         ExitChangeCartridgeModeResponse parsedRes = (ExitChangeCartridgeModeResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "00899389190078c840201a521d880f1dfa4fd153a975571060d9098181614321",
+                -119,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillCannulaStateStreamRequest;
 
-import java.math.BigInteger;
-
 @MessageProps(
     opCode=-25,
     size=1,
@@ -21,13 +19,14 @@ import java.math.BigInteger;
 )
 public class FillCannulaStateStreamResponse extends Message {
     
-    private int state;
+    private int stateId;
+    private FillCannulaState state;
     
     public FillCannulaStateStreamResponse() {}
     
-    public FillCannulaStateStreamResponse(int state) {
-        this.cargo = buildCargo(state);
-        this.state = state;
+    public FillCannulaStateStreamResponse(int stateId) {
+        this.cargo = buildCargo(stateId);
+        parse(cargo);
         
     }
 
@@ -35,7 +34,8 @@ public class FillCannulaStateStreamResponse extends Message {
         raw = removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.state = raw[0];
+        this.stateId = raw[0];
+        this.state = getState();
         
     }
 
@@ -45,8 +45,35 @@ public class FillCannulaStateStreamResponse extends Message {
             new byte[]{ (byte) state });
     }
     
-    public int getState() {
-        return state;
+    public int getStateId() {
+        return stateId;
+    }
+
+    public FillCannulaState getState() {
+        return FillCannulaState.fromId(stateId);
+    }
+
+
+    public enum FillCannulaState {
+        CANNULA_FILLED(2),
+        ;
+
+        private final int id;
+        FillCannulaState(int id) {
+            this.id = id;
+        }
+
+
+        public int getId() {
+            return id;
+        }
+
+        public static FillCannulaState fromId(int id) {
+            for (FillCannulaState c : values()) {
+                if (c.id == id) return c;
+            }
+            return null;
+        }
     }
     
 }

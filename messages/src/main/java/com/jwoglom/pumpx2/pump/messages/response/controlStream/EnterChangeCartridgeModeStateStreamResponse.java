@@ -22,13 +22,14 @@ import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentEnterCh
 )
 public class EnterChangeCartridgeModeStateStreamResponse extends Message {
     
-    private int state;
+    private int stateId;
+    private ChangeCartridgeState state;
     
     public EnterChangeCartridgeModeStateStreamResponse() {}
     
-    public EnterChangeCartridgeModeStateStreamResponse(int state) {
-        this.cargo = buildCargo(state);
-        this.state = state;
+    public EnterChangeCartridgeModeStateStreamResponse(int stateId) {
+        this.cargo = buildCargo(stateId);
+        parse(cargo);
         
     }
 
@@ -36,7 +37,8 @@ public class EnterChangeCartridgeModeStateStreamResponse extends Message {
         raw = removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.state = raw[0];
+        this.stateId = raw[0];
+        this.state = getState();
         
     }
 
@@ -46,8 +48,34 @@ public class EnterChangeCartridgeModeStateStreamResponse extends Message {
             new byte[]{ (byte) state });
     }
     
-    public int getState() {
-        return state;
+    public int getStateId() {
+        return stateId;
+    }
+
+    public ChangeCartridgeState getState() {
+        return ChangeCartridgeState.fromId(stateId);
+    }
+
+    public enum ChangeCartridgeState {
+        READY_TO_CHANGE(2),
+        ;
+
+        private final int id;
+        ChangeCartridgeState(int id) {
+            this.id = id;
+        }
+
+
+        public int getId() {
+            return id;
+        }
+
+        public static ChangeCartridgeState fromId(int id) {
+            for (ChangeCartridgeState c : values()) {
+                if (c.id == id) return c;
+            }
+            return null;
+        }
     }
     
 }

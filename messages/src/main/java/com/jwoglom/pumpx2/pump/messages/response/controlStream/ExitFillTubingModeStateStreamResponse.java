@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFillTubingModeStateStreamRequest;
 
-import java.math.BigInteger;
-
 /**
  * Stream message sent by pump while exiting fill tubing mode.
  *
@@ -26,13 +24,14 @@ import java.math.BigInteger;
 )
 public class ExitFillTubingModeStateStreamResponse extends Message {
     
-    private int state;
+    private int stateId;
+    private ExitFillTubingModeState state;
     
     public ExitFillTubingModeStateStreamResponse() {}
     
-    public ExitFillTubingModeStateStreamResponse(int state) {
-        this.cargo = buildCargo(state);
-        this.state = state;
+    public ExitFillTubingModeStateStreamResponse(int stateId) {
+        this.cargo = buildCargo(stateId);
+        parse(cargo);
         
     }
 
@@ -40,7 +39,8 @@ public class ExitFillTubingModeStateStreamResponse extends Message {
         raw = removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.state = raw[0];
+        this.stateId = raw[0];
+        this.state = getState();
         
     }
 
@@ -50,8 +50,35 @@ public class ExitFillTubingModeStateStreamResponse extends Message {
             new byte[]{ (byte) state });
     }
     
-    public int getState() {
-        return state;
+    public int getStateId() {
+        return stateId;
+    }
+
+
+    public ExitFillTubingModeState getState() {
+        return ExitFillTubingModeState.fromId(stateId);
+    }
+
+    public enum ExitFillTubingModeState {
+        TUBING_FILLED(0),
+        ;
+
+        private final int id;
+        ExitFillTubingModeState(int id) {
+            this.id = id;
+        }
+
+
+        public int getId() {
+            return id;
+        }
+
+        public static ExitFillTubingModeState fromId(int id) {
+            for (ExitFillTubingModeState c : values()) {
+                if (c.id == id) return c;
+            }
+            return null;
+        }
     }
     
 }
