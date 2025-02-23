@@ -39,6 +39,12 @@ public class Packetize {
     }
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId, int maxChunkSize) {
+        if (message == null) {
+            L.e(TAG, "packetize has null message");
+        } else if (message.getCargo() == null) {
+            L.e(TAG, "packetize has null messagecargo messageName="+message.messageName());
+            L.e(TAG, "packetize has null messagecargo message="+message+" authKey="+Hex.encodeHexString(authenticationKey));
+        }
         int length = 3 + message.getCargo().length;
         if (message.signed()) {
             length += 24;

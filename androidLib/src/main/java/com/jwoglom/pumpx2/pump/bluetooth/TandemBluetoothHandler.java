@@ -363,6 +363,7 @@ public class TandemBluetoothHandler {
                         Timber.e(e, "Could not handle control stream message: '%s'", Hex.encodeHexString(value));
                         return;
                     }
+                    Timber.i("ControlStream requestMessage=%s", requestMessage);
                 } else {
                     Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
                     if (opt.isPresent()) {

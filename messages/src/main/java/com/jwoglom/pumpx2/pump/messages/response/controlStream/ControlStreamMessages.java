@@ -9,6 +9,8 @@ public class ControlStreamMessages {
     public static Message determineRequestMessage(byte[] rawBtValue) throws InstantiationException, IllegalAccessException {
         Validate.isTrue(rawBtValue.length >= 3);
         byte opCode = rawBtValue[2];
-        return Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();
+
+        Message responseMessage = Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();
+        return responseMessage.getRequestClass().newInstance();
     }
 }
