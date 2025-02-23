@@ -425,8 +425,14 @@ public class TandemBluetoothHandler {
 
                 TronMessageWrapper wrapper = new TronMessageWrapper(requestMessage, txId);
                 // For multi-packet messages, use the saved packet array list so we have existing state of the previous BT packets.
-                PacketArrayList packetArrayList = PumpState.checkForSavedPacketArrayList(characteristic, txId)
-                        .orElse(wrapper.buildPacketArrayList(MessageType.RESPONSE));
+                // Skip this for CONTROL_STREAM messages.
+                PacketArrayList packetArrayList;
+                if (characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
+                    packetArrayList = wrapper.buildPacketArrayList(MessageType.RESPONSE);
+                } else {
+                    packetArrayList = PumpState.checkForSavedPacketArrayList(characteristic, txId)
+                            .orElse(wrapper.buildPacketArrayList(MessageType.RESPONSE));
+                }
                 PumpResponseMessage response;
                 try {
                     response = BTResponseParser.parse(wrapper.message(), packetArrayList, parser.getValue(), characteristicUUID);

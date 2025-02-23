@@ -4,6 +4,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;
 
 /**
@@ -15,7 +16,7 @@ import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStrea
         size=0,
         type=MessageType.REQUEST,
         characteristic=Characteristic.CONTROL_STREAM,
-        response=PumpingStateStreamResponse.class,
+        response=FillTubingStateStreamResponse.class,
         stream=true,
         signed=true
 )
