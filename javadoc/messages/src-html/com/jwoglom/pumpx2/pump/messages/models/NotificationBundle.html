@@ -146,20 +146,22 @@
 <span class="source-line-no">129</span><span id="line-129">            });</span>
 <span class="source-line-no">130</span><span id="line-130">        }</span>
 <span class="source-line-no">131</span><span id="line-131">        if (malfunctionStatusResponse != null) {</span>
-<span class="source-line-no">132</span><span id="line-132">            if (!StringUtils.isBlank(malfunctionStatusResponse.getErrorString())) {</span>
-<span class="source-line-no">133</span><span id="line-133">                slugs.add(malfunctionStatusResponse);</span>
-<span class="source-line-no">134</span><span id="line-134">            }</span>
-<span class="source-line-no">135</span><span id="line-135">        }</span>
-<span class="source-line-no">136</span><span id="line-136">        // todo remaining</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">        return slugs;</span>
-<span class="source-line-no">139</span><span id="line-139">    }</span>
-<span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">    public Map&lt;Class&lt;? extends Message&gt;, Instant&gt; getLastUpdatedTimes() {</span>
-<span class="source-line-no">142</span><span id="line-142">        return lastUpdatedTimes;</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">}</span>
+<span class="source-line-no">132</span><span id="line-132">            if (malfunctionStatusResponse.hasMalfunction() &amp;&amp;</span>
+<span class="source-line-no">133</span><span id="line-133">                !StringUtils.isBlank(malfunctionStatusResponse.getErrorString()))</span>
+<span class="source-line-no">134</span><span id="line-134">            {</span>
+<span class="source-line-no">135</span><span id="line-135">                slugs.add(malfunctionStatusResponse);</span>
+<span class="source-line-no">136</span><span id="line-136">            }</span>
+<span class="source-line-no">137</span><span id="line-137">        }</span>
+<span class="source-line-no">138</span><span id="line-138">        // todo remaining</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">        return slugs;</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    public Map&lt;Class&lt;? extends Message&gt;, Instant&gt; getLastUpdatedTimes() {</span>
+<span class="source-line-no">144</span><span id="line-144">        return lastUpdatedTimes;</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">}</span>
 
 
 

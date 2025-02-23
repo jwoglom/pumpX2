@@ -129,13 +129,24 @@
 <span class="source-line-no">112</span><span id="line-112">    }</span>
 <span class="source-line-no">113</span><span id="line-113"></span>
 <span class="source-line-no">114</span><span id="line-114">    public String getErrorString() {</span>
-<span class="source-line-no">115</span><span id="line-115">        // no error</span>
-<span class="source-line-no">116</span><span id="line-116">        if (getCodeA() == 0 &amp;&amp; getCodeB() == 0) {</span>
-<span class="source-line-no">117</span><span id="line-117">            return "";</span>
-<span class="source-line-no">118</span><span id="line-118">        }</span>
-<span class="source-line-no">119</span><span id="line-119">        return String.format(Locale.US, "%d-%#x", getCodeA(), getCodeB());</span>
-<span class="source-line-no">120</span><span id="line-120">    }</span>
-<span class="source-line-no">121</span><span id="line-121">}</span>
+<span class="source-line-no">115</span><span id="line-115">        if (!hasMalfunction()) return "";</span>
+<span class="source-line-no">116</span><span id="line-116">        return String.format(Locale.US, "%d-%#x", getCodeA(), getCodeB());</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    public boolean hasMalfunction() {</span>
+<span class="source-line-no">120</span><span id="line-120">        // empty</span>
+<span class="source-line-no">121</span><span id="line-121">        if (getCodeA() == 0 &amp;&amp; getCodeB() == 0) {</span>
+<span class="source-line-no">122</span><span id="line-122">            return false;</span>
+<span class="source-line-no">123</span><span id="line-123">        }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">        // 3-0x2026 -- appears to be ignorable</span>
+<span class="source-line-no">126</span><span id="line-126">        if (getCodeA() == 3 &amp;&amp; getCodeB() == 8230) {</span>
+<span class="source-line-no">127</span><span id="line-127">            return false;</span>
+<span class="source-line-no">128</span><span id="line-128">        }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">        return true;</span>
+<span class="source-line-no">131</span><span id="line-131">    }</span>
+<span class="source-line-no">132</span><span id="line-132">}</span>
 
 
 
