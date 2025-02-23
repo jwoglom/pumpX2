@@ -32,7 +32,7 @@ public class MalfunctionStatusResponseTest {
         assertEquals("12-0x2071", parsedRes.getErrorString());
     }
 
-    // 3-0x2026 - unknown
+    // 3-0x2026 - unknown and seems to be ignorable
     @Test
     public void testMalfunction2StatusResponse_3_0x2026_unknown() throws DecoderException {
         MalfunctionStatusResponse expected = new MalfunctionStatusResponse(

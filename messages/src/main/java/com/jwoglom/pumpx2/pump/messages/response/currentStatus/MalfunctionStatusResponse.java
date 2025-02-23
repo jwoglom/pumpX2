@@ -69,10 +69,21 @@ public class MalfunctionStatusResponse extends Message {
     }
 
     public String getErrorString() {
-        // no error
-        if (getCodeA() == 0 && getCodeB() == 0) {
-            return "";
-        }
+        if (!hasMalfunction()) return "";
         return String.format(Locale.US, "%d-%#x", getCodeA(), getCodeB());
+    }
+
+    public boolean hasMalfunction() {
+        // empty
+        if (getCodeA() == 0 && getCodeB() == 0) {
+            return false;
+        }
+
+        // 3-0x2026 -- appears to be ignorable
+        if (getCodeA() == 3 && getCodeB() == 8230) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -129,7 +129,9 @@ public class NotificationBundle {
             });
         }
         if (malfunctionStatusResponse != null) {
-            if (!StringUtils.isBlank(malfunctionStatusResponse.getErrorString())) {
+            if (malfunctionStatusResponse.hasMalfunction() &&
+                !StringUtils.isBlank(malfunctionStatusResponse.getErrorString()))
+            {
                 slugs.add(malfunctionStatusResponse);
             }
         }
