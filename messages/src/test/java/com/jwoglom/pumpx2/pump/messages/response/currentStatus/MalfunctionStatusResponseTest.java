@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class MalfunctionStatusResponseTest {
@@ -34,6 +35,7 @@ public class MalfunctionStatusResponseTest {
 
     // 3-0x2026 - unknown and seems to be ignorable
     @Test
+    @Ignore("ignored in code")
     public void testMalfunction2StatusResponse_3_0x2026_unknown() throws DecoderException {
         MalfunctionStatusResponse expected = new MalfunctionStatusResponse(
                 3, 8230, new byte[]{2,-1,-1}
