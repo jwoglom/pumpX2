@@ -2,18 +2,15 @@ package com.jwoglom.pumpx2.pump.messages.request.control;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
-import static com.jwoglom.pumpx2.pump.messages.PacketArrayList.IGNORE_INVALID_HMAC;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
 
 import org.apache.commons.codec.DecoderException;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class ChangeCartridgeRequestTest {
+public class EnterChangeCartridgeModeRequestTest {
     // invalid
 //    @Test
 //    public void testChangeCartridgeRequest() throws DecoderException {
@@ -38,9 +35,9 @@ public class ChangeCartridgeRequestTest {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
         // empty cargo
-        ChangeCartridgeRequest expected = new ChangeCartridgeRequest();
+        EnterChangeCartridgeModeRequest expected = new EnterChangeCartridgeModeRequest();
 
-        ChangeCartridgeRequest parsedReq = (ChangeCartridgeRequest) MessageTester.test(
+        EnterChangeCartridgeModeRequest parsedReq = (EnterChangeCartridgeModeRequest) MessageTester.test(
                 "01369036181d142820db51e5fa626a7df87fc2cf",
                 54,
                 1,

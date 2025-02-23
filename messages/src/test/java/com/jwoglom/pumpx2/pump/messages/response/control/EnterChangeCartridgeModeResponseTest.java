@@ -6,13 +6,11 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 
 import org.apache.commons.codec.DecoderException;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class ChangeCartridgeResponseTest {
+public class EnterChangeCartridgeModeResponseTest {
 
     // these were bt log parsing errors
 //    /**
@@ -66,11 +64,11 @@ public class ChangeCartridgeResponseTest {
     public void testChangeCartridgeResponse_2() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        ChangeCartridgeResponse expected = new ChangeCartridgeResponse(
+        EnterChangeCartridgeModeResponse expected = new EnterChangeCartridgeModeResponse(
                 0
         );
 
-        ChangeCartridgeResponse parsedRes = (ChangeCartridgeResponse) MessageTester.test(
+        EnterChangeCartridgeModeResponse parsedRes = (EnterChangeCartridgeModeResponse) MessageTester.test(
                 "003691361900e2cd272051bfc76d9666fb6bbe8b89627199c182617b1f6fe440",
                 54,
                 1,

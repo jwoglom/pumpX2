@@ -7,40 +7,36 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
-import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.ExitFillTubingModeRequest;
 
 import java.math.BigInteger;
 
+/**
+ * IMPORTANT: You need to wait for stream messages from ExitFillTubingModeStateStreamResponse
+ * to know when the pump has safely exited fill tubing mode.
+ */
 @MessageProps(
-    opCode=-111,
+    opCode=-105,
     size=1,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
-    signed=true, // NOT signed (?)
-    modifiesInsulinDelivery=true,
-    request=ChangeCartridgeRequest.class
+    signed=true,
+    request=ExitFillTubingModeRequest.class
 )
-public class ChangeCartridgeResponse extends StatusMessage {
+public class ExitFillTubingModeResponse extends StatusMessage {
     
     private int status;
     
-    public ChangeCartridgeResponse() {}
-
-
-    public ChangeCartridgeResponse(byte[] raw) {
-        this.cargo = raw;
-        parse(raw);
-
-    }
+    public ExitFillTubingModeResponse() {}
     
-    public ChangeCartridgeResponse(int status) {
+    public ExitFillTubingModeResponse(int status) {
         this.cargo = buildCargo(status);
         this.status = status;
         
     }
 
-    public void parse(byte[] raw) {
-        raw = removeSignedRequestHmacBytes(raw);
+    public void parse(byte[] raw) { 
+        raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
@@ -50,13 +46,9 @@ public class ChangeCartridgeResponse extends StatusMessage {
     
     public static byte[] buildCargo(int status) {
         return Bytes.combine(
-            new byte[]{ (byte) status }
-        );
+            new byte[]{ (byte) status });
     }
-
-    /**
-     * @return 0 if successful
-     */
+    
     public int getStatus() {
         return status;
     }

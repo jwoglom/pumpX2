@@ -10,6 +10,8 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyR
 import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentEnterChangeCartridgeModeStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentDetectingCartridgeStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillTubingStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
@@ -111,8 +113,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2R
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.ChangeCartridgeRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.ChangeCartridgeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.EnterChangeCartridgeModeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.EnterChangeCartridgeModeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
@@ -204,6 +206,14 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSegmentResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode20Request;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode20Response;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.EnterChangeCartridgeModeStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.DetectingCartridgeStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ExitChangeCartridgeModeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ExitChangeCartridgeModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ExitFillTubingModeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ExitFillTubingModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFillTubingModeStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.ExitFillTubingModeStateStreamResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -269,7 +279,7 @@ public enum Messages {
     BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),
     LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),
     IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),
-    CHANGE_CARTRIDGE(ChangeCartridgeRequest.class, ChangeCartridgeResponse.class),
+    CHANGE_CARTRIDGE(EnterChangeCartridgeModeRequest.class, EnterChangeCartridgeModeResponse.class),
     INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),
     BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),
     COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),
@@ -316,6 +326,11 @@ public enum Messages {
     SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),
     SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),
     UNKNOWN_MOBI_OPCODE20(UnknownMobiOpcode20Request.class, UnknownMobiOpcode20Response.class),
+    CHANGE_CARTRIDGE_STATE_STREAM(NonexistentEnterChangeCartridgeModeStateStreamRequest.class, EnterChangeCartridgeModeStateStreamResponse.class),
+    DETECTING_CARTRIDGE_STATE_STREAM(NonexistentDetectingCartridgeStateStreamRequest.class, DetectingCartridgeStateStreamResponse.class),
+    EXIT_CHANGE_CARTRIDGE_MODE(ExitChangeCartridgeModeRequest.class, ExitChangeCartridgeModeResponse.class),
+    EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),
+    EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),
     // MESSAGES_END
     ;
 
