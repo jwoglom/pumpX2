@@ -60,7 +60,8 @@ public class ExitFillTubingModeStateStreamResponse extends Message {
     }
 
     public enum ExitFillTubingModeState {
-        TUBING_FILLED(0),
+        NOT_COMPLETE(0),
+        TUBING_FILLED(1),
         ;
 
         private final int id;

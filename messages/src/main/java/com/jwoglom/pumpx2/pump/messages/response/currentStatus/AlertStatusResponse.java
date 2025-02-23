@@ -104,7 +104,7 @@ public class AlertStatusResponse extends Message {
         TRANSMITTER_EXPIRING_ALERT3(46),
         DEFAULT_ALERT_47(47),
         CGM_UNAVAILABLE(48),
-        DEFAULT_ALERT_49(49),
+        FILL_TUBING_STILL_IN_PROGRESS(49),
         DEFAULT_ALERT_50(50),
         DEFAULT_ALERT_51(51),
         DEFAULT_ALERT_52(52),
