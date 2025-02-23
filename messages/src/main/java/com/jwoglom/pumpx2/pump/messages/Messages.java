@@ -214,6 +214,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.ExitFillTubingModeReques
 import com.jwoglom.pumpx2.pump.messages.response.control.ExitFillTubingModeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFillTubingModeStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ExitFillTubingModeStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillCannulaStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -331,6 +333,7 @@ public enum Messages {
     EXIT_CHANGE_CARTRIDGE_MODE(ExitChangeCartridgeModeRequest.class, ExitChangeCartridgeModeResponse.class),
     EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),
     EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),
+    FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),
     // MESSAGES_END
     ;
 

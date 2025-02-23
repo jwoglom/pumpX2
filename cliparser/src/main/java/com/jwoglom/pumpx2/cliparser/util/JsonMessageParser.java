@@ -113,7 +113,12 @@ public class JsonMessageParser {
                 case "control":
                     btChar = CharacteristicUUID.CONTROL_CHARACTERISTICS.toString();
                     break;
+                case "controlstream":
+                case "control_stream":
+                    btChar = CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS.toString();
+                    break;
                 case "current_status":
+                case "currentstatus":
                     btChar = CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS.toString();
                     break;
             }
