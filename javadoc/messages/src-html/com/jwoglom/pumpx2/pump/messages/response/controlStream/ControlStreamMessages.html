@@ -26,9 +26,11 @@
 <span class="source-line-no">009</span><span id="line-9">    public static Message determineRequestMessage(byte[] rawBtValue) throws InstantiationException, IllegalAccessException {</span>
 <span class="source-line-no">010</span><span id="line-10">        Validate.isTrue(rawBtValue.length &gt;= 3);</span>
 <span class="source-line-no">011</span><span id="line-11">        byte opCode = rawBtValue[2];</span>
-<span class="source-line-no">012</span><span id="line-12">        return Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();</span>
-<span class="source-line-no">013</span><span id="line-13">    }</span>
-<span class="source-line-no">014</span><span id="line-14">}</span>
+<span class="source-line-no">012</span><span id="line-12"></span>
+<span class="source-line-no">013</span><span id="line-13">        Message responseMessage = Messages.fromOpcode(opCode, Characteristic.CONTROL_STREAM).newInstance();</span>
+<span class="source-line-no">014</span><span id="line-14">        return responseMessage.getRequestClass().newInstance();</span>
+<span class="source-line-no">015</span><span id="line-15">    }</span>
+<span class="source-line-no">016</span><span id="line-16">}</span>
 
 
 
