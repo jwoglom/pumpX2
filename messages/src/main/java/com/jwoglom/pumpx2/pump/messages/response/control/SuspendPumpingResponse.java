@@ -56,9 +56,5 @@ public class SuspendPumpingResponse extends StatusMessage {
         return status;
     }
 
-    // returns 0 when successful
-    public boolean getStatusOK() {
-        return status == 0;
-    }
     
 }
