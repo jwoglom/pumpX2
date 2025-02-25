@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;
 
 import java.math.BigInteger;
@@ -18,9 +19,10 @@ import java.math.BigInteger;
     signed=true,
     request=ChangeControlIQSettingsRequest.class
 )
-public class ChangeControlIQSettingsResponse extends Message {
+public class ChangeControlIQSettingsResponse extends StatusMessage {
     
-    
+    private int status;
+
     public ChangeControlIQSettingsResponse() {
         this.cargo = EMPTY;
     }
@@ -33,9 +35,12 @@ public class ChangeControlIQSettingsResponse extends Message {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        
+        this.status = raw[0];
     }
 
-    
-    
+
+    @Override
+    public int getStatus() {
+        return this.status;
+    }
 }
