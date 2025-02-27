@@ -34,6 +34,21 @@ public class PumpState {
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = PumpState::actionsAffectingInsulinDeliveryEnabled;
     }
 
+    public static void resetState(Context context) {
+        setPairingCode(context, null);
+        setJpakeDerivedSecret(context, null);
+        setJpakeServerNonce(context, null);
+        pumpTimeSinceReset = null;
+        selfTimeSinceReset = null;
+        failedPumpConnectionAttempts = 0;
+        setSavedBluetoothMAC(context, null);
+        setPumpAPIVersion(null);
+        clearRequestMessages();
+        savedPacketArrayList.clear();
+        processedResponseMessages = 0;
+        processedResponseMessagesFromUs = 0;
+    }
+
     private static SharedPreferences prefs(Context context) {
         return context.getSharedPreferences("PumpState", Context.MODE_PRIVATE);
     }
