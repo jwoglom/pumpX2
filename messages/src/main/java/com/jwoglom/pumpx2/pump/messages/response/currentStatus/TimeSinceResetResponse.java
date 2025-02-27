@@ -24,6 +24,7 @@ import java.time.Instant;
 public class TimeSinceResetResponse extends Message {
     
     private long currentTime;
+    private Instant currentTimeInstant;
     private long pumpTimeSinceReset;
     
     public TimeSinceResetResponse() {}
@@ -31,6 +32,7 @@ public class TimeSinceResetResponse extends Message {
     public TimeSinceResetResponse(long currentTime, long pumpTimeSinceReset) {
         this.cargo = buildCargo(currentTime, pumpTimeSinceReset);
         this.currentTime = currentTime;
+        this.currentTimeInstant = getCurrentTimeInstant();
         this.pumpTimeSinceReset = pumpTimeSinceReset;
         
     }
@@ -39,6 +41,7 @@ public class TimeSinceResetResponse extends Message {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.currentTime = Bytes.readUint32(raw, 0);
+        this.currentTimeInstant = getCurrentTimeInstant();
         this.pumpTimeSinceReset = Bytes.readUint32(raw, 4);
     }
 
