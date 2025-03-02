@@ -21,6 +21,7 @@ import java.util.Set;
 )
 public class SetIDPSegmentRequest extends Message {
     private int idpId;
+    private int unknownId;
     private int segmentIndex;
     private IDPSegmentOperation operation;
     private int operationId;
@@ -41,9 +42,10 @@ public class SetIDPSegmentRequest extends Message {
     /**
      * @param idpId the insulin delivery profile ID (NOT SLOT)
      */
-    public SetIDPSegmentRequest(int idpId, int segmentIndex, IDPSegmentOperation operation, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int idpStatusId) {
-        this.cargo = buildCargo(idpId, segmentIndex, operation.id, profileStartTime, profileBasalRate, profileCarbRatio, profileTargetBG, profileISF, idpStatusId);
+    public SetIDPSegmentRequest(int idpId, int unknownId, int segmentIndex, IDPSegmentOperation operation, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int idpStatusId) {
+        this.cargo = buildCargo(idpId, unknownId, segmentIndex, operation.id, profileStartTime, profileBasalRate, profileCarbRatio, profileTargetBG, profileISF, idpStatusId);
         this.idpId = idpId;
+        this.unknownId = unknownId;
         this.segmentIndex = segmentIndex;
         this.operation = operation;
         this.operationId = operation.id;
@@ -62,6 +64,7 @@ public class SetIDPSegmentRequest extends Message {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.idpId = raw[0];
+        this.unknownId = raw[1];
         this.segmentIndex = raw[2];
         this.operationId = raw[3];
         this.operation = getOperation();
@@ -76,9 +79,9 @@ public class SetIDPSegmentRequest extends Message {
     }
 
 
-    public static byte[] buildCargo(int idpId, int segmentIndex, int operationId, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int idpStatusId) {
+    public static byte[] buildCargo(int idpId, int unknownId, int segmentIndex, int operationId, int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF, int idpStatusId) {
         return Bytes.combine(
-                new byte[]{ (byte) idpId, 1 },
+                new byte[]{ (byte) idpId, (byte) unknownId },
                 new byte[]{ (byte) segmentIndex, (byte) operationId },
                 Bytes.firstTwoBytesLittleEndian(profileStartTime),
                 Bytes.firstTwoBytesLittleEndian(profileBasalRate),
@@ -116,19 +119,23 @@ public class SetIDPSegmentRequest extends Message {
         return IDPSegmentResponse.IDPSegmentStatus.fromBitmask(idpStatusId);
     }
 
+    public int getUnknownId() {
+        return unknownId;
+    }
+
     public enum IDPSegmentOperation {
         /**
          * Modifies the given segmentId
          */
-        MODIFY(0),
+        MODIFY_SEGMENT_ID(0),
         /**
-         * Creates a new segment AFTER the current segmentId
+         * Creates a new segment. segmentId is NOT used (always has value 0).
          */
-        CREATE_AFTER(1),
+        CREATE_SEGMENT(1),
         /**
          * Deletes the given segmentId
          */
-        DELETE(2),
+        DELETE_SEGMENT_ID(2),
         ;
 
         private final int id;

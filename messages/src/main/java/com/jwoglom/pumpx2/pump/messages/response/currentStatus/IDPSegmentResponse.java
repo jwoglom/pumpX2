@@ -112,6 +112,7 @@ public class IDPSegmentResponse extends Message {
         CARB_RATIO(2),
         TARGET_BG(4),
         CORRECTION_FACTOR(8),
+        UNKNOWN_16(16),
         ;
 
         private final int id;

@@ -216,6 +216,10 @@ import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFil
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ExitFillTubingModeStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillCannulaStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBolusLimitRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBolusLimitResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBasalLimitRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBasalLimitResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -334,6 +338,8 @@ public enum Messages {
     EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),
     EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),
     FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),
+    SET_MAX_BOLUS_LIMIT(SetMaxBolusLimitRequest.class, SetMaxBolusLimitResponse.class),
+    SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),
     // MESSAGES_END
     ;
 
