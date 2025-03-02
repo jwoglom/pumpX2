@@ -1032,6 +1032,24 @@ loadScripts(document, 'script');</script>
  1<code>firstTwoBytesLittleEndian(pairingCode) [byte 1]</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetMaxBasalLimitRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 1]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetMaxBolusLimitRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>firstTwoBytesLittleEndian(maxBolusMilliunits) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(maxBolusMilliunits) [byte 1]</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetModesRequest.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetModesRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetModesRequest</a></dt>
 <dd>
 <div class="block">
@@ -1203,6 +1221,22 @@ loadScripts(document, 'script');</script>
  OffsetDescription
  0<code>new byte[]{(byte) status} [element 0]</code>
  1<code>new byte[]{2} [element 1]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetMaxBasalLimitResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetMaxBolusLimitResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetModesResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetModesResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetModesResponse</a></dt>
@@ -1688,13 +1722,13 @@ loadScripts(document, 'script');</script>
  13<code>(byte) fillTubingAnnun</code>
  </div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#buildCargo(int,int,int,int,int,long,int,int,int)" class="member-name-link">buildCargo(int, int, int, int, int, long, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#buildCargo(int,int,int,int,int,int,long,int,int,int)" class="member-name-link">buildCargo(int, int, int, int, int, int, long, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>
 <div class="block">
  Byte layout for SetIDPSegmentRequest.buildCargo(...):
  OffsetDescription
  0<code>new byte[]{(byte) idpId} [element 0]</code>
- 1<code>new byte[]{1} [element 1]</code>
+ 1<code>new byte[]{(byte) unknownId} [element 1]</code>
  2<code>new byte[]{(byte) segmentIndex} [element 0]</code>
  3<code>new byte[]{(byte) operationId} [element 1]</code>
  4<code>firstTwoBytesLittleEndian(profileStartTime) [byte 0]</code>
@@ -3773,12 +3807,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html#create(com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse,java.lang.String)" class="member-name-link">create(AbstractCentralChallengeResponse, String)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/PumpChallengeRequestBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">PumpChallengeRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#CREATE_AFTER" class="member-name-link">CREATE_AFTER</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
-<dd>
-<div class="block">Creates a new segment AFTER the current segmentId</div>
-</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CREATE_IDP" class="member-name-link">CREATE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#CREATE_SEGMENT" class="member-name-link">CREATE_SEGMENT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dd>
+<div class="block">Creates a new segment.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
 <div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CreateIDPResponse</code></a>, opCode -26, size 35
@@ -4378,12 +4412,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html#DEFAULT_REMINDER_9" class="member-name-link">DEFAULT_REMINDER_9</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ReminderStatusResponse.ReminderType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ReminderStatusResponse.ReminderType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#DELETE" class="member-name-link">DELETE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#DELETE_IDP" class="member-name-link">DELETE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#DELETE_SEGMENT_ID" class="member-name-link">DELETE_SEGMENT_ID</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
 <dd>
 <div class="block">Deletes the given segmentId</div>
 </dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#DELETE_IDP" class="member-name-link">DELETE_IDP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">DeleteIDPRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
 <div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/DeleteIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>DeleteIDPResponse</code></a>, opCode -82, size 2
@@ -6044,7 +6078,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#getMaxBolusHourlyTotal()" class="member-name-link">getMaxBolusHourlyTotal()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusCalcDataSnapshotResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html#getMaxBolusMilliunits()" class="member-name-link">getMaxBolusMilliunits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html#getMaxBolusSize()" class="member-name-link">getMaxBolusSize()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/IdpBolusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpBolusHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#getMaxHourlyBasalMilliunits()" class="member-name-link">getMaxHourlyBasalMilliunits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html#getMaxIobEventsExceeded()" class="member-name-link">getMaxIobEventsExceeded()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusCalcDataSnapshotResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusCalcDataSnapshotResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -6558,6 +6596,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetModesResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetModesResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetModesResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetQuickBolusSettingsResponse</a></dt>
@@ -6749,6 +6791,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html#getUnknown4()" class="member-name-link">getUnknown4()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBatteryV2Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html#getUnknown4()" class="member-name-link">getUnknown4()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/UnknownMobiOpcode30Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">UnknownMobiOpcode30Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#getUnknownId()" class="member-name-link">getUnknownId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#getUnusedRemaining()" class="member-name-link">getUnusedRemaining()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">GetG6TransmitterHardwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -7946,7 +7990,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#modifiesInsulinDelivery()" class="member-name-link">modifiesInsulinDelivery()</a> - Element in annotation interface com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#MODIFY" class="member-name-link">MODIFY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html#MODIFY_SEGMENT_ID" class="member-name-link">MODIFY_SEGMENT_ID</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a></dt>
 <dd>
 <div class="block">Modifies the given segmentId</div>
 </dd>
@@ -8537,6 +8581,7 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for SetIDPSegmentRequest:
  <code>idpId</code><code>raw[0]</code>
+ <code>unknownId</code><code>raw[1]</code>
  <code>segmentIndex</code><code>raw[2]</code>
  <code>operationId</code><code>raw[3]</code>
  <code>operation</code><code>getOperation()</code>
@@ -8558,6 +8603,20 @@ loadScripts(document, 'script');</script>
  <code>profileCarbEntry</code><code>raw[4]</code>
  <code>changeTypeId</code><code>raw[5]</code>
  <code>changeType</code><code>getChangeType()</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetMaxBasalLimitRequest:
+ <code>maxHourlyBasalMilliunits</code><code>Bytes.readShort(raw, 0)</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetMaxBolusLimitRequest:
+ <code>maxBolusMilliunits</code><code>Bytes.readShort(raw, 0)</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetModesRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetModesRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetModesRequest</a></dt>
@@ -8968,6 +9027,20 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">
  Parsed fields for SetIDPSettingsResponse:
+ <code>status</code><code>raw[0]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetMaxBasalLimitResponse:
+ <code>status</code><code>raw[0]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetMaxBolusLimitResponse:
  <code>status</code><code>raw[0]</code>
  </div>
 </dd>
@@ -11021,6 +11094,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_IDP_SETTINGS" class="member-name-link">SET_IDP_SETTINGS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_MAX_BASAL_LIMIT" class="member-name-link">SET_MAX_BASAL_LIMIT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_MAX_BOLUS_LIMIT" class="member-name-link">SET_MAX_BOLUS_LIMIT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_MODES" class="member-name-link">SET_MODES</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_QUICK_BOLUS_SETTINGS" class="member-name-link">SET_QUICK_BOLUS_SETTINGS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -11177,7 +11254,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetIDPSegmentRequest(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E(int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest.IDPSegmentOperation,int,int,long,int,int,int)" class="member-name-link">SetIDPSegmentRequest(int, int, SetIDPSegmentRequest.IDPSegmentOperation, int, int, long, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html#%3Cinit%3E(int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest.IDPSegmentOperation,int,int,long,int,int,int)" class="member-name-link">SetIDPSegmentRequest(int, int, int, SetIDPSegmentRequest.IDPSegmentOperation, int, int, long, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSegmentRequest.IDPSegmentOperation.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSegmentRequest.IDPSegmentOperation</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>&nbsp;</dd>
@@ -11247,6 +11324,90 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html#%3Cinit%3E(int)" class="member-name-link">SetIDPSettingsResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetIDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetIDPSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#setInsulinUnits(java.lang.Double)" class="member-name-link">setInsulinUnits(Double)</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetMaxBasalLimitResponse</code></a>, opCode -120, size 4
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-120</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>4</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetMaxBasalLimitResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#%3Cinit%3E()" class="member-name-link">SetMaxBasalLimitRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#%3Cinit%3E(int)" class="member-name-link">SetMaxBasalLimitRequest(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBasalLimitRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetMaxBasalLimitRequest</code></a>, opCode -119, size 1
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-119</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>1</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetMaxBasalLimitRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html#%3Cinit%3E()" class="member-name-link">SetMaxBasalLimitResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html#%3Cinit%3E(int)" class="member-name-link">SetMaxBasalLimitResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBasalLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBasalLimitResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetMaxBolusLimitResponse</code></a>, opCode -122, size 2
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-122</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetMaxBolusLimitResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html#%3Cinit%3E()" class="member-name-link">SetMaxBolusLimitRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html#%3Cinit%3E(int)" class="member-name-link">SetMaxBolusLimitRequest(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetMaxBolusLimitRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetMaxBolusLimitRequest</code></a>, opCode -121, size 1
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-121</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>1</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
+ &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBolusLimitRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetMaxBolusLimitRequest</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html#%3Cinit%3E()" class="member-name-link">SetMaxBolusLimitResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html#%3Cinit%3E(int)" class="member-name-link">SetMaxBolusLimitResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetMaxBolusLimitResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetMaxBolusLimitResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetModesRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetModesRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
@@ -12070,6 +12231,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#UNITS_5_0" class="member-name-link">UNITS_5_0</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.IDPSegmentStatus.html#UNKNOWN_16" class="member-name-link">UNKNOWN_16</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#UNKNOWN_MOBI_OPCODE_NEG124" class="member-name-link">UNKNOWN_MOBI_OPCODE_NEG124</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>

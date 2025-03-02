@@ -186,38 +186,39 @@
 <span class="source-line-no">169</span><span id="line-169">        CARB_RATIO(2),</span>
 <span class="source-line-no">170</span><span id="line-170">        TARGET_BG(4),</span>
 <span class="source-line-no">171</span><span id="line-171">        CORRECTION_FACTOR(8),</span>
-<span class="source-line-no">172</span><span id="line-172">        ;</span>
-<span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">        private final int id;</span>
-<span class="source-line-no">175</span><span id="line-175">        IDPSegmentStatus(int id) {</span>
-<span class="source-line-no">176</span><span id="line-176">            this.id = id;</span>
-<span class="source-line-no">177</span><span id="line-177">        }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">        public int getId() {</span>
-<span class="source-line-no">180</span><span id="line-180">            return id;</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">        public static Set&lt;IDPSegmentStatus&gt; fromBitmask(int mask) {</span>
-<span class="source-line-no">184</span><span id="line-184">            Set&lt;IDPSegmentStatus&gt; items = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">185</span><span id="line-185">            for (IDPSegmentStatus status : values()) {</span>
-<span class="source-line-no">186</span><span id="line-186">                if ((mask &amp; status.getId()) != 0) {</span>
-<span class="source-line-no">187</span><span id="line-187">                    items.add(status);</span>
-<span class="source-line-no">188</span><span id="line-188">                }</span>
-<span class="source-line-no">189</span><span id="line-189">            }</span>
-<span class="source-line-no">190</span><span id="line-190"></span>
-<span class="source-line-no">191</span><span id="line-191">            return items;</span>
-<span class="source-line-no">192</span><span id="line-192">        }</span>
-<span class="source-line-no">193</span><span id="line-193"></span>
-<span class="source-line-no">194</span><span id="line-194">        public static int toBitmask(IDPSegmentStatus ...items) {</span>
-<span class="source-line-no">195</span><span id="line-195">            int mask = 0;</span>
-<span class="source-line-no">196</span><span id="line-196">            for (IDPSegmentStatus item : items) {</span>
-<span class="source-line-no">197</span><span id="line-197">                mask += item.getId();</span>
-<span class="source-line-no">198</span><span id="line-198">            }</span>
-<span class="source-line-no">199</span><span id="line-199">            return mask;</span>
-<span class="source-line-no">200</span><span id="line-200">        }</span>
-<span class="source-line-no">201</span><span id="line-201">    }</span>
-<span class="source-line-no">202</span><span id="line-202">    </span>
-<span class="source-line-no">203</span><span id="line-203">}</span>
+<span class="source-line-no">172</span><span id="line-172">        UNKNOWN_16(16),</span>
+<span class="source-line-no">173</span><span id="line-173">        ;</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">        private final int id;</span>
+<span class="source-line-no">176</span><span id="line-176">        IDPSegmentStatus(int id) {</span>
+<span class="source-line-no">177</span><span id="line-177">            this.id = id;</span>
+<span class="source-line-no">178</span><span id="line-178">        }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">        public int getId() {</span>
+<span class="source-line-no">181</span><span id="line-181">            return id;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183"></span>
+<span class="source-line-no">184</span><span id="line-184">        public static Set&lt;IDPSegmentStatus&gt; fromBitmask(int mask) {</span>
+<span class="source-line-no">185</span><span id="line-185">            Set&lt;IDPSegmentStatus&gt; items = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">186</span><span id="line-186">            for (IDPSegmentStatus status : values()) {</span>
+<span class="source-line-no">187</span><span id="line-187">                if ((mask &amp; status.getId()) != 0) {</span>
+<span class="source-line-no">188</span><span id="line-188">                    items.add(status);</span>
+<span class="source-line-no">189</span><span id="line-189">                }</span>
+<span class="source-line-no">190</span><span id="line-190">            }</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">            return items;</span>
+<span class="source-line-no">193</span><span id="line-193">        }</span>
+<span class="source-line-no">194</span><span id="line-194"></span>
+<span class="source-line-no">195</span><span id="line-195">        public static int toBitmask(IDPSegmentStatus ...items) {</span>
+<span class="source-line-no">196</span><span id="line-196">            int mask = 0;</span>
+<span class="source-line-no">197</span><span id="line-197">            for (IDPSegmentStatus item : items) {</span>
+<span class="source-line-no">198</span><span id="line-198">                mask += item.getId();</span>
+<span class="source-line-no">199</span><span id="line-199">            }</span>
+<span class="source-line-no">200</span><span id="line-200">            return mask;</span>
+<span class="source-line-no">201</span><span id="line-201">        }</span>
+<span class="source-line-no">202</span><span id="line-202">    }</span>
+<span class="source-line-no">203</span><span id="line-203">    </span>
+<span class="source-line-no">204</span><span id="line-204">}</span>
 
 
 
