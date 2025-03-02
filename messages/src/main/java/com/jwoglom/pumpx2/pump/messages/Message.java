@@ -138,4 +138,12 @@ public abstract class Message {
         props.putOpt("modifiesInsulinDelivery", props().modifiesInsulinDelivery());
         return props.toString(0);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Message)) return false;
+        return jsonToString().equals(((Message) o).jsonToString());
+
+    }
 }

@@ -53,7 +53,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
 
         // IdpSegmentResponse(1,0)
@@ -119,7 +119,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:28:32.215000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00beabbe1a00023e2c4720c4b672744dc4eb533cd0840e563f4bfa168217c0f018",{"cargo":[0,2]}]
@@ -163,7 +163,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:28:59.666000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00ccabcc1a0002592c472052a88a7903ce4baf653c00f15a3b3d66d100ed76b531",{"cargo":[0,2]}]
@@ -208,7 +208,7 @@ public class SetIDPSegmentRequestTest {
                 SetIDPSegmentRequest.IDPSegmentOperation.MODIFY_SEGMENT_ID,
                 540, 900, 20_000, 100, 10,
                 IDPSegmentResponse.IDPSegmentStatus.toBitmask(
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:29:29.486000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00d3abd31a0002772c47207d8c14b777ffea551a23a849b9f5aad3d2ffccfc26a1",{"cargo":[0,2]}]
@@ -262,7 +262,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:30:04.646000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00e5abe51a00029a2c472055c083c0dce86589fe5c23c9a8316a55e917b5070dfb",{"cargo":[0,2]}]
@@ -318,7 +318,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:30:35.936000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00f7abf71a0002ba2c4720060f9c190d353adbc1d2164eb9de04deb12df6e2664a",{"cargo":[0,2]}]
@@ -371,7 +371,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:31:03.147000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0005ab051a0002d52c472027d507e0e3ead117e408c3c0604bd691d61884b673c2",{"cargo":[0,2]}]
@@ -427,7 +427,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:31:30.085000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0010ab101a0002f02c4720f38440797bf92b73933b867851e17016adeca5d34a33",{"cargo":[0,2]}]
@@ -476,7 +476,7 @@ public class SetIDPSegmentRequestTest {
                 120, 200, 20_000, 100, 10,
                 IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
                         IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:31:49.619000","ReadResp","","Index 2 out of bounds for length 0"]
@@ -525,7 +525,7 @@ public class SetIDPSegmentRequestTest {
                 180, 300, 20_000, 100, 10,
                 IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
                         IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:32:07.586000","ReadResp","","Index 2 out of bounds for length 0"]
@@ -583,7 +583,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:32:45.355000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0040ab401a00023b2d4720801ef96049a8f33187339b410aef114ab3ac9e54030a",{"cargo":[0,2]}]
@@ -634,7 +634,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:33:14.755000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","004dab4d1a0002582d4720fc639a26aba7d24638d9f30d09ea4a1f5df30caee306",{"cargo":[0,2]}]
@@ -681,7 +681,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:33:48.506000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0057ab571a00027a2d47203f7c15e44a5a3bf5aa5eb6dd03a6016e154ddf5b828c",{"cargo":[0,2]}]
@@ -775,7 +775,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:36:01.316000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0076ab761a0002ff2d47209b53ffa17bfb86d1b923b9a55954ef453bd02d848a5f",{"cargo":[0,2]}]
@@ -822,7 +822,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:36:19.663000","WriteReq","CURRENT_STATUS","request.currentStatus.TimeSinceResetRequest","008036800001a0",{"cargo":[]}]
@@ -876,7 +876,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 08:36:35.004000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","008eab8e1a0002212e4720cdac73cfb98c2d8e04d7f482bbd9fa50469d57913c13",{"cargo":[0,2]}]
@@ -975,7 +975,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 10:21:56.529000","WriteReq","CURRENT_STATUS","request.currentStatus.TimeSinceResetRequest","00e236e20049cd",{"cargo":[]}]
@@ -1029,7 +1029,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 10:22:34.888000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","00f0abf01a0002f84647207cc3c9700946c75bec6cbac35f39d6cba31b459d0f62",{"cargo":[0,2]}]
@@ -1078,7 +1078,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 10:23:13.678000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0001ab011a00021f4747204cb7a85c00624f0cb1d9ce4cb17274d922b3178359a6",{"cargo":[0,2]}]
@@ -1130,7 +1130,7 @@ public class SetIDPSegmentRequestTest {
                         IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                         IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                         IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
-                        IDPSegmentResponse.IDPSegmentStatus.UNKNOWN_16)
+                        IDPSegmentResponse.IDPSegmentStatus.START_TIME)
         );
         /*
 ["2025-02-27 10:27:58.950000","ReadResp","CONTROL","response.control.SetIDPSegmentResponse","0046ab461a00023c4847204815136d41e8916346003b52d1bc7fce302e70e949bd",{"cargo":[0,2]}]

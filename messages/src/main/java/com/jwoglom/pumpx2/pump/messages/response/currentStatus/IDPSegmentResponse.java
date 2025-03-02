@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -112,7 +113,7 @@ public class IDPSegmentResponse extends Message {
         CARB_RATIO(2),
         TARGET_BG(4),
         CORRECTION_FACTOR(8),
-        UNKNOWN_16(16),
+        START_TIME(16),
         ;
 
         private final int id;
