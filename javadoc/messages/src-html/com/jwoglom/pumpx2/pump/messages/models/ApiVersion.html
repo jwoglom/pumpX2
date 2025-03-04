@@ -17,35 +17,48 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.models;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">public class ApiVersion {</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4"></span>
-<span class="source-line-no">005</span><span id="line-5">    private final int major;</span>
-<span class="source-line-no">006</span><span id="line-6">    private final int minor;</span>
-<span class="source-line-no">007</span><span id="line-7">    public ApiVersion(int major, int minor) {</span>
-<span class="source-line-no">008</span><span id="line-8">        this.major = major;</span>
-<span class="source-line-no">009</span><span id="line-9">        this.minor = minor;</span>
-<span class="source-line-no">010</span><span id="line-10">    }</span>
-<span class="source-line-no">011</span><span id="line-11"></span>
-<span class="source-line-no">012</span><span id="line-12">    public int getMajor() {</span>
-<span class="source-line-no">013</span><span id="line-13">        return major;</span>
-<span class="source-line-no">014</span><span id="line-14">    }</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">    public int getMinor() {</span>
-<span class="source-line-no">017</span><span id="line-17">        return minor;</span>
-<span class="source-line-no">018</span><span id="line-18">    }</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    public boolean greaterThan(ApiVersion other) {</span>
-<span class="source-line-no">021</span><span id="line-21">        return getMajor() &gt; other.getMajor() || (getMajor() == other.getMajor() &amp;&amp; getMinor() &gt; other.getMinor());</span>
-<span class="source-line-no">022</span><span id="line-22">    }</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    public boolean greaterThan(KnownApiVersion other) {</span>
-<span class="source-line-no">025</span><span id="line-25">        return greaterThan(other.get());</span>
-<span class="source-line-no">026</span><span id="line-26">    }</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    public String toString() {</span>
-<span class="source-line-no">029</span><span id="line-29">        return "ApiVersion(major=" + major + ", minor=" + minor + ")";</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31">}</span>
+<span class="source-line-no">005</span><span id="line-5">public class ApiVersion {</span>
+<span class="source-line-no">006</span><span id="line-6"></span>
+<span class="source-line-no">007</span><span id="line-7">    private final int major;</span>
+<span class="source-line-no">008</span><span id="line-8">    private final int minor;</span>
+<span class="source-line-no">009</span><span id="line-9">    public ApiVersion(int major, int minor) {</span>
+<span class="source-line-no">010</span><span id="line-10">        this.major = major;</span>
+<span class="source-line-no">011</span><span id="line-11">        this.minor = minor;</span>
+<span class="source-line-no">012</span><span id="line-12">    }</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">    public int getMajor() {</span>
+<span class="source-line-no">015</span><span id="line-15">        return major;</span>
+<span class="source-line-no">016</span><span id="line-16">    }</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">    public int getMinor() {</span>
+<span class="source-line-no">019</span><span id="line-19">        return minor;</span>
+<span class="source-line-no">020</span><span id="line-20">    }</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">    public boolean greaterThan(ApiVersion other) {</span>
+<span class="source-line-no">023</span><span id="line-23">        return getMajor() &gt; other.getMajor() || (getMajor() == other.getMajor() &amp;&amp; getMinor() &gt; other.getMinor());</span>
+<span class="source-line-no">024</span><span id="line-24">    }</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">    public boolean greaterThan(KnownApiVersion other) {</span>
+<span class="source-line-no">027</span><span id="line-27">        return greaterThan(other.get());</span>
+<span class="source-line-no">028</span><span id="line-28">    }</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">    public String toString() {</span>
+<span class="source-line-no">031</span><span id="line-31">        return "ApiVersion(major=" + major + ", minor=" + minor + ")";</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public String serialize() {</span>
+<span class="source-line-no">035</span><span id="line-35">        return major + "," + minor;</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    public static ApiVersion deserialize(String s) {</span>
+<span class="source-line-no">039</span><span id="line-39">        if (s == null || s.isEmpty()) return null;</span>
+<span class="source-line-no">040</span><span id="line-40">        String[] parts = s.split(",");</span>
+<span class="source-line-no">041</span><span id="line-41">        Validate.isTrue(parts.length == 2);</span>
+<span class="source-line-no">042</span><span id="line-42">        return new ApiVersion(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44">}</span>
 
 
 
