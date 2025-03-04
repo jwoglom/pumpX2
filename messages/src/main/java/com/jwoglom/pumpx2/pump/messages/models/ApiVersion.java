@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.models;
 
+import org.apache.commons.lang3.Validate;
+
 public class ApiVersion {
 
     private final int major;
@@ -27,5 +29,16 @@ public class ApiVersion {
 
     public String toString() {
         return "ApiVersion(major=" + major + ", minor=" + minor + ")";
+    }
+
+    public String serialize() {
+        return major + "," + minor;
+    }
+
+    public static ApiVersion deserialize(String s) {
+        if (s == null || s.isEmpty()) return null;
+        String[] parts = s.split(",");
+        Validate.isTrue(parts.length == 2);
+        return new ApiVersion(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
     }
 }

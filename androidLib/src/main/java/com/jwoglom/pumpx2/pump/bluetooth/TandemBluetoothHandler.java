@@ -40,6 +40,7 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeRes
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.util.timber.LConfigurator;
@@ -59,7 +60,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -575,6 +575,8 @@ public class TandemBluetoothHandler {
                 } else {
                     if (msg instanceof ApiVersionResponse) {
                         PumpState.setPumpAPIVersion(((ApiVersionResponse) msg).getApiVersion());
+                    } else if (msg instanceof PumpVersionResponse) {
+                        PumpState.setPumpSerialNum("" + ((PumpVersionResponse) msg).getSerialNum());
                     } else if (msg instanceof TimeSinceResetResponse) {
                         PumpState.setPumpTimeSinceReset(((TimeSinceResetResponse) msg).getCurrentTime());
                     }

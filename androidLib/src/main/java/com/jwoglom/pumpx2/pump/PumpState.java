@@ -45,6 +45,7 @@ public class PumpState {
         failedPumpConnectionAttempts = 0;
         setSavedBluetoothMAC(context, null);
         setPumpAPIVersion(null);
+        setPumpSerialNum(null);
         clearRequestMessages();
         savedPacketArrayList.clear();
         processedResponseMessages = 0;
@@ -58,6 +59,8 @@ public class PumpState {
             o.put("jpakeDerivedSecret", getJpakeDerivedSecret(context));
             o.put("jpakeServerNonce", getJpakeServerNonce(context));
             o.put("savedBluetoothMAC", getSavedBluetoothMAC(context));
+            o.put("pumpSerialNum", getPumpSerialNum());
+            o.put("pumpAPIVersion", getPumpAPIVersion().serialize());
             return o.toString();
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -71,6 +74,8 @@ public class PumpState {
             setJpakeDerivedSecret(context, o.getString("jpakeDerivedSecret"));
             setJpakeServerNonce(context, o.getString("jpakeServerNonce"));
             setSavedBluetoothMAC(context, o.getString("savedBluetoothMAC"));
+            setPumpSerialNum(o.getString("pumpSerialNum"));
+            setPumpAPIVersion(ApiVersion.deserialize(o.getString("pumpAPIVersion")));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -175,6 +180,14 @@ public class PumpState {
             return KnownApiVersion.API_V2_1.get();
         }
         return pumpApiVersion;
+    }
+
+    private static String pumpSerialNum = null;
+    public static void setPumpSerialNum(String pumpSerialNum) {
+        PumpState.pumpSerialNum = pumpSerialNum;
+    }
+    public static String getPumpSerialNum() {
+        return pumpSerialNum;
     }
 
     // The state of recent messages sent to the pump paired with the transaction id.
