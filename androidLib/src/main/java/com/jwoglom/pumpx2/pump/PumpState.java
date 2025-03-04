@@ -15,6 +15,8 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 
 import org.apache.commons.lang3.Validate;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +49,31 @@ public class PumpState {
         savedPacketArrayList.clear();
         processedResponseMessages = 0;
         processedResponseMessagesFromUs = 0;
+    }
+
+    public static String exportState(Context context) {
+        try {
+            JSONObject o = new JSONObject();
+            o.put("pairingCode", getPairingCode(context));
+            o.put("jpakeDerivedSecret", getJpakeDerivedSecret(context));
+            o.put("jpakeServerNonce", getJpakeServerNonce(context));
+            o.put("savedBluetoothMAC", getSavedBluetoothMAC(context));
+            return o.toString();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void importState(Context context, String stateJson) {
+        try {
+            JSONObject o = new JSONObject(stateJson);
+            setPairingCode(context, o.getString("pairingCode"));
+            setJpakeDerivedSecret(context, o.getString("jpakeDerivedSecret"));
+            setJpakeServerNonce(context, o.getString("jpakeServerNonce"));
+            setSavedBluetoothMAC(context, o.getString("savedBluetoothMAC"));
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static SharedPreferences prefs(Context context) {
@@ -266,5 +293,6 @@ public class PumpState {
      * Used in the TandemPump constructor to set the pairing code type.
      */
     public static PairingCodeType pairingCodeType = PairingCodeType.LONG_16CHAR;
+
 }
 
