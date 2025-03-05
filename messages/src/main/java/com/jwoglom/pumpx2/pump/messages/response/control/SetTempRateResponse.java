@@ -3,7 +3,6 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
@@ -24,7 +23,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetTempRateRequest;
 public class SetTempRateResponse extends StatusMessage {
 
     private int status;
-    private int id;
+    private int tempRateId;
 
 
     public SetTempRateResponse() {}
@@ -33,19 +32,24 @@ public class SetTempRateResponse extends StatusMessage {
         parse(raw);
     }
 
+    public SetTempRateResponse(int status, int tempRateId) {
+        parse(buildCargo(status, tempRateId));
+    }
+
     public void parse(byte[] raw) { 
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
-        this.id = raw[1];
+        this.tempRateId = Bytes.readShort(raw, 1);
         
     }
 
     
-    public static byte[] buildCargo(byte[] raw) {
+    public static byte[] buildCargo(int status, int tempRateId) {
         return Bytes.combine(
-            raw);
+            new byte[]{ (byte) status },
+            Bytes.firstTwoBytesLittleEndian(tempRateId));
     }
 
 
@@ -56,7 +60,10 @@ public class SetTempRateResponse extends StatusMessage {
         return status;
     }
 
-    public int getId() {
-        return id;
+    /**
+     * @return ID of temp rate which exists in history log (see TempRateActivatedHistoryLog)
+     */
+    public int getTempRateId() {
+        return tempRateId;
     }
 }
