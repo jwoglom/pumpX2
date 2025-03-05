@@ -21,7 +21,11 @@ public class SetMaxBolusLimitRequest extends Message {
 
     public SetMaxBolusLimitRequest() {}
 
+    public static final int MIN_BOLUS_LIMIT_MILLIUNITS = 1_000;
+    public static final int MAX_BOLUS_LIMIT_MILLIUNITS = 25_000;
     public SetMaxBolusLimitRequest(int maxBolusMilliunits) {
+        Validate.isTrue(maxBolusMilliunits >= MIN_BOLUS_LIMIT_MILLIUNITS, "bolus limit must be greater than 1 unit");
+        Validate.isTrue(maxBolusMilliunits <= MAX_BOLUS_LIMIT_MILLIUNITS, "bolus limit must be less than or equal to 25 units");
         this.cargo = buildCargo(maxBolusMilliunits);
         this.maxBolusMilliunits = maxBolusMilliunits;
         
