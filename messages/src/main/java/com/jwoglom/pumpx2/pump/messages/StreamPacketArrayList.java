@@ -74,7 +74,7 @@ public class StreamPacketArrayList extends PacketArrayList {
                 throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
             } else if (cargoSize != this.actualExpectedCargoSize) {
                 if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
-                    L.i(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    L.d(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     this.expectedCargoSize += 24;
                     this.actualExpectedCargoSize += 24;
                 } else if (opCode != HISTORY_LOG_STREAM_OPCODE) {

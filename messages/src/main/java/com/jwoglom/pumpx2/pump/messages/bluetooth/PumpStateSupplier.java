@@ -25,6 +25,9 @@ public class PumpStateSupplier {
     public static Supplier<Boolean> actionsAffectingInsulinDeliveryEnabled = () -> false;
 
 
+    /**
+     * @return the byte array consisting of the key used for signing messages
+     */
     private static byte[] determinePumpAuthKey() {
         String derivedSecret = jpakeDerivedSecretHex == null ? null : jpakeDerivedSecretHex.get();
         String serverNonce = jpakeServerNonceHex == null ? null : jpakeServerNonceHex.get();
@@ -37,9 +40,10 @@ public class PumpStateSupplier {
         // stored jpake raw derived secret is decoded from hex for use in hmac
         if (!StringUtils.isBlank(derivedSecret) && !StringUtils.isBlank(serverNonce)) {
             try {
-                L.i(TAG, "PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
                 byte[] jpakeSecret = Hex.decodeHex(derivedSecret);
                 byte[] jpakeNonce = Hex.decodeHex(serverNonce);
+
+                // hkdf of nonce and secret bytes are passed to hmac
                 byte[] authKey = Hkdf.build(jpakeNonce, jpakeSecret);
                 L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
 
@@ -49,12 +53,12 @@ public class PumpStateSupplier {
             }
         }
 
-        L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code);
+        L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
 
 
         if (code == null) return new byte[0];
 
-        // pairing code is passed as raw ascii to hmac
+        // 16 digit pairing code is passed as raw ascii to hmac
         return code.getBytes(StandardCharsets.UTF_8);
     }
 }
