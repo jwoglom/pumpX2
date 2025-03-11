@@ -517,8 +517,7 @@ public class TandemBluetoothHandler {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {
                         PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
-                        tandemPump.onPumpConnected(peripheral);
-                        this.setupPeriodicTimeSinceReset(peripheral);
+                        this.internalOnPumpConnected(peripheral);
                     } else {
                         Timber.w("Invalid pairing code: %s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
@@ -570,8 +569,7 @@ public class TandemBluetoothHandler {
                             PumpState.setJpakeDerivedSecret(context, Hex.encodeHexString(derivedSecret));
                             byte[] serverNonce = JpakeAuthBuilder.getInstance().getServerNonce();
                             PumpState.setJpakeServerNonce(context, Hex.encodeHexString(serverNonce));
-                            tandemPump.onPumpConnected(peripheral);
-                            this.setupPeriodicTimeSinceReset(peripheral);
+                            this.internalOnPumpConnected(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
                             Timber.i("JpakeAuth DONE: Invalid");
                             tandemPump.onInvalidPairingCode(peripheral, resp);
@@ -589,6 +587,13 @@ public class TandemBluetoothHandler {
                 }
             } else {
                 Timber.w("UNHANDLED RESPONSE to %s: %s", CharacteristicUUID.which(characteristicUUID), Hex.encodeHexString(parser.getValue()));
+            }
+        }
+
+        private void internalOnPumpConnected(BluetoothPeripheral peripheral) {
+            tandemPump.onPumpConnected(peripheral);
+            if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
+                this.setupPeriodicTimeSinceReset(peripheral);
             }
         }
 
