@@ -78,31 +78,68 @@ public class IDPSegmentResponse extends Message {
             Bytes.firstTwoBytesLittleEndian(profileISF), 
             new byte[]{ (byte) idpStatusId });
     }
-    
+
+    /**
+     * @return ID of the insulin delivery profile in which this segment exists. Not to be confused with "slot"
+     */
     public int getIdpId() {
         return idpId;
     }
+
+    /**
+     * @return 0-indexed spot in the segments list in which this segment occurs in the profile
+     */
     public int getSegmentIndex() {
         return segmentIndex;
     }
+
+    /**
+     * @return start time of the profile segment. The profile segment runs from this time until the
+     * next-configured profile segment start time in this insulin delivery profile. Expressed in
+     * minutes since midnight, see {@link com.jwoglom.pumpx2.pump.messages.models.MinsTime}
+     *
+     */
     public int getProfileStartTime() {
         return profileStartTime;
     }
+
+    /**
+     * @return basal rate of the profile segment in milliunits.
+     * See {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1000To1(Long)} to convert
+     * to a displayable value.
+     */
     public int getProfileBasalRate() {
         return profileBasalRate;
     }
+
+    /**
+     * @return carb ratio, expressed in 1000-increments. A carb ratio of 5g:1u is expressed as '5000',
+     * a carb ratio of 10g:1u is expressed as '10000', etc.
+     */
     public long getProfileCarbRatio() {
         return profileCarbRatio;
     }
+
+    /**
+     * @return target BG in mg/dL used for corrections
+     */
     public int getProfileTargetBG() {
         return profileTargetBG;
     }
+
+    /**
+     * @return insulin sensitivity factor. A "correction factor" of 1u:30mg/dL is expressed as '30'.
+     */
     public int getProfileISF() {
         return profileISF;
     }
     public int getIdpStatusId() {
         return idpStatusId;
     }
+
+    /**
+     * @return which fields in the time segment are filled out
+     */
     public Set<IDPSegmentStatus> getIdpStatus() {
         return IDPSegmentStatus.fromBitmask(idpStatusId);
     }
