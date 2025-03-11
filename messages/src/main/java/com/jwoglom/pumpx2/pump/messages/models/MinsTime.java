@@ -43,4 +43,9 @@ public class MinsTime {
     public int hashCode() {
         return Objects.hash(hour, min);
     }
+
+    @SuppressWarnings("DefaultLocale")
+    public String toString() {
+        return String.format("%02d:%02d", hour(), min());
+    }
 }

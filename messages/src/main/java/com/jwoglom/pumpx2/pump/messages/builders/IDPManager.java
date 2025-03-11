@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.control.CreateIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;
@@ -54,6 +55,10 @@ public class IDPManager {
 
         public Message duplicateProfileMessage(String newProfileName) {
             return new CreateIDPRequest(newProfileName, getIdpId());
+        }
+
+        public Message setActiveProfileMessage() {
+            return new SetActiveIDPRequest(getIdpId());
         }
 
         public Message deleteSegmentMessage(IDPSegmentResponse segment) {
@@ -148,7 +153,7 @@ public class IDPManager {
         return messages;
     }
 
-    public void processMessage(Message message) {
+    public IDPManager processMessage(Message message) {
         if (message instanceof ProfileStatusResponse) {
             profileStatusResponse = (ProfileStatusResponse) message;
             profiles.removeIf(p -> !profileStatusResponse.getIdpSlotIds().contains(p.getIdpId()));
@@ -168,6 +173,12 @@ public class IDPManager {
                 profile.get().processMessage(message);
             }
         }
+
+        return this;
+    }
+
+    public static boolean isIDPManagerResponse(Message message) {
+        return (message instanceof ProfileStatusResponse) || (message instanceof IDPSettingsResponse) || (message instanceof IDPSegmentResponse);
     }
 
     public boolean isComplete() {
