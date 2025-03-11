@@ -83,7 +83,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-32">SetTempRateResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-31">SetTempRateResponse</a></span>
 <span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
 <div class="block">Response message for <a href="../../request/control/SetTempRateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetTempRateRequest</code></a>, opCode -91, size 4
 
@@ -125,6 +125,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetTempRateResponse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">SetTempRateResponse</a><wbr>(int&nbsp;status,
+ int&nbsp;tempRateId)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -140,13 +143,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(byte%5B%5D)" class="member-name-link">buildCargo</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;status,
+ int&nbsp;tempRateId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">
+ Byte layout for SetTempRateResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
+ 1<code>firstTwoBytesLittleEndian(tempRateId) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(tempRateId) [byte 1]</code>
+ </div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTempRateId()" class="member-name-link">getTempRateId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
@@ -154,7 +166,7 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for SetTempRateResponse:
  <code>status</code><code>raw[0]</code>
- <code>id</code><code>raw[1]</code>
+ <code>tempRateId</code><code>Bytes.readShort(raw, 1)</code>
  </div>
 </div>
 </div>
@@ -183,13 +195,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetTempRateResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-48">SetTempRateResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-47">SetTempRateResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>SetTempRateResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-50">SetTempRateResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-49">SetTempRateResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int)">
+<h3>SetTempRateResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-53">SetTempRateResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+ int&nbsp;tempRateId)</span></div>
 </section>
 </li>
 </ul>
@@ -203,11 +222,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-64">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetTempRateResponse:</caption>
  <tr><td><code>status</code></td><td><code>raw[0]</code></td></tr>
- <tr><td><code>id</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>tempRateId</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -216,15 +235,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(byte[])">
+<section class="detail" id="buildCargo(int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-71">buildCargo</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-83">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+ int&nbsp;tempRateId)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for SetTempRateResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>(byte) status</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(tempRateId) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(tempRateId) [byte 1]</code></td></tr>
+ </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-80">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-93">getStatus</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
@@ -234,9 +261,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getId()">
-<h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-84">getId</a></span>()</div>
+<section class="detail" id="getTempRateId()">
+<h3>getTempRateId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetTempRateResponse.html#line-100">getTempRateId</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>ID of temp rate which exists in history log (see TempRateActivatedHistoryLog)</dd>
+</dl>
 </section>
 </li>
 </ul>
