@@ -72,7 +72,7 @@ public class StopTempRateResponseTest {
                 // 2024-12-22-mobi-screenrec.jsonl
                 // 2024-12-22 09:46:38.384000
                 "007ca77c1b00610028034f20de866872a5759f0a90733baae767381b6184106f17ed",
-                81,
+                124,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected
