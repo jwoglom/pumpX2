@@ -29,6 +29,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
 import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
@@ -50,6 +51,7 @@ import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
 import com.welie.blessed.BluetoothPeripheralCallback;
 import com.welie.blessed.ConnectionPriority;
+import com.welie.blessed.ConnectionState;
 import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
@@ -78,6 +80,7 @@ import com.jwoglom.pumpx2.util.timber.DebugTree;
 public class TandemBluetoothHandler {
     private final Context context;
     private TandemPump tandemPump;
+    public Long periodicTimeSinceResetInterval = 120_000L;
 
     /**
      * Initializes PumpX2.
@@ -515,6 +518,7 @@ public class TandemBluetoothHandler {
                     if (resp.getSuccess()) {
                         PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                         tandemPump.onPumpConnected(peripheral);
+                        this.setupPeriodicTimeSinceReset(peripheral);
                     } else {
                         Timber.w("Invalid pairing code: %s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
@@ -567,6 +571,7 @@ public class TandemBluetoothHandler {
                             byte[] serverNonce = JpakeAuthBuilder.getInstance().getServerNonce();
                             PumpState.setJpakeServerNonce(context, Hex.encodeHexString(serverNonce));
                             tandemPump.onPumpConnected(peripheral);
+                            this.setupPeriodicTimeSinceReset(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
                             Timber.i("JpakeAuth DONE: Invalid");
                             tandemPump.onInvalidPairingCode(peripheral, resp);
@@ -585,6 +590,18 @@ public class TandemBluetoothHandler {
             } else {
                 Timber.w("UNHANDLED RESPONSE to %s: %s", CharacteristicUUID.which(characteristicUUID), Hex.encodeHexString(parser.getValue()));
             }
+        }
+
+        private void setupPeriodicTimeSinceReset(BluetoothPeripheral peripheral) {
+            handler.postDelayed(() -> {
+                if (peripheral != null && peripheral.getState().equals(ConnectionState.CONNECTED)) {
+                    Timber.i("periodicTimeSinceReset triggered");
+                    tandemPump.sendCommand(peripheral, new TimeSinceResetRequest());
+                    handler.post(() -> {
+                        setupPeriodicTimeSinceReset(peripheral);
+                    });
+                }
+            }, periodicTimeSinceResetInterval);
         }
 
         @Override
