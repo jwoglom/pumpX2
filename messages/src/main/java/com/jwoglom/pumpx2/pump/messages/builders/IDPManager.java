@@ -144,12 +144,21 @@ public class IDPManager {
         }
     }
 
-    private final List<Profile> profiles = new ArrayList<>();
+    private final List<Profile> profiles;
     private ProfileStatusResponse profileStatusResponse;
 
-    public IDPManager() {}
+    public IDPManager() {
+        this.profiles = new ArrayList<>();
+    }
+
     public IDPManager(ProfileStatusResponse profileStatusResponse) {
+        this.profiles = new ArrayList<>();
         this.profileStatusResponse = profileStatusResponse;
+    }
+
+    public IDPManager(IDPManager m) {
+        this.profiles = m.profiles;
+        this.profileStatusResponse = m.profileStatusResponse;
     }
 
     public List<Message> nextMessages() {
@@ -206,7 +215,8 @@ public class IDPManager {
             }
         }
 
-        return this;
+        // Create a new object instance for Jetpack Compose state management
+        return new IDPManager(this);
     }
 
     public static boolean isIDPManagerResponse(Message message) {

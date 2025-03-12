@@ -70,7 +70,17 @@ public class NotificationBundle {
     }
 
     public NotificationBundle() {
+    }
 
+    public NotificationBundle(NotificationBundle bundle) {
+        this.alertStatusResponse = bundle.alertStatusResponse;
+        this.reminderStatusResponse = bundle.reminderStatusResponse;
+        this.alarmStatusResponse = bundle.alarmStatusResponse;
+        this.cgmAlertStatusResponse = bundle.cgmAlertStatusResponse;
+        this.malfunctionStatusResponse = bundle.malfunctionStatusResponse;
+        this.otherNotificationStatusResponse = bundle.otherNotificationStatusResponse;
+        this.otherNotification2StatusResponse = bundle.otherNotification2StatusResponse;
+        this.lastUpdatedTimes = bundle.lastUpdatedTimes;
     }
 
     public NotificationBundle add(Message message) {
@@ -99,7 +109,8 @@ public class NotificationBundle {
             lastUpdatedTimes.put(OtherNotification2StatusResponse.class, Instant.now());
         }
 
-        return this;
+        // Create a new object instance for Jetpack Compose state management
+        return new NotificationBundle(this);
     }
 
     /**
