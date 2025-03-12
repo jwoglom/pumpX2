@@ -215,8 +215,7 @@ public class IDPManager {
             }
         }
 
-        // Create a new object instance for Jetpack Compose state management
-        return new IDPManager(this);
+        return this;
     }
 
     public static boolean isIDPManagerResponse(Message message) {

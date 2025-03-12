@@ -109,8 +109,7 @@ public class NotificationBundle {
             lastUpdatedTimes.put(OtherNotification2StatusResponse.class, Instant.now());
         }
 
-        // Create a new object instance for Jetpack Compose state management
-        return new NotificationBundle(this);
+        return this;
     }
 
     /**
