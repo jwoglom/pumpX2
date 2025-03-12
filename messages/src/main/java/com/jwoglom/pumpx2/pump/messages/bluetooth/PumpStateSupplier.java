@@ -45,7 +45,7 @@ public class PumpStateSupplier {
 
                 // hkdf of nonce and secret bytes are passed to hmac
                 byte[] authKey = Hkdf.build(jpakeNonce, jpakeSecret);
-                L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
+                L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
 
                 return authKey;
             } catch (DecoderException e) {
@@ -53,7 +53,7 @@ public class PumpStateSupplier {
             }
         }
 
-        L.i(TAG, "PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
+        L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
 
 
         if (code == null) return new byte[0];

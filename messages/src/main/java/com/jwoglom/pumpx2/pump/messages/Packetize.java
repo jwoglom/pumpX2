@@ -56,7 +56,7 @@ public class Packetize {
         // packet[3 ... N] filled with message cargo
         System.arraycopy(message.getCargo(), 0, packet, 3, message.getCargo().length);
 
-        L.d(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
+        //L.d(TAG, "packetize signed "+message.signed()+": packetBefore="+ Hex.encodeHexString(packet));
         if (message.props().modifiesInsulinDelivery() && !PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled.get()) {
             throw new ActionsAffectingInsulinDeliveryNotEnabledInPumpX2Exception();
         }
@@ -74,12 +74,12 @@ public class Packetize {
             System.arraycopy(messageData, 0, packet, 0, i);
             System.arraycopy(hmacSha1Output, 0, packet, i, hmacSha1Output.length);
         }
-        L.d(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));
+        //L.d(TAG, "packetize packetAfter="+ Hex.encodeHexString(packet));
 
         // Append CRC to packet
         byte[] crc = Bytes.calculateCRC16(packet);
         byte[] packetWithCRC = ArrayUtils.addAll(packet, crc);
-        L.d(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
+        //L.d(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
 
         // Fill Packet list with chunks of size 18 (maxChunkSize)
         List<Packet> packets = new ArrayList<>();

@@ -16,10 +16,12 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatus
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -154,4 +156,7 @@ public class NotificationBundle {
         return lastUpdatedTimes;
     }
 
+    public String toString() {
+        return JavaHelpers.autoToString(this, new HashSet<>(Arrays.asList("lastUpdatedTimes")));
+    }
 }

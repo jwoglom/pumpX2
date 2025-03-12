@@ -1,14 +1,19 @@
 package com.jwoglom.pumpx2.pump.messages.builders.crypto;
 
+import com.jwoglom.pumpx2.shared.L;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.SecureRandomSpi;
 import java.util.Arrays;
 
 public class AllZeroSecureRandom extends SecureRandom {
+    private static String TAG = "AllZeroSecureRandom";
 
     private static class CustomSpi extends SecureRandomSpi {
-        CustomSpi() {}
+        CustomSpi() {
+            L.e(TAG, "INSECURE RANDOM SEED IS BEING USED. THIS IS NOT CRYPTOGRAPHICALLY SECURE, USE AT YOUR OWN RISK!");
+        }
 
         @Override
         protected void engineSetSeed(byte[] seed) {

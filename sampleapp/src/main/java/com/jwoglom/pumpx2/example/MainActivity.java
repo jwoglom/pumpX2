@@ -409,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
             statusText.setText("Connected to pump!");
             statusText.postInvalidate();
 
-            Timber.i("CONNECTED: PUMP_PAIRING_CODE=" + pumpPairingCode.get() + " JPAKE_DERIVED_SECRET = " + jpakeDerivedSecretHex.get() + " PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authenticationKey.get()) + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
+            Timber.i("PUMP-CONNECTED-LINE: PUMP_PAIRING_CODE=" + pumpPairingCode.get() + " JPAKE_DERIVED_SECRET = " + jpakeDerivedSecretHex.get() + " PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authenticationKey.get()) + " PUMP_TIME_SINCE_RESET=" + pumpTimeSinceReset.get());
 
             basicLinearLayout.setVisibility(View.VISIBLE);
 

@@ -187,7 +187,7 @@ public abstract class TandemPump {
      * @return true if we should connect to the detected pump, false otherwise
      */
     public boolean onPumpDiscovered(BluetoothPeripheral peripheral, @Nullable ScanResult scanResult) {
-        Timber.i("TandemPump: onPumpDiscovered(peripheral=%s, scanResult=%s)", peripheral, scanResult);
+        Timber.i("TandemPump: onPumpDiscovered(peripheral=%s, addr=%s, scanResult=%s)", peripheral.getName(), peripheral.getAddress(), scanResult);
         if (filterToBluetoothMac.isPresent()) {
             if (filterToBluetoothMac.get().equals(peripheral.getAddress())) {
                 Timber.i("TandemPump: found matching MAC (%s)", peripheral.getAddress());
@@ -224,7 +224,7 @@ public abstract class TandemPump {
      * @param model the model variant of the pump. Either TSLIM_X2 or MOBI.
      */
     public void onPumpModel(BluetoothPeripheral peripheral, KnownDeviceModel model) {
-        Timber.i("TandemPump: onPumpModel: %s", model);
+        Timber.i("TandemPump: PUMP-MODEL=%s", model);
         this.deviceModel = model;
     }
 
@@ -255,12 +255,12 @@ public abstract class TandemPump {
             PumpState.setJpakeServerNonce(context, "");
             PumpState.setPairingCode(context, pairingCode);
             if (StringUtils.isBlank(jpakeSecretHex)) {
-                Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", BOOTSTRAP)");
+                Timber.i("PUMP-PAIR(SHORT_6CHAR, BOOTSTRAP, pairingCode=" + pairingCode + ")");
                 JpakeAuthBuilder.clearInstance();
                 Message message = JpakeAuthBuilder.initializeWithPairingCode(pairingCode).nextRequest();
                 sendCommand(peripheral, message);
             } else {
-                Timber.i("TandemPump: pair(SHORT_6CHAR, pairingCode=" + pairingCode + ", derivedSecret=" + jpakeSecretHex + ")");
+                Timber.i("PUMP-PAIR(SHORT_6CHAR, CONFIRM, pairingCode=" + pairingCode + ", derivedSecret=" + jpakeSecretHex + ")");
                 JpakeAuthBuilder.clearInstance();
                 try {
                     Message message = JpakeAuthBuilder.initializeWithDerivedSecret(pairingCode, Hex.decodeHex(jpakeSecretHex)).nextRequest();
@@ -272,7 +272,7 @@ public abstract class TandemPump {
                 }
             }
         } else if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
-            Timber.i("TandemPump: pair(LONG_16CHAR, " + pairingCode + ")");
+            Timber.i("PUMP-PAIR(LONG_16CHAR, " + pairingCode + ")");
             try {
                 PumpState.setPairingCode(context, pairingCode);
                 Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);

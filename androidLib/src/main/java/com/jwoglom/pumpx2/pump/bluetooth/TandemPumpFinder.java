@@ -50,7 +50,7 @@ public abstract class TandemPumpFinder {
             // Plant a tree
             Timber.plant(timberTree);
         } else {
-            Timber.i("Skipped Timber tree initialization");
+            Timber.d("Skipped Timber tree initialization");
         }
 
         // Create BluetoothCentral
@@ -84,7 +84,7 @@ public abstract class TandemPumpFinder {
 
         @Override
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
-            Timber.i("TandemPumpFinder: Discovered peripheral '%s'", peripheral.getName());
+            Timber.i("PUMP-FINDER-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
 
             instance.onDiscoveredPump(peripheral, scanResult);
         }

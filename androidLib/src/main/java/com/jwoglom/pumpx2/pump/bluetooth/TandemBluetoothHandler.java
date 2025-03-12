@@ -99,7 +99,7 @@ public class TandemBluetoothHandler {
             Timber.plant(timberTree);
             LConfigurator.enableTimber();
         } else {
-            Timber.i("Skipped Timber tree initialization");
+            Timber.d("Skipped Timber tree initialization");
         }
 
         // Create BluetoothCentral
@@ -144,7 +144,7 @@ public class TandemBluetoothHandler {
     private final BluetoothPeripheralCallback peripheralCallback = new BluetoothPeripheralCallback() {
         @Override
         public void onServicesDiscovered(@NotNull BluetoothPeripheral peripheral) {
-            Timber.i("TandemBluetoothHandler: services discovered, updating BT state");
+            Timber.d("TandemBluetoothHandler: services discovered, updating BT state");
             // Request a higher MTU, iOS always asks for 185
             // NOTE: If this is removed or lowered, then pump request messages cannot be over a certain length
             // or they may not be able to be received. More pump response messages will also split over multiple packets.
@@ -167,7 +167,7 @@ public class TandemBluetoothHandler {
 
             peripheral.getServices().forEach(service -> {
                 String characteristics = service.getCharacteristics().stream().map(c -> CharacteristicUUID.which(c.getUuid())).collect(Collectors.joining(", "));
-                Timber.i("Found service %s with characteristics: %s", ServiceUUID.which(service.getUuid()), characteristics);
+                Timber.d("Found service %s with characteristics: %s", ServiceUUID.which(service.getUuid()), characteristics);
             });
 
             // Read manufacturer and model number from the Device Information Service
@@ -245,16 +245,16 @@ public class TandemBluetoothHandler {
                     if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                         int requestsSent = Packetize.txId.get();
                         int repliesReceived = PumpState.processedResponseMessages;
-                        Timber.i("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
+                        Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
                         if (requestsSent > 0 && repliesReceived == 0) {
-                            Timber.i("InitialPumpConnectionStuck: not getting pump replies. Disconnecting and unbonding: bondState=%s", peripheral.getBondState());
+                            Timber.w("InitialPumpConnectionStuck: not getting pump replies. Disconnecting and unbonding: bondState=%s", peripheral.getBondState());
                             peripheral.cancelConnection();
                             central.removeBond(peripheral.getAddress());
                         }
                     }
                 }, 5000);
             } else if (!remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
-                Timber.i("TandemBluetoothHandler: initial pump connection is waiting for: %s", remainingConnectionInitializationSteps);
+                Timber.d("TandemBluetoothHandler: initial pump connection is waiting for: %s", remainingConnectionInitializationSteps);
             }
         }
 
@@ -262,7 +262,7 @@ public class TandemBluetoothHandler {
         public void onNotificationStateUpdate(@NotNull BluetoothPeripheral peripheral, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
                 final boolean isNotifying = peripheral.isNotifying(characteristic);
-                Timber.i("SUCCESS: Notify set to '%s' for %s (%s)", isNotifying, characteristic.getUuid(), CharacteristicUUID.which(characteristic.getUuid()));
+                Timber.d("SUCCESS: Notify set to '%s' for %s (%s)", isNotifying, characteristic.getUuid(), CharacteristicUUID.which(characteristic.getUuid()));
 
                 synchronized (remainingCharacteristicNotificationsInit) {
                     remainingCharacteristicNotificationsInit.remove(characteristic.getUuid());
@@ -285,7 +285,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onCharacteristicWrite(@NotNull BluetoothPeripheral peripheral, @NotNull byte[] value, @NotNull BluetoothGattCharacteristic characteristic, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
-                Timber.i("SUCCESS: Writing <%s> to %s", asHexString(value), CharacteristicUUID.which(characteristic.getUuid()));
+                Timber.d("SUCCESS: Writing <%s> to %s", asHexString(value), CharacteristicUUID.which(characteristic.getUuid()));
             } else {
                 Timber.e("ERROR: Failed writing <%s> to %s (%s)", asHexString(value), CharacteristicUUID.which(characteristic.getUuid()), status);
                 if (PumpState.tconnectAppConnectionSharing && CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS.equals(characteristic.getUuid()) && status == GattStatus.ERROR) {
@@ -326,10 +326,10 @@ public class TandemBluetoothHandler {
 
             if (characteristicUUID.equals(CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID)) {
                 String manufacturer = parser.getStringValue(0);
-                Timber.i("Received manufacturer: %s", manufacturer);
+                Timber.d("Received manufacturer: %s", manufacturer);
             } else if (characteristicUUID.equals(CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID)) {
                 String modelNumber = parser.getStringValue(0);
-                Timber.i("Received modelNumber: %s - BT name: %s", modelNumber, peripheral.getName());
+                Timber.d("Received modelNumber: %s - BT name: %s", modelNumber, peripheral.getName());
                 if (peripheral.getName().startsWith("Tandem Mobi")) {
                     tandemPump.onPumpModel(peripheral, KnownDeviceModel.MOBI);
                 } else if (peripheral.getName().startsWith("tslim X2")) {
@@ -339,7 +339,7 @@ public class TandemBluetoothHandler {
                 // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
                 // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);
                 Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(value);
-                Timber.i("QualifyingEvent response: %s", events);
+                Timber.i("RECEIVE-EVENTS: %s", events);
                 tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
@@ -366,7 +366,7 @@ public class TandemBluetoothHandler {
                         Timber.e(e, "Could not handle control stream message: '%s'", Hex.encodeHexString(value));
                         return;
                     }
-                    Timber.i("ControlStream requestMessage=%s", requestMessage);
+                    Timber.d("ControlStream requestMessage=%s", requestMessage);
                 } else {
                     Optional<Message> opt = PumpState.readRequestMessage(characteristic, txId);
                     if (opt.isPresent()) {
@@ -525,39 +525,39 @@ public class TandemBluetoothHandler {
                 // JPAKE
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
-                    Timber.i("JpakeAuthResp1a: %s", resp);
+                    Timber.d("JpakeAuthResp1a: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.i("JpakeAuthReq1b: %s", req);
+                    Timber.d("JpakeAuthReq1b: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake1bResponse) {
                     Jpake1bResponse resp = (Jpake1bResponse) response.message().get();
-                    Timber.i("JpakeAuthResp1b: %s", resp);
+                    Timber.d("JpakeAuthResp1b: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.i("JpakeAuthReq2: %s", req);
+                    Timber.d("JpakeAuthReq2: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake2Response) {
                     Jpake2Response resp = (Jpake2Response) response.message().get();
-                    Timber.i("JpakeAuthResp2: %s", resp);
+                    Timber.d("JpakeAuthResp2: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.i("JpakeAuthReq3: %s", req);
+                    Timber.d("JpakeAuthReq3: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake3SessionKeyResponse) {
                     Jpake3SessionKeyResponse resp = (Jpake3SessionKeyResponse) response.message().get();
-                    Timber.i("JpakeAuthResp3: %s", resp);
+                    Timber.d("JpakeAuthResp3: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.i("JpakeAuthReq4: %s", req);
+                    Timber.d("JpakeAuthReq4: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake4KeyConfirmationResponse) {
                     Jpake4KeyConfirmationResponse resp = (Jpake4KeyConfirmationResponse) response.message().get();
-                    Timber.i("JpakeAuthResp4: %s", resp);
+                    Timber.d("JpakeAuthResp4: %s", resp);
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
@@ -571,7 +571,7 @@ public class TandemBluetoothHandler {
                             PumpState.setJpakeServerNonce(context, Hex.encodeHexString(serverNonce));
                             this.internalOnPumpConnected(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
-                            Timber.i("JpakeAuth DONE: Invalid");
+                            Timber.w("JpakeAuth DONE: Invalid");
                             tandemPump.onInvalidPairingCode(peripheral, resp);
                         }
                     }
@@ -632,7 +632,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectionUpdated(@NotNull BluetoothPeripheral peripheral, int interval, int latency, int timeout, @NotNull GattStatus status) {
             if (status == GattStatus.SUCCESS) {
-                Timber.i("onConnectionUpdated %s", status);
+                Timber.d("onConnectionUpdated %s", status);
 
                 remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CONNECTION_UPDATED);
                 checkIfInitialPumpConnectionEstablished(peripheral);
@@ -682,7 +682,7 @@ public class TandemBluetoothHandler {
 
         @Override
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
-            Timber.i("TandemBluetoothHandler: Discovered peripheral '%s'", peripheral.getName());
+            Timber.i("PUMP-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
 
 //            if (peripheral.getAddress().equals(PumpState.getSavedBluetoothMAC(context))) {
 //                Timber.d("Pump has same address as saved pump (%s), auto connecting", peripheral.getAddress());
@@ -694,14 +694,14 @@ public class TandemBluetoothHandler {
             if (tandemPump.onPumpDiscovered(peripheral, scanResult)) {
                 Timber.i("TandemBluetoothHandler: stopping scan in preparation for pump peripheral connection");
                 central.stopScan();
-                Timber.i("TandemBluetoothHandler: connecting to pump " + peripheral.getName() + " ( " + peripheral.getAddress() + ")");
+                Timber.i("PUMP-CONNECT(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
                 central.connectPeripheral(peripheral, peripheralCallback);
             }
         }
 
         @Override
         public void onBluetoothAdapterStateChanged(int state) {
-            Timber.d("TandemBluetoothHandler: bluetooth adapter changed state to %d", state);
+            Timber.i("TandemBluetoothHandler: bluetooth adapter changed state to %d", state);
             if (state == BluetoothAdapter.STATE_ON) {
                 // Bluetooth is on now, start scanning again
                 // Scan for peripherals with a certain service UUIDs
@@ -711,7 +711,7 @@ public class TandemBluetoothHandler {
 
         @Override
         public void onScanFailed(@NotNull ScanFailure scanFailure) {
-            Timber.i("TandemBluetoothHandler: scanning failed with error %s", scanFailure);
+            Timber.w("TandemBluetoothHandler: scanning failed with error %s", scanFailure);
         }
     };
 
