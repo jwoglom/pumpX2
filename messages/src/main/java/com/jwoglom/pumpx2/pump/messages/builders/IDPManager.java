@@ -28,6 +28,14 @@ import java.util.Set;
  * IDPManager provides a loose abstraction over processing insulin delivery profile (IDP) response
  * manages, generating the requests necessary to get a full state of the profiles on the pump, and
  * generating request messages in the correct format for making mutations on pump profiles.
+ * <p>
+ * Instantiate an IDPManager, then periodically call {@link #nextMessages()} and invoke TandemPump.sendCommand()
+ * on the returned request messages until {@link #isComplete()}. When a response is received, pass it to IDPManager
+ * via call to {@link #processMessage(Message)}. Then {@link #getProfiles()} will return a list of profile
+ * objects consisting of segments, and you can perform modifications by performing the returned commands
+ * from {@link #createNewProfileMessage}, {@link Profile#deleteProfileMessage()}, {@link Profile#createSegmentMessage}
+ * and etc on IDPManager and each Profile.
+ * </p>
  */
 public class IDPManager {
     /**
