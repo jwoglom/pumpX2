@@ -1,6 +1,8 @@
 package com.jwoglom.pumpx2.pump.messages.builders;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
+import com.jwoglom.pumpx2.pump.messages.models.MinsTime;
 import com.jwoglom.pumpx2.pump.messages.request.control.CreateIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;
@@ -11,13 +13,16 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusReque
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse;
+import com.jwoglom.pumpx2.shared.JavaHelpers;
 
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * IDPManager provides a loose abstraction over processing insulin delivery profile (IDP) response
@@ -25,11 +30,16 @@ import java.util.Optional;
  * generating request messages in the correct format for making mutations on pump profiles.
  */
 public class IDPManager {
+    /**
+     * Wrapper class for an insulin delivery profile consisting of profile settings and all segments.
+     */
     public static class Profile {
         private IDPSettingsResponse idpSettingsResponse;
         private List<IDPSegmentResponse> segments = new ArrayList<>();
-        public Profile(IDPSettingsResponse idpSettingsResponse) {
+        boolean isActiveProfile;
+        public Profile(IDPSettingsResponse idpSettingsResponse, boolean isActiveProfile) {
             this.idpSettingsResponse = idpSettingsResponse;
+            this.isActiveProfile = isActiveProfile;
         }
 
         public boolean isComplete() {
@@ -84,16 +94,20 @@ public class IDPManager {
                             IDPSegmentResponse.IDPSegmentStatus.START_TIME));
         }
 
-        public Message createSegmentMessage(int profileStartTime, int profileBasalRate, long profileCarbRatio, int profileTargetBG, int profileISF) {
+        public Message createSegmentMessage(int profileStartTime, int profileBasalRateMilliunits, long profileCarbRatio, int profileTargetBG, int profileISF) {
             return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, 0,
                     SetIDPSegmentRequest.IDPSegmentOperation.CREATE_SEGMENT,
-                    profileStartTime, profileBasalRate, profileCarbRatio, profileTargetBG, profileISF,
+                    profileStartTime, profileBasalRateMilliunits, profileCarbRatio, profileTargetBG, profileISF,
                     IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
                             IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,
                             IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
                             IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
                             IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
                             IDPSegmentResponse.IDPSegmentStatus.START_TIME));
+        }
+
+        public Message createSegmentMessage(MinsTime profileStartTime, float profileBasalRateUnits, long profileCarbRatio, int profileTargetBG, int profileISF) {
+            return createSegmentMessage(profileStartTime.encode(), (int) InsulinUnit.from1To1000(profileBasalRateUnits), profileCarbRatio, profileTargetBG, profileISF);
         }
 
         private void processMessage(Message message) {
@@ -113,6 +127,13 @@ public class IDPManager {
             }
         }
 
+        public String toString() {
+            return JavaHelpers.autoToString(this, new HashSet<String>());
+        }
+
+        public boolean isActiveProfile() {
+            return isActiveProfile;
+        }
     }
 
     private final List<Profile> profiles = new ArrayList<>();
@@ -163,7 +184,10 @@ public class IDPManager {
             if (profile.isPresent()) {
                 profile.get().processMessage(message);
             } else {
-                profiles.add(new Profile((IDPSettingsResponse) message));
+                int activeSlot = profileStatusResponse.getActiveIdpSlotId();
+                int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);
+                boolean isActiveProfile = idpId == activeIdpId;
+                profiles.add(new Profile((IDPSettingsResponse) message, isActiveProfile));
             }
             profiles.sort((a,b) -> profileStatusResponse.getIdpSlotIds().indexOf(a.getIdpId()) - profileStatusResponse.getIdpSlotIds().indexOf(b.getIdpId()));
         } else if (message instanceof IDPSegmentResponse) {
@@ -206,8 +230,30 @@ public class IDPManager {
         profileStatusResponse = null;
     }
 
-    public Message createNewProfileMessage(String profileName, int firstSegmentProfileCarbRatio, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int profileCarbEntry) {
-        return new CreateIDPRequest(profileName, firstSegmentProfileCarbRatio, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, profileCarbEntry);
+    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, int defaultBasalRateMilliunits, int defaultTargetBG, int defaultISF, int defaultInsulinDuration, boolean profileCarbEntryEnabled) {
+        return new CreateIDPRequest(profileName, defaultCarbRatio, defaultBasalRateMilliunits, defaultTargetBG, defaultISF, defaultInsulinDuration, profileCarbEntryEnabled ? 1 : 0);
+    }
+
+    /**
+     *
+     * @param profileName alphanumeric visible name for the profile
+     * @param defaultCarbRatio carb ratio for the first profile segment in the profile (at midnight).
+     *                         value of '1000' means 1 unit:1 carb. value of '5000' means 1 unit:5 carbs.
+     * @param defaultBasalRateUnits basal rate for the first profile segment in units
+     * @param defaultTargetBG target BG for first profile segment in mg/dL
+     * @param defaultISF insulin sensitivity factor for first profile segment.
+     *                   value of '1' means 1 unit:1 mg/dL. value of '5' means 1 unit:5 mg/dL
+     * @param defaultInsulinDuration insulin duration via MinsTime constructor
+     * @param profileCarbEntryEnabled if carb entry is enabled in the profile
+     * @return filled message to send to pump creating the profile
+     */
+    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, float defaultBasalRateUnits, int defaultTargetBG, int defaultISF, MinsTime defaultInsulinDuration, boolean profileCarbEntryEnabled) {
+        return new CreateIDPRequest(profileName, defaultCarbRatio, (int) InsulinUnit.from1To1000(defaultBasalRateUnits), defaultTargetBG, defaultISF, defaultInsulinDuration.encode(), profileCarbEntryEnabled ? 1 : 0);
+    }
+
+    @Override
+    public String toString() {
+        return JavaHelpers.autoToString(this, new HashSet<String>());
     }
 
 }

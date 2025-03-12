@@ -34,6 +34,18 @@ tasks.javadoc {
     options.linkSource = true
 }
 
+// resolves InaccessibleObjectException in ReflectionToStringBuilder
+tasks.withType(JavaCompile) {
+    options.compilerArgs += [
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    ]
+}
+test {
+    jvmArgs += [
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED'
+    ]
+}
+
 publishing {
     publications {
         "$project.name"(MavenPublication) {
