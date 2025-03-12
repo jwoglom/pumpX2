@@ -45,235 +45,243 @@
 <span class="source-line-no">028</span><span id="line-28"> * IDPManager provides a loose abstraction over processing insulin delivery profile (IDP) response</span>
 <span class="source-line-no">029</span><span id="line-29"> * manages, generating the requests necessary to get a full state of the profiles on the pump, and</span>
 <span class="source-line-no">030</span><span id="line-30"> * generating request messages in the correct format for making mutations on pump profiles.</span>
-<span class="source-line-no">031</span><span id="line-31"> */</span>
-<span class="source-line-no">032</span><span id="line-32">public class IDPManager {</span>
-<span class="source-line-no">033</span><span id="line-33">    /**</span>
-<span class="source-line-no">034</span><span id="line-34">     * Wrapper class for an insulin delivery profile consisting of profile settings and all segments.</span>
-<span class="source-line-no">035</span><span id="line-35">     */</span>
-<span class="source-line-no">036</span><span id="line-36">    public static class Profile {</span>
-<span class="source-line-no">037</span><span id="line-37">        private IDPSettingsResponse idpSettingsResponse;</span>
-<span class="source-line-no">038</span><span id="line-38">        private List&lt;IDPSegmentResponse&gt; segments = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">039</span><span id="line-39">        boolean isActiveProfile;</span>
-<span class="source-line-no">040</span><span id="line-40">        public Profile(IDPSettingsResponse idpSettingsResponse, boolean isActiveProfile) {</span>
-<span class="source-line-no">041</span><span id="line-41">            this.idpSettingsResponse = idpSettingsResponse;</span>
-<span class="source-line-no">042</span><span id="line-42">            this.isActiveProfile = isActiveProfile;</span>
-<span class="source-line-no">043</span><span id="line-43">        }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">        public boolean isComplete() {</span>
-<span class="source-line-no">046</span><span id="line-46">            return segments.size() == idpSettingsResponse.getNumberOfProfileSegments();</span>
-<span class="source-line-no">047</span><span id="line-47">        }</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">        public IDPSettingsResponse getIdpSettingsResponse() {</span>
-<span class="source-line-no">050</span><span id="line-50">            return idpSettingsResponse;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;p&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * Instantiate an IDPManager, then periodically call {@link #nextMessages()} and invoke TandemPump.sendCommand()</span>
+<span class="source-line-no">033</span><span id="line-33"> * on the returned request messages until {@link #isComplete()}. When a response is received, pass it to IDPManager</span>
+<span class="source-line-no">034</span><span id="line-34"> * via call to {@link #processMessage(Message)}. Then {@link #getProfiles()} will return a list of profile</span>
+<span class="source-line-no">035</span><span id="line-35"> * objects consisting of segments, and you can perform modifications by performing the returned commands</span>
+<span class="source-line-no">036</span><span id="line-36"> * from {@link #createNewProfileMessage}, {@link Profile#deleteProfileMessage()}, {@link Profile#createSegmentMessage}</span>
+<span class="source-line-no">037</span><span id="line-37"> * and etc on IDPManager and each Profile.</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;/p&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> */</span>
+<span class="source-line-no">040</span><span id="line-40">public class IDPManager {</span>
+<span class="source-line-no">041</span><span id="line-41">    /**</span>
+<span class="source-line-no">042</span><span id="line-42">     * Wrapper class for an insulin delivery profile consisting of profile settings and all segments.</span>
+<span class="source-line-no">043</span><span id="line-43">     */</span>
+<span class="source-line-no">044</span><span id="line-44">    public static class Profile {</span>
+<span class="source-line-no">045</span><span id="line-45">        private IDPSettingsResponse idpSettingsResponse;</span>
+<span class="source-line-no">046</span><span id="line-46">        private List&lt;IDPSegmentResponse&gt; segments = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">047</span><span id="line-47">        boolean isActiveProfile;</span>
+<span class="source-line-no">048</span><span id="line-48">        public Profile(IDPSettingsResponse idpSettingsResponse, boolean isActiveProfile) {</span>
+<span class="source-line-no">049</span><span id="line-49">            this.idpSettingsResponse = idpSettingsResponse;</span>
+<span class="source-line-no">050</span><span id="line-50">            this.isActiveProfile = isActiveProfile;</span>
 <span class="source-line-no">051</span><span id="line-51">        }</span>
 <span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">        public int getIdpId() {</span>
-<span class="source-line-no">054</span><span id="line-54">            return idpSettingsResponse.getIdpId();</span>
+<span class="source-line-no">053</span><span id="line-53">        public boolean isComplete() {</span>
+<span class="source-line-no">054</span><span id="line-54">            return segments.size() == idpSettingsResponse.getNumberOfProfileSegments();</span>
 <span class="source-line-no">055</span><span id="line-55">        }</span>
 <span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">        public List&lt;IDPSegmentResponse&gt; getSegments() {</span>
-<span class="source-line-no">058</span><span id="line-58">            Validate.isTrue(isComplete());</span>
-<span class="source-line-no">059</span><span id="line-59">            return segments;</span>
-<span class="source-line-no">060</span><span id="line-60">        }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">        public Message deleteProfileMessage() {</span>
-<span class="source-line-no">063</span><span id="line-63">            return new DeleteIDPRequest(getIdpId());</span>
-<span class="source-line-no">064</span><span id="line-64">        }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">        public Message duplicateProfileMessage(String newProfileName) {</span>
-<span class="source-line-no">067</span><span id="line-67">            return new CreateIDPRequest(newProfileName, getIdpId());</span>
+<span class="source-line-no">057</span><span id="line-57">        public IDPSettingsResponse getIdpSettingsResponse() {</span>
+<span class="source-line-no">058</span><span id="line-58">            return idpSettingsResponse;</span>
+<span class="source-line-no">059</span><span id="line-59">        }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">        public int getIdpId() {</span>
+<span class="source-line-no">062</span><span id="line-62">            return idpSettingsResponse.getIdpId();</span>
+<span class="source-line-no">063</span><span id="line-63">        }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">        public List&lt;IDPSegmentResponse&gt; getSegments() {</span>
+<span class="source-line-no">066</span><span id="line-66">            Validate.isTrue(isComplete());</span>
+<span class="source-line-no">067</span><span id="line-67">            return segments;</span>
 <span class="source-line-no">068</span><span id="line-68">        }</span>
 <span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">        public Message setActiveProfileMessage() {</span>
-<span class="source-line-no">071</span><span id="line-71">            return new SetActiveIDPRequest(getIdpId());</span>
+<span class="source-line-no">070</span><span id="line-70">        public Message deleteProfileMessage() {</span>
+<span class="source-line-no">071</span><span id="line-71">            return new DeleteIDPRequest(getIdpId());</span>
 <span class="source-line-no">072</span><span id="line-72">        }</span>
 <span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">        public Message deleteSegmentMessage(IDPSegmentResponse segment) {</span>
-<span class="source-line-no">075</span><span id="line-75">            Validate.isTrue(segment.getIdpId() == getIdpId());</span>
-<span class="source-line-no">076</span><span id="line-76">            Validate.isTrue(segment.getSegmentIndex() != 0, "Deleting the 0th segment index is not supported");</span>
-<span class="source-line-no">077</span><span id="line-77">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),</span>
-<span class="source-line-no">078</span><span id="line-78">                    SetIDPSegmentRequest.IDPSegmentOperation.DELETE_SEGMENT_ID,</span>
-<span class="source-line-no">079</span><span id="line-79">                    segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),</span>
-<span class="source-line-no">080</span><span id="line-80">                    segment.getIdpStatusId());</span>
-<span class="source-line-no">081</span><span id="line-81">        }</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">        public Message modifySegmentMessage(IDPSegmentResponse segment) {</span>
-<span class="source-line-no">084</span><span id="line-84">            Validate.isTrue(segment.getIdpId() == getIdpId());</span>
-<span class="source-line-no">085</span><span id="line-85">            int statusId = 0;</span>
-<span class="source-line-no">086</span><span id="line-86">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),</span>
-<span class="source-line-no">087</span><span id="line-87">                    SetIDPSegmentRequest.IDPSegmentOperation.MODIFY_SEGMENT_ID,</span>
-<span class="source-line-no">088</span><span id="line-88">                    segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),</span>
-<span class="source-line-no">089</span><span id="line-89">                    IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31</span>
-<span class="source-line-no">090</span><span id="line-90">                            IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,</span>
-<span class="source-line-no">091</span><span id="line-91">                            IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,</span>
-<span class="source-line-no">092</span><span id="line-92">                            IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,</span>
-<span class="source-line-no">093</span><span id="line-93">                            IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,</span>
-<span class="source-line-no">094</span><span id="line-94">                            IDPSegmentResponse.IDPSegmentStatus.START_TIME));</span>
-<span class="source-line-no">095</span><span id="line-95">        }</span>
-<span class="source-line-no">096</span><span id="line-96"></span>
-<span class="source-line-no">097</span><span id="line-97">        public Message createSegmentMessage(int profileStartTime, int profileBasalRateMilliunits, long profileCarbRatio, int profileTargetBG, int profileISF) {</span>
-<span class="source-line-no">098</span><span id="line-98">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, 0,</span>
-<span class="source-line-no">099</span><span id="line-99">                    SetIDPSegmentRequest.IDPSegmentOperation.CREATE_SEGMENT,</span>
-<span class="source-line-no">100</span><span id="line-100">                    profileStartTime, profileBasalRateMilliunits, profileCarbRatio, profileTargetBG, profileISF,</span>
-<span class="source-line-no">101</span><span id="line-101">                    IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31</span>
-<span class="source-line-no">102</span><span id="line-102">                            IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,</span>
-<span class="source-line-no">103</span><span id="line-103">                            IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,</span>
-<span class="source-line-no">104</span><span id="line-104">                            IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,</span>
-<span class="source-line-no">105</span><span id="line-105">                            IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,</span>
-<span class="source-line-no">106</span><span id="line-106">                            IDPSegmentResponse.IDPSegmentStatus.START_TIME));</span>
-<span class="source-line-no">107</span><span id="line-107">        }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">        public Message createSegmentMessage(MinsTime profileStartTime, float profileBasalRateUnits, long profileCarbRatio, int profileTargetBG, int profileISF) {</span>
-<span class="source-line-no">110</span><span id="line-110">            return createSegmentMessage(profileStartTime.encode(), (int) InsulinUnit.from1To1000(profileBasalRateUnits), profileCarbRatio, profileTargetBG, profileISF);</span>
-<span class="source-line-no">111</span><span id="line-111">        }</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">        private void processMessage(Message message) {</span>
-<span class="source-line-no">114</span><span id="line-114">            if (message instanceof IDPSegmentResponse) {</span>
-<span class="source-line-no">115</span><span id="line-115">                int idpId = ((IDPSegmentResponse) message).getIdpId();</span>
-<span class="source-line-no">116</span><span id="line-116">                Validate.isTrue(idpId == getIdpId());</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">                int segmentIndex = ((IDPSegmentResponse) message).getSegmentIndex();</span>
-<span class="source-line-no">119</span><span id="line-119">                segments.removeIf(s -&gt; segmentIndex == s.getSegmentIndex());</span>
-<span class="source-line-no">120</span><span id="line-120">                segments.add((IDPSegmentResponse) message);</span>
-<span class="source-line-no">121</span><span id="line-121">                segments.sort(Comparator.comparingInt(IDPSegmentResponse::getSegmentIndex));</span>
-<span class="source-line-no">122</span><span id="line-122">            } else if (message instanceof IDPSettingsResponse) {</span>
-<span class="source-line-no">123</span><span id="line-123">                int idpId = ((IDPSettingsResponse) message).getIdpId();</span>
+<span class="source-line-no">074</span><span id="line-74">        public Message duplicateProfileMessage(String newProfileName) {</span>
+<span class="source-line-no">075</span><span id="line-75">            return new CreateIDPRequest(newProfileName, getIdpId());</span>
+<span class="source-line-no">076</span><span id="line-76">        }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">        public Message setActiveProfileMessage() {</span>
+<span class="source-line-no">079</span><span id="line-79">            return new SetActiveIDPRequest(getIdpId());</span>
+<span class="source-line-no">080</span><span id="line-80">        }</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">        public Message deleteSegmentMessage(IDPSegmentResponse segment) {</span>
+<span class="source-line-no">083</span><span id="line-83">            Validate.isTrue(segment.getIdpId() == getIdpId());</span>
+<span class="source-line-no">084</span><span id="line-84">            Validate.isTrue(segment.getSegmentIndex() != 0, "Deleting the 0th segment index is not supported");</span>
+<span class="source-line-no">085</span><span id="line-85">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),</span>
+<span class="source-line-no">086</span><span id="line-86">                    SetIDPSegmentRequest.IDPSegmentOperation.DELETE_SEGMENT_ID,</span>
+<span class="source-line-no">087</span><span id="line-87">                    segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),</span>
+<span class="source-line-no">088</span><span id="line-88">                    segment.getIdpStatusId());</span>
+<span class="source-line-no">089</span><span id="line-89">        }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">        public Message modifySegmentMessage(IDPSegmentResponse segment) {</span>
+<span class="source-line-no">092</span><span id="line-92">            Validate.isTrue(segment.getIdpId() == getIdpId());</span>
+<span class="source-line-no">093</span><span id="line-93">            int statusId = 0;</span>
+<span class="source-line-no">094</span><span id="line-94">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),</span>
+<span class="source-line-no">095</span><span id="line-95">                    SetIDPSegmentRequest.IDPSegmentOperation.MODIFY_SEGMENT_ID,</span>
+<span class="source-line-no">096</span><span id="line-96">                    segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),</span>
+<span class="source-line-no">097</span><span id="line-97">                    IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31</span>
+<span class="source-line-no">098</span><span id="line-98">                            IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,</span>
+<span class="source-line-no">099</span><span id="line-99">                            IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,</span>
+<span class="source-line-no">100</span><span id="line-100">                            IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,</span>
+<span class="source-line-no">101</span><span id="line-101">                            IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,</span>
+<span class="source-line-no">102</span><span id="line-102">                            IDPSegmentResponse.IDPSegmentStatus.START_TIME));</span>
+<span class="source-line-no">103</span><span id="line-103">        }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">        public Message createSegmentMessage(int profileStartTime, int profileBasalRateMilliunits, long profileCarbRatio, int profileTargetBG, int profileISF) {</span>
+<span class="source-line-no">106</span><span id="line-106">            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, 0,</span>
+<span class="source-line-no">107</span><span id="line-107">                    SetIDPSegmentRequest.IDPSegmentOperation.CREATE_SEGMENT,</span>
+<span class="source-line-no">108</span><span id="line-108">                    profileStartTime, profileBasalRateMilliunits, profileCarbRatio, profileTargetBG, profileISF,</span>
+<span class="source-line-no">109</span><span id="line-109">                    IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31</span>
+<span class="source-line-no">110</span><span id="line-110">                            IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,</span>
+<span class="source-line-no">111</span><span id="line-111">                            IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,</span>
+<span class="source-line-no">112</span><span id="line-112">                            IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,</span>
+<span class="source-line-no">113</span><span id="line-113">                            IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,</span>
+<span class="source-line-no">114</span><span id="line-114">                            IDPSegmentResponse.IDPSegmentStatus.START_TIME));</span>
+<span class="source-line-no">115</span><span id="line-115">        }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">        public Message createSegmentMessage(MinsTime profileStartTime, float profileBasalRateUnits, long profileCarbRatio, int profileTargetBG, int profileISF) {</span>
+<span class="source-line-no">118</span><span id="line-118">            return createSegmentMessage(profileStartTime.encode(), (int) InsulinUnit.from1To1000(profileBasalRateUnits), profileCarbRatio, profileTargetBG, profileISF);</span>
+<span class="source-line-no">119</span><span id="line-119">        }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">        private void processMessage(Message message) {</span>
+<span class="source-line-no">122</span><span id="line-122">            if (message instanceof IDPSegmentResponse) {</span>
+<span class="source-line-no">123</span><span id="line-123">                int idpId = ((IDPSegmentResponse) message).getIdpId();</span>
 <span class="source-line-no">124</span><span id="line-124">                Validate.isTrue(idpId == getIdpId());</span>
 <span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">                idpSettingsResponse = (IDPSettingsResponse) message;</span>
-<span class="source-line-no">127</span><span id="line-127">            }</span>
-<span class="source-line-no">128</span><span id="line-128">        }</span>
-<span class="source-line-no">129</span><span id="line-129"></span>
-<span class="source-line-no">130</span><span id="line-130">        public String toString() {</span>
-<span class="source-line-no">131</span><span id="line-131">            return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
-<span class="source-line-no">132</span><span id="line-132">        }</span>
+<span class="source-line-no">126</span><span id="line-126">                int segmentIndex = ((IDPSegmentResponse) message).getSegmentIndex();</span>
+<span class="source-line-no">127</span><span id="line-127">                segments.removeIf(s -&gt; segmentIndex == s.getSegmentIndex());</span>
+<span class="source-line-no">128</span><span id="line-128">                segments.add((IDPSegmentResponse) message);</span>
+<span class="source-line-no">129</span><span id="line-129">                segments.sort(Comparator.comparingInt(IDPSegmentResponse::getSegmentIndex));</span>
+<span class="source-line-no">130</span><span id="line-130">            } else if (message instanceof IDPSettingsResponse) {</span>
+<span class="source-line-no">131</span><span id="line-131">                int idpId = ((IDPSettingsResponse) message).getIdpId();</span>
+<span class="source-line-no">132</span><span id="line-132">                Validate.isTrue(idpId == getIdpId());</span>
 <span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">        public boolean isActiveProfile() {</span>
-<span class="source-line-no">135</span><span id="line-135">            return isActiveProfile;</span>
+<span class="source-line-no">134</span><span id="line-134">                idpSettingsResponse = (IDPSettingsResponse) message;</span>
+<span class="source-line-no">135</span><span id="line-135">            }</span>
 <span class="source-line-no">136</span><span id="line-136">        }</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    private final List&lt;Profile&gt; profiles = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">140</span><span id="line-140">    private ProfileStatusResponse profileStatusResponse;</span>
+<span class="source-line-no">137</span><span id="line-137"></span>
+<span class="source-line-no">138</span><span id="line-138">        public String toString() {</span>
+<span class="source-line-no">139</span><span id="line-139">            return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
+<span class="source-line-no">140</span><span id="line-140">        }</span>
 <span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">    public IDPManager() {}</span>
-<span class="source-line-no">143</span><span id="line-143">    public IDPManager(ProfileStatusResponse profileStatusResponse) {</span>
-<span class="source-line-no">144</span><span id="line-144">        this.profileStatusResponse = profileStatusResponse;</span>
+<span class="source-line-no">142</span><span id="line-142">        public boolean isActiveProfile() {</span>
+<span class="source-line-no">143</span><span id="line-143">            return isActiveProfile;</span>
+<span class="source-line-no">144</span><span id="line-144">        }</span>
 <span class="source-line-no">145</span><span id="line-145">    }</span>
 <span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    public List&lt;Message&gt; nextMessages() {</span>
-<span class="source-line-no">148</span><span id="line-148">        List&lt;Message&gt; messages = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">147</span><span id="line-147">    private final List&lt;Profile&gt; profiles = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">148</span><span id="line-148">    private ProfileStatusResponse profileStatusResponse;</span>
 <span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">        if (profileStatusResponse == null) {</span>
-<span class="source-line-no">151</span><span id="line-151">            messages.add(new ProfileStatusRequest());</span>
-<span class="source-line-no">152</span><span id="line-152">            return messages;</span>
-<span class="source-line-no">153</span><span id="line-153">        }</span>
+<span class="source-line-no">150</span><span id="line-150">    public IDPManager() {}</span>
+<span class="source-line-no">151</span><span id="line-151">    public IDPManager(ProfileStatusResponse profileStatusResponse) {</span>
+<span class="source-line-no">152</span><span id="line-152">        this.profileStatusResponse = profileStatusResponse;</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
 <span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">        profileStatusResponse.getIdpSlotIds().forEach(idpSlotId -&gt; {</span>
-<span class="source-line-no">156</span><span id="line-156">           Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpSlotId).findFirst();</span>
+<span class="source-line-no">155</span><span id="line-155">    public List&lt;Message&gt; nextMessages() {</span>
+<span class="source-line-no">156</span><span id="line-156">        List&lt;Message&gt; messages = new ArrayList&lt;&gt;();</span>
 <span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">           if (profile.isEmpty()) {</span>
-<span class="source-line-no">159</span><span id="line-159">               messages.add(new IDPSettingsRequest(idpSlotId));</span>
-<span class="source-line-no">160</span><span id="line-160">           } else {</span>
-<span class="source-line-no">161</span><span id="line-161">               int segmentCount = profile.get().getIdpSettingsResponse().getNumberOfProfileSegments();</span>
-<span class="source-line-no">162</span><span id="line-162">               if (!profile.get().isComplete()) {</span>
-<span class="source-line-no">163</span><span id="line-163">                   for (int i=0; i&lt;segmentCount; i++) {</span>
-<span class="source-line-no">164</span><span id="line-164">                       int finalI = i;</span>
-<span class="source-line-no">165</span><span id="line-165">                       if (profile.get().segments.stream().noneMatch(s -&gt; s.getSegmentIndex() == finalI)) {</span>
-<span class="source-line-no">166</span><span id="line-166">                           messages.add(new IDPSegmentRequest(idpSlotId, i));</span>
-<span class="source-line-no">167</span><span id="line-167">                       }</span>
-<span class="source-line-no">168</span><span id="line-168">                   }</span>
-<span class="source-line-no">169</span><span id="line-169">               }</span>
-<span class="source-line-no">170</span><span id="line-170">           }</span>
-<span class="source-line-no">171</span><span id="line-171"></span>
-<span class="source-line-no">172</span><span id="line-172">        });</span>
-<span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">        return messages;</span>
-<span class="source-line-no">175</span><span id="line-175">    }</span>
-<span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">    public IDPManager processMessage(Message message) {</span>
-<span class="source-line-no">178</span><span id="line-178">        if (message instanceof ProfileStatusResponse) {</span>
-<span class="source-line-no">179</span><span id="line-179">            profileStatusResponse = (ProfileStatusResponse) message;</span>
-<span class="source-line-no">180</span><span id="line-180">            profiles.removeIf(p -&gt; !profileStatusResponse.getIdpSlotIds().contains(p.getIdpId()));</span>
-<span class="source-line-no">181</span><span id="line-181">        } else if (message instanceof IDPSettingsResponse) {</span>
-<span class="source-line-no">182</span><span id="line-182">            int idpId = ((IDPSettingsResponse) message).getIdpId();</span>
-<span class="source-line-no">183</span><span id="line-183">            Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
-<span class="source-line-no">184</span><span id="line-184">            if (profile.isPresent()) {</span>
-<span class="source-line-no">185</span><span id="line-185">                profile.get().processMessage(message);</span>
-<span class="source-line-no">186</span><span id="line-186">            } else {</span>
-<span class="source-line-no">187</span><span id="line-187">                int activeSlot = profileStatusResponse.getActiveIdpSlotId();</span>
-<span class="source-line-no">188</span><span id="line-188">                int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);</span>
-<span class="source-line-no">189</span><span id="line-189">                boolean isActiveProfile = idpId == activeIdpId;</span>
-<span class="source-line-no">190</span><span id="line-190">                profiles.add(new Profile((IDPSettingsResponse) message, isActiveProfile));</span>
-<span class="source-line-no">191</span><span id="line-191">            }</span>
-<span class="source-line-no">192</span><span id="line-192">            profiles.sort((a,b) -&gt; profileStatusResponse.getIdpSlotIds().indexOf(a.getIdpId()) - profileStatusResponse.getIdpSlotIds().indexOf(b.getIdpId()));</span>
-<span class="source-line-no">193</span><span id="line-193">        } else if (message instanceof IDPSegmentResponse) {</span>
-<span class="source-line-no">194</span><span id="line-194">            int idpId = ((IDPSegmentResponse) message).getIdpId();</span>
-<span class="source-line-no">195</span><span id="line-195">            Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
-<span class="source-line-no">196</span><span id="line-196">            if (profile.isPresent()) {</span>
-<span class="source-line-no">197</span><span id="line-197">                profile.get().processMessage(message);</span>
-<span class="source-line-no">198</span><span id="line-198">            }</span>
-<span class="source-line-no">199</span><span id="line-199">        }</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">        return this;</span>
-<span class="source-line-no">202</span><span id="line-202">    }</span>
-<span class="source-line-no">203</span><span id="line-203"></span>
-<span class="source-line-no">204</span><span id="line-204">    public static boolean isIDPManagerResponse(Message message) {</span>
-<span class="source-line-no">205</span><span id="line-205">        return (message instanceof ProfileStatusResponse) || (message instanceof IDPSettingsResponse) || (message instanceof IDPSegmentResponse);</span>
-<span class="source-line-no">206</span><span id="line-206">    }</span>
-<span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">    public boolean isComplete() {</span>
-<span class="source-line-no">209</span><span id="line-209">        return profileStatusResponse != null &amp;&amp; profiles.size() == profileStatusResponse.getNumberOfProfiles() &amp;&amp; profiles.stream().allMatch(Profile::isComplete);</span>
+<span class="source-line-no">158</span><span id="line-158">        if (profileStatusResponse == null) {</span>
+<span class="source-line-no">159</span><span id="line-159">            messages.add(new ProfileStatusRequest());</span>
+<span class="source-line-no">160</span><span id="line-160">            return messages;</span>
+<span class="source-line-no">161</span><span id="line-161">        }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">        profileStatusResponse.getIdpSlotIds().forEach(idpSlotId -&gt; {</span>
+<span class="source-line-no">164</span><span id="line-164">           Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpSlotId).findFirst();</span>
+<span class="source-line-no">165</span><span id="line-165"></span>
+<span class="source-line-no">166</span><span id="line-166">           if (profile.isEmpty()) {</span>
+<span class="source-line-no">167</span><span id="line-167">               messages.add(new IDPSettingsRequest(idpSlotId));</span>
+<span class="source-line-no">168</span><span id="line-168">           } else {</span>
+<span class="source-line-no">169</span><span id="line-169">               int segmentCount = profile.get().getIdpSettingsResponse().getNumberOfProfileSegments();</span>
+<span class="source-line-no">170</span><span id="line-170">               if (!profile.get().isComplete()) {</span>
+<span class="source-line-no">171</span><span id="line-171">                   for (int i=0; i&lt;segmentCount; i++) {</span>
+<span class="source-line-no">172</span><span id="line-172">                       int finalI = i;</span>
+<span class="source-line-no">173</span><span id="line-173">                       if (profile.get().segments.stream().noneMatch(s -&gt; s.getSegmentIndex() == finalI)) {</span>
+<span class="source-line-no">174</span><span id="line-174">                           messages.add(new IDPSegmentRequest(idpSlotId, i));</span>
+<span class="source-line-no">175</span><span id="line-175">                       }</span>
+<span class="source-line-no">176</span><span id="line-176">                   }</span>
+<span class="source-line-no">177</span><span id="line-177">               }</span>
+<span class="source-line-no">178</span><span id="line-178">           }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">        });</span>
+<span class="source-line-no">181</span><span id="line-181"></span>
+<span class="source-line-no">182</span><span id="line-182">        return messages;</span>
+<span class="source-line-no">183</span><span id="line-183">    }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">    public IDPManager processMessage(Message message) {</span>
+<span class="source-line-no">186</span><span id="line-186">        if (message instanceof ProfileStatusResponse) {</span>
+<span class="source-line-no">187</span><span id="line-187">            profileStatusResponse = (ProfileStatusResponse) message;</span>
+<span class="source-line-no">188</span><span id="line-188">            profiles.removeIf(p -&gt; !profileStatusResponse.getIdpSlotIds().contains(p.getIdpId()));</span>
+<span class="source-line-no">189</span><span id="line-189">        } else if (message instanceof IDPSettingsResponse) {</span>
+<span class="source-line-no">190</span><span id="line-190">            int idpId = ((IDPSettingsResponse) message).getIdpId();</span>
+<span class="source-line-no">191</span><span id="line-191">            Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
+<span class="source-line-no">192</span><span id="line-192">            if (profile.isPresent()) {</span>
+<span class="source-line-no">193</span><span id="line-193">                profile.get().processMessage(message);</span>
+<span class="source-line-no">194</span><span id="line-194">            } else {</span>
+<span class="source-line-no">195</span><span id="line-195">                int activeSlot = profileStatusResponse.getActiveIdpSlotId();</span>
+<span class="source-line-no">196</span><span id="line-196">                int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);</span>
+<span class="source-line-no">197</span><span id="line-197">                boolean isActiveProfile = idpId == activeIdpId;</span>
+<span class="source-line-no">198</span><span id="line-198">                profiles.add(new Profile((IDPSettingsResponse) message, isActiveProfile));</span>
+<span class="source-line-no">199</span><span id="line-199">            }</span>
+<span class="source-line-no">200</span><span id="line-200">            profiles.sort((a,b) -&gt; profileStatusResponse.getIdpSlotIds().indexOf(a.getIdpId()) - profileStatusResponse.getIdpSlotIds().indexOf(b.getIdpId()));</span>
+<span class="source-line-no">201</span><span id="line-201">        } else if (message instanceof IDPSegmentResponse) {</span>
+<span class="source-line-no">202</span><span id="line-202">            int idpId = ((IDPSegmentResponse) message).getIdpId();</span>
+<span class="source-line-no">203</span><span id="line-203">            Optional&lt;Profile&gt; profile = profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
+<span class="source-line-no">204</span><span id="line-204">            if (profile.isPresent()) {</span>
+<span class="source-line-no">205</span><span id="line-205">                profile.get().processMessage(message);</span>
+<span class="source-line-no">206</span><span id="line-206">            }</span>
+<span class="source-line-no">207</span><span id="line-207">        }</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">        return this;</span>
 <span class="source-line-no">210</span><span id="line-210">    }</span>
 <span class="source-line-no">211</span><span id="line-211"></span>
-<span class="source-line-no">212</span><span id="line-212">    public List&lt;Profile&gt; getProfiles() {</span>
-<span class="source-line-no">213</span><span id="line-213">        Validate.isTrue(isComplete());</span>
-<span class="source-line-no">214</span><span id="line-214">        return profiles;</span>
-<span class="source-line-no">215</span><span id="line-215">    }</span>
-<span class="source-line-no">216</span><span id="line-216"></span>
-<span class="source-line-no">217</span><span id="line-217">    public Profile getActiveProfile() {</span>
-<span class="source-line-no">218</span><span id="line-218">        Validate.isTrue(isComplete());</span>
-<span class="source-line-no">219</span><span id="line-219">        int activeSlot = profileStatusResponse.getActiveIdpSlotId();</span>
-<span class="source-line-no">220</span><span id="line-220">        int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);</span>
-<span class="source-line-no">221</span><span id="line-221">        return getProfileWithIdpId(activeIdpId).orElseThrow();</span>
-<span class="source-line-no">222</span><span id="line-222">    }</span>
-<span class="source-line-no">223</span><span id="line-223"></span>
-<span class="source-line-no">224</span><span id="line-224">    public Optional&lt;Profile&gt; getProfileWithIdpId(int idpId) {</span>
-<span class="source-line-no">225</span><span id="line-225">        return profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
-<span class="source-line-no">226</span><span id="line-226">    }</span>
-<span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">    public void clear() {</span>
-<span class="source-line-no">229</span><span id="line-229">        profiles.clear();</span>
-<span class="source-line-no">230</span><span id="line-230">        profileStatusResponse = null;</span>
-<span class="source-line-no">231</span><span id="line-231">    }</span>
-<span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, int defaultBasalRateMilliunits, int defaultTargetBG, int defaultISF, int defaultInsulinDuration, boolean profileCarbEntryEnabled) {</span>
-<span class="source-line-no">234</span><span id="line-234">        return new CreateIDPRequest(profileName, defaultCarbRatio, defaultBasalRateMilliunits, defaultTargetBG, defaultISF, defaultInsulinDuration, profileCarbEntryEnabled ? 1 : 0);</span>
-<span class="source-line-no">235</span><span id="line-235">    }</span>
-<span class="source-line-no">236</span><span id="line-236"></span>
-<span class="source-line-no">237</span><span id="line-237">    /**</span>
-<span class="source-line-no">238</span><span id="line-238">     *</span>
-<span class="source-line-no">239</span><span id="line-239">     * @param profileName alphanumeric visible name for the profile</span>
-<span class="source-line-no">240</span><span id="line-240">     * @param defaultCarbRatio carb ratio for the first profile segment in the profile (at midnight).</span>
-<span class="source-line-no">241</span><span id="line-241">     *                         value of '1000' means 1 unit:1 carb. value of '5000' means 1 unit:5 carbs.</span>
-<span class="source-line-no">242</span><span id="line-242">     * @param defaultBasalRateUnits basal rate for the first profile segment in units</span>
-<span class="source-line-no">243</span><span id="line-243">     * @param defaultTargetBG target BG for first profile segment in mg/dL</span>
-<span class="source-line-no">244</span><span id="line-244">     * @param defaultISF insulin sensitivity factor for first profile segment.</span>
-<span class="source-line-no">245</span><span id="line-245">     *                   value of '1' means 1 unit:1 mg/dL. value of '5' means 1 unit:5 mg/dL</span>
-<span class="source-line-no">246</span><span id="line-246">     * @param defaultInsulinDuration insulin duration via MinsTime constructor</span>
-<span class="source-line-no">247</span><span id="line-247">     * @param profileCarbEntryEnabled if carb entry is enabled in the profile</span>
-<span class="source-line-no">248</span><span id="line-248">     * @return filled message to send to pump creating the profile</span>
-<span class="source-line-no">249</span><span id="line-249">     */</span>
-<span class="source-line-no">250</span><span id="line-250">    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, float defaultBasalRateUnits, int defaultTargetBG, int defaultISF, MinsTime defaultInsulinDuration, boolean profileCarbEntryEnabled) {</span>
-<span class="source-line-no">251</span><span id="line-251">        return new CreateIDPRequest(profileName, defaultCarbRatio, (int) InsulinUnit.from1To1000(defaultBasalRateUnits), defaultTargetBG, defaultISF, defaultInsulinDuration.encode(), profileCarbEntryEnabled ? 1 : 0);</span>
-<span class="source-line-no">252</span><span id="line-252">    }</span>
-<span class="source-line-no">253</span><span id="line-253"></span>
-<span class="source-line-no">254</span><span id="line-254">    @Override</span>
-<span class="source-line-no">255</span><span id="line-255">    public String toString() {</span>
-<span class="source-line-no">256</span><span id="line-256">        return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
-<span class="source-line-no">257</span><span id="line-257">    }</span>
-<span class="source-line-no">258</span><span id="line-258"></span>
-<span class="source-line-no">259</span><span id="line-259">}</span>
+<span class="source-line-no">212</span><span id="line-212">    public static boolean isIDPManagerResponse(Message message) {</span>
+<span class="source-line-no">213</span><span id="line-213">        return (message instanceof ProfileStatusResponse) || (message instanceof IDPSettingsResponse) || (message instanceof IDPSegmentResponse);</span>
+<span class="source-line-no">214</span><span id="line-214">    }</span>
+<span class="source-line-no">215</span><span id="line-215"></span>
+<span class="source-line-no">216</span><span id="line-216">    public boolean isComplete() {</span>
+<span class="source-line-no">217</span><span id="line-217">        return profileStatusResponse != null &amp;&amp; profiles.size() == profileStatusResponse.getNumberOfProfiles() &amp;&amp; profiles.stream().allMatch(Profile::isComplete);</span>
+<span class="source-line-no">218</span><span id="line-218">    }</span>
+<span class="source-line-no">219</span><span id="line-219"></span>
+<span class="source-line-no">220</span><span id="line-220">    public List&lt;Profile&gt; getProfiles() {</span>
+<span class="source-line-no">221</span><span id="line-221">        Validate.isTrue(isComplete());</span>
+<span class="source-line-no">222</span><span id="line-222">        return profiles;</span>
+<span class="source-line-no">223</span><span id="line-223">    }</span>
+<span class="source-line-no">224</span><span id="line-224"></span>
+<span class="source-line-no">225</span><span id="line-225">    public Profile getActiveProfile() {</span>
+<span class="source-line-no">226</span><span id="line-226">        Validate.isTrue(isComplete());</span>
+<span class="source-line-no">227</span><span id="line-227">        int activeSlot = profileStatusResponse.getActiveIdpSlotId();</span>
+<span class="source-line-no">228</span><span id="line-228">        int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);</span>
+<span class="source-line-no">229</span><span id="line-229">        return getProfileWithIdpId(activeIdpId).orElseThrow();</span>
+<span class="source-line-no">230</span><span id="line-230">    }</span>
+<span class="source-line-no">231</span><span id="line-231"></span>
+<span class="source-line-no">232</span><span id="line-232">    public Optional&lt;Profile&gt; getProfileWithIdpId(int idpId) {</span>
+<span class="source-line-no">233</span><span id="line-233">        return profiles.stream().filter(p -&gt; p.getIdpId() == idpId).findFirst();</span>
+<span class="source-line-no">234</span><span id="line-234">    }</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">    public void clear() {</span>
+<span class="source-line-no">237</span><span id="line-237">        profiles.clear();</span>
+<span class="source-line-no">238</span><span id="line-238">        profileStatusResponse = null;</span>
+<span class="source-line-no">239</span><span id="line-239">    }</span>
+<span class="source-line-no">240</span><span id="line-240"></span>
+<span class="source-line-no">241</span><span id="line-241">    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, int defaultBasalRateMilliunits, int defaultTargetBG, int defaultISF, int defaultInsulinDuration, boolean profileCarbEntryEnabled) {</span>
+<span class="source-line-no">242</span><span id="line-242">        return new CreateIDPRequest(profileName, defaultCarbRatio, defaultBasalRateMilliunits, defaultTargetBG, defaultISF, defaultInsulinDuration, profileCarbEntryEnabled ? 1 : 0);</span>
+<span class="source-line-no">243</span><span id="line-243">    }</span>
+<span class="source-line-no">244</span><span id="line-244"></span>
+<span class="source-line-no">245</span><span id="line-245">    /**</span>
+<span class="source-line-no">246</span><span id="line-246">     *</span>
+<span class="source-line-no">247</span><span id="line-247">     * @param profileName alphanumeric visible name for the profile</span>
+<span class="source-line-no">248</span><span id="line-248">     * @param defaultCarbRatio carb ratio for the first profile segment in the profile (at midnight).</span>
+<span class="source-line-no">249</span><span id="line-249">     *                         value of '1000' means 1 unit:1 carb. value of '5000' means 1 unit:5 carbs.</span>
+<span class="source-line-no">250</span><span id="line-250">     * @param defaultBasalRateUnits basal rate for the first profile segment in units</span>
+<span class="source-line-no">251</span><span id="line-251">     * @param defaultTargetBG target BG for first profile segment in mg/dL</span>
+<span class="source-line-no">252</span><span id="line-252">     * @param defaultISF insulin sensitivity factor for first profile segment.</span>
+<span class="source-line-no">253</span><span id="line-253">     *                   value of '1' means 1 unit:1 mg/dL. value of '5' means 1 unit:5 mg/dL</span>
+<span class="source-line-no">254</span><span id="line-254">     * @param defaultInsulinDuration insulin duration via MinsTime constructor</span>
+<span class="source-line-no">255</span><span id="line-255">     * @param profileCarbEntryEnabled if carb entry is enabled in the profile</span>
+<span class="source-line-no">256</span><span id="line-256">     * @return filled message to send to pump creating the profile</span>
+<span class="source-line-no">257</span><span id="line-257">     */</span>
+<span class="source-line-no">258</span><span id="line-258">    public Message createNewProfileMessage(String profileName, int defaultCarbRatio, float defaultBasalRateUnits, int defaultTargetBG, int defaultISF, MinsTime defaultInsulinDuration, boolean profileCarbEntryEnabled) {</span>
+<span class="source-line-no">259</span><span id="line-259">        return new CreateIDPRequest(profileName, defaultCarbRatio, (int) InsulinUnit.from1To1000(defaultBasalRateUnits), defaultTargetBG, defaultISF, defaultInsulinDuration.encode(), profileCarbEntryEnabled ? 1 : 0);</span>
+<span class="source-line-no">260</span><span id="line-260">    }</span>
+<span class="source-line-no">261</span><span id="line-261"></span>
+<span class="source-line-no">262</span><span id="line-262">    @Override</span>
+<span class="source-line-no">263</span><span id="line-263">    public String toString() {</span>
+<span class="source-line-no">264</span><span id="line-264">        return JavaHelpers.autoToString(this, new HashSet&lt;String&gt;());</span>
+<span class="source-line-no">265</span><span id="line-265">    }</span>
+<span class="source-line-no">266</span><span id="line-266"></span>
+<span class="source-line-no">267</span><span id="line-267">}</span>
 
 
 
