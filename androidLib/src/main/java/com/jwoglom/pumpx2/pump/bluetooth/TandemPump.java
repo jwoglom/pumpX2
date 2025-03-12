@@ -112,10 +112,11 @@ public abstract class TandemPump {
             return;
         }
 
-        Timber.i("TandemPump: sendCommand(" + message + ")");
         ArrayList<byte[]> bytes = new ArrayList<>();
         byte currentTxId = Packetize.txId.get();
         PumpState.pushRequestMessage(message, currentTxId);
+        // added spaces align the message with the corresponding PARSED-MESSAGE canonical log line
+        Timber.i("  SENT-MESSAGE(txId=%-3d, %s):\t%s", currentTxId, CharacteristicUUID.which(message.getCharacteristic().getUuid()), message);
         TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
         Packetize.txId.increment();
 
@@ -125,7 +126,8 @@ public abstract class TandemPump {
 
         for (byte[] b : bytes) {
             UUID uuid = CharacteristicUUID.determine(message);
-            Timber.d("TandemPump: raw sendCommand to characteristic %s: %s", CharacteristicUUID.which(uuid), Hex.encodeHexString(b));
+            // added spaces align the message with the corresponding PARSED-MESSAGE canonical log line
+            Timber.d(" SENT-RAW-CHAR(txId=%-3d, %s):\t%s", currentTxId, CharacteristicUUID.which(uuid), Hex.encodeHexString(b));
             peripheral.writeCharacteristic(ServiceUUID.PUMP_SERVICE_UUID,
                     uuid,
                     b,
@@ -141,7 +143,7 @@ public abstract class TandemPump {
      *             expected format of 16 alphanumeric characters
      */
     public void onInvalidPairingCode(BluetoothPeripheral peripheral, @Nullable AbstractPumpChallengeResponse resp) {
-        Timber.i("TandemPump: onInvalidPairingCode: %s", resp);
+        Timber.w("TandemPump: onInvalidPairingCode: %s", resp);
     }
 
     /**
@@ -171,7 +173,7 @@ public abstract class TandemPump {
      * @return true if we should attempt to re-connect to the device, false otherwise
      */
     public boolean onPumpDisconnected(BluetoothPeripheral peripheral, HciStatus status) {
-        Timber.i("TandemPump: onPumpDisconnected with status '%s'", status);
+        Timber.w("TandemPump: onPumpDisconnected with status '%s'", status);
         return true;
     }
 

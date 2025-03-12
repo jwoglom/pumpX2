@@ -71,6 +71,10 @@ public class PacketArrayList {
         return opCode;
     }
 
+    public byte getExpectedTxId() {
+        return expectedTxId;
+    }
+
     public final boolean needsMorePacket() {
         byte b = this.firstByteMod15;
         return b >= 0;

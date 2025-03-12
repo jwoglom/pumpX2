@@ -23,6 +23,7 @@ public class BTResponseParser {
         return parse(wrapper.message(), packetArrayList, output, uuid);
     }
 
+    @SuppressWarnings("DefaultLocale")
     public static PumpResponseMessage parse(Message message, PacketArrayList packetArrayList, byte[] output, UUID uuid) {
         L.d(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
         checkCharacteristicUuid(uuid, output);
@@ -43,12 +44,13 @@ public class BTResponseParser {
                 byte[] a = packetArrayList.messageData();
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
+                byte txId = packetArrayList.getExpectedTxId();
                 L.d(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
                 if (msg == null) {
-                    L.i(TAG, "PARSED-MESSAGE-FAILURE(" + CharacteristicUUID.which(uuid) + ", " + b4 + ", " + message.signed() + "): " + Hex.encodeHexString(copyOfRange));
+                    L.w(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));
                 } else {
-                    L.i(TAG, "PARSED-MESSAGE(" + CharacteristicUUID.which(uuid) + "): " + msg);
+                    L.i(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s):\t%s", txId, CharacteristicUUID.which(uuid), msg));
                 }
 
                 return new PumpResponseMessage(output, msg);
