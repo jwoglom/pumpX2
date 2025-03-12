@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.MinsTime;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 
 import java.util.HashSet;
@@ -28,6 +29,7 @@ public class IDPSegmentResponse extends Message {
     private int idpId;
     private int segmentIndex;
     private int profileStartTime;
+    private MinsTime profileProcessedStartTime;
     private int profileBasalRate;
     private long profileCarbRatio;
     private int profileTargetBG;
@@ -42,6 +44,7 @@ public class IDPSegmentResponse extends Message {
         this.idpId = idpId;
         this.segmentIndex = segmentIndex;
         this.profileStartTime = profileStartTime;
+        this.profileProcessedStartTime = new MinsTime(profileStartTime);
         this.profileBasalRate = profileBasalRate;
         this.profileCarbRatio = profileCarbRatio;
         this.profileTargetBG = profileTargetBG;
@@ -57,6 +60,7 @@ public class IDPSegmentResponse extends Message {
         this.idpId = raw[0];
         this.segmentIndex = raw[1];
         this.profileStartTime = Bytes.readShort(raw, 2);
+        this.profileProcessedStartTime = new MinsTime(profileStartTime);
         this.profileBasalRate = Bytes.readShort(raw, 4);
         this.profileCarbRatio = Bytes.readUint32(raw, 6);
         this.profileTargetBG = Bytes.readShort(raw, 10);
@@ -96,11 +100,18 @@ public class IDPSegmentResponse extends Message {
     /**
      * @return start time of the profile segment. The profile segment runs from this time until the
      * next-configured profile segment start time in this insulin delivery profile. Expressed in
-     * minutes since midnight, see {@link com.jwoglom.pumpx2.pump.messages.models.MinsTime}
+     * minutes since midnight, see {@link MinsTime} and {@link #getProfileProcessedStartTime()} helper.
      *
      */
     public int getProfileStartTime() {
         return profileStartTime;
+    }
+
+    /**
+     * @return start time of the profile segment as {@link MinsTime}
+     */
+    public MinsTime getProfileProcessedStartTime() {
+        return profileProcessedStartTime;
     }
 
     /**
