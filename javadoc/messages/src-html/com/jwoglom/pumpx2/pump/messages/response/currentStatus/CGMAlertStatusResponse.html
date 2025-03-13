@@ -27,179 +27,180 @@
 <span class="source-line-no">010</span><span id="line-10">import java.math.BigInteger;</span>
 <span class="source-line-no">011</span><span id="line-11">import java.util.HashSet;</span>
 <span class="source-line-no">012</span><span id="line-12">import java.util.Set;</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest}, opCode 75, size 8</span>
-<span class="source-line-no">016</span><span id="line-16"> *</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;br&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> *</span>
-<span class="source-line-no">019</span><span id="line-19"> * </span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;75&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;8&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;/table&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> */</span>
-<span class="source-line-no">028</span><span id="line-28">@MessageProps(</span>
-<span class="source-line-no">029</span><span id="line-29">    opCode=75,</span>
-<span class="source-line-no">030</span><span id="line-30">    size=8,</span>
-<span class="source-line-no">031</span><span id="line-31">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">032</span><span id="line-32">    request=CGMAlertStatusRequest.class</span>
-<span class="source-line-no">033</span><span id="line-33">)</span>
-<span class="source-line-no">034</span><span id="line-34">public class CGMAlertStatusResponse extends Message {</span>
-<span class="source-line-no">035</span><span id="line-35">    </span>
-<span class="source-line-no">036</span><span id="line-36">    private BigInteger intMap;</span>
-<span class="source-line-no">037</span><span id="line-37">    </span>
-<span class="source-line-no">038</span><span id="line-38">    public CGMAlertStatusResponse() {}</span>
-<span class="source-line-no">039</span><span id="line-39">    </span>
-<span class="source-line-no">040</span><span id="line-40">    public CGMAlertStatusResponse(long cgmAlertBitmask) {</span>
-<span class="source-line-no">041</span><span id="line-41">        this.cargo = buildCargo(cgmAlertBitmask);</span>
-<span class="source-line-no">042</span><span id="line-42">        this.intMap = BigInteger.valueOf(cgmAlertBitmask);</span>
-<span class="source-line-no">043</span><span id="line-43">        </span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    /**</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;caption&gt;Parsed fields for CGMAlertStatusResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;intMap&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint64(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;/table&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     */</span>
-<span class="source-line-no">052</span><span id="line-52">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">053</span><span id="line-53">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">054</span><span id="line-54">        this.cargo = raw;</span>
-<span class="source-line-no">055</span><span id="line-55">        this.intMap = Bytes.readUint64(raw, 0);</span>
-<span class="source-line-no">056</span><span id="line-56">        </span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    </span>
-<span class="source-line-no">060</span><span id="line-60">    /**</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;caption&gt;Byte layout for CGMAlertStatusResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;/table&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     */</span>
-<span class="source-line-no">074</span><span id="line-74">    public static byte[] buildCargo(long cgmAlertBitmask) {</span>
-<span class="source-line-no">075</span><span id="line-75">        return Bytes.combine(</span>
-<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint64(cgmAlertBitmask));</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78">    </span>
-<span class="source-line-no">079</span><span id="line-79">    public BigInteger getIntMap() {</span>
-<span class="source-line-no">080</span><span id="line-80">        return intMap;</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82">    public long getBitMap() {</span>
-<span class="source-line-no">083</span><span id="line-83">        return intMap.longValue();</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    public Set&lt;CGMAlert&gt; getCgmAlerts() {</span>
-<span class="source-line-no">087</span><span id="line-87">        return CGMAlert.fromBitmask(intMap);</span>
-<span class="source-line-no">088</span><span id="line-88">    }</span>
-<span class="source-line-no">089</span><span id="line-89"></span>
-<span class="source-line-no">090</span><span id="line-90">    public enum CGMAlert {</span>
-<span class="source-line-no">091</span><span id="line-91">        DEFAULT_CGM_ALERT_0(0),</span>
-<span class="source-line-no">092</span><span id="line-92">        FIXED_LOW_CGM_ALERT(1),</span>
-<span class="source-line-no">093</span><span id="line-93">        HIGH_CGM_ALERT(2),</span>
-<span class="source-line-no">094</span><span id="line-94">        LOW_CGM_ALERT(3),</span>
-<span class="source-line-no">095</span><span id="line-95">        CALIBRATION_REQUEST_CGM_ALERT(4),</span>
-<span class="source-line-no">096</span><span id="line-96">        RISE_CGM_ALERT(5),</span>
-<span class="source-line-no">097</span><span id="line-97">        RAPID_RISE_CGM_ALERT(6),</span>
-<span class="source-line-no">098</span><span id="line-98">        FALL_CGM_ALERT(7),</span>
-<span class="source-line-no">099</span><span id="line-99">        RAPID_FALL_CGM_ALERT(8),</span>
-<span class="source-line-no">100</span><span id="line-100">        LOW_CALIBRATION_ERROR_CGM_ALERT(9),</span>
-<span class="source-line-no">101</span><span id="line-101">        HIGH_CALIBRATION_ERROR_CGM_ALERT(10),</span>
-<span class="source-line-no">102</span><span id="line-102">        SENSOR_FAILED_CGM_ALERT(11),</span>
-<span class="source-line-no">103</span><span id="line-103">        SENSOR_EXPIRING_CGM_ALERT(12),</span>
-<span class="source-line-no">104</span><span id="line-104">        SENSOR_EXPIRED_CGM_ALERT(13),</span>
-<span class="source-line-no">105</span><span id="line-105">        OUT_OF_RANGE_CGM_ALERT(14),</span>
-<span class="source-line-no">106</span><span id="line-106">        DEFAULT_CGM_ALERT_15(15),</span>
-<span class="source-line-no">107</span><span id="line-107">        FIRST_START_CALIBRATION_CGM_ALERT(16),</span>
-<span class="source-line-no">108</span><span id="line-108">        SECOND_START_CALIBRATION_CGM_ALERT(17),</span>
-<span class="source-line-no">109</span><span id="line-109">        CALIBRATION_REQUIRED_CGM_ALERT(18),</span>
-<span class="source-line-no">110</span><span id="line-110">        LOW_TRANSMITTER_CGM_ALERT(19),</span>
-<span class="source-line-no">111</span><span id="line-111">        TRANSMITTER_CGM_ALERT(20),</span>
-<span class="source-line-no">112</span><span id="line-112">        DEFAULT_CGM_ALERT_21(21),</span>
-<span class="source-line-no">113</span><span id="line-113">        SENSOR_EXPIRING_CGM_ALERT2(22),</span>
-<span class="source-line-no">114</span><span id="line-114">        DEFAULT_CGM_ALERT_23(23),</span>
-<span class="source-line-no">115</span><span id="line-115">        DEFAULT_CGM_ALERT_24(24),</span>
-<span class="source-line-no">116</span><span id="line-116">        SENSOR_REUSE(25),</span>
-<span class="source-line-no">117</span><span id="line-117">        DEFAULT_CGM_ALERT_26(26),</span>
-<span class="source-line-no">118</span><span id="line-118">        DEFAULT_CGM_ALERT_27(27),</span>
-<span class="source-line-no">119</span><span id="line-119">        DEFAULT_CGM_ALERT_28(28),</span>
-<span class="source-line-no">120</span><span id="line-120">        DEFAULT_CGM_ALERT_29(29),</span>
-<span class="source-line-no">121</span><span id="line-121">        DEFAULT_CGM_ALERT_30(30),</span>
-<span class="source-line-no">122</span><span id="line-122">        DEFAULT_CGM_ALERT_31(31),</span>
-<span class="source-line-no">123</span><span id="line-123">        DEFAULT_CGM_ALERT_32(32),</span>
-<span class="source-line-no">124</span><span id="line-124">        DEFAULT_CGM_ALERT_33(33),</span>
-<span class="source-line-no">125</span><span id="line-125">        DEFAULT_CGM_ALERT_34(34),</span>
-<span class="source-line-no">126</span><span id="line-126">        DEFAULT_CGM_ALERT_35(35),</span>
-<span class="source-line-no">127</span><span id="line-127">        DEFAULT_CGM_ALERT_36(36),</span>
-<span class="source-line-no">128</span><span id="line-128">        DEFAULT_CGM_ALERT_37(37),</span>
-<span class="source-line-no">129</span><span id="line-129">        DEFAULT_CGM_ALERT_38(38),</span>
-<span class="source-line-no">130</span><span id="line-130">        DEFAULT_CGM_ALERT_39(39),</span>
-<span class="source-line-no">131</span><span id="line-131">        DEFAULT_CGM_ALERT_40(40),</span>
-<span class="source-line-no">132</span><span id="line-132">        DEFAULT_CGM_ALERT_41(41),</span>
-<span class="source-line-no">133</span><span id="line-133">        DEFAULT_CGM_ALERT_42(42),</span>
-<span class="source-line-no">134</span><span id="line-134">        DEFAULT_CGM_ALERT_43(43),</span>
-<span class="source-line-no">135</span><span id="line-135">        DEFAULT_CGM_ALERT_44(44),</span>
-<span class="source-line-no">136</span><span id="line-136">        DEFAULT_CGM_ALERT_45(45),</span>
-<span class="source-line-no">137</span><span id="line-137">        DEFAULT_CGM_ALERT_46(46),</span>
-<span class="source-line-no">138</span><span id="line-138">        DEFAULT_CGM_ALERT_47(47),</span>
-<span class="source-line-no">139</span><span id="line-139">        DEFAULT_CGM_ALERT_48(48),</span>
-<span class="source-line-no">140</span><span id="line-140">        DEFAULT_CGM_ALERT_49(49),</span>
-<span class="source-line-no">141</span><span id="line-141">        DEFAULT_CGM_ALERT_50(50),</span>
-<span class="source-line-no">142</span><span id="line-142">        DEFAULT_CGM_ALERT_51(51),</span>
-<span class="source-line-no">143</span><span id="line-143">        DEFAULT_CGM_ALERT_52(52),</span>
-<span class="source-line-no">144</span><span id="line-144">        DEFAULT_CGM_ALERT_53(53),</span>
-<span class="source-line-no">145</span><span id="line-145">        DEFAULT_CGM_ALERT_55(55),</span>
-<span class="source-line-no">146</span><span id="line-146">        DEFAULT_CGM_ALERT_56(56),</span>
-<span class="source-line-no">147</span><span id="line-147">        DEFAULT_CGM_ALERT_57(57),</span>
-<span class="source-line-no">148</span><span id="line-148">        DEFAULT_CGM_ALERT_58(58),</span>
-<span class="source-line-no">149</span><span id="line-149">        DEFAULT_CGM_ALERT_59(59),</span>
-<span class="source-line-no">150</span><span id="line-150">        DEFAULT_CGM_ALERT_60(60),</span>
-<span class="source-line-no">151</span><span id="line-151">        DEFAULT_CGM_ALERT_61(61),</span>
-<span class="source-line-no">152</span><span id="line-152">        DEFAULT_CGM_ALERT_62(62),</span>
-<span class="source-line-no">153</span><span id="line-153">        DEFAULT_CGM_ALERT_63(63),</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">        ;</span>
-<span class="source-line-no">156</span><span id="line-156"></span>
-<span class="source-line-no">157</span><span id="line-157">        private final int id;</span>
-<span class="source-line-no">158</span><span id="line-158">        CGMAlert(int id) {</span>
-<span class="source-line-no">159</span><span id="line-159">            this.id = id;</span>
-<span class="source-line-no">160</span><span id="line-160">        }</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">        public int id() {</span>
-<span class="source-line-no">163</span><span id="line-163">            return id;</span>
-<span class="source-line-no">164</span><span id="line-164">        }</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
-<span class="source-line-no">167</span><span id="line-167">            Set&lt;CGMAlert&gt; set = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">168</span><span id="line-168">            for (CGMAlert a : values()) {</span>
-<span class="source-line-no">169</span><span id="line-169">                if (bitmask.testBit(a.id())) {</span>
-<span class="source-line-no">170</span><span id="line-170">                    set.add(a);</span>
-<span class="source-line-no">171</span><span id="line-171">                }</span>
-<span class="source-line-no">172</span><span id="line-172">            }</span>
-<span class="source-line-no">173</span><span id="line-173">            return set;</span>
-<span class="source-line-no">174</span><span id="line-174">        }</span>
-<span class="source-line-no">175</span><span id="line-175"></span>
-<span class="source-line-no">176</span><span id="line-176">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
-<span class="source-line-no">177</span><span id="line-177">            BigInteger i = BigInteger.ZERO;</span>
-<span class="source-line-no">178</span><span id="line-178">            for (CGMAlert a : alerts) {</span>
-<span class="source-line-no">179</span><span id="line-179">                i.setBit(a.id());</span>
-<span class="source-line-no">180</span><span id="line-180">            }</span>
-<span class="source-line-no">181</span><span id="line-181">            return i;</span>
-<span class="source-line-no">182</span><span id="line-182">        }</span>
-<span class="source-line-no">183</span><span id="line-183">    }</span>
-<span class="source-line-no">184</span><span id="line-184">    </span>
-<span class="source-line-no">185</span><span id="line-185">}</span>
+<span class="source-line-no">013</span><span id="line-13">import java.util.TreeSet;</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">/**</span>
+<span class="source-line-no">016</span><span id="line-16"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest}, opCode 75, size 8</span>
+<span class="source-line-no">017</span><span id="line-17"> *</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;br&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> *</span>
+<span class="source-line-no">020</span><span id="line-20"> * </span>
+<span class="source-line-no">021</span><span id="line-21"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;75&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;8&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;/table&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> */</span>
+<span class="source-line-no">029</span><span id="line-29">@MessageProps(</span>
+<span class="source-line-no">030</span><span id="line-30">    opCode=75,</span>
+<span class="source-line-no">031</span><span id="line-31">    size=8,</span>
+<span class="source-line-no">032</span><span id="line-32">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">033</span><span id="line-33">    request=CGMAlertStatusRequest.class</span>
+<span class="source-line-no">034</span><span id="line-34">)</span>
+<span class="source-line-no">035</span><span id="line-35">public class CGMAlertStatusResponse extends Message {</span>
+<span class="source-line-no">036</span><span id="line-36">    </span>
+<span class="source-line-no">037</span><span id="line-37">    private BigInteger intMap;</span>
+<span class="source-line-no">038</span><span id="line-38">    </span>
+<span class="source-line-no">039</span><span id="line-39">    public CGMAlertStatusResponse() {}</span>
+<span class="source-line-no">040</span><span id="line-40">    </span>
+<span class="source-line-no">041</span><span id="line-41">    public CGMAlertStatusResponse(long cgmAlertBitmask) {</span>
+<span class="source-line-no">042</span><span id="line-42">        this.cargo = buildCargo(cgmAlertBitmask);</span>
+<span class="source-line-no">043</span><span id="line-43">        this.intMap = BigInteger.valueOf(cgmAlertBitmask);</span>
+<span class="source-line-no">044</span><span id="line-44">        </span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    /**</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;caption&gt;Parsed fields for CGMAlertStatusResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;intMap&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint64(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;/table&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     */</span>
+<span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">054</span><span id="line-54">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">055</span><span id="line-55">        this.cargo = raw;</span>
+<span class="source-line-no">056</span><span id="line-56">        this.intMap = Bytes.readUint64(raw, 0);</span>
+<span class="source-line-no">057</span><span id="line-57">        </span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    </span>
+<span class="source-line-no">061</span><span id="line-61">    /**</span>
+<span class="source-line-no">062</span><span id="line-62">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">063</span><span id="line-63">     * &lt;caption&gt;Byte layout for CGMAlertStatusResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint64(cgmAlertBitmask) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;/table&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     */</span>
+<span class="source-line-no">075</span><span id="line-75">    public static byte[] buildCargo(long cgmAlertBitmask) {</span>
+<span class="source-line-no">076</span><span id="line-76">        return Bytes.combine(</span>
+<span class="source-line-no">077</span><span id="line-77">            Bytes.toUint64(cgmAlertBitmask));</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79">    </span>
+<span class="source-line-no">080</span><span id="line-80">    public BigInteger getIntMap() {</span>
+<span class="source-line-no">081</span><span id="line-81">        return intMap;</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83">    public long getBitMap() {</span>
+<span class="source-line-no">084</span><span id="line-84">        return intMap.longValue();</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">    public Set&lt;CGMAlert&gt; getCgmAlerts() {</span>
+<span class="source-line-no">088</span><span id="line-88">        return CGMAlert.fromBitmask(intMap);</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    public enum CGMAlert {</span>
+<span class="source-line-no">092</span><span id="line-92">        DEFAULT_CGM_ALERT_0(0),</span>
+<span class="source-line-no">093</span><span id="line-93">        FIXED_LOW_CGM_ALERT(1),</span>
+<span class="source-line-no">094</span><span id="line-94">        HIGH_CGM_ALERT(2),</span>
+<span class="source-line-no">095</span><span id="line-95">        LOW_CGM_ALERT(3),</span>
+<span class="source-line-no">096</span><span id="line-96">        CALIBRATION_REQUEST_CGM_ALERT(4),</span>
+<span class="source-line-no">097</span><span id="line-97">        RISE_CGM_ALERT(5),</span>
+<span class="source-line-no">098</span><span id="line-98">        RAPID_RISE_CGM_ALERT(6),</span>
+<span class="source-line-no">099</span><span id="line-99">        FALL_CGM_ALERT(7),</span>
+<span class="source-line-no">100</span><span id="line-100">        RAPID_FALL_CGM_ALERT(8),</span>
+<span class="source-line-no">101</span><span id="line-101">        LOW_CALIBRATION_ERROR_CGM_ALERT(9),</span>
+<span class="source-line-no">102</span><span id="line-102">        HIGH_CALIBRATION_ERROR_CGM_ALERT(10),</span>
+<span class="source-line-no">103</span><span id="line-103">        SENSOR_FAILED_CGM_ALERT(11),</span>
+<span class="source-line-no">104</span><span id="line-104">        SENSOR_EXPIRING_CGM_ALERT(12),</span>
+<span class="source-line-no">105</span><span id="line-105">        SENSOR_EXPIRED_CGM_ALERT(13),</span>
+<span class="source-line-no">106</span><span id="line-106">        OUT_OF_RANGE_CGM_ALERT(14),</span>
+<span class="source-line-no">107</span><span id="line-107">        DEFAULT_CGM_ALERT_15(15),</span>
+<span class="source-line-no">108</span><span id="line-108">        FIRST_START_CALIBRATION_CGM_ALERT(16),</span>
+<span class="source-line-no">109</span><span id="line-109">        SECOND_START_CALIBRATION_CGM_ALERT(17),</span>
+<span class="source-line-no">110</span><span id="line-110">        CALIBRATION_REQUIRED_CGM_ALERT(18),</span>
+<span class="source-line-no">111</span><span id="line-111">        LOW_TRANSMITTER_CGM_ALERT(19),</span>
+<span class="source-line-no">112</span><span id="line-112">        TRANSMITTER_CGM_ALERT(20),</span>
+<span class="source-line-no">113</span><span id="line-113">        DEFAULT_CGM_ALERT_21(21),</span>
+<span class="source-line-no">114</span><span id="line-114">        SENSOR_EXPIRING_CGM_ALERT2(22),</span>
+<span class="source-line-no">115</span><span id="line-115">        DEFAULT_CGM_ALERT_23(23),</span>
+<span class="source-line-no">116</span><span id="line-116">        DEFAULT_CGM_ALERT_24(24),</span>
+<span class="source-line-no">117</span><span id="line-117">        SENSOR_REUSE(25),</span>
+<span class="source-line-no">118</span><span id="line-118">        DEFAULT_CGM_ALERT_26(26),</span>
+<span class="source-line-no">119</span><span id="line-119">        DEFAULT_CGM_ALERT_27(27),</span>
+<span class="source-line-no">120</span><span id="line-120">        DEFAULT_CGM_ALERT_28(28),</span>
+<span class="source-line-no">121</span><span id="line-121">        DEFAULT_CGM_ALERT_29(29),</span>
+<span class="source-line-no">122</span><span id="line-122">        DEFAULT_CGM_ALERT_30(30),</span>
+<span class="source-line-no">123</span><span id="line-123">        DEFAULT_CGM_ALERT_31(31),</span>
+<span class="source-line-no">124</span><span id="line-124">        DEFAULT_CGM_ALERT_32(32),</span>
+<span class="source-line-no">125</span><span id="line-125">        DEFAULT_CGM_ALERT_33(33),</span>
+<span class="source-line-no">126</span><span id="line-126">        DEFAULT_CGM_ALERT_34(34),</span>
+<span class="source-line-no">127</span><span id="line-127">        DEFAULT_CGM_ALERT_35(35),</span>
+<span class="source-line-no">128</span><span id="line-128">        DEFAULT_CGM_ALERT_36(36),</span>
+<span class="source-line-no">129</span><span id="line-129">        DEFAULT_CGM_ALERT_37(37),</span>
+<span class="source-line-no">130</span><span id="line-130">        DEFAULT_CGM_ALERT_38(38),</span>
+<span class="source-line-no">131</span><span id="line-131">        DEFAULT_CGM_ALERT_39(39),</span>
+<span class="source-line-no">132</span><span id="line-132">        DEFAULT_CGM_ALERT_40(40),</span>
+<span class="source-line-no">133</span><span id="line-133">        DEFAULT_CGM_ALERT_41(41),</span>
+<span class="source-line-no">134</span><span id="line-134">        DEFAULT_CGM_ALERT_42(42),</span>
+<span class="source-line-no">135</span><span id="line-135">        DEFAULT_CGM_ALERT_43(43),</span>
+<span class="source-line-no">136</span><span id="line-136">        DEFAULT_CGM_ALERT_44(44),</span>
+<span class="source-line-no">137</span><span id="line-137">        DEFAULT_CGM_ALERT_45(45),</span>
+<span class="source-line-no">138</span><span id="line-138">        DEFAULT_CGM_ALERT_46(46),</span>
+<span class="source-line-no">139</span><span id="line-139">        DEFAULT_CGM_ALERT_47(47),</span>
+<span class="source-line-no">140</span><span id="line-140">        DEFAULT_CGM_ALERT_48(48),</span>
+<span class="source-line-no">141</span><span id="line-141">        DEFAULT_CGM_ALERT_49(49),</span>
+<span class="source-line-no">142</span><span id="line-142">        DEFAULT_CGM_ALERT_50(50),</span>
+<span class="source-line-no">143</span><span id="line-143">        DEFAULT_CGM_ALERT_51(51),</span>
+<span class="source-line-no">144</span><span id="line-144">        DEFAULT_CGM_ALERT_52(52),</span>
+<span class="source-line-no">145</span><span id="line-145">        DEFAULT_CGM_ALERT_53(53),</span>
+<span class="source-line-no">146</span><span id="line-146">        DEFAULT_CGM_ALERT_55(55),</span>
+<span class="source-line-no">147</span><span id="line-147">        DEFAULT_CGM_ALERT_56(56),</span>
+<span class="source-line-no">148</span><span id="line-148">        DEFAULT_CGM_ALERT_57(57),</span>
+<span class="source-line-no">149</span><span id="line-149">        DEFAULT_CGM_ALERT_58(58),</span>
+<span class="source-line-no">150</span><span id="line-150">        DEFAULT_CGM_ALERT_59(59),</span>
+<span class="source-line-no">151</span><span id="line-151">        DEFAULT_CGM_ALERT_60(60),</span>
+<span class="source-line-no">152</span><span id="line-152">        DEFAULT_CGM_ALERT_61(61),</span>
+<span class="source-line-no">153</span><span id="line-153">        DEFAULT_CGM_ALERT_62(62),</span>
+<span class="source-line-no">154</span><span id="line-154">        DEFAULT_CGM_ALERT_63(63),</span>
+<span class="source-line-no">155</span><span id="line-155"></span>
+<span class="source-line-no">156</span><span id="line-156">        ;</span>
+<span class="source-line-no">157</span><span id="line-157"></span>
+<span class="source-line-no">158</span><span id="line-158">        private final int id;</span>
+<span class="source-line-no">159</span><span id="line-159">        CGMAlert(int id) {</span>
+<span class="source-line-no">160</span><span id="line-160">            this.id = id;</span>
+<span class="source-line-no">161</span><span id="line-161">        }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">        public int id() {</span>
+<span class="source-line-no">164</span><span id="line-164">            return id;</span>
+<span class="source-line-no">165</span><span id="line-165">        }</span>
+<span class="source-line-no">166</span><span id="line-166"></span>
+<span class="source-line-no">167</span><span id="line-167">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
+<span class="source-line-no">168</span><span id="line-168">            Set&lt;CGMAlert&gt; set = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">169</span><span id="line-169">            for (CGMAlert a : values()) {</span>
+<span class="source-line-no">170</span><span id="line-170">                if (bitmask.testBit(a.id())) {</span>
+<span class="source-line-no">171</span><span id="line-171">                    set.add(a);</span>
+<span class="source-line-no">172</span><span id="line-172">                }</span>
+<span class="source-line-no">173</span><span id="line-173">            }</span>
+<span class="source-line-no">174</span><span id="line-174">            return set;</span>
+<span class="source-line-no">175</span><span id="line-175">        }</span>
+<span class="source-line-no">176</span><span id="line-176"></span>
+<span class="source-line-no">177</span><span id="line-177">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
+<span class="source-line-no">178</span><span id="line-178">            BigInteger i = BigInteger.ZERO;</span>
+<span class="source-line-no">179</span><span id="line-179">            for (CGMAlert a : alerts) {</span>
+<span class="source-line-no">180</span><span id="line-180">                i.setBit(a.id());</span>
+<span class="source-line-no">181</span><span id="line-181">            }</span>
+<span class="source-line-no">182</span><span id="line-182">            return i;</span>
+<span class="source-line-no">183</span><span id="line-183">        }</span>
+<span class="source-line-no">184</span><span id="line-184">    }</span>
+<span class="source-line-no">185</span><span id="line-185">    </span>
+<span class="source-line-no">186</span><span id="line-186">}</span>
 
 
 

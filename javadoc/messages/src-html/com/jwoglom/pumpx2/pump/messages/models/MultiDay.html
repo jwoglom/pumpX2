@@ -18,50 +18,52 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.models;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import java.util.HashSet;</span>
-<span class="source-line-no">004</span><span id="line-4">import java.util.Set;</span>
-<span class="source-line-no">005</span><span id="line-5"></span>
-<span class="source-line-no">006</span><span id="line-6">public enum MultiDay {</span>
-<span class="source-line-no">007</span><span id="line-7">    MONDAY(1),</span>
-<span class="source-line-no">008</span><span id="line-8">    TUESDAY(2),</span>
-<span class="source-line-no">009</span><span id="line-9">    WEDNESDAY(4),</span>
-<span class="source-line-no">010</span><span id="line-10">    THURSDAY(8),</span>
-<span class="source-line-no">011</span><span id="line-11">    FRIDAY(16),</span>
-<span class="source-line-no">012</span><span id="line-12">    SATURDAY(32),</span>
-<span class="source-line-no">013</span><span id="line-13">    SUNDAY(64),</span>
-<span class="source-line-no">014</span><span id="line-14">    ;</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">    public static final Set&lt;MultiDay&gt; ALL_DAYS = fromBitmask(127);</span>
+<span class="source-line-no">004</span><span id="line-4">import java.util.LinkedHashSet;</span>
+<span class="source-line-no">005</span><span id="line-5">import java.util.Set;</span>
+<span class="source-line-no">006</span><span id="line-6">import java.util.TreeSet;</span>
+<span class="source-line-no">007</span><span id="line-7"></span>
+<span class="source-line-no">008</span><span id="line-8">public enum MultiDay {</span>
+<span class="source-line-no">009</span><span id="line-9">    MONDAY(1),</span>
+<span class="source-line-no">010</span><span id="line-10">    TUESDAY(2),</span>
+<span class="source-line-no">011</span><span id="line-11">    WEDNESDAY(4),</span>
+<span class="source-line-no">012</span><span id="line-12">    THURSDAY(8),</span>
+<span class="source-line-no">013</span><span id="line-13">    FRIDAY(16),</span>
+<span class="source-line-no">014</span><span id="line-14">    SATURDAY(32),</span>
+<span class="source-line-no">015</span><span id="line-15">    SUNDAY(64),</span>
+<span class="source-line-no">016</span><span id="line-16">    ;</span>
 <span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    private final int id;</span>
+<span class="source-line-no">018</span><span id="line-18">    public static final Set&lt;MultiDay&gt; ALL_DAYS = fromBitmask(127);</span>
 <span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    MultiDay(int id) {</span>
-<span class="source-line-no">021</span><span id="line-21">        this.id = id;</span>
-<span class="source-line-no">022</span><span id="line-22">    }</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    public int id() {</span>
-<span class="source-line-no">025</span><span id="line-25">        return id;</span>
-<span class="source-line-no">026</span><span id="line-26">    }</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    public static Set&lt;MultiDay&gt; fromBitmask(int bitmask) {</span>
-<span class="source-line-no">029</span><span id="line-29">        Set&lt;MultiDay&gt; set = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">030</span><span id="line-30">        for (MultiDay day : values()) {</span>
-<span class="source-line-no">031</span><span id="line-31">            if (bitmask % day.id() == 0) {</span>
-<span class="source-line-no">032</span><span id="line-32">                set.add(day);</span>
-<span class="source-line-no">033</span><span id="line-33">            }</span>
-<span class="source-line-no">034</span><span id="line-34">        }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">        return set;</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">    public static int toBitmask(MultiDay... days) {</span>
-<span class="source-line-no">040</span><span id="line-40">        int mask = 0;</span>
-<span class="source-line-no">041</span><span id="line-41">        for (MultiDay day : days) {</span>
-<span class="source-line-no">042</span><span id="line-42">            mask += day.id();</span>
-<span class="source-line-no">043</span><span id="line-43">        }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">        return mask;</span>
-<span class="source-line-no">046</span><span id="line-46">    }</span>
-<span class="source-line-no">047</span><span id="line-47">}</span>
+<span class="source-line-no">020</span><span id="line-20">    private final int id;</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">    MultiDay(int id) {</span>
+<span class="source-line-no">023</span><span id="line-23">        this.id = id;</span>
+<span class="source-line-no">024</span><span id="line-24">    }</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">    public int id() {</span>
+<span class="source-line-no">027</span><span id="line-27">        return id;</span>
+<span class="source-line-no">028</span><span id="line-28">    }</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">    public static Set&lt;MultiDay&gt; fromBitmask(int bitmask) {</span>
+<span class="source-line-no">031</span><span id="line-31">        Set&lt;MultiDay&gt; set = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">032</span><span id="line-32">        for (MultiDay day : values()) {</span>
+<span class="source-line-no">033</span><span id="line-33">            if (bitmask % day.id() == 0) {</span>
+<span class="source-line-no">034</span><span id="line-34">                set.add(day);</span>
+<span class="source-line-no">035</span><span id="line-35">            }</span>
+<span class="source-line-no">036</span><span id="line-36">        }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">        return set;</span>
+<span class="source-line-no">039</span><span id="line-39">    }</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">    public static int toBitmask(MultiDay... days) {</span>
+<span class="source-line-no">042</span><span id="line-42">        int mask = 0;</span>
+<span class="source-line-no">043</span><span id="line-43">        for (MultiDay day : days) {</span>
+<span class="source-line-no">044</span><span id="line-44">            mask += day.id();</span>
+<span class="source-line-no">045</span><span id="line-45">        }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">        return mask;</span>
+<span class="source-line-no">048</span><span id="line-48">    }</span>
+<span class="source-line-no">049</span><span id="line-49">}</span>
 
 
 
