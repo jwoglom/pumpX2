@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequ
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
     opCode=73,
@@ -131,7 +132,7 @@ public class ReminderStatusResponse extends Message {
         }
 
         public static Set<ReminderType> fromBitmask(BigInteger bitmask) {
-            Set<ReminderType> set = new HashSet<>();
+            Set<ReminderType> set = new TreeSet<>();
             for (ReminderType a : values()) {
                 if (bitmask.testBit(a.id())) {
                     set.add(a);

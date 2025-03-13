@@ -1,7 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.models;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public enum MultiDay {
     MONDAY(1),
@@ -26,7 +28,7 @@ public enum MultiDay {
     }
 
     public static Set<MultiDay> fromBitmask(int bitmask) {
-        Set<MultiDay> set = new HashSet<>();
+        Set<MultiDay> set = new TreeSet<>();
         for (MultiDay day : values()) {
             if (bitmask % day.id() == 0) {
                 set.add(day);

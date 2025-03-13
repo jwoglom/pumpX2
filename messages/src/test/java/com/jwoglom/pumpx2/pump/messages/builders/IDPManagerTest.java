@@ -99,25 +99,25 @@ public class IDPManagerTest {
                         "idpSettingsResponse=IDPSettingsResponse[carbEntry=false,idpId=2,insulinDuration=200,maxBolus=20000,name=PROFILE2,numberOfProfileSegments=1,cargo={2,80,82,79,70,73,76,69,50,0,0,0,0,0,0,0,0,1,-56,0,32,78,0}]," +
                         "isActiveProfile=false," +
                         "segments=[" +
-                            "IDPSegmentResponse[idpId=2,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={2,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}]" +
+                            "IDPSegmentResponse[idpId=2,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={2,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}]" +
                         "]" +
                     "], " +
                     "IDPManager.Profile[" +
                         "idpSettingsResponse=IDPSettingsResponse[carbEntry=false,idpId=1,insulinDuration=200,maxBolus=20000,name=PROFILE1,numberOfProfileSegments=2,cargo={1,80,82,79,70,73,76,69,49,0,0,0,0,0,0,0,0,2,-56,0,32,78,0}]," +
                         "isActiveProfile=false," +
                         "segments=[" +
-                            "IDPSegmentResponse[idpId=1,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={1,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}], " +
-                            "IDPSegmentResponse[idpId=1,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=1000,profileCarbRatio=10,profileISF=1,profileProcessedStartTime=01:40,profileStartTime=100,profileTargetBG=101,segmentIndex=1,cargo={1,1,100,0,-24,3,10,0,0,0,101,0,1,0,31}]" +
+                            "IDPSegmentResponse[idpId=1,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={1,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}], " +
+                            "IDPSegmentResponse[idpId=1,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=1000,profileCarbRatio=10,profileISF=1,profileProcessedStartTime=01:40,profileStartTime=100,profileTargetBG=101,segmentIndex=1,cargo={1,1,100,0,-24,3,10,0,0,0,101,0,1,0,31}]" +
                         "]" +
                     "], " +
                     "IDPManager.Profile[" +
                         "idpSettingsResponse=IDPSettingsResponse[carbEntry=true,idpId=0,insulinDuration=300,maxBolus=25000,name=PROFILE0,numberOfProfileSegments=4,cargo={0,80,82,79,70,73,76,69,48,0,0,0,0,0,0,0,0,4,44,1,-88,97,1}]," +
                         "isActiveProfile=true," +
                         "segments=[" +
-                            "IDPSegmentResponse[idpId=0,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={0,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}], " +
-                            "IDPSegmentResponse[idpId=0,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=1000,profileCarbRatio=10,profileISF=1,profileProcessedStartTime=01:40,profileStartTime=100,profileTargetBG=101,segmentIndex=1,cargo={0,1,100,0,-24,3,10,0,0,0,101,0,1,0,31}], " +
-                            "IDPSegmentResponse[idpId=0,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=2000,profileCarbRatio=20,profileISF=2,profileProcessedStartTime=03:20,profileStartTime=200,profileTargetBG=102,segmentIndex=2,cargo={0,2,-56,0,-48,7,20,0,0,0,102,0,2,0,31}], " +
-                            "IDPSegmentResponse[idpId=0,idpStatus=[CARB_RATIO, CORRECTION_FACTOR, TARGET_BG, BASAL_RATE, START_TIME],idpStatusId=31,profileBasalRate=3000,profileCarbRatio=30,profileISF=3,profileProcessedStartTime=05:00,profileStartTime=300,profileTargetBG=103,segmentIndex=3,cargo={0,3,44,1,-72,11,30,0,0,0,103,0,3,0,31}]" +
+                            "IDPSegmentResponse[idpId=0,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=500,profileCarbRatio=5,profileISF=1,profileProcessedStartTime=00:00,profileStartTime=0,profileTargetBG=100,segmentIndex=0,cargo={0,0,0,0,-12,1,5,0,0,0,100,0,1,0,31}], " +
+                            "IDPSegmentResponse[idpId=0,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=1000,profileCarbRatio=10,profileISF=1,profileProcessedStartTime=01:40,profileStartTime=100,profileTargetBG=101,segmentIndex=1,cargo={0,1,100,0,-24,3,10,0,0,0,101,0,1,0,31}], " +
+                            "IDPSegmentResponse[idpId=0,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=2000,profileCarbRatio=20,profileISF=2,profileProcessedStartTime=03:20,profileStartTime=200,profileTargetBG=102,segmentIndex=2,cargo={0,2,-56,0,-48,7,20,0,0,0,102,0,2,0,31}], " +
+                            "IDPSegmentResponse[idpId=0,idpStatus=[BASAL_RATE, CARB_RATIO, TARGET_BG, CORRECTION_FACTOR, START_TIME],idpStatusId=31,profileBasalRate=3000,profileCarbRatio=30,profileISF=3,profileProcessedStartTime=05:00,profileStartTime=300,profileTargetBG=103,segmentIndex=3,cargo={0,3,44,1,-72,11,30,0,0,0,103,0,3,0,31}]" +
                         "]" +
                     "]" +
                 "]" +

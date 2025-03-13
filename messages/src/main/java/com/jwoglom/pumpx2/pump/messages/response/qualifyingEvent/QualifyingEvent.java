@@ -31,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -137,7 +138,7 @@ public enum QualifyingEvent {
     }
 
     public static Set<QualifyingEvent> fromBitmask(long bitmask) {
-        Set<QualifyingEvent> ret = new HashSet<>();
+        Set<QualifyingEvent> ret = new TreeSet<>();
         for (QualifyingEvent e : values()) {
             if ((bitmask & e.getId()) != 0) {
                 ret.add(e);

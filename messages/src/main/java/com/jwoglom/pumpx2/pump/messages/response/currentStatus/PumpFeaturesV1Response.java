@@ -9,6 +9,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV1Requ
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
     opCode=79,
@@ -105,7 +106,7 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
         }
 
         public static Set<PumpFeatureType> fromBitmask(BigInteger intMap) {
-            Set<PumpFeatureType> current = new HashSet<>();
+            Set<PumpFeatureType> current = new TreeSet<>();
             for (PumpFeatureType type : PumpFeatureType.values()) {
                 if (!intMap.and(type.bitmask()).equals(BigInteger.ZERO)) {
                     current.add(type);

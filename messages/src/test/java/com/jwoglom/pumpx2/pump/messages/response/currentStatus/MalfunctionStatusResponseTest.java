@@ -12,6 +12,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class MalfunctionStatusResponseTest {
+    // button pressed down?? 23-0x20a7 02:02:05.041 CX2:MUA:L:BTResponseParser          com.jwoglom.controlx2                I  PARSED-MESSAGE(txId=124, CURRENT_STATUS):	MalfunctionStatusResponse[codeA=23,codeB=8359,errorString=23-0x20a7,remaining={2,-1,-1},cargo={23,0,0,0,-89,32,0,0,2,-1,-1}]
+
+
     // 12-0x2071 - stuck vibrator motor
     @Test
     public void testMalfunction2StatusResponse_12_0x2071_stuckVibratorMotor() throws DecoderException {

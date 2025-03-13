@@ -2,7 +2,9 @@ package com.jwoglom.pumpx2.pump.messages.models;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public enum SupportedDevices {
     ALL(KnownDeviceModel.TSLIM_X2, KnownDeviceModel.MOBI),
@@ -12,7 +14,7 @@ public enum SupportedDevices {
 
     private final Set<KnownDeviceModel> models;
     SupportedDevices(KnownDeviceModel... models) {
-        this.models = new HashSet<>();
+        this.models = new TreeSet<>();
         this.models.addAll(Arrays.asList(models));
     }
 

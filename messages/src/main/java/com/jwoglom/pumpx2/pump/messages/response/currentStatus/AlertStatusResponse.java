@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
         opCode=69,
@@ -160,7 +161,7 @@ public class AlertStatusResponse extends Message {
     }
 
     public Set<AlertResponseType> getAlerts() {
-        Set<AlertResponseType> current = new HashSet<>();
+        Set<AlertResponseType> current = new TreeSet<>();
         for (AlertResponseType type : AlertResponseType.values()) {
             if (intMap.testBit(type.bitmask())) {
                 current.add(type);

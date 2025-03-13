@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
         opCode=71,
@@ -141,7 +142,7 @@ public class AlarmStatusResponse extends Message {
         }
 
         public static Set<AlarmResponseType> fromBitmask(BigInteger intMap) {
-            Set<AlarmResponseType> current = new HashSet<>();
+            Set<AlarmResponseType> current = new TreeSet<>();
             for (AlarmResponseType type : AlarmResponseType.values()) {
                 if (intMap.testBit(type.bitmask())) {
                     current.add(type);

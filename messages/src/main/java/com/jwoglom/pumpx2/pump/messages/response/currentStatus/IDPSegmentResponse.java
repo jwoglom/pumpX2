@@ -11,6 +11,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * If the segment index is invalid, returns ErrorResponse with INVALID_PARAMETER, which causes the
@@ -174,7 +175,7 @@ public class IDPSegmentResponse extends Message {
         }
 
         public static Set<IDPSegmentStatus> fromBitmask(int mask) {
-            Set<IDPSegmentStatus> items = new HashSet<>();
+            Set<IDPSegmentStatus> items = new TreeSet<>();
             for (IDPSegmentStatus status : values()) {
                 if ((mask & status.getId()) != 0) {
                     items.add(status);

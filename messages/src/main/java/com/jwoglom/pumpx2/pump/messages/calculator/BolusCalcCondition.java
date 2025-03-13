@@ -116,7 +116,7 @@ public interface BolusCalcCondition {
         }
     }
 
-    class Condition extends Exception {
+    class Condition extends Exception implements Comparable<Condition> {
         private final String msg;
         private final String reason;
         private final BolusCalcPrompt prompt;
@@ -164,6 +164,11 @@ public interface BolusCalcCondition {
 
         public @Nullable BolusCalcPrompt getPrompt() {
             return prompt;
+        }
+
+        @Override
+        public int compareTo(Condition o) {
+            return o.hashCode() - this.hashCode();
         }
     }
 

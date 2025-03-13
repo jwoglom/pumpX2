@@ -11,6 +11,7 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistory
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
     opCode=-23,
@@ -86,7 +87,7 @@ public class PumpingStateStreamResponse extends Message {
             return mask;
         }
         public static Set<PumpingState> fromBitmask(long bitmask) {
-            Set<PumpingState> ret = new HashSet<>();
+            Set<PumpingState> ret = new TreeSet<>();
             for (PumpingState s : values()) {
                 if ((bitmask & s.mask()) != 0) {
                     ret.add(s);

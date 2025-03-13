@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequ
 import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @MessageProps(
     opCode=75,
@@ -130,7 +131,7 @@ public class CGMAlertStatusResponse extends Message {
         }
 
         public static Set<CGMAlert> fromBitmask(BigInteger bitmask) {
-            Set<CGMAlert> set = new HashSet<>();
+            Set<CGMAlert> set = new TreeSet<>();
             for (CGMAlert a : values()) {
                 if (bitmask.testBit(a.id())) {
                     set.add(a);

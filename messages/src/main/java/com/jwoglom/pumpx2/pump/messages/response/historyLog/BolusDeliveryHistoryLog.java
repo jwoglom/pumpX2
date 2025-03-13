@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @HistoryLogProps(
     opCode = 280,
@@ -156,7 +157,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
             return mask;
         }
         public static Set<BolusType> fromBitmask(int bitmask) {
-            Set<BolusType> ret = new HashSet<>();
+            Set<BolusType> ret = new TreeSet<>();
             for (BolusType b : values()) {
                 if ((bitmask & b.mask()) != 0) {
                     ret.add(b);

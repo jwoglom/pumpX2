@@ -10,8 +10,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -133,7 +135,7 @@ public class BolusCalculator {
 
         Set<BolusCalcCondition> ignored = Arrays.stream(ignoredConditions).collect(Collectors.toSet());
 
-        Set<BolusCalcCondition> conditions = new HashSet<>();
+        Set<BolusCalcCondition> conditions = new TreeSet<>();
 
         BolusCalcComponent addedFromCarbs = getAddedFromCarbs();
         BolusCalcComponent addedFromBG = getAddedFromGlucose();
