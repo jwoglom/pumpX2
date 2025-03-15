@@ -70,93 +70,111 @@
 <span class="source-line-no">053</span><span id="line-53">)</span>
 <span class="source-line-no">054</span><span id="line-54">public class RemoteBgEntryRequest extends Message {</span>
 <span class="source-line-no">055</span><span id="line-55">    private int bg;</span>
-<span class="source-line-no">056</span><span id="line-56">    private boolean isAutopopBg;</span>
-<span class="source-line-no">057</span><span id="line-57">    private long pumpTime;</span>
-<span class="source-line-no">058</span><span id="line-58">    private int bolusId;</span>
-<span class="source-line-no">059</span><span id="line-59">    </span>
-<span class="source-line-no">060</span><span id="line-60">    public RemoteBgEntryRequest() {}</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * Creates a request to add a data point of the current BG to the provided bolus ID (which must</span>
-<span class="source-line-no">064</span><span id="line-64">     * be in progress; in a state between calling {@link BolusPermissionRequest} and {@link InitiateBolusRequest})</span>
-<span class="source-line-no">065</span><span id="line-65">     * @param bg the blood glucose value in mg/dL</span>
-<span class="source-line-no">066</span><span id="line-66">     * @param isAutopopBg true if the BG was autopopulated from the CGM; false if manually entered</span>
-<span class="source-line-no">067</span><span id="line-67">     * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
-<span class="source-line-no">068</span><span id="line-68">     * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}</span>
-<span class="source-line-no">069</span><span id="line-69">     */</span>
-<span class="source-line-no">070</span><span id="line-70">    public RemoteBgEntryRequest(int bg, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
-<span class="source-line-no">071</span><span id="line-71">        this.cargo = buildCargo(bg, isAutopopBg, pumpTimeSecondsSinceBoot, bolusId);</span>
-<span class="source-line-no">072</span><span id="line-72">        this.bg = bg;</span>
-<span class="source-line-no">073</span><span id="line-73">        this.isAutopopBg = isAutopopBg;</span>
-<span class="source-line-no">074</span><span id="line-74">        this.pumpTime = pumpTimeSecondsSinceBoot;</span>
-<span class="source-line-no">075</span><span id="line-75">        this.bolusId = bolusId;</span>
-<span class="source-line-no">076</span><span id="line-76">    }</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    /**</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;caption&gt;Parsed fields for RemoteBgEntryRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isAutopopBg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[4] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 5)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 9)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;/table&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     */</span>
-<span class="source-line-no">087</span><span id="line-87">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">088</span><span id="line-88">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">089</span><span id="line-89">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">090</span><span id="line-90">        this.cargo = raw;</span>
-<span class="source-line-no">091</span><span id="line-91">        this.bg = Bytes.readShort(raw, 0);</span>
-<span class="source-line-no">092</span><span id="line-92">        this.isAutopopBg = (raw[4] == 1);</span>
-<span class="source-line-no">093</span><span id="line-93">        this.pumpTime = Bytes.readUint32(raw, 5);</span>
-<span class="source-line-no">094</span><span id="line-94">        this.bolusId = Bytes.readShort(raw, 9);</span>
-<span class="source-line-no">095</span><span id="line-95">    }</span>
-<span class="source-line-no">096</span><span id="line-96"></span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    /**</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;caption&gt;Byte layout for RemoteBgEntryRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (isAutopopBg ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     * &lt;/table&gt;</span>
-<span class="source-line-no">114</span><span id="line-114">     */</span>
-<span class="source-line-no">115</span><span id="line-115">    public static byte[] buildCargo(int bg, boolean isAutopopBg, long pumpTime, int bolusId) {</span>
-<span class="source-line-no">116</span><span id="line-116">        return Bytes.combine(</span>
-<span class="source-line-no">117</span><span id="line-117">            Bytes.firstTwoBytesLittleEndian(bg),</span>
-<span class="source-line-no">118</span><span id="line-118">            new byte[]{0, 0},</span>
-<span class="source-line-no">119</span><span id="line-119">            new byte[]{(byte) (isAutopopBg ? 1 : 0)},</span>
-<span class="source-line-no">120</span><span id="line-120">            Bytes.toUint32(pumpTime),</span>
-<span class="source-line-no">121</span><span id="line-121">            Bytes.firstTwoBytesLittleEndian(bolusId)</span>
-<span class="source-line-no">122</span><span id="line-122">        );</span>
-<span class="source-line-no">123</span><span id="line-123">    }</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">    public int getBG() {</span>
-<span class="source-line-no">126</span><span id="line-126">        return bg;</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    public boolean getIsAutopopBg() {</span>
-<span class="source-line-no">130</span><span id="line-130">        return isAutopopBg;</span>
-<span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">    public long getPumpTime() {</span>
-<span class="source-line-no">134</span><span id="line-134">        return pumpTime;</span>
-<span class="source-line-no">135</span><span id="line-135">    }</span>
-<span class="source-line-no">136</span><span id="line-136"></span>
-<span class="source-line-no">137</span><span id="line-137">    public int getBolusId() {</span>
-<span class="source-line-no">138</span><span id="line-138">        return bolusId;</span>
-<span class="source-line-no">139</span><span id="line-139">    }</span>
-<span class="source-line-no">140</span><span id="line-140">    </span>
-<span class="source-line-no">141</span><span id="line-141">    </span>
-<span class="source-line-no">142</span><span id="line-142">}</span>
+<span class="source-line-no">056</span><span id="line-56">    private boolean useForCgmCalibration;</span>
+<span class="source-line-no">057</span><span id="line-57">    private boolean isAutopopBg;</span>
+<span class="source-line-no">058</span><span id="line-58">    private long pumpTime;</span>
+<span class="source-line-no">059</span><span id="line-59">    private int bolusId;</span>
+<span class="source-line-no">060</span><span id="line-60">    </span>
+<span class="source-line-no">061</span><span id="line-61">    public RemoteBgEntryRequest() {}</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">    /**</span>
+<span class="source-line-no">064</span><span id="line-64">     * Creates a request to add a data point of the current BG to the provided bolus ID (which must</span>
+<span class="source-line-no">065</span><span id="line-65">     * be in progress; in a state between calling {@link BolusPermissionRequest} and {@link InitiateBolusRequest})</span>
+<span class="source-line-no">066</span><span id="line-66">     * @param bg the blood glucose value in mg/dL</span>
+<span class="source-line-no">067</span><span id="line-67">     * @param useForCgmCalibration if the BG should be used to calibrate the active G6 or G7 CGM sensor</span>
+<span class="source-line-no">068</span><span id="line-68">     * @param isAutopopBg true if the BG was autopopulated from the CGM; false if manually entered</span>
+<span class="source-line-no">069</span><span id="line-69">     * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
+<span class="source-line-no">070</span><span id="line-70">     * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}</span>
+<span class="source-line-no">071</span><span id="line-71">     */</span>
+<span class="source-line-no">072</span><span id="line-72">    public RemoteBgEntryRequest(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
+<span class="source-line-no">073</span><span id="line-73">        this.cargo = buildCargo(bg, useForCgmCalibration, isAutopopBg, pumpTimeSecondsSinceBoot, bolusId);</span>
+<span class="source-line-no">074</span><span id="line-74">        this.bg = bg;</span>
+<span class="source-line-no">075</span><span id="line-75">        this.useForCgmCalibration = useForCgmCalibration;</span>
+<span class="source-line-no">076</span><span id="line-76">        this.isAutopopBg = isAutopopBg;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.pumpTime = pumpTimeSecondsSinceBoot;</span>
+<span class="source-line-no">078</span><span id="line-78">        this.bolusId = bolusId;</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    /**</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;caption&gt;Parsed fields for RemoteBgEntryRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;useForCgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[2] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isAutopopBg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[4] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 5)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 9)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;/table&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     */</span>
+<span class="source-line-no">091</span><span id="line-91">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">092</span><span id="line-92">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">093</span><span id="line-93">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">094</span><span id="line-94">        this.cargo = raw;</span>
+<span class="source-line-no">095</span><span id="line-95">        this.bg = Bytes.readShort(raw, 0);</span>
+<span class="source-line-no">096</span><span id="line-96">        this.useForCgmCalibration = (raw[2] == 1);</span>
+<span class="source-line-no">097</span><span id="line-97">        this.isAutopopBg = (raw[4] == 1);</span>
+<span class="source-line-no">098</span><span id="line-98">        this.pumpTime = Bytes.readUint32(raw, 5);</span>
+<span class="source-line-no">099</span><span id="line-99">        this.bolusId = Bytes.readShort(raw, 9);</span>
+<span class="source-line-no">100</span><span id="line-100">    }</span>
+<span class="source-line-no">101</span><span id="line-101"></span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    /**</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;caption&gt;Byte layout for RemoteBgEntryRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (useForCgmCalibration ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (isAutopopBg ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">118</span><span id="line-118">     * &lt;/table&gt;</span>
+<span class="source-line-no">119</span><span id="line-119">     */</span>
+<span class="source-line-no">120</span><span id="line-120">    public static byte[] buildCargo(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTime, int bolusId) {</span>
+<span class="source-line-no">121</span><span id="line-121">        return Bytes.combine(</span>
+<span class="source-line-no">122</span><span id="line-122">            Bytes.firstTwoBytesLittleEndian(bg),</span>
+<span class="source-line-no">123</span><span id="line-123">            new byte[]{(byte) (useForCgmCalibration ? 1 : 0)},</span>
+<span class="source-line-no">124</span><span id="line-124">            new byte[]{0},</span>
+<span class="source-line-no">125</span><span id="line-125">            new byte[]{(byte) (isAutopopBg ? 1 : 0)},</span>
+<span class="source-line-no">126</span><span id="line-126">            Bytes.toUint32(pumpTime),</span>
+<span class="source-line-no">127</span><span id="line-127">            Bytes.firstTwoBytesLittleEndian(bolusId)</span>
+<span class="source-line-no">128</span><span id="line-128">        );</span>
+<span class="source-line-no">129</span><span id="line-129">    }</span>
+<span class="source-line-no">130</span><span id="line-130"></span>
+<span class="source-line-no">131</span><span id="line-131">    public int getBG() {</span>
+<span class="source-line-no">132</span><span id="line-132">        return bg;</span>
+<span class="source-line-no">133</span><span id="line-133">    }</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">    public boolean getIsAutopopBg() {</span>
+<span class="source-line-no">136</span><span id="line-136">        return isAutopopBg;</span>
+<span class="source-line-no">137</span><span id="line-137">    }</span>
+<span class="source-line-no">138</span><span id="line-138"></span>
+<span class="source-line-no">139</span><span id="line-139">    public boolean isAutopopBg() {</span>
+<span class="source-line-no">140</span><span id="line-140">        return isAutopopBg;</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    public boolean isUseForCgmCalibration() {</span>
+<span class="source-line-no">144</span><span id="line-144">        return useForCgmCalibration;</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">    public boolean getUseForCgmCalibration() {</span>
+<span class="source-line-no">148</span><span id="line-148">        return useForCgmCalibration;</span>
+<span class="source-line-no">149</span><span id="line-149">    }</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">    public long getPumpTime() {</span>
+<span class="source-line-no">152</span><span id="line-152">        return pumpTime;</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">    public int getBolusId() {</span>
+<span class="source-line-no">156</span><span id="line-156">        return bolusId;</span>
+<span class="source-line-no">157</span><span id="line-157">    }</span>
+<span class="source-line-no">158</span><span id="line-158"></span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">}</span>
 
 
 

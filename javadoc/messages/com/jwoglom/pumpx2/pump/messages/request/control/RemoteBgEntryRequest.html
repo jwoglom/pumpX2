@@ -129,7 +129,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">RemoteBgEntryRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,boolean,long,int)" class="member-name-link">RemoteBgEntryRequest</a><wbr>(int&nbsp;bg,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,boolean,boolean,long,int)" class="member-name-link">RemoteBgEntryRequest</a><wbr>(int&nbsp;bg,
+ boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTimeSecondsSinceBoot,
  int&nbsp;bolusId)</code></div>
@@ -152,7 +153,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,boolean,long,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;bg,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,boolean,boolean,long,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;bg,
+ boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTime,
  int&nbsp;bolusId)</code></div>
@@ -162,8 +164,8 @@ loadScripts(document, 'script');</script>
  OffsetDescription
  0<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
  1<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
- 2<code>new byte[]{0} [element 0]</code>
- 3<code>new byte[]{0} [element 1]</code>
+ 2<code>(byte) (useForCgmCalibration ? 1 : 0)</code>
+ 3<code>(byte) (0)</code>
  4<code>(byte) (isAutopopBg ? 1 : 0)</code>
  5<code>toUint32(pumpTime) [byte 0]</code>
  6<code>toUint32(pumpTime) [byte 1]</code>
@@ -185,12 +187,22 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpTime()" class="member-name-link">getPumpTime</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUseForCgmCalibration()" class="member-name-link">getUseForCgmCalibration</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAutopopBg()" class="member-name-link">isAutopopBg</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseForCgmCalibration()" class="member-name-link">isUseForCgmCalibration</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for RemoteBgEntryRequest:
  <code>bg</code><code>Bytes.readShort(raw, 0)</code>
+ <code>useForCgmCalibration</code><code>(raw[2] == 1)</code>
  <code>isAutopopBg</code><code>(raw[4] == 1)</code>
  <code>pumpTime</code><code>Bytes.readUint32(raw, 5)</code>
  <code>bolusId</code><code>Bytes.readShort(raw, 9)</code>
@@ -219,13 +231,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>RemoteBgEntryRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-60">RemoteBgEntryRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-61">RemoteBgEntryRequest</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(int,boolean,long,int)">
+<section class="detail" id="&lt;init&gt;(int,boolean,boolean,long,int)">
 <h3>RemoteBgEntryRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-70">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-72">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
+ boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTimeSecondsSinceBoot,
  int&nbsp;bolusId)</span></div>
@@ -234,6 +247,7 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>bg</code> - the blood glucose value in mg/dL</dd>
+<dd><code>useForCgmCalibration</code> - if the BG should be used to calibrate the active G6 or G7 CGM sensor</dd>
 <dd><code>isAutopopBg</code> - true if the BG was autopopulated from the CGM; false if manually entered</dd>
 <dd><code>pumpTimeSecondsSinceBoot</code> - the output of <a href="../../response/currentStatus/TimeSinceResetResponse.html#getPumpTimeSecondsSinceReset()"><code>TimeSinceResetResponse.getPumpTimeSecondsSinceReset()</code></a></dd>
 <dd><code>bolusId</code> - the bolus ID returned from <a href="../../response/control/BolusPermissionResponse.html#getBolusId()"><code>BolusPermissionResponse.getBolusId()</code></a></dd>
@@ -251,10 +265,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-87">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-91">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for RemoteBgEntryRequest:</caption>
  <tr><td><code>bg</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>useForCgmCalibration</code></td><td><code>(raw[2] == 1)</code></td></tr>
  <tr><td><code>isAutopopBg</code></td><td><code>(raw[4] == 1)</code></td></tr>
  <tr><td><code>pumpTime</code></td><td><code>Bytes.readUint32(raw, 5)</code></td></tr>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 9)</code></td></tr>
@@ -266,9 +281,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(int,boolean,long,int)">
+<section class="detail" id="buildCargo(int,boolean,boolean,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-115">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-120">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
+ boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTime,
  int&nbsp;bolusId)</span></div>
@@ -277,8 +293,8 @@ loadScripts(document, 'script');</script>
  <tr><th>Offset</th><th>Description</th></tr>
  <tr><td>0</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
  <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
- <tr><td>2</td><td><code>new byte[]{0} [element 0]</code></td></tr>
- <tr><td>3</td><td><code>new byte[]{0} [element 1]</code></td></tr>
+ <tr><td>2</td><td><code>(byte) (useForCgmCalibration ? 1 : 0)</code></td></tr>
+ <tr><td>3</td><td><code>(byte) (0)</code></td></tr>
  <tr><td>4</td><td><code>(byte) (isAutopopBg ? 1 : 0)</code></td></tr>
  <tr><td>5</td><td><code>toUint32(pumpTime) [byte 0]</code></td></tr>
  <tr><td>6</td><td><code>toUint32(pumpTime) [byte 1]</code></td></tr>
@@ -292,25 +308,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBG()">
 <h3>getBG</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-125">getBG</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-131">getBG</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIsAutopopBg()">
 <h3>getIsAutopopBg</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-129">getIsAutopopBg</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-135">getIsAutopopBg</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAutopopBg()">
+<h3>isAutopopBg</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-139">isAutopopBg</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isUseForCgmCalibration()">
+<h3>isUseForCgmCalibration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-143">isUseForCgmCalibration</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getUseForCgmCalibration()">
+<h3>getUseForCgmCalibration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-147">getUseForCgmCalibration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPumpTime()">
 <h3>getPumpTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-133">getPumpTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-151">getPumpTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-137">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-155">getBolusId</a></span>()</div>
 </section>
 </li>
 </ul>

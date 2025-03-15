@@ -58,7 +58,7 @@
 <span class="source-line-no">041</span><span id="line-41">    public static final int MAX_BASAL_LIMIT_MILLIUNITS = 15_000;</span>
 <span class="source-line-no">042</span><span id="line-42">    public SetMaxBasalLimitRequest(int maxHourlyBasalMilliunits) {</span>
 <span class="source-line-no">043</span><span id="line-43">        Validate.isTrue(maxHourlyBasalMilliunits &gt;= MIN_BASAL_LIMIT_MILLIUNITS, "hourly basal limit must be greater than 1 unit");</span>
-<span class="source-line-no">044</span><span id="line-44">        Validate.isTrue(maxHourlyBasalMilliunits &lt;= MAX_BASAL_LIMIT_MILLIUNITS, "bolus limit must be less than or equal to 15 units");</span>
+<span class="source-line-no">044</span><span id="line-44">        Validate.isTrue(maxHourlyBasalMilliunits &lt;= MAX_BASAL_LIMIT_MILLIUNITS, "basal limit must be less than or equal to 15 units");</span>
 <span class="source-line-no">045</span><span id="line-45">        this.cargo = buildCargo(maxHourlyBasalMilliunits);</span>
 <span class="source-line-no">046</span><span id="line-46">        this.maxHourlyBasalMilliunits = maxHourlyBasalMilliunits;</span>
 <span class="source-line-no">047</span><span id="line-47">        </span>
