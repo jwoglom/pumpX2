@@ -167,14 +167,15 @@ public class Main {
         int opCode = initialRead[2];
         Set<Message> messages = new HashSet<>();
         String messageStr = "";
-        try {
-            Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
-            possibilities = CharacteristicGuesser.filterKnownPossibilities(rawHex, opCode, possibilities);
-            if (possibilities.size() == 0) {
-                return opCode+"\tUnknown opcode "+opCode;
-            }
-            Characteristic characteristic = null;
-            for (Characteristic c : possibilities) {
+        Exception exc = null;
+        Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
+        //possibilities = CharacteristicGuesser.filterKnownPossibilities(rawHex, opCode, possibilities);
+        if (possibilities.size() == 0) {
+            return opCode+"\tUnknown opcode "+opCode;
+        }
+        Characteristic characteristic = null;
+        for (Characteristic c : possibilities) {
+            try {
                 Message message = Messages.fromOpcode(opCode, c).newInstance();
                 message.fillWithEmptyCargo();
                 messages.add(message);
@@ -188,14 +189,13 @@ public class Main {
                     messageStr += " <OR> ";
                 }
                 messageStr += message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
+                return opCode+"\t"+messageStr;
+            } catch (InstantiationException|IllegalAccessException|IllegalArgumentException|NullPointerException e) {
+                e.printStackTrace();
+                exc = e;
             }
-        } catch (NullPointerException e) {
-            return opCode+"\tUnknown opcode "+opCode;
-        } catch (InstantiationException|IllegalAccessException e) {
-            e.printStackTrace();
         }
-
-        return opCode+"\t"+messageStr;
+        throw new RuntimeException(exc);
     }
 
     public static String parseFull(String rawHex, String ...extra) throws DecoderException {
