@@ -4,6 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
+import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.shared.Hex;
 
@@ -16,7 +17,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200239,timeSinceReset=461710145]
         initPumpState("6VeDeRAL5DCigGw2", 461710145L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(180, true, 1200173L, 10676);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(180, false, true, 1200173L, 10676);
 
         /**
          * 00533353073923851bb40000bfb4    51      response.currentStatus.LastBGResponse   LastBGResponse[bgSource=0,bgTimestamp=461710137,bgValue=180
@@ -45,7 +46,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200239,timeSinceReset=461710145]
         initPumpState("6VeDeRAL5DCigGw2", 461710145L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(185, true, 1200239L, 10677);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(185, false, true, 1200239L, 10677);
 
 
         /**
@@ -74,7 +75,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200296,timeSinceReset=461710202]
         initPumpState("6VeDeRAL5DCigGw2", 461710202L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(186, true, 1200239L, 10678);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(186, false, true, 1200239L, 10678);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "02ceb6ce23ba000000016f501200b6297a23851b",
@@ -95,7 +96,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1079252,timeSinceReset=461589158
         initPumpState("6VeDeRAL5DCigGw2", 461589158L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(142, true, 1079274L, 10652);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(142, false, true, 1079274L, 10652);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "023cb63c238e00000001ea7710009c29bc4a831b",
@@ -105,6 +106,45 @@ public class RemoteBgEntryRequestTest {
                 expected,
                 "013c1d2edd239e1a8499a6686078565ad1b8acdc",
                 "003ca71a3107"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+
+    @Test
+    public void testRemoteBgEntryRequest_G7Calibrate_169mgdl() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(169, true, true, 2887044L, 0);
+
+        RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
+                "02d6b6d623a900010001840d2c00000052cf5a20",
+                -42,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "01d6e4b43557b2ab113cb54266a2d1616c1972f8",
+                "00d66e6d6786"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+    @Test
+    public void testRemoteBgEntryRequest_G7Calibrate_170mgdl() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(170, true, true, 2887044L, 0);
+
+        RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
+                "02e1b6e123aa00010001840d2c00000082cf5a20",
+                -31,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "01e10d94486401b99108897a2c3fdb9c2ec6be15",
+                "00e1663cfd1a"
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());

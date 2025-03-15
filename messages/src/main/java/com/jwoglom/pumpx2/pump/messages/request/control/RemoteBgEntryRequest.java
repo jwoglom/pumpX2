@@ -28,6 +28,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetRes
 )
 public class RemoteBgEntryRequest extends Message {
     private int bg;
+    private boolean useForCgmCalibration;
     private boolean isAutopopBg;
     private long pumpTime;
     private int bolusId;
@@ -38,13 +39,15 @@ public class RemoteBgEntryRequest extends Message {
      * Creates a request to add a data point of the current BG to the provided bolus ID (which must
      * be in progress; in a state between calling {@link BolusPermissionRequest} and {@link InitiateBolusRequest})
      * @param bg the blood glucose value in mg/dL
+     * @param useForCgmCalibration if the BG should be used to calibrate the active G6 or G7 CGM sensor
      * @param isAutopopBg true if the BG was autopopulated from the CGM; false if manually entered
      * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}
      * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}
      */
-    public RemoteBgEntryRequest(int bg, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {
-        this.cargo = buildCargo(bg, isAutopopBg, pumpTimeSecondsSinceBoot, bolusId);
+    public RemoteBgEntryRequest(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {
+        this.cargo = buildCargo(bg, useForCgmCalibration, isAutopopBg, pumpTimeSecondsSinceBoot, bolusId);
         this.bg = bg;
+        this.useForCgmCalibration = useForCgmCalibration;
         this.isAutopopBg = isAutopopBg;
         this.pumpTime = pumpTimeSecondsSinceBoot;
         this.bolusId = bolusId;
@@ -55,16 +58,18 @@ public class RemoteBgEntryRequest extends Message {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.bg = Bytes.readShort(raw, 0);
+        this.useForCgmCalibration = (raw[2] == 1);
         this.isAutopopBg = (raw[4] == 1);
         this.pumpTime = Bytes.readUint32(raw, 5);
         this.bolusId = Bytes.readShort(raw, 9);
     }
 
 
-    public static byte[] buildCargo(int bg, boolean isAutopopBg, long pumpTime, int bolusId) {
+    public static byte[] buildCargo(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTime, int bolusId) {
         return Bytes.combine(
             Bytes.firstTwoBytesLittleEndian(bg),
-            new byte[]{0, 0},
+            new byte[]{(byte) (useForCgmCalibration ? 1 : 0)},
+            new byte[]{0},
             new byte[]{(byte) (isAutopopBg ? 1 : 0)},
             Bytes.toUint32(pumpTime),
             Bytes.firstTwoBytesLittleEndian(bolusId)
@@ -79,6 +84,18 @@ public class RemoteBgEntryRequest extends Message {
         return isAutopopBg;
     }
 
+    public boolean isAutopopBg() {
+        return isAutopopBg;
+    }
+
+    public boolean isUseForCgmCalibration() {
+        return useForCgmCalibration;
+    }
+
+    public boolean getUseForCgmCalibration() {
+        return useForCgmCalibration;
+    }
+
     public long getPumpTime() {
         return pumpTime;
     }
@@ -86,6 +103,6 @@ public class RemoteBgEntryRequest extends Message {
     public int getBolusId() {
         return bolusId;
     }
-    
-    
+
+
 }

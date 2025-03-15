@@ -21,9 +21,9 @@ if [[ -f "$keyfile" && "$PUMP_AUTHENTICATION_KEY" == "" ]]; then
   PUMP_AUTHENTICATION_KEY=$(cat $keyfile)
 elif [[ "$PUMP_AUTHENTICATION_KEY" == "" ]]; then
   echo "============================================">&2
-  echo "WARNING: PUMP_AUTHENTICATION_KEY is not set.">&2
-  echo "Encrypted messages will not be decoded.">&2
+  echo "PUMP_AUTHENTICATION_KEY will be set to default value">&2
   echo "============================================">&2
+  export PUMP_AUTHENTICATION_KEY=IGNORE_HMAC_SIGNATURE_EXCEPTION
 else
   echo $PUMP_AUTHENTICATION_KEY > $keyfile
 fi
