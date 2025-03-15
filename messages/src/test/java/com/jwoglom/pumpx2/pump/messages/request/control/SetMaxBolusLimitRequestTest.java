@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class SetMaxBolusLimitRequestTest {
     @Test
-    public void testSetDeliveryLimitsRequest_20u() throws DecoderException {
+    public void testSetMaxBolusLimitRequest_20u() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetMaxBolusLimitRequest expected = new SetMaxBolusLimitRequest(20_000);
@@ -27,5 +27,19 @@ public class SetMaxBolusLimitRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void setMaxBolusLimitRequest_lt1u_invalid() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
+
+        new SetMaxBolusLimitRequest(500);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void setMaxBolusLimitRequest_gt25u_invalid() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
+
+        new SetMaxBolusLimitRequest(25_100);
     }
 }

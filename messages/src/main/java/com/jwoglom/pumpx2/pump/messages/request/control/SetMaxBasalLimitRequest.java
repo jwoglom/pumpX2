@@ -25,7 +25,7 @@ public class SetMaxBasalLimitRequest extends Message {
     public static final int MAX_BASAL_LIMIT_MILLIUNITS = 15_000;
     public SetMaxBasalLimitRequest(int maxHourlyBasalMilliunits) {
         Validate.isTrue(maxHourlyBasalMilliunits >= MIN_BASAL_LIMIT_MILLIUNITS, "hourly basal limit must be greater than 1 unit");
-        Validate.isTrue(maxHourlyBasalMilliunits <= MAX_BASAL_LIMIT_MILLIUNITS, "bolus limit must be less than or equal to 15 units");
+        Validate.isTrue(maxHourlyBasalMilliunits <= MAX_BASAL_LIMIT_MILLIUNITS, "basal limit must be less than or equal to 15 units");
         this.cargo = buildCargo(maxHourlyBasalMilliunits);
         this.maxHourlyBasalMilliunits = maxHourlyBasalMilliunits;
         
