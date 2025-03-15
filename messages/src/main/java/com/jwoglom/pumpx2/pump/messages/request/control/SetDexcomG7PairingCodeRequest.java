@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;
 
 @MessageProps(
     opCode=-4,
@@ -14,14 +14,14 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeRespons
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    response=SetG7PairingCodeResponse.class
+    response= SetDexcomG7PairingCodeResponse.class
 )
-public class SetG7PairingCodeRequest extends Message { 
+public class SetDexcomG7PairingCodeRequest extends Message {
     private int pairingCode;
     
-    public SetG7PairingCodeRequest() {}
+    public SetDexcomG7PairingCodeRequest() {}
 
-    public SetG7PairingCodeRequest(int pairingCode) {
+    public SetDexcomG7PairingCodeRequest(int pairingCode) {
         this.cargo = buildCargo(pairingCode);
         this.pairingCode = pairingCode;
         

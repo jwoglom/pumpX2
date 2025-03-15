@@ -10,16 +10,16 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class StartG6SensorSessionResponseTest {
+public class StartDexcomG6SensorSessionResponseTest {
     @Test
     public void testStartG6SensorSessionResponse() throws DecoderException { 
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
-        StartG6SensorSessionResponse expected = new StartG6SensorSessionResponse(
+        StartDexcomG6SensorSessionResponse expected = new StartDexcomG6SensorSessionResponse(
             0
         );
 
-        StartG6SensorSessionResponse parsedRes = (StartG6SensorSessionResponse) MessageTester.test(
+        StartDexcomG6SensorSessionResponse parsedRes = (StartDexcomG6SensorSessionResponse) MessageTester.test(
                 "002eb32e1900cbc3f21f0a67a11d39b6d34d4936e72c6cfb468c9a4b768c6115",
                 46,
                 1,

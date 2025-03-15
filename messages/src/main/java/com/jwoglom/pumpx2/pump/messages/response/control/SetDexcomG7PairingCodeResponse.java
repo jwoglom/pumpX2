@@ -3,29 +3,26 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
-import com.jwoglom.pumpx2.pump.messages.request.control.StartG6SensorSessionRequest;
-
-import java.math.BigInteger;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;
 
 @MessageProps(
-    opCode=-77,
-    size=1,
+    opCode=-3,
+    size=2, // +24
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    request=StartG6SensorSessionRequest.class
+    request= SetDexcomG7PairingCodeRequest.class
 )
-public class StartG6SensorSessionResponse extends StatusMessage {
+public class SetDexcomG7PairingCodeResponse extends StatusMessage {
     
     private int status;
     
-    public StartG6SensorSessionResponse() {}
+    public SetDexcomG7PairingCodeResponse() {}
     
-    public StartG6SensorSessionResponse(int status) {
+    public SetDexcomG7PairingCodeResponse(int status) {
         this.cargo = buildCargo(status);
         this.status = status;
         
@@ -42,12 +39,9 @@ public class StartG6SensorSessionResponse extends StatusMessage {
     
     public static byte[] buildCargo(int status) {
         return Bytes.combine(
-            new byte[]{ (byte) status });
+            new byte[]{ (byte) status, 0 });
     }
-
-    /**
-     * @return 0 if successful
-     */
+    
     public int getStatus() {
         return status;
     }

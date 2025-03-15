@@ -10,18 +10,18 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class StopG6SensorSessionResponseTest {
+public class SetDexcomG7PairingCodeResponseTest {
     @Test
-    public void testStopG6SensorSessionResponse() throws DecoderException { 
+    public void testSetG7PairingCodeResponse_success() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
-        StopG6SensorSessionResponse expected = new StopG6SensorSessionResponse(
+        SetDexcomG7PairingCodeResponse expected = new SetDexcomG7PairingCodeResponse(
             0
         );
 
-        StopG6SensorSessionResponse parsedRes = (StopG6SensorSessionResponse) MessageTester.test(
-                "005ab55a19002cc7f21f7fc48fc9d4bfe3feca73675911cca9f1b3a96caba40c",
-                90,
+        SetDexcomG7PairingCodeResponse parsedRes = (SetDexcomG7PairingCodeResponse) MessageTester.test(
+                "00f9fdf91a00009346fd1f7a5eccab7fe004d6d23a4472643416ebd8b9fe8ff2bf",
+                -7,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

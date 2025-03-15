@@ -167,10 +167,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationReque
 import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetG6TransmitterIdResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.StartG6SensorSessionRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.StartG6SensorSessionResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.StopG6SensorSessionRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.StopG6SensorSessionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.StartDexcomG6SensorSessionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.StartDexcomG6SensorSessionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.StopDexcomCGMSensorSessionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.StopDexcomCGMSensorSessionResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.PlaySoundRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
@@ -180,8 +180,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;
-import com.jwoglom.pumpx2.pump.messages.response.control.SetG7PairingCodeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;
@@ -312,14 +312,14 @@ public enum Messages {
     OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),
     DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),
     SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),
-    START_G6_SENSOR_SESSION(StartG6SensorSessionRequest.class, StartG6SensorSessionResponse.class),
-    STOP_G6_SENSOR_SESSION(StopG6SensorSessionRequest.class, StopG6SensorSessionResponse.class),
+    START_DEXCOM_G6_SENSOR_SESSION(StartDexcomG6SensorSessionRequest.class, StartDexcomG6SensorSessionResponse.class),
+    STOP_DEXCOM_CGM_SENSOR_SESSION(StopDexcomCGMSensorSessionRequest.class, StopDexcomCGMSensorSessionResponse.class),
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
     DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
-    CONTROL_STREAM_NEG27(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
+    FILL_TUBING_STATE_STREAM(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
     OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
-    SET_G7_PAIRING_CODE(SetG7PairingCodeRequest.class, SetG7PairingCodeResponse.class),
+    SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
     UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),
     GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),

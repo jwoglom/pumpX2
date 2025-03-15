@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.control.StartG6SensorSessionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.StartDexcomG6SensorSessionResponse;
 
 @MessageProps(
     opCode=-78,
@@ -14,19 +14,19 @@ import com.jwoglom.pumpx2.pump.messages.response.control.StartG6SensorSessionRes
     type=MessageType.REQUEST,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    response=StartG6SensorSessionResponse.class
+    response= StartDexcomG6SensorSessionResponse.class
 )
-public class StartG6SensorSessionRequest extends Message {
+public class StartDexcomG6SensorSessionRequest extends Message {
     public static final int NO_CODE = 0;
 
     private int sensorCode;
     
-    public StartG6SensorSessionRequest() {
+    public StartDexcomG6SensorSessionRequest() {
         this.cargo = buildCargo(NO_CODE);
         this.sensorCode = NO_CODE;
     }
 
-    public StartG6SensorSessionRequest(int sensorCode) {
+    public StartDexcomG6SensorSessionRequest(int sensorCode) {
         this.cargo = buildCargo(sensorCode);
         this.sensorCode = sensorCode;
     }

@@ -3,13 +3,10 @@ package com.jwoglom.pumpx2.pump.messages.response.control;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
-import com.jwoglom.pumpx2.pump.messages.request.control.StopG6SensorSessionRequest;
-
-import java.math.BigInteger;
+import com.jwoglom.pumpx2.pump.messages.request.control.StopDexcomCGMSensorSessionRequest;
 
 @MessageProps(
     opCode=-75,
@@ -17,17 +14,17 @@ import java.math.BigInteger;
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     signed=true,
-    request=StopG6SensorSessionRequest.class
+    request=StopDexcomCGMSensorSessionRequest.class
 )
-public class StopG6SensorSessionResponse extends StatusMessage {
+public class StopDexcomCGMSensorSessionResponse extends StatusMessage {
 
     private int status;
     
-    public StopG6SensorSessionResponse() {
+    public StopDexcomCGMSensorSessionResponse() {
         this.cargo = EMPTY;
     }
 
-    public StopG6SensorSessionResponse(int status) {
+    public StopDexcomCGMSensorSessionResponse(int status) {
         this.cargo = buildCargo(status);
         this.status = status;
     }

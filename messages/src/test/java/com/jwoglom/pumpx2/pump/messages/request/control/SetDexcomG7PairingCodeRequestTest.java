@@ -8,20 +8,19 @@ import static org.junit.Assert.assertEquals;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.request.control.SetG7PairingCodeRequest;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
-public class SetG7PairingCodeRequestTest {
+public class SetDexcomG7PairingCodeRequestTest {
     @Test
     public void testSetG7PairingCodeRequest_code3546() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
 
-        SetG7PairingCodeRequest expected = new SetG7PairingCodeRequest(3546);
+        SetDexcomG7PairingCodeRequest expected = new SetDexcomG7PairingCodeRequest(3546);
 
-        SetG7PairingCodeRequest parsedReq = (SetG7PairingCodeRequest) MessageTester.test(
+        SetDexcomG7PairingCodeRequest parsedReq = (SetDexcomG7PairingCodeRequest) MessageTester.test(
                 "02f9fcf920da0d000000000000e68cfd1fc0e13b",
                 -7,
                 1,
