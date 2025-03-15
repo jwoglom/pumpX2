@@ -25,6 +25,7 @@ public class LastBGResponse extends Message {
     private long bgTimestamp;
     private int bgValue;
     private int bgSourceId;
+    private BgSource bgSource;
     
     public LastBGResponse() {}
     
@@ -33,7 +34,15 @@ public class LastBGResponse extends Message {
         this.bgTimestamp = bgTimestamp;
         this.bgValue = bgValue;
         this.bgSourceId = bgSourceId;
-        
+        this.bgSource = getBgSource();
+    }
+
+    public LastBGResponse(long bgTimestamp, int bgValue, BgSource bgSource) {
+        this.cargo = buildCargo(bgTimestamp, bgValue, bgSource.getId());
+        this.bgTimestamp = bgTimestamp;
+        this.bgValue = bgValue;
+        this.bgSourceId = bgSource.getId();
+        this.bgSource = getBgSource();
     }
 
     public void parse(byte[] raw) {
@@ -42,6 +51,7 @@ public class LastBGResponse extends Message {
         this.bgTimestamp = Bytes.readUint32(raw, 0);
         this.bgValue = Bytes.readShort(raw, 4);
         this.bgSourceId = raw[6];
+        this.bgSource = getBgSource();
         
     }
 

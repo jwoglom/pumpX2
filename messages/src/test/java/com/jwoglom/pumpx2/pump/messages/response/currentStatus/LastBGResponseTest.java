@@ -33,7 +33,7 @@ public class LastBGResponseTest {
     }
 
     @Test
-    public void testLastBGResponse() throws DecoderException {
+    public void testLastBGResponse_cgm() throws DecoderException {
         LastBGResponse expected = new LastBGResponse(
                 // long bgTimestamp, int bgValue, int bgSource
                 458530870L, 206, 1
@@ -49,5 +49,27 @@ public class LastBGResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(Instant.parse("2022-07-13T01:41:10Z"), parsedRes.getBgTimestampInstant());
+        assertEquals(LastBGResponse.BgSource.CGM, expected.getBgSource());
+    }
+
+
+    @Test
+    public void testLastBGResponse_cgmCalibration() throws DecoderException {
+        LastBGResponse expected = new LastBGResponse(
+                // long bgTimestamp, int bgValue, int bgSource
+                542807828L, 169, 0
+        );
+
+        LastBGResponse parsedRes = (LastBGResponse) MessageTester.test(
+                "00d733d70714975a20a90000cc8f",
+                -41,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2025-03-14T11:57:08Z"), parsedRes.getBgTimestampInstant());
+        assertEquals(LastBGResponse.BgSource.MANUAL, expected.getBgSource());
     }
 }
