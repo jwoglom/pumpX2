@@ -46,7 +46,7 @@
 <span class="source-line-no">029</span><span id="line-29">)</span>
 <span class="source-line-no">030</span><span id="line-30">public class PumpGlobalsResponse extends Message {</span>
 <span class="source-line-no">031</span><span id="line-31">    </span>
-<span class="source-line-no">032</span><span id="line-32">    private int quickBolusEnabled;</span>
+<span class="source-line-no">032</span><span id="line-32">    private int quickBolusEnabledRaw;</span>
 <span class="source-line-no">033</span><span id="line-33">    private int quickBolusIncrementUnits;</span>
 <span class="source-line-no">034</span><span id="line-34">    private int quickBolusIncrementCarbs;</span>
 <span class="source-line-no">035</span><span id="line-35">    private int quickBolusEntryType;</span>
@@ -61,9 +61,9 @@
 <span class="source-line-no">044</span><span id="line-44">    </span>
 <span class="source-line-no">045</span><span id="line-45">    public PumpGlobalsResponse() {}</span>
 <span class="source-line-no">046</span><span id="line-46">    </span>
-<span class="source-line-no">047</span><span id="line-47">    public PumpGlobalsResponse(int quickBolusEnabled, int quickBolusIncrementUnits, int quickBolusIncrementCarbs, int quickBolusEntryType, int quickBolusStatus, int buttonAnnun, int quickBolusAnnun, int bolusAnnun, int reminderAnnun, int alertAnnun, int alarmAnnun, int fillTubingAnnun) {</span>
-<span class="source-line-no">048</span><span id="line-48">        this.cargo = buildCargo(quickBolusEnabled, quickBolusIncrementUnits, quickBolusIncrementCarbs, quickBolusEntryType, quickBolusStatus, buttonAnnun, quickBolusAnnun, bolusAnnun, reminderAnnun, alertAnnun, alarmAnnun, fillTubingAnnun);</span>
-<span class="source-line-no">049</span><span id="line-49">        this.quickBolusEnabled = quickBolusEnabled;</span>
+<span class="source-line-no">047</span><span id="line-47">    public PumpGlobalsResponse(int quickBolusEnabledRaw, int quickBolusIncrementUnits, int quickBolusIncrementCarbs, int quickBolusEntryType, int quickBolusStatus, int buttonAnnun, int quickBolusAnnun, int bolusAnnun, int reminderAnnun, int alertAnnun, int alarmAnnun, int fillTubingAnnun) {</span>
+<span class="source-line-no">048</span><span id="line-48">        this.cargo = buildCargo(quickBolusEnabledRaw, quickBolusIncrementUnits, quickBolusIncrementCarbs, quickBolusEntryType, quickBolusStatus, buttonAnnun, quickBolusAnnun, bolusAnnun, reminderAnnun, alertAnnun, alarmAnnun, fillTubingAnnun);</span>
+<span class="source-line-no">049</span><span id="line-49">        this.quickBolusEnabledRaw = quickBolusEnabledRaw;</span>
 <span class="source-line-no">050</span><span id="line-50">        this.quickBolusIncrementUnits = quickBolusIncrementUnits;</span>
 <span class="source-line-no">051</span><span id="line-51">        this.quickBolusIncrementCarbs = quickBolusIncrementCarbs;</span>
 <span class="source-line-no">052</span><span id="line-52">        this.quickBolusEntryType = quickBolusEntryType;</span>
@@ -81,7 +81,7 @@
 <span class="source-line-no">064</span><span id="line-64">    /**</span>
 <span class="source-line-no">065</span><span id="line-65">     * &lt;table border="1"&gt;</span>
 <span class="source-line-no">066</span><span id="line-66">     * &lt;caption&gt;Parsed fields for PumpGlobalsResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;quickBolusEnabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;quickBolusEnabledRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;quickBolusIncrementUnits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;quickBolusIncrementCarbs&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 3)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;quickBolusEntryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
@@ -98,7 +98,7 @@
 <span class="source-line-no">081</span><span id="line-81">    public void parse(byte[] raw) {</span>
 <span class="source-line-no">082</span><span id="line-82">        Validate.isTrue(raw.length == props().size());</span>
 <span class="source-line-no">083</span><span id="line-83">        this.cargo = raw;</span>
-<span class="source-line-no">084</span><span id="line-84">        this.quickBolusEnabled = raw[0];</span>
+<span class="source-line-no">084</span><span id="line-84">        this.quickBolusEnabledRaw = raw[0];</span>
 <span class="source-line-no">085</span><span id="line-85">        this.quickBolusIncrementUnits = Bytes.readShort(raw, 1);</span>
 <span class="source-line-no">086</span><span id="line-86">        this.quickBolusIncrementCarbs = Bytes.readShort(raw, 3);</span>
 <span class="source-line-no">087</span><span id="line-87">        this.quickBolusEntryType = raw[5];</span>
@@ -150,71 +150,77 @@
 <span class="source-line-no">133</span><span id="line-133">            new byte[]{ (byte) fillTubingAnnun });</span>
 <span class="source-line-no">134</span><span id="line-134">    }</span>
 <span class="source-line-no">135</span><span id="line-135">    </span>
-<span class="source-line-no">136</span><span id="line-136">    public int getQuickBolusEnabled() {</span>
-<span class="source-line-no">137</span><span id="line-137">        return quickBolusEnabled;</span>
+<span class="source-line-no">136</span><span id="line-136">    public int getQuickBolusEnabledRaw() {</span>
+<span class="source-line-no">137</span><span id="line-137">        return quickBolusEnabledRaw;</span>
 <span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139">    public int getQuickBolusIncrementUnits() {</span>
-<span class="source-line-no">140</span><span id="line-140">        return quickBolusIncrementUnits;</span>
+<span class="source-line-no">139</span><span id="line-139">    public boolean getQuickBolusEnabled() {</span>
+<span class="source-line-no">140</span><span id="line-140">        return quickBolusEnabledRaw == 1;</span>
 <span class="source-line-no">141</span><span id="line-141">    }</span>
-<span class="source-line-no">142</span><span id="line-142">    public int getQuickBolusIncrementCarbs() {</span>
-<span class="source-line-no">143</span><span id="line-143">        return quickBolusIncrementCarbs;</span>
+<span class="source-line-no">142</span><span id="line-142">    public boolean isQuickBolusEnabled() {</span>
+<span class="source-line-no">143</span><span id="line-143">        return quickBolusEnabledRaw == 1;</span>
 <span class="source-line-no">144</span><span id="line-144">    }</span>
-<span class="source-line-no">145</span><span id="line-145">    public int getQuickBolusEntryType() {</span>
-<span class="source-line-no">146</span><span id="line-146">        return quickBolusEntryType;</span>
+<span class="source-line-no">145</span><span id="line-145">    public int getQuickBolusIncrementUnits() {</span>
+<span class="source-line-no">146</span><span id="line-146">        return quickBolusIncrementUnits;</span>
 <span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148">    public int getQuickBolusStatus() {</span>
-<span class="source-line-no">149</span><span id="line-149">        return quickBolusStatus;</span>
+<span class="source-line-no">148</span><span id="line-148">    public int getQuickBolusIncrementCarbs() {</span>
+<span class="source-line-no">149</span><span id="line-149">        return quickBolusIncrementCarbs;</span>
 <span class="source-line-no">150</span><span id="line-150">    }</span>
-<span class="source-line-no">151</span><span id="line-151">    public AnnunciationEnum getButtonAnnun() {</span>
-<span class="source-line-no">152</span><span id="line-152">        return AnnunciationEnum.fromId(buttonAnnun);</span>
+<span class="source-line-no">151</span><span id="line-151">    public int getQuickBolusEntryType() {</span>
+<span class="source-line-no">152</span><span id="line-152">        return quickBolusEntryType;</span>
 <span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154">    public AnnunciationEnum getQuickBolusAnnun() {</span>
-<span class="source-line-no">155</span><span id="line-155">        return AnnunciationEnum.fromId(quickBolusAnnun);</span>
+<span class="source-line-no">154</span><span id="line-154">    public int getQuickBolusStatus() {</span>
+<span class="source-line-no">155</span><span id="line-155">        return quickBolusStatus;</span>
 <span class="source-line-no">156</span><span id="line-156">    }</span>
-<span class="source-line-no">157</span><span id="line-157">    public AnnunciationEnum getBolusAnnun() {</span>
-<span class="source-line-no">158</span><span id="line-158">        return AnnunciationEnum.fromId(bolusAnnun);</span>
+<span class="source-line-no">157</span><span id="line-157">    public AnnunciationEnum getButtonAnnun() {</span>
+<span class="source-line-no">158</span><span id="line-158">        return AnnunciationEnum.fromId(buttonAnnun);</span>
 <span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160">    public AnnunciationEnum getReminderAnnun() {</span>
-<span class="source-line-no">161</span><span id="line-161">        return AnnunciationEnum.fromId(reminderAnnun);</span>
+<span class="source-line-no">160</span><span id="line-160">    public AnnunciationEnum getQuickBolusAnnun() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return AnnunciationEnum.fromId(quickBolusAnnun);</span>
 <span class="source-line-no">162</span><span id="line-162">    }</span>
-<span class="source-line-no">163</span><span id="line-163">    public AnnunciationEnum getAlertAnnun() {</span>
-<span class="source-line-no">164</span><span id="line-164">        return AnnunciationEnum.fromId(alertAnnun);</span>
+<span class="source-line-no">163</span><span id="line-163">    public AnnunciationEnum getBolusAnnun() {</span>
+<span class="source-line-no">164</span><span id="line-164">        return AnnunciationEnum.fromId(bolusAnnun);</span>
 <span class="source-line-no">165</span><span id="line-165">    }</span>
-<span class="source-line-no">166</span><span id="line-166">    public AnnunciationEnum getAlarmAnnun() {</span>
-<span class="source-line-no">167</span><span id="line-167">        return AnnunciationEnum.fromId(alarmAnnun);</span>
+<span class="source-line-no">166</span><span id="line-166">    public AnnunciationEnum getReminderAnnun() {</span>
+<span class="source-line-no">167</span><span id="line-167">        return AnnunciationEnum.fromId(reminderAnnun);</span>
 <span class="source-line-no">168</span><span id="line-168">    }</span>
-<span class="source-line-no">169</span><span id="line-169">    public AnnunciationEnum getFillTubingAnnun() {</span>
-<span class="source-line-no">170</span><span id="line-170">        return AnnunciationEnum.fromId(fillTubingAnnun);</span>
+<span class="source-line-no">169</span><span id="line-169">    public AnnunciationEnum getAlertAnnun() {</span>
+<span class="source-line-no">170</span><span id="line-170">        return AnnunciationEnum.fromId(alertAnnun);</span>
 <span class="source-line-no">171</span><span id="line-171">    }</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">    public enum AnnunciationEnum {</span>
-<span class="source-line-no">174</span><span id="line-174">        AUDIO_HIGH(0),</span>
-<span class="source-line-no">175</span><span id="line-175">        AUDIO_MEDIUM(1),</span>
-<span class="source-line-no">176</span><span id="line-176">        AUDIO_LOW(2),</span>
-<span class="source-line-no">177</span><span id="line-177">        VIBRATE(3),</span>
+<span class="source-line-no">172</span><span id="line-172">    public AnnunciationEnum getAlarmAnnun() {</span>
+<span class="source-line-no">173</span><span id="line-173">        return AnnunciationEnum.fromId(alarmAnnun);</span>
+<span class="source-line-no">174</span><span id="line-174">    }</span>
+<span class="source-line-no">175</span><span id="line-175">    public AnnunciationEnum getFillTubingAnnun() {</span>
+<span class="source-line-no">176</span><span id="line-176">        return AnnunciationEnum.fromId(fillTubingAnnun);</span>
+<span class="source-line-no">177</span><span id="line-177">    }</span>
 <span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">        ;</span>
-<span class="source-line-no">180</span><span id="line-180"></span>
-<span class="source-line-no">181</span><span id="line-181">        private final int id;</span>
-<span class="source-line-no">182</span><span id="line-182">        AnnunciationEnum(int id) {</span>
-<span class="source-line-no">183</span><span id="line-183">            this.id = id;</span>
-<span class="source-line-no">184</span><span id="line-184">        }</span>
-<span class="source-line-no">185</span><span id="line-185"></span>
-<span class="source-line-no">186</span><span id="line-186">        public int id() {</span>
-<span class="source-line-no">187</span><span id="line-187">            return id;</span>
-<span class="source-line-no">188</span><span id="line-188">        }</span>
-<span class="source-line-no">189</span><span id="line-189"></span>
-<span class="source-line-no">190</span><span id="line-190">        public static AnnunciationEnum fromId(int id) {</span>
-<span class="source-line-no">191</span><span id="line-191">            for (AnnunciationEnum a : AnnunciationEnum.values()) {</span>
-<span class="source-line-no">192</span><span id="line-192">                if (a.id() == id) {</span>
-<span class="source-line-no">193</span><span id="line-193">                    return a;</span>
-<span class="source-line-no">194</span><span id="line-194">                }</span>
-<span class="source-line-no">195</span><span id="line-195">            }</span>
-<span class="source-line-no">196</span><span id="line-196">            return null;</span>
-<span class="source-line-no">197</span><span id="line-197">        }</span>
-<span class="source-line-no">198</span><span id="line-198">    }</span>
-<span class="source-line-no">199</span><span id="line-199">    </span>
-<span class="source-line-no">200</span><span id="line-200">}</span>
+<span class="source-line-no">179</span><span id="line-179">    public enum AnnunciationEnum {</span>
+<span class="source-line-no">180</span><span id="line-180">        AUDIO_HIGH(0),</span>
+<span class="source-line-no">181</span><span id="line-181">        AUDIO_MEDIUM(1),</span>
+<span class="source-line-no">182</span><span id="line-182">        AUDIO_LOW(2),</span>
+<span class="source-line-no">183</span><span id="line-183">        VIBRATE(3),</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">        ;</span>
+<span class="source-line-no">186</span><span id="line-186"></span>
+<span class="source-line-no">187</span><span id="line-187">        private final int id;</span>
+<span class="source-line-no">188</span><span id="line-188">        AnnunciationEnum(int id) {</span>
+<span class="source-line-no">189</span><span id="line-189">            this.id = id;</span>
+<span class="source-line-no">190</span><span id="line-190">        }</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">        public int id() {</span>
+<span class="source-line-no">193</span><span id="line-193">            return id;</span>
+<span class="source-line-no">194</span><span id="line-194">        }</span>
+<span class="source-line-no">195</span><span id="line-195"></span>
+<span class="source-line-no">196</span><span id="line-196">        public static AnnunciationEnum fromId(int id) {</span>
+<span class="source-line-no">197</span><span id="line-197">            for (AnnunciationEnum a : AnnunciationEnum.values()) {</span>
+<span class="source-line-no">198</span><span id="line-198">                if (a.id() == id) {</span>
+<span class="source-line-no">199</span><span id="line-199">                    return a;</span>
+<span class="source-line-no">200</span><span id="line-200">                }</span>
+<span class="source-line-no">201</span><span id="line-201">            }</span>
+<span class="source-line-no">202</span><span id="line-202">            return null;</span>
+<span class="source-line-no">203</span><span id="line-203">        }</span>
+<span class="source-line-no">204</span><span id="line-204">    }</span>
+<span class="source-line-no">205</span><span id="line-205">    </span>
+<span class="source-line-no">206</span><span id="line-206">}</span>
 
 
 
