@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.Arrays;
 
@@ -35,10 +36,19 @@ public class SetQuickBolusSettingsRequest extends Message {
     }
 
     public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {
+        if (enabled) {
+            Validate.isTrue(increment.equals(QuickBolusIncrement.DISABLED), "must specify QuickBolusIncrement.DISABLED when disabled: " + this);
+        } else {
+            Validate.isTrue(!increment.equals(QuickBolusIncrement.DISABLED), "cannot specify QuickBolusIncrement.DISABLED when enabled: " + this);
+        }
         this.cargo = buildCargo(enabled, mode.getRaw(), increment.getMagic());
-        this.enabled = enabled;
-        this.modeRaw = mode.getRaw();
-        this.magic = increment.getMagic();
+        parse(cargo);
+    }
+
+
+    public SetQuickBolusSettingsRequest(QuickBolusIncrement increment) {
+        this.cargo = buildCargo(increment.isEnabled(), increment.getMode().getRaw(), increment.getMagic());
+        parse(cargo);
     }
 
     public void parse(byte[] raw) { 
@@ -72,20 +82,24 @@ public class SetQuickBolusSettingsRequest extends Message {
     }
 
     public enum QuickBolusIncrement {
-        UNITS_0_5(QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),
-        UNITS_1_0(QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),
-        UNITS_2_O(QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),
-        UNITS_5_0(QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),
+        DISABLED(false, QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),
 
-        CARBS_2G(QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),
-        CARBS_5G(QuickBolusMode.CARBS, new byte[]{-120,19,-120,19,8}),
-        CARBS_10G(QuickBolusMode.CARBS, new byte[]{-120,19,16,39,8}),
-        CARBS_15G(QuickBolusMode.CARBS, new byte[]{-120,19,-104,58,8}),
+        UNITS_0_5(true, QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),
+        UNITS_1_0(true, QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),
+        UNITS_2_O(true, QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),
+        UNITS_5_0(true, QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),
+
+        CARBS_2G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),
+        CARBS_5G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-120,19,8}),
+        CARBS_10G(true, QuickBolusMode.CARBS, new byte[]{-120,19,16,39,8}),
+        CARBS_15G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-104,58,8}),
         ;
 
+        private final boolean enabled;
         private final QuickBolusMode mode;
         private final byte[] magic;
-        QuickBolusIncrement(QuickBolusMode mode, byte[] magic) {
+        QuickBolusIncrement(boolean enabled, QuickBolusMode mode, byte[] magic) {
+            this.enabled = enabled;
             this.mode = mode;
             this.magic = magic;
         }
@@ -98,9 +112,21 @@ public class SetQuickBolusSettingsRequest extends Message {
             return magic;
         }
 
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public boolean getEnabled() {
+            return enabled;
+        }
+
+        public boolean isEqual(QuickBolusIncrement o) {
+            return this.enabled == o.enabled && this.mode == o.mode && Hex.encodeHexString(this.magic).equals(Hex.encodeHexString(o.magic));
+        }
+
         public static QuickBolusIncrement forMagic(byte[] magic) {
             for (QuickBolusIncrement i : values()) {
-                if (Arrays.equals(i.magic, magic)) return i;
+                if (i.enabled && Arrays.equals(i.magic, magic)) return i;
             }
             return null;
         }
@@ -108,7 +134,11 @@ public class SetQuickBolusSettingsRequest extends Message {
 
     public QuickBolusIncrement getIncrement() {
         checkValidIncrement();
-        return QuickBolusIncrement.forMagic(this.magic);
+        if (this.enabled) {
+            return QuickBolusIncrement.forMagic(this.magic);
+        } else {
+            return QuickBolusIncrement.DISABLED;
+        }
     }
 
     public int getModeRaw() {

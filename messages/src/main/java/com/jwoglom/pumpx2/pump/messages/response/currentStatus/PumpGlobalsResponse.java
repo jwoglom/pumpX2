@@ -15,7 +15,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest
 )
 public class PumpGlobalsResponse extends Message {
     
-    private int quickBolusEnabled;
+    private int quickBolusEnabledRaw;
     private int quickBolusIncrementUnits;
     private int quickBolusIncrementCarbs;
     private int quickBolusEntryType;
@@ -30,9 +30,9 @@ public class PumpGlobalsResponse extends Message {
     
     public PumpGlobalsResponse() {}
     
-    public PumpGlobalsResponse(int quickBolusEnabled, int quickBolusIncrementUnits, int quickBolusIncrementCarbs, int quickBolusEntryType, int quickBolusStatus, int buttonAnnun, int quickBolusAnnun, int bolusAnnun, int reminderAnnun, int alertAnnun, int alarmAnnun, int fillTubingAnnun) {
-        this.cargo = buildCargo(quickBolusEnabled, quickBolusIncrementUnits, quickBolusIncrementCarbs, quickBolusEntryType, quickBolusStatus, buttonAnnun, quickBolusAnnun, bolusAnnun, reminderAnnun, alertAnnun, alarmAnnun, fillTubingAnnun);
-        this.quickBolusEnabled = quickBolusEnabled;
+    public PumpGlobalsResponse(int quickBolusEnabledRaw, int quickBolusIncrementUnits, int quickBolusIncrementCarbs, int quickBolusEntryType, int quickBolusStatus, int buttonAnnun, int quickBolusAnnun, int bolusAnnun, int reminderAnnun, int alertAnnun, int alarmAnnun, int fillTubingAnnun) {
+        this.cargo = buildCargo(quickBolusEnabledRaw, quickBolusIncrementUnits, quickBolusIncrementCarbs, quickBolusEntryType, quickBolusStatus, buttonAnnun, quickBolusAnnun, bolusAnnun, reminderAnnun, alertAnnun, alarmAnnun, fillTubingAnnun);
+        this.quickBolusEnabledRaw = quickBolusEnabledRaw;
         this.quickBolusIncrementUnits = quickBolusIncrementUnits;
         this.quickBolusIncrementCarbs = quickBolusIncrementCarbs;
         this.quickBolusEntryType = quickBolusEntryType;
@@ -50,7 +50,7 @@ public class PumpGlobalsResponse extends Message {
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.quickBolusEnabled = raw[0];
+        this.quickBolusEnabledRaw = raw[0];
         this.quickBolusIncrementUnits = Bytes.readShort(raw, 1);
         this.quickBolusIncrementCarbs = Bytes.readShort(raw, 3);
         this.quickBolusEntryType = raw[5];
@@ -82,8 +82,14 @@ public class PumpGlobalsResponse extends Message {
             new byte[]{ (byte) fillTubingAnnun });
     }
     
-    public int getQuickBolusEnabled() {
-        return quickBolusEnabled;
+    public int getQuickBolusEnabledRaw() {
+        return quickBolusEnabledRaw;
+    }
+    public boolean getQuickBolusEnabled() {
+        return quickBolusEnabledRaw == 1;
+    }
+    public boolean isQuickBolusEnabled() {
+        return quickBolusEnabledRaw == 1;
     }
     public int getQuickBolusIncrementUnits() {
         return quickBolusIncrementUnits;

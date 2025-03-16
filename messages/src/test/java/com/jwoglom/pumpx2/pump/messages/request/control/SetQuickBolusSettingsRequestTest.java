@@ -11,6 +11,8 @@ import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -36,6 +38,7 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertFalse(parsedReq.isEnabled());
+        assertEquals(QuickBolusIncrement.DISABLED, parsedReq.getIncrement());
     }
 
     @Test
@@ -57,8 +60,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.UNITS_0_5, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.UNITS_0_5, parsedReq.getIncrement());
     }
 
     @Test
@@ -80,8 +83,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.UNITS_1_0, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.UNITS_1_0, parsedReq.getIncrement());
     }
 
     @Test
@@ -103,8 +106,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.UNITS_2_O, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.UNITS_2_O, parsedReq.getIncrement());
     }
 
     @Test
@@ -126,8 +129,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.UNITS_5_0, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.UNITS_5_0, parsedReq.getIncrement());
     }
 
     @Test
@@ -149,8 +152,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.CARBS_2G, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.CARBS_2G, parsedReq.getIncrement());
     }
 
     @Test
@@ -172,8 +175,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.CARBS_5G, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.CARBS_5G, parsedReq.getIncrement());
     }
 
     @Test
@@ -195,8 +198,8 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.CARBS_10G, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.CARBS_10G, parsedReq.getIncrement());
     }
 
     @Test
@@ -218,8 +221,57 @@ public class SetQuickBolusSettingsRequestTest {
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(SetQuickBolusSettingsRequest.QuickBolusIncrement.CARBS_15G, parsedReq.getIncrement());
+        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
+        assertEquals(QuickBolusIncrement.CARBS_15G, parsedReq.getIncrement());
+    }
+
+    @Test
+    public void testSetQuickBolusSettingsRequest_singleArgConstructor() throws DecoderException {
+        SetQuickBolusSettingsRequest[][] testCases = new SetQuickBolusSettingsRequest[][]{
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.DISABLED),
+                new SetQuickBolusSettingsRequest(new byte[]{0,0,-12,1,-48,7,1})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_0_5),
+                new SetQuickBolusSettingsRequest(new byte[]{1,0,-12,1,-48,7,1})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_1_0),
+                new SetQuickBolusSettingsRequest(new byte[]{1,0,-24,3,-48,7,4})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_2_O),
+                new SetQuickBolusSettingsRequest(new byte[]{1,0,-48,7,-48,7,4})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_5_0),
+                new SetQuickBolusSettingsRequest(new byte[]{1,0,-120,19,-48,7,4})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_2G),
+                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-48,7,8})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_5G),
+                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-120,19,8})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_10G),
+                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,16,39,8})
+            },
+            {
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_15G),
+                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-104,58,8})
+            },
+        };
+
+        int n = 0;
+        for (SetQuickBolusSettingsRequest[] testCase : testCases) {
+            System.out.println("TestCase#" + n + "[" + testCase[0] + " --- " + testCase[1] + "]");
+            assertEquals("TestCase#" + n, testCase[0], testCase[1]);
+            n++;
+        }
     }
 
 }
