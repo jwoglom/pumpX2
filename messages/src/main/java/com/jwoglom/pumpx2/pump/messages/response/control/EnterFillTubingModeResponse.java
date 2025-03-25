@@ -37,6 +37,7 @@ public class EnterFillTubingModeResponse extends StatusMessage {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
+        this.status = raw[0];
     }
 
 

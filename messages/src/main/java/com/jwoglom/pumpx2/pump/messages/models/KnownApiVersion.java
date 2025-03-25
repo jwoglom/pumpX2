@@ -10,9 +10,9 @@ public enum KnownApiVersion {
     API_V3(3, 0),
     // v3.2 is the API version used by software v7.7 and utilizes a 6-character numeric pairing PIN
     API_V3_2(3, 2),
-    // v3.4 is the API version used by software v7.8
+    // v3.4 is the API version used by software v7.8 for the t:slim X2
     API_V3_4(3, 4),
-    // Tandem Mobi initial release
+    // Tandem Mobi initial release. Software v7.7 for the Tandem Mobi
     MOBI_API_V3_5(3, 5),
     // Represents known messages from the app that we can't parse with known firmware
     API_FUTURE(99, 99)

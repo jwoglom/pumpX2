@@ -94,4 +94,33 @@ public class PumpFeaturesV1ResponseTest {
                 PumpFeaturesV1Response.PumpFeatureType.PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED
         ), parsedRes.getPrimaryFeatures());
     }
+
+
+    @Test
+    public void testPumpFeaturesResponseMobiApiVersionV3_5() throws DecoderException {
+        PumpFeaturesV1Response parsedRes = new PumpFeaturesV1Response(
+                new byte[]{18, 21, 101, 118, 0, 0, 0, 0}
+                // 0000000000000000000000000000000001110110011001010001010100010010
+                // 1, 4, 8, 10, 12, 16, 18, 21, 22, 25, 26, 28, 29, 30
+        );
+
+        assertEquals(Set.of(
+                PumpFeaturesV1Response.PumpFeatureType.DEXCOM_G6_SUPPORTED, // 1
+                // 4
+                // 8
+                PumpFeaturesV1Response.PumpFeatureType.CONTROL_IQ_SUPPORTED, // 10
+                // 12
+                PumpFeaturesV1Response.PumpFeatureType.WOMBAT_SUPPORTED, // 16
+                PumpFeaturesV1Response.PumpFeatureType.BASAL_LIMIT_SUPPORTED, // 18
+                // 21
+                // 22
+                PumpFeaturesV1Response.PumpFeatureType.AUTO_POP_SUPPORTED, // 25
+                // 26
+                PumpFeaturesV1Response.PumpFeatureType.BLE_PUMP_CONTROL_SUPPORTED, // 28
+                PumpFeaturesV1Response.PumpFeatureType.PUMP_SETTINGS_IN_IDP_GUI_SUPPORTED // 29
+                // 30
+        ), parsedRes.getPrimaryFeatures());
+
+        assertEquals(BigInteger.valueOf(1986336018L), parsedRes.getIntMap());
+    }
 }

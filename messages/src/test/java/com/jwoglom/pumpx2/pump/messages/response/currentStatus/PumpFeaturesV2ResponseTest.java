@@ -89,4 +89,15 @@ public class PumpFeaturesV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+
+    // Mobi v3.5
+    @Test
+    public void testPumpSupportedFeatures() throws DecoderException {
+        PumpFeaturesV2Response parsedRes = new PumpFeaturesV2Response(
+                // int status, int supportedFeaturesIndex, long pumpFeaturesBitmask
+                0, 2, 249425407L
+        );
+
+    }
 }

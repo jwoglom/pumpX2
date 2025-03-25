@@ -30,6 +30,10 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
         this.features = PumpFeatureType.fromBitmask(intMap);
     }
 
+    public PumpFeaturesV1Response(byte[] raw) {
+        parse(raw);
+    }
+
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;

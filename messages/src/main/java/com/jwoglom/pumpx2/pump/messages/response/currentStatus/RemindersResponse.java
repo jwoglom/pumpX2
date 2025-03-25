@@ -23,7 +23,8 @@ import java.util.Set;
     type=MessageType.RESPONSE,
     request=RemindersRequest.class
 )
-public class RemindersResponse extends StatusMessage {
+// NOT a StatusMessage
+public class RemindersResponse extends Message {
     
     private Reminder lowBGReminder;
     private Reminder highBGReminder;

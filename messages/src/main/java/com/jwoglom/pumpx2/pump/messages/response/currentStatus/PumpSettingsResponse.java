@@ -14,7 +14,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsReques
     type=MessageType.RESPONSE,
     request=PumpSettingsRequest.class
 )
-public class PumpSettingsResponse extends StatusMessage {
+// NOT a StatusMessage
+public class PumpSettingsResponse extends Message {
     
     private int lowInsulinThreshold;
     private int cannulaPrimeSize;
