@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpSoundsRequest;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ import java.math.BigInteger;
     signed=true,
     request=SetPumpSoundsRequest.class
 )
-public class SetPumpSoundsResponse extends Message {
+public class SetPumpSoundsResponse extends StatusMessage {
     
     private int status;
     

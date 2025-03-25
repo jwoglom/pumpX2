@@ -30,7 +30,7 @@ public class SetPumpSoundsRequestTest {
 
         SetPumpSoundsRequest parsedReq = (SetPumpSoundsRequest) MessageTester.test(
                 "0282e482210000000000000002b68abd68206095",
-                -4,
+                -126,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected,

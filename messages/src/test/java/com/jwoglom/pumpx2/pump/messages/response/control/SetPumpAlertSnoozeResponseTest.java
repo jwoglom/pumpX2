@@ -16,12 +16,12 @@ public class SetPumpAlertSnoozeResponseTest {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         SetPumpAlertSnoozeResponse expected = new SetPumpAlertSnoozeResponse(
-            // int status
+            0
         );
 
         SetPumpAlertSnoozeResponse parsedRes = (SetPumpAlertSnoozeResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "0031d5311900ba80682053558873893a6be84fccd0aa1a79beb7a1eb118a9cb8",
+                49,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected

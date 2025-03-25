@@ -16,12 +16,12 @@ public class SetPumpSoundsResponseTest {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
         SetPumpSoundsResponse expected = new SetPumpSoundsResponse(
-            // int status
+            0
         );
 
         SetPumpSoundsResponse parsedRes = (SetPumpSoundsResponse) MessageTester.test(
-                "xxxx",
-                3,
+                "004ee54e1900648168208bb1895bc466198b6c049eb08f073d9afed28dba8c00",
+                78,
                 1,
                 CharacteristicUUID.CONTROL_CHARACTERISTICS,
                 expected
