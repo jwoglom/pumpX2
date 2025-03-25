@@ -220,6 +220,10 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBolusLimitRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBolusLimitResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBasalLimitRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBasalLimitResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpSoundsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpSoundsResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpAlertSnoozeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpAlertSnoozeResponse;
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -340,6 +344,8 @@ public enum Messages {
     FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),
     SET_MAX_BOLUS_LIMIT(SetMaxBolusLimitRequest.class, SetMaxBolusLimitResponse.class),
     SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),
+    SET_PUMP_SOUNDS(SetPumpSoundsRequest.class, SetPumpSoundsResponse.class),
+    SET_PUMP_ALERT_SNOOZE(SetPumpAlertSnoozeRequest.class, SetPumpAlertSnoozeResponse.class),
     // MESSAGES_END
     ;
 
