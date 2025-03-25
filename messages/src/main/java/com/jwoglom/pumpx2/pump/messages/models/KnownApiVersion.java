@@ -16,6 +16,8 @@ public enum KnownApiVersion {
     MOBI_API_V3_5(3, 5),
     // Tandem Mobi Software v7.7.0.1 (G6 and G7 CGM support)
     MOBI_API_V3_6(3, 6),
+    // Tandem Mobi Software v7.9.0.1 (Control-IQ Plus)
+    MOBI_API_V3_8(3, 8),
     // Represents known messages from the app that we can't parse with known firmware
     API_FUTURE(99, 99)
     ;
