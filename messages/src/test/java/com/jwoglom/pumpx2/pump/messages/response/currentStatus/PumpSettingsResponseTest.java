@@ -27,4 +27,17 @@ public class PumpSettingsResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+
+    @Test
+    public void testPumpSettingsResponse_Mobi() throws DecoderException {
+        PumpSettingsResponse expected = new PumpSettingsResponse(
+                // int lowInsulinThreshold, int cannulaPrimeSize, int autoShutdownEnabled, int autoShutdownDuration, int featureLock, int oledTimeout, int status
+                16, 10, 0, 5, 0, 30, 15
+        );
+
+        PumpSettingsResponse parsedRes = new PumpSettingsResponse(new byte[]{16, 10, 0, 5, 0, 0, 30, 15, 0});
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }

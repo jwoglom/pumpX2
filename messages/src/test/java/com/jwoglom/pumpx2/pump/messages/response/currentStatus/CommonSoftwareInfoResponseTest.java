@@ -78,4 +78,24 @@ public class CommonSoftwareInfoResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+
+    @Test
+    public void testCommonSoftwareInfoResponse_MobiV3_6() throws DecoderException {
+        CommonSoftwareInfoResponse expected = new CommonSoftwareInfoResponse(
+                new byte[]{
+                        0,102,99,56,50,101,52,57,53,100,100,101,56,50,102,99,102,0,22,122,15,0,0,0,0,0,102,99,56,50,101,52,57,53,100,100,101,56,50,102,99,102,0,22,122,15,0,0,0,0,0
+                }
+        );
+
+        CommonSoftwareInfoResponse parsedRes = (CommonSoftwareInfoResponse) MessageTester.test(
+                "00398f3933006663383265343935646465383266636600167a0f00000000006663383265343935646465383266636600167a0f0000000000a739",
+                57,
+                4,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
 }

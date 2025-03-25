@@ -39,6 +39,10 @@ public class PumpSettingsResponse extends Message {
         
     }
 
+    public PumpSettingsResponse(byte[] raw) {
+        parse(raw);
+    }
+
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
