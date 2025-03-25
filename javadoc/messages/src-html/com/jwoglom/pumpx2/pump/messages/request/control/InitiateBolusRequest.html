@@ -122,7 +122,7 @@
 <span class="source-line-no">105</span><span id="line-105">     * @param extended3        TODO unknown, set as 0</span>
 <span class="source-line-no">106</span><span id="line-106">     */</span>
 <span class="source-line-no">107</span><span id="line-107">    public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {</span>
-<span class="source-line-no">108</span><span id="line-108">        Validate.isTrue(totalVolume &gt;= MIN_BOLUS_MILLIUNITS);</span>
+<span class="source-line-no">108</span><span id="line-108">        Validate.isTrue(totalVolume &gt;= MIN_BOLUS_MILLIUNITS || (totalVolume + extendedVolume) &gt;= MIN_EXTENDED_BOLUS_MILLIUNITS);</span>
 <span class="source-line-no">109</span><span id="line-109">        Validate.isTrue(bolusID &gt; 0);</span>
 <span class="source-line-no">110</span><span id="line-110">        Validate.isTrue(foodVolume &gt;= 0);</span>
 <span class="source-line-no">111</span><span id="line-111">        Validate.isTrue(correctionVolume &gt;= 0);</span>

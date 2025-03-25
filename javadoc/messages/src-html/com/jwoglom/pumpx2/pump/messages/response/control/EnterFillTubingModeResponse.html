@@ -67,34 +67,41 @@
 <span class="source-line-no">050</span><span id="line-50">        this.status = status;</span>
 <span class="source-line-no">051</span><span id="line-51">    }</span>
 <span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) { </span>
-<span class="source-line-no">054</span><span id="line-54">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">055</span><span id="line-55">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">056</span><span id="line-56">        this.cargo = raw;</span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">    /**</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;caption&gt;Byte layout for EnterFillTubingModeResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;/table&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     */</span>
-<span class="source-line-no">067</span><span id="line-67">    public static byte[] buildCargo(int status) {</span>
-<span class="source-line-no">068</span><span id="line-68">        return Bytes.combine(</span>
-<span class="source-line-no">069</span><span id="line-69">                new byte[]{ (byte) status }</span>
-<span class="source-line-no">070</span><span id="line-70">        );</span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    /**</span>
-<span class="source-line-no">075</span><span id="line-75">     * @return 0 if successful</span>
-<span class="source-line-no">076</span><span id="line-76">     */</span>
-<span class="source-line-no">077</span><span id="line-77">    public int getStatus() {</span>
-<span class="source-line-no">078</span><span id="line-78">        return status;</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80">}</span>
+<span class="source-line-no">053</span><span id="line-53">    /**</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;caption&gt;Parsed fields for EnterFillTubingModeResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;/table&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     */</span>
+<span class="source-line-no">059</span><span id="line-59">    public void parse(byte[] raw) { </span>
+<span class="source-line-no">060</span><span id="line-60">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">062</span><span id="line-62">        this.cargo = raw;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.status = raw[0];</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    /**</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;caption&gt;Byte layout for EnterFillTubingModeResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;/table&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     */</span>
+<span class="source-line-no">074</span><span id="line-74">    public static byte[] buildCargo(int status) {</span>
+<span class="source-line-no">075</span><span id="line-75">        return Bytes.combine(</span>
+<span class="source-line-no">076</span><span id="line-76">                new byte[]{ (byte) status }</span>
+<span class="source-line-no">077</span><span id="line-77">        );</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    /**</span>
+<span class="source-line-no">082</span><span id="line-82">     * @return 0 if successful</span>
+<span class="source-line-no">083</span><span id="line-83">     */</span>
+<span class="source-line-no">084</span><span id="line-84">    public int getStatus() {</span>
+<span class="source-line-no">085</span><span id="line-85">        return status;</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87">}</span>
 
 
 
