@@ -190,6 +190,34 @@ public class InitiateBolusRequestTest {
 
     }
 
+
+
+    @Test
+    public void testInitiateBolusRequest_Mobi_Extended8h() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        // 2u, 0% now/100% later, 8h
+        InitiateBolusRequest expected = new InitiateBolusRequest(0, 248, 12, 0, 0, 0, 0, 0, 2_000, 28_800, 0);
+
+        // {"raw":{"btChar":"","guessedBtChar":"7b83fffc9f774e5c8064aae2c24838b9","type":"WriteReq","value":"03209e203d00000000f80000000c000000000000022000000000000000000000d00700008070000001200000000069aa68202a42881bcc24a6b547740020ec4553e43b3837351e0961fc","ts":"2025-03-25 00:11:21.907000"},"parsed":{"cargoHex":"00000000f80000000c00000000000000000000000000000000d00700008070000000000000","name":"request.control.InitiateBolusRequest","messageProps":{"signed":true,"responseName":"response.control.InitiateBolusResponse","responseOpCode":-97,"characteristicUuid":"7b83fffc-9f77-4e5c-8064-aae2c24838b9","type":"REQUEST","characteristic":"CONTROL","minApi":"API_V2_1","size":37,"stream":false,"opCode":-98,"supportedDevices":"ALL","variableSize":false,"modifiesInsulinDelivery":true},
+        // "params":{"correctionVolume":0,"totalVolume":0,"bolusTypeBitmask":12,"bolusCarbs":0,"bolusBG":0,"bolusIOB":0,"extendedVolume":2000,"foodVolume":0,"extendedSeconds":28800,"extended3":0,"cargo":[0,0,0,0,-8,0,0,0,12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-48,7,0,0,-128,112,0,0,0,0,0,0],"bolusID":248}}}
+        InitiateBolusRequest parsedReq = (InitiateBolusRequest) MessageTester.test(
+                "03209e203d00000000f80000000c000000000000",
+                32,
+                3,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected,
+                "022000000000000000000000d007000080700000",
+                "01200000000069aa68202a42881bcc24a6b54774",
+                "0020ec4553e43b3837351e0961fc"
+        );
+
+        assertHexEquals(expected.getCargo(), parsedReq.getCargo());
+        assertEquals(2_000, parsedReq.getExtendedVolume());
+        assertEquals(28_800, parsedReq.getExtendedSeconds());
+
+    }
+
     private byte[] stripHmacCargo(byte[] cargo) {
         return Bytes.dropLastN(cargo, 24);
     }

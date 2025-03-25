@@ -82,7 +82,7 @@ public class InitiateBolusRequest extends Message {
      * @param extended3        TODO unknown, set as 0
      */
     public InitiateBolusRequest(long totalVolume, int bolusID, int bolusTypeBitmask, long foodVolume, long correctionVolume, int bolusCarbs, int bolusBG, long bolusIOB, long extendedVolume, long extendedSeconds, long extended3) {
-        Validate.isTrue(totalVolume >= MIN_BOLUS_MILLIUNITS);
+        Validate.isTrue(totalVolume >= MIN_BOLUS_MILLIUNITS || (totalVolume + extendedVolume) >= MIN_EXTENDED_BOLUS_MILLIUNITS);
         Validate.isTrue(bolusID > 0);
         Validate.isTrue(foodVolume >= 0);
         Validate.isTrue(correctionVolume >= 0);
