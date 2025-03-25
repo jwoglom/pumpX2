@@ -23,6 +23,7 @@ public class PumpStateSupplier {
     public static Supplier<ApiVersion> pumpApiVersion = null;
     public static Supplier<Boolean> controlIQSupported = () -> false;
     public static Supplier<Boolean> actionsAffectingInsulinDeliveryEnabled = () -> false;
+    public static Supplier<Integer> inProgressBolusId = () -> null;
 
 
     /**

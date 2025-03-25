@@ -11,6 +11,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;
@@ -114,7 +115,14 @@ public enum QualifyingEvent {
             ControlIQSleepScheduleRequest::new)),
     CONTROL_IQ_SLEEP(8388608, Set.of(
             ControlIQSleepScheduleRequest::new)),
-    BOLUS_PERMISSION_REVOKED(2147483648L),
+    BOLUS_PERMISSION_REVOKED(2147483648L, Set.of(
+            () -> {
+                if (PumpStateSupplier.inProgressBolusId != null && PumpStateSupplier.inProgressBolusId.get() != null) {
+                    return new BolusPermissionChangeReasonRequest(PumpStateSupplier.inProgressBolusId.get());
+                }
+                return null;
+            }
+    )),
 
     ;
     private final long id;
