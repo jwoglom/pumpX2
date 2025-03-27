@@ -4,38 +4,35 @@ import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 @HistoryLogProps(
     opCode = 256,
     usedByAndroid = true,
-    usedByTidepool = true // LID_CGM_DATA_GXB
+    usedByTidepool = true, // LID_CGM_DATA_GXB
+    usedInTconnectsync = true
 )
 public class CGMHistoryLog extends HistoryLog {
     
-    private int glucoseValueStatus;
-    private int cgmDataType;
+    private int glucoseValueStatusRaw;
+    private GlucoseValueStatus glucoseValueStatus;
+    private int cgmDataTypeRaw;
+    private Set<CgmDataType> cgmDataTypes;
     private int rate;
     private int algorithmState;
     private int rssi;
     private int currentGlucoseDisplayValue;
     private long timeStampSeconds;
-    private int egvInfoBitmask;
+    private int egvInfoBitmaskRaw;
+    private Set<EgvInfo> egvInfo;
     private int interval;
     
     public CGMHistoryLog() {}
     
-    public CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatus, cgmDataType, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
-        this.pumpTimeSec = pumpTimeSec;
-        this.sequenceNum = sequenceNum;
-        this.glucoseValueStatus = glucoseValueStatus;
-        this.cgmDataType = cgmDataType;
-        this.rate = rate;
-        this.algorithmState = algorithmState;
-        this.rssi = rssi;
-        this.currentGlucoseDisplayValue = currentGlucoseDisplayValue;
-        this.timeStampSeconds = timeStampSeconds;
-        this.egvInfoBitmask = egvInfoBitmask;
-        this.interval = interval;
+    public CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
+        parse(cargo);
         
     }
 
@@ -43,18 +40,25 @@ public class CGMHistoryLog extends HistoryLog {
         return 256;
     }
 
+    /**
+     * TODO: this needs to be checked against the tconnectsync eventparser code since they seem to differ
+     * @param raw
+     */
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.glucoseValueStatus = Bytes.readShort(raw, 10);
-        this.cgmDataType = raw[12];
+        this.glucoseValueStatusRaw = Bytes.readShort(raw, 10);
+        this.glucoseValueStatus = getGlucoseValueStatus();
+        this.cgmDataTypeRaw = raw[12];
+        this.cgmDataTypes = getCgmDataTypes();
         this.rate = raw[13];
         this.algorithmState = raw[14];
         this.rssi = raw[15];
         this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);
         this.timeStampSeconds = Bytes.readUint32(raw, 18);
-        this.egvInfoBitmask = Bytes.readShort(raw, 22);
+        this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);
+        this.egvInfo = getEgvInfo();
         this.interval = raw[24];
         
     }
@@ -77,12 +81,76 @@ public class CGMHistoryLog extends HistoryLog {
             new byte[]{ 1 }); // missing param?
     }
     
-    public int getGlucoseValueStatus() {
-        return glucoseValueStatus;
+    public int getGlucoseValueStatusRaw() {
+        return glucoseValueStatusRaw;
     }
-    public int getCgmDataType() {
-        return cgmDataType;
+
+    public enum GlucoseValueStatus {
+        NORMAL(0),
+        HIGH(1),
+        LOW(2)
+
+        ;
+        private int id;
+        GlucoseValueStatus(int id) {
+            this.id = id;
+        }
+
+        public static GlucoseValueStatus fromId(int id) {
+            for (GlucoseValueStatus r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
+
+        public int getId() {
+            return id;
+        }
     }
+
+    public GlucoseValueStatus getGlucoseValueStatus() {
+        return GlucoseValueStatus.fromId(glucoseValueStatusRaw);
+    }
+
+    public int getCgmDataTypeRaw() {
+        return cgmDataTypeRaw;
+    }
+
+    public enum CgmDataType {
+        FIVE_MINUTE_READING(1),
+        BACKFILL(2),
+        IMMEDIATE_MATCH_VALUE(4),
+        CALIBRATION(8),
+        NONE(16)
+
+        ;
+        private int id;
+        CgmDataType(int id) {
+            this.id = id;
+        }
+
+        public static Set<CgmDataType> fromId(int mask) {
+            Set<CgmDataType> items = new TreeSet<>();
+            for (CgmDataType i : values()) {
+                if ((mask & i.getId()) != 0) {
+                    items.add(i);
+                }
+            }
+
+            return items;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
+
+    public Set<CgmDataType> getCgmDataTypes() {
+        return CgmDataType.fromId(cgmDataTypeRaw);
+    }
+
     public int getRate() {
         return rate;
     }
@@ -98,8 +166,45 @@ public class CGMHistoryLog extends HistoryLog {
     public long getTimeStampSeconds() {
         return timeStampSeconds;
     }
-    public int getEgvInfoBitmask() {
-        return egvInfoBitmask;
+    public int getEgvInfoBitmaskRaw() {
+        return egvInfoBitmaskRaw;
+    }
+
+    public enum EgvInfo {
+        FIVE_MINUTE_READING(1),
+        BACKFILL(2),
+        IMMEDIATE_MATCH_VALUE(4),
+        CALIBRATION(8),
+        NONE(16),
+        VALID_TIMESTAMP(32),
+        VALID_EGV_RANGE(64),
+        VALID_ALG_STATE(128),
+        EGV_PROCESSED(256)
+
+        ;
+        private int id;
+        EgvInfo(int id) {
+            this.id = id;
+        }
+
+        public static Set<EgvInfo> fromId(int mask) {
+            Set<EgvInfo> items = new TreeSet<>();
+            for (EgvInfo i : values()) {
+                if ((mask & i.getId()) != 0) {
+                    items.add(i);
+                }
+            }
+
+            return items;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
+
+    public Set<EgvInfo> getEgvInfo() {
+        return EgvInfo.fromId(egvInfoBitmaskRaw);
     }
     public int getInterval() {
         return interval;

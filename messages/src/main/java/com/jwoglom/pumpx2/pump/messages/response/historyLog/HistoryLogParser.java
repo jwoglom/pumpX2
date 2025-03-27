@@ -70,11 +70,13 @@ public class HistoryLogParser {
     );
 
     public static Map<Integer, Class<? extends HistoryLog>> LOG_MESSAGE_IDS = new HashMap<>();
+    public static Map<Class<? extends HistoryLog>, Integer> LOG_MESSAGE_CLASS_TO_ID = new HashMap<>();
 
     static {
         for (Class<? extends HistoryLog> clazz : LOG_MESSAGE_TYPES) {
             try {
                 LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);
+                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());
             } catch (IllegalAccessException|InstantiationException e) {
                 L.e(TAG, String.format("could not instantiate %s", clazz), e);
                 e.printStackTrace();

@@ -6,6 +6,9 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 import java.math.BigInteger;
 
+/**
+ * NOTE, replaced by {@link CGMHistoryLog} in recent firmware
+ */
 @HistoryLogProps(
     opCode = 211,
     displayName = "CGM GX Data Sample",
