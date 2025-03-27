@@ -65,7 +65,8 @@ public class HistoryLogParser {
         HypoMinimizerResumeHistoryLog.class,
         BasalDeliveryHistoryLog.class,
         ControlIQPcmChangeHistoryLog.class,
-        ControlIQUserModeChangeHistoryLog.class
+        ControlIQUserModeChangeHistoryLog.class,
+        DexcomG7CGMHistoryLog.class
         // MESSAGES_END
     );
 

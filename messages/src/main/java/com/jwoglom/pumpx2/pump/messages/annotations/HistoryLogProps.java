@@ -13,6 +13,6 @@ public @interface HistoryLogProps {
     boolean usedByAndroid() default false;
     boolean referencedInAndroid() default false;
     boolean usedByTidepool() default false;
-    boolean usedInTconnectsync() default false;
+    boolean usedByTconnectsync() default false;
     String displayName() default "";
 }

@@ -9,9 +9,10 @@ import java.util.TreeSet;
 
 @HistoryLogProps(
     opCode = 256,
+    displayName = "Dexcom G6 CGM Data",
     usedByAndroid = true,
     usedByTidepool = true, // LID_CGM_DATA_GXB
-    usedInTconnectsync = true
+    usedByTconnectsync = true
 )
 public class DexcomG6CGMHistoryLog extends HistoryLog {
     
@@ -42,7 +43,6 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
 
     /**
      * TODO: this needs to be checked against the tconnectsync eventparser code since they seem to differ
-     * @param raw
      */
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == 26);
@@ -175,7 +175,7 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
         BACKFILL(2),
         IMMEDIATE_MATCH_VALUE(4),
         CALIBRATION(8),
-        NONE(16),
+        NO_EGV(16),
         VALID_TIMESTAMP(32),
         VALID_EGV_RANGE(64),
         VALID_ALG_STATE(128),
