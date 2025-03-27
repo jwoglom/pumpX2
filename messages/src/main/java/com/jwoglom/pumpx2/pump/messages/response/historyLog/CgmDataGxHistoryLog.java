@@ -4,10 +4,8 @@ import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import java.math.BigInteger;
-
 /**
- * NOTE, replaced by {@link CGMHistoryLog} in recent firmware
+ * NOTE, replaced by {@link DexcomG6CGMHistoryLog} in recent firmware
  */
 @HistoryLogProps(
     opCode = 211,

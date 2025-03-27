@@ -16,7 +16,7 @@ public class HistoryLogParser {
     public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = Set.of(
         DateChangeHistoryLog.class,
         BGHistoryLog.class,
-        CGMHistoryLog.class,
+        DexcomG6CGMHistoryLog.class,
         BolusDeliveryHistoryLog.class,
         BolusCompletedHistoryLog.class,
         BolusRequestedMsg1HistoryLog.class,

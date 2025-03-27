@@ -13,7 +13,7 @@ import java.util.TreeSet;
     usedByTidepool = true, // LID_CGM_DATA_GXB
     usedInTconnectsync = true
 )
-public class CGMHistoryLog extends HistoryLog {
+public class DexcomG6CGMHistoryLog extends HistoryLog {
     
     private int glucoseValueStatusRaw;
     private GlucoseValueStatus glucoseValueStatus;
@@ -28,9 +28,9 @@ public class CGMHistoryLog extends HistoryLog {
     private Set<EgvInfo> egvInfo;
     private int interval;
     
-    public CGMHistoryLog() {}
+    public DexcomG6CGMHistoryLog() {}
     
-    public CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+    public DexcomG6CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
         this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
         parse(cargo);
         
