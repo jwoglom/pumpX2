@@ -10,8 +10,11 @@ import java.util.Set;
 /**
  * Contains everything shared between {@link LastBolusStatusResponse} and {@link LastBolusStatusV2Response}
  * except that the latter contains requestedVolume
+ *
+ * NOTE: Intentionally not a subclass of StatusMessage because status seems to be equal to 1 even
+ * when partially valid data is returned about the last bolus.
  */
-public abstract class LastBolusStatusAbstractResponse extends StatusMessage {
+public abstract class LastBolusStatusAbstractResponse extends Message {
     public abstract int getStatus();
     public abstract int getBolusId();
     public abstract long getTimestamp();
