@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.Nullable;
 
@@ -34,7 +35,7 @@ import timber.log.Timber;
  */
 public abstract class TandemPumpFinder {
     private final Context context;
-    private final Handler handler = new Handler();
+    private final Handler handler;
 
     /**
      * Initializes TandemPumpFinder.
@@ -45,6 +46,7 @@ public abstract class TandemPumpFinder {
      */
     public TandemPumpFinder(Context context, @Nullable Timber.Tree timberTree) {
         this.context = context;
+        this.handler = new Handler(Looper.getMainLooper());
 
         if (timberTree != null) {
             // Plant a tree

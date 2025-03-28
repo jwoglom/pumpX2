@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.Nullable;
 
@@ -80,6 +81,7 @@ import com.jwoglom.pumpx2.util.timber.DebugTree;
 public class TandemBluetoothHandler {
     private final Context context;
     private TandemPump tandemPump;
+    private final Handler handler;
     public Long periodicTimeSinceResetInterval = 120_000L;
 
     /**
@@ -93,6 +95,7 @@ public class TandemBluetoothHandler {
     public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree) {
         this.context = context;
         this.tandemPump = tandemPump;
+        this.handler = new Handler(Looper.getMainLooper());
 
         if (timberTree != null) {
             // Plant a tree
@@ -120,7 +123,6 @@ public class TandemBluetoothHandler {
 
     public BluetoothCentralManager central;
     private static TandemBluetoothHandler instance = null;
-    private final Handler handler = new Handler();
 
     private enum ConnectionInitializationStep {
         SERVICES_DISCOVERED,

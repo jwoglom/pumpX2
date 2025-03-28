@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
 
         statusText = findViewById(R.id.statusText);
         initStatusText();
@@ -336,6 +337,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(pumpConnectedStage1Receiver);
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
 
