@@ -49,7 +49,7 @@ def add_parse_javadoc(java_file):
         # Start the comment
         if existing_javadoc:
             existing_javadoc = existing_javadoc.strip()
-            existing_javadoc = re.sub(r'\s*\*\/\s*$', '', javadoc_text)
+            existing_javadoc = re.sub(r'\s*\*\/\s*$', '', existing_javadoc)
             javadoc = existing_javadoc
             javadoc += f"{indent} *"
             javadoc += f"{indent} * <br>"
