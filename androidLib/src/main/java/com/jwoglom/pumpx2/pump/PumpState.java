@@ -59,7 +59,9 @@ public class PumpState {
             o.put("jpakeDerivedSecret", getJpakeDerivedSecret(context));
             o.put("jpakeServerNonce", getJpakeServerNonce(context));
             o.put("savedBluetoothMAC", getSavedBluetoothMAC(context));
-            o.put("pumpSerialNum", getPumpSerialNum());
+            if (getPumpSerialNum() != null && !getPumpSerialNum().isBlank()) {
+                o.put("pumpSerialNum", getPumpSerialNum());
+            }
             o.put("pumpAPIVersion", getPumpAPIVersion().serialize());
             return o.toString();
         } catch (JSONException e) {
@@ -74,7 +76,9 @@ public class PumpState {
             setJpakeDerivedSecret(context, o.getString("jpakeDerivedSecret"));
             setJpakeServerNonce(context, o.getString("jpakeServerNonce"));
             setSavedBluetoothMAC(context, o.getString("savedBluetoothMAC"));
-            setPumpSerialNum(o.getString("pumpSerialNum"));
+            if (o.has("pumpSerialNum") && !o.getString("pumpSerialNum").isBlank()) {
+                setPumpSerialNum(o.getString("pumpSerialNum"));
+            }
             setPumpAPIVersion(ApiVersion.deserialize(o.getString("pumpAPIVersion")));
         } catch (JSONException e) {
             throw new RuntimeException(e);
