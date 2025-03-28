@@ -18,6 +18,7 @@ import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;
 import com.jwoglom.pumpx2.pump.messages.models.PairingCodeType;
 import com.jwoglom.pumpx2.pump.messages.request.authentication.AbstractCentralChallengeRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
@@ -215,6 +216,7 @@ public abstract class TandemPump {
         Timber.i("JpakeServerNonce=%s", PumpState.getJpakeServerNonce(context));
 
         sendCommand(peripheral, new ApiVersionRequest());
+        sendCommand(peripheral, new PumpVersionRequest());
         sendCommand(peripheral, new TimeSinceResetRequest());
     }
 
