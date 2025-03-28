@@ -21,108 +21,109 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">import java.math.BigInteger;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">@HistoryLogProps(</span>
-<span class="source-line-no">010</span><span id="line-10">    opCode = 211,</span>
-<span class="source-line-no">011</span><span id="line-11">    displayName = "CGM GX Data Sample",</span>
-<span class="source-line-no">012</span><span id="line-12">    usedByTidepool = true</span>
-<span class="source-line-no">013</span><span id="line-13">)</span>
-<span class="source-line-no">014</span><span id="line-14">public class CgmDataGxHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">015</span><span id="line-15">    </span>
-<span class="source-line-no">016</span><span id="line-16">    private int status;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int type;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int rate;</span>
-<span class="source-line-no">019</span><span id="line-19">    private int rssi;</span>
-<span class="source-line-no">020</span><span id="line-20">    private int value;</span>
-<span class="source-line-no">021</span><span id="line-21">    private long timestamp;</span>
-<span class="source-line-no">022</span><span id="line-22">    private long transmitterTimestamp;</span>
-<span class="source-line-no">023</span><span id="line-23">    </span>
-<span class="source-line-no">024</span><span id="line-24">    public CgmDataGxHistoryLog() {}</span>
-<span class="source-line-no">025</span><span id="line-25">    public CgmDataGxHistoryLog(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">026</span><span id="line-26">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">027</span><span id="line-27">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
-<span class="source-line-no">028</span><span id="line-28">        this.status = status;</span>
-<span class="source-line-no">029</span><span id="line-29">        this.type = type;</span>
-<span class="source-line-no">030</span><span id="line-30">        this.rate = rate;</span>
-<span class="source-line-no">031</span><span id="line-31">        this.rssi = rssi;</span>
-<span class="source-line-no">032</span><span id="line-32">        this.value = value;</span>
-<span class="source-line-no">033</span><span id="line-33">        this.timestamp = timestamp;</span>
-<span class="source-line-no">034</span><span id="line-34">        this.transmitterTimestamp = transmitterTimestamp;</span>
-<span class="source-line-no">035</span><span id="line-35">        </span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    public CgmDataGxHistoryLog(int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">039</span><span id="line-39">        this(0, 0, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
-<span class="source-line-no">040</span><span id="line-40">    }</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">    public int typeId() {</span>
-<span class="source-line-no">043</span><span id="line-43">        return 211;</span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    /**</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;caption&gt;Parsed fields for CgmDataGxHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;value&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;/table&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     */</span>
-<span class="source-line-no">058</span><span id="line-58">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">059</span><span id="line-59">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">060</span><span id="line-60">        this.cargo = raw;</span>
-<span class="source-line-no">061</span><span id="line-61">        parseBase(raw);</span>
-<span class="source-line-no">062</span><span id="line-62">        this.status = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">063</span><span id="line-63">        this.type = raw[12];</span>
-<span class="source-line-no">064</span><span id="line-64">        this.rate = raw[13];</span>
-<span class="source-line-no">065</span><span id="line-65">        this.rssi = raw[15];</span>
-<span class="source-line-no">066</span><span id="line-66">        this.value = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">067</span><span id="line-67">        this.timestamp = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">068</span><span id="line-68">        this.transmitterTimestamp = Bytes.readUint32(raw, 22);</span>
-<span class="source-line-no">069</span><span id="line-69">        </span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">073</span><span id="line-73">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">074</span><span id="line-74">            new byte[]{-45, 0}, // (byte) 211</span>
-<span class="source-line-no">075</span><span id="line-75">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">077</span><span id="line-77">            Bytes.firstTwoBytesLittleEndian(status), </span>
-<span class="source-line-no">078</span><span id="line-78">            new byte[]{ (byte) type }, </span>
-<span class="source-line-no">079</span><span id="line-79">            new byte[]{ (byte) rate }, </span>
-<span class="source-line-no">080</span><span id="line-80">            new byte[]{ (byte) rssi }, </span>
-<span class="source-line-no">081</span><span id="line-81">            Bytes.firstTwoBytesLittleEndian(value), </span>
-<span class="source-line-no">082</span><span id="line-82">            Bytes.toUint32(timestamp), </span>
-<span class="source-line-no">083</span><span id="line-83">            Bytes.toUint32(transmitterTimestamp)));</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    public int getStatus() {</span>
-<span class="source-line-no">087</span><span id="line-87">        return status;</span>
-<span class="source-line-no">088</span><span id="line-88">    }</span>
-<span class="source-line-no">089</span><span id="line-89">    public int getType() {</span>
-<span class="source-line-no">090</span><span id="line-90">        return type;</span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92">    public int getRate() {</span>
-<span class="source-line-no">093</span><span id="line-93">        return rate;</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95">    public int getRssi() {</span>
-<span class="source-line-no">096</span><span id="line-96">        return rssi;</span>
-<span class="source-line-no">097</span><span id="line-97">    }</span>
-<span class="source-line-no">098</span><span id="line-98">    public int getValue() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return value;</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101">    public long getTimestamp() {</span>
-<span class="source-line-no">102</span><span id="line-102">        return timestamp;</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104">    public long getTransmitterTimestamp() {</span>
-<span class="source-line-no">105</span><span id="line-105">        return transmitterTimestamp;</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107">    </span>
-<span class="source-line-no">108</span><span id="line-108">}</span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * NOTE, replaced by {@link DexcomG6CGMHistoryLog} in recent firmware</span>
+<span class="source-line-no">009</span><span id="line-9"> */</span>
+<span class="source-line-no">010</span><span id="line-10">@HistoryLogProps(</span>
+<span class="source-line-no">011</span><span id="line-11">    opCode = 211,</span>
+<span class="source-line-no">012</span><span id="line-12">    displayName = "CGM GX Data Sample",</span>
+<span class="source-line-no">013</span><span id="line-13">    usedByTidepool = true</span>
+<span class="source-line-no">014</span><span id="line-14">)</span>
+<span class="source-line-no">015</span><span id="line-15">public class CgmDataGxHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">016</span><span id="line-16">    </span>
+<span class="source-line-no">017</span><span id="line-17">    private int status;</span>
+<span class="source-line-no">018</span><span id="line-18">    private int type;</span>
+<span class="source-line-no">019</span><span id="line-19">    private int rate;</span>
+<span class="source-line-no">020</span><span id="line-20">    private int rssi;</span>
+<span class="source-line-no">021</span><span id="line-21">    private int value;</span>
+<span class="source-line-no">022</span><span id="line-22">    private long timestamp;</span>
+<span class="source-line-no">023</span><span id="line-23">    private long transmitterTimestamp;</span>
+<span class="source-line-no">024</span><span id="line-24">    </span>
+<span class="source-line-no">025</span><span id="line-25">    public CgmDataGxHistoryLog() {}</span>
+<span class="source-line-no">026</span><span id="line-26">    public CgmDataGxHistoryLog(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
+<span class="source-line-no">027</span><span id="line-27">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">028</span><span id="line-28">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
+<span class="source-line-no">029</span><span id="line-29">        this.status = status;</span>
+<span class="source-line-no">030</span><span id="line-30">        this.type = type;</span>
+<span class="source-line-no">031</span><span id="line-31">        this.rate = rate;</span>
+<span class="source-line-no">032</span><span id="line-32">        this.rssi = rssi;</span>
+<span class="source-line-no">033</span><span id="line-33">        this.value = value;</span>
+<span class="source-line-no">034</span><span id="line-34">        this.timestamp = timestamp;</span>
+<span class="source-line-no">035</span><span id="line-35">        this.transmitterTimestamp = transmitterTimestamp;</span>
+<span class="source-line-no">036</span><span id="line-36">        </span>
+<span class="source-line-no">037</span><span id="line-37">    }</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    public CgmDataGxHistoryLog(int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
+<span class="source-line-no">040</span><span id="line-40">        this(0, 0, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
+<span class="source-line-no">041</span><span id="line-41">    }</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    public int typeId() {</span>
+<span class="source-line-no">044</span><span id="line-44">        return 211;</span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    /**</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;caption&gt;Parsed fields for CgmDataGxHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;value&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;/table&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     */</span>
+<span class="source-line-no">059</span><span id="line-59">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">060</span><span id="line-60">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">061</span><span id="line-61">        this.cargo = raw;</span>
+<span class="source-line-no">062</span><span id="line-62">        parseBase(raw);</span>
+<span class="source-line-no">063</span><span id="line-63">        this.status = Bytes.readShort(raw, 10);</span>
+<span class="source-line-no">064</span><span id="line-64">        this.type = raw[12];</span>
+<span class="source-line-no">065</span><span id="line-65">        this.rate = raw[13];</span>
+<span class="source-line-no">066</span><span id="line-66">        this.rssi = raw[15];</span>
+<span class="source-line-no">067</span><span id="line-67">        this.value = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">068</span><span id="line-68">        this.timestamp = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">069</span><span id="line-69">        this.transmitterTimestamp = Bytes.readUint32(raw, 22);</span>
+<span class="source-line-no">070</span><span id="line-70">        </span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
+<span class="source-line-no">074</span><span id="line-74">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">075</span><span id="line-75">            new byte[]{-45, 0}, // (byte) 211</span>
+<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">077</span><span id="line-77">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">078</span><span id="line-78">            Bytes.firstTwoBytesLittleEndian(status), </span>
+<span class="source-line-no">079</span><span id="line-79">            new byte[]{ (byte) type }, </span>
+<span class="source-line-no">080</span><span id="line-80">            new byte[]{ (byte) rate }, </span>
+<span class="source-line-no">081</span><span id="line-81">            new byte[]{ (byte) rssi }, </span>
+<span class="source-line-no">082</span><span id="line-82">            Bytes.firstTwoBytesLittleEndian(value), </span>
+<span class="source-line-no">083</span><span id="line-83">            Bytes.toUint32(timestamp), </span>
+<span class="source-line-no">084</span><span id="line-84">            Bytes.toUint32(transmitterTimestamp)));</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">    public int getStatus() {</span>
+<span class="source-line-no">088</span><span id="line-88">        return status;</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90">    public int getType() {</span>
+<span class="source-line-no">091</span><span id="line-91">        return type;</span>
+<span class="source-line-no">092</span><span id="line-92">    }</span>
+<span class="source-line-no">093</span><span id="line-93">    public int getRate() {</span>
+<span class="source-line-no">094</span><span id="line-94">        return rate;</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96">    public int getRssi() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return rssi;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99">    public int getValue() {</span>
+<span class="source-line-no">100</span><span id="line-100">        return value;</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102">    public long getTimestamp() {</span>
+<span class="source-line-no">103</span><span id="line-103">        return timestamp;</span>
+<span class="source-line-no">104</span><span id="line-104">    }</span>
+<span class="source-line-no">105</span><span id="line-105">    public long getTransmitterTimestamp() {</span>
+<span class="source-line-no">106</span><span id="line-106">        return transmitterTimestamp;</span>
+<span class="source-line-no">107</span><span id="line-107">    }</span>
+<span class="source-line-no">108</span><span id="line-108">    </span>
+<span class="source-line-no">109</span><span id="line-109">}</span>
 
 
 

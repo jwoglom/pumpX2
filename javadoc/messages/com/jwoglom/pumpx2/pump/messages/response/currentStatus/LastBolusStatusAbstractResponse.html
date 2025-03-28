@@ -76,9 +76,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">com.jwoglom.pumpx2.pump.messages.Message</a>
-<div class="inheritance"><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">com.jwoglom.pumpx2.pump.messages.models.StatusMessage</a>
 <div class="inheritance">com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAbstractResponse</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
@@ -87,10 +85,13 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="LastBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusResponse</a></code>, <code><a href="LastBolusStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusV2Response</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-14">LastBolusStatusAbstractResponse</a></span>
-<span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-17">LastBolusStatusAbstractResponse</a></span>
+<span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
 <div class="block">Contains everything shared between <a href="LastBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>LastBolusStatusResponse</code></a> and <a href="LastBolusStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>LastBolusStatusV2Response</code></a>
- except that the latter contains requestedVolume</div>
+ except that the latter contains requestedVolume
+
+ NOTE: Intentionally not a subclass of StatusMessage because status seems to be equal to 1 even
+ when partially valid data is returned about the last bolus.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -182,9 +183,6 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.StatusMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></h3>
-<code><a href="../../models/StatusMessage.html#isStatusOK()">isStatusOK</a></code></div>
-<div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#equals(java.lang.Object)">equals</a>, <a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#parse(byte%5B%5D)">parse</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
@@ -204,7 +202,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>LastBolusStatusAbstractResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-14">LastBolusStatusAbstractResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-17">LastBolusStatusAbstractResponse</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -218,79 +216,73 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-15">getStatus</a></span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
-<dt>Returns:</dt>
-<dd>0 if successful</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-18">getStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-16">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-19">getBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimestamp()">
 <h3>getTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-17">getTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-20">getTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimestampInstant()">
 <h3>getTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-18">getTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-21">getTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDeliveredVolume()">
 <h3>getDeliveredVolume</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-19">getDeliveredVolume</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-22">getDeliveredVolume</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusStatusId()">
 <h3>getBolusStatusId</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-20">getBolusStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-23">getBolusStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusStatus()">
 <h3>getBolusStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LastBolusStatusAbstractResponse.BolusStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusAbstractResponse.BolusStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-46">getBolusStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LastBolusStatusAbstractResponse.BolusStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusAbstractResponse.BolusStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-49">getBolusStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSourceId()">
 <h3>getBolusSourceId</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-49">getBolusSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-52">getBolusSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSource()">
 <h3>getBolusSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-50">getBolusSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-53">getBolusSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusTypeBitmask()">
 <h3>getBolusTypeBitmask</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-53">getBolusTypeBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-56">getBolusTypeBitmask</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusType()">
 <h3>getBolusType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-54">getBolusType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-57">getBolusType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusDuration()">
 <h3>getExtendedBolusDuration</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-57">getExtendedBolusDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusAbstractResponse.html#line-60">getExtendedBolusDuration</a></span>()</div>
 </section>
 </li>
 </ul>
