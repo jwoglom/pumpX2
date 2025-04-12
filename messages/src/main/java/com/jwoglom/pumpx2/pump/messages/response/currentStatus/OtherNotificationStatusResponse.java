@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;
 
 import java.math.BigInteger;
@@ -19,7 +20,7 @@ import java.math.BigInteger;
     request=OtherNotificationStatusRequest.class,
     minApi=KnownApiVersion.MOBI_API_V3_5
 )
-public class OtherNotificationStatusResponse extends Message {
+public class OtherNotificationStatusResponse extends NotificationMessage {
     
     
     public OtherNotificationStatusResponse() {
@@ -37,6 +38,9 @@ public class OtherNotificationStatusResponse extends Message {
         
     }
 
-    
-    
+
+    @Override
+    public int size() {
+        return 0; // not sure about this one
+    }
 }

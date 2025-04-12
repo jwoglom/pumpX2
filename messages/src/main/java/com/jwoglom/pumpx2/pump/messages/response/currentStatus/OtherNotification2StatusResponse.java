@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;
 
 @MessageProps(
@@ -15,7 +16,7 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2
     characteristic=Characteristic.CURRENT_STATUS,
     request=OtherNotification2StatusRequest.class
 )
-public class OtherNotification2StatusResponse extends Message {
+public class OtherNotification2StatusResponse extends NotificationMessage {
     
     private long codeA;
     private long codeB;
@@ -50,5 +51,10 @@ public class OtherNotification2StatusResponse extends Message {
 
     public long getCodeB() {
         return codeB;
+    }
+
+    @Override
+    public int size() {
+        return (codeA==0 && codeB==0) ? 0 : 1;
     }
 }

@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
     type=MessageType.RESPONSE,
     request=CGMAlertStatusRequest.class
 )
-public class CGMAlertStatusResponse extends Message {
+public class CGMAlertStatusResponse extends NotificationMessage {
     
     private BigInteger intMap;
     
@@ -52,6 +53,11 @@ public class CGMAlertStatusResponse extends Message {
 
     public Set<CGMAlert> getCgmAlerts() {
         return CGMAlert.fromBitmask(intMap);
+    }
+
+    @Override
+    public int size() {
+        return getCgmAlerts().size();
     }
 
     public enum CGMAlert {

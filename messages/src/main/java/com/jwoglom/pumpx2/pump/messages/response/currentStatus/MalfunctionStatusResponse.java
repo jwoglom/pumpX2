@@ -1,11 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 
 import java.math.BigInteger;
@@ -21,7 +23,7 @@ import java.util.Locale;
     characteristic=Characteristic.CURRENT_STATUS,
     request= MalfunctionStatusRequest.class
 )
-public class MalfunctionStatusResponse extends Message {
+public class MalfunctionStatusResponse extends NotificationMessage {
     
     private long codeA;
     private long codeB;
@@ -85,5 +87,11 @@ public class MalfunctionStatusResponse extends Message {
         }
 
         return true;
+    }
+
+    @Override
+    public int size() {
+        return (hasMalfunction() &&
+                !StringUtils.isBlank(getErrorString())) ? 1 : 0;
     }
 }
