@@ -20,187 +20,193 @@
 <span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
-<span class="source-line-no">009</span><span id="line-9"></span>
-<span class="source-line-no">010</span><span id="line-10">import java.math.BigInteger;</span>
-<span class="source-line-no">011</span><span id="line-11">import java.util.HashSet;</span>
-<span class="source-line-no">012</span><span id="line-12">import java.util.Set;</span>
-<span class="source-line-no">013</span><span id="line-13">import java.util.TreeSet;</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">/**</span>
-<span class="source-line-no">016</span><span id="line-16"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest}, opCode 71, size 8</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;br&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> *</span>
-<span class="source-line-no">020</span><span id="line-20"> * </span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;71&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;8&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;/table&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> */</span>
-<span class="source-line-no">029</span><span id="line-29">@MessageProps(</span>
-<span class="source-line-no">030</span><span id="line-30">        opCode=71,</span>
-<span class="source-line-no">031</span><span id="line-31">        size=8,</span>
-<span class="source-line-no">032</span><span id="line-32">        type=MessageType.RESPONSE,</span>
-<span class="source-line-no">033</span><span id="line-33">        request= AlarmStatusRequest.class</span>
-<span class="source-line-no">034</span><span id="line-34">)</span>
-<span class="source-line-no">035</span><span id="line-35">public class AlarmStatusResponse extends Message {</span>
-<span class="source-line-no">036</span><span id="line-36">    private BigInteger intMap;</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    // private val unused, but placed to force java tostring to include the formatted alerts set</span>
-<span class="source-line-no">039</span><span id="line-39">    private Set&lt;AlarmResponseType&gt; alarms;</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    public AlarmStatusResponse() {}</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public AlarmStatusResponse(BigInteger intMap) {</span>
-<span class="source-line-no">044</span><span id="line-44">        this.cargo = buildCargo(intMap);</span>
-<span class="source-line-no">045</span><span id="line-45">        parse(cargo);</span>
-<span class="source-line-no">046</span><span id="line-46">    }</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    private static byte[] buildCargo(BigInteger byte0uint64) {</span>
-<span class="source-line-no">049</span><span id="line-49">        return Bytes.toUint64(byte0uint64.longValue());</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">053</span><span id="line-53">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">054</span><span id="line-54">        intMap = Bytes.readUint64(raw, 0);</span>
-<span class="source-line-no">055</span><span id="line-55">        cargo = raw;</span>
-<span class="source-line-no">056</span><span id="line-56">        alarms = getAlarms();</span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    public BigInteger getIntMap() {</span>
-<span class="source-line-no">060</span><span id="line-60">        return intMap;</span>
-<span class="source-line-no">061</span><span id="line-61">    }</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    public enum AlarmResponseType {</span>
-<span class="source-line-no">064</span><span id="line-64">        CARTRIDGE_ALARM(0),</span>
-<span class="source-line-no">065</span><span id="line-65">        CARTRIDGE_ALARM2(1),</span>
-<span class="source-line-no">066</span><span id="line-66">        OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</span>
-<span class="source-line-no">067</span><span id="line-67">        PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),</span>
-<span class="source-line-no">068</span><span id="line-68">        DEFAULT_ALARM_4(4),</span>
-<span class="source-line-no">069</span><span id="line-69">        CARTRIDGE_ALARM3(5),</span>
-<span class="source-line-no">070</span><span id="line-70">        CARTRIDGE_ALARM4(6),</span>
-<span class="source-line-no">071</span><span id="line-71">        AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),</span>
-<span class="source-line-no">072</span><span id="line-72">        EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),</span>
-<span class="source-line-no">073</span><span id="line-73">        CARTRIDGE_ALARM5(9),</span>
-<span class="source-line-no">074</span><span id="line-74">        TEMPERATURE_ALARM(10),</span>
-<span class="source-line-no">075</span><span id="line-75">        TEMPERATURE_ALARM2(11),</span>
-<span class="source-line-no">076</span><span id="line-76">        BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),</span>
-<span class="source-line-no">077</span><span id="line-77">        DEFAULT_ALARM_13(13),</span>
-<span class="source-line-no">078</span><span id="line-78">        INVALID_DATE_ALARM(14),</span>
-<span class="source-line-no">079</span><span id="line-79">        TEMPERATURE_ALARM3(15),</span>
-<span class="source-line-no">080</span><span id="line-80">        CARTRIDGE_ALARM6(16),</span>
-<span class="source-line-no">081</span><span id="line-81">        DEFAULT_ALARM_17(17),</span>
-<span class="source-line-no">082</span><span id="line-82">        RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),</span>
-<span class="source-line-no">083</span><span id="line-83">        DEFAULT_ALARM_19(19),</span>
-<span class="source-line-no">084</span><span id="line-84">        CARTRIDGE_ALARM7(20),</span>
-<span class="source-line-no">085</span><span id="line-85">        ALTITUDE_ALARM(21),</span>
-<span class="source-line-no">086</span><span id="line-86">        STUCK_BUTTON_ALARM(22),</span>
-<span class="source-line-no">087</span><span id="line-87">        RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),</span>
-<span class="source-line-no">088</span><span id="line-88">        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),</span>
-<span class="source-line-no">089</span><span id="line-89">        CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),</span>
-<span class="source-line-no">090</span><span id="line-90">        OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</span>
-<span class="source-line-no">091</span><span id="line-91">        DEFAULT_ALARM_27(27),</span>
-<span class="source-line-no">092</span><span id="line-92">        DEFAULT_ALARM_28(28),</span>
-<span class="source-line-no">093</span><span id="line-93">        CARTRIDGE_ALARM10(29),</span>
-<span class="source-line-no">094</span><span id="line-94">        CARTRIDGE_ALARM11(30),</span>
-<span class="source-line-no">095</span><span id="line-95">        CARTRIDGE_ALARM12(31),</span>
-<span class="source-line-no">096</span><span id="line-96">        DEFAULT_ALARM_32(32),</span>
-<span class="source-line-no">097</span><span id="line-97">        DEFAULT_ALARM_33(33),</span>
-<span class="source-line-no">098</span><span id="line-98">        DEFAULT_ALARM_34(34),</span>
-<span class="source-line-no">099</span><span id="line-99">        DEFAULT_ALARM_35(35),</span>
-<span class="source-line-no">100</span><span id="line-100">        DEFAULT_ALARM_36(36),</span>
-<span class="source-line-no">101</span><span id="line-101">        DEFAULT_ALARM_37(37),</span>
-<span class="source-line-no">102</span><span id="line-102">        DEFAULT_ALARM_38(38),</span>
-<span class="source-line-no">103</span><span id="line-103">        DEFAULT_ALARM_39(39),</span>
-<span class="source-line-no">104</span><span id="line-104">        DEFAULT_ALARM_40(40),</span>
-<span class="source-line-no">105</span><span id="line-105">        DEFAULT_ALARM_41(41),</span>
-<span class="source-line-no">106</span><span id="line-106">        DEFAULT_ALARM_42(42),</span>
-<span class="source-line-no">107</span><span id="line-107">        DEFAULT_ALARM_43(43),</span>
-<span class="source-line-no">108</span><span id="line-108">        DEFAULT_ALARM_44(44),</span>
-<span class="source-line-no">109</span><span id="line-109">        DEFAULT_ALARM_45(45),</span>
-<span class="source-line-no">110</span><span id="line-110">        DEFAULT_ALARM_46(46),</span>
-<span class="source-line-no">111</span><span id="line-111">        DEFAULT_ALARM_47(47),</span>
-<span class="source-line-no">112</span><span id="line-112">        DEFAULT_ALARM_48(48),</span>
-<span class="source-line-no">113</span><span id="line-113">        DEFAULT_ALARM_49(49),</span>
-<span class="source-line-no">114</span><span id="line-114">        DEFAULT_ALARM_50(50),</span>
-<span class="source-line-no">115</span><span id="line-115">        DEFAULT_ALARM_51(51),</span>
-<span class="source-line-no">116</span><span id="line-116">        DEFAULT_ALARM_52(52),</span>
-<span class="source-line-no">117</span><span id="line-117">        DEFAULT_ALARM_53(53),</span>
-<span class="source-line-no">118</span><span id="line-118">        DEFAULT_ALARM_54(54),</span>
-<span class="source-line-no">119</span><span id="line-119">        DEFAULT_ALARM_55(55),</span>
-<span class="source-line-no">120</span><span id="line-120">        DEFAULT_ALARM_56(56),</span>
-<span class="source-line-no">121</span><span id="line-121">        DEFAULT_ALARM_57(57),</span>
-<span class="source-line-no">122</span><span id="line-122">        DEFAULT_ALARM_58(58),</span>
-<span class="source-line-no">123</span><span id="line-123">        DEFAULT_ALARM_59(59),</span>
-<span class="source-line-no">124</span><span id="line-124">        DEFAULT_ALARM_60(60),</span>
-<span class="source-line-no">125</span><span id="line-125">        DEFAULT_ALARM_61(61),</span>
-<span class="source-line-no">126</span><span id="line-126">        DEFAULT_ALARM_62(62),</span>
-<span class="source-line-no">127</span><span id="line-127">        DEFAULT_ALARM_63(63)</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">        ;</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">        private final int bitmask;</span>
-<span class="source-line-no">132</span><span id="line-132">        private final String description;</span>
-<span class="source-line-no">133</span><span id="line-133">        AlarmResponseType(int bitmask) {</span>
-<span class="source-line-no">134</span><span id="line-134">            this.bitmask = bitmask;</span>
-<span class="source-line-no">135</span><span id="line-135">            this.description = null;</span>
-<span class="source-line-no">136</span><span id="line-136">        }</span>
-<span class="source-line-no">137</span><span id="line-137">        AlarmResponseType(int bitmask, String description) {</span>
-<span class="source-line-no">138</span><span id="line-138">            this.bitmask = bitmask;</span>
-<span class="source-line-no">139</span><span id="line-139">            this.description = description;</span>
-<span class="source-line-no">140</span><span id="line-140">        }</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">        public int bitmask() {</span>
-<span class="source-line-no">143</span><span id="line-143">            return bitmask;</span>
-<span class="source-line-no">144</span><span id="line-144">        }</span>
-<span class="source-line-no">145</span><span id="line-145">        public String getDescription() {</span>
-<span class="source-line-no">146</span><span id="line-146">            return description;</span>
-<span class="source-line-no">147</span><span id="line-147">        }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">        public static BigInteger toBitmask(AlarmResponseType ...types) {</span>
-<span class="source-line-no">150</span><span id="line-150">            BigInteger ret = BigInteger.ZERO;</span>
-<span class="source-line-no">151</span><span id="line-151">            for (AlarmResponseType type : types) {</span>
-<span class="source-line-no">152</span><span id="line-152">                ret = ret.setBit(type.bitmask());</span>
-<span class="source-line-no">153</span><span id="line-153">            }</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
+<span class="source-line-no">010</span><span id="line-10"></span>
+<span class="source-line-no">011</span><span id="line-11">import java.math.BigInteger;</span>
+<span class="source-line-no">012</span><span id="line-12">import java.util.HashSet;</span>
+<span class="source-line-no">013</span><span id="line-13">import java.util.Set;</span>
+<span class="source-line-no">014</span><span id="line-14">import java.util.TreeSet;</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16">/**</span>
+<span class="source-line-no">017</span><span id="line-17"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest}, opCode 71, size 8</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;br&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> *</span>
+<span class="source-line-no">021</span><span id="line-21"> * </span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;71&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;8&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;/table&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> */</span>
+<span class="source-line-no">030</span><span id="line-30">@MessageProps(</span>
+<span class="source-line-no">031</span><span id="line-31">        opCode=71,</span>
+<span class="source-line-no">032</span><span id="line-32">        size=8,</span>
+<span class="source-line-no">033</span><span id="line-33">        type=MessageType.RESPONSE,</span>
+<span class="source-line-no">034</span><span id="line-34">        request= AlarmStatusRequest.class</span>
+<span class="source-line-no">035</span><span id="line-35">)</span>
+<span class="source-line-no">036</span><span id="line-36">public class AlarmStatusResponse extends NotificationMessage {</span>
+<span class="source-line-no">037</span><span id="line-37">    private BigInteger intMap;</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    // private val unused, but placed to force java tostring to include the formatted alerts set</span>
+<span class="source-line-no">040</span><span id="line-40">    private Set&lt;AlarmResponseType&gt; alarms;</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42">    public AlarmStatusResponse() {}</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public AlarmStatusResponse(BigInteger intMap) {</span>
+<span class="source-line-no">045</span><span id="line-45">        this.cargo = buildCargo(intMap);</span>
+<span class="source-line-no">046</span><span id="line-46">        parse(cargo);</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    private static byte[] buildCargo(BigInteger byte0uint64) {</span>
+<span class="source-line-no">050</span><span id="line-50">        return Bytes.toUint64(byte0uint64.longValue());</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">054</span><span id="line-54">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">055</span><span id="line-55">        intMap = Bytes.readUint64(raw, 0);</span>
+<span class="source-line-no">056</span><span id="line-56">        cargo = raw;</span>
+<span class="source-line-no">057</span><span id="line-57">        alarms = getAlarms();</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    public BigInteger getIntMap() {</span>
+<span class="source-line-no">061</span><span id="line-61">        return intMap;</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    @Override</span>
+<span class="source-line-no">065</span><span id="line-65">    public int size() {</span>
+<span class="source-line-no">066</span><span id="line-66">        return alarms==null ? 0 : alarms.size();</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    public enum AlarmResponseType {</span>
+<span class="source-line-no">070</span><span id="line-70">        CARTRIDGE_ALARM(0),</span>
+<span class="source-line-no">071</span><span id="line-71">        CARTRIDGE_ALARM2(1),</span>
+<span class="source-line-no">072</span><span id="line-72">        OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</span>
+<span class="source-line-no">073</span><span id="line-73">        PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),</span>
+<span class="source-line-no">074</span><span id="line-74">        DEFAULT_ALARM_4(4),</span>
+<span class="source-line-no">075</span><span id="line-75">        CARTRIDGE_ALARM3(5),</span>
+<span class="source-line-no">076</span><span id="line-76">        CARTRIDGE_ALARM4(6),</span>
+<span class="source-line-no">077</span><span id="line-77">        AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),</span>
+<span class="source-line-no">078</span><span id="line-78">        EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),</span>
+<span class="source-line-no">079</span><span id="line-79">        CARTRIDGE_ALARM5(9),</span>
+<span class="source-line-no">080</span><span id="line-80">        TEMPERATURE_ALARM(10),</span>
+<span class="source-line-no">081</span><span id="line-81">        TEMPERATURE_ALARM2(11),</span>
+<span class="source-line-no">082</span><span id="line-82">        BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),</span>
+<span class="source-line-no">083</span><span id="line-83">        DEFAULT_ALARM_13(13),</span>
+<span class="source-line-no">084</span><span id="line-84">        INVALID_DATE_ALARM(14),</span>
+<span class="source-line-no">085</span><span id="line-85">        TEMPERATURE_ALARM3(15),</span>
+<span class="source-line-no">086</span><span id="line-86">        CARTRIDGE_ALARM6(16),</span>
+<span class="source-line-no">087</span><span id="line-87">        DEFAULT_ALARM_17(17),</span>
+<span class="source-line-no">088</span><span id="line-88">        RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),</span>
+<span class="source-line-no">089</span><span id="line-89">        DEFAULT_ALARM_19(19),</span>
+<span class="source-line-no">090</span><span id="line-90">        CARTRIDGE_ALARM7(20),</span>
+<span class="source-line-no">091</span><span id="line-91">        ALTITUDE_ALARM(21),</span>
+<span class="source-line-no">092</span><span id="line-92">        STUCK_BUTTON_ALARM(22),</span>
+<span class="source-line-no">093</span><span id="line-93">        RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),</span>
+<span class="source-line-no">094</span><span id="line-94">        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),</span>
+<span class="source-line-no">095</span><span id="line-95">        CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),</span>
+<span class="source-line-no">096</span><span id="line-96">        OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</span>
+<span class="source-line-no">097</span><span id="line-97">        DEFAULT_ALARM_27(27),</span>
+<span class="source-line-no">098</span><span id="line-98">        DEFAULT_ALARM_28(28),</span>
+<span class="source-line-no">099</span><span id="line-99">        CARTRIDGE_ALARM10(29),</span>
+<span class="source-line-no">100</span><span id="line-100">        CARTRIDGE_ALARM11(30),</span>
+<span class="source-line-no">101</span><span id="line-101">        CARTRIDGE_ALARM12(31),</span>
+<span class="source-line-no">102</span><span id="line-102">        DEFAULT_ALARM_32(32),</span>
+<span class="source-line-no">103</span><span id="line-103">        DEFAULT_ALARM_33(33),</span>
+<span class="source-line-no">104</span><span id="line-104">        DEFAULT_ALARM_34(34),</span>
+<span class="source-line-no">105</span><span id="line-105">        DEFAULT_ALARM_35(35),</span>
+<span class="source-line-no">106</span><span id="line-106">        DEFAULT_ALARM_36(36),</span>
+<span class="source-line-no">107</span><span id="line-107">        DEFAULT_ALARM_37(37),</span>
+<span class="source-line-no">108</span><span id="line-108">        DEFAULT_ALARM_38(38),</span>
+<span class="source-line-no">109</span><span id="line-109">        DEFAULT_ALARM_39(39),</span>
+<span class="source-line-no">110</span><span id="line-110">        DEFAULT_ALARM_40(40),</span>
+<span class="source-line-no">111</span><span id="line-111">        DEFAULT_ALARM_41(41),</span>
+<span class="source-line-no">112</span><span id="line-112">        DEFAULT_ALARM_42(42),</span>
+<span class="source-line-no">113</span><span id="line-113">        DEFAULT_ALARM_43(43),</span>
+<span class="source-line-no">114</span><span id="line-114">        DEFAULT_ALARM_44(44),</span>
+<span class="source-line-no">115</span><span id="line-115">        DEFAULT_ALARM_45(45),</span>
+<span class="source-line-no">116</span><span id="line-116">        DEFAULT_ALARM_46(46),</span>
+<span class="source-line-no">117</span><span id="line-117">        DEFAULT_ALARM_47(47),</span>
+<span class="source-line-no">118</span><span id="line-118">        DEFAULT_ALARM_48(48),</span>
+<span class="source-line-no">119</span><span id="line-119">        DEFAULT_ALARM_49(49),</span>
+<span class="source-line-no">120</span><span id="line-120">        DEFAULT_ALARM_50(50),</span>
+<span class="source-line-no">121</span><span id="line-121">        DEFAULT_ALARM_51(51),</span>
+<span class="source-line-no">122</span><span id="line-122">        DEFAULT_ALARM_52(52),</span>
+<span class="source-line-no">123</span><span id="line-123">        DEFAULT_ALARM_53(53),</span>
+<span class="source-line-no">124</span><span id="line-124">        DEFAULT_ALARM_54(54),</span>
+<span class="source-line-no">125</span><span id="line-125">        DEFAULT_ALARM_55(55),</span>
+<span class="source-line-no">126</span><span id="line-126">        DEFAULT_ALARM_56(56),</span>
+<span class="source-line-no">127</span><span id="line-127">        DEFAULT_ALARM_57(57),</span>
+<span class="source-line-no">128</span><span id="line-128">        DEFAULT_ALARM_58(58),</span>
+<span class="source-line-no">129</span><span id="line-129">        DEFAULT_ALARM_59(59),</span>
+<span class="source-line-no">130</span><span id="line-130">        DEFAULT_ALARM_60(60),</span>
+<span class="source-line-no">131</span><span id="line-131">        DEFAULT_ALARM_61(61),</span>
+<span class="source-line-no">132</span><span id="line-132">        DEFAULT_ALARM_62(62),</span>
+<span class="source-line-no">133</span><span id="line-133">        DEFAULT_ALARM_63(63)</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">        ;</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">        private final int bitmask;</span>
+<span class="source-line-no">138</span><span id="line-138">        private final String description;</span>
+<span class="source-line-no">139</span><span id="line-139">        AlarmResponseType(int bitmask) {</span>
+<span class="source-line-no">140</span><span id="line-140">            this.bitmask = bitmask;</span>
+<span class="source-line-no">141</span><span id="line-141">            this.description = null;</span>
+<span class="source-line-no">142</span><span id="line-142">        }</span>
+<span class="source-line-no">143</span><span id="line-143">        AlarmResponseType(int bitmask, String description) {</span>
+<span class="source-line-no">144</span><span id="line-144">            this.bitmask = bitmask;</span>
+<span class="source-line-no">145</span><span id="line-145">            this.description = description;</span>
+<span class="source-line-no">146</span><span id="line-146">        }</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">        public int bitmask() {</span>
+<span class="source-line-no">149</span><span id="line-149">            return bitmask;</span>
+<span class="source-line-no">150</span><span id="line-150">        }</span>
+<span class="source-line-no">151</span><span id="line-151">        public String getDescription() {</span>
+<span class="source-line-no">152</span><span id="line-152">            return description;</span>
+<span class="source-line-no">153</span><span id="line-153">        }</span>
 <span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">            return ret;</span>
-<span class="source-line-no">156</span><span id="line-156">        }</span>
-<span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</span>
-<span class="source-line-no">159</span><span id="line-159">            Set&lt;AlarmResponseType&gt; current = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">160</span><span id="line-160">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
-<span class="source-line-no">161</span><span id="line-161">                if (intMap.testBit(type.bitmask())) {</span>
-<span class="source-line-no">162</span><span id="line-162">                    current.add(type);</span>
-<span class="source-line-no">163</span><span id="line-163">                }</span>
-<span class="source-line-no">164</span><span id="line-164">            }</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">            return current;</span>
-<span class="source-line-no">167</span><span id="line-167">        }</span>
-<span class="source-line-no">168</span><span id="line-168"></span>
-<span class="source-line-no">169</span><span id="line-169">        public static AlarmResponseType fromSingularId(long id) {</span>
-<span class="source-line-no">170</span><span id="line-170">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
-<span class="source-line-no">171</span><span id="line-171">                if (id == type.bitmask()) {</span>
-<span class="source-line-no">172</span><span id="line-172">                    return type;</span>
-<span class="source-line-no">173</span><span id="line-173">                }</span>
-<span class="source-line-no">174</span><span id="line-174">            }</span>
-<span class="source-line-no">175</span><span id="line-175">            return null;</span>
-<span class="source-line-no">176</span><span id="line-176">        }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">        public String toString() {</span>
-<span class="source-line-no">179</span><span id="line-179">            return name();</span>
-<span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181">    }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">    public Set&lt;AlarmResponseType&gt; getAlarms() {</span>
-<span class="source-line-no">184</span><span id="line-184">        return AlarmResponseType.fromBitmask(getIntMap());</span>
-<span class="source-line-no">185</span><span id="line-185">    }</span>
-<span class="source-line-no">186</span><span id="line-186">}</span>
+<span class="source-line-no">155</span><span id="line-155">        public static BigInteger toBitmask(AlarmResponseType ...types) {</span>
+<span class="source-line-no">156</span><span id="line-156">            BigInteger ret = BigInteger.ZERO;</span>
+<span class="source-line-no">157</span><span id="line-157">            for (AlarmResponseType type : types) {</span>
+<span class="source-line-no">158</span><span id="line-158">                ret = ret.setBit(type.bitmask());</span>
+<span class="source-line-no">159</span><span id="line-159">            }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">            return ret;</span>
+<span class="source-line-no">162</span><span id="line-162">        }</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</span>
+<span class="source-line-no">165</span><span id="line-165">            Set&lt;AlarmResponseType&gt; current = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">166</span><span id="line-166">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
+<span class="source-line-no">167</span><span id="line-167">                if (intMap.testBit(type.bitmask())) {</span>
+<span class="source-line-no">168</span><span id="line-168">                    current.add(type);</span>
+<span class="source-line-no">169</span><span id="line-169">                }</span>
+<span class="source-line-no">170</span><span id="line-170">            }</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172">            return current;</span>
+<span class="source-line-no">173</span><span id="line-173">        }</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">        public static AlarmResponseType fromSingularId(long id) {</span>
+<span class="source-line-no">176</span><span id="line-176">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
+<span class="source-line-no">177</span><span id="line-177">                if (id == type.bitmask()) {</span>
+<span class="source-line-no">178</span><span id="line-178">                    return type;</span>
+<span class="source-line-no">179</span><span id="line-179">                }</span>
+<span class="source-line-no">180</span><span id="line-180">            }</span>
+<span class="source-line-no">181</span><span id="line-181">            return null;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183"></span>
+<span class="source-line-no">184</span><span id="line-184">        public String toString() {</span>
+<span class="source-line-no">185</span><span id="line-185">            return name();</span>
+<span class="source-line-no">186</span><span id="line-186">        }</span>
+<span class="source-line-no">187</span><span id="line-187">    }</span>
+<span class="source-line-no">188</span><span id="line-188"></span>
+<span class="source-line-no">189</span><span id="line-189">    public Set&lt;AlarmResponseType&gt; getAlarms() {</span>
+<span class="source-line-no">190</span><span id="line-190">        return AlarmResponseType.fromBitmask(getIntMap());</span>
+<span class="source-line-no">191</span><span id="line-191">    }</span>
+<span class="source-line-no">192</span><span id="line-192">}</span>
 
 
 
