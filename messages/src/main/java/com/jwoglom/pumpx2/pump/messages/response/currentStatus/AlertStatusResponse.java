@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
         type=MessageType.RESPONSE,
         request= AlarmStatusRequest.class
 )
-public class AlertStatusResponse extends Message {
+public class AlertStatusResponse extends NotificationMessage {
     private BigInteger intMap;
 
     // private val unused, but placed to force java tostring to include the formatted alerts set
@@ -51,6 +52,12 @@ public class AlertStatusResponse extends Message {
     }
     public long getBitMap() {
         return intMap.longValue();
+    }
+
+
+    @Override
+    public int size() {
+        return alerts==null ? 0 : alerts.size();
     }
 
     public enum AlertResponseType {

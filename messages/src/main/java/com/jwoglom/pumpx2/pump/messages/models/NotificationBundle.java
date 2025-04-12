@@ -121,24 +121,16 @@ public class NotificationBundle {
         ArrayList<Object> slugs = new ArrayList<>();
 
         if (alertStatusResponse != null) {
-            alertStatusResponse.getAlerts().stream().sorted().forEach(alert -> {
-                slugs.add(alert);
-            });
+            alertStatusResponse.getAlerts().stream().sorted().forEach(slugs::add);
         }
         if (reminderStatusResponse != null) {
-            reminderStatusResponse.getReminders().stream().sorted().forEach(alert -> {
-                slugs.add(alert);
-            });
+            reminderStatusResponse.getReminders().stream().sorted().forEach(slugs::add);
         }
         if (alarmStatusResponse != null) {
-            alarmStatusResponse.getAlarms().stream().sorted().forEach(alarm -> {
-                slugs.add(alarm);
-            });
+            alarmStatusResponse.getAlarms().stream().sorted().forEach(slugs::add);
         }
         if (cgmAlertStatusResponse != null) {
-            cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(cgmAlert -> {
-                slugs.add(cgmAlert);
-            });
+            cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(slugs::add);
         }
         if (malfunctionStatusResponse != null) {
             if (malfunctionStatusResponse.hasMalfunction() &&
@@ -155,6 +147,42 @@ public class NotificationBundle {
     public Map<Class<? extends Message>, Instant> getLastUpdatedTimes() {
         return lastUpdatedTimes;
     }
+
+    public boolean isEmpty() {
+        return getNotificationCount()==0;
+    }
+
+    public int getNotificationCount() {
+        int count=0;
+
+        if (this.alertStatusResponse!=null) {
+            count += this.alertStatusResponse.size();
+        }
+
+        if (this.reminderStatusResponse!=null) {
+            count += this.reminderStatusResponse.size();
+        }
+
+        if (this.cgmAlertStatusResponse!=null) {
+            count += this.cgmAlertStatusResponse.size();
+        }
+
+        if (this.malfunctionStatusResponse!=null) {
+            count += this.malfunctionStatusResponse.size();
+        }
+
+        if (this.otherNotificationStatusResponse!=null) {
+            count += this.otherNotificationStatusResponse.size();
+        }
+
+        if (this.otherNotification2StatusResponse!=null) {
+            count += this.otherNotification2StatusResponse.size();
+        }
+
+        return count;
+    }
+
+
 
     public String toString() {
         return JavaHelpers.autoToString(this, new HashSet<>(Arrays.asList("lastUpdatedTimes")));

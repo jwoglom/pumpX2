@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
         type=MessageType.RESPONSE,
         request= AlarmStatusRequest.class
 )
-public class AlarmStatusResponse extends Message {
+public class AlarmStatusResponse extends NotificationMessage {
     private BigInteger intMap;
 
     // private val unused, but placed to force java tostring to include the formatted alerts set
@@ -44,6 +45,11 @@ public class AlarmStatusResponse extends Message {
 
     public BigInteger getIntMap() {
         return intMap;
+    }
+
+    @Override
+    public int size() {
+        return alarms==null ? 0 : alarms.size();
     }
 
     public enum AlarmResponseType {

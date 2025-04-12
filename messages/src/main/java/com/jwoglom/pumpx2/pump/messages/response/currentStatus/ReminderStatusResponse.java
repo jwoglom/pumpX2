@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 
 import java.math.BigInteger;
@@ -18,7 +19,7 @@ import java.util.TreeSet;
     type=MessageType.RESPONSE,
     request=ReminderStatusRequest.class
 )
-public class ReminderStatusResponse extends Message {
+public class ReminderStatusResponse extends NotificationMessage {
     
     private BigInteger intMap;
     
@@ -53,6 +54,11 @@ public class ReminderStatusResponse extends Message {
 
     public Set<ReminderType> getReminders() {
         return ReminderType.fromBitmask(getIntMap());
+    }
+
+    @Override
+    public int size() {
+        return getReminders().size();
     }
 
     public enum ReminderType {
