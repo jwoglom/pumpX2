@@ -1,9 +1,10 @@
 package com.jwoglom.pumpx2.pump.messages;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
@@ -14,16 +15,14 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.shared.L;
-
 import org.apache.commons.codec.DecoderException;
 import com.jwoglom.pumpx2.shared.Hex;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MessageTester {
-    private static final String TAG = "MessageTester";
+    private static final Logger log = LoggerFactory.getLogger(MessageTester.class);
 
     public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
         PumpStateSupplier.pumpPairingCode = () -> pumpAuthenticationKey;
@@ -59,7 +58,7 @@ public class MessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        log.debug(String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertEquals(expected.getClass(), parsedMessage.getClass());
         assertEquals(expected.verboseToString(), parsedMessage.verboseToString());
 
@@ -78,12 +77,10 @@ public class MessageTester {
             }
         }
 
-
         assertHexEquals(parsedMessage.getCargo(), expected.getCargo());
 
         return parsedMessage;
     }
-
 
     public static Message testMultiplePackets(List<String> rawHex, int txId, UUID expectedCharacteristic, Message expected) {
         List<byte[]> initialReads = rawHex.stream().map(i -> {
@@ -124,7 +121,6 @@ public class MessageTester {
 
         return parsedMessage;
     }
-
 
     public static void assertHexEquals(byte[] a, byte[] b) {
         assertNotNull("first byte[] is null", a);
