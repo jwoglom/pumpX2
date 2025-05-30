@@ -1,5 +1,8 @@
 package com.jwoglom.pumpx2.shared;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 //import com.google.common.reflect.ClassPath;
 //import com.googlecode.openbeans.Introspector;
 //import com.googlecode.openbeans.PropertyDescriptor;
@@ -22,9 +25,8 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
 public class JavaHelpers {
-    private static final String TAG = "JavaHelpers";
+    private static final Logger log = LoggerFactory.getLogger(JavaHelpers.class);
 
 //    public static Map<String, Object> getProperties(final Object bean) {
 //        final Map<String, Object> result = new HashMap<>();
@@ -72,12 +74,11 @@ public class JavaHelpers {
 //                    .map(ClassPath.ClassInfo::getName)
 //                    .collect(Collectors.toList());
 //        } catch (IOException e) {
-//            L.e(TAG, "cannot get class names", e);
+//            log.error("cannot get class names", e);
 //            e.printStackTrace();
 //            return new ArrayList<String>();
 //        }
 //    }
-
 
     public static String autoToString(Object bean, Set<String> ignoredPropertyNames) {
         if (ignoredPropertyNames == null) {
@@ -88,7 +89,7 @@ public class JavaHelpers {
                     .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
                     .build();
         } catch (Exception e) {
-            L.e(TAG, "Unable to autoToString: " + e);
+            log.error("Unable to autoToString: " + e);
             return bean.toString();
         }
 //        Map<String, Object> properties = getProperties(bean);
@@ -106,7 +107,7 @@ public class JavaHelpers {
                     .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
                     .build();
         } catch (Exception e) {
-            L.e(TAG, "Unable to autoToStringVerbose: " + e);
+            log.error("Unable to autoToStringVerbose: " + e);
             return bean.toString();
         }
     }
@@ -131,7 +132,7 @@ public class JavaHelpers {
                     .setExcludeFieldNames(ignoredPropertyNames.toArray(new String[0]))
                     .build();
         } catch (Exception e) {
-            L.e(TAG, "Unable to autoToStringJson: " + e);
+            log.error("Unable to autoToStringJson: " + e);
             return bean.toString();
         }
     }
