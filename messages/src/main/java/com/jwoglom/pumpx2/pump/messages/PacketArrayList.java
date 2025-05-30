@@ -61,7 +61,6 @@ public class PacketArrayList {
         if (messageProps.stream()) {
             return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
         }
-
         return new PacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
     }
 
