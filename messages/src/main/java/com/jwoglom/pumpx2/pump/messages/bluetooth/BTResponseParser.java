@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class BTResponseParser {
-    //private static final String TAG = "BTResponseParser";
-
     private static final Logger log = LoggerFactory.getLogger(BTResponseParser.class);
 
     public static PumpResponseMessage parse(TronMessageWrapper wrapper, byte[] output, MessageType outputType, UUID uuid) {

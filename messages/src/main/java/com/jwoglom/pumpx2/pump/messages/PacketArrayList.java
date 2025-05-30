@@ -11,6 +11,8 @@ import com.jwoglom.pumpx2.shared.L;
 import com.jwoglom.pumpx2.shared.Hex;
 
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -18,7 +20,7 @@ import java.util.Set;
 
 
 public class PacketArrayList {
-    protected static final String TAG = "PacketArrayList";
+    private static final Logger log = LoggerFactory.getLogger(PacketArrayList.class);
     public static final String IGNORE_INVALID_HMAC = "IGNORE_HMAC_SIGNATURE_EXCEPTION";
     public static boolean ignoreInvalidTxId = false;
 
@@ -54,7 +56,7 @@ public class PacketArrayList {
     // Returns either PacketArrayList or StreamPacketArrayList depending on the opcode
     public static PacketArrayList build(byte expectedopCode, Characteristic characteristic, byte expectedCargoSize, byte expectedTxId, boolean isSigned) {
         Class<? extends Message> messageClass = Messages.fromOpcode(expectedopCode, characteristic);
-        L.d(TAG, String.format("queried messageClass for expectedOpcode %d, %s: expectedCargoSize=%d", expectedopCode, messageClass, expectedCargoSize));
+        log.debug(String.format("queried messageClass for expectedOpcode %d, %s: expectedCargoSize=%d", expectedopCode, messageClass, expectedCargoSize));
         MessageProps messageProps = messageClass.getAnnotation(MessageProps.class);
         if (messageProps.stream()) {
             return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
@@ -101,21 +103,21 @@ public class PacketArrayList {
             ok = false;
         }
         // the fullCargo size is 2 + the message length.
-        L.d(TAG, "validate fullCargo size="+fullCargo.length+" ok="+ok);
+        log.debug("validate fullCargo size="+fullCargo.length+" ok="+ok);
         if (!ok) {
             if (shouldIgnoreInvalidHmac(authKey)) {
-                L.e(TAG, "CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
+                log.error("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
             } else {
                 throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode+" authKey="+new String(authKey));
             }
         } else if (this.isSigned) {
-            L.d(TAG, "validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
+            log.debug("validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
             byte[] bArr2 = this.messageData;
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, authKey);
             if (!Arrays.equals(expectedHmac, hmacSha)) {
-                L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
+                log.error("Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
                 if (shouldIgnoreInvalidHmac(authKey)) {
                     return true;
                 }
@@ -176,12 +178,12 @@ public class PacketArrayList {
             this.firstByteMod15 = (byte) (bArr[0] & 15);
             this.opCode = bArr[2];
             byte txId = bArr[3];
-            L.d(TAG, "PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));
+            log.debug("PacketArrayList firstByteMod15="+firstByteMod15+" opCode="+opCode+" txId="+txId+" expectedTxId="+expectedTxId+" bArr="+JavaHelpers.display(bArr));
             if (txId != this.expectedTxId) {
                 throwUnexpectedTransactionIdException(txId);
             } else if (cargoSize != this.actualExpectedCargoSize) {
                 if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
-                    L.d(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    log.debug("adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     expectedCargoSize += 24;
                     actualExpectedCargoSize += 24;
                 } else {
@@ -192,7 +194,7 @@ public class PacketArrayList {
         } else {
             throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);
         }
-        L.d(TAG, "PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
+        log.debug("PacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
     }
 
 
@@ -203,29 +205,29 @@ public class PacketArrayList {
         } else if (packetData.length >= 3) {
             byte firstByteMod15 = (byte) (packetData[0] & 15);
             byte secondByte = packetData[1];
-            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
+            log.debug("Found tx id: "+secondByte+" expected "+this.expectedTxId);
             if (secondByte == this.expectedTxId) {
                 if (this.empty) {
                     this.firstByteMod15 = firstByteMod15;
-                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
+                    log.debug("txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
                     parse(packetData);
                 } else if (((byte) 0) == firstByteMod15) {
-                    L.d(TAG, "firstByteMod15=0");
+                    log.debug("firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
                         this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
+                        log.debug("firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
                     this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
+                    log.debug("firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }
                 this.empty = false;
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
-                L.d(TAG, "validatePacket: decrementing firstByteMod15 to " + firstByteMod15);
+                log.debug("validatePacket: decrementing firstByteMod15 to " + firstByteMod15);
                 return;
             }
             throwUnexpectedTransactionIdException(secondByte);
@@ -237,7 +239,7 @@ public class PacketArrayList {
     private void throwUnexpectedTransactionIdException(byte foundTxId) {
         RuntimeException ex = new UnexpectedTransactionIdException(foundTxId, this.expectedTxId, this.expectedOpCode);
         if (ignoreInvalidTxId) {
-            L.e(TAG, ex);
+            log.error("unexpected transaction id", ex);
             return;
         }
         throw ex;
