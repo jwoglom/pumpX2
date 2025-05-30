@@ -13,19 +13,19 @@ public class CharacteristicGuesser {
     public static Characteristic guessBestCharacteristic(String rawHex, int opCode) {
         Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
         if (possibilities.size() > 1) {
-            String log = "Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ";
+            String msg = "Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ";
             possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
             if (possibilities.contains(Characteristic.CONTROL)) {
-                log += "Using CONTROL";
+                msg += "Using CONTROL";
                 possibilities = Set.of(Characteristic.CONTROL);
             } else if (possibilities.contains(Characteristic.AUTHORIZATION)) {
-                log += "Using AUTHORIZATION";
+                msg += "Using AUTHORIZATION";
                 possibilities = Set.of(Characteristic.AUTHORIZATION);
             } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
-                log += "Using CURRENT_STATUS";
+                msg += "Using CURRENT_STATUS";
                 possibilities = Set.of(Characteristic.CURRENT_STATUS);
             }
-            log.warn(log);
+            log.warn(msg);
         }
         for (Characteristic c : possibilities) {
             return c;
