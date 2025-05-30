@@ -17,17 +17,17 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.shared.L;</span>
-<span class="source-line-no">007</span><span id="line-7"></span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.shared.Hex;</span>
-<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">003</span><span id="line-3">import org.slf4j.Logger;</span>
+<span class="source-line-no">004</span><span id="line-4">import org.slf4j.LoggerFactory;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.shared.L;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.shared.Hex;</span>
 <span class="source-line-no">010</span><span id="line-10">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">011</span><span id="line-11"></span>
 <span class="source-line-no">012</span><span id="line-12">public class StreamPacketArrayList extends PacketArrayList {</span>
-<span class="source-line-no">013</span><span id="line-13">    protected static final String TAG = "StreamPacketArrayList";</span>
+<span class="source-line-no">013</span><span id="line-13">    private static final Logger log = LoggerFactory.getLogger(StreamPacketArrayList.class);</span>
 <span class="source-line-no">014</span><span id="line-14">    private static final int HISTORY_LOG_STREAM_OPCODE = -127;</span>
 <span class="source-line-no">015</span><span id="line-15"></span>
 <span class="source-line-no">016</span><span id="line-16">    private byte[] originalMessageData = new byte[0];</span>
@@ -44,29 +44,29 @@
 <span class="source-line-no">027</span><span id="line-27">        } else if (packetData.length &gt;= 3) {</span>
 <span class="source-line-no">028</span><span id="line-28">            byte firstByteMod15 = (byte) (packetData[0] &amp; 15);</span>
 <span class="source-line-no">029</span><span id="line-29">            byte secondByte = packetData[1];</span>
-<span class="source-line-no">030</span><span id="line-30">            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);</span>
+<span class="source-line-no">030</span><span id="line-30">            log.debug("Found tx id: "+secondByte+" expected "+this.expectedTxId);</span>
 <span class="source-line-no">031</span><span id="line-31">            if (secondByte == this.expectedTxId) {</span>
 <span class="source-line-no">032</span><span id="line-32">                if (this.empty) {</span>
 <span class="source-line-no">033</span><span id="line-33">                    this.firstByteMod15 = firstByteMod15;</span>
-<span class="source-line-no">034</span><span id="line-34">                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");</span>
+<span class="source-line-no">034</span><span id="line-34">                    log.debug("txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");</span>
 <span class="source-line-no">035</span><span id="line-35">                    parse(packetData);</span>
 <span class="source-line-no">036</span><span id="line-36">                } else if (((byte) 0) == firstByteMod15) {</span>
-<span class="source-line-no">037</span><span id="line-37">                    L.d(TAG, "firstByteMod15=0");</span>
+<span class="source-line-no">037</span><span id="line-37">                    log.debug("firstByteMod15=0");</span>
 <span class="source-line-no">038</span><span id="line-38">                    if (this.firstByteMod15 == firstByteMod15) {</span>
 <span class="source-line-no">039</span><span id="line-39">                        this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</span>
-<span class="source-line-no">040</span><span id="line-40">                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));</span>
+<span class="source-line-no">040</span><span id="line-40">                        log.debug("firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));</span>
 <span class="source-line-no">041</span><span id="line-41">                    } else {</span>
 <span class="source-line-no">042</span><span id="line-42">                        throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</span>
 <span class="source-line-no">043</span><span id="line-43">                    }</span>
 <span class="source-line-no">044</span><span id="line-44">                } else if (this.firstByteMod15 == firstByteMod15) {</span>
 <span class="source-line-no">045</span><span id="line-45">                    this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));</span>
-<span class="source-line-no">046</span><span id="line-46">                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));</span>
+<span class="source-line-no">046</span><span id="line-46">                    log.debug("firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));</span>
 <span class="source-line-no">047</span><span id="line-47">                } else {</span>
 <span class="source-line-no">048</span><span id="line-48">                    throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));</span>
 <span class="source-line-no">049</span><span id="line-49">                }</span>
 <span class="source-line-no">050</span><span id="line-50">                //if (!moreHistoryLogsRemaining()) {</span>
 <span class="source-line-no">051</span><span id="line-51">                if (!needsMorePacket()) {</span>
-<span class="source-line-no">052</span><span id="line-52">                    L.d(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));</span>
+<span class="source-line-no">052</span><span id="line-52">                    log.debug(String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));</span>
 <span class="source-line-no">053</span><span id="line-53">                    this.empty = true;</span>
 <span class="source-line-no">054</span><span id="line-54">                }</span>
 <span class="source-line-no">055</span><span id="line-55">                this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);</span>
@@ -79,7 +79,7 @@
 <span class="source-line-no">062</span><span id="line-62">    }</span>
 <span class="source-line-no">063</span><span id="line-63"></span>
 <span class="source-line-no">064</span><span id="line-64">    protected void parse(byte[] bArr) {</span>
-<span class="source-line-no">065</span><span id="line-65">        L.d(TAG, String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));</span>
+<span class="source-line-no">065</span><span id="line-65">        log.debug(String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));</span>
 <span class="source-line-no">066</span><span id="line-66">        byte opCode = bArr[2];</span>
 <span class="source-line-no">067</span><span id="line-67">        byte cargoSize = bArr[4];</span>
 <span class="source-line-no">068</span><span id="line-68">        if (opCode == this.expectedOpCode) {</span>
@@ -91,7 +91,7 @@
 <span class="source-line-no">074</span><span id="line-74">                throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);</span>
 <span class="source-line-no">075</span><span id="line-75">            } else if (cargoSize != this.actualExpectedCargoSize) {</span>
 <span class="source-line-no">076</span><span id="line-76">                if (cargoSize == this.actualExpectedCargoSize + 24 &amp;&amp; isSigned) {</span>
-<span class="source-line-no">077</span><span id="line-77">                    L.d(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");</span>
+<span class="source-line-no">077</span><span id="line-77">                    log.debug("adding +24 expectedCargoSize for already signed request which contains an existing trailer");</span>
 <span class="source-line-no">078</span><span id="line-78">                    this.expectedCargoSize += 24;</span>
 <span class="source-line-no">079</span><span id="line-79">                    this.actualExpectedCargoSize += 24;</span>
 <span class="source-line-no">080</span><span id="line-80">                } else if (opCode != HISTORY_LOG_STREAM_OPCODE) {</span>
@@ -104,8 +104,8 @@
 <span class="source-line-no">087</span><span id="line-87">            if ((byte) opCode == HISTORY_LOG_STREAM_OPCODE) {</span>
 <span class="source-line-no">088</span><span id="line-88">                if (cargoSize &lt;= 255) {</span>
 <span class="source-line-no">089</span><span id="line-89">                    byte numHistoryLogs = bArr[5];</span>
-<span class="source-line-no">090</span><span id="line-90">                    L.d(TAG, "StreamPacketArrayParse check: opCode="+opCode+" numHistoryLogs="+numHistoryLogs+" expHistoryLogs="+((numHistoryLogs * 26) + 2)+" cargoSize="+cargoSize);</span>
-<span class="source-line-no">091</span><span id="line-91">                    L.d(TAG, "StreamPacketArrayParse bArr="+Hex.encodeHexString(bArr)+" oldFullCargo="+Hex.encodeHexString(fullCargo)+" newFullCargo="+Hex.encodeHexString(Bytes.dropFirstN(bArr, 5)));</span>
+<span class="source-line-no">090</span><span id="line-90">                    log.debug("StreamPacketArrayParse check: opCode="+opCode+" numHistoryLogs="+numHistoryLogs+" expHistoryLogs="+((numHistoryLogs * 26) + 2)+" cargoSize="+cargoSize);</span>
+<span class="source-line-no">091</span><span id="line-91">                    log.debug("StreamPacketArrayParse bArr="+Hex.encodeHexString(bArr)+" oldFullCargo="+Hex.encodeHexString(fullCargo)+" newFullCargo="+Hex.encodeHexString(Bytes.dropFirstN(bArr, 5)));</span>
 <span class="source-line-no">092</span><span id="line-92">                    if (cargoSize != (numHistoryLogs * 26) + 2) {</span>
 <span class="source-line-no">093</span><span id="line-93">                        throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");</span>
 <span class="source-line-no">094</span><span id="line-94">                    } else {</span>
@@ -120,7 +120,7 @@
 <span class="source-line-no">103</span><span id="line-103">            throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);</span>
 <span class="source-line-no">104</span><span id="line-104">        }</span>
 <span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">        L.d(TAG, "StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);</span>
+<span class="source-line-no">106</span><span id="line-106">        log.debug("StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);</span>
 <span class="source-line-no">107</span><span id="line-107"></span>
 <span class="source-line-no">108</span><span id="line-108">    }</span>
 <span class="source-line-no">109</span><span id="line-109"></span>

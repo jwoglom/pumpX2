@@ -17,42 +17,44 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.shared.L;</span>
-<span class="source-line-no">004</span><span id="line-4"></span>
-<span class="source-line-no">005</span><span id="line-5">/**</span>
-<span class="source-line-no">006</span><span id="line-6"> * Represents the NEXT ID which can be used for a transaction in communicating with the pump.</span>
-<span class="source-line-no">007</span><span id="line-7"> * We read the current txId, send a message with it, and then increment it.</span>
-<span class="source-line-no">008</span><span id="line-8"> */</span>
-<span class="source-line-no">009</span><span id="line-9">public class TransactionId {</span>
-<span class="source-line-no">010</span><span id="line-10">    private static final String TAG = "TransactionId";</span>
-<span class="source-line-no">011</span><span id="line-11">    private int txId = 0;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">    public void set(int i) {</span>
-<span class="source-line-no">014</span><span id="line-14">        if (i &lt; 0 || i &gt; 255) {</span>
-<span class="source-line-no">015</span><span id="line-15">            i = 0;</span>
-<span class="source-line-no">016</span><span id="line-16">        }</span>
-<span class="source-line-no">017</span><span id="line-17">        if (i != txId + 1) {</span>
-<span class="source-line-no">018</span><span id="line-18">            L.d(TAG, "set: old " + txId + " new " + i);</span>
-<span class="source-line-no">019</span><span id="line-19">        }</span>
-<span class="source-line-no">020</span><span id="line-20">        txId = i;</span>
-<span class="source-line-no">021</span><span id="line-21">    }</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23">    public void increment() {</span>
-<span class="source-line-no">024</span><span id="line-24">        set(txId + 1);</span>
-<span class="source-line-no">025</span><span id="line-25">    }</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    public void reset() {</span>
-<span class="source-line-no">028</span><span id="line-28">        set(0);</span>
-<span class="source-line-no">029</span><span id="line-29">    }</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    public byte get() {</span>
-<span class="source-line-no">032</span><span id="line-32">        return (byte) txId;</span>
-<span class="source-line-no">033</span><span id="line-33">    }</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">    public String toString() {</span>
-<span class="source-line-no">036</span><span id="line-36">        return "TransactionId(txId="+txId+")";</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38">}</span>
+<span class="source-line-no">003</span><span id="line-3">import org.slf4j.Logger;</span>
+<span class="source-line-no">004</span><span id="line-4">import org.slf4j.LoggerFactory;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.shared.L;</span>
+<span class="source-line-no">006</span><span id="line-6"></span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * Represents the NEXT ID which can be used for a transaction in communicating with the pump.</span>
+<span class="source-line-no">009</span><span id="line-9"> * We read the current txId, send a message with it, and then increment it.</span>
+<span class="source-line-no">010</span><span id="line-10"> */</span>
+<span class="source-line-no">011</span><span id="line-11">public class TransactionId {</span>
+<span class="source-line-no">012</span><span id="line-12">    private static final Logger log = LoggerFactory.getLogger(TransactionId.class);</span>
+<span class="source-line-no">013</span><span id="line-13">    private int txId = 0;</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">    public void set(int i) {</span>
+<span class="source-line-no">016</span><span id="line-16">        if (i &lt; 0 || i &gt; 255) {</span>
+<span class="source-line-no">017</span><span id="line-17">            i = 0;</span>
+<span class="source-line-no">018</span><span id="line-18">        }</span>
+<span class="source-line-no">019</span><span id="line-19">        if (i != txId + 1) {</span>
+<span class="source-line-no">020</span><span id="line-20">            log.debug("set: old " + txId + " new " + i);</span>
+<span class="source-line-no">021</span><span id="line-21">        }</span>
+<span class="source-line-no">022</span><span id="line-22">        txId = i;</span>
+<span class="source-line-no">023</span><span id="line-23">    }</span>
+<span class="source-line-no">024</span><span id="line-24"></span>
+<span class="source-line-no">025</span><span id="line-25">    public void increment() {</span>
+<span class="source-line-no">026</span><span id="line-26">        set(txId + 1);</span>
+<span class="source-line-no">027</span><span id="line-27">    }</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    public void reset() {</span>
+<span class="source-line-no">030</span><span id="line-30">        set(0);</span>
+<span class="source-line-no">031</span><span id="line-31">    }</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    public byte get() {</span>
+<span class="source-line-no">034</span><span id="line-34">        return (byte) txId;</span>
+<span class="source-line-no">035</span><span id="line-35">    }</span>
+<span class="source-line-no">036</span><span id="line-36"></span>
+<span class="source-line-no">037</span><span id="line-37">    public String toString() {</span>
+<span class="source-line-no">038</span><span id="line-38">        return "TransactionId(txId="+txId+")";</span>
+<span class="source-line-no">039</span><span id="line-39">    }</span>
+<span class="source-line-no">040</span><span id="line-40">}</span>
 
 
 
