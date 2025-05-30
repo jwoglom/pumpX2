@@ -39,10 +39,10 @@ public class Packetize {
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId, int maxChunkSize) {
         if (message == null) {
-            log.error("error", "packetize has null message");
+            log.error("packetize has null message");
         } else if (message.getCargo() == null) {
-            log.error("error", "packetize has null messagecargo messageName="+message.messageName());
-            log.error("error", "packetize has null messagecargo message="+message+" authKey="+Hex.encodeHexString(authenticationKey));
+            log.error("packetize has null messagecargo messageName="+message.messageName());
+            log.error("packetize has null messagecargo message="+message+" authKey="+Hex.encodeHexString(authenticationKey));
         }
         int length = 3 + message.getCargo().length;
         if (message.signed()) {
