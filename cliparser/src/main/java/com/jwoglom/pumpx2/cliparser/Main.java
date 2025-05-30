@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.cliparser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Set;
 import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
@@ -20,12 +22,9 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetRes
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogParser;
 import com.jwoglom.pumpx2.shared.L;
-
 import org.apache.commons.codec.DecoderException;
 import org.json.JSONObject;
-
 import com.jwoglom.pumpx2.shared.Hex;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,14 +34,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import javax.annotation.Nullable;
 
 public class Main {
-    private static final String TAG = "CLIParser";
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     static {
         L.getPrintln = System.err::println;
     }
@@ -152,7 +149,7 @@ public class Main {
 
     private static void assertTrue(String msg, boolean ok) {
         if (!ok) {
-            L.w(TAG, "FAIL: " + msg);
+            log.warn("FAIL: " + msg);
         }
     }
 
@@ -233,7 +230,6 @@ public class Main {
         }
         return ret;
     }
-
 
     @SuppressWarnings("deprecation")
     public static Message parse(String rawHex, String ...extra) throws DecoderException {
@@ -342,7 +338,7 @@ public class Main {
             return null;
         }
         Message parsedMessage = resp.message().get();
-        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        log.debug(String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertTrue("classes match", expected.getClass().equals(parsedMessage.getClass()));
 
         int numPackets = tron.packets().size();

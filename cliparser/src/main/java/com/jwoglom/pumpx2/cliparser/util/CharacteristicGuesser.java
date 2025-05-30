@@ -1,14 +1,14 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.shared.L;
 
-import java.util.Set;
-
 public class CharacteristicGuesser {
-    private static final String TAG = "CharacteristicGuesser";
+    private static final Logger log = LoggerFactory.getLogger(CharacteristicGuesser.class);
 
     public static Characteristic guessBestCharacteristic(String rawHex, int opCode) {
         Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
@@ -25,14 +25,13 @@ public class CharacteristicGuesser {
                 log += "Using CURRENT_STATUS";
                 possibilities = Set.of(Characteristic.CURRENT_STATUS);
             }
-            L.w(TAG, log);
+            log.warn(log);
         }
         for (Characteristic c : possibilities) {
             return c;
         }
         return null;
     }
-
 
     public static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
         int len = rawHex.length();

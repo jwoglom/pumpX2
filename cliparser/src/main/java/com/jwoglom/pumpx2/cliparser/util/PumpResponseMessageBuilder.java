@@ -1,5 +1,7 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Messages;
@@ -13,18 +15,15 @@ import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
-
 import org.apache.commons.codec.DecoderException;
 import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class PumpResponseMessageBuilder {
-    private static final String TAG = "PumpResponseMessageBuilder";
-
+    private static final Logger log = LoggerFactory.getLogger(PumpResponseMessageBuilder.class);
 
     public static PumpResponseMessage build(String valueStr, String btChar, String... extraValueStr) throws NoMessageMatch {
         PumpResponseMessage resp = makeMessage(valueStr, btChar, extraValueStr);
@@ -33,7 +32,7 @@ public class PumpResponseMessageBuilder {
         }
 
         if ((resp == null || !resp.message().isPresent()) && (extraValueStr == null || extraValueStr.length == 0)) {
-            L.d(TAG, "Message not fully formed");
+            log.debug("Message not fully formed");
 
             // Hack to split messages which contain two packets into individual packets for parsing
             if (!valueStr.substring(0, 2).equals("00")) {
@@ -41,23 +40,23 @@ public class PumpResponseMessageBuilder {
                 int num = Integer.parseInt(valueStr.substring(0, 2), 16);
                 List<String> messages = new ArrayList<>();
                 String remainder = valueStr;
-                L.d(TAG, "rawHex: "+remainder);
+                log.debug("rawHex: "+remainder);
                 for (int i=num-1; i>=0; i--) {
-                    L.d(TAG, "i="+i+" num="+num);
+                    log.debug("i="+i+" num="+num);
                     String spl = Integer.toHexString(i) + op;
                     if (spl.length() == 3) {
                         spl = "0"+spl;
                     }
-                    L.d(TAG, "spl:"+spl);
+                    log.debug("spl:"+spl);
                     String[] split = remainder.split(spl);
                     messages.add(split[0]);
-                    L.d(TAG, "messages:"+messages);
+                    log.debug("messages:"+messages);
                     if (split.length > 1) {
                         remainder = spl + split[1];
                     } else {
                         remainder = "";
                     }
-                    L.d(TAG, "remainder: "+remainder);
+                    log.debug("remainder: "+remainder);
                 }
                 if (!remainder.isEmpty()) {
                     messages.add(remainder);
@@ -72,13 +71,12 @@ public class PumpResponseMessageBuilder {
         return resp;
     }
 
-
     private static PumpResponseMessage makeMessage(String valueStr, String btChar, String... extraValueStr) throws NoMessageMatch {
         byte[] value;
         try {
             value = Hex.decodeHex(valueStr);
         } catch (JSONException | DecoderException e) {
-            L.d(TAG, e.getMessage());
+            log.debug(e.getMessage());
             return null;
         }
 
@@ -88,7 +86,7 @@ public class PumpResponseMessageBuilder {
                 btChar = CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.toString();
             } else {
                 Characteristic guessedCharacteristic = CharacteristicGuesser.guessBestCharacteristic(valueStr, value[2]);
-                L.i(TAG, "guessed characteristic for opCode " + value[2] + ": " + guessedCharacteristic);
+                log.info("guessed characteristic for opCode " + value[2] + ": " + guessedCharacteristic);
                 if (guessedCharacteristic == null) {
                     throw new NoMessageMatch.NoOpCodeForCharacteristicException(value[2], null, null, valueStr, null);
                 }
@@ -112,8 +110,6 @@ public class PumpResponseMessageBuilder {
             throw new NoMessageMatch.NonPumpBtMessage(null, null, valueStr);
         }
 
-
-
         Characteristic characteristic = Characteristic.of(uuid);
         if (characteristic == null) {
             throw new NoMessageMatch.NonPumpBtMessage(uuid, CharacteristicUUID.which(uuid), valueStr);
@@ -121,7 +117,7 @@ public class PumpResponseMessageBuilder {
 
         int opCode = value[2];
         byte txId = value[3];
-        L.d(TAG, "makeMessage(txId="+txId+", opCode="+opCode+")");
+        log.debug("makeMessage(txId="+txId+", opCode="+opCode+")");
 
         if (StringUtils.isBlank(btChar)) {
             throw new RuntimeException("missing characteristic, cannot parse");
@@ -147,14 +143,14 @@ public class PumpResponseMessageBuilder {
             message = (Message) messageClass.newInstance();
             message.fillWithEmptyCargo();
         } catch (InstantiationException | IllegalAccessException e) {
-            L.d(TAG, e.getMessage());
+            log.debug(e.getMessage());
             return null;
         }
 
         try {
             return makeResponseMessage(message, value, (byte) txId, characteristic, extraValueStr);
         } catch (UnexpectedTransactionIdException e) {
-            L.e(TAG, "UnexpectedTransactionIdException(foundTxId="+e.foundTxId+", txId="+txId+")");
+            log.error("UnexpectedTransactionIdException(foundTxId="+e.foundTxId+", txId="+txId+")");
             if ((byte) e.foundTxId != (byte) txId) {
                 return makeResponseMessage(message, value, (byte) e.foundTxId, characteristic, extraValueStr);
             } else {
@@ -162,7 +158,6 @@ public class PumpResponseMessageBuilder {
             }
         }
     }
-
 
     private static PumpResponseMessage makeResponseMessage(Message message, byte[] value, byte txId, Characteristic characteristic, String... extraValueStr) {
         TronMessageWrapper tron = new TronMessageWrapper(message, (byte) txId);
@@ -174,7 +169,7 @@ public class PumpResponseMessageBuilder {
         try {
             if (extraValueStr != null) {
                 for (String exRawHex : extraValueStr) {
-                    L.d(TAG, "extraValueStr: " + exRawHex);
+                    log.debug("extraValueStr: " + exRawHex);
                     byte[] nextRead = Hex.decodeHex(exRawHex);
                     resp = BTResponseParser.parse(tron.message(), packetArrayList, nextRead, characteristic.getUuid());
                 }
@@ -196,7 +191,7 @@ public class PumpResponseMessageBuilder {
                 return c.getUuid();
             }
         }
-        L.e(TAG, "No characteristic found for UUID "+btChar);
+        log.error("No characteristic found for UUID "+btChar);
         return null;
     }
 
