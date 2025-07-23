@@ -16,6 +16,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
@@ -23,9 +24,14 @@ import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogParser;
 import com.jwoglom.pumpx2.shared.L;
 import org.apache.commons.codec.DecoderException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import com.jwoglom.pumpx2.shared.Hex;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -140,6 +146,14 @@ public class Main {
                     System.out.println(JsonMessageParser.parse(line));
                 }
                 break;
+            case "encode":
+                try {
+                    System.out.println(encode(args[1], args[2], args.length > 3 ? args[3] : ""));
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                break;
             default:
                 System.err.println("Nothing to do.");
                 break;
@@ -151,6 +165,81 @@ public class Main {
         if (!ok) {
             log.warn("FAIL: " + msg);
         }
+    }
+
+    public static String encode(String txId, String messageName, String messageParamsJson) throws InstantiationException, IllegalAccessException, NumberFormatException, IllegalArgumentException, InvocationTargetException {
+        if (messageParamsJson == null || messageParamsJson.isEmpty()) {
+            messageParamsJson = "{}";
+        }
+        JSONObject messageParams = new JSONObject(messageParamsJson);
+        Class<? extends Message> messageClass = null;
+        for (Messages m : Messages.values()) {
+            if (m.name().equals(messageName)) {
+                messageClass = m.requestClass();
+                break;
+            } else if (m.requestClass().getSimpleName().equals(messageName)) {
+                messageClass = m.requestClass();
+                break;
+            } else if (m.responseClass().getSimpleName().equals(messageName)) {
+                messageClass = m.responseClass();
+                break;
+            }
+        }
+        if (messageClass == null) {
+            System.err.println("Unknown message name: " + messageName);
+            System.exit(1);
+        }
+        Message message = null;
+        Object[] params = null;
+        for (Constructor<?> constructor : messageClass.getConstructors()) {
+            if (constructor.getParameterCount() == messageParams.length()) {
+                if (constructor.getParameterCount() == 0) {
+                    message = (Message) constructor.newInstance();
+                    message.fillWithEmptyCargo();
+                    params = new Object[0];
+                    break;
+                }
+                params = new Object[constructor.getParameterCount()];
+                int i = 0;
+                for (Parameter parameter : constructor.getParameters()) {
+                    if (messageParams.has(parameter.getName())) {
+                        Object value = messageParams.get(parameter.getName());
+                        // For primitive types, autoboxing handles the conversion
+                        // For non-primitive types, we need explicit casting
+                        if (parameter.getType().isPrimitive()) {
+                            params[i] = value;
+                        } else {
+                            params[i] = parameter.getType().cast(value);
+                        }
+                    } else {
+                        params[i] = null;
+                    }
+                    i++;
+                }
+                message = (Message) constructor.newInstance(params);
+                break;
+            }
+        }
+        if (message == null) {
+            System.err.println("Unable to build message " + messageName + " with params " + messageParams + ": no constructor was found with " + messageParams.length() + " parameters");
+            System.exit(1);
+        }
+        
+        byte currentTxId = (byte) Integer.valueOf(txId).byteValue();
+        TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
+
+        JSONObject ret = new JSONObject();
+        ArrayList<String> packets = new ArrayList<>();
+        for (Packet packet : wrapper.packets()) {
+            packets.add(Hex.encodeHexString(packet.build()));
+        }
+        ret.put("txId", txId);
+        ret.put("messageName", message.getClass().getSimpleName());
+        ret.put("messageParams", params);
+        ret.put("packets", packets);
+        ret.put("characteristicName", CharacteristicUUID.which(message.getCharacteristic().getUuid()));
+        ret.put("characteristic", message.getCharacteristic().getUuid().toString());
+        return ret.toString();
     }
 
     public static String parseOpcode(String rawHex) throws DecoderException {

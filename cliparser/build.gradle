@@ -3,6 +3,11 @@ plugins {
     id "application"
 }
 apply plugin : "java"
+
+compileJava {
+    options.compilerArgs << '-parameters'
+}
+
 ext {
     javaMainClass = "com.jwoglom.pumpx2.cliparser.Main"
 }
@@ -15,7 +20,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
 }
-
 
 publishing {
     publications {
