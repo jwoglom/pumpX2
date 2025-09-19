@@ -43,6 +43,7 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
+import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
 
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
@@ -154,12 +155,81 @@ public class Main {
                     e.printStackTrace();
                 }
                 break;
+            case "jpake":
+                System.out.println(jpakeAuthEncoder(args[1]));
             default:
                 System.err.println("Nothing to do.");
                 break;
 
         }
     }
+
+    private static String jpakeAuthEncoder(String pairingCode) {
+        try {
+            JpakeAuthBuilder builder = JpakeAuthBuilder.initializeWithPairingCode(pairingCode);
+            Scanner scanner = new Scanner(System.in);
+
+            byte txId = 0;
+            
+            while (!builder.done() && !builder.invalid()) {
+                // Generate next request
+                Message request = builder.nextRequest();
+                if (request == null) {
+                    break;
+                }
+                
+                // Convert request to JSON and output
+                System.out.println(builder.getStep().name() + ": " + encode(txId, request, null));
+                System.out.flush();
+                
+                // Increment txId for next request
+                txId++;
+                
+                // Read response hex from stdin
+                if (scanner.hasNextLine()) {
+                    String responseHex = scanner.nextLine().trim();
+                    
+                    // Parse the hex string using existing parse method
+                    Message response = parse(responseHex);
+                    if (response != null) {
+                        builder.processResponse(response);
+                    } else {
+                        JSONObject result = new JSONObject();
+                        result.put("error", "Could not parse response message from hex: " + responseHex + " at step " + builder.getStep().name());
+                        return result.toString();
+                    }
+                } else {
+                    JSONObject result = new JSONObject();
+                    result.put("error", "No response received from stdin. Reached step" + builder.getStep().name());
+                    return result.toString();
+                }
+            }
+            
+            if (builder.done()) {
+                JSONObject result = new JSONObject();
+                result.put("derivedSecret", Hex.encodeHexString(builder.getDerivedSecret()));
+                result.put("serverNonce", Hex.encodeHexString(builder.getServerNonce()));
+                result.put("messageName", "JpakeAuthResult");
+                result.put("txId", "" + txId);
+                return result.toString();
+            } else if (builder.invalid()) {
+                JSONObject result = new JSONObject();
+                result.put("error", "JPAKE authentication failed - HMAC validation failed at step " + builder.getStep().name());
+                return result.toString();
+            } else {
+                JSONObject result = new JSONObject();
+                result.put("error", "JPAKE authentication incomplete at step " + builder.getStep().name());
+                return result.toString();
+            }
+            
+        } catch (Exception e) {
+            JSONObject result = new JSONObject();
+            result.put("error", "Exception during JPAKE authentication: " + e.getMessage());
+            return result.toString();
+        }
+    }
+    
+
 
     private static void assertTrue(String msg, boolean ok) {
         if (!ok) {
@@ -224,18 +294,29 @@ public class Main {
             System.err.println("Unable to build message " + messageName + " with params " + messageParams + ": no constructor was found with " + messageParams.length() + " parameters");
             System.exit(1);
         }
-        
         byte currentTxId = (byte) Integer.valueOf(txId).byteValue();
-        TronMessageWrapper wrapper = new TronMessageWrapper(message, currentTxId);
+        return encode(currentTxId, message, params);
+    }
+
+    private static String encode(byte currentTxId, Message message, @Nullable Object[] params) {
+        TronMessageWrapper wrapper;
+        String maxChunkSize = System.getenv("PUMPX2_MAX_CHUNK_SIZE");
+        if (maxChunkSize == null || maxChunkSize.isEmpty()) {
+            wrapper = new TronMessageWrapper(message, currentTxId);
+        } else {
+            wrapper = new TronMessageWrapper(message, currentTxId, Integer.parseInt(maxChunkSize));
+        }
 
         JSONObject ret = new JSONObject();
         ArrayList<String> packets = new ArrayList<>();
         for (Packet packet : wrapper.packets()) {
             packets.add(Hex.encodeHexString(packet.build()));
         }
-        ret.put("txId", txId);
+        ret.put("txId", "" + currentTxId);
         ret.put("messageName", message.getClass().getSimpleName());
-        ret.put("messageParams", params);
+        if (params != null) {
+            ret.put("messageParams", params);
+        }
         ret.put("packets", packets);
         ret.put("characteristicName", CharacteristicUUID.which(message.getCharacteristic().getUuid()));
         ret.put("characteristic", message.getCharacteristic().getUuid().toString());

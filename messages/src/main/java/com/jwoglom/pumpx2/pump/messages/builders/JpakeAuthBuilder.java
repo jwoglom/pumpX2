@@ -274,6 +274,10 @@ public class JpakeAuthBuilder {
         return step == JpakeStep.INVALID;
     }
 
+    public JpakeStep getStep() {
+        return step;
+    }
+
     public byte[] getDerivedSecret() {
         return this.derivedSecret;
     }

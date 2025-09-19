@@ -99,12 +99,11 @@ public class Packetize {
         List<Byte> subList = new ArrayList<>();
 
         for (byte b : packetWithCRC) {
+            subList.add(b);
             if (subList.size() == partitionSize) {
                 partitions.add(subList);
                 subList = new ArrayList<>();
             }
-
-            subList.add(b);
         }
 
         if (!subList.isEmpty()) {
