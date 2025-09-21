@@ -87,8 +87,9 @@ public class TandemBluetoothHandler {
     private final Handler handler;
     public Long periodicTimeSinceResetInterval = 120_000L;
 
-    private static final long QUALIFYING_EVENTS_HEALTH_CHECK_INTERVAL_MS = 60_000L;
-    private static final long QUALIFYING_EVENTS_STALE_TIMEOUT_MS = 180_000L;
+    private static final long QUALIFYING_EVENTS_HEALTH_CHECK_INTERVAL_MS = 30_000L;
+    private static final long QUALIFYING_EVENTS_STALE_TIMEOUT_MS = 120_000L;
+    private static final long NOTIFICATION_RETRY_DELAY_MS = 2_000L;
     private static final int MAX_NOTIFICATION_ENABLE_ATTEMPTS = 5;
 
     private final Map<UUID, Integer> notificationEnableAttempts = new HashMap<>();
@@ -220,48 +221,104 @@ public class TandemBluetoothHandler {
 
     private void requestNotify(BluetoothPeripheral peripheral, UUID characteristicUuid, boolean enable, String reason) {
         UUID serviceUUID = getServiceUuidForCharacteristic(characteristicUuid);
+
         if (enable) {
-            int attempt;
-            synchronized (notificationEnableAttempts) {
-                int current = notificationEnableAttempts.getOrDefault(characteristicUuid, 0);
-                if (current >= MAX_NOTIFICATION_ENABLE_ATTEMPTS) {
-                    if (current != Integer.MAX_VALUE) {
-                        Timber.e("Exceeded notification enable attempts for %s after %d tries (%s)",
-                                CharacteristicUUID.which(characteristicUuid), current, reason);
-                        notificationEnableAttempts.put(characteristicUuid, Integer.MAX_VALUE);
-                        tandemPump.onPumpCriticalError(peripheral,
-                                TandemError.NOTIFICATION_STATE_FAILED.withExtra(
-                                        "characteristic: " + CharacteristicUUID.which(characteristicUuid)
-                                                + ", attempts: " + current + ", reason: " + reason));
-                    } else {
-                        Timber.d("Notification enable attempts exhausted for %s, skipping re-enable", CharacteristicUUID.which(characteristicUuid));
-                    }
-                    return;
-                }
-                attempt = current + 1;
-                notificationEnableAttempts.put(characteristicUuid, attempt);
+            int attempt = incrementNotificationEnableAttempt(peripheral, characteristicUuid, reason);
+            if (attempt == -1) {
+                return;
             }
+
+            if (!ConnectionState.CONNECTED.equals(peripheral.getState())) {
+                Timber.d("Deferring notify enable for %s because state is %s (%s)",
+                        CharacteristicUUID.which(characteristicUuid), peripheral.getState(), reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (peripheral not connected)");
+                return;
+            }
+
+            BluetoothGattCharacteristic characteristic = peripheral.getCharacteristic(serviceUUID, characteristicUuid);
+            if (characteristic == null) {
+                Timber.w("Characteristic %s missing while enabling notifications (%s), retrying",
+                        CharacteristicUUID.which(characteristicUuid), reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (characteristic missing)");
+                return;
+            }
+
             Timber.i("Setting notify=true for %s (%s) [attempt=%d reason=%s]", characteristicUuid,
                     CharacteristicUUID.which(characteristicUuid), attempt, reason);
+
+            boolean enqueued = peripheral.setNotify(characteristic, true);
+            if (!enqueued) {
+                Timber.w("setNotify returned false for %s (%s) [attempt=%d reason=%s]", characteristicUuid,
+                        CharacteristicUUID.which(characteristicUuid), attempt, reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (enqueue failed)");
+            }
         } else {
+            BluetoothGattCharacteristic characteristic = peripheral.getCharacteristic(serviceUUID, characteristicUuid);
             synchronized (notificationEnableAttempts) {
                 notificationEnableAttempts.remove(characteristicUuid);
             }
             Timber.i("Setting notify=false for %s (%s) [reason=%s]", characteristicUuid,
                     CharacteristicUUID.which(characteristicUuid), reason);
+            if (characteristic == null) {
+                Timber.d("Skipping disable notify for %s because characteristic is unavailable", CharacteristicUUID.which(characteristicUuid));
+                return;
+            }
+            if (!peripheral.setNotify(characteristic, false)) {
+                Timber.w("setNotify returned false while disabling %s (%s)", characteristicUuid, CharacteristicUUID.which(characteristicUuid));
+            }
         }
-
-        peripheral.setNotify(serviceUUID, characteristicUuid, enable);
     }
 
-    private void ensureNotificationEnabled(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
-        handler.post(() -> {
+    private void scheduleNotificationRetry(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        handler.postDelayed(() -> {
             if (!ConnectionState.CONNECTED.equals(peripheral.getState())) {
-                Timber.d("Skipping notify re-enable for %s because peripheral state is %s", CharacteristicUUID.which(characteristicUuid), peripheral.getState());
+                Timber.d("Skipping notify retry for %s because peripheral state is %s (%s)",
+                        CharacteristicUUID.which(characteristicUuid), peripheral.getState(), reason);
                 return;
             }
             requestNotify(peripheral, characteristicUuid, true, reason);
-        });
+        }, NOTIFICATION_RETRY_DELAY_MS);
+    }
+
+    private int incrementNotificationEnableAttempt(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        synchronized (notificationEnableAttempts) {
+            int current = notificationEnableAttempts.getOrDefault(characteristicUuid, 0);
+            if (current >= MAX_NOTIFICATION_ENABLE_ATTEMPTS) {
+                if (current != Integer.MAX_VALUE) {
+                    Timber.e("Exceeded notification enable attempts for %s after %d tries (%s)",
+                            CharacteristicUUID.which(characteristicUuid), current, reason);
+                    notificationEnableAttempts.put(characteristicUuid, Integer.MAX_VALUE);
+                    tandemPump.onPumpCriticalError(peripheral,
+                            TandemError.NOTIFICATION_STATE_FAILED.withExtra(
+                                    "characteristic: " + CharacteristicUUID.which(characteristicUuid)
+                                            + ", attempts: " + current + ", reason: " + reason));
+                } else {
+                    Timber.d("Notification enable attempts exhausted for %s, skipping re-enable", CharacteristicUUID.which(characteristicUuid));
+                }
+                return -1;
+            }
+            int attempt = current + 1;
+            notificationEnableAttempts.put(characteristicUuid, attempt);
+            return attempt;
+        }
+    }
+
+    private void decrementNotificationEnableAttempt(UUID characteristicUuid) {
+        synchronized (notificationEnableAttempts) {
+            int current = notificationEnableAttempts.getOrDefault(characteristicUuid, 0);
+            if (current <= 1) {
+                notificationEnableAttempts.remove(characteristicUuid);
+            } else if (current != Integer.MAX_VALUE) {
+                notificationEnableAttempts.put(characteristicUuid, current - 1);
+            }
+        }
+    }
+
+    private void ensureNotificationEnabled(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        handler.post(() -> requestNotify(peripheral, characteristicUuid, true, reason));
     }
 
     private void installNotificationSubscriptions(BluetoothPeripheral peripheral, String reason) {
