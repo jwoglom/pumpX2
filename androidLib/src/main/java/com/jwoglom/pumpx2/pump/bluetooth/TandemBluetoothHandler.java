@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
-import com.jwoglom.pumpx2.pump.TandemPump;
+import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
@@ -269,11 +269,14 @@ public class TandemBluetoothHandler {
     }
 
     private void handleServiceChanged(BluetoothPeripheral peripheral, byte[] value) {
-        Timber.w("Received SERVICE_CHANGED indication (%s); rediscovering services", Hex.encodeHexString(value));
+        Timber.w("Received SERVICE_CHANGED indication (%s); reinstalling notifications", Hex.encodeHexString(value));
         qualifyingEventsNotifying.set(false);
-        handler.post(() -> {
-            peripheral.discoverServices();
-        });
+
+        synchronized (notificationEnableAttempts) {
+            notificationEnableAttempts.keySet().removeAll(CharacteristicUUID.ENABLED_NOTIFICATIONS);
+        }
+
+        handler.post(() -> installNotificationSubscriptions(peripheral, "service changed indication"));
     }
 
     // Callback for peripheral-specific events
