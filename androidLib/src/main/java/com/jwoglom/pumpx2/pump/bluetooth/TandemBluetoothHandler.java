@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
+import com.jwoglom.pumpx2.pump.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
