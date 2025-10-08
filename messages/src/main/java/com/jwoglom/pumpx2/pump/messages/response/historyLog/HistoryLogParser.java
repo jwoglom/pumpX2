@@ -1,17 +1,17 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.util.MessageHelpers;
 import com.jwoglom.pumpx2.shared.L;
+
 import com.jwoglom.pumpx2.shared.Hex;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class HistoryLogParser {
-    private static final Logger log = LoggerFactory.getLogger(HistoryLogParser.class);
+    private static final String TAG = "HistoryLogParser";
 
     public static final Set<Class<? extends HistoryLog>> LOG_MESSAGE_TYPES = Set.of(
         DateChangeHistoryLog.class,
@@ -79,7 +79,7 @@ public class HistoryLogParser {
                 LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);
                 LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());
             } catch (IllegalAccessException|InstantiationException e) {
-                log.error(String.format("could not instantiate %s", clazz), e);
+                L.e(TAG, String.format("could not instantiate %s", clazz), e);
                 e.printStackTrace();
             }
         }
@@ -88,12 +88,12 @@ public class HistoryLogParser {
     public static HistoryLog parse(byte[] rawStream) {
         int typeId = Bytes.readShort(rawStream, 0) & 4095;
 //        if (typeId % 256 != typeId) {
-//            log.warn("typeId "+typeId+" is being corrected to "+(typeId % 256));
+//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
 //            typeId = typeId % 256;
 //        }
         HistoryLog ret = parseWithTypeId(rawStream, typeId);
         if (ret instanceof UnknownHistoryLog) {
-            log.warn("retry HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
+            L.w(TAG, "retry HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
             HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);
             if (two instanceof UnknownHistoryLog) {
                 return ret;
@@ -106,25 +106,25 @@ public class HistoryLogParser {
     private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {
         HistoryLog historyLog = null;
         if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
-            log.warn("unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
             historyLog = new UnknownHistoryLog();
             historyLog.parse(rawStream);
-            log.info(String.format("Processed embedded HistoryLog: UnknownHistoryLog (%d): %s", typeId, Hex.encodeHexString(rawStream)));
+            L.i(TAG, String.format("Processed embedded HistoryLog: UnknownHistoryLog (%d): %s", typeId, Hex.encodeHexString(rawStream)));
             return historyLog;
         }
 
         try {
             historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();
         } catch (IllegalAccessException|InstantiationException e) {
-            log.error("could not instantiate "+typeId, e);
+            L.e(TAG, "could not instantiate "+typeId, e);
             e.printStackTrace();
             return null;
         }
 
         String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());
-        log.debug("found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+        L.d(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
         historyLog.parse(rawStream);
-        log.info(String.format("Processed embedded HistoryLog: %s (%d): %s", name, typeId, Hex.encodeHexString(rawStream)));
+        L.i(TAG, String.format("Processed embedded HistoryLog: %s (%d): %s", name, typeId, Hex.encodeHexString(rawStream)));
         return historyLog;
     }
 }

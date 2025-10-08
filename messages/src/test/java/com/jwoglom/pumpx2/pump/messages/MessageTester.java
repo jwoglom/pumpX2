@@ -1,11 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
@@ -16,14 +14,18 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.apache.commons.codec.DecoderException;
+import org.junit.Test;
+
 import com.jwoglom.pumpx2.shared.Hex;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MessageTester {
-    private static final Logger log = LoggerFactory.getLogger(MessageTester.class);
+    private static final String TAG = "MessageTester";
 
     public static void initPumpState(String pumpAuthenticationKey, long timeSinceReset) {
         PumpStateSupplier.pumpPairingCode = () -> pumpAuthenticationKey;
@@ -59,7 +61,7 @@ public class MessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        log.debug(String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertEquals(expected.getClass(), parsedMessage.getClass());
         assertEquals(expected.verboseToString(), parsedMessage.verboseToString());
 
@@ -78,10 +80,12 @@ public class MessageTester {
             }
         }
 
+
         assertHexEquals(parsedMessage.getCargo(), expected.getCargo());
 
         return parsedMessage;
     }
+
 
     public static Message testMultiplePackets(List<String> rawHex, int txId, UUID expectedCharacteristic, Message expected) {
         List<byte[]> initialReads = rawHex.stream().map(i -> {
@@ -123,6 +127,7 @@ public class MessageTester {
         return parsedMessage;
     }
 
+
     public static void assertHexEquals(byte[] a, byte[] b) {
         assertNotNull("first byte[] is null", a);
         assertNotNull("second byte[] is null", b);
@@ -143,20 +148,18 @@ public class MessageTester {
 
     @Test
     public void testPartitionList() {
-        byte[] testData = new byte[25]; // 25 bytes
+        byte[] testData = new byte[25];
         for (int i = 0; i < testData.length; i++) {
             testData[i] = (byte) i;
         }
-        
+
         List<List<Byte>> partitions = Packetize.partitionList(testData, 10);
-        
-        // Should have 3 partitions: 10, 10, and 5 bytes
+
         assertEquals(3, partitions.size());
         assertEquals(10, partitions.get(0).size());
         assertEquals(10, partitions.get(1).size());
         assertEquals(5, partitions.get(2).size());
-        
-        // Verify no partition exceeds maxChunkSize
+
         for (List<Byte> partition : partitions) {
             assertTrue("Partition size " + partition.size() + " exceeds maxChunkSize 10", partition.size() <= 10);
         }

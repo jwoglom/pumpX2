@@ -1,7 +1,5 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -10,13 +8,16 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.stream.Collector;
 
 public class JsonMessageParser {
-    private static final Logger log = LoggerFactory.getLogger(JsonMessageParser.class);
+    private static final String TAG = "JsonMessageParser";
+
 
     public static String parse(String line) {
         try {
@@ -134,7 +135,7 @@ public class JsonMessageParser {
 
             return PumpResponseMessageBuilder.build(valueStr, btChar, extraValueStr);
         } catch (JSONException e) {
-            log.debug(e.getMessage());
+            L.d(TAG, e.getMessage());
             return null;
         }
     }

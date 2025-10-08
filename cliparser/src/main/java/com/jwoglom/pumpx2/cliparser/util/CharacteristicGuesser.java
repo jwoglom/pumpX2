@@ -1,37 +1,38 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.shared.L;
 
+import java.util.Set;
+
 public class CharacteristicGuesser {
-    private static final Logger log = LoggerFactory.getLogger(CharacteristicGuesser.class);
+    private static final String TAG = "CharacteristicGuesser";
 
     public static Characteristic guessBestCharacteristic(String rawHex, int opCode) {
         Set<Characteristic> possibilities = Messages.findPossibleCharacteristicsForOpcode(opCode);
         if (possibilities.size() > 1) {
-            String msg = "Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ";
+            String log = "Multiple characteristics possible for opCode: "+opCode+": "+possibilities+" ";
             possibilities = filterKnownPossibilities(rawHex, opCode, possibilities);
             if (possibilities.contains(Characteristic.CONTROL)) {
-                msg += "Using CONTROL";
+                log += "Using CONTROL";
                 possibilities = Set.of(Characteristic.CONTROL);
             } else if (possibilities.contains(Characteristic.AUTHORIZATION)) {
-                msg += "Using AUTHORIZATION";
+                log += "Using AUTHORIZATION";
                 possibilities = Set.of(Characteristic.AUTHORIZATION);
             } else if (possibilities.contains(Characteristic.CURRENT_STATUS)) {
-                msg += "Using CURRENT_STATUS";
+                log += "Using CURRENT_STATUS";
                 possibilities = Set.of(Characteristic.CURRENT_STATUS);
             }
-            log.warn(msg);
+            L.w(TAG, log);
         }
         for (Characteristic c : possibilities) {
             return c;
         }
         return null;
     }
+
 
     public static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
         int len = rawHex.length();

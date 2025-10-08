@@ -1,18 +1,19 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.StringUtils;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.apache.commons.codec.DecoderException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 public class PumpStateSupplier {
-    private static final Logger log = LoggerFactory.getLogger(PumpStateSupplier.class);
+    private static final String TAG = "PumpStateSupplier";
 
     public static Supplier<byte[]> authenticationKey = PumpStateSupplier::determinePumpAuthKey;
     public static Supplier<String> pumpPairingCode = null;
@@ -23,6 +24,7 @@ public class PumpStateSupplier {
     public static Supplier<Boolean> controlIQSupported = () -> false;
     public static Supplier<Boolean> actionsAffectingInsulinDeliveryEnabled = () -> false;
     public static Supplier<Integer> inProgressBolusId = () -> null;
+
 
     /**
      * @return the byte array consisting of the key used for signing messages
@@ -44,15 +46,16 @@ public class PumpStateSupplier {
 
                 // hkdf of nonce and secret bytes are passed to hmac
                 byte[] authKey = Hkdf.build(jpakeNonce, jpakeSecret);
-                log.debug("DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
+                L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
 
                 return authKey;
             } catch (DecoderException e) {
-                log.error("error", e);
+                L.e(TAG, e);
             }
         }
 
-        log.debug("DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
+        L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
+
 
         if (code == null) return new byte[0];
 
