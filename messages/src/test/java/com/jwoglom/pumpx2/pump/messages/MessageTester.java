@@ -16,6 +16,8 @@ import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
+import org.junit.Test;
+
 import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.List;
@@ -141,6 +143,25 @@ public class MessageTester {
             if (i+2 <= max) {System.out.print("short: "+Bytes.readShort(cargo,i)+"\t");}
             if (i+4 <= max) {System.out.print("float: "+Bytes.readFloat(cargo, i)+"\t");}
             System.out.println();
+        }
+    }
+
+    @Test
+    public void testPartitionList() {
+        byte[] testData = new byte[25];
+        for (int i = 0; i < testData.length; i++) {
+            testData[i] = (byte) i;
+        }
+
+        List<List<Byte>> partitions = Packetize.partitionList(testData, 10);
+
+        assertEquals(3, partitions.size());
+        assertEquals(10, partitions.get(0).size());
+        assertEquals(10, partitions.get(1).size());
+        assertEquals(5, partitions.get(2).size());
+
+        for (List<Byte> partition : partitions) {
+            assertTrue("Partition size " + partition.size() + " exceeds maxChunkSize 10", partition.size() <= 10);
         }
     }
 }
