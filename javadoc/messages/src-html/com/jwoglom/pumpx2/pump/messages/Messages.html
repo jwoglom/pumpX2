@@ -17,474 +17,471 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import org.slf4j.Logger;</span>
-<span class="source-line-no">004</span><span id="line-4">import org.slf4j.LoggerFactory;</span>
-<span class="source-line-no">005</span><span id="line-5">import org.apache.commons.lang3.Validate;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentEnterChangeCartridgeModeStateStreamRequest;</span>
-<span class="source-line-no">016</span><span id="line-16">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentDetectingCartridgeStateStreamRequest;</span>
-<span class="source-line-no">017</span><span id="line-17">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillTubingStateStreamRequest;</span>
-<span class="source-line-no">018</span><span id="line-18">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
-<span class="source-line-no">019</span><span id="line-19">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;</span>
-<span class="source-line-no">020</span><span id="line-20">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;</span>
-<span class="source-line-no">021</span><span id="line-21">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest;</span>
-<span class="source-line-no">022</span><span id="line-22">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMGlucoseAlertSettingsRequest;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMOORAlertSettingsRequest;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMRateAlertSettingsRequest;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQIOBRequest;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV1Request;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV2Request;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatusRequest;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Request;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Request;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;</span>
-<span class="source-line-no">039</span><span id="line-39">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;</span>
-<span class="source-line-no">040</span><span id="line-40">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;</span>
-<span class="source-line-no">041</span><span id="line-41">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSettingsRequest;</span>
-<span class="source-line-no">042</span><span id="line-42">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;</span>
-<span class="source-line-no">043</span><span id="line-43">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;</span>
-<span class="source-line-no">044</span><span id="line-44">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;</span>
-<span class="source-line-no">045</span><span id="line-45">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;</span>
-<span class="source-line-no">046</span><span id="line-46">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;</span>
-<span class="source-line-no">047</span><span id="line-47">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;</span>
-<span class="source-line-no">048</span><span id="line-48">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.NonControlIQIOBRequest;</span>
-<span class="source-line-no">049</span><span id="line-49">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</span>
-<span class="source-line-no">050</span><span id="line-50">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV1Request;</span>
-<span class="source-line-no">051</span><span id="line-51">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV2Request;</span>
-<span class="source-line-no">052</span><span id="line-52">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;</span>
-<span class="source-line-no">053</span><span id="line-53">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;</span>
-<span class="source-line-no">054</span><span id="line-54">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionRequest;</span>
-<span class="source-line-no">055</span><span id="line-55">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</span>
-<span class="source-line-no">056</span><span id="line-56">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;</span>
-<span class="source-line-no">057</span><span id="line-57">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</span>
-<span class="source-line-no">058</span><span id="line-58">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</span>
-<span class="source-line-no">059</span><span id="line-59">import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;</span>
-<span class="source-line-no">060</span><span id="line-60">import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;</span>
-<span class="source-line-no">061</span><span id="line-61">import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;</span>
-<span class="source-line-no">062</span><span id="line-62">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;</span>
-<span class="source-line-no">063</span><span id="line-63">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;</span>
-<span class="source-line-no">064</span><span id="line-64">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;</span>
-<span class="source-line-no">065</span><span id="line-65">import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;</span>
-<span class="source-line-no">066</span><span id="line-66">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;</span>
-<span class="source-line-no">067</span><span id="line-67">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;</span>
-<span class="source-line-no">068</span><span id="line-68">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;</span>
-<span class="source-line-no">069</span><span id="line-69">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;</span>
-<span class="source-line-no">070</span><span id="line-70">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;</span>
-<span class="source-line-no">071</span><span id="line-71">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQAlertInfoResponse;</span>
-<span class="source-line-no">072</span><span id="line-72">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQSettingsResponse;</span>
-<span class="source-line-no">073</span><span id="line-73">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQStatusResponse;</span>
-<span class="source-line-no">074</span><span id="line-74">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalLimitSettingsResponse;</span>
-<span class="source-line-no">075</span><span id="line-75">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;</span>
-<span class="source-line-no">076</span><span id="line-76">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMGlucoseAlertSettingsResponse;</span>
-<span class="source-line-no">077</span><span id="line-77">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;</span>
-<span class="source-line-no">078</span><span id="line-78">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMOORAlertSettingsResponse;</span>
-<span class="source-line-no">079</span><span id="line-79">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMRateAlertSettingsResponse;</span>
-<span class="source-line-no">080</span><span id="line-80">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMStatusResponse;</span>
-<span class="source-line-no">081</span><span id="line-81">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;</span>
-<span class="source-line-no">082</span><span id="line-82">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV1Response;</span>
-<span class="source-line-no">083</span><span id="line-83">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV2Response;</span>
-<span class="source-line-no">084</span><span id="line-84">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse;</span>
-<span class="source-line-no">085</span><span id="line-85">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBasalStatusResponse;</span>
-<span class="source-line-no">086</span><span id="line-86">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV1Response;</span>
-<span class="source-line-no">087</span><span id="line-87">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;</span>
-<span class="source-line-no">088</span><span id="line-88">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;</span>
-<span class="source-line-no">089</span><span id="line-89">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEGVGuiDataResponse;</span>
-<span class="source-line-no">090</span><span id="line-90">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ExtendedBolusStatusResponse;</span>
-<span class="source-line-no">091</span><span id="line-91">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GlobalMaxBolusSettingsResponse;</span>
-<span class="source-line-no">092</span><span id="line-92">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;</span>
-<span class="source-line-no">093</span><span id="line-93">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;</span>
-<span class="source-line-no">094</span><span id="line-94">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HomeScreenMirrorResponse;</span>
-<span class="source-line-no">095</span><span id="line-95">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse;</span>
-<span class="source-line-no">096</span><span id="line-96">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;</span>
-<span class="source-line-no">097</span><span id="line-97">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;</span>
-<span class="source-line-no">098</span><span id="line-98">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;</span>
-<span class="source-line-no">099</span><span id="line-99">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse;</span>
-<span class="source-line-no">100</span><span id="line-100">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;</span>
-<span class="source-line-no">101</span><span id="line-101">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV2Response;</span>
-<span class="source-line-no">102</span><span id="line-102">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;</span>
-<span class="source-line-no">103</span><span id="line-103">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpSettingsResponse;</span>
-<span class="source-line-no">104</span><span id="line-104">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;</span>
-<span class="source-line-no">105</span><span id="line-105">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;</span>
-<span class="source-line-no">106</span><span id="line-106">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse;</span>
-<span class="source-line-no">107</span><span id="line-107">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateResponse;</span>
-<span class="source-line-no">108</span><span id="line-108">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;</span>
-<span class="source-line-no">109</span><span id="line-109">import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;</span>
-<span class="source-line-no">110</span><span id="line-110">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnapshotRequest;</span>
-<span class="source-line-no">111</span><span id="line-111">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;</span>
-<span class="source-line-no">112</span><span id="line-112">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;</span>
-<span class="source-line-no">113</span><span id="line-113">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionChangeReasonResponse;</span>
-<span class="source-line-no">114</span><span id="line-114">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;</span>
-<span class="source-line-no">115</span><span id="line-115">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;</span>
-<span class="source-line-no">116</span><span id="line-116">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;</span>
-<span class="source-line-no">117</span><span id="line-117">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;</span>
-<span class="source-line-no">118</span><span id="line-118">import com.jwoglom.pumpx2.pump.messages.request.control.EnterChangeCartridgeModeRequest;</span>
-<span class="source-line-no">119</span><span id="line-119">import com.jwoglom.pumpx2.pump.messages.response.control.EnterChangeCartridgeModeResponse;</span>
-<span class="source-line-no">120</span><span id="line-120">import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;</span>
-<span class="source-line-no">121</span><span id="line-121">import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;</span>
-<span class="source-line-no">122</span><span id="line-122">import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;</span>
-<span class="source-line-no">123</span><span id="line-123">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
-<span class="source-line-no">124</span><span id="line-124">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;</span>
-<span class="source-line-no">125</span><span id="line-125">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CommonSoftwareInfoResponse;</span>
-<span class="source-line-no">126</span><span id="line-126">import com.jwoglom.pumpx2.pump.messages.request.control.SuspendPumpingRequest;</span>
-<span class="source-line-no">127</span><span id="line-127">import com.jwoglom.pumpx2.pump.messages.response.control.SuspendPumpingResponse;</span>
-<span class="source-line-no">128</span><span id="line-128">import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;</span>
-<span class="source-line-no">129</span><span id="line-129">import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;</span>
-<span class="source-line-no">130</span><span id="line-130">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;</span>
-<span class="source-line-no">131</span><span id="line-131">import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;</span>
-<span class="source-line-no">132</span><span id="line-132">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;</span>
-<span class="source-line-no">133</span><span id="line-133">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusResponse;</span>
-<span class="source-line-no">134</span><span id="line-134">import com.jwoglom.pumpx2.pump.messages.request.control.RemoteBgEntryRequest;</span>
-<span class="source-line-no">135</span><span id="line-135">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;</span>
-<span class="source-line-no">136</span><span id="line-136">import com.jwoglom.pumpx2.pump.messages.request.control.RemoteCarbEntryRequest;</span>
-<span class="source-line-no">137</span><span id="line-137">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;</span>
-<span class="source-line-no">138</span><span id="line-138">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;</span>
-<span class="source-line-no">139</span><span id="line-139">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LocalizationResponse;</span>
-<span class="source-line-no">140</span><span id="line-140">import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionReleaseRequest;</span>
-<span class="source-line-no">141</span><span id="line-141">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionReleaseResponse;</span>
-<span class="source-line-no">142</span><span id="line-142">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg70Request;</span>
-<span class="source-line-no">143</span><span id="line-143">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg70Response;</span>
-<span class="source-line-no">144</span><span id="line-144">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode110Request;</span>
-<span class="source-line-no">145</span><span id="line-145">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode110Response;</span>
-<span class="source-line-no">146</span><span id="line-146">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg66Request;</span>
-<span class="source-line-no">147</span><span id="line-147">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg66Response;</span>
-<span class="source-line-no">148</span><span id="line-148">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg124Request;</span>
-<span class="source-line-no">149</span><span id="line-149">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg124Response;</span>
-<span class="source-line-no">150</span><span id="line-150">import com.jwoglom.pumpx2.pump.messages.request.control.SetModesRequest;</span>
-<span class="source-line-no">151</span><span id="line-151">import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;</span>
-<span class="source-line-no">152</span><span id="line-152">import com.jwoglom.pumpx2.pump.messages.request.control.SetSleepScheduleRequest;</span>
-<span class="source-line-no">153</span><span id="line-153">import com.jwoglom.pumpx2.pump.messages.response.control.SetSleepScheduleResponse;</span>
-<span class="source-line-no">154</span><span id="line-154">import com.jwoglom.pumpx2.pump.messages.request.control.SetTempRateRequest;</span>
-<span class="source-line-no">155</span><span id="line-155">import com.jwoglom.pumpx2.pump.messages.response.control.SetTempRateResponse;</span>
-<span class="source-line-no">156</span><span id="line-156">import com.jwoglom.pumpx2.pump.messages.request.control.StopTempRateRequest;</span>
-<span class="source-line-no">157</span><span id="line-157">import com.jwoglom.pumpx2.pump.messages.response.control.StopTempRateResponse;</span>
-<span class="source-line-no">158</span><span id="line-158">import com.jwoglom.pumpx2.pump.messages.request.control.ResumePumpingRequest;</span>
-<span class="source-line-no">159</span><span id="line-159">import com.jwoglom.pumpx2.pump.messages.response.control.ResumePumpingResponse;</span>
-<span class="source-line-no">160</span><span id="line-160">import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;</span>
-<span class="source-line-no">161</span><span id="line-161">import com.jwoglom.pumpx2.pump.messages.response.control.ChangeControlIQSettingsResponse;</span>
-<span class="source-line-no">162</span><span id="line-162">import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;</span>
-<span class="source-line-no">163</span><span id="line-163">import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;</span>
-<span class="source-line-no">164</span><span id="line-164">import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;</span>
-<span class="source-line-no">165</span><span id="line-165">import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;</span>
-<span class="source-line-no">166</span><span id="line-166">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;</span>
-<span class="source-line-no">167</span><span id="line-167">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;</span>
-<span class="source-line-no">168</span><span id="line-168">import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;</span>
-<span class="source-line-no">169</span><span id="line-169">import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;</span>
-<span class="source-line-no">170</span><span id="line-170">import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;</span>
-<span class="source-line-no">171</span><span id="line-171">import com.jwoglom.pumpx2.pump.messages.response.control.SetG6TransmitterIdResponse;</span>
-<span class="source-line-no">172</span><span id="line-172">import com.jwoglom.pumpx2.pump.messages.request.control.StartDexcomG6SensorSessionRequest;</span>
-<span class="source-line-no">173</span><span id="line-173">import com.jwoglom.pumpx2.pump.messages.response.control.StartDexcomG6SensorSessionResponse;</span>
-<span class="source-line-no">174</span><span id="line-174">import com.jwoglom.pumpx2.pump.messages.request.control.StopDexcomCGMSensorSessionRequest;</span>
-<span class="source-line-no">175</span><span id="line-175">import com.jwoglom.pumpx2.pump.messages.response.control.StopDexcomCGMSensorSessionResponse;</span>
-<span class="source-line-no">176</span><span id="line-176">import com.jwoglom.pumpx2.pump.messages.request.control.PlaySoundRequest;</span>
-<span class="source-line-no">177</span><span id="line-177">import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;</span>
-<span class="source-line-no">178</span><span id="line-178">import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;</span>
-<span class="source-line-no">179</span><span id="line-179">import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;</span>
-<span class="source-line-no">180</span><span id="line-180">import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;</span>
-<span class="source-line-no">181</span><span id="line-181">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;</span>
-<span class="source-line-no">182</span><span id="line-182">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;</span>
-<span class="source-line-no">183</span><span id="line-183">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;</span>
-<span class="source-line-no">184</span><span id="line-184">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;</span>
-<span class="source-line-no">185</span><span id="line-185">import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;</span>
-<span class="source-line-no">186</span><span id="line-186">import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;</span>
-<span class="source-line-no">187</span><span id="line-187">import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;</span>
-<span class="source-line-no">188</span><span id="line-188">import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;</span>
-<span class="source-line-no">189</span><span id="line-189">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;</span>
-<span class="source-line-no">190</span><span id="line-190">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;</span>
-<span class="source-line-no">191</span><span id="line-191">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetSavedG7PairingCodeRequest;</span>
-<span class="source-line-no">192</span><span id="line-192">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetSavedG7PairingCodeResponse;</span>
-<span class="source-line-no">193</span><span id="line-193">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHardwareInfoRequest;</span>
-<span class="source-line-no">194</span><span id="line-194">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetG6TransmitterHardwareInfoResponse;</span>
-<span class="source-line-no">195</span><span id="line-195">import com.jwoglom.pumpx2.pump.messages.request.control.ChangeTimeDateRequest;</span>
-<span class="source-line-no">196</span><span id="line-196">import com.jwoglom.pumpx2.pump.messages.response.control.ChangeTimeDateResponse;</span>
-<span class="source-line-no">197</span><span id="line-197">import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;</span>
-<span class="source-line-no">198</span><span id="line-198">import com.jwoglom.pumpx2.pump.messages.response.control.SetActiveIDPResponse;</span>
-<span class="source-line-no">199</span><span id="line-199">import com.jwoglom.pumpx2.pump.messages.request.control.CreateIDPRequest;</span>
-<span class="source-line-no">200</span><span id="line-200">import com.jwoglom.pumpx2.pump.messages.response.control.CreateIDPResponse;</span>
-<span class="source-line-no">201</span><span id="line-201">import com.jwoglom.pumpx2.pump.messages.request.control.RenameIDPRequest;</span>
-<span class="source-line-no">202</span><span id="line-202">import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;</span>
-<span class="source-line-no">203</span><span id="line-203">import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;</span>
-<span class="source-line-no">204</span><span id="line-204">import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;</span>
-<span class="source-line-no">205</span><span id="line-205">import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest;</span>
-<span class="source-line-no">206</span><span id="line-206">import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSettingsResponse;</span>
-<span class="source-line-no">207</span><span id="line-207">import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;</span>
-<span class="source-line-no">208</span><span id="line-208">import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSegmentResponse;</span>
-<span class="source-line-no">209</span><span id="line-209">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode20Request;</span>
-<span class="source-line-no">210</span><span id="line-210">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode20Response;</span>
-<span class="source-line-no">211</span><span id="line-211">import com.jwoglom.pumpx2.pump.messages.response.controlStream.EnterChangeCartridgeModeStateStreamResponse;</span>
-<span class="source-line-no">212</span><span id="line-212">import com.jwoglom.pumpx2.pump.messages.response.controlStream.DetectingCartridgeStateStreamResponse;</span>
-<span class="source-line-no">213</span><span id="line-213">import com.jwoglom.pumpx2.pump.messages.request.control.ExitChangeCartridgeModeRequest;</span>
-<span class="source-line-no">214</span><span id="line-214">import com.jwoglom.pumpx2.pump.messages.response.control.ExitChangeCartridgeModeResponse;</span>
-<span class="source-line-no">215</span><span id="line-215">import com.jwoglom.pumpx2.pump.messages.request.control.ExitFillTubingModeRequest;</span>
-<span class="source-line-no">216</span><span id="line-216">import com.jwoglom.pumpx2.pump.messages.response.control.ExitFillTubingModeResponse;</span>
-<span class="source-line-no">217</span><span id="line-217">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFillTubingModeStateStreamRequest;</span>
-<span class="source-line-no">218</span><span id="line-218">import com.jwoglom.pumpx2.pump.messages.response.controlStream.ExitFillTubingModeStateStreamResponse;</span>
-<span class="source-line-no">219</span><span id="line-219">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillCannulaStateStreamRequest;</span>
-<span class="source-line-no">220</span><span id="line-220">import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;</span>
-<span class="source-line-no">221</span><span id="line-221">import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBolusLimitRequest;</span>
-<span class="source-line-no">222</span><span id="line-222">import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBolusLimitResponse;</span>
-<span class="source-line-no">223</span><span id="line-223">import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBasalLimitRequest;</span>
-<span class="source-line-no">224</span><span id="line-224">import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBasalLimitResponse;</span>
-<span class="source-line-no">225</span><span id="line-225">import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpSoundsRequest;</span>
-<span class="source-line-no">226</span><span id="line-226">import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpSoundsResponse;</span>
-<span class="source-line-no">227</span><span id="line-227">import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpAlertSnoozeRequest;</span>
-<span class="source-line-no">228</span><span id="line-228">import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpAlertSnoozeResponse;</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.request.authentication.CentralChallengeRequest;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequest;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentEnterChangeCartridgeModeStateStreamRequest;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentDetectingCartridgeStateStreamRequest;</span>
+<span class="source-line-no">015</span><span id="line-15">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillTubingStateStreamRequest;</span>
+<span class="source-line-no">016</span><span id="line-16">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
+<span class="source-line-no">017</span><span id="line-17">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;</span>
+<span class="source-line-no">018</span><span id="line-18">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;</span>
+<span class="source-line-no">019</span><span id="line-19">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQAlertInfoRequest;</span>
+<span class="source-line-no">020</span><span id="line-20">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;</span>
+<span class="source-line-no">021</span><span id="line-21">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;</span>
+<span class="source-line-no">022</span><span id="line-22">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMGlucoseAlertSettingsRequest;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMOORAlertSettingsRequest;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMRateAlertSettingsRequest;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQIOBRequest;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV1Request;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQInfoV2Request;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatusRequest;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV1Request;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBatteryV2Request;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;</span>
+<span class="source-line-no">038</span><span id="line-38">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;</span>
+<span class="source-line-no">039</span><span id="line-39">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSettingsRequest;</span>
+<span class="source-line-no">040</span><span id="line-40">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogRequest;</span>
+<span class="source-line-no">041</span><span id="line-41">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HistoryLogStatusRequest;</span>
+<span class="source-line-no">042</span><span id="line-42">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;</span>
+<span class="source-line-no">043</span><span id="line-43">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSegmentRequest;</span>
+<span class="source-line-no">044</span><span id="line-44">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;</span>
+<span class="source-line-no">045</span><span id="line-45">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;</span>
+<span class="source-line-no">046</span><span id="line-46">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.NonControlIQIOBRequest;</span>
+<span class="source-line-no">047</span><span id="line-47">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</span>
+<span class="source-line-no">048</span><span id="line-48">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV1Request;</span>
+<span class="source-line-no">049</span><span id="line-49">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpFeaturesV2Request;</span>
+<span class="source-line-no">050</span><span id="line-50">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;</span>
+<span class="source-line-no">051</span><span id="line-51">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;</span>
+<span class="source-line-no">052</span><span id="line-52">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionRequest;</span>
+<span class="source-line-no">053</span><span id="line-53">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</span>
+<span class="source-line-no">054</span><span id="line-54">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.RemindersRequest;</span>
+<span class="source-line-no">055</span><span id="line-55">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</span>
+<span class="source-line-no">056</span><span id="line-56">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</span>
+<span class="source-line-no">057</span><span id="line-57">import com.jwoglom.pumpx2.pump.messages.request.historyLog.NonexistentHistoryLogStreamRequest;</span>
+<span class="source-line-no">058</span><span id="line-58">import com.jwoglom.pumpx2.pump.messages.response.ErrorResponse;</span>
+<span class="source-line-no">059</span><span id="line-59">import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;</span>
+<span class="source-line-no">060</span><span id="line-60">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;</span>
+<span class="source-line-no">061</span><span id="line-61">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;</span>
+<span class="source-line-no">062</span><span id="line-62">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;</span>
+<span class="source-line-no">063</span><span id="line-63">import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;</span>
+<span class="source-line-no">064</span><span id="line-64">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;</span>
+<span class="source-line-no">065</span><span id="line-65">import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;</span>
+<span class="source-line-no">066</span><span id="line-66">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;</span>
+<span class="source-line-no">067</span><span id="line-67">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;</span>
+<span class="source-line-no">068</span><span id="line-68">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;</span>
+<span class="source-line-no">069</span><span id="line-69">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQAlertInfoResponse;</span>
+<span class="source-line-no">070</span><span id="line-70">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQSettingsResponse;</span>
+<span class="source-line-no">071</span><span id="line-71">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalIQStatusResponse;</span>
+<span class="source-line-no">072</span><span id="line-72">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BasalLimitSettingsResponse;</span>
+<span class="source-line-no">073</span><span id="line-73">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;</span>
+<span class="source-line-no">074</span><span id="line-74">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMGlucoseAlertSettingsResponse;</span>
+<span class="source-line-no">075</span><span id="line-75">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMHardwareInfoResponse;</span>
+<span class="source-line-no">076</span><span id="line-76">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMOORAlertSettingsResponse;</span>
+<span class="source-line-no">077</span><span id="line-77">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMRateAlertSettingsResponse;</span>
+<span class="source-line-no">078</span><span id="line-78">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMStatusResponse;</span>
+<span class="source-line-no">079</span><span id="line-79">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQIOBResponse;</span>
+<span class="source-line-no">080</span><span id="line-80">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV1Response;</span>
+<span class="source-line-no">081</span><span id="line-81">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQInfoV2Response;</span>
+<span class="source-line-no">082</span><span id="line-82">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ControlIQSleepScheduleResponse;</span>
+<span class="source-line-no">083</span><span id="line-83">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBasalStatusResponse;</span>
+<span class="source-line-no">084</span><span id="line-84">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV1Response;</span>
+<span class="source-line-no">085</span><span id="line-85">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBatteryV2Response;</span>
+<span class="source-line-no">086</span><span id="line-86">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;</span>
+<span class="source-line-no">087</span><span id="line-87">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEGVGuiDataResponse;</span>
+<span class="source-line-no">088</span><span id="line-88">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ExtendedBolusStatusResponse;</span>
+<span class="source-line-no">089</span><span id="line-89">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GlobalMaxBolusSettingsResponse;</span>
+<span class="source-line-no">090</span><span id="line-90">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;</span>
+<span class="source-line-no">091</span><span id="line-91">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogStatusResponse;</span>
+<span class="source-line-no">092</span><span id="line-92">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HomeScreenMirrorResponse;</span>
+<span class="source-line-no">093</span><span id="line-93">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse;</span>
+<span class="source-line-no">094</span><span id="line-94">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.InsulinStatusResponse;</span>
+<span class="source-line-no">095</span><span id="line-95">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;</span>
+<span class="source-line-no">096</span><span id="line-96">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.NonControlIQIOBResponse;</span>
+<span class="source-line-no">097</span><span id="line-97">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ProfileStatusResponse;</span>
+<span class="source-line-no">098</span><span id="line-98">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV1Response;</span>
+<span class="source-line-no">099</span><span id="line-99">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpFeaturesV2Response;</span>
+<span class="source-line-no">100</span><span id="line-100">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;</span>
+<span class="source-line-no">101</span><span id="line-101">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpSettingsResponse;</span>
+<span class="source-line-no">102</span><span id="line-102">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;</span>
+<span class="source-line-no">103</span><span id="line-103">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;</span>
+<span class="source-line-no">104</span><span id="line-104">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.RemindersResponse;</span>
+<span class="source-line-no">105</span><span id="line-105">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateResponse;</span>
+<span class="source-line-no">106</span><span id="line-106">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;</span>
+<span class="source-line-no">107</span><span id="line-107">import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;</span>
+<span class="source-line-no">108</span><span id="line-108">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusCalcDataSnapshotRequest;</span>
+<span class="source-line-no">109</span><span id="line-109">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse;</span>
+<span class="source-line-no">110</span><span id="line-110">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;</span>
+<span class="source-line-no">111</span><span id="line-111">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusPermissionChangeReasonResponse;</span>
+<span class="source-line-no">112</span><span id="line-112">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV2Request;</span>
+<span class="source-line-no">113</span><span id="line-113">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;</span>
+<span class="source-line-no">114</span><span id="line-114">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest;</span>
+<span class="source-line-no">115</span><span id="line-115">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;</span>
+<span class="source-line-no">116</span><span id="line-116">import com.jwoglom.pumpx2.pump.messages.request.control.EnterChangeCartridgeModeRequest;</span>
+<span class="source-line-no">117</span><span id="line-117">import com.jwoglom.pumpx2.pump.messages.response.control.EnterChangeCartridgeModeResponse;</span>
+<span class="source-line-no">118</span><span id="line-118">import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;</span>
+<span class="source-line-no">119</span><span id="line-119">import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;</span>
+<span class="source-line-no">120</span><span id="line-120">import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;</span>
+<span class="source-line-no">121</span><span id="line-121">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
+<span class="source-line-no">122</span><span id="line-122">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;</span>
+<span class="source-line-no">123</span><span id="line-123">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CommonSoftwareInfoResponse;</span>
+<span class="source-line-no">124</span><span id="line-124">import com.jwoglom.pumpx2.pump.messages.request.control.SuspendPumpingRequest;</span>
+<span class="source-line-no">125</span><span id="line-125">import com.jwoglom.pumpx2.pump.messages.response.control.SuspendPumpingResponse;</span>
+<span class="source-line-no">126</span><span id="line-126">import com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest;</span>
+<span class="source-line-no">127</span><span id="line-127">import com.jwoglom.pumpx2.pump.messages.response.control.CancelBolusResponse;</span>
+<span class="source-line-no">128</span><span id="line-128">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPumpingStateStreamRequest;</span>
+<span class="source-line-no">129</span><span id="line-129">import com.jwoglom.pumpx2.pump.messages.response.controlStream.PumpingStateStreamResponse;</span>
+<span class="source-line-no">130</span><span id="line-130">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusRequest;</span>
+<span class="source-line-no">131</span><span id="line-131">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusResponse;</span>
+<span class="source-line-no">132</span><span id="line-132">import com.jwoglom.pumpx2.pump.messages.request.control.RemoteBgEntryRequest;</span>
+<span class="source-line-no">133</span><span id="line-133">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;</span>
+<span class="source-line-no">134</span><span id="line-134">import com.jwoglom.pumpx2.pump.messages.request.control.RemoteCarbEntryRequest;</span>
+<span class="source-line-no">135</span><span id="line-135">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteCarbEntryResponse;</span>
+<span class="source-line-no">136</span><span id="line-136">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;</span>
+<span class="source-line-no">137</span><span id="line-137">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LocalizationResponse;</span>
+<span class="source-line-no">138</span><span id="line-138">import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionReleaseRequest;</span>
+<span class="source-line-no">139</span><span id="line-139">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionReleaseResponse;</span>
+<span class="source-line-no">140</span><span id="line-140">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg70Request;</span>
+<span class="source-line-no">141</span><span id="line-141">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg70Response;</span>
+<span class="source-line-no">142</span><span id="line-142">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode110Request;</span>
+<span class="source-line-no">143</span><span id="line-143">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode110Response;</span>
+<span class="source-line-no">144</span><span id="line-144">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg66Request;</span>
+<span class="source-line-no">145</span><span id="line-145">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg66Response;</span>
+<span class="source-line-no">146</span><span id="line-146">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg124Request;</span>
+<span class="source-line-no">147</span><span id="line-147">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg124Response;</span>
+<span class="source-line-no">148</span><span id="line-148">import com.jwoglom.pumpx2.pump.messages.request.control.SetModesRequest;</span>
+<span class="source-line-no">149</span><span id="line-149">import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;</span>
+<span class="source-line-no">150</span><span id="line-150">import com.jwoglom.pumpx2.pump.messages.request.control.SetSleepScheduleRequest;</span>
+<span class="source-line-no">151</span><span id="line-151">import com.jwoglom.pumpx2.pump.messages.response.control.SetSleepScheduleResponse;</span>
+<span class="source-line-no">152</span><span id="line-152">import com.jwoglom.pumpx2.pump.messages.request.control.SetTempRateRequest;</span>
+<span class="source-line-no">153</span><span id="line-153">import com.jwoglom.pumpx2.pump.messages.response.control.SetTempRateResponse;</span>
+<span class="source-line-no">154</span><span id="line-154">import com.jwoglom.pumpx2.pump.messages.request.control.StopTempRateRequest;</span>
+<span class="source-line-no">155</span><span id="line-155">import com.jwoglom.pumpx2.pump.messages.response.control.StopTempRateResponse;</span>
+<span class="source-line-no">156</span><span id="line-156">import com.jwoglom.pumpx2.pump.messages.request.control.ResumePumpingRequest;</span>
+<span class="source-line-no">157</span><span id="line-157">import com.jwoglom.pumpx2.pump.messages.response.control.ResumePumpingResponse;</span>
+<span class="source-line-no">158</span><span id="line-158">import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;</span>
+<span class="source-line-no">159</span><span id="line-159">import com.jwoglom.pumpx2.pump.messages.response.control.ChangeControlIQSettingsResponse;</span>
+<span class="source-line-no">160</span><span id="line-160">import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeRequest;</span>
+<span class="source-line-no">161</span><span id="line-161">import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;</span>
+<span class="source-line-no">162</span><span id="line-162">import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;</span>
+<span class="source-line-no">163</span><span id="line-163">import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;</span>
+<span class="source-line-no">164</span><span id="line-164">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;</span>
+<span class="source-line-no">165</span><span id="line-165">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;</span>
+<span class="source-line-no">166</span><span id="line-166">import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;</span>
+<span class="source-line-no">167</span><span id="line-167">import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;</span>
+<span class="source-line-no">168</span><span id="line-168">import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;</span>
+<span class="source-line-no">169</span><span id="line-169">import com.jwoglom.pumpx2.pump.messages.response.control.SetG6TransmitterIdResponse;</span>
+<span class="source-line-no">170</span><span id="line-170">import com.jwoglom.pumpx2.pump.messages.request.control.StartDexcomG6SensorSessionRequest;</span>
+<span class="source-line-no">171</span><span id="line-171">import com.jwoglom.pumpx2.pump.messages.response.control.StartDexcomG6SensorSessionResponse;</span>
+<span class="source-line-no">172</span><span id="line-172">import com.jwoglom.pumpx2.pump.messages.request.control.StopDexcomCGMSensorSessionRequest;</span>
+<span class="source-line-no">173</span><span id="line-173">import com.jwoglom.pumpx2.pump.messages.response.control.StopDexcomCGMSensorSessionResponse;</span>
+<span class="source-line-no">174</span><span id="line-174">import com.jwoglom.pumpx2.pump.messages.request.control.PlaySoundRequest;</span>
+<span class="source-line-no">175</span><span id="line-175">import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;</span>
+<span class="source-line-no">176</span><span id="line-176">import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;</span>
+<span class="source-line-no">177</span><span id="line-177">import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;</span>
+<span class="source-line-no">178</span><span id="line-178">import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;</span>
+<span class="source-line-no">179</span><span id="line-179">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;</span>
+<span class="source-line-no">180</span><span id="line-180">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;</span>
+<span class="source-line-no">181</span><span id="line-181">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;</span>
+<span class="source-line-no">182</span><span id="line-182">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;</span>
+<span class="source-line-no">183</span><span id="line-183">import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;</span>
+<span class="source-line-no">184</span><span id="line-184">import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;</span>
+<span class="source-line-no">185</span><span id="line-185">import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;</span>
+<span class="source-line-no">186</span><span id="line-186">import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;</span>
+<span class="source-line-no">187</span><span id="line-187">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;</span>
+<span class="source-line-no">188</span><span id="line-188">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;</span>
+<span class="source-line-no">189</span><span id="line-189">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetSavedG7PairingCodeRequest;</span>
+<span class="source-line-no">190</span><span id="line-190">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetSavedG7PairingCodeResponse;</span>
+<span class="source-line-no">191</span><span id="line-191">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHardwareInfoRequest;</span>
+<span class="source-line-no">192</span><span id="line-192">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetG6TransmitterHardwareInfoResponse;</span>
+<span class="source-line-no">193</span><span id="line-193">import com.jwoglom.pumpx2.pump.messages.request.control.ChangeTimeDateRequest;</span>
+<span class="source-line-no">194</span><span id="line-194">import com.jwoglom.pumpx2.pump.messages.response.control.ChangeTimeDateResponse;</span>
+<span class="source-line-no">195</span><span id="line-195">import com.jwoglom.pumpx2.pump.messages.request.control.SetActiveIDPRequest;</span>
+<span class="source-line-no">196</span><span id="line-196">import com.jwoglom.pumpx2.pump.messages.response.control.SetActiveIDPResponse;</span>
+<span class="source-line-no">197</span><span id="line-197">import com.jwoglom.pumpx2.pump.messages.request.control.CreateIDPRequest;</span>
+<span class="source-line-no">198</span><span id="line-198">import com.jwoglom.pumpx2.pump.messages.response.control.CreateIDPResponse;</span>
+<span class="source-line-no">199</span><span id="line-199">import com.jwoglom.pumpx2.pump.messages.request.control.RenameIDPRequest;</span>
+<span class="source-line-no">200</span><span id="line-200">import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;</span>
+<span class="source-line-no">201</span><span id="line-201">import com.jwoglom.pumpx2.pump.messages.request.control.DeleteIDPRequest;</span>
+<span class="source-line-no">202</span><span id="line-202">import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;</span>
+<span class="source-line-no">203</span><span id="line-203">import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest;</span>
+<span class="source-line-no">204</span><span id="line-204">import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSettingsResponse;</span>
+<span class="source-line-no">205</span><span id="line-205">import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;</span>
+<span class="source-line-no">206</span><span id="line-206">import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSegmentResponse;</span>
+<span class="source-line-no">207</span><span id="line-207">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode20Request;</span>
+<span class="source-line-no">208</span><span id="line-208">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode20Response;</span>
+<span class="source-line-no">209</span><span id="line-209">import com.jwoglom.pumpx2.pump.messages.response.controlStream.EnterChangeCartridgeModeStateStreamResponse;</span>
+<span class="source-line-no">210</span><span id="line-210">import com.jwoglom.pumpx2.pump.messages.response.controlStream.DetectingCartridgeStateStreamResponse;</span>
+<span class="source-line-no">211</span><span id="line-211">import com.jwoglom.pumpx2.pump.messages.request.control.ExitChangeCartridgeModeRequest;</span>
+<span class="source-line-no">212</span><span id="line-212">import com.jwoglom.pumpx2.pump.messages.response.control.ExitChangeCartridgeModeResponse;</span>
+<span class="source-line-no">213</span><span id="line-213">import com.jwoglom.pumpx2.pump.messages.request.control.ExitFillTubingModeRequest;</span>
+<span class="source-line-no">214</span><span id="line-214">import com.jwoglom.pumpx2.pump.messages.response.control.ExitFillTubingModeResponse;</span>
+<span class="source-line-no">215</span><span id="line-215">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentExitFillTubingModeStateStreamRequest;</span>
+<span class="source-line-no">216</span><span id="line-216">import com.jwoglom.pumpx2.pump.messages.response.controlStream.ExitFillTubingModeStateStreamResponse;</span>
+<span class="source-line-no">217</span><span id="line-217">import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillCannulaStateStreamRequest;</span>
+<span class="source-line-no">218</span><span id="line-218">import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;</span>
+<span class="source-line-no">219</span><span id="line-219">import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBolusLimitRequest;</span>
+<span class="source-line-no">220</span><span id="line-220">import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBolusLimitResponse;</span>
+<span class="source-line-no">221</span><span id="line-221">import com.jwoglom.pumpx2.pump.messages.request.control.SetMaxBasalLimitRequest;</span>
+<span class="source-line-no">222</span><span id="line-222">import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBasalLimitResponse;</span>
+<span class="source-line-no">223</span><span id="line-223">import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpSoundsRequest;</span>
+<span class="source-line-no">224</span><span id="line-224">import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpSoundsResponse;</span>
+<span class="source-line-no">225</span><span id="line-225">import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpAlertSnoozeRequest;</span>
+<span class="source-line-no">226</span><span id="line-226">import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpAlertSnoozeResponse;</span>
+<span class="source-line-no">227</span><span id="line-227">// IMPORT_END</span>
+<span class="source-line-no">228</span><span id="line-228">import com.jwoglom.pumpx2.shared.L;</span>
 <span class="source-line-no">229</span><span id="line-229"></span>
-<span class="source-line-no">230</span><span id="line-230">// IMPORT_END</span>
-<span class="source-line-no">231</span><span id="line-231">import com.jwoglom.pumpx2.shared.L;</span>
+<span class="source-line-no">230</span><span id="line-230">import com.jwoglom.pumpx2.shared.Hex;</span>
+<span class="source-line-no">231</span><span id="line-231">import org.apache.commons.lang3.tuple.Pair;</span>
 <span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">import com.jwoglom.pumpx2.shared.Hex;</span>
-<span class="source-line-no">234</span><span id="line-234">import org.apache.commons.lang3.tuple.Pair;</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">import java.util.HashMap;</span>
-<span class="source-line-no">237</span><span id="line-237">import java.util.HashSet;</span>
-<span class="source-line-no">238</span><span id="line-238">import java.util.Map;</span>
-<span class="source-line-no">239</span><span id="line-239">import java.util.Set;</span>
-<span class="source-line-no">240</span><span id="line-240"></span>
-<span class="source-line-no">241</span><span id="line-241">public enum Messages {</span>
-<span class="source-line-no">242</span><span id="line-242">    API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),</span>
-<span class="source-line-no">243</span><span id="line-243">    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy</span>
-<span class="source-line-no">244</span><span id="line-244">    JPAKE_ROUND1A(Jpake1aRequest.class, Jpake1aResponse.class), // jpake</span>
-<span class="source-line-no">245</span><span id="line-245">    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy</span>
-<span class="source-line-no">246</span><span id="line-246">    JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake</span>
-<span class="source-line-no">247</span><span id="line-247">    JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake</span>
-<span class="source-line-no">248</span><span id="line-248">    JPAKE_3_SESSION_KEY(Jpake3SessionKeyRequest.class, Jpake3SessionKeyResponse.class), // jpake</span>
-<span class="source-line-no">249</span><span id="line-249">    JPAKE_4_KEY_CONFIRMATION(Jpake4KeyConfirmationRequest.class, Jpake4KeyConfirmationResponse.class), // jpake</span>
-<span class="source-line-no">250</span><span id="line-250">    ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),</span>
-<span class="source-line-no">251</span><span id="line-251">    ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),</span>
-<span class="source-line-no">252</span><span id="line-252">    CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),</span>
-<span class="source-line-no">253</span><span id="line-253">    CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),</span>
-<span class="source-line-no">254</span><span id="line-254">    NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),</span>
-<span class="source-line-no">255</span><span id="line-255">    PUMP_FEATURES(PumpFeaturesV1Request.class, PumpFeaturesV1Response.class),</span>
-<span class="source-line-no">256</span><span id="line-256">    PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),</span>
-<span class="source-line-no">257</span><span id="line-257">    PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),</span>
-<span class="source-line-no">258</span><span id="line-258">    CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),</span>
-<span class="source-line-no">259</span><span id="line-259">    CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),</span>
-<span class="source-line-no">260</span><span id="line-260">    CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),</span>
-<span class="source-line-no">261</span><span id="line-261">    INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),</span>
-<span class="source-line-no">262</span><span id="line-262">    LAST_BG(LastBGRequest.class, LastBGResponse.class),</span>
-<span class="source-line-no">263</span><span id="line-263">    CURRENT_BOLUS_STATUS(CurrentBolusStatusRequest.class, CurrentBolusStatusResponse.class),</span>
-<span class="source-line-no">264</span><span id="line-264">    CURRENT_BASAL_STATUS(CurrentBasalStatusRequest.class, CurrentBasalStatusResponse.class),</span>
-<span class="source-line-no">265</span><span id="line-265">    CONTROL_IQ_SLEEP_SCHEDULE(ControlIQSleepScheduleRequest.class, ControlIQSleepScheduleResponse.class),</span>
-<span class="source-line-no">266</span><span id="line-266">    CONTROL_IQ_INFO_V1(ControlIQInfoV1Request.class, ControlIQInfoV1Response.class),</span>
-<span class="source-line-no">267</span><span id="line-267">    CONTROL_IQ_INFO_V2(ControlIQInfoV2Request.class, ControlIQInfoV2Response.class),</span>
-<span class="source-line-no">268</span><span id="line-268">    CGM_ALERT_STATUS(CGMAlertStatusRequest.class, CGMAlertStatusResponse.class),</span>
-<span class="source-line-no">269</span><span id="line-269">    CGM_GLUCOSE_ALERT_SETTINGS(CGMGlucoseAlertSettingsRequest.class, CGMGlucoseAlertSettingsResponse.class),</span>
-<span class="source-line-no">270</span><span id="line-270">    CGMOOR_ALERT_SETTINGS(CGMOORAlertSettingsRequest.class, CGMOORAlertSettingsResponse.class),</span>
-<span class="source-line-no">271</span><span id="line-271">    CGM_RATE_ALERT_SETTINGS(CGMRateAlertSettingsRequest.class, CGMRateAlertSettingsResponse.class),</span>
-<span class="source-line-no">272</span><span id="line-272">    CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),</span>
-<span class="source-line-no">273</span><span id="line-273">    GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),</span>
-<span class="source-line-no">274</span><span id="line-274">    BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),</span>
-<span class="source-line-no">275</span><span id="line-275">    PUMP_VERSION(PumpVersionRequest.class, PumpVersionResponse.class),</span>
-<span class="source-line-no">276</span><span id="line-276">    PUMP_SUPPORTED_FEATURES(PumpFeaturesV2Request.class, PumpFeaturesV2Response.class),</span>
-<span class="source-line-no">277</span><span id="line-277">    REMINDER_STATUS(ReminderStatusRequest.class, ReminderStatusResponse.class),</span>
-<span class="source-line-no">278</span><span id="line-278">    REMINDERS(RemindersRequest.class, RemindersResponse.class),</span>
-<span class="source-line-no">279</span><span id="line-279">    TEMP_RATE(TempRateRequest.class, TempRateResponse.class),</span>
-<span class="source-line-no">280</span><span id="line-280">    TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),</span>
-<span class="source-line-no">281</span><span id="line-281">    HOME_SCREEN_MIRROR(HomeScreenMirrorRequest.class, HomeScreenMirrorResponse.class),</span>
-<span class="source-line-no">282</span><span id="line-282">    PROFILE_STATUS(ProfileStatusRequest.class, ProfileStatusResponse.class),</span>
-<span class="source-line-no">283</span><span id="line-283">    IDP_SEGMENT(IDPSegmentRequest.class, IDPSegmentResponse.class),</span>
-<span class="source-line-no">284</span><span id="line-284">    EXTENDED_BOLUS_STATUS(ExtendedBolusStatusRequest.class, ExtendedBolusStatusResponse.class),</span>
-<span class="source-line-no">285</span><span id="line-285">    BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),</span>
-<span class="source-line-no">286</span><span id="line-286">    BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),</span>
-<span class="source-line-no">287</span><span id="line-287">    BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),</span>
-<span class="source-line-no">288</span><span id="line-288">    HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),</span>
-<span class="source-line-no">289</span><span id="line-289">    HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),</span>
-<span class="source-line-no">290</span><span id="line-290">    HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),</span>
-<span class="source-line-no">291</span><span id="line-291">    BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),</span>
-<span class="source-line-no">292</span><span id="line-292">    BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),</span>
-<span class="source-line-no">293</span><span id="line-293">    LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),</span>
-<span class="source-line-no">294</span><span id="line-294">    IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),</span>
-<span class="source-line-no">295</span><span id="line-295">    CHANGE_CARTRIDGE(EnterChangeCartridgeModeRequest.class, EnterChangeCartridgeModeResponse.class),</span>
-<span class="source-line-no">296</span><span id="line-296">    INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),</span>
-<span class="source-line-no">297</span><span id="line-297">    BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),</span>
-<span class="source-line-no">298</span><span id="line-298">    COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),</span>
-<span class="source-line-no">299</span><span id="line-299">    SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),</span>
-<span class="source-line-no">300</span><span id="line-300">    CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),</span>
-<span class="source-line-no">301</span><span id="line-301">    PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),</span>
-<span class="source-line-no">302</span><span id="line-302">    LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),</span>
-<span class="source-line-no">303</span><span id="line-303">    REMOTE_BG_ENTRY(RemoteBgEntryRequest.class, RemoteBgEntryResponse.class),</span>
-<span class="source-line-no">304</span><span id="line-304">    REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),</span>
-<span class="source-line-no">305</span><span id="line-305">    LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),</span>
-<span class="source-line-no">306</span><span id="line-306">    BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),</span>
-<span class="source-line-no">307</span><span id="line-307">    UNKNOWN_MOBI_OPCODE_NEG70(UnknownMobiOpcodeNeg70Request.class, UnknownMobiOpcodeNeg70Response.class),</span>
-<span class="source-line-no">308</span><span id="line-308">    UNKNOWN_MOBI_OPCODE110(UnknownMobiOpcode110Request.class, UnknownMobiOpcode110Response.class),</span>
-<span class="source-line-no">309</span><span id="line-309">    UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),</span>
-<span class="source-line-no">310</span><span id="line-310">    UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),</span>
-<span class="source-line-no">311</span><span id="line-311">    SET_MODES(SetModesRequest.class, SetModesResponse.class),</span>
-<span class="source-line-no">312</span><span id="line-312">    SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),</span>
-<span class="source-line-no">313</span><span id="line-313">    SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),</span>
-<span class="source-line-no">314</span><span id="line-314">    STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),</span>
-<span class="source-line-no">315</span><span id="line-315">    RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),</span>
-<span class="source-line-no">316</span><span id="line-316">    CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),</span>
-<span class="source-line-no">317</span><span id="line-317">    ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),</span>
-<span class="source-line-no">318</span><span id="line-318">    SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),</span>
-<span class="source-line-no">319</span><span id="line-319">    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),</span>
-<span class="source-line-no">320</span><span id="line-320">    DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),</span>
-<span class="source-line-no">321</span><span id="line-321">    SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),</span>
-<span class="source-line-no">322</span><span id="line-322">    START_DEXCOM_G6_SENSOR_SESSION(StartDexcomG6SensorSessionRequest.class, StartDexcomG6SensorSessionResponse.class),</span>
-<span class="source-line-no">323</span><span id="line-323">    STOP_DEXCOM_CGM_SENSOR_SESSION(StopDexcomCGMSensorSessionRequest.class, StopDexcomCGMSensorSessionResponse.class),</span>
-<span class="source-line-no">324</span><span id="line-324">    PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),</span>
-<span class="source-line-no">325</span><span id="line-325">    DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),</span>
-<span class="source-line-no">326</span><span id="line-326">    FILL_TUBING_STATE_STREAM(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),</span>
-<span class="source-line-no">327</span><span id="line-327">    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),</span>
-<span class="source-line-no">328</span><span id="line-328">    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),</span>
-<span class="source-line-no">329</span><span id="line-329">    SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),</span>
-<span class="source-line-no">330</span><span id="line-330">    FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),</span>
-<span class="source-line-no">331</span><span id="line-331">    UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),</span>
-<span class="source-line-no">332</span><span id="line-332">    GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),</span>
-<span class="source-line-no">333</span><span id="line-333">    GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),</span>
-<span class="source-line-no">334</span><span id="line-334">    CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),</span>
-<span class="source-line-no">335</span><span id="line-335">    SET_ACTIVE_IDP(SetActiveIDPRequest.class, SetActiveIDPResponse.class),</span>
-<span class="source-line-no">336</span><span id="line-336">    CREATE_IDP(CreateIDPRequest.class, CreateIDPResponse.class),</span>
-<span class="source-line-no">337</span><span id="line-337">    RENAME_IDP(RenameIDPRequest.class, RenameIDPResponse.class),</span>
-<span class="source-line-no">338</span><span id="line-338">    DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),</span>
-<span class="source-line-no">339</span><span id="line-339">    SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),</span>
-<span class="source-line-no">340</span><span id="line-340">    SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),</span>
-<span class="source-line-no">341</span><span id="line-341">    UNKNOWN_MOBI_OPCODE20(UnknownMobiOpcode20Request.class, UnknownMobiOpcode20Response.class),</span>
-<span class="source-line-no">342</span><span id="line-342">    CHANGE_CARTRIDGE_STATE_STREAM(NonexistentEnterChangeCartridgeModeStateStreamRequest.class, EnterChangeCartridgeModeStateStreamResponse.class),</span>
-<span class="source-line-no">343</span><span id="line-343">    DETECTING_CARTRIDGE_STATE_STREAM(NonexistentDetectingCartridgeStateStreamRequest.class, DetectingCartridgeStateStreamResponse.class),</span>
-<span class="source-line-no">344</span><span id="line-344">    EXIT_CHANGE_CARTRIDGE_MODE(ExitChangeCartridgeModeRequest.class, ExitChangeCartridgeModeResponse.class),</span>
-<span class="source-line-no">345</span><span id="line-345">    EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),</span>
-<span class="source-line-no">346</span><span id="line-346">    EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),</span>
-<span class="source-line-no">347</span><span id="line-347">    FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),</span>
-<span class="source-line-no">348</span><span id="line-348">    SET_MAX_BOLUS_LIMIT(SetMaxBolusLimitRequest.class, SetMaxBolusLimitResponse.class),</span>
-<span class="source-line-no">349</span><span id="line-349">    SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),</span>
-<span class="source-line-no">350</span><span id="line-350">    SET_PUMP_SOUNDS(SetPumpSoundsRequest.class, SetPumpSoundsResponse.class),</span>
-<span class="source-line-no">351</span><span id="line-351">    SET_PUMP_ALERT_SNOOZE(SetPumpAlertSnoozeRequest.class, SetPumpAlertSnoozeResponse.class),</span>
-<span class="source-line-no">352</span><span id="line-352">    // MESSAGES_END</span>
-<span class="source-line-no">353</span><span id="line-353">    ;</span>
-<span class="source-line-no">354</span><span id="line-354"></span>
-<span class="source-line-no">355</span><span id="line-355">    private static final Logger log = LoggerFactory.getLogger(Messages.class);</span>
-<span class="source-line-no">356</span><span id="line-356"></span>
-<span class="source-line-no">357</span><span id="line-357">    public static Map&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; OPCODES = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">358</span><span id="line-358">    public static Map&lt;Integer, Messages&gt; REQUESTS = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">359</span><span id="line-359">    public static Map&lt;Integer, Messages&gt; RESPONSES = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">360</span><span id="line-360"></span>
-<span class="source-line-no">361</span><span id="line-361">    static {</span>
-<span class="source-line-no">362</span><span id="line-362">        for (Messages m : Messages.values()) {</span>
-<span class="source-line-no">363</span><span id="line-363">            OPCODES.put(Pair.of(m.requestProps().characteristic(), m.requestOpCode), m.requestClass);</span>
-<span class="source-line-no">364</span><span id="line-364">            REQUESTS.put(m.requestOpCode, m);</span>
+<span class="source-line-no">233</span><span id="line-233">import java.util.HashMap;</span>
+<span class="source-line-no">234</span><span id="line-234">import java.util.HashSet;</span>
+<span class="source-line-no">235</span><span id="line-235">import java.util.Map;</span>
+<span class="source-line-no">236</span><span id="line-236">import java.util.Set;</span>
+<span class="source-line-no">237</span><span id="line-237"></span>
+<span class="source-line-no">238</span><span id="line-238">public enum Messages {</span>
+<span class="source-line-no">239</span><span id="line-239">    API_VERSION(ApiVersionRequest.class, ApiVersionResponse.class),</span>
+<span class="source-line-no">240</span><span id="line-240">    CENTRAL_CHALLENGE(CentralChallengeRequest.class, CentralChallengeResponse.class), // legacy</span>
+<span class="source-line-no">241</span><span id="line-241">    JPAKE_ROUND1A(Jpake1aRequest.class, Jpake1aResponse.class), // jpake</span>
+<span class="source-line-no">242</span><span id="line-242">    PUMP_CHALLENGE(PumpChallengeRequest.class, PumpChallengeResponse.class), // legacy</span>
+<span class="source-line-no">243</span><span id="line-243">    JPAKE_ROUND1B(Jpake1bRequest.class, Jpake1bResponse.class), // jpake</span>
+<span class="source-line-no">244</span><span id="line-244">    JPAKE_ROUND2(Jpake2Request.class, Jpake2Response.class), // jpake</span>
+<span class="source-line-no">245</span><span id="line-245">    JPAKE_3_SESSION_KEY(Jpake3SessionKeyRequest.class, Jpake3SessionKeyResponse.class), // jpake</span>
+<span class="source-line-no">246</span><span id="line-246">    JPAKE_4_KEY_CONFIRMATION(Jpake4KeyConfirmationRequest.class, Jpake4KeyConfirmationResponse.class), // jpake</span>
+<span class="source-line-no">247</span><span id="line-247">    ALARM_STATUS(AlarmStatusRequest.class, AlarmStatusResponse.class),</span>
+<span class="source-line-no">248</span><span id="line-248">    ALERT_STATUS(AlertStatusRequest.class, AlertStatusResponse.class),</span>
+<span class="source-line-no">249</span><span id="line-249">    CGM_HARDWARE_INFO(CGMHardwareInfoRequest.class, CGMHardwareInfoResponse.class),</span>
+<span class="source-line-no">250</span><span id="line-250">    CONTROL_IQ_IOB(ControlIQIOBRequest.class, ControlIQIOBResponse.class),</span>
+<span class="source-line-no">251</span><span id="line-251">    NON_CONTROL_IQ_IOB(NonControlIQIOBRequest.class, NonControlIQIOBResponse.class),</span>
+<span class="source-line-no">252</span><span id="line-252">    PUMP_FEATURES(PumpFeaturesV1Request.class, PumpFeaturesV1Response.class),</span>
+<span class="source-line-no">253</span><span id="line-253">    PUMP_GLOBALS(PumpGlobalsRequest.class, PumpGlobalsResponse.class),</span>
+<span class="source-line-no">254</span><span id="line-254">    PUMP_SETTINGS(PumpSettingsRequest.class, PumpSettingsResponse.class),</span>
+<span class="source-line-no">255</span><span id="line-255">    CGM_STATUS(CGMStatusRequest.class, CGMStatusResponse.class),</span>
+<span class="source-line-no">256</span><span id="line-256">    CURRENT_BATTERY_V1(CurrentBatteryV1Request.class, CurrentBatteryV1Response.class),</span>
+<span class="source-line-no">257</span><span id="line-257">    CURRENT_BATTERY_V2(CurrentBatteryV2Request.class, CurrentBatteryV2Response.class),</span>
+<span class="source-line-no">258</span><span id="line-258">    INSULIN_STATUS(InsulinStatusRequest.class, InsulinStatusResponse.class),</span>
+<span class="source-line-no">259</span><span id="line-259">    LAST_BG(LastBGRequest.class, LastBGResponse.class),</span>
+<span class="source-line-no">260</span><span id="line-260">    CURRENT_BOLUS_STATUS(CurrentBolusStatusRequest.class, CurrentBolusStatusResponse.class),</span>
+<span class="source-line-no">261</span><span id="line-261">    CURRENT_BASAL_STATUS(CurrentBasalStatusRequest.class, CurrentBasalStatusResponse.class),</span>
+<span class="source-line-no">262</span><span id="line-262">    CONTROL_IQ_SLEEP_SCHEDULE(ControlIQSleepScheduleRequest.class, ControlIQSleepScheduleResponse.class),</span>
+<span class="source-line-no">263</span><span id="line-263">    CONTROL_IQ_INFO_V1(ControlIQInfoV1Request.class, ControlIQInfoV1Response.class),</span>
+<span class="source-line-no">264</span><span id="line-264">    CONTROL_IQ_INFO_V2(ControlIQInfoV2Request.class, ControlIQInfoV2Response.class),</span>
+<span class="source-line-no">265</span><span id="line-265">    CGM_ALERT_STATUS(CGMAlertStatusRequest.class, CGMAlertStatusResponse.class),</span>
+<span class="source-line-no">266</span><span id="line-266">    CGM_GLUCOSE_ALERT_SETTINGS(CGMGlucoseAlertSettingsRequest.class, CGMGlucoseAlertSettingsResponse.class),</span>
+<span class="source-line-no">267</span><span id="line-267">    CGMOOR_ALERT_SETTINGS(CGMOORAlertSettingsRequest.class, CGMOORAlertSettingsResponse.class),</span>
+<span class="source-line-no">268</span><span id="line-268">    CGM_RATE_ALERT_SETTINGS(CGMRateAlertSettingsRequest.class, CGMRateAlertSettingsResponse.class),</span>
+<span class="source-line-no">269</span><span id="line-269">    CURRENT_EGV_GUI_DATA(CurrentEGVGuiDataRequest.class, CurrentEGVGuiDataResponse.class),</span>
+<span class="source-line-no">270</span><span id="line-270">    GLOBAL_MAX_BOLUS_SETTINGS(GlobalMaxBolusSettingsRequest.class, GlobalMaxBolusSettingsResponse.class),</span>
+<span class="source-line-no">271</span><span id="line-271">    BASAL_LIMIT_SETTINGS(BasalLimitSettingsRequest.class, BasalLimitSettingsResponse.class),</span>
+<span class="source-line-no">272</span><span id="line-272">    PUMP_VERSION(PumpVersionRequest.class, PumpVersionResponse.class),</span>
+<span class="source-line-no">273</span><span id="line-273">    PUMP_SUPPORTED_FEATURES(PumpFeaturesV2Request.class, PumpFeaturesV2Response.class),</span>
+<span class="source-line-no">274</span><span id="line-274">    REMINDER_STATUS(ReminderStatusRequest.class, ReminderStatusResponse.class),</span>
+<span class="source-line-no">275</span><span id="line-275">    REMINDERS(RemindersRequest.class, RemindersResponse.class),</span>
+<span class="source-line-no">276</span><span id="line-276">    TEMP_RATE(TempRateRequest.class, TempRateResponse.class),</span>
+<span class="source-line-no">277</span><span id="line-277">    TIME_SINCE_RESET(TimeSinceResetRequest.class, TimeSinceResetResponse.class),</span>
+<span class="source-line-no">278</span><span id="line-278">    HOME_SCREEN_MIRROR(HomeScreenMirrorRequest.class, HomeScreenMirrorResponse.class),</span>
+<span class="source-line-no">279</span><span id="line-279">    PROFILE_STATUS(ProfileStatusRequest.class, ProfileStatusResponse.class),</span>
+<span class="source-line-no">280</span><span id="line-280">    IDP_SEGMENT(IDPSegmentRequest.class, IDPSegmentResponse.class),</span>
+<span class="source-line-no">281</span><span id="line-281">    EXTENDED_BOLUS_STATUS(ExtendedBolusStatusRequest.class, ExtendedBolusStatusResponse.class),</span>
+<span class="source-line-no">282</span><span id="line-282">    BASAL_IQ_ALERT_INFO(BasalIQAlertInfoRequest.class, BasalIQAlertInfoResponse.class),</span>
+<span class="source-line-no">283</span><span id="line-283">    BASAL_IQ_SETTINGS(BasalIQSettingsRequest.class, BasalIQSettingsResponse.class),</span>
+<span class="source-line-no">284</span><span id="line-284">    BASAL_IQ_STATUS(BasalIQStatusRequest.class, BasalIQStatusResponse.class),</span>
+<span class="source-line-no">285</span><span id="line-285">    HISTORY_LOG(HistoryLogRequest.class, HistoryLogResponse.class),</span>
+<span class="source-line-no">286</span><span id="line-286">    HISTORY_LOG_STREAM(NonexistentHistoryLogStreamRequest.class, HistoryLogStreamResponse.class),</span>
+<span class="source-line-no">287</span><span id="line-287">    HISTORY_LOG_STATUS(HistoryLogStatusRequest.class, HistoryLogStatusResponse.class),</span>
+<span class="source-line-no">288</span><span id="line-288">    BOLUS_CALC_DATA_SNAPSHOT(BolusCalcDataSnapshotRequest.class, BolusCalcDataSnapshotResponse.class),</span>
+<span class="source-line-no">289</span><span id="line-289">    BOLUS_PERMISSION_CHANGE_REASON(BolusPermissionChangeReasonRequest.class, BolusPermissionChangeReasonResponse.class),</span>
+<span class="source-line-no">290</span><span id="line-290">    LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),</span>
+<span class="source-line-no">291</span><span id="line-291">    IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),</span>
+<span class="source-line-no">292</span><span id="line-292">    CHANGE_CARTRIDGE(EnterChangeCartridgeModeRequest.class, EnterChangeCartridgeModeResponse.class),</span>
+<span class="source-line-no">293</span><span id="line-293">    INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),</span>
+<span class="source-line-no">294</span><span id="line-294">    BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),</span>
+<span class="source-line-no">295</span><span id="line-295">    COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),</span>
+<span class="source-line-no">296</span><span id="line-296">    SUSPEND_PUMPING(SuspendPumpingRequest.class, SuspendPumpingResponse.class),</span>
+<span class="source-line-no">297</span><span id="line-297">    CANCEL_BOLUS(CancelBolusRequest.class, CancelBolusResponse.class),</span>
+<span class="source-line-no">298</span><span id="line-298">    PUMPING_STATE_STREAM(NonexistentPumpingStateStreamRequest.class, PumpingStateStreamResponse.class),</span>
+<span class="source-line-no">299</span><span id="line-299">    LAST_BOLUS_STATUS(LastBolusStatusRequest.class, LastBolusStatusResponse.class),</span>
+<span class="source-line-no">300</span><span id="line-300">    REMOTE_BG_ENTRY(RemoteBgEntryRequest.class, RemoteBgEntryResponse.class),</span>
+<span class="source-line-no">301</span><span id="line-301">    REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),</span>
+<span class="source-line-no">302</span><span id="line-302">    LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),</span>
+<span class="source-line-no">303</span><span id="line-303">    BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),</span>
+<span class="source-line-no">304</span><span id="line-304">    UNKNOWN_MOBI_OPCODE_NEG70(UnknownMobiOpcodeNeg70Request.class, UnknownMobiOpcodeNeg70Response.class),</span>
+<span class="source-line-no">305</span><span id="line-305">    UNKNOWN_MOBI_OPCODE110(UnknownMobiOpcode110Request.class, UnknownMobiOpcode110Response.class),</span>
+<span class="source-line-no">306</span><span id="line-306">    UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),</span>
+<span class="source-line-no">307</span><span id="line-307">    UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),</span>
+<span class="source-line-no">308</span><span id="line-308">    SET_MODES(SetModesRequest.class, SetModesResponse.class),</span>
+<span class="source-line-no">309</span><span id="line-309">    SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),</span>
+<span class="source-line-no">310</span><span id="line-310">    SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),</span>
+<span class="source-line-no">311</span><span id="line-311">    STOP_TEMP_RATE(StopTempRateRequest.class, StopTempRateResponse.class),</span>
+<span class="source-line-no">312</span><span id="line-312">    RESUME_PUMPING(ResumePumpingRequest.class, ResumePumpingResponse.class),</span>
+<span class="source-line-no">313</span><span id="line-313">    CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),</span>
+<span class="source-line-no">314</span><span id="line-314">    ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),</span>
+<span class="source-line-no">315</span><span id="line-315">    SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),</span>
+<span class="source-line-no">316</span><span id="line-316">    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),</span>
+<span class="source-line-no">317</span><span id="line-317">    DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),</span>
+<span class="source-line-no">318</span><span id="line-318">    SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),</span>
+<span class="source-line-no">319</span><span id="line-319">    START_DEXCOM_G6_SENSOR_SESSION(StartDexcomG6SensorSessionRequest.class, StartDexcomG6SensorSessionResponse.class),</span>
+<span class="source-line-no">320</span><span id="line-320">    STOP_DEXCOM_CGM_SENSOR_SESSION(StopDexcomCGMSensorSessionRequest.class, StopDexcomCGMSensorSessionResponse.class),</span>
+<span class="source-line-no">321</span><span id="line-321">    PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),</span>
+<span class="source-line-no">322</span><span id="line-322">    DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),</span>
+<span class="source-line-no">323</span><span id="line-323">    FILL_TUBING_STATE_STREAM(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),</span>
+<span class="source-line-no">324</span><span id="line-324">    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),</span>
+<span class="source-line-no">325</span><span id="line-325">    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),</span>
+<span class="source-line-no">326</span><span id="line-326">    SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),</span>
+<span class="source-line-no">327</span><span id="line-327">    FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),</span>
+<span class="source-line-no">328</span><span id="line-328">    UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),</span>
+<span class="source-line-no">329</span><span id="line-329">    GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),</span>
+<span class="source-line-no">330</span><span id="line-330">    GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),</span>
+<span class="source-line-no">331</span><span id="line-331">    CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),</span>
+<span class="source-line-no">332</span><span id="line-332">    SET_ACTIVE_IDP(SetActiveIDPRequest.class, SetActiveIDPResponse.class),</span>
+<span class="source-line-no">333</span><span id="line-333">    CREATE_IDP(CreateIDPRequest.class, CreateIDPResponse.class),</span>
+<span class="source-line-no">334</span><span id="line-334">    RENAME_IDP(RenameIDPRequest.class, RenameIDPResponse.class),</span>
+<span class="source-line-no">335</span><span id="line-335">    DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),</span>
+<span class="source-line-no">336</span><span id="line-336">    SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),</span>
+<span class="source-line-no">337</span><span id="line-337">    SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),</span>
+<span class="source-line-no">338</span><span id="line-338">    UNKNOWN_MOBI_OPCODE20(UnknownMobiOpcode20Request.class, UnknownMobiOpcode20Response.class),</span>
+<span class="source-line-no">339</span><span id="line-339">    CHANGE_CARTRIDGE_STATE_STREAM(NonexistentEnterChangeCartridgeModeStateStreamRequest.class, EnterChangeCartridgeModeStateStreamResponse.class),</span>
+<span class="source-line-no">340</span><span id="line-340">    DETECTING_CARTRIDGE_STATE_STREAM(NonexistentDetectingCartridgeStateStreamRequest.class, DetectingCartridgeStateStreamResponse.class),</span>
+<span class="source-line-no">341</span><span id="line-341">    EXIT_CHANGE_CARTRIDGE_MODE(ExitChangeCartridgeModeRequest.class, ExitChangeCartridgeModeResponse.class),</span>
+<span class="source-line-no">342</span><span id="line-342">    EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),</span>
+<span class="source-line-no">343</span><span id="line-343">    EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),</span>
+<span class="source-line-no">344</span><span id="line-344">    FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),</span>
+<span class="source-line-no">345</span><span id="line-345">    SET_MAX_BOLUS_LIMIT(SetMaxBolusLimitRequest.class, SetMaxBolusLimitResponse.class),</span>
+<span class="source-line-no">346</span><span id="line-346">    SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),</span>
+<span class="source-line-no">347</span><span id="line-347">    SET_PUMP_SOUNDS(SetPumpSoundsRequest.class, SetPumpSoundsResponse.class),</span>
+<span class="source-line-no">348</span><span id="line-348">    SET_PUMP_ALERT_SNOOZE(SetPumpAlertSnoozeRequest.class, SetPumpAlertSnoozeResponse.class),</span>
+<span class="source-line-no">349</span><span id="line-349">    // MESSAGES_END</span>
+<span class="source-line-no">350</span><span id="line-350">    ;</span>
+<span class="source-line-no">351</span><span id="line-351"></span>
+<span class="source-line-no">352</span><span id="line-352">    private static final String TAG = "Messages";</span>
+<span class="source-line-no">353</span><span id="line-353"></span>
+<span class="source-line-no">354</span><span id="line-354">    public static Map&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; OPCODES = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">355</span><span id="line-355">    public static Map&lt;Integer, Messages&gt; REQUESTS = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">356</span><span id="line-356">    public static Map&lt;Integer, Messages&gt; RESPONSES = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">357</span><span id="line-357"></span>
+<span class="source-line-no">358</span><span id="line-358">    static {</span>
+<span class="source-line-no">359</span><span id="line-359">        for (Messages m : Messages.values()) {</span>
+<span class="source-line-no">360</span><span id="line-360">            OPCODES.put(Pair.of(m.requestProps().characteristic(), m.requestOpCode), m.requestClass);</span>
+<span class="source-line-no">361</span><span id="line-361">            REQUESTS.put(m.requestOpCode, m);</span>
+<span class="source-line-no">362</span><span id="line-362"></span>
+<span class="source-line-no">363</span><span id="line-363">            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);</span>
+<span class="source-line-no">364</span><span id="line-364">            RESPONSES.put(m.responseOpCode, m);</span>
 <span class="source-line-no">365</span><span id="line-365"></span>
-<span class="source-line-no">366</span><span id="line-366">            OPCODES.put(Pair.of(m.responseProps().characteristic(), m.responseOpCode), m.responseClass);</span>
-<span class="source-line-no">367</span><span id="line-367">            RESPONSES.put(m.responseOpCode, m);</span>
+<span class="source-line-no">366</span><span id="line-366">            Validate.isTrue(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</span>
+<span class="source-line-no">367</span><span id="line-367">        }</span>
 <span class="source-line-no">368</span><span id="line-368"></span>
-<span class="source-line-no">369</span><span id="line-369">            Validate.isTrue(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);</span>
-<span class="source-line-no">370</span><span id="line-370">        }</span>
-<span class="source-line-no">371</span><span id="line-371"></span>
-<span class="source-line-no">372</span><span id="line-372">        for (Characteristic c : Characteristic.values()) {</span>
-<span class="source-line-no">373</span><span id="line-373">            int errorOpcode = new ErrorResponse().opCode();</span>
-<span class="source-line-no">374</span><span id="line-374">            if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {</span>
-<span class="source-line-no">375</span><span id="line-375">                OPCODES.put(Pair.of(c, errorOpcode), ErrorResponse.class);</span>
-<span class="source-line-no">376</span><span id="line-376">            }</span>
-<span class="source-line-no">377</span><span id="line-377">        }</span>
-<span class="source-line-no">378</span><span id="line-378">    }</span>
-<span class="source-line-no">379</span><span id="line-379"></span>
-<span class="source-line-no">380</span><span id="line-380">    public static Message parse(byte[] data, int opCode, Characteristic characteristic) {</span>
-<span class="source-line-no">381</span><span id="line-381">        try {</span>
-<span class="source-line-no">382</span><span id="line-382">            Class&lt;? extends Message&gt; clazz = OPCODES.get(Pair.of(characteristic, opCode));</span>
-<span class="source-line-no">383</span><span id="line-383">            if (clazz == null) {</span>
-<span class="source-line-no">384</span><span id="line-384">                log.warn("Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));</span>
-<span class="source-line-no">385</span><span id="line-385">                return null;</span>
-<span class="source-line-no">386</span><span id="line-386">            }</span>
-<span class="source-line-no">387</span><span id="line-387">            Message msg = clazz.newInstance();</span>
-<span class="source-line-no">388</span><span id="line-388">            msg.parse(data);</span>
-<span class="source-line-no">389</span><span id="line-389">            return msg;</span>
-<span class="source-line-no">390</span><span id="line-390">        } catch (Exception e) {</span>
-<span class="source-line-no">391</span><span id="line-391">            log.warn("Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);</span>
-<span class="source-line-no">392</span><span id="line-392">            e.printStackTrace();</span>
-<span class="source-line-no">393</span><span id="line-393">            return null;</span>
-<span class="source-line-no">394</span><span id="line-394">        }</span>
-<span class="source-line-no">395</span><span id="line-395">    }</span>
-<span class="source-line-no">396</span><span id="line-396"></span>
-<span class="source-line-no">397</span><span id="line-397">    public static Set&lt;Characteristic&gt; findPossibleCharacteristicsForOpcode(int opCode) {</span>
-<span class="source-line-no">398</span><span id="line-398">        Set&lt;Characteristic&gt; items = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">399</span><span id="line-399">        for (Pair&lt;Characteristic, Integer&gt; entry : OPCODES.keySet()) {</span>
-<span class="source-line-no">400</span><span id="line-400">            if (entry.getRight().equals(opCode)) {</span>
-<span class="source-line-no">401</span><span id="line-401">                items.add(entry.getLeft());</span>
-<span class="source-line-no">402</span><span id="line-402">            }</span>
-<span class="source-line-no">403</span><span id="line-403">        }</span>
+<span class="source-line-no">369</span><span id="line-369">        for (Characteristic c : Characteristic.values()) {</span>
+<span class="source-line-no">370</span><span id="line-370">            int errorOpcode = new ErrorResponse().opCode();</span>
+<span class="source-line-no">371</span><span id="line-371">            if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {</span>
+<span class="source-line-no">372</span><span id="line-372">                OPCODES.put(Pair.of(c, errorOpcode), ErrorResponse.class);</span>
+<span class="source-line-no">373</span><span id="line-373">            }</span>
+<span class="source-line-no">374</span><span id="line-374">        }</span>
+<span class="source-line-no">375</span><span id="line-375">    }</span>
+<span class="source-line-no">376</span><span id="line-376"></span>
+<span class="source-line-no">377</span><span id="line-377">    public static Message parse(byte[] data, int opCode, Characteristic characteristic) {</span>
+<span class="source-line-no">378</span><span id="line-378">        try {</span>
+<span class="source-line-no">379</span><span id="line-379">            Class&lt;? extends Message&gt; clazz = OPCODES.get(Pair.of(characteristic, opCode));</span>
+<span class="source-line-no">380</span><span id="line-380">            if (clazz == null) {</span>
+<span class="source-line-no">381</span><span id="line-381">                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));</span>
+<span class="source-line-no">382</span><span id="line-382">                return null;</span>
+<span class="source-line-no">383</span><span id="line-383">            }</span>
+<span class="source-line-no">384</span><span id="line-384">            Message msg = clazz.newInstance();</span>
+<span class="source-line-no">385</span><span id="line-385">            msg.parse(data);</span>
+<span class="source-line-no">386</span><span id="line-386">            return msg;</span>
+<span class="source-line-no">387</span><span id="line-387">        } catch (Exception e) {</span>
+<span class="source-line-no">388</span><span id="line-388">            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);</span>
+<span class="source-line-no">389</span><span id="line-389">            e.printStackTrace();</span>
+<span class="source-line-no">390</span><span id="line-390">            return null;</span>
+<span class="source-line-no">391</span><span id="line-391">        }</span>
+<span class="source-line-no">392</span><span id="line-392">    }</span>
+<span class="source-line-no">393</span><span id="line-393"></span>
+<span class="source-line-no">394</span><span id="line-394">    public static Set&lt;Characteristic&gt; findPossibleCharacteristicsForOpcode(int opCode) {</span>
+<span class="source-line-no">395</span><span id="line-395">        Set&lt;Characteristic&gt; items = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">396</span><span id="line-396">        for (Pair&lt;Characteristic, Integer&gt; entry : OPCODES.keySet()) {</span>
+<span class="source-line-no">397</span><span id="line-397">            if (entry.getRight().equals(opCode)) {</span>
+<span class="source-line-no">398</span><span id="line-398">                items.add(entry.getLeft());</span>
+<span class="source-line-no">399</span><span id="line-399">            }</span>
+<span class="source-line-no">400</span><span id="line-400">        }</span>
+<span class="source-line-no">401</span><span id="line-401"></span>
+<span class="source-line-no">402</span><span id="line-402">        return items;</span>
+<span class="source-line-no">403</span><span id="line-403">    }</span>
 <span class="source-line-no">404</span><span id="line-404"></span>
-<span class="source-line-no">405</span><span id="line-405">        return items;</span>
-<span class="source-line-no">406</span><span id="line-406">    }</span>
-<span class="source-line-no">407</span><span id="line-407"></span>
-<span class="source-line-no">408</span><span id="line-408">    public static Set&lt;Class&lt;? extends Message&gt;&gt; findPossibleMessagesForCharacteristic(Characteristic characteristic) {</span>
-<span class="source-line-no">409</span><span id="line-409">        Set&lt;Class&lt;? extends Message&gt;&gt; items = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">410</span><span id="line-410">        for (Map.Entry&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; entry : OPCODES.entrySet()) {</span>
-<span class="source-line-no">411</span><span id="line-411">            if (entry.getKey().getLeft().equals(characteristic)) {</span>
-<span class="source-line-no">412</span><span id="line-412">                items.add(entry.getValue());</span>
-<span class="source-line-no">413</span><span id="line-413">            }</span>
-<span class="source-line-no">414</span><span id="line-414">        }</span>
+<span class="source-line-no">405</span><span id="line-405">    public static Set&lt;Class&lt;? extends Message&gt;&gt; findPossibleMessagesForCharacteristic(Characteristic characteristic) {</span>
+<span class="source-line-no">406</span><span id="line-406">        Set&lt;Class&lt;? extends Message&gt;&gt; items = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">407</span><span id="line-407">        for (Map.Entry&lt;Pair&lt;Characteristic, Integer&gt;, Class&lt;? extends Message&gt;&gt; entry : OPCODES.entrySet()) {</span>
+<span class="source-line-no">408</span><span id="line-408">            if (entry.getKey().getLeft().equals(characteristic)) {</span>
+<span class="source-line-no">409</span><span id="line-409">                items.add(entry.getValue());</span>
+<span class="source-line-no">410</span><span id="line-410">            }</span>
+<span class="source-line-no">411</span><span id="line-411">        }</span>
+<span class="source-line-no">412</span><span id="line-412"></span>
+<span class="source-line-no">413</span><span id="line-413">        return items;</span>
+<span class="source-line-no">414</span><span id="line-414">    }</span>
 <span class="source-line-no">415</span><span id="line-415"></span>
-<span class="source-line-no">416</span><span id="line-416">        return items;</span>
-<span class="source-line-no">417</span><span id="line-417">    }</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">    public static Class&lt;? extends Message&gt; fromOpcode(int opCode, Characteristic characteristic) {</span>
-<span class="source-line-no">420</span><span id="line-420">        return OPCODES.get(Pair.of(characteristic, opCode));</span>
-<span class="source-line-no">421</span><span id="line-421">    }</span>
-<span class="source-line-no">422</span><span id="line-422"></span>
-<span class="source-line-no">423</span><span id="line-423">    private final int requestOpCode;</span>
-<span class="source-line-no">424</span><span id="line-424">    private final Class&lt;? extends Message&gt; requestClass;</span>
-<span class="source-line-no">425</span><span id="line-425">    private final int responseOpCode;</span>
-<span class="source-line-no">426</span><span id="line-426">    private final Class&lt;? extends Message&gt; responseClass;</span>
-<span class="source-line-no">427</span><span id="line-427">    Messages(Class&lt;? extends Message&gt; requestClass, Class&lt;? extends Message&gt; responseClass) {</span>
-<span class="source-line-no">428</span><span id="line-428">        this.requestClass = requestClass;</span>
-<span class="source-line-no">429</span><span id="line-429">        this.requestOpCode = requestProps().opCode();</span>
-<span class="source-line-no">430</span><span id="line-430">        this.responseClass = responseClass;</span>
-<span class="source-line-no">431</span><span id="line-431">        this.responseOpCode = responseProps().opCode();</span>
-<span class="source-line-no">432</span><span id="line-432">    }</span>
-<span class="source-line-no">433</span><span id="line-433"></span>
-<span class="source-line-no">434</span><span id="line-434">    public int requestOpCode() {</span>
-<span class="source-line-no">435</span><span id="line-435">        return requestOpCode;</span>
+<span class="source-line-no">416</span><span id="line-416">    public static Class&lt;? extends Message&gt; fromOpcode(int opCode, Characteristic characteristic) {</span>
+<span class="source-line-no">417</span><span id="line-417">        return OPCODES.get(Pair.of(characteristic, opCode));</span>
+<span class="source-line-no">418</span><span id="line-418">    }</span>
+<span class="source-line-no">419</span><span id="line-419"></span>
+<span class="source-line-no">420</span><span id="line-420">    private final int requestOpCode;</span>
+<span class="source-line-no">421</span><span id="line-421">    private final Class&lt;? extends Message&gt; requestClass;</span>
+<span class="source-line-no">422</span><span id="line-422">    private final int responseOpCode;</span>
+<span class="source-line-no">423</span><span id="line-423">    private final Class&lt;? extends Message&gt; responseClass;</span>
+<span class="source-line-no">424</span><span id="line-424">    Messages(Class&lt;? extends Message&gt; requestClass, Class&lt;? extends Message&gt; responseClass) {</span>
+<span class="source-line-no">425</span><span id="line-425">        this.requestClass = requestClass;</span>
+<span class="source-line-no">426</span><span id="line-426">        this.requestOpCode = requestProps().opCode();</span>
+<span class="source-line-no">427</span><span id="line-427">        this.responseClass = responseClass;</span>
+<span class="source-line-no">428</span><span id="line-428">        this.responseOpCode = responseProps().opCode();</span>
+<span class="source-line-no">429</span><span id="line-429">    }</span>
+<span class="source-line-no">430</span><span id="line-430"></span>
+<span class="source-line-no">431</span><span id="line-431">    public int requestOpCode() {</span>
+<span class="source-line-no">432</span><span id="line-432">        return requestOpCode;</span>
+<span class="source-line-no">433</span><span id="line-433">    }</span>
+<span class="source-line-no">434</span><span id="line-434">    public Class&lt;? extends Message&gt; requestClass() {</span>
+<span class="source-line-no">435</span><span id="line-435">        return requestClass;</span>
 <span class="source-line-no">436</span><span id="line-436">    }</span>
-<span class="source-line-no">437</span><span id="line-437">    public Class&lt;? extends Message&gt; requestClass() {</span>
-<span class="source-line-no">438</span><span id="line-438">        return requestClass;</span>
+<span class="source-line-no">437</span><span id="line-437">    public MessageProps requestProps() {</span>
+<span class="source-line-no">438</span><span id="line-438">        return requestClass.getAnnotation(MessageProps.class);</span>
 <span class="source-line-no">439</span><span id="line-439">    }</span>
-<span class="source-line-no">440</span><span id="line-440">    public MessageProps requestProps() {</span>
-<span class="source-line-no">441</span><span id="line-441">        return requestClass.getAnnotation(MessageProps.class);</span>
-<span class="source-line-no">442</span><span id="line-442">    }</span>
-<span class="source-line-no">443</span><span id="line-443"></span>
-<span class="source-line-no">444</span><span id="line-444">    public int responseOpCode() {</span>
-<span class="source-line-no">445</span><span id="line-445">        return responseOpCode;</span>
+<span class="source-line-no">440</span><span id="line-440"></span>
+<span class="source-line-no">441</span><span id="line-441">    public int responseOpCode() {</span>
+<span class="source-line-no">442</span><span id="line-442">        return responseOpCode;</span>
+<span class="source-line-no">443</span><span id="line-443">    }</span>
+<span class="source-line-no">444</span><span id="line-444">    public Class&lt;? extends Message&gt; responseClass() {</span>
+<span class="source-line-no">445</span><span id="line-445">        return responseClass;</span>
 <span class="source-line-no">446</span><span id="line-446">    }</span>
-<span class="source-line-no">447</span><span id="line-447">    public Class&lt;? extends Message&gt; responseClass() {</span>
-<span class="source-line-no">448</span><span id="line-448">        return responseClass;</span>
+<span class="source-line-no">447</span><span id="line-447">    public MessageProps responseProps() {</span>
+<span class="source-line-no">448</span><span id="line-448">        return responseClass.getAnnotation(MessageProps.class);</span>
 <span class="source-line-no">449</span><span id="line-449">    }</span>
-<span class="source-line-no">450</span><span id="line-450">    public MessageProps responseProps() {</span>
-<span class="source-line-no">451</span><span id="line-451">        return responseClass.getAnnotation(MessageProps.class);</span>
-<span class="source-line-no">452</span><span id="line-452">    }</span>
-<span class="source-line-no">453</span><span id="line-453"></span>
-<span class="source-line-no">454</span><span id="line-454">    public Message request() {</span>
-<span class="source-line-no">455</span><span id="line-455">        try {</span>
-<span class="source-line-no">456</span><span id="line-456">            return requestClass.newInstance();</span>
-<span class="source-line-no">457</span><span id="line-457">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</span>
-<span class="source-line-no">458</span><span id="line-458">            e.printStackTrace();</span>
-<span class="source-line-no">459</span><span id="line-459">            return null;</span>
-<span class="source-line-no">460</span><span id="line-460">        }</span>
-<span class="source-line-no">461</span><span id="line-461">    }</span>
-<span class="source-line-no">462</span><span id="line-462">    public Message response() {</span>
-<span class="source-line-no">463</span><span id="line-463">        try {</span>
-<span class="source-line-no">464</span><span id="line-464">            return responseClass.newInstance();</span>
-<span class="source-line-no">465</span><span id="line-465">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</span>
-<span class="source-line-no">466</span><span id="line-466">            e.printStackTrace();</span>
-<span class="source-line-no">467</span><span id="line-467">            return null;</span>
-<span class="source-line-no">468</span><span id="line-468">        }</span>
-<span class="source-line-no">469</span><span id="line-469">    }</span>
-<span class="source-line-no">470</span><span id="line-470">}</span>
+<span class="source-line-no">450</span><span id="line-450"></span>
+<span class="source-line-no">451</span><span id="line-451">    public Message request() {</span>
+<span class="source-line-no">452</span><span id="line-452">        try {</span>
+<span class="source-line-no">453</span><span id="line-453">            return requestClass.newInstance();</span>
+<span class="source-line-no">454</span><span id="line-454">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</span>
+<span class="source-line-no">455</span><span id="line-455">            e.printStackTrace();</span>
+<span class="source-line-no">456</span><span id="line-456">            return null;</span>
+<span class="source-line-no">457</span><span id="line-457">        }</span>
+<span class="source-line-no">458</span><span id="line-458">    }</span>
+<span class="source-line-no">459</span><span id="line-459">    public Message response() {</span>
+<span class="source-line-no">460</span><span id="line-460">        try {</span>
+<span class="source-line-no">461</span><span id="line-461">            return responseClass.newInstance();</span>
+<span class="source-line-no">462</span><span id="line-462">        } catch (IllegalAccessException | InstantiationException | ClassCastException e) {</span>
+<span class="source-line-no">463</span><span id="line-463">            e.printStackTrace();</span>
+<span class="source-line-no">464</span><span id="line-464">            return null;</span>
+<span class="source-line-no">465</span><span id="line-465">        }</span>
+<span class="source-line-no">466</span><span id="line-466">    }</span>
+<span class="source-line-no">467</span><span id="line-467">}</span>
 
 
 
