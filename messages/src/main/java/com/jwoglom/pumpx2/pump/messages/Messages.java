@@ -1,7 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
@@ -226,7 +224,6 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpSoundsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpSoundsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetPumpAlertSnoozeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetPumpAlertSnoozeResponse;
-
 // IMPORT_END
 import com.jwoglom.pumpx2.shared.L;
 
@@ -352,7 +349,7 @@ public enum Messages {
     // MESSAGES_END
     ;
 
-    private static final Logger log = LoggerFactory.getLogger(Messages.class);
+    private static final String TAG = "Messages";
 
     public static Map<Pair<Characteristic, Integer>, Class<? extends Message>> OPCODES = new HashMap<>();
     public static Map<Integer, Messages> REQUESTS = new HashMap<>();
@@ -381,14 +378,14 @@ public enum Messages {
         try {
             Class<? extends Message> clazz = OPCODES.get(Pair.of(characteristic, opCode));
             if (clazz == null) {
-                log.warn("Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));
+                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));
                 return null;
             }
             Message msg = clazz.newInstance();
             msg.parse(data);
             return msg;
         } catch (Exception e) {
-            log.warn("Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);
+            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);
             e.printStackTrace();
             return null;
         }

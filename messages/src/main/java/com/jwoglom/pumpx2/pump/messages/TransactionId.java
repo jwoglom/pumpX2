@@ -1,7 +1,5 @@
 package com.jwoglom.pumpx2.pump.messages;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.jwoglom.pumpx2.shared.L;
 
 /**
@@ -9,7 +7,7 @@ import com.jwoglom.pumpx2.shared.L;
  * We read the current txId, send a message with it, and then increment it.
  */
 public class TransactionId {
-    private static final Logger log = LoggerFactory.getLogger(TransactionId.class);
+    private static final String TAG = "TransactionId";
     private int txId = 0;
 
     public void set(int i) {
@@ -17,7 +15,7 @@ public class TransactionId {
             i = 0;
         }
         if (i != txId + 1) {
-            log.debug("set: old " + txId + " new " + i);
+            L.d(TAG, "set: old " + txId + " new " + i);
         }
         txId = i;
     }

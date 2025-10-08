@@ -1,10 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
@@ -13,14 +12,16 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.apache.commons.codec.DecoderException;
 import com.jwoglom.pumpx2.shared.Hex;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class HistoryLogMessageTester {
-    private static final Logger log = LoggerFactory.getLogger(HistoryLogMessageTester.class);
+    private static final String TAG = "HistoryLogMessageTester";
 
     public static HistoryLogStreamResponse test(String rawHex, int streamId, List<HistoryLog> expectedLogs) throws DecoderException {
         byte[] initialRead = Hex.decodeHex(rawHex);
@@ -37,11 +38,11 @@ public class HistoryLogMessageTester {
         assertTrue("Response message returned from parser: " + resp, resp.message().isPresent());
 
         Message parsedMessage = resp.message().get();
-        log.debug(String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
+        L.d(TAG, String.format("Parsed: %s\nExpected: %s", parsedMessage, expected));
         assertEquals(expected.getClass(), parsedMessage.getClass());
 
         HistoryLogStreamResponse streamResp = (HistoryLogStreamResponse) parsedMessage;
-        log.debug("historyLogstoString: " +streamResp.getHistoryLogsToString());
+        L.d(TAG, "historyLogstoString: " +streamResp.getHistoryLogsToString());
         List<HistoryLog> parsedLogs = streamResp.getHistoryLogs();
         assertNotNull(parsedLogs);
 
@@ -71,6 +72,7 @@ public class HistoryLogMessageTester {
 
         return parsed;
     }
+
 
     // Tests just the historylog parsing without the HistoryLogStreamResponse wrapper
     public static HistoryLog testSingleIgnoringBaseFields(String rawHex, HistoryLog expected) throws DecoderException {

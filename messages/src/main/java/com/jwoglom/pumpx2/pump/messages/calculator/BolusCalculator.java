@@ -1,13 +1,14 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.commons.lang3.Validate;
 import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.models.InsulinUnit;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  * Contains logic for deciding an estimated bolus amount given inputs and current pump/CGM status.
  */
 public class BolusCalculator {
-    private static final Logger log = LoggerFactory.getLogger(BolusCalculator.class);
+    private static final String TAG = "BolusCalculator";
 
     // input fields
     private final BolusParameters userInputParameters;
@@ -140,9 +141,10 @@ public class BolusCalculator {
         BolusCalcComponent addedFromBG = getAddedFromGlucose();
         BolusCalcComponent addedFromIOB = getAddedFromIOB();
 
-        log.debug("addedFromCarbs: " + addedFromCarbs);
-        log.debug("addedFromBG: " + addedFromBG);
-        log.debug("addedFromIOB: " + addedFromIOB);
+
+        L.d(TAG, "addedFromCarbs: " + addedFromCarbs);
+        L.d(TAG, "addedFromBG: " + addedFromBG);
+        L.d(TAG, "addedFromIOB: " + addedFromIOB);
 
         double total = addedFromCarbs.getUnits();
 
@@ -182,7 +184,7 @@ public class BolusCalculator {
 
         BolusCalcUnits bolusCalcUnits = new BolusCalcUnits(total, addedFromCarbs.getUnits(), addedFromBG.getUnits(), addedFromIOB.getUnits(), 0);
 
-        log.debug("bolusCalculator: " + bolusCalcUnits + ", " + conditions);
+        L.d(TAG, "bolusCalculator: " + bolusCalcUnits + ", " + conditions);
         Validate.isTrue(bolusCalcUnits.getTotal() >= 0);
 
         // If there are any FailedPreconditions, then return 0 units regardless

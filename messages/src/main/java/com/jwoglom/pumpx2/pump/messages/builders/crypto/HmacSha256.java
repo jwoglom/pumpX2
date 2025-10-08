@@ -1,13 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.builders.crypto;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.jwoglom.pumpx2.shared.L;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 public class HmacSha256 {
-    private static final Logger log = LoggerFactory.getLogger(HmacSha256.class);
+    private static final String TAG = "HmacSha256";
+
 
     private static byte mod255(int i) {
         if (i < 0) {
@@ -33,7 +33,7 @@ public class HmacSha256 {
             mac.init(secretKeySpec);
             return mac.doFinal(mod255(data));
         } catch (Exception e) {
-            log.error("error", e);
+            L.e(TAG, e);
             return new byte[]{};
         }
     }

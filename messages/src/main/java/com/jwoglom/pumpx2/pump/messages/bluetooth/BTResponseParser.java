@@ -5,19 +5,18 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
+import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 public class BTResponseParser {
-    private static final Logger log = LoggerFactory.getLogger(BTResponseParser.class);
+    private static final String TAG = "BTResponseParser";
 
     public static PumpResponseMessage parse(TronMessageWrapper wrapper, byte[] output, MessageType outputType, UUID uuid) {
         PacketArrayList packetArrayList = wrapper.buildPacketArrayList(outputType);
@@ -26,7 +25,7 @@ public class BTResponseParser {
 
     @SuppressWarnings("DefaultLocale")
     public static PumpResponseMessage parse(Message message, PacketArrayList packetArrayList, byte[] output, UUID uuid) {
-        log.debug("Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
+        L.d(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
         checkCharacteristicUuid(uuid, output);
 
         packetArrayList.validatePacket(output);
@@ -46,20 +45,20 @@ public class BTResponseParser {
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
                 byte txId = packetArrayList.getExpectedTxId();
-                log.debug( "Parsing message with opcode "+b4);
+                L.d(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
                 if (msg == null) {
-                    log.warn(String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));
+                    L.w(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));
                 } else {
-                    log.info(String.format("PARSED-MESSAGE(txId=%-3d, %s):\t%s", txId, CharacteristicUUID.which(uuid), msg));
+                    L.i(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s):\t%s", txId, CharacteristicUUID.which(uuid), msg));
                 }
 
                 return new PumpResponseMessage(output, msg);
             } else {
-                log.debug( "PacketArrayList could not validate");
+                L.d(TAG, "PacketArrayList could not validate");
             }
         } else {
-            log.info( "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
+            L.i(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
             return new PumpResponseMessage(output);
         }
 
@@ -68,7 +67,7 @@ public class BTResponseParser {
 
     public static PumpResponseMessage parseBestEffortForLogging(byte[] output, UUID uuid) {
         if (output.length < 3) {
-            log.error( "parseBestEffortForLogging input has less than 3 bytes");
+            L.e(TAG, "parseBestEffortForLogging input has less than 3 bytes");
             return null;
         }
         byte txId = parseTxId(output);
@@ -80,7 +79,7 @@ public class BTResponseParser {
             message = Messages.fromOpcode(opCode, Characteristic.of(uuid)).newInstance();
             message.fillWithEmptyCargo();
         } catch (NullPointerException|InstantiationException|IllegalAccessException e) {
-            log.error( "parseBestEffortForLogging", e);
+            L.e(TAG, "parseBestEffortForLogging", e);
             return null;
         }
 
@@ -89,7 +88,7 @@ public class BTResponseParser {
             PacketArrayList packetArrayList = tron.buildPacketArrayList(messageType);
             return BTResponseParser.parse(tron.message(), packetArrayList, output, uuid);
         } catch (Exception e) {
-            log.error( "parseBestEffortForLogging", e);
+            L.e(TAG, "parseBestEffortForLogging", e);
             return null;
         }
     }

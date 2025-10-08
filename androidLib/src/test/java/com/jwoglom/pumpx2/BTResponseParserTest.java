@@ -1,10 +1,9 @@
 package com.jwoglom.pumpx2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
@@ -18,16 +17,19 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.PumpChallengeRequ
 import com.jwoglom.pumpx2.pump.messages.response.authentication.CentralChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.shared.L;
+
 import org.apache.commons.codec.DecoderException;
 import com.jwoglom.pumpx2.shared.Hex;
 import org.junit.Test;
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BTResponseParserTest {
-    private static final Logger log = LoggerFactory.getLogger(BTResponseParserTest.class);
+    private static final String TAG = "X2-BtResponseParserTest";
+
 
     @Test
     public void testTconnectAppFirstRequest() throws DecoderException {
@@ -37,12 +39,12 @@ public class BTResponseParserTest {
 
         TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0,1,2,3,4,5,6,7,8,9}), (byte) 0);
         PumpResponseMessage response = BTResponseParser.parse(wrapper, initialResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
-        log.warn("PumpResponseMessageEvent: "+response);
+        L.w(TAG, "PumpResponseMessageEvent: "+response);
 
         assertTrue(response.message().isPresent());
         assertTrue(response.message().get() instanceof CentralChallengeResponse);
         CentralChallengeResponse message = (CentralChallengeResponse) response.message().get();
-        log.warn("CentralChallengeResponse: "+message);
+        L.w(TAG, "CentralChallengeResponse: "+message);
 
         assertFalse(message.signed());
         assertEquals(1, message.getAppInstanceId());
@@ -50,6 +52,7 @@ public class BTResponseParserTest {
         assertEquals("840c4e16873046bc", Hex.encodeHexString(message.getHmacKey()));
 
     }
+
 
     // Bad test
 //    @Test
@@ -59,12 +62,12 @@ public class BTResponseParserTest {
 //
 //        TronMessageWrapper wrapper = new TronMessageWrapper(request, (byte) 0);
 //        PumpResponseMessageEvent response = BTResponseParser.parse(wrapper, challengeRequest, MessageType.REQUEST, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
-//        log.warn("PumpChallengeResponseEvent: "+response);
+//        L.w(TAG, "PumpChallengeResponseEvent: "+response);
 //
 //        assertTrue(response.message().isPresent());
 //        assertTrue(response.message().get() instanceof PumpChallengeRequest);
 //        PumpChallengeRequest message = (PumpChallengeRequest) response.message().get();
-//        log.warn("PumpChallengeRequest: "+message);
+//        L.w(TAG, "PumpChallengeRequest: "+message);
 //    }
 
     @Test
@@ -85,12 +88,12 @@ public class BTResponseParserTest {
 
         TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0,1,2,3,4,5,6,7,8,9}), (byte) 0);
         PumpResponseMessage response = BTResponseParser.parse(wrapper, read, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
-        log.warn("PumpResponseMessageEvent: "+response);
+        L.w(TAG, "PumpResponseMessageEvent: "+response);
 
         assertTrue(response.message().isPresent());
         assertTrue(response.message().get() instanceof CentralChallengeResponse);
         CentralChallengeResponse message = (CentralChallengeResponse) response.message().get();
-        log.warn("CentralChallengeResponse: "+message);
+        L.w(TAG, "CentralChallengeResponse: "+message);
 
         assertFalse(message.signed());
         assertEquals(1, message.getAppInstanceId());
@@ -110,13 +113,13 @@ public class BTResponseParserTest {
             UUID uuid = CharacteristicUUID.determine(message);
 
             boolean multiplePackets = wrapper.packets().size() > 1;
-            log.warn("SendPumpMessage packets: " + wrapper.packets());
+            L.w(TAG, "SendPumpMessage packets: " + wrapper.packets());
 
             BTProcessGattOperationEvent btEvent = null;
             writeBytes = new ArrayList<>();
             List<BTProcessGattOperationEvent> events = new ArrayList<>();
             for (Packet packet : wrapper.packets()) {
-                log.warn("SendPumpMessage packet: " + packet);
+                L.w(TAG, "SendPumpMessage packet: " + packet);
                 btEvent = new BTProcessGattOperationEvent(uuid, packet.build(), multiplePackets);
                 writeBytes.add(btEvent.data());
                 events.add(btEvent);
@@ -135,13 +138,13 @@ public class BTResponseParserTest {
             UUID uuid = CharacteristicUUID.determine(message);
 
             boolean multiplePackets = wrapper.packets().size() > 1;
-            log.warn("SendPumpMessage packets: " + wrapper.packets());
+            L.w(TAG, "SendPumpMessage packets: " + wrapper.packets());
 
             BTProcessGattOperationEvent btEvent = null;
             writeBytes = new ArrayList<>();
             List<BTProcessGattOperationEvent> events = new ArrayList<>();
             for (Packet packet : wrapper.packets()) {
-                log.warn("SendPumpMessage packet: " + packet);
+                L.w(TAG, "SendPumpMessage packet: " + packet);
                 btEvent = new BTProcessGattOperationEvent(uuid, packet.build(), multiplePackets);
                 writeBytes.add(btEvent.data());
                 events.add(btEvent);
@@ -161,13 +164,13 @@ public class BTResponseParserTest {
             UUID uuid = CharacteristicUUID.determine(message);
 
             boolean multiplePackets = wrapper.packets().size() > 1;
-            log.warn("SendPumpMessage packets: " + wrapper.packets());
+            L.w(TAG, "SendPumpMessage packets: " + wrapper.packets());
 
             BTProcessGattOperationEvent btEvent = null;
             writeBytes = new ArrayList<>();
             List<BTProcessGattOperationEvent> events = new ArrayList<>();
             for (Packet packet : wrapper.packets()) {
-                log.warn("SendPumpMessage packet: " + packet);
+                L.w(TAG, "SendPumpMessage packet: " + packet);
                 btEvent = new BTProcessGattOperationEvent(uuid, packet.build(), multiplePackets);
                 writeBytes.add(btEvent.data());
                 events.add(btEvent);
@@ -188,13 +191,13 @@ public class BTResponseParserTest {
             UUID uuid = CharacteristicUUID.determine(message);
 
             boolean multiplePackets = wrapper.packets().size() > 1;
-            log.warn("SendPumpMessage packets: " + wrapper.packets());
+            L.w(TAG, "SendPumpMessage packets: " + wrapper.packets());
 
             BTProcessGattOperationEvent btEvent = null;
             writeBytes = new ArrayList<>();
             List<BTProcessGattOperationEvent> events = new ArrayList<>();
             for (Packet packet : wrapper.packets()) {
-                log.warn("SendPumpMessage packet: " + packet);
+                L.w(TAG, "SendPumpMessage packet: " + packet);
                 btEvent = new BTProcessGattOperationEvent(uuid, packet.build(), multiplePackets);
                 writeBytes.add(btEvent.data());
                 events.add(btEvent);
@@ -218,12 +221,12 @@ public class BTResponseParserTest {
 
             TronMessageWrapper wrapper = new TronMessageWrapper(new CentralChallengeRequest(0, new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), (byte) 0);
             PumpResponseMessage response = BTResponseParser.parse(wrapper, centralChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
-            log.warn("PumpResponseMessageEvent: " + response);
+            L.w(TAG, "PumpResponseMessageEvent: " + response);
 
             assertTrue(response.message().isPresent());
             assertTrue(response.message().get() instanceof CentralChallengeResponse);
             CentralChallengeResponse message = (CentralChallengeResponse) response.message().get();
-            log.warn("CentralChallengeResponse: " + message);
+            L.w(TAG, "CentralChallengeResponse: " + message);
 
             assertFalse(message.signed());
             assertEquals(1, message.getAppInstanceId());
@@ -237,12 +240,12 @@ public class BTResponseParserTest {
 
             TronMessageWrapper wrapper = new TronMessageWrapper(new PumpChallengeRequest(0, new byte[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}), (byte) 1);
             PumpResponseMessage response = BTResponseParser.parse(wrapper, pumpChallengeResponse, MessageType.RESPONSE, CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS);
-            log.warn("PumpResponseMessageEvent: " + response);
+            L.w(TAG, "PumpResponseMessageEvent: " + response);
 
             assertTrue(response.message().isPresent());
             assertTrue(response.message().get() instanceof PumpChallengeResponse);
             PumpChallengeResponse message = (PumpChallengeResponse) response.message().get();
-            log.warn("PumpChallengeResponse: " + message);
+            L.w(TAG, "PumpChallengeResponse: " + message);
 
             assertFalse(message.signed());
             assertFalse(message.getSuccess());
