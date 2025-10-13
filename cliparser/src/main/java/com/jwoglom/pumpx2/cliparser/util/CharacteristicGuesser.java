@@ -1,8 +1,11 @@
 package com.jwoglom.pumpx2.cliparser.util;
 
 import java.util.Set;
+import java.util.UUID;
+
 import com.jwoglom.pumpx2.pump.messages.Messages;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.shared.L;
 
 import java.util.Set;
@@ -35,6 +38,12 @@ public class CharacteristicGuesser {
 
 
     public static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
+        String pumpx2Characteristic = System.getenv("PUMPX2_CHARACTERISTIC");
+        if (pumpx2Characteristic != null && !pumpx2Characteristic.isBlank()) {
+            Characteristic c = Characteristic.valueOf(pumpx2Characteristic);
+            if (c == null) c = Characteristic.of(UUID.fromString(pumpx2Characteristic));
+            return Set.of(c);
+        }
         int len = rawHex.length();
         if (
                 (opCode == 32 && len == 14) || // ApiVersionRequest with cargo size=2

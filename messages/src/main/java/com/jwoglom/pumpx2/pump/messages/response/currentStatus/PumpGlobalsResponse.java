@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;
 
 @MessageProps(
@@ -102,6 +103,37 @@ public class PumpGlobalsResponse extends Message {
     }
     public int getQuickBolusStatus() {
         return quickBolusStatus;
+    }
+    public QuickBolusIncrement getQuickBolusIncrement() {
+        if (!isQuickBolusEnabled()) {
+            return QuickBolusIncrement.DISABLED;
+        }
+
+        // units
+        if (getQuickBolusEntryType() == 0) {
+            switch (getQuickBolusIncrementUnits()) {
+                case 500:
+                    return QuickBolusIncrement.UNITS_0_5;
+                case 1000:
+                    return QuickBolusIncrement.UNITS_1_0;
+                case 2000:
+                    return QuickBolusIncrement.UNITS_2_0;
+                case 5000:
+                    return QuickBolusIncrement.UNITS_5_0;
+            }
+        } else if (getQuickBolusEntryType() == 1) {
+            switch (getQuickBolusIncrementCarbs()) {
+                case 2000:
+                    return QuickBolusIncrement.CARBS_2G;
+                case 5000:
+                    return QuickBolusIncrement.CARBS_5G;
+                case 10000:
+                    return QuickBolusIncrement.CARBS_10G;
+                case 15000:
+                    return QuickBolusIncrement.CARBS_15G;
+            }
+        }
+        return null;
     }
     public AnnunciationEnum getButtonAnnun() {
         return AnnunciationEnum.fromId(buttonAnnun);
