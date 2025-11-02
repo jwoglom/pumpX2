@@ -86,7 +86,7 @@ public class SetQuickBolusSettingsRequest extends Message {
 
         UNITS_0_5(true, QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),
         UNITS_1_0(true, QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),
-        UNITS_2_O(true, QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),
+        UNITS_2_0(true, QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),
         UNITS_5_0(true, QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),
 
         CARBS_2G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),

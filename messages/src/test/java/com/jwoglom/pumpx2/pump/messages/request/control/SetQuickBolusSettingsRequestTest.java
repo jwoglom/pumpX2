@@ -107,7 +107,7 @@ public class SetQuickBolusSettingsRequestTest {
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
         assertTrue(parsedReq.isEnabled());
         assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.UNITS_2_O, parsedReq.getIncrement());
+        assertEquals(QuickBolusIncrement.UNITS_2_0, parsedReq.getIncrement());
     }
 
     @Test
@@ -241,7 +241,7 @@ public class SetQuickBolusSettingsRequestTest {
                 new SetQuickBolusSettingsRequest(new byte[]{1,0,-24,3,-48,7,4})
             },
             {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_2_O),
+                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_2_0),
                 new SetQuickBolusSettingsRequest(new byte[]{1,0,-48,7,-48,7,4})
             },
             {
