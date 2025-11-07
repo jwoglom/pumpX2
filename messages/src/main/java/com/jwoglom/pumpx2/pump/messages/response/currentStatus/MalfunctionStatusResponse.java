@@ -18,7 +18,8 @@ import java.util.Locale;
  */
 @MessageProps(
     opCode=121,
-    size=11,
+    size=10, // or 11
+    variableSize=true,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CURRENT_STATUS,
     request= MalfunctionStatusRequest.class
@@ -40,7 +41,7 @@ public class MalfunctionStatusResponse extends NotificationMessage {
     }
 
     public void parse(byte[] raw) {
-        Validate.isTrue(raw.length == props().size());
+        Validate.isTrue(raw.length >= props().size());
         this.cargo = raw;
         this.codeA = Bytes.readUint32(raw, 0);
         this.codeB = Bytes.readUint32(raw, 4);
