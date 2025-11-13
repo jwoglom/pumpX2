@@ -106,10 +106,10 @@ public class HistoryLogParser {
     private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {
         HistoryLog historyLog = null;
         if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
-            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
+            L.d(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
             historyLog = new UnknownHistoryLog();
             historyLog.parse(rawStream);
-            L.i(TAG, String.format("Processed embedded HistoryLog: UnknownHistoryLog (%d): %s", typeId, Hex.encodeHexString(rawStream)));
+            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));
             return historyLog;
         }
 
@@ -124,7 +124,7 @@ public class HistoryLogParser {
         String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());
         L.d(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
         historyLog.parse(rawStream);
-        L.i(TAG, String.format("Processed embedded HistoryLog: %s (%d): %s", name, typeId, Hex.encodeHexString(rawStream)));
+        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));
         return historyLog;
     }
 }

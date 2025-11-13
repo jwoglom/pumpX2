@@ -378,14 +378,14 @@ public enum Messages {
         try {
             Class<? extends Message> clazz = OPCODES.get(Pair.of(characteristic, opCode));
             if (clazz == null) {
-                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));
+                L.i(TAG, String.format("UNKNOWN-MESSAGE-OPCODE(opCode=%-3d, characteristic=%s): %s", opCode, characteristic.name(), Hex.encodeHexString(data)));
                 return null;
             }
             Message msg = clazz.newInstance();
             msg.parse(data);
             return msg;
         } catch (Exception e) {
-            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);
+            L.w(TAG, String.format("MESSAGE-PARSE-ERROR(opCode=%-3d, characteristic=%s): %s", opCode, characteristic.name(), Hex.encodeHexString(data)), e);
             e.printStackTrace();
             return null;
         }

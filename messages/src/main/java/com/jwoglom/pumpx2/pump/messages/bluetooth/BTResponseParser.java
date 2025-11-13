@@ -58,7 +58,7 @@ public class BTResponseParser {
                 L.d(TAG, "PacketArrayList could not validate");
             }
         } else {
-            L.i(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
+            L.d(TAG, "PacketArrayList needs more packets: "+Hex.encodeHexString(output));
             return new PumpResponseMessage(output);
         }
 

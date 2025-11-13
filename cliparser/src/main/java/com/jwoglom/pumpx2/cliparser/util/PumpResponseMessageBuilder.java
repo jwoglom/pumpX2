@@ -88,7 +88,7 @@ public class PumpResponseMessageBuilder {
                 btChar = CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.toString();
             } else {
                 Characteristic guessedCharacteristic = CharacteristicGuesser.guessBestCharacteristic(valueStr, value[2]);
-                L.i(TAG, "guessed characteristic for opCode " + value[2] + ": " + guessedCharacteristic);
+                L.d(TAG, "guessed characteristic for opCode " + value[2] + ": " + guessedCharacteristic);
                 if (guessedCharacteristic == null) {
                     throw new NoMessageMatch.NoOpCodeForCharacteristicException(value[2], null, null, valueStr, null);
                 }
