@@ -169,6 +169,11 @@ public class PacketArrayList {
             this.expectedCargoSize = 51;
             this.actualExpectedCargoSize = 51;
         }
+        // MalfunctionStatusResponse can have cargo size 10 or 11
+        else if (121 == opCode && 10 == cargoSize) {
+            this.expectedCargoSize = 10;
+            this.actualExpectedCargoSize = 10;
+        }
 
 
 

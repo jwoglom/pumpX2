@@ -18,7 +18,7 @@ import java.util.Locale;
  */
 @MessageProps(
     opCode=121,
-    size=10, // or 11
+    size=11, // or 10
     variableSize=true,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CURRENT_STATUS,
