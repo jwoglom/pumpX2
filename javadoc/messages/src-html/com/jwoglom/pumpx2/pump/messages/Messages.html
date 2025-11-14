@@ -395,14 +395,14 @@
 <span class="source-line-no">378</span><span id="line-378">        try {</span>
 <span class="source-line-no">379</span><span id="line-379">            Class&lt;? extends Message&gt; clazz = OPCODES.get(Pair.of(characteristic, opCode));</span>
 <span class="source-line-no">380</span><span id="line-380">            if (clazz == null) {</span>
-<span class="source-line-no">381</span><span id="line-381">                L.w(TAG, "Unable to find message for opCode: " + opCode +" for " + characteristic + " with data: " + Hex.encodeHexString(data));</span>
+<span class="source-line-no">381</span><span id="line-381">                L.i(TAG, String.format("UNKNOWN-MESSAGE-OPCODE(opCode=%-3d, characteristic=%s): %s", opCode, characteristic.name(), Hex.encodeHexString(data)));</span>
 <span class="source-line-no">382</span><span id="line-382">                return null;</span>
 <span class="source-line-no">383</span><span id="line-383">            }</span>
 <span class="source-line-no">384</span><span id="line-384">            Message msg = clazz.newInstance();</span>
 <span class="source-line-no">385</span><span id="line-385">            msg.parse(data);</span>
 <span class="source-line-no">386</span><span id="line-386">            return msg;</span>
 <span class="source-line-no">387</span><span id="line-387">        } catch (Exception e) {</span>
-<span class="source-line-no">388</span><span id="line-388">            L.w(TAG, "Unable to invoke parse of data: " + Hex.encodeHexString(data) + " opCode: " + opCode + " " + characteristic, e);</span>
+<span class="source-line-no">388</span><span id="line-388">            L.w(TAG, String.format("MESSAGE-PARSE-ERROR(opCode=%-3d, characteristic=%s): %s", opCode, characteristic.name(), Hex.encodeHexString(data)), e);</span>
 <span class="source-line-no">389</span><span id="line-389">            e.printStackTrace();</span>
 <span class="source-line-no">390</span><span id="line-390">            return null;</span>
 <span class="source-line-no">391</span><span id="line-391">        }</span>

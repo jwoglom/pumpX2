@@ -123,10 +123,10 @@
 <span class="source-line-no">106</span><span id="line-106">    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {</span>
 <span class="source-line-no">107</span><span id="line-107">        HistoryLog historyLog = null;</span>
 <span class="source-line-no">108</span><span id="line-108">        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {</span>
-<span class="source-line-no">109</span><span id="line-109">            L.w(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
+<span class="source-line-no">109</span><span id="line-109">            L.d(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
 <span class="source-line-no">110</span><span id="line-110">            historyLog = new UnknownHistoryLog();</span>
 <span class="source-line-no">111</span><span id="line-111">            historyLog.parse(rawStream);</span>
-<span class="source-line-no">112</span><span id="line-112">            L.i(TAG, String.format("Processed embedded HistoryLog: UnknownHistoryLog (%d): %s", typeId, Hex.encodeHexString(rawStream)));</span>
+<span class="source-line-no">112</span><span id="line-112">            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));</span>
 <span class="source-line-no">113</span><span id="line-113">            return historyLog;</span>
 <span class="source-line-no">114</span><span id="line-114">        }</span>
 <span class="source-line-no">115</span><span id="line-115"></span>
@@ -141,7 +141,7 @@
 <span class="source-line-no">124</span><span id="line-124">        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());</span>
 <span class="source-line-no">125</span><span id="line-125">        L.d(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
 <span class="source-line-no">126</span><span id="line-126">        historyLog.parse(rawStream);</span>
-<span class="source-line-no">127</span><span id="line-127">        L.i(TAG, String.format("Processed embedded HistoryLog: %s (%d): %s", name, typeId, Hex.encodeHexString(rawStream)));</span>
+<span class="source-line-no">127</span><span id="line-127">        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));</span>
 <span class="source-line-no">128</span><span id="line-128">        return historyLog;</span>
 <span class="source-line-no">129</span><span id="line-129">    }</span>
 <span class="source-line-no">130</span><span id="line-130">}</span>
