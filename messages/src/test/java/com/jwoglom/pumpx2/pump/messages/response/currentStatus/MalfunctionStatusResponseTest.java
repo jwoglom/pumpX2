@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -56,5 +57,27 @@ public class MalfunctionStatusResponseTest {
         assertEquals(3, parsedRes.getCodeA());
         assertEquals(0x2026, parsedRes.getCodeB());
         assertEquals("3-0x2026", parsedRes.getErrorString());
+    }
+
+    // 18-0x2077 -- appears on new pump
+    @Test
+    public void testMalfunction_ignorable_18_0x2077() throws DecoderException {
+        MalfunctionStatusResponse expected = new MalfunctionStatusResponse(
+                18, 8311, new byte[]{2, 3, 10}
+        );
+
+        // MalfunctionStatusResponse[codeA=18,codeB=8311,errorString=18-0x2077,remaining={2,3,10},cargo={18,0,0,0,119,32,0,0,2,3,10}]
+        MalfunctionStatusResponse parsedRes = (MalfunctionStatusResponse) MessageTester.test(
+                "005979590b120000007720000002030a5792",
+                89,
+                1,
+                CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS,
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(18, parsedRes.getCodeA());
+        assertEquals(0x2077, parsedRes.getCodeB());
+        assertFalse(parsedRes.hasMalfunction());
     }
 }

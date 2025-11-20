@@ -76,15 +76,17 @@ public class MalfunctionStatusResponse extends NotificationMessage {
         return String.format(Locale.US, "%d-%#x", getCodeA(), getCodeB());
     }
 
-    public boolean hasMalfunction() {
-        // empty
-        if (getCodeA() == 0 && getCodeB() == 0) {
-            return false;
-        }
+    public long[][] IGNORABLE_CODES = new long[][]{
+            {0, 0}, // empty
+            {3, 8230}, // 3-0x2026
+            {18, 8311}, // 18-0x2077 (codeA=18, codeB=8311, remaining={2,3,10}
+    };
 
-        // 3-0x2026 -- appears to be ignorable
-        if (getCodeA() == 3 && getCodeB() == 8230) {
-            return false;
+    public boolean hasMalfunction() {
+        for (long[] code : IGNORABLE_CODES) {
+            if (code[0] == getCodeA() && code[1] == getCodeB()) {
+                return false;
+            }
         }
 
         return true;
