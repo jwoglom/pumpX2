@@ -76,64 +76,71 @@
 <span class="source-line-no">059</span><span id="line-59">        parse(raw);</span>
 <span class="source-line-no">060</span><span id="line-60">    }</span>
 <span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * Sets a temp rate for basal delivery.</span>
-<span class="source-line-no">064</span><span id="line-64">     *</span>
-<span class="source-line-no">065</span><span id="line-65">     * @param minutes between 15 minutes and 72 hours. durations shorter than 15 minutes are not supported and the pump will return an error</span>
-<span class="source-line-no">066</span><span id="line-66">     * @param percent between 0 percent and 250 percent. values above 250% are not supported and the pump will return an error</span>
-<span class="source-line-no">067</span><span id="line-67">     */</span>
-<span class="source-line-no">068</span><span id="line-68">    public SetTempRateRequest(int minutes, int percent) {</span>
-<span class="source-line-no">069</span><span id="line-69">        Validate.isTrue(minutes &gt;= 15 &amp;&amp; minutes &lt;= 72*60, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");</span>
-<span class="source-line-no">070</span><span id="line-70">        Validate.isTrue(percent &gt;= 0 &amp;&amp; percent &lt;= 250, "percent temp rate must be between 0-250%");</span>
-<span class="source-line-no">071</span><span id="line-71">        this.cargo = buildCargo(minutes, percent);</span>
-<span class="source-line-no">072</span><span id="line-72">        this.minutes = minutes;</span>
-<span class="source-line-no">073</span><span id="line-73">        this.percent = percent;</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    /**</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;caption&gt;Parsed fields for SetTempRateRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;minutes&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;percent&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 4)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;/table&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     */</span>
-<span class="source-line-no">083</span><span id="line-83">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">084</span><span id="line-84">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">085</span><span id="line-85">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">086</span><span id="line-86">        this.cargo = raw;</span>
-<span class="source-line-no">087</span><span id="line-87">        this.minutes = Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60);</span>
-<span class="source-line-no">088</span><span id="line-88">        this.percent = Bytes.readShort(raw, 4);</span>
-<span class="source-line-no">089</span><span id="line-89">    }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">    </span>
-<span class="source-line-no">092</span><span id="line-92">    /**</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;caption&gt;Byte layout for SetTempRateRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(percent) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(percent) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     * &lt;/table&gt;</span>
-<span class="source-line-no">103</span><span id="line-103">     */</span>
-<span class="source-line-no">104</span><span id="line-104">    public static byte[] buildCargo(int minutes, int percent) {</span>
-<span class="source-line-no">105</span><span id="line-105">        return Bytes.combine(</span>
-<span class="source-line-no">106</span><span id="line-106">                Bytes.toUint32(minutes * 1000L * 60L),</span>
-<span class="source-line-no">107</span><span id="line-107">                Bytes.firstTwoBytesLittleEndian(percent)</span>
-<span class="source-line-no">108</span><span id="line-108">        );</span>
-<span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">    public int getMinutes() {</span>
-<span class="source-line-no">113</span><span id="line-113">        return minutes;</span>
-<span class="source-line-no">114</span><span id="line-114">    }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">    public int getPercent() {</span>
-<span class="source-line-no">117</span><span id="line-117">        return percent;</span>
-<span class="source-line-no">118</span><span id="line-118">    }</span>
-<span class="source-line-no">119</span><span id="line-119">}</span>
+<span class="source-line-no">062</span><span id="line-62">    public static int MIN_MINUTES = 15;</span>
+<span class="source-line-no">063</span><span id="line-63">    public static int MAX_MINUTES = 72 * 60;</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    public static int MIN_PERCENT = 0;</span>
+<span class="source-line-no">066</span><span id="line-66">    public static int MAX_PERCENT = 250;</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    /**</span>
+<span class="source-line-no">070</span><span id="line-70">     * Sets a temp rate for basal delivery.</span>
+<span class="source-line-no">071</span><span id="line-71">     *</span>
+<span class="source-line-no">072</span><span id="line-72">     * @param minutes between 15 minutes and 72 hours. durations shorter than 15 minutes are not supported and the pump will return an error</span>
+<span class="source-line-no">073</span><span id="line-73">     * @param percent between 0 percent and 250 percent. values above 250% are not supported and the pump will return an error</span>
+<span class="source-line-no">074</span><span id="line-74">     */</span>
+<span class="source-line-no">075</span><span id="line-75">    public SetTempRateRequest(int minutes, int percent) {</span>
+<span class="source-line-no">076</span><span id="line-76">        Validate.isTrue(minutes &gt;= MIN_MINUTES &amp;&amp; minutes &lt;= MAX_MINUTES, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");</span>
+<span class="source-line-no">077</span><span id="line-77">        Validate.isTrue(percent &gt;= MIN_PERCENT &amp;&amp; percent &lt;= MAX_PERCENT, "percent temp rate must be between 0-250%");</span>
+<span class="source-line-no">078</span><span id="line-78">        this.cargo = buildCargo(minutes, percent);</span>
+<span class="source-line-no">079</span><span id="line-79">        this.minutes = minutes;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.percent = percent;</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    /**</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;caption&gt;Parsed fields for SetTempRateRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;minutes&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;percent&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 4)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;/table&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     */</span>
+<span class="source-line-no">090</span><span id="line-90">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">091</span><span id="line-91">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">092</span><span id="line-92">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">093</span><span id="line-93">        this.cargo = raw;</span>
+<span class="source-line-no">094</span><span id="line-94">        this.minutes = Math.toIntExact(Bytes.readUint32(raw, 0) / 1000 / 60);</span>
+<span class="source-line-no">095</span><span id="line-95">        this.percent = Bytes.readShort(raw, 4);</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    </span>
+<span class="source-line-no">099</span><span id="line-99">    /**</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;caption&gt;Byte layout for SetTempRateRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(minutes * 1000L * 60L) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(percent) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(percent) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     * &lt;/table&gt;</span>
+<span class="source-line-no">110</span><span id="line-110">     */</span>
+<span class="source-line-no">111</span><span id="line-111">    public static byte[] buildCargo(int minutes, int percent) {</span>
+<span class="source-line-no">112</span><span id="line-112">        return Bytes.combine(</span>
+<span class="source-line-no">113</span><span id="line-113">                Bytes.toUint32(minutes * 1000L * 60L),</span>
+<span class="source-line-no">114</span><span id="line-114">                Bytes.firstTwoBytesLittleEndian(percent)</span>
+<span class="source-line-no">115</span><span id="line-115">        );</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    public int getMinutes() {</span>
+<span class="source-line-no">120</span><span id="line-120">        return minutes;</span>
+<span class="source-line-no">121</span><span id="line-121">    }</span>
+<span class="source-line-no">122</span><span id="line-122"></span>
+<span class="source-line-no">123</span><span id="line-123">    public int getPercent() {</span>
+<span class="source-line-no">124</span><span id="line-124">        return percent;</span>
+<span class="source-line-no">125</span><span id="line-125">    }</span>
+<span class="source-line-no">126</span><span id="line-126">}</span>
 
 
 
