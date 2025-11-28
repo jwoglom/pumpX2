@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.cliparser;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
 import com.jwoglom.pumpx2.cliparser.util.JsonMessageParser;
@@ -92,6 +95,9 @@ public class Main {
         switch (args[0].toLowerCase(Locale.ROOT)) {
             case "opcode":
                 System.out.println(parseOpcode(args[1]));
+                break;
+            case "listallcommands":
+                listAllCommands();
                 break;
             case "parse":
                 System.out.println(parseFull(args[1], extra));
@@ -531,5 +537,31 @@ public class Main {
         String type = message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
         int typeId = message.typeId();
         return typeId+"\t"+type+"\t"+rawHex+"\t"+message;
+    }
+
+    public static void listAllCommands() {
+        Map<Integer, String> currentStatus = new HashMap<>();
+        Map<Integer, String> control = new HashMap<>();
+        for (Messages m : Messages.values()) {
+            if (m.requestProps().characteristic().equals(Characteristic.CURRENT_STATUS)) {
+                currentStatus.put(sanitizedOpcode(m.requestOpCode()), m.requestClass().getSimpleName());
+            } else if (m.requestProps().characteristic().equals(Characteristic.CONTROL)) {
+                control.put(sanitizedOpcode(m.requestOpCode()), m.requestClass().getSimpleName());
+            }
+        }
+
+        System.out.println("CurrentStatus:");
+        for (Integer opCode : currentStatus.keySet().stream().sorted().collect(Collectors.toList())) {
+            System.out.println(opCode+"\t"+currentStatus.get(opCode));
+        }
+        System.out.println("\n");
+        System.out.println("Control:");
+        for (Integer opCode : control.keySet().stream().sorted().collect(Collectors.toList())) {
+            System.out.println(opCode+"\t"+control.get(opCode));
+        }
+    }
+
+    public static Integer sanitizedOpcode(int opCode) {
+        return (int) ((byte) opCode);
     }
 }

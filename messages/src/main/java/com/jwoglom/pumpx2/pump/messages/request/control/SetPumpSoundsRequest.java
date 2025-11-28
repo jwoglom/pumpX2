@@ -42,7 +42,24 @@ public class SetPumpSoundsRequest extends Message {
     public SetPumpSoundsRequest() {}
 
     public SetPumpSoundsRequest(int quickBolusAnnunRaw, int generalAnnunRaw, int reminderAnnunRaw, int alertAnnunRaw, int alarmAnnunRaw, int cgmAlertAnnunA, int cgmAlertAnnunB, int changeBitmaskRaw) {
-        this.cargo = buildCargo(quickBolusAnnunRaw, generalAnnunRaw, reminderAnnunRaw, alertAnnunRaw, alarmAnnunRaw, cgmAlertAnnunA, cgmAlertAnnunB, changeBitmaskRaw);
+        this(0, quickBolusAnnunRaw, generalAnnunRaw, reminderAnnunRaw, alertAnnunRaw, alarmAnnunRaw, cgmAlertAnnunA, cgmAlertAnnunB, changeBitmaskRaw);
+    }
+
+
+    public SetPumpSoundsRequest(
+            PumpGlobalsResponse.AnnunciationEnum quickBolusAnnun,
+            PumpGlobalsResponse.AnnunciationEnum generalAnnun,
+            PumpGlobalsResponse.AnnunciationEnum reminderAnnun,
+            PumpGlobalsResponse.AnnunciationEnum alertAnnun,
+            PumpGlobalsResponse.AnnunciationEnum alarmAnnun,
+            CgmAlertAnnunciationEnum cgmAlertAnnun,
+            ChangeBitmask changeBitmask
+    ) {
+        this(0, quickBolusAnnun.id(), generalAnnun.id(), reminderAnnun.id(), alertAnnun.id(), alarmAnnun.id(), cgmAlertAnnun.getIdA(), cgmAlertAnnun.getIdB(), changeBitmask.id());
+    }
+
+    public SetPumpSoundsRequest(int firstByteUnknown, int quickBolusAnnunRaw, int generalAnnunRaw, int reminderAnnunRaw, int alertAnnunRaw, int alarmAnnunRaw, int cgmAlertAnnunA, int cgmAlertAnnunB, int changeBitmaskRaw) {
+        this.cargo = buildCargo(firstByteUnknown, quickBolusAnnunRaw, generalAnnunRaw, reminderAnnunRaw, alertAnnunRaw, alarmAnnunRaw, cgmAlertAnnunA, cgmAlertAnnunB, changeBitmaskRaw);
         parse(cargo);
     }
 
@@ -74,9 +91,9 @@ public class SetPumpSoundsRequest extends Message {
     }
 
     
-    public static byte[] buildCargo(int quickBolusAnnunRaw, int generalAnnunRaw, int reminderAnnunRaw, int alertAnnunRaw, int alarmAnnunRaw, int cgmAlertAnnunA, int cgmAlertAnnunB, int changeBitmask) {
+    public static byte[] buildCargo(int firstByteUnknown, int quickBolusAnnunRaw, int generalAnnunRaw, int reminderAnnunRaw, int alertAnnunRaw, int alarmAnnunRaw, int cgmAlertAnnunA, int cgmAlertAnnunB, int changeBitmask) {
         return Bytes.combine(
-            new byte[]{0},
+            new byte[]{ (byte) firstByteUnknown },
             new byte[]{ (byte) quickBolusAnnunRaw },
             new byte[]{ (byte) generalAnnunRaw },
             new byte[]{ (byte) reminderAnnunRaw },
@@ -168,6 +185,14 @@ public class SetPumpSoundsRequest extends Message {
             }
             return null;
         }
+
+        public int getIdA() {
+            return idA;
+        }
+
+        public int getIdB() {
+            return idB;
+        }
     }
 
     public CgmAlertAnnunciationEnum getCgmAlertAnnun() {
@@ -198,7 +223,7 @@ public class SetPumpSoundsRequest extends Message {
         public static Set<ChangeBitmask> fromBitmask(int bitmask) {
             Set<ChangeBitmask> set = new TreeSet<>();
             for (ChangeBitmask i : values()) {
-                if (bitmask % i.id() == 0) {
+                if ((bitmask & i.id()) != 0) {
                     set.add(i);
                 }
             }

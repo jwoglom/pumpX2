@@ -35,6 +35,13 @@ public class SetTempRateRequest extends Message {
         parse(raw);
     }
 
+    public static int MIN_MINUTES = 15;
+    public static int MAX_MINUTES = 72 * 60;
+
+    public static int MIN_PERCENT = 0;
+    public static int MAX_PERCENT = 250;
+
+
     /**
      * Sets a temp rate for basal delivery.
      *
@@ -42,8 +49,8 @@ public class SetTempRateRequest extends Message {
      * @param percent between 0 percent and 250 percent. values above 250% are not supported and the pump will return an error
      */
     public SetTempRateRequest(int minutes, int percent) {
-        Validate.isTrue(minutes >= 15 && minutes <= 72*60, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");
-        Validate.isTrue(percent >= 0 && percent <= 250, "percent temp rate must be between 0-250%");
+        Validate.isTrue(minutes >= MIN_MINUTES && minutes <= MAX_MINUTES, "duration of temp rate must be between 15 and 4,320 minutes (72 hours)");
+        Validate.isTrue(percent >= MIN_PERCENT && percent <= MAX_PERCENT, "percent temp rate must be between 0-250%");
         this.cargo = buildCargo(minutes, percent);
         this.minutes = minutes;
         this.percent = percent;
