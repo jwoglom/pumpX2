@@ -1,7 +1,6 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
 import java.time.Instant;
@@ -23,8 +22,13 @@ public abstract class LastBolusStatusAbstractResponse extends Message {
     public abstract int getBolusStatusId();
     public enum BolusStatus {
         // TODO: this is guesswork and is incomplete
-        STOPPED(0),
+        STOPPED_USER_TERMINATED(0),
+        STOPPED_ALARM(1),
+        STOPPED_MALFUNCTION(2),
         COMPLETE(3),
+        STOPPED_WIRELESS(4),
+        REJECTED_WIRELESS(5),
+        TERMINATED_PLGS(6),
         ;
 
         private final int id;

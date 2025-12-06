@@ -4,7 +4,6 @@ import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -15,7 +14,7 @@ import java.util.TreeSet;
 public class BolusDeliveryHistoryLog extends HistoryLog {
     
     private int bolusID;
-    private int bolusDeliveryStatus;
+    private int bolusDeliveryStatusId;
     private int bolusTypeBitmask;
     private int bolusSource;
     private int reserved;
@@ -27,12 +26,12 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     
     public BolusDeliveryHistoryLog() {}
     
-    public BolusDeliveryHistoryLog(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, Set<BolusType> bolusTypes, BolusSource bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusID, bolusDeliveryStatus, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), reserved, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
+    public BolusDeliveryHistoryLog(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatusId, Set<BolusType> bolusTypes, BolusSource bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusID, bolusDeliveryStatusId, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), reserved, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusID = bolusID;
-        this.bolusDeliveryStatus = bolusDeliveryStatus;
+        this.bolusDeliveryStatusId = bolusDeliveryStatusId;
         this.bolusTypeBitmask = BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{}));
         this.bolusSource = bolusSource.id();
         this.reserved = reserved;
@@ -53,7 +52,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.bolusID = Bytes.readShort(raw, 10);
-        this.bolusDeliveryStatus = raw[12];
+        this.bolusDeliveryStatusId = raw[12];
         this.bolusTypeBitmask = raw[13];
         this.bolusSource = raw[14];
         this.reserved = raw[15];
@@ -85,8 +84,8 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     public int getBolusID() {
         return bolusID;
     }
-    public int getBolusDeliveryStatus() {
-        return bolusDeliveryStatus;
+    public int getBolusDeliveryStatusId() {
+        return bolusDeliveryStatusId;
     }
     public int getBolusTypeBitmask() {
         return bolusTypeBitmask;

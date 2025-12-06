@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAbstractResponse;
 
 @HistoryLogProps(
     opCode = 21,
@@ -11,7 +12,8 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 )
 public class BolexCompletedHistoryLog extends HistoryLog {
     
-    private int completionStatus;
+    private int completionStatusId;
+    private LastBolusStatusAbstractResponse.BolusStatus completionStatus;
     private int bolusId;
     private float iob;
     private float insulinDelivered;
@@ -19,11 +21,12 @@ public class BolexCompletedHistoryLog extends HistoryLog {
     
     public BolexCompletedHistoryLog() {}
     
-    public BolexCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatus, bolusId, iob, insulinDelivered, insulinRequested);
+    public BolexCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatusId, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatusId, bolusId, iob, insulinDelivered, insulinRequested);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
-        this.completionStatus = completionStatus;
+        this.completionStatusId = completionStatusId;
+        this.completionStatus = LastBolusStatusAbstractResponse.BolusStatus.fromId(completionStatusId);
         this.bolusId = bolusId;
         this.iob = iob;
         this.insulinDelivered = insulinDelivered;
@@ -39,7 +42,8 @@ public class BolexCompletedHistoryLog extends HistoryLog {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.completionStatus = Bytes.readShort(raw, 10);
+        this.completionStatusId = Bytes.readShort(raw, 10);
+        this.completionStatus = LastBolusStatusAbstractResponse.BolusStatus.fromId(completionStatusId);
         this.bolusId = Bytes.readShort(raw, 12);
         this.iob = Bytes.readFloat(raw, 14);
         this.insulinDelivered = Bytes.readFloat(raw, 18);
@@ -60,7 +64,10 @@ public class BolexCompletedHistoryLog extends HistoryLog {
             Bytes.toFloat(insulinRequested));
     }
     
-    public int getCompletionStatus() {
+    public int getCompletionStatusId() {
+        return completionStatusId;
+    }
+    public LastBolusStatusAbstractResponse.BolusStatus getCompletionStatus() {
         return completionStatus;
     }
     public int getBolusId() {

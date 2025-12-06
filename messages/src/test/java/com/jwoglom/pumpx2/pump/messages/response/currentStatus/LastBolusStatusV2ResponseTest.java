@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV2Response;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog;
 
 import org.apache.commons.codec.DecoderException;
@@ -75,7 +74,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
 
-        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
         assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
@@ -121,7 +120,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
 
-        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
         assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
     }
@@ -170,7 +169,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
 
-        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
         assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.EXTENDED), parsedRes.getBolusType());
     }
@@ -193,7 +192,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
 
-        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED, parsedRes.getBolusStatus());
+        assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.QUICK_BOLUS, parsedRes.getBolusSource());
         assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
     }
