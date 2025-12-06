@@ -15,4 +15,5 @@ public @interface HistoryLogProps {
     boolean usedByTidepool() default false;
     boolean usedByTconnectsync() default false;
     String displayName() default "";
+    String internalName() default "";
 }

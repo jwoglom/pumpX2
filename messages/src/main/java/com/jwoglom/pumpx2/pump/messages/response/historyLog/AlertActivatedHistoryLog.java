@@ -10,6 +10,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 4,
     displayName = "Alert Activated",
+    internalName = "LID_ALERT_ACTIVATED",
     usedByTidepool = true
 )
 public class AlertActivatedHistoryLog extends HistoryLog {

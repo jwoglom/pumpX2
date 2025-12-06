@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 3,
     displayName = "Basal Rate Change",
+    internalName = "LID_BASAL_RATE_CHANGE",
     usedByTidepool = true
 )
 public class BasalRateChangeHistoryLog extends HistoryLog {
