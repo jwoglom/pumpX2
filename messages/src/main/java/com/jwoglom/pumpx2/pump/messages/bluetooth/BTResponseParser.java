@@ -25,7 +25,7 @@ public class BTResponseParser {
 
     @SuppressWarnings("DefaultLocale")
     public static PumpResponseMessage parse(Message message, PacketArrayList packetArrayList, byte[] output, UUID uuid) {
-        L.d(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
+        L.t(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());
         checkCharacteristicUuid(uuid, output);
 
         packetArrayList.validatePacket(output);
@@ -45,7 +45,7 @@ public class BTResponseParser {
                 byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);
                 byte b4 = packetArrayList.opCode();
                 byte txId = packetArrayList.getExpectedTxId();
-                L.d(TAG, "Parsing message with opcode "+b4);
+                L.t(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
                 if (msg == null) {
                     L.w(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));

@@ -27,7 +27,7 @@ public class Packetize {
 
     private static int determineMaxChunkSize(Message message) {
         if (message.getCharacteristic().equals(Characteristic.CONTROL) && message.type().equals(MessageType.REQUEST)) {
-            L.d(TAG, "using maxChunkSize="+CONTROL_MAX_CHUNK_SIZE+" for control request characteristic");
+            L.t(TAG, "using maxChunkSize="+CONTROL_MAX_CHUNK_SIZE+" for control request characteristic");
             return CONTROL_MAX_CHUNK_SIZE;
         }
 

@@ -27,29 +27,29 @@ public class StreamPacketArrayList extends PacketArrayList {
         } else if (packetData.length >= 3) {
             byte firstByteMod15 = (byte) (packetData[0] & 15);
             byte secondByte = packetData[1];
-            L.d(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
+            L.t(TAG, "Found tx id: "+secondByte+" expected "+this.expectedTxId);
             if (secondByte == this.expectedTxId) {
                 if (this.empty) {
                     this.firstByteMod15 = firstByteMod15;
-                    L.d(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
+                    L.t(TAG, "txid matches, firstByteMod15="+firstByteMod15+", parsing packetData");
                     parse(packetData);
                 } else if (((byte) 0) == firstByteMod15) {
-                    L.d(TAG, "firstByteMod15=0");
+                    L.t(TAG, "firstByteMod15=0");
                     if (this.firstByteMod15 == firstByteMod15) {
                         this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                        L.d(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
+                        L.t(TAG, "firstByteMod15 matches expected, fullCargo="+ Hex.encodeHexString(fullCargo));
                     } else {
                         throw new IllegalArgumentException("Unexpected packets remaining 3: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                     }
                 } else if (this.firstByteMod15 == firstByteMod15) {
                     this.fullCargo = Bytes.combine(this.fullCargo, Bytes.dropFirstN(packetData, 2));
-                    L.d(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
+                    L.t(TAG, "firstByteMod15 matches expected, nonzero, fullCargo=" + Hex.encodeHexString(fullCargo));
                 } else {
                     throw new IllegalArgumentException("Unexpected packets remaining 2: " + ((int) firstByteMod15) + ", expected " + ((int) this.firstByteMod15) + ", opCode: " + ((int) this.expectedOpCode));
                 }
                 //if (!moreHistoryLogsRemaining()) {
                 if (!needsMorePacket()) {
-                    L.d(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));
+                    L.t(TAG, String.format("Completed parsing historyLog: %s", Hex.encodeHexString(this.messageData)));
                     this.empty = true;
                 }
                 this.firstByteMod15 = (byte) (this.firstByteMod15 - 1);
@@ -62,7 +62,7 @@ public class StreamPacketArrayList extends PacketArrayList {
     }
 
     protected void parse(byte[] bArr) {
-        L.d(TAG, String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));
+        L.t(TAG, String.format("Parsing stream byte array opCode=%d cargoSize=%d: %s", bArr[2], bArr[4], Hex.encodeHexString(bArr)));
         byte opCode = bArr[2];
         byte cargoSize = bArr[4];
         if (opCode == this.expectedOpCode) {
@@ -74,7 +74,7 @@ public class StreamPacketArrayList extends PacketArrayList {
                 throw new UnexpectedTransactionIdException(txId, this.expectedTxId, this.expectedOpCode);
             } else if (cargoSize != this.actualExpectedCargoSize) {
                 if (cargoSize == this.actualExpectedCargoSize + 24 && isSigned) {
-                    L.d(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
+                    L.t(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     this.expectedCargoSize += 24;
                     this.actualExpectedCargoSize += 24;
                 } else if (opCode != HISTORY_LOG_STREAM_OPCODE) {
@@ -87,8 +87,8 @@ public class StreamPacketArrayList extends PacketArrayList {
             if ((byte) opCode == HISTORY_LOG_STREAM_OPCODE) {
                 if (cargoSize <= 255) {
                     byte numHistoryLogs = bArr[5];
-                    L.d(TAG, "StreamPacketArrayParse check: opCode="+opCode+" numHistoryLogs="+numHistoryLogs+" expHistoryLogs="+((numHistoryLogs * 26) + 2)+" cargoSize="+cargoSize);
-                    L.d(TAG, "StreamPacketArrayParse bArr="+Hex.encodeHexString(bArr)+" oldFullCargo="+Hex.encodeHexString(fullCargo)+" newFullCargo="+Hex.encodeHexString(Bytes.dropFirstN(bArr, 5)));
+                    L.t(TAG, "StreamPacketArrayParse check: opCode="+opCode+" numHistoryLogs="+numHistoryLogs+" expHistoryLogs="+((numHistoryLogs * 26) + 2)+" cargoSize="+cargoSize);
+                    L.t(TAG, "StreamPacketArrayParse bArr="+Hex.encodeHexString(bArr)+" oldFullCargo="+Hex.encodeHexString(fullCargo)+" newFullCargo="+Hex.encodeHexString(Bytes.dropFirstN(bArr, 5)));
                     if (cargoSize != (numHistoryLogs * 26) + 2) {
                         throw new IllegalArgumentException("Cargo size doesn't match number of history logs requested");
                     } else {
@@ -103,7 +103,7 @@ public class StreamPacketArrayList extends PacketArrayList {
             throw new UnexpectedOpCodeException(opCode, this.expectedOpCode);
         }
 
-        L.d(TAG, "StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
+        L.t(TAG, "StreamPacketArrayParse ok: opCode="+opCode+" firstByteMod15="+firstByteMod15+" cargoSize="+cargoSize);
 
     }
 

@@ -6,6 +6,8 @@ import java.util.function.Consumer;
 public class L {
     public static final String LOG_PREFIX = "PumpX2";
 
+    public static boolean TraceEnabled = false;
+
     // Giant hack to allow this logging class to be used across Android and non-Android code
     public static TriConsumer<String, String, String> getTimberDebug = (a, b, c) -> {};
     public static TriConsumer<String, String, String> getTimberInfo = (a, b, c) -> {};
@@ -15,6 +17,18 @@ public class L {
     public static QuadConsumer<String, Throwable, String, String> getTimberErrorThrowable = (a, b, c, d) -> {};
 
     public static Consumer<String> getPrintln = System.out::println;
+
+    // Trace
+    public static void t(String tag, String out) {
+        if (TraceEnabled) {
+            getPrintln.accept(LOG_PREFIX + ":TRACE: " + tag + ": " + out);
+            try {
+                getTimberDebug.accept(tag, "%s", out);
+            } catch (RuntimeException e) {
+
+            }
+        }
+    }
 
     // Debug
     public static void d(String tag, String out) {
