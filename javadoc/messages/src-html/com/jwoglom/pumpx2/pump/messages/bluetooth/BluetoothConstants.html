@@ -20,10 +20,14 @@
 <span class="source-line-no">003</span><span id="line-3">public final class BluetoothConstants {</span>
 <span class="source-line-no">004</span><span id="line-4">    public final static String DEVICE_NAME_TSLIM_X2 = "tslim X2";</span>
 <span class="source-line-no">005</span><span id="line-5"></span>
-<span class="source-line-no">006</span><span id="line-6">    public static boolean isTandemBluetoothDevice(String deviceName) {</span>
-<span class="source-line-no">007</span><span id="line-7">        return deviceName.startsWith(DEVICE_NAME_TSLIM_X2);</span>
-<span class="source-line-no">008</span><span id="line-8">    }</span>
-<span class="source-line-no">009</span><span id="line-9">}</span>
+<span class="source-line-no">006</span><span id="line-6">    // note, the Bluetooth DIS device name still identifies as a X2.</span>
+<span class="source-line-no">007</span><span id="line-7">    // Only the user-visible name is labeled as "Tandem Mobi"</span>
+<span class="source-line-no">008</span><span id="line-8">    public final static String DEVICE_NAME_TANDEM_MOBI = "Tandem Mobi";</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">    public static boolean isTandemBluetoothDevice(String deviceName) {</span>
+<span class="source-line-no">011</span><span id="line-11">        return deviceName.startsWith(DEVICE_NAME_TSLIM_X2) || deviceName.startsWith(DEVICE_NAME_TANDEM_MOBI);</span>
+<span class="source-line-no">012</span><span id="line-12">    }</span>
+<span class="source-line-no">013</span><span id="line-13">}</span>
 
 
 

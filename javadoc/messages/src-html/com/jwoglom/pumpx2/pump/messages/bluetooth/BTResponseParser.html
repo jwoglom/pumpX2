@@ -42,7 +42,7 @@
 <span class="source-line-no">025</span><span id="line-25"></span>
 <span class="source-line-no">026</span><span id="line-26">    @SuppressWarnings("DefaultLocale")</span>
 <span class="source-line-no">027</span><span id="line-27">    public static PumpResponseMessage parse(Message message, PacketArrayList packetArrayList, byte[] output, UUID uuid) {</span>
-<span class="source-line-no">028</span><span id="line-28">        L.d(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());</span>
+<span class="source-line-no">028</span><span id="line-28">        L.t(TAG, "Parsing event with: message: "+message+" \npacketArrayList: "+packetArrayList+" \noutput: "+Hex.encodeHexString(output)+" \nuuid: "+uuid.toString());</span>
 <span class="source-line-no">029</span><span id="line-29">        checkCharacteristicUuid(uuid, output);</span>
 <span class="source-line-no">030</span><span id="line-30"></span>
 <span class="source-line-no">031</span><span id="line-31">        packetArrayList.validatePacket(output);</span>
@@ -62,7 +62,7 @@
 <span class="source-line-no">045</span><span id="line-45">                byte[] copyOfRange = Arrays.copyOfRange(a, 3, a.length);</span>
 <span class="source-line-no">046</span><span id="line-46">                byte b4 = packetArrayList.opCode();</span>
 <span class="source-line-no">047</span><span id="line-47">                byte txId = packetArrayList.getExpectedTxId();</span>
-<span class="source-line-no">048</span><span id="line-48">                L.d(TAG, "Parsing message with opcode "+b4);</span>
+<span class="source-line-no">048</span><span id="line-48">                L.t(TAG, "Parsing message with opcode "+b4);</span>
 <span class="source-line-no">049</span><span id="line-49">                Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));</span>
 <span class="source-line-no">050</span><span id="line-50">                if (msg == null) {</span>
 <span class="source-line-no">051</span><span id="line-51">                    L.w(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));</span>

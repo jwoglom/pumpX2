@@ -153,21 +153,21 @@
 <span class="source-line-no">136</span><span id="line-136">            this.clientRound1 = this.cli.getRound1();</span>
 <span class="source-line-no">137</span><span id="line-137">            byte[] challenge = Arrays.copyOfRange(this.clientRound1, 0, 165);</span>
 <span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">            L.d(TAG, "Req1a: " + Hex.encodeHexString(challenge));</span>
+<span class="source-line-no">139</span><span id="line-139">            L.t(TAG, "Req1a: " + Hex.encodeHexString(challenge));</span>
 <span class="source-line-no">140</span><span id="line-140">            request = new Jpake1aRequest(0, challenge);</span>
 <span class="source-line-no">141</span><span id="line-141"></span>
 <span class="source-line-no">142</span><span id="line-142">            step = JpakeStep.ROUND_1A_SENT;</span>
 <span class="source-line-no">143</span><span id="line-143">        } else if (step == JpakeStep.ROUND_1A_RECEIVED) {</span>
 <span class="source-line-no">144</span><span id="line-144">            byte[] challenge = Arrays.copyOfRange(this.clientRound1, 165, 330);</span>
 <span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">            L.d(TAG, "Req1b: " + Hex.encodeHexString(challenge));</span>
+<span class="source-line-no">146</span><span id="line-146">            L.t(TAG, "Req1b: " + Hex.encodeHexString(challenge));</span>
 <span class="source-line-no">147</span><span id="line-147">            request = new Jpake1bRequest(0, challenge);</span>
 <span class="source-line-no">148</span><span id="line-148"></span>
 <span class="source-line-no">149</span><span id="line-149">            step = JpakeStep.ROUND_1B_SENT;</span>
 <span class="source-line-no">150</span><span id="line-150">        } else if (step == JpakeStep.ROUND_1B_RECEIVED) {</span>
 <span class="source-line-no">151</span><span id="line-151">            this.clientRound2 = this.cli.getRound2();</span>
 <span class="source-line-no">152</span><span id="line-152">            byte[] challenge = Arrays.copyOfRange(this.clientRound2, 0, 165);</span>
-<span class="source-line-no">153</span><span id="line-153">            L.d(TAG, "Req2: " + Hex.encodeHexString(challenge));</span>
+<span class="source-line-no">153</span><span id="line-153">            L.t(TAG, "Req2: " + Hex.encodeHexString(challenge));</span>
 <span class="source-line-no">154</span><span id="line-154">            request = new Jpake2Request(0, challenge);</span>
 <span class="source-line-no">155</span><span id="line-155"></span>
 <span class="source-line-no">156</span><span id="line-156">            step = JpakeStep.ROUND_2_SENT;</span>
@@ -175,7 +175,7 @@
 <span class="source-line-no">158</span><span id="line-158">            request = new Jpake3SessionKeyRequest(0);</span>
 <span class="source-line-no">159</span><span id="line-159"></span>
 <span class="source-line-no">160</span><span id="line-160">            this.derivedSecret = this.cli.deriveSecret();</span>
-<span class="source-line-no">161</span><span id="line-161">            L.d(TAG, "Req3 DerivedSecret=" + Hex.encodeHexString(derivedSecret));</span>
+<span class="source-line-no">161</span><span id="line-161">            L.t(TAG, "Req3 DerivedSecret=" + Hex.encodeHexString(derivedSecret));</span>
 <span class="source-line-no">162</span><span id="line-162"></span>
 <span class="source-line-no">163</span><span id="line-163">            step = JpakeStep.CONFIRM_3_SENT;</span>
 <span class="source-line-no">164</span><span id="line-164">        } else if (step == JpakeStep.CONFIRM_INITIAL) {</span>
@@ -186,10 +186,10 @@
 <span class="source-line-no">169</span><span id="line-169">            this.clientNonce4 = generateNonce();</span>
 <span class="source-line-no">170</span><span id="line-170">            byte[] hashDigest3 = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(serverNonce3, derivedSecret));</span>
 <span class="source-line-no">171</span><span id="line-171"></span>
-<span class="source-line-no">172</span><span id="line-172">            L.d(TAG, "Req4: clientNonce4=" + Hex.encodeHexString(clientNonce4));</span>
-<span class="source-line-no">173</span><span id="line-173">            L.d(TAG, "Req4: derivedSecret=" + Hex.encodeHexString(derivedSecret));</span>
-<span class="source-line-no">174</span><span id="line-174">            L.d(TAG, "Req4: serverNonce3=" + Hex.encodeHexString(serverNonce3));</span>
-<span class="source-line-no">175</span><span id="line-175">            L.d(TAG, "Req4: hashDigest3=" + Hex.encodeHexString(hashDigest3));</span>
+<span class="source-line-no">172</span><span id="line-172">            L.t(TAG, "Req4: clientNonce4=" + Hex.encodeHexString(clientNonce4));</span>
+<span class="source-line-no">173</span><span id="line-173">            L.t(TAG, "Req4: derivedSecret=" + Hex.encodeHexString(derivedSecret));</span>
+<span class="source-line-no">174</span><span id="line-174">            L.t(TAG, "Req4: serverNonce3=" + Hex.encodeHexString(serverNonce3));</span>
+<span class="source-line-no">175</span><span id="line-175">            L.t(TAG, "Req4: hashDigest3=" + Hex.encodeHexString(hashDigest3));</span>
 <span class="source-line-no">176</span><span id="line-176">            request = new Jpake4KeyConfirmationRequest(0,</span>
 <span class="source-line-no">177</span><span id="line-177">                    clientNonce4,</span>
 <span class="source-line-no">178</span><span id="line-178">                    Jpake4KeyConfirmationRequest.RESERVED,</span>
@@ -223,13 +223,13 @@
 <span class="source-line-no">206</span><span id="line-206">        this.receivedMessages.add(response);</span>
 <span class="source-line-no">207</span><span id="line-207">        if (response instanceof Jpake1aResponse) {</span>
 <span class="source-line-no">208</span><span id="line-208">            Jpake1aResponse m = (Jpake1aResponse) response;</span>
-<span class="source-line-no">209</span><span id="line-209">            L.d(TAG, "Res1a: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
+<span class="source-line-no">209</span><span id="line-209">            L.t(TAG, "Res1a: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
 <span class="source-line-no">210</span><span id="line-210">            this.serverRound1 = m.getCentralChallengeHash();</span>
 <span class="source-line-no">211</span><span id="line-211"></span>
 <span class="source-line-no">212</span><span id="line-212">            step = JpakeStep.ROUND_1A_RECEIVED;</span>
 <span class="source-line-no">213</span><span id="line-213">        } else if (response instanceof Jpake1bResponse) {</span>
 <span class="source-line-no">214</span><span id="line-214">            Jpake1bResponse m = (Jpake1bResponse) response;</span>
-<span class="source-line-no">215</span><span id="line-215">            L.d(TAG, "Res1b: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
+<span class="source-line-no">215</span><span id="line-215">            L.t(TAG, "Res1b: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
 <span class="source-line-no">216</span><span id="line-216">            byte[] fullServerRound1 = Bytes.combine(this.serverRound1, m.getCentralChallengeHash());</span>
 <span class="source-line-no">217</span><span id="line-217">            L.d(TAG, "FULL_ROUND_1_RESPONSE: " + Hex.encodeHexString(fullServerRound1));</span>
 <span class="source-line-no">218</span><span id="line-218">            this.serverRound1 = fullServerRound1;</span>
@@ -238,7 +238,7 @@
 <span class="source-line-no">221</span><span id="line-221">            step = JpakeStep.ROUND_1B_RECEIVED;</span>
 <span class="source-line-no">222</span><span id="line-222">        } else if (response instanceof Jpake2Response) {</span>
 <span class="source-line-no">223</span><span id="line-223">            Jpake2Response m = (Jpake2Response) response;</span>
-<span class="source-line-no">224</span><span id="line-224">            L.d(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
+<span class="source-line-no">224</span><span id="line-224">            L.t(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));</span>
 <span class="source-line-no">225</span><span id="line-225">            this.serverRound2 = m.getCentralChallengeHash();</span>
 <span class="source-line-no">226</span><span id="line-226">            L.d(TAG, "FULL_ROUND_2_RESPONSE: " + Hex.encodeHexString(this.serverRound2));</span>
 <span class="source-line-no">227</span><span id="line-227"></span>
@@ -246,14 +246,14 @@
 <span class="source-line-no">229</span><span id="line-229">            step = JpakeStep.ROUND_2_RECEIVED;</span>
 <span class="source-line-no">230</span><span id="line-230">        } else if (response instanceof Jpake3SessionKeyResponse) {</span>
 <span class="source-line-no">231</span><span id="line-231">            Jpake3SessionKeyResponse m = (Jpake3SessionKeyResponse) response;</span>
-<span class="source-line-no">232</span><span id="line-232">            L.d(TAG, "Res3: nonce=" + Hex.encodeHexString(m.getDeviceKeyNonce()));</span>
-<span class="source-line-no">233</span><span id="line-233">            L.d(TAG, "Res3: reserved=" + Hex.encodeHexString(m.getDeviceKeyReserved()));</span>
+<span class="source-line-no">232</span><span id="line-232">            L.t(TAG, "Res3: nonce=" + Hex.encodeHexString(m.getDeviceKeyNonce()));</span>
+<span class="source-line-no">233</span><span id="line-233">            L.t(TAG, "Res3: reserved=" + Hex.encodeHexString(m.getDeviceKeyReserved()));</span>
 <span class="source-line-no">234</span><span id="line-234"></span>
 <span class="source-line-no">235</span><span id="line-235">            this.serverNonce3 = m.getDeviceKeyNonce();</span>
 <span class="source-line-no">236</span><span id="line-236">            step = JpakeStep.CONFIRM_3_RECEIVED;</span>
 <span class="source-line-no">237</span><span id="line-237">        } else if (response instanceof Jpake4KeyConfirmationResponse) {</span>
 <span class="source-line-no">238</span><span id="line-238">            Jpake4KeyConfirmationResponse m = (Jpake4KeyConfirmationResponse) response;</span>
-<span class="source-line-no">239</span><span id="line-239">            L.d(TAG, "JpakeAuthBuilder Res4: nonce=" + Hex.encodeHexString(m.getHashDigest()) + " hashDigest=" + Hex.encodeHexString(m.getNonce()));</span>
+<span class="source-line-no">239</span><span id="line-239">            L.t(TAG, "JpakeAuthBuilder Res4: nonce=" + Hex.encodeHexString(m.getHashDigest()) + " hashDigest=" + Hex.encodeHexString(m.getNonce()));</span>
 <span class="source-line-no">240</span><span id="line-240"></span>
 <span class="source-line-no">241</span><span id="line-241">            this.serverNonce4 = m.getNonce();</span>
 <span class="source-line-no">242</span><span id="line-242">            this.serverHashDigest4 = m.getHashDigest();</span>
