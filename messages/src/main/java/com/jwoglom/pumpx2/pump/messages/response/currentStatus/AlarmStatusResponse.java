@@ -87,7 +87,7 @@ public class AlarmStatusResponse extends NotificationMessage {
         CARTRIDGE_ALARM12(31),
         DEFAULT_ALARM_32(32),
         DEFAULT_ALARM_33(33),
-        DEFAULT_ALARM_34(34),
+        CARTRIDGE_ALARM_34(34, "There is an issue with the cartridge and it cannot be used. You need to reload a new cartridge and then resume insulin delivery."),
         DEFAULT_ALARM_35(35),
         DEFAULT_ALARM_36(36),
         DEFAULT_ALARM_37(37),
