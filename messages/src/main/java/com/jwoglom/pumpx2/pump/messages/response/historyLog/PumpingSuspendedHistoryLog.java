@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 11,
     displayName = "Pumping Suspended",
+    internalName = "LID_PUMPING_SUSPENDED",
     usedByTidepool = true
 )
 public class PumpingSuspendedHistoryLog extends HistoryLog {

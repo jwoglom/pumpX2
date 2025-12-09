@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 12,
     displayName = "Pumping Resumed",
+    internalName = "LID_PUMPING_RESUMED",
     usedByTidepool = true
 )
 public class PumpingResumedHistoryLog extends HistoryLog {

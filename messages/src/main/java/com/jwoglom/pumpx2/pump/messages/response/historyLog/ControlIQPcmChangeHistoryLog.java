@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 230, // -26
     displayName = "ControlIQ Pump Control Mode (PCM) Change",
+    internalName = "LID_AA_PCM_CHANGE",
     usedByTidepool = true // LID_AA_PCM_CHANGE
 )
 public class ControlIQPcmChangeHistoryLog extends HistoryLog {

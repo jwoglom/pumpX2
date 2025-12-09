@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 55,
     displayName = "Bolus Activated",
+    internalName = "LID_BOLUS_ACTIVATED",
     usedByTidepool = true
 )
 public class BolusActivatedHistoryLog extends HistoryLog {

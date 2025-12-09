@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 13,
     displayName = "Time Change",
+    internalName = "LID_TIME_CHANGED",
     usedByTidepool = true
 )
 public class TimeChangedHistoryLog extends HistoryLog {

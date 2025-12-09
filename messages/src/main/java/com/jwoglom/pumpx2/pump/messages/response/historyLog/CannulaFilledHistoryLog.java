@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 61,
     displayName = "Cannula Filled",
+    internalName = "LID_CANNULA_FILLED",
     usedByTidepool = true
 )
 public class CannulaFilledHistoryLog extends HistoryLog {

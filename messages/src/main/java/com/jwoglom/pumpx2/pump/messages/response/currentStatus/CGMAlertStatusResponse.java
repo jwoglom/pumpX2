@@ -136,6 +136,15 @@ public class CGMAlertStatusResponse extends NotificationMessage {
             return id;
         }
 
+        public static CGMAlert fromId(int id) {
+            for (CGMAlert alert : values()) {
+                if (alert.id() == id) {
+                    return alert;
+                }
+            }
+            return null;
+        }
+
         public static Set<CGMAlert> fromBitmask(BigInteger bitmask) {
             Set<CGMAlert> set = new TreeSet<>();
             for (CGMAlert a : values()) {

@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse;
 @HistoryLogProps(
     opCode = 16,
     displayName = "BG Taken",
+    internalName = "LID_BG_READING_TAKEN",
     usedByAndroid = true,
     usedByTidepool = true
 )

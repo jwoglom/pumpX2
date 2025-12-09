@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 63,
     displayName = "Tubing Filled",
+    internalName = "LID_TUBING_FILLED",
     usedByTidepool = true
 )
 public class TubingFilledHistoryLog extends HistoryLog {

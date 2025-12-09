@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 90,
     displayName = "New Day",
+    internalName = "LID_NEW_DAY",
     usedByTidepool = true
 )
 public class NewDayHistoryLog extends HistoryLog {

@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 65,
     displayName = "Bolus Requested 2/3",
+    internalName = "LID_BOLUS_REQUESTED_MSG2",
     usedByAndroid = true,
     usedByTidepool = true
 )

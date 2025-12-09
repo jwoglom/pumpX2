@@ -10,6 +10,7 @@ import java.util.TreeSet;
 @HistoryLogProps(
     opCode = 256,
     displayName = "Dexcom G6 CGM Data",
+    internalName = "LID_CGM_DATA_GXB",
     usedByAndroid = true,
     usedByTidepool = true, // LID_CGM_DATA_GXB
     usedByTconnectsync = true

@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAb
 @HistoryLogProps(
     opCode = 20,
     displayName = "Bolus Completed",
+    internalName = "LID_BOLUS_COMPLETED",
     usedByAndroid = true,
     usedByTidepool = true
 )

@@ -9,6 +9,7 @@ import java.util.Set;
 @HistoryLogProps(
     opCode = 64,
     displayName = "Bolus Requested 1/3",
+    internalName = "LID_BOLUS_REQUESTED_MSG1",
     usedByAndroid = true,
     usedByTidepool = true
 )

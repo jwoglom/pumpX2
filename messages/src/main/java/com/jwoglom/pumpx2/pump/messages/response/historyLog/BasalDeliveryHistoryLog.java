@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 279,
     displayName = "Basal Delivery",
+    internalName = "LID_BASAL_DELIVERY",
     usedByTidepool = true
 )
 public class BasalDeliveryHistoryLog extends HistoryLog {
