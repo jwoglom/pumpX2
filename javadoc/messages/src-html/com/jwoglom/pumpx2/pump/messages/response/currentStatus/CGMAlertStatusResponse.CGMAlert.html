@@ -187,26 +187,35 @@
 <span class="source-line-no">170</span><span id="line-170">            return id;</span>
 <span class="source-line-no">171</span><span id="line-171">        }</span>
 <span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
-<span class="source-line-no">174</span><span id="line-174">            Set&lt;CGMAlert&gt; set = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">175</span><span id="line-175">            for (CGMAlert a : values()) {</span>
-<span class="source-line-no">176</span><span id="line-176">                if (bitmask.testBit(a.id())) {</span>
-<span class="source-line-no">177</span><span id="line-177">                    set.add(a);</span>
-<span class="source-line-no">178</span><span id="line-178">                }</span>
-<span class="source-line-no">179</span><span id="line-179">            }</span>
-<span class="source-line-no">180</span><span id="line-180">            return set;</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
-<span class="source-line-no">184</span><span id="line-184">            BigInteger i = BigInteger.ZERO;</span>
-<span class="source-line-no">185</span><span id="line-185">            for (CGMAlert a : alerts) {</span>
-<span class="source-line-no">186</span><span id="line-186">                i.setBit(a.id());</span>
-<span class="source-line-no">187</span><span id="line-187">            }</span>
-<span class="source-line-no">188</span><span id="line-188">            return i;</span>
-<span class="source-line-no">189</span><span id="line-189">        }</span>
-<span class="source-line-no">190</span><span id="line-190">    }</span>
-<span class="source-line-no">191</span><span id="line-191">    </span>
-<span class="source-line-no">192</span><span id="line-192">}</span>
+<span class="source-line-no">173</span><span id="line-173">        public static CGMAlert fromId(int id) {</span>
+<span class="source-line-no">174</span><span id="line-174">            for (CGMAlert alert : values()) {</span>
+<span class="source-line-no">175</span><span id="line-175">                if (alert.id() == id) {</span>
+<span class="source-line-no">176</span><span id="line-176">                    return alert;</span>
+<span class="source-line-no">177</span><span id="line-177">                }</span>
+<span class="source-line-no">178</span><span id="line-178">            }</span>
+<span class="source-line-no">179</span><span id="line-179">            return null;</span>
+<span class="source-line-no">180</span><span id="line-180">        }</span>
+<span class="source-line-no">181</span><span id="line-181"></span>
+<span class="source-line-no">182</span><span id="line-182">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
+<span class="source-line-no">183</span><span id="line-183">            Set&lt;CGMAlert&gt; set = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">184</span><span id="line-184">            for (CGMAlert a : values()) {</span>
+<span class="source-line-no">185</span><span id="line-185">                if (bitmask.testBit(a.id())) {</span>
+<span class="source-line-no">186</span><span id="line-186">                    set.add(a);</span>
+<span class="source-line-no">187</span><span id="line-187">                }</span>
+<span class="source-line-no">188</span><span id="line-188">            }</span>
+<span class="source-line-no">189</span><span id="line-189">            return set;</span>
+<span class="source-line-no">190</span><span id="line-190">        }</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
+<span class="source-line-no">193</span><span id="line-193">            BigInteger i = BigInteger.ZERO;</span>
+<span class="source-line-no">194</span><span id="line-194">            for (CGMAlert a : alerts) {</span>
+<span class="source-line-no">195</span><span id="line-195">                i.setBit(a.id());</span>
+<span class="source-line-no">196</span><span id="line-196">            }</span>
+<span class="source-line-no">197</span><span id="line-197">            return i;</span>
+<span class="source-line-no">198</span><span id="line-198">        }</span>
+<span class="source-line-no">199</span><span id="line-199">    }</span>
+<span class="source-line-no">200</span><span id="line-200">    </span>
+<span class="source-line-no">201</span><span id="line-201">}</span>
 
 
 

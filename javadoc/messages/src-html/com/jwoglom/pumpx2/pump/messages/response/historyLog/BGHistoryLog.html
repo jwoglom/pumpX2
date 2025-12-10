@@ -25,166 +25,167 @@
 <span class="source-line-no">008</span><span id="line-8">@HistoryLogProps(</span>
 <span class="source-line-no">009</span><span id="line-9">    opCode = 16,</span>
 <span class="source-line-no">010</span><span id="line-10">    displayName = "BG Taken",</span>
-<span class="source-line-no">011</span><span id="line-11">    usedByAndroid = true,</span>
-<span class="source-line-no">012</span><span id="line-12">    usedByTidepool = true</span>
-<span class="source-line-no">013</span><span id="line-13">)</span>
-<span class="source-line-no">014</span><span id="line-14">public class BGHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">    private int bg;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int cgmCalibration;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int bgSourceId;</span>
-<span class="source-line-no">019</span><span id="line-19">    private float iob;</span>
-<span class="source-line-no">020</span><span id="line-20">    private int targetBG;</span>
-<span class="source-line-no">021</span><span id="line-21">    private int isf;</span>
-<span class="source-line-no">022</span><span id="line-22">    private long spare;</span>
-<span class="source-line-no">023</span><span id="line-23">    </span>
-<span class="source-line-no">024</span><span id="line-24">    public BGHistoryLog() {}</span>
-<span class="source-line-no">025</span><span id="line-25">    </span>
-<span class="source-line-no">026</span><span id="line-26">    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSourceId, float iob, int targetBG, int isf, long spare) {</span>
-<span class="source-line-no">027</span><span id="line-27">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSourceId, iob, targetBG, isf, spare);</span>
-<span class="source-line-no">028</span><span id="line-28">        this.pumpTimeSec = pumpTimeSec;</span>
-<span class="source-line-no">029</span><span id="line-29">        this.sequenceNum = sequenceNum;</span>
-<span class="source-line-no">030</span><span id="line-30">        this.bg = bg;</span>
-<span class="source-line-no">031</span><span id="line-31">        this.cgmCalibration = cgmCalibration;</span>
-<span class="source-line-no">032</span><span id="line-32">        this.bgSourceId = bgSourceId;</span>
-<span class="source-line-no">033</span><span id="line-33">        this.iob = iob;</span>
-<span class="source-line-no">034</span><span id="line-34">        this.targetBG = targetBG;</span>
-<span class="source-line-no">035</span><span id="line-35">        this.isf = isf;</span>
-<span class="source-line-no">036</span><span id="line-36">        this.spare = spare;</span>
-<span class="source-line-no">037</span><span id="line-37">        </span>
-<span class="source-line-no">038</span><span id="line-38">    }</span>
-<span class="source-line-no">039</span><span id="line-39"></span>
-<span class="source-line-no">040</span><span id="line-40">    public int typeId() {</span>
-<span class="source-line-no">041</span><span id="line-41">        return 16;</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    /**</span>
-<span class="source-line-no">045</span><span id="line-45">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">046</span><span id="line-46">     * &lt;caption&gt;Parsed fields for BGHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bgSourceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;iob&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;targetBG&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isf&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;/table&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     */</span>
-<span class="source-line-no">056</span><span id="line-56">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">057</span><span id="line-57">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">058</span><span id="line-58">        parseBase(raw);</span>
-<span class="source-line-no">059</span><span id="line-59">        this.cargo = raw;</span>
-<span class="source-line-no">060</span><span id="line-60">        this.bg = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">061</span><span id="line-61">        this.cgmCalibration = raw[12];</span>
-<span class="source-line-no">062</span><span id="line-62">        this.bgSourceId = raw[13];</span>
-<span class="source-line-no">063</span><span id="line-63">        this.iob = Bytes.readFloat(raw, 14);</span>
-<span class="source-line-no">064</span><span id="line-64">        this.targetBG = Bytes.readShort(raw, 18);</span>
-<span class="source-line-no">065</span><span id="line-65">        this.isf = Bytes.readShort(raw, 20);</span>
-<span class="source-line-no">066</span><span id="line-66">        this.spare = Bytes.readUint32(raw, 22);</span>
-<span class="source-line-no">067</span><span id="line-67">        </span>
-<span class="source-line-no">068</span><span id="line-68">    }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">    </span>
-<span class="source-line-no">071</span><span id="line-71">    /**</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;caption&gt;Byte layout for BGHistoryLog.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{16} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) cgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bgSource&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;/table&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     */</span>
-<span class="source-line-no">103</span><span id="line-103">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {</span>
-<span class="source-line-no">104</span><span id="line-104">        return Bytes.combine(</span>
-<span class="source-line-no">105</span><span id="line-105">            new byte[]{ 16, 0 },</span>
-<span class="source-line-no">106</span><span id="line-106">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">107</span><span id="line-107">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">108</span><span id="line-108">            Bytes.firstTwoBytesLittleEndian(bg), </span>
-<span class="source-line-no">109</span><span id="line-109">            new byte[]{ (byte) cgmCalibration }, </span>
-<span class="source-line-no">110</span><span id="line-110">            new byte[]{ (byte) bgSource }, </span>
-<span class="source-line-no">111</span><span id="line-111">            Bytes.toFloat(iob), </span>
-<span class="source-line-no">112</span><span id="line-112">            Bytes.firstTwoBytesLittleEndian(targetBG), </span>
-<span class="source-line-no">113</span><span id="line-113">            Bytes.firstTwoBytesLittleEndian(isf), </span>
-<span class="source-line-no">114</span><span id="line-114">            Bytes.toUint32(spare));</span>
-<span class="source-line-no">115</span><span id="line-115">    }</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">    /**</span>
-<span class="source-line-no">118</span><span id="line-118">     * @return the BG entry in mg/dL</span>
-<span class="source-line-no">119</span><span id="line-119">     */</span>
-<span class="source-line-no">120</span><span id="line-120">    public int getBg() {</span>
-<span class="source-line-no">121</span><span id="line-121">        return bg;</span>
-<span class="source-line-no">122</span><span id="line-122">    }</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">    /**</span>
-<span class="source-line-no">125</span><span id="line-125">     * @return TODO(unknown)</span>
-<span class="source-line-no">126</span><span id="line-126">     */</span>
-<span class="source-line-no">127</span><span id="line-127">    public int getCgmCalibration() {</span>
-<span class="source-line-no">128</span><span id="line-128">        return cgmCalibration;</span>
-<span class="source-line-no">129</span><span id="line-129">    }</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">    public int getBgSourceId() {</span>
-<span class="source-line-no">132</span><span id="line-132">        return bgSourceId;</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    /**</span>
-<span class="source-line-no">136</span><span id="line-136">     * @return the source of the BG entry (CGM or manual)</span>
-<span class="source-line-no">137</span><span id="line-137">     */</span>
-<span class="source-line-no">138</span><span id="line-138">    public LastBGResponse.BgSource getBgSource() {</span>
-<span class="source-line-no">139</span><span id="line-139">        return LastBGResponse.BgSource.fromId(bgSourceId);</span>
-<span class="source-line-no">140</span><span id="line-140">    }</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">    /**</span>
-<span class="source-line-no">143</span><span id="line-143">     * @return the current insulin on board</span>
-<span class="source-line-no">144</span><span id="line-144">     */</span>
-<span class="source-line-no">145</span><span id="line-145">    public float getIob() {</span>
-<span class="source-line-no">146</span><span id="line-146">        return iob;</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">    /**</span>
-<span class="source-line-no">150</span><span id="line-150">     * @return the target BG in the pump profile</span>
-<span class="source-line-no">151</span><span id="line-151">     */</span>
-<span class="source-line-no">152</span><span id="line-152">    public int getTargetBG() {</span>
-<span class="source-line-no">153</span><span id="line-153">        return targetBG;</span>
-<span class="source-line-no">154</span><span id="line-154">    }</span>
-<span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">    /**</span>
-<span class="source-line-no">157</span><span id="line-157">     * @return the insulin sensitivity factor in the pump profile</span>
-<span class="source-line-no">158</span><span id="line-158">     */</span>
-<span class="source-line-no">159</span><span id="line-159">    public int getIsf() {</span>
-<span class="source-line-no">160</span><span id="line-160">        return isf;</span>
-<span class="source-line-no">161</span><span id="line-161">    }</span>
-<span class="source-line-no">162</span><span id="line-162"></span>
-<span class="source-line-no">163</span><span id="line-163">    /**</span>
-<span class="source-line-no">164</span><span id="line-164">     * @return TODO(unknown): always 1?</span>
-<span class="source-line-no">165</span><span id="line-165">     */</span>
-<span class="source-line-no">166</span><span id="line-166">    public long getSpare() {</span>
-<span class="source-line-no">167</span><span id="line-167">        return spare;</span>
-<span class="source-line-no">168</span><span id="line-168">    }</span>
-<span class="source-line-no">169</span><span id="line-169">    </span>
-<span class="source-line-no">170</span><span id="line-170">}</span>
+<span class="source-line-no">011</span><span id="line-11">    internalName = "LID_BG_READING_TAKEN",</span>
+<span class="source-line-no">012</span><span id="line-12">    usedByAndroid = true,</span>
+<span class="source-line-no">013</span><span id="line-13">    usedByTidepool = true</span>
+<span class="source-line-no">014</span><span id="line-14">)</span>
+<span class="source-line-no">015</span><span id="line-15">public class BGHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">016</span><span id="line-16"></span>
+<span class="source-line-no">017</span><span id="line-17">    private int bg;</span>
+<span class="source-line-no">018</span><span id="line-18">    private int cgmCalibration;</span>
+<span class="source-line-no">019</span><span id="line-19">    private int bgSourceId;</span>
+<span class="source-line-no">020</span><span id="line-20">    private float iob;</span>
+<span class="source-line-no">021</span><span id="line-21">    private int targetBG;</span>
+<span class="source-line-no">022</span><span id="line-22">    private int isf;</span>
+<span class="source-line-no">023</span><span id="line-23">    private long spare;</span>
+<span class="source-line-no">024</span><span id="line-24">    </span>
+<span class="source-line-no">025</span><span id="line-25">    public BGHistoryLog() {}</span>
+<span class="source-line-no">026</span><span id="line-26">    </span>
+<span class="source-line-no">027</span><span id="line-27">    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSourceId, float iob, int targetBG, int isf, long spare) {</span>
+<span class="source-line-no">028</span><span id="line-28">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSourceId, iob, targetBG, isf, spare);</span>
+<span class="source-line-no">029</span><span id="line-29">        this.pumpTimeSec = pumpTimeSec;</span>
+<span class="source-line-no">030</span><span id="line-30">        this.sequenceNum = sequenceNum;</span>
+<span class="source-line-no">031</span><span id="line-31">        this.bg = bg;</span>
+<span class="source-line-no">032</span><span id="line-32">        this.cgmCalibration = cgmCalibration;</span>
+<span class="source-line-no">033</span><span id="line-33">        this.bgSourceId = bgSourceId;</span>
+<span class="source-line-no">034</span><span id="line-34">        this.iob = iob;</span>
+<span class="source-line-no">035</span><span id="line-35">        this.targetBG = targetBG;</span>
+<span class="source-line-no">036</span><span id="line-36">        this.isf = isf;</span>
+<span class="source-line-no">037</span><span id="line-37">        this.spare = spare;</span>
+<span class="source-line-no">038</span><span id="line-38">        </span>
+<span class="source-line-no">039</span><span id="line-39">    }</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">    public int typeId() {</span>
+<span class="source-line-no">042</span><span id="line-42">        return 16;</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    /**</span>
+<span class="source-line-no">046</span><span id="line-46">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">047</span><span id="line-47">     * &lt;caption&gt;Parsed fields for BGHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bgSourceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;iob&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;targetBG&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isf&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;/table&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     */</span>
+<span class="source-line-no">057</span><span id="line-57">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">058</span><span id="line-58">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">059</span><span id="line-59">        parseBase(raw);</span>
+<span class="source-line-no">060</span><span id="line-60">        this.cargo = raw;</span>
+<span class="source-line-no">061</span><span id="line-61">        this.bg = Bytes.readShort(raw, 10);</span>
+<span class="source-line-no">062</span><span id="line-62">        this.cgmCalibration = raw[12];</span>
+<span class="source-line-no">063</span><span id="line-63">        this.bgSourceId = raw[13];</span>
+<span class="source-line-no">064</span><span id="line-64">        this.iob = Bytes.readFloat(raw, 14);</span>
+<span class="source-line-no">065</span><span id="line-65">        this.targetBG = Bytes.readShort(raw, 18);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.isf = Bytes.readShort(raw, 20);</span>
+<span class="source-line-no">067</span><span id="line-67">        this.spare = Bytes.readUint32(raw, 22);</span>
+<span class="source-line-no">068</span><span id="line-68">        </span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    </span>
+<span class="source-line-no">072</span><span id="line-72">    /**</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;caption&gt;Byte layout for BGHistoryLog.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{16} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) cgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bgSource&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(iob) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(spare) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;/table&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     */</span>
+<span class="source-line-no">104</span><span id="line-104">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {</span>
+<span class="source-line-no">105</span><span id="line-105">        return Bytes.combine(</span>
+<span class="source-line-no">106</span><span id="line-106">            new byte[]{ 16, 0 },</span>
+<span class="source-line-no">107</span><span id="line-107">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">108</span><span id="line-108">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">109</span><span id="line-109">            Bytes.firstTwoBytesLittleEndian(bg), </span>
+<span class="source-line-no">110</span><span id="line-110">            new byte[]{ (byte) cgmCalibration }, </span>
+<span class="source-line-no">111</span><span id="line-111">            new byte[]{ (byte) bgSource }, </span>
+<span class="source-line-no">112</span><span id="line-112">            Bytes.toFloat(iob), </span>
+<span class="source-line-no">113</span><span id="line-113">            Bytes.firstTwoBytesLittleEndian(targetBG), </span>
+<span class="source-line-no">114</span><span id="line-114">            Bytes.firstTwoBytesLittleEndian(isf), </span>
+<span class="source-line-no">115</span><span id="line-115">            Bytes.toUint32(spare));</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">    /**</span>
+<span class="source-line-no">119</span><span id="line-119">     * @return the BG entry in mg/dL</span>
+<span class="source-line-no">120</span><span id="line-120">     */</span>
+<span class="source-line-no">121</span><span id="line-121">    public int getBg() {</span>
+<span class="source-line-no">122</span><span id="line-122">        return bg;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    /**</span>
+<span class="source-line-no">126</span><span id="line-126">     * @return TODO(unknown)</span>
+<span class="source-line-no">127</span><span id="line-127">     */</span>
+<span class="source-line-no">128</span><span id="line-128">    public int getCgmCalibration() {</span>
+<span class="source-line-no">129</span><span id="line-129">        return cgmCalibration;</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">    public int getBgSourceId() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return bgSourceId;</span>
+<span class="source-line-no">134</span><span id="line-134">    }</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">    /**</span>
+<span class="source-line-no">137</span><span id="line-137">     * @return the source of the BG entry (CGM or manual)</span>
+<span class="source-line-no">138</span><span id="line-138">     */</span>
+<span class="source-line-no">139</span><span id="line-139">    public LastBGResponse.BgSource getBgSource() {</span>
+<span class="source-line-no">140</span><span id="line-140">        return LastBGResponse.BgSource.fromId(bgSourceId);</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    /**</span>
+<span class="source-line-no">144</span><span id="line-144">     * @return the current insulin on board</span>
+<span class="source-line-no">145</span><span id="line-145">     */</span>
+<span class="source-line-no">146</span><span id="line-146">    public float getIob() {</span>
+<span class="source-line-no">147</span><span id="line-147">        return iob;</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">    /**</span>
+<span class="source-line-no">151</span><span id="line-151">     * @return the target BG in the pump profile</span>
+<span class="source-line-no">152</span><span id="line-152">     */</span>
+<span class="source-line-no">153</span><span id="line-153">    public int getTargetBG() {</span>
+<span class="source-line-no">154</span><span id="line-154">        return targetBG;</span>
+<span class="source-line-no">155</span><span id="line-155">    }</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">    /**</span>
+<span class="source-line-no">158</span><span id="line-158">     * @return the insulin sensitivity factor in the pump profile</span>
+<span class="source-line-no">159</span><span id="line-159">     */</span>
+<span class="source-line-no">160</span><span id="line-160">    public int getIsf() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return isf;</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">    /**</span>
+<span class="source-line-no">165</span><span id="line-165">     * @return TODO(unknown): always 1?</span>
+<span class="source-line-no">166</span><span id="line-166">     */</span>
+<span class="source-line-no">167</span><span id="line-167">    public long getSpare() {</span>
+<span class="source-line-no">168</span><span id="line-168">        return spare;</span>
+<span class="source-line-no">169</span><span id="line-169">    }</span>
+<span class="source-line-no">170</span><span id="line-170">    </span>
+<span class="source-line-no">171</span><span id="line-171">}</span>
 
 
 

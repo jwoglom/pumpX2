@@ -26,70 +26,71 @@
 <span class="source-line-no">009</span><span id="line-9">@HistoryLogProps(</span>
 <span class="source-line-no">010</span><span id="line-10">    opCode = 55,</span>
 <span class="source-line-no">011</span><span id="line-11">    displayName = "Bolus Activated",</span>
-<span class="source-line-no">012</span><span id="line-12">    usedByTidepool = true</span>
-<span class="source-line-no">013</span><span id="line-13">)</span>
-<span class="source-line-no">014</span><span id="line-14">public class BolusActivatedHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">015</span><span id="line-15">    </span>
-<span class="source-line-no">016</span><span id="line-16">    private int bolusId;</span>
-<span class="source-line-no">017</span><span id="line-17">    private float iob;</span>
-<span class="source-line-no">018</span><span id="line-18">    private float bolusSize;</span>
-<span class="source-line-no">019</span><span id="line-19">    </span>
-<span class="source-line-no">020</span><span id="line-20">    public BolusActivatedHistoryLog() {}</span>
-<span class="source-line-no">021</span><span id="line-21">    public BolusActivatedHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolusSize) {</span>
-<span class="source-line-no">022</span><span id="line-22">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">023</span><span id="line-23">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, iob, bolusSize);</span>
-<span class="source-line-no">024</span><span id="line-24">        this.bolusId = bolusId;</span>
-<span class="source-line-no">025</span><span id="line-25">        this.iob = iob;</span>
-<span class="source-line-no">026</span><span id="line-26">        this.bolusSize = bolusSize;</span>
-<span class="source-line-no">027</span><span id="line-27">        </span>
-<span class="source-line-no">028</span><span id="line-28">    }</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    public BolusActivatedHistoryLog(int bolusId, float iob, float bolusSize) {</span>
-<span class="source-line-no">031</span><span id="line-31">        this(0, 0, bolusId, iob, bolusSize);</span>
-<span class="source-line-no">032</span><span id="line-32">    }</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    public int typeId() {</span>
-<span class="source-line-no">035</span><span id="line-35">        return 55;</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    /**</span>
-<span class="source-line-no">039</span><span id="line-39">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">040</span><span id="line-40">     * &lt;caption&gt;Parsed fields for BolusActivatedHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;iob&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusSize&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44">     * &lt;/table&gt;</span>
-<span class="source-line-no">045</span><span id="line-45">     */</span>
-<span class="source-line-no">046</span><span id="line-46">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">047</span><span id="line-47">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">048</span><span id="line-48">        this.cargo = raw;</span>
-<span class="source-line-no">049</span><span id="line-49">        parseBase(raw);</span>
-<span class="source-line-no">050</span><span id="line-50">        this.bolusId = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">051</span><span id="line-51">        this.iob = Bytes.readFloat(raw, 14);</span>
-<span class="source-line-no">052</span><span id="line-52">        this.bolusSize = Bytes.readFloat(raw, 18);</span>
-<span class="source-line-no">053</span><span id="line-53">        </span>
-<span class="source-line-no">054</span><span id="line-54">    }</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolusSize) {</span>
-<span class="source-line-no">057</span><span id="line-57">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">058</span><span id="line-58">            new byte[]{55, 0},</span>
-<span class="source-line-no">059</span><span id="line-59">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">060</span><span id="line-60">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">061</span><span id="line-61">            Bytes.firstTwoBytesLittleEndian(bolusId), </span>
-<span class="source-line-no">062</span><span id="line-62">            Bytes.toFloat(iob), </span>
-<span class="source-line-no">063</span><span id="line-63">            Bytes.toFloat(bolusSize)));</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65">    public int getBolusId() {</span>
-<span class="source-line-no">066</span><span id="line-66">        return bolusId;</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68">    public float getIob() {</span>
-<span class="source-line-no">069</span><span id="line-69">        return iob;</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71">    public float getBolusSize() {</span>
-<span class="source-line-no">072</span><span id="line-72">        return bolusSize;</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74">    </span>
-<span class="source-line-no">075</span><span id="line-75">}</span>
+<span class="source-line-no">012</span><span id="line-12">    internalName = "LID_BOLUS_ACTIVATED",</span>
+<span class="source-line-no">013</span><span id="line-13">    usedByTidepool = true</span>
+<span class="source-line-no">014</span><span id="line-14">)</span>
+<span class="source-line-no">015</span><span id="line-15">public class BolusActivatedHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">016</span><span id="line-16">    </span>
+<span class="source-line-no">017</span><span id="line-17">    private int bolusId;</span>
+<span class="source-line-no">018</span><span id="line-18">    private float iob;</span>
+<span class="source-line-no">019</span><span id="line-19">    private float bolusSize;</span>
+<span class="source-line-no">020</span><span id="line-20">    </span>
+<span class="source-line-no">021</span><span id="line-21">    public BolusActivatedHistoryLog() {}</span>
+<span class="source-line-no">022</span><span id="line-22">    public BolusActivatedHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolusSize) {</span>
+<span class="source-line-no">023</span><span id="line-23">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">024</span><span id="line-24">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, iob, bolusSize);</span>
+<span class="source-line-no">025</span><span id="line-25">        this.bolusId = bolusId;</span>
+<span class="source-line-no">026</span><span id="line-26">        this.iob = iob;</span>
+<span class="source-line-no">027</span><span id="line-27">        this.bolusSize = bolusSize;</span>
+<span class="source-line-no">028</span><span id="line-28">        </span>
+<span class="source-line-no">029</span><span id="line-29">    }</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    public BolusActivatedHistoryLog(int bolusId, float iob, float bolusSize) {</span>
+<span class="source-line-no">032</span><span id="line-32">        this(0, 0, bolusId, iob, bolusSize);</span>
+<span class="source-line-no">033</span><span id="line-33">    }</span>
+<span class="source-line-no">034</span><span id="line-34"></span>
+<span class="source-line-no">035</span><span id="line-35">    public int typeId() {</span>
+<span class="source-line-no">036</span><span id="line-36">        return 55;</span>
+<span class="source-line-no">037</span><span id="line-37">    }</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    /**</span>
+<span class="source-line-no">040</span><span id="line-40">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">041</span><span id="line-41">     * &lt;caption&gt;Parsed fields for BolusActivatedHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;iob&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusSize&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45">     * &lt;/table&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     */</span>
+<span class="source-line-no">047</span><span id="line-47">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">048</span><span id="line-48">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">049</span><span id="line-49">        this.cargo = raw;</span>
+<span class="source-line-no">050</span><span id="line-50">        parseBase(raw);</span>
+<span class="source-line-no">051</span><span id="line-51">        this.bolusId = Bytes.readShort(raw, 10);</span>
+<span class="source-line-no">052</span><span id="line-52">        this.iob = Bytes.readFloat(raw, 14);</span>
+<span class="source-line-no">053</span><span id="line-53">        this.bolusSize = Bytes.readFloat(raw, 18);</span>
+<span class="source-line-no">054</span><span id="line-54">        </span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolusSize) {</span>
+<span class="source-line-no">058</span><span id="line-58">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">059</span><span id="line-59">            new byte[]{55, 0},</span>
+<span class="source-line-no">060</span><span id="line-60">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">061</span><span id="line-61">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">062</span><span id="line-62">            Bytes.firstTwoBytesLittleEndian(bolusId), </span>
+<span class="source-line-no">063</span><span id="line-63">            Bytes.toFloat(iob), </span>
+<span class="source-line-no">064</span><span id="line-64">            Bytes.toFloat(bolusSize)));</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66">    public int getBolusId() {</span>
+<span class="source-line-no">067</span><span id="line-67">        return bolusId;</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69">    public float getIob() {</span>
+<span class="source-line-no">070</span><span id="line-70">        return iob;</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72">    public float getBolusSize() {</span>
+<span class="source-line-no">073</span><span id="line-73">        return bolusSize;</span>
+<span class="source-line-no">074</span><span id="line-74">    }</span>
+<span class="source-line-no">075</span><span id="line-75">    </span>
+<span class="source-line-no">076</span><span id="line-76">}</span>
 
 
 

@@ -26,37 +26,38 @@
 <span class="source-line-no">009</span><span id="line-9">@HistoryLogProps(</span>
 <span class="source-line-no">010</span><span id="line-10">    opCode = 60,</span>
 <span class="source-line-no">011</span><span id="line-11">    displayName = "Data Log Corruption",</span>
-<span class="source-line-no">012</span><span id="line-12">    usedByTidepool = true</span>
-<span class="source-line-no">013</span><span id="line-13">)</span>
-<span class="source-line-no">014</span><span id="line-14">public class DataLogCorruptionHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">015</span><span id="line-15">    </span>
+<span class="source-line-no">012</span><span id="line-12">    internalName = "LID_DATA_LOG_CORRUPTION",</span>
+<span class="source-line-no">013</span><span id="line-13">    usedByTidepool = true</span>
+<span class="source-line-no">014</span><span id="line-14">)</span>
+<span class="source-line-no">015</span><span id="line-15">public class DataLogCorruptionHistoryLog extends HistoryLog {</span>
 <span class="source-line-no">016</span><span id="line-16">    </span>
-<span class="source-line-no">017</span><span id="line-17">    public DataLogCorruptionHistoryLog() {}</span>
-<span class="source-line-no">018</span><span id="line-18">    public DataLogCorruptionHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">019</span><span id="line-19">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">020</span><span id="line-20">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">021</span><span id="line-21">        </span>
-<span class="source-line-no">022</span><span id="line-22">    }</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    public int typeId() {</span>
-<span class="source-line-no">025</span><span id="line-25">        return 60;</span>
-<span class="source-line-no">026</span><span id="line-26">    }</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">029</span><span id="line-29">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">030</span><span id="line-30">        this.cargo = raw;</span>
-<span class="source-line-no">031</span><span id="line-31">        parseBase(raw);</span>
-<span class="source-line-no">032</span><span id="line-32">        </span>
-<span class="source-line-no">033</span><span id="line-33">    }</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">036</span><span id="line-36">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">037</span><span id="line-37">            new byte[]{60, 0},</span>
-<span class="source-line-no">038</span><span id="line-38">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">039</span><span id="line-39">            Bytes.toUint32(sequenceNum)));</span>
-<span class="source-line-no">040</span><span id="line-40">    }</span>
-<span class="source-line-no">041</span><span id="line-41">    </span>
-<span class="source-line-no">042</span><span id="line-42">}</span>
+<span class="source-line-no">017</span><span id="line-17">    </span>
+<span class="source-line-no">018</span><span id="line-18">    public DataLogCorruptionHistoryLog() {}</span>
+<span class="source-line-no">019</span><span id="line-19">    public DataLogCorruptionHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">020</span><span id="line-20">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">021</span><span id="line-21">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">022</span><span id="line-22">        </span>
+<span class="source-line-no">023</span><span id="line-23">    }</span>
+<span class="source-line-no">024</span><span id="line-24"></span>
+<span class="source-line-no">025</span><span id="line-25">    public int typeId() {</span>
+<span class="source-line-no">026</span><span id="line-26">        return 60;</span>
+<span class="source-line-no">027</span><span id="line-27">    }</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">030</span><span id="line-30">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">031</span><span id="line-31">        this.cargo = raw;</span>
+<span class="source-line-no">032</span><span id="line-32">        parseBase(raw);</span>
+<span class="source-line-no">033</span><span id="line-33">        </span>
+<span class="source-line-no">034</span><span id="line-34">    }</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">037</span><span id="line-37">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">038</span><span id="line-38">            new byte[]{60, 0},</span>
+<span class="source-line-no">039</span><span id="line-39">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">040</span><span id="line-40">            Bytes.toUint32(sequenceNum)));</span>
+<span class="source-line-no">041</span><span id="line-41">    }</span>
+<span class="source-line-no">042</span><span id="line-42">    </span>
+<span class="source-line-no">043</span><span id="line-43">}</span>
 
 
 

@@ -24,104 +24,105 @@
 <span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
 <span class="source-line-no">008</span><span id="line-8">    opCode = 230, // -26</span>
 <span class="source-line-no">009</span><span id="line-9">    displayName = "ControlIQ Pump Control Mode (PCM) Change",</span>
-<span class="source-line-no">010</span><span id="line-10">    usedByTidepool = true // LID_AA_PCM_CHANGE</span>
-<span class="source-line-no">011</span><span id="line-11">)</span>
-<span class="source-line-no">012</span><span id="line-12">public class ControlIQPcmChangeHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">013</span><span id="line-13">    </span>
-<span class="source-line-no">014</span><span id="line-14">    private int currentPcmId;</span>
-<span class="source-line-no">015</span><span id="line-15">    private int previousPcmId;</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
-<span class="source-line-no">017</span><span id="line-17">    private PCM currentPcm;</span>
-<span class="source-line-no">018</span><span id="line-18">    private PCM previousPcm;</span>
-<span class="source-line-no">019</span><span id="line-19">    </span>
-<span class="source-line-no">020</span><span id="line-20">    public ControlIQPcmChangeHistoryLog() {}</span>
-<span class="source-line-no">021</span><span id="line-21">    public ControlIQPcmChangeHistoryLog(long pumpTimeSec, long sequenceNum, int currentPcmId, int previousPcmId) {</span>
-<span class="source-line-no">022</span><span id="line-22">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">023</span><span id="line-23">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentPcmId, previousPcmId);</span>
-<span class="source-line-no">024</span><span id="line-24">        this.currentPcmId = currentPcmId;</span>
-<span class="source-line-no">025</span><span id="line-25">        this.previousPcmId = previousPcmId;</span>
-<span class="source-line-no">026</span><span id="line-26">        </span>
-<span class="source-line-no">027</span><span id="line-27">    }</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">    public ControlIQPcmChangeHistoryLog(int currentPcmId, int previousPcmId) {</span>
-<span class="source-line-no">030</span><span id="line-30">        this(0, 0, currentPcmId, previousPcmId);</span>
-<span class="source-line-no">031</span><span id="line-31">    }</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">    public int typeId() {</span>
-<span class="source-line-no">034</span><span id="line-34">        return 230;</span>
-<span class="source-line-no">035</span><span id="line-35">    }</span>
-<span class="source-line-no">036</span><span id="line-36"></span>
-<span class="source-line-no">037</span><span id="line-37">    /**</span>
-<span class="source-line-no">038</span><span id="line-38">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">039</span><span id="line-39">     * &lt;caption&gt;Parsed fields for ControlIQPcmChangeHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">040</span><span id="line-40">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentPcmId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousPcmId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentPcm&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;PCM.fromId(currentPcmId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousPcm&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;PCM.fromId(previousPcmId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44">     * &lt;/table&gt;</span>
-<span class="source-line-no">045</span><span id="line-45">     */</span>
-<span class="source-line-no">046</span><span id="line-46">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">047</span><span id="line-47">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">048</span><span id="line-48">        this.cargo = raw;</span>
-<span class="source-line-no">049</span><span id="line-49">        parseBase(raw);</span>
-<span class="source-line-no">050</span><span id="line-50">        this.currentPcmId = raw[10];</span>
-<span class="source-line-no">051</span><span id="line-51">        this.previousPcmId = raw[11];</span>
-<span class="source-line-no">052</span><span id="line-52">        this.currentPcm = PCM.fromId(currentPcmId);</span>
-<span class="source-line-no">053</span><span id="line-53">        this.previousPcm = PCM.fromId(previousPcmId);</span>
-<span class="source-line-no">054</span><span id="line-54">        </span>
-<span class="source-line-no">055</span><span id="line-55">    }</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentPcm, int previousPcm) {</span>
-<span class="source-line-no">058</span><span id="line-58">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">059</span><span id="line-59">            new byte[]{-26, 0}, // (byte) 230</span>
-<span class="source-line-no">060</span><span id="line-60">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">061</span><span id="line-61">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">062</span><span id="line-62">            new byte[]{ (byte) currentPcm }, </span>
-<span class="source-line-no">063</span><span id="line-63">            new byte[]{ (byte) previousPcm }));</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65">    public int getCurrentPcmId() {</span>
-<span class="source-line-no">066</span><span id="line-66">        return currentPcmId;</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68">    public int getPreviousPcmId() {</span>
-<span class="source-line-no">069</span><span id="line-69">        return previousPcmId;</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    public PCM getCurrentPcm() {</span>
-<span class="source-line-no">073</span><span id="line-73">        return PCM.fromId(currentPcmId);</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    public PCM getPreviousPcm() {</span>
-<span class="source-line-no">077</span><span id="line-77">        return PCM.fromId(previousPcmId);</span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">    public enum PCM {</span>
-<span class="source-line-no">081</span><span id="line-81">        NO_CONTROL(0),</span>
-<span class="source-line-no">082</span><span id="line-82">        OPEN_LOOP(1),</span>
-<span class="source-line-no">083</span><span id="line-83">        CGM_INACTIVE(2),</span>
-<span class="source-line-no">084</span><span id="line-84">        CLOSED_LOOP(3),</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">        ;</span>
-<span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">        private final int id;</span>
-<span class="source-line-no">089</span><span id="line-89">        PCM(int id) {</span>
-<span class="source-line-no">090</span><span id="line-90">            this.id = id;</span>
-<span class="source-line-no">091</span><span id="line-91">        }</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">        public static PCM fromId(int id) {</span>
-<span class="source-line-no">094</span><span id="line-94">            for (PCM s : values()) {</span>
-<span class="source-line-no">095</span><span id="line-95">                if (s.id == id) {</span>
-<span class="source-line-no">096</span><span id="line-96">                    return s;</span>
-<span class="source-line-no">097</span><span id="line-97">                }</span>
-<span class="source-line-no">098</span><span id="line-98">            }</span>
-<span class="source-line-no">099</span><span id="line-99">            return null;</span>
-<span class="source-line-no">100</span><span id="line-100">        }</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">        public int getId() {</span>
-<span class="source-line-no">103</span><span id="line-103">            return id;</span>
-<span class="source-line-no">104</span><span id="line-104">        }</span>
-<span class="source-line-no">105</span><span id="line-105">    }</span>
-<span class="source-line-no">106</span><span id="line-106">    </span>
-<span class="source-line-no">107</span><span id="line-107">}</span>
+<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_AA_PCM_CHANGE",</span>
+<span class="source-line-no">011</span><span id="line-11">    usedByTidepool = true // LID_AA_PCM_CHANGE</span>
+<span class="source-line-no">012</span><span id="line-12">)</span>
+<span class="source-line-no">013</span><span id="line-13">public class ControlIQPcmChangeHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">014</span><span id="line-14">    </span>
+<span class="source-line-no">015</span><span id="line-15">    private int currentPcmId;</span>
+<span class="source-line-no">016</span><span id="line-16">    private int previousPcmId;</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">    private PCM currentPcm;</span>
+<span class="source-line-no">019</span><span id="line-19">    private PCM previousPcm;</span>
+<span class="source-line-no">020</span><span id="line-20">    </span>
+<span class="source-line-no">021</span><span id="line-21">    public ControlIQPcmChangeHistoryLog() {}</span>
+<span class="source-line-no">022</span><span id="line-22">    public ControlIQPcmChangeHistoryLog(long pumpTimeSec, long sequenceNum, int currentPcmId, int previousPcmId) {</span>
+<span class="source-line-no">023</span><span id="line-23">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">024</span><span id="line-24">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentPcmId, previousPcmId);</span>
+<span class="source-line-no">025</span><span id="line-25">        this.currentPcmId = currentPcmId;</span>
+<span class="source-line-no">026</span><span id="line-26">        this.previousPcmId = previousPcmId;</span>
+<span class="source-line-no">027</span><span id="line-27">        </span>
+<span class="source-line-no">028</span><span id="line-28">    }</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">    public ControlIQPcmChangeHistoryLog(int currentPcmId, int previousPcmId) {</span>
+<span class="source-line-no">031</span><span id="line-31">        this(0, 0, currentPcmId, previousPcmId);</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public int typeId() {</span>
+<span class="source-line-no">035</span><span id="line-35">        return 230;</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    /**</span>
+<span class="source-line-no">039</span><span id="line-39">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">040</span><span id="line-40">     * &lt;caption&gt;Parsed fields for ControlIQPcmChangeHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentPcmId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousPcmId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentPcm&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;PCM.fromId(currentPcmId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousPcm&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;PCM.fromId(previousPcmId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45">     * &lt;/table&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     */</span>
+<span class="source-line-no">047</span><span id="line-47">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">048</span><span id="line-48">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">049</span><span id="line-49">        this.cargo = raw;</span>
+<span class="source-line-no">050</span><span id="line-50">        parseBase(raw);</span>
+<span class="source-line-no">051</span><span id="line-51">        this.currentPcmId = raw[10];</span>
+<span class="source-line-no">052</span><span id="line-52">        this.previousPcmId = raw[11];</span>
+<span class="source-line-no">053</span><span id="line-53">        this.currentPcm = PCM.fromId(currentPcmId);</span>
+<span class="source-line-no">054</span><span id="line-54">        this.previousPcm = PCM.fromId(previousPcmId);</span>
+<span class="source-line-no">055</span><span id="line-55">        </span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentPcm, int previousPcm) {</span>
+<span class="source-line-no">059</span><span id="line-59">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">060</span><span id="line-60">            new byte[]{-26, 0}, // (byte) 230</span>
+<span class="source-line-no">061</span><span id="line-61">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">062</span><span id="line-62">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">063</span><span id="line-63">            new byte[]{ (byte) currentPcm }, </span>
+<span class="source-line-no">064</span><span id="line-64">            new byte[]{ (byte) previousPcm }));</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66">    public int getCurrentPcmId() {</span>
+<span class="source-line-no">067</span><span id="line-67">        return currentPcmId;</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69">    public int getPreviousPcmId() {</span>
+<span class="source-line-no">070</span><span id="line-70">        return previousPcmId;</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public PCM getCurrentPcm() {</span>
+<span class="source-line-no">074</span><span id="line-74">        return PCM.fromId(currentPcmId);</span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public PCM getPreviousPcm() {</span>
+<span class="source-line-no">078</span><span id="line-78">        return PCM.fromId(previousPcmId);</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    public enum PCM {</span>
+<span class="source-line-no">082</span><span id="line-82">        NO_CONTROL(0),</span>
+<span class="source-line-no">083</span><span id="line-83">        OPEN_LOOP(1),</span>
+<span class="source-line-no">084</span><span id="line-84">        CGM_INACTIVE(2),</span>
+<span class="source-line-no">085</span><span id="line-85">        CLOSED_LOOP(3),</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">        ;</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">        private final int id;</span>
+<span class="source-line-no">090</span><span id="line-90">        PCM(int id) {</span>
+<span class="source-line-no">091</span><span id="line-91">            this.id = id;</span>
+<span class="source-line-no">092</span><span id="line-92">        }</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">        public static PCM fromId(int id) {</span>
+<span class="source-line-no">095</span><span id="line-95">            for (PCM s : values()) {</span>
+<span class="source-line-no">096</span><span id="line-96">                if (s.id == id) {</span>
+<span class="source-line-no">097</span><span id="line-97">                    return s;</span>
+<span class="source-line-no">098</span><span id="line-98">                }</span>
+<span class="source-line-no">099</span><span id="line-99">            }</span>
+<span class="source-line-no">100</span><span id="line-100">            return null;</span>
+<span class="source-line-no">101</span><span id="line-101">        }</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">        public int getId() {</span>
+<span class="source-line-no">104</span><span id="line-104">            return id;</span>
+<span class="source-line-no">105</span><span id="line-105">        }</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107">    </span>
+<span class="source-line-no">108</span><span id="line-108">}</span>
 
 
 
