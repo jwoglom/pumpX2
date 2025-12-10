@@ -9,6 +9,7 @@ import java.util.Set;
 @HistoryLogProps(
     opCode = 399,
     displayName = "Dexcom G7 CGM Data",
+    internalName = "LID_CGM_DATA_G7",
     usedByTconnectsync = true
 )
 public class DexcomG7CGMHistoryLog extends HistoryLog {

@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 229, // -27
     displayName = "ControlIQ User Mode Change",
+    internalName = "LID_AA_USER_MODE_CHANGE",
     usedByTidepool = true // LID_AA_USER_MODE_CHANGE
 )
 public class ControlIQUserModeChangeHistoryLog extends HistoryLog {

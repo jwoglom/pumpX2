@@ -10,6 +10,7 @@ import java.time.Instant;
 @HistoryLogProps(
     opCode = 14,
     displayName = "Date Change",
+    internalName = "LID_DATE_CHANGED",
     usedByAndroid = true,
     usedByTidepool = true
 )

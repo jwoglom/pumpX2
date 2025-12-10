@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAb
 @HistoryLogProps(
     opCode = 21,
     displayName = "Extended Bolus Portion Complete",
+    internalName = "LID_BOLEX_COMPLETED",
     usedByAndroid = true
 )
 public class BolexCompletedHistoryLog extends HistoryLog {

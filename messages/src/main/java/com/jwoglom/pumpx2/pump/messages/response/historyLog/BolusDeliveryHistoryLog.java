@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 @HistoryLogProps(
     opCode = 280,
+    internalName = "LID_BOLUS_DELIVERY",
     usedByAndroid = true
 )
 public class BolusDeliveryHistoryLog extends HistoryLog {

@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 33,
     displayName = "Cartridge Filled",
+    internalName = "LID_CARTRIDGE_FILLED",
     usedByTidepool = true
 )
 public class CartridgeFilledHistoryLog extends HistoryLog {
