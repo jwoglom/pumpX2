@@ -1,10 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.calculator;
 
-import org.apache.commons.lang3.Validate;
-import com.jwoglom.pumpx2.shared.L;
-
+import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -84,11 +81,9 @@ public class BolusCalcUnits {
     }
 
 
-    private static final DecimalFormat decFormat = new DecimalFormat("0.00");
-    static {
-        decFormat.setRoundingMode(RoundingMode.HALF_UP);
-    }
     static double doublePrecision(double val) {
-        return Double.parseDouble(decFormat.format(val));
+        // Locale-safe rounding to 2 decimal places.
+        // Avoids DecimalFormat (locale-dependent decimal separators) + parseDouble round-trips.
+        return BigDecimal.valueOf(val).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }
