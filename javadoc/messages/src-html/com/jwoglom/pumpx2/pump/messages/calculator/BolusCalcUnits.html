@@ -17,98 +17,93 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.calculator;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.shared.L;</span>
-<span class="source-line-no">005</span><span id="line-5"></span>
-<span class="source-line-no">006</span><span id="line-6">import java.math.RoundingMode;</span>
-<span class="source-line-no">007</span><span id="line-7">import java.text.DecimalFormat;</span>
-<span class="source-line-no">008</span><span id="line-8">import java.util.Objects;</span>
-<span class="source-line-no">009</span><span id="line-9"></span>
-<span class="source-line-no">010</span><span id="line-10">/**</span>
-<span class="source-line-no">011</span><span id="line-11"> * An object representing the units for each component of the bolus calculation. The total amount</span>
-<span class="source-line-no">012</span><span id="line-12"> * is the amount which is actually suggested by the pump; all other values are helpers which can</span>
-<span class="source-line-no">013</span><span id="line-13"> * be used to display the subcomponents of the calculation. Note that the total is NOT ALWAYS the</span>
-<span class="source-line-no">014</span><span id="line-14"> * sum of each other component, since in some scenarios components will be ignored in the calculation.</span>
-<span class="source-line-no">015</span><span id="line-15"> */</span>
-<span class="source-line-no">016</span><span id="line-16">public class BolusCalcUnits {</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    private final double total;</span>
-<span class="source-line-no">019</span><span id="line-19">    private final double fromCarbs;</span>
-<span class="source-line-no">020</span><span id="line-20">    private final double fromBG;</span>
-<span class="source-line-no">021</span><span id="line-21">    private final double fromIOB;</span>
-<span class="source-line-no">022</span><span id="line-22">    private final double fromUser;</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    BolusCalcUnits(double total, double fromCarbs, double fromBG, double fromIOB, double fromUser) {</span>
-<span class="source-line-no">025</span><span id="line-25">        this.total = doublePrecision(total);</span>
-<span class="source-line-no">026</span><span id="line-26">        this.fromCarbs = doublePrecision(fromCarbs);</span>
-<span class="source-line-no">027</span><span id="line-27">        this.fromBG = doublePrecision(fromBG);</span>
-<span class="source-line-no">028</span><span id="line-28">        this.fromIOB = doublePrecision(fromIOB);</span>
-<span class="source-line-no">029</span><span id="line-29">        this.fromUser = doublePrecision(fromUser);</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    BolusCalcUnits(double total, double fromCarbs, double fromBG, double fromIOB) {</span>
-<span class="source-line-no">033</span><span id="line-33">        this(total, fromCarbs, fromBG, fromIOB, 0.0);</span>
-<span class="source-line-no">034</span><span id="line-34">    }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    /**</span>
-<span class="source-line-no">037</span><span id="line-37">     * @param fromUser the amount of insulin entered by the user which overrides all other amounts</span>
-<span class="source-line-no">038</span><span id="line-38">     * @return a {@link BolusCalcUnits} object which only contains the user-provided input</span>
-<span class="source-line-no">039</span><span id="line-39">     */</span>
-<span class="source-line-no">040</span><span id="line-40">    public static BolusCalcUnits fromUser(double fromUser) {</span>
-<span class="source-line-no">041</span><span id="line-41">        return new BolusCalcUnits(fromUser, 0.0, 0.0, 0.0, fromUser);</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    /**</span>
-<span class="source-line-no">045</span><span id="line-45">     * @return the total amount of insulin which will be filled in the units input.</span>
-<span class="source-line-no">046</span><span id="line-46">     * This is NOT ALWAYS the sum of all of the individual components.</span>
-<span class="source-line-no">047</span><span id="line-47">     */</span>
-<span class="source-line-no">048</span><span id="line-48">    public double getTotal() {</span>
-<span class="source-line-no">049</span><span id="line-49">        return total;</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    public double getFromCarbs() {</span>
-<span class="source-line-no">053</span><span id="line-53">        return fromCarbs;</span>
-<span class="source-line-no">054</span><span id="line-54">    }</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public double getFromBG() {</span>
-<span class="source-line-no">057</span><span id="line-57">        return fromBG;</span>
-<span class="source-line-no">058</span><span id="line-58">    }</span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">    public double getFromIOB() {</span>
-<span class="source-line-no">061</span><span id="line-61">        return fromIOB;</span>
-<span class="source-line-no">062</span><span id="line-62">    }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
-<span class="source-line-no">064</span><span id="line-64">    public double getFromUser() {</span>
-<span class="source-line-no">065</span><span id="line-65">        return fromUser;</span>
-<span class="source-line-no">066</span><span id="line-66">    }</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">    @Override</span>
-<span class="source-line-no">069</span><span id="line-69">    public boolean equals(Object o) {</span>
-<span class="source-line-no">070</span><span id="line-70">        if (this == o) return true;</span>
-<span class="source-line-no">071</span><span id="line-71">        if (o == null || getClass() != o.getClass()) return false;</span>
-<span class="source-line-no">072</span><span id="line-72">        BolusCalcUnits that = (BolusCalcUnits) o;</span>
-<span class="source-line-no">073</span><span id="line-73">        return Double.compare(that.total, total) == 0 &amp;&amp; Double.compare(that.fromCarbs, fromCarbs) == 0 &amp;&amp; Double.compare(that.fromBG, fromBG) == 0 &amp;&amp; Double.compare(that.fromIOB, fromIOB) == 0 &amp;&amp; Double.compare(that.fromUser, fromUser) == 0;</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    @Override</span>
-<span class="source-line-no">077</span><span id="line-77">    public int hashCode() {</span>
-<span class="source-line-no">078</span><span id="line-78">        return Objects.hash(total, fromCarbs, fromBG, fromIOB, fromUser);</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    @Override</span>
-<span class="source-line-no">082</span><span id="line-82">    public String toString() {</span>
-<span class="source-line-no">083</span><span id="line-83">        return "BolusCalcUnits(total: " + total + " = fromCarbs: " + fromCarbs + " + bg: " + fromBG + " + fromIOB: " + fromIOB + " + fromUser: " + fromUser + ")";</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    private static final DecimalFormat decFormat = new DecimalFormat("0.00");</span>
-<span class="source-line-no">088</span><span id="line-88">    static {</span>
-<span class="source-line-no">089</span><span id="line-89">        decFormat.setRoundingMode(RoundingMode.HALF_UP);</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91">    static double doublePrecision(double val) {</span>
-<span class="source-line-no">092</span><span id="line-92">        return Double.parseDouble(decFormat.format(val));</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94">}</span>
+<span class="source-line-no">003</span><span id="line-3">import java.math.BigDecimal;</span>
+<span class="source-line-no">004</span><span id="line-4">import java.math.RoundingMode;</span>
+<span class="source-line-no">005</span><span id="line-5">import java.util.Objects;</span>
+<span class="source-line-no">006</span><span id="line-6"></span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * An object representing the units for each component of the bolus calculation. The total amount</span>
+<span class="source-line-no">009</span><span id="line-9"> * is the amount which is actually suggested by the pump; all other values are helpers which can</span>
+<span class="source-line-no">010</span><span id="line-10"> * be used to display the subcomponents of the calculation. Note that the total is NOT ALWAYS the</span>
+<span class="source-line-no">011</span><span id="line-11"> * sum of each other component, since in some scenarios components will be ignored in the calculation.</span>
+<span class="source-line-no">012</span><span id="line-12"> */</span>
+<span class="source-line-no">013</span><span id="line-13">public class BolusCalcUnits {</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">    private final double total;</span>
+<span class="source-line-no">016</span><span id="line-16">    private final double fromCarbs;</span>
+<span class="source-line-no">017</span><span id="line-17">    private final double fromBG;</span>
+<span class="source-line-no">018</span><span id="line-18">    private final double fromIOB;</span>
+<span class="source-line-no">019</span><span id="line-19">    private final double fromUser;</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">    BolusCalcUnits(double total, double fromCarbs, double fromBG, double fromIOB, double fromUser) {</span>
+<span class="source-line-no">022</span><span id="line-22">        this.total = doublePrecision(total);</span>
+<span class="source-line-no">023</span><span id="line-23">        this.fromCarbs = doublePrecision(fromCarbs);</span>
+<span class="source-line-no">024</span><span id="line-24">        this.fromBG = doublePrecision(fromBG);</span>
+<span class="source-line-no">025</span><span id="line-25">        this.fromIOB = doublePrecision(fromIOB);</span>
+<span class="source-line-no">026</span><span id="line-26">        this.fromUser = doublePrecision(fromUser);</span>
+<span class="source-line-no">027</span><span id="line-27">    }</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    BolusCalcUnits(double total, double fromCarbs, double fromBG, double fromIOB) {</span>
+<span class="source-line-no">030</span><span id="line-30">        this(total, fromCarbs, fromBG, fromIOB, 0.0);</span>
+<span class="source-line-no">031</span><span id="line-31">    }</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    /**</span>
+<span class="source-line-no">034</span><span id="line-34">     * @param fromUser the amount of insulin entered by the user which overrides all other amounts</span>
+<span class="source-line-no">035</span><span id="line-35">     * @return a {@link BolusCalcUnits} object which only contains the user-provided input</span>
+<span class="source-line-no">036</span><span id="line-36">     */</span>
+<span class="source-line-no">037</span><span id="line-37">    public static BolusCalcUnits fromUser(double fromUser) {</span>
+<span class="source-line-no">038</span><span id="line-38">        return new BolusCalcUnits(fromUser, 0.0, 0.0, 0.0, fromUser);</span>
+<span class="source-line-no">039</span><span id="line-39">    }</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">    /**</span>
+<span class="source-line-no">042</span><span id="line-42">     * @return the total amount of insulin which will be filled in the units input.</span>
+<span class="source-line-no">043</span><span id="line-43">     * This is NOT ALWAYS the sum of all of the individual components.</span>
+<span class="source-line-no">044</span><span id="line-44">     */</span>
+<span class="source-line-no">045</span><span id="line-45">    public double getTotal() {</span>
+<span class="source-line-no">046</span><span id="line-46">        return total;</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public double getFromCarbs() {</span>
+<span class="source-line-no">050</span><span id="line-50">        return fromCarbs;</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    public double getFromBG() {</span>
+<span class="source-line-no">054</span><span id="line-54">        return fromBG;</span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    public double getFromIOB() {</span>
+<span class="source-line-no">058</span><span id="line-58">        return fromIOB;</span>
+<span class="source-line-no">059</span><span id="line-59">    }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">    public double getFromUser() {</span>
+<span class="source-line-no">062</span><span id="line-62">        return fromUser;</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    @Override</span>
+<span class="source-line-no">066</span><span id="line-66">    public boolean equals(Object o) {</span>
+<span class="source-line-no">067</span><span id="line-67">        if (this == o) return true;</span>
+<span class="source-line-no">068</span><span id="line-68">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="source-line-no">069</span><span id="line-69">        BolusCalcUnits that = (BolusCalcUnits) o;</span>
+<span class="source-line-no">070</span><span id="line-70">        return Double.compare(that.total, total) == 0 &amp;&amp; Double.compare(that.fromCarbs, fromCarbs) == 0 &amp;&amp; Double.compare(that.fromBG, fromBG) == 0 &amp;&amp; Double.compare(that.fromIOB, fromIOB) == 0 &amp;&amp; Double.compare(that.fromUser, fromUser) == 0;</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    @Override</span>
+<span class="source-line-no">074</span><span id="line-74">    public int hashCode() {</span>
+<span class="source-line-no">075</span><span id="line-75">        return Objects.hash(total, fromCarbs, fromBG, fromIOB, fromUser);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    @Override</span>
+<span class="source-line-no">079</span><span id="line-79">    public String toString() {</span>
+<span class="source-line-no">080</span><span id="line-80">        return "BolusCalcUnits(total: " + total + " = fromCarbs: " + fromCarbs + " + bg: " + fromBG + " + fromIOB: " + fromIOB + " + fromUser: " + fromUser + ")";</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    static double doublePrecision(double val) {</span>
+<span class="source-line-no">085</span><span id="line-85">        // Locale-safe rounding to 2 decimal places.</span>
+<span class="source-line-no">086</span><span id="line-86">        // Avoids DecimalFormat (locale-dependent decimal separators) + parseDouble round-trips.</span>
+<span class="source-line-no">087</span><span id="line-87">        return BigDecimal.valueOf(val).setScale(2, RoundingMode.HALF_UP).doubleValue();</span>
+<span class="source-line-no">088</span><span id="line-88">    }</span>
+<span class="source-line-no">089</span><span id="line-89">}</span>
 
 
 
