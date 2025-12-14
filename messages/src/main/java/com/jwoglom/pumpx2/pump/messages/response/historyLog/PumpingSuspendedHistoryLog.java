@@ -64,7 +64,7 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
         return SuspendReason.fromId(reasonId);
     }
 
-    enum SuspendReason {
+    public enum SuspendReason {
         USER_ABORTED(0),
         ALARM(1),
         MALFUNCTION(2),

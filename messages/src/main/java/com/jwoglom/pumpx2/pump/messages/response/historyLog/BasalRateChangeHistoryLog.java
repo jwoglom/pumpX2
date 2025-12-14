@@ -94,7 +94,7 @@ public class BasalRateChangeHistoryLog extends HistoryLog {
         return changeTypeId;
     }
 
-    enum ChangeType {
+    public enum ChangeType {
         TIMED_SEGMENT(1),
         NEW_PROFILE(2),
         TEMP_RATE_START(4),
