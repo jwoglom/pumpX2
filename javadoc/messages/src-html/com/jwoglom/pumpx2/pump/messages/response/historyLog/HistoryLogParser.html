@@ -23,157 +23,172 @@
 <span class="source-line-no">006</span><span id="line-6"></span>
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.shared.Hex;</span>
 <span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">import java.util.HashMap;</span>
-<span class="source-line-no">010</span><span id="line-10">import java.util.Map;</span>
-<span class="source-line-no">011</span><span id="line-11">import java.util.Set;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">public class HistoryLogParser {</span>
-<span class="source-line-no">014</span><span id="line-14">    private static final String TAG = "HistoryLogParser";</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">    public static final Set&lt;Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_TYPES = Set.of(</span>
-<span class="source-line-no">017</span><span id="line-17">        DateChangeHistoryLog.class,</span>
-<span class="source-line-no">018</span><span id="line-18">        BGHistoryLog.class,</span>
-<span class="source-line-no">019</span><span id="line-19">        DexcomG6CGMHistoryLog.class,</span>
-<span class="source-line-no">020</span><span id="line-20">        BolusDeliveryHistoryLog.class,</span>
-<span class="source-line-no">021</span><span id="line-21">        BolusCompletedHistoryLog.class,</span>
-<span class="source-line-no">022</span><span id="line-22">        BolusRequestedMsg1HistoryLog.class,</span>
-<span class="source-line-no">023</span><span id="line-23">        BolusRequestedMsg2HistoryLog.class,</span>
-<span class="source-line-no">024</span><span id="line-24">        BolusRequestedMsg3HistoryLog.class,</span>
-<span class="source-line-no">025</span><span id="line-25">        BolexCompletedHistoryLog.class,</span>
-<span class="source-line-no">026</span><span id="line-26">        BasalRateChangeHistoryLog.class,</span>
-<span class="source-line-no">027</span><span id="line-27">        BolexActivatedHistoryLog.class,</span>
-<span class="source-line-no">028</span><span id="line-28">        BolusActivatedHistoryLog.class,</span>
-<span class="source-line-no">029</span><span id="line-29">        CannulaFilledHistoryLog.class,</span>
-<span class="source-line-no">030</span><span id="line-30">        CarbEnteredHistoryLog.class,</span>
-<span class="source-line-no">031</span><span id="line-31">        CartridgeFilledHistoryLog.class,</span>
-<span class="source-line-no">032</span><span id="line-32">        CorrectionDeclinedHistoryLog.class,</span>
-<span class="source-line-no">033</span><span id="line-33">        DailyBasalHistoryLog.class,</span>
-<span class="source-line-no">034</span><span id="line-34">        DataLogCorruptionHistoryLog.class,</span>
-<span class="source-line-no">035</span><span id="line-35">        IdpActionHistoryLog.class,</span>
-<span class="source-line-no">036</span><span id="line-36">        IdpBolusHistoryLog.class,</span>
-<span class="source-line-no">037</span><span id="line-37">        IdpListHistoryLog.class,</span>
-<span class="source-line-no">038</span><span id="line-38">        FactoryResetHistoryLog.class,</span>
-<span class="source-line-no">039</span><span id="line-39">        IdpActionMsg2HistoryLog.class,</span>
-<span class="source-line-no">040</span><span id="line-40">        IdpTimeDependentSegmentHistoryLog.class,</span>
-<span class="source-line-no">041</span><span id="line-41">        LogErasedHistoryLog.class,</span>
-<span class="source-line-no">042</span><span id="line-42">        NewDayHistoryLog.class,</span>
-<span class="source-line-no">043</span><span id="line-43">        ParamChangeGlobalSettingsHistoryLog.class,</span>
-<span class="source-line-no">044</span><span id="line-44">        ParamChangePumpSettingsHistoryLog.class,</span>
-<span class="source-line-no">045</span><span id="line-45">        //ParamChangePumpSettingsHistoryLog.class,</span>
-<span class="source-line-no">046</span><span id="line-46">        ParamChangeRemSettingsHistoryLog.class,</span>
-<span class="source-line-no">047</span><span id="line-47">        ParamChangeReminderHistoryLog.class,</span>
-<span class="source-line-no">048</span><span id="line-48">        PumpingResumedHistoryLog.class,</span>
-<span class="source-line-no">049</span><span id="line-49">        PumpingSuspendedHistoryLog.class,</span>
-<span class="source-line-no">050</span><span id="line-50">        TempRateActivatedHistoryLog.class,</span>
-<span class="source-line-no">051</span><span id="line-51">        TempRateCompletedHistoryLog.class,</span>
-<span class="source-line-no">052</span><span id="line-52">        TimeChangedHistoryLog.class,</span>
-<span class="source-line-no">053</span><span id="line-53">        TubingFilledHistoryLog.class,</span>
-<span class="source-line-no">054</span><span id="line-54">        UsbConnectedHistoryLog.class,</span>
-<span class="source-line-no">055</span><span id="line-55">        //UsbConnectedHistoryLog.class,</span>
-<span class="source-line-no">056</span><span id="line-56">        UsbDisconnectedHistoryLog.class,</span>
-<span class="source-line-no">057</span><span id="line-57">        UsbEnumeratedHistoryLog.class,</span>
-<span class="source-line-no">058</span><span id="line-58">        AlarmActivatedHistoryLog.class,</span>
-<span class="source-line-no">059</span><span id="line-59">        AlertActivatedHistoryLog.class,</span>
-<span class="source-line-no">060</span><span id="line-60">        AlarmClearedHistoryLog.class,</span>
-<span class="source-line-no">061</span><span id="line-61">        CgmDataSampleHistoryLog.class,</span>
-<span class="source-line-no">062</span><span id="line-62">        CgmCalibrationHistoryLog.class,</span>
-<span class="source-line-no">063</span><span id="line-63">        CgmDataGxHistoryLog.class,</span>
-<span class="source-line-no">064</span><span id="line-64">        CgmCalibrationGxHistoryLog.class,</span>
-<span class="source-line-no">065</span><span id="line-65">        CgmAlertAckDexHistoryLog.class,</span>
-<span class="source-line-no">066</span><span id="line-66">        CgmAlertActivatedDexHistoryLog.class,</span>
-<span class="source-line-no">067</span><span id="line-67">        CgmAlertActivatedFsl2HistoryLog.class,</span>
-<span class="source-line-no">068</span><span id="line-68">        CgmAlertActivatedHistoryLog.class,</span>
-<span class="source-line-no">069</span><span id="line-69">        CgmAlertClearedDexHistoryLog.class,</span>
-<span class="source-line-no">070</span><span id="line-70">        CgmAlertClearedFsl2HistoryLog.class,</span>
-<span class="source-line-no">071</span><span id="line-71">        CgmAlertClearedHistoryLog.class,</span>
-<span class="source-line-no">072</span><span id="line-72">        CgmDataFsl2HistoryLog.class,</span>
-<span class="source-line-no">073</span><span id="line-73">        CgmDataFsl3HistoryLog.class,</span>
-<span class="source-line-no">074</span><span id="line-74">        HypoMinimizerSuspendHistoryLog.class,</span>
-<span class="source-line-no">075</span><span id="line-75">        HypoMinimizerResumeHistoryLog.class,</span>
-<span class="source-line-no">076</span><span id="line-76">        BasalDeliveryHistoryLog.class,</span>
-<span class="source-line-no">077</span><span id="line-77">        CgmJoinSessionFsl2HistoryLog.class,</span>
-<span class="source-line-no">078</span><span id="line-78">        CgmJoinSessionFsl3HistoryLog.class,</span>
-<span class="source-line-no">079</span><span id="line-79">        CgmJoinSessionG7HistoryLog.class,</span>
-<span class="source-line-no">080</span><span id="line-80">        CgmJoinSessionHistoryLog.class,</span>
-<span class="source-line-no">081</span><span id="line-81">        CgmStartSessionHistoryLog.class,</span>
-<span class="source-line-no">082</span><span id="line-82">        CgmStartSessionFsl2HistoryLog.class,</span>
-<span class="source-line-no">083</span><span id="line-83">        CgmStopSessionHistoryLog.class,</span>
-<span class="source-line-no">084</span><span id="line-84">        CgmStopSessionFsl2HistoryLog.class,</span>
-<span class="source-line-no">085</span><span id="line-85">        CgmStopSessionFsl3HistoryLog.class,</span>
-<span class="source-line-no">086</span><span id="line-86">        CgmStopSessionG7HistoryLog.class,</span>
-<span class="source-line-no">087</span><span id="line-87">        DailyStatusHistoryLog.class,</span>
-<span class="source-line-no">088</span><span id="line-88">        ControlIQPcmChangeHistoryLog.class,</span>
-<span class="source-line-no">089</span><span id="line-89">        ControlIQUserModeChangeHistoryLog.class,</span>
-<span class="source-line-no">090</span><span id="line-90">        DexcomG7CGMHistoryLog.class,</span>
-<span class="source-line-no">091</span><span id="line-91">        MalfunctionHistoryLog.class,</span>
-<span class="source-line-no">092</span><span id="line-92">        PlgsPeriodicHistoryLog.class,</span>
-<span class="source-line-no">093</span><span id="line-93">        ShelfModeHistoryLog.class,</span>
-<span class="source-line-no">094</span><span id="line-94">        ArmInitHistoryLog.class,</span>
-<span class="source-line-no">095</span><span id="line-95">        AlertClearedHistoryLog.class,</span>
-<span class="source-line-no">096</span><span id="line-96">        VersionInfoHistoryLog.class,</span>
-<span class="source-line-no">097</span><span id="line-97">        UpdateStatusHistoryLog.class,</span>
-<span class="source-line-no">098</span><span id="line-98">        VersionsAHistoryLog.class</span>
-<span class="source-line-no">099</span><span id="line-99">        // MESSAGES_END</span>
-<span class="source-line-no">100</span><span id="line-100">    );</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">    public static Map&lt;Integer, Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_IDS = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">103</span><span id="line-103">    public static Map&lt;Class&lt;? extends HistoryLog&gt;, Integer&gt; LOG_MESSAGE_CLASS_TO_ID = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">    static {</span>
-<span class="source-line-no">106</span><span id="line-106">        for (Class&lt;? extends HistoryLog&gt; clazz : LOG_MESSAGE_TYPES) {</span>
-<span class="source-line-no">107</span><span id="line-107">            try {</span>
-<span class="source-line-no">108</span><span id="line-108">                LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);</span>
-<span class="source-line-no">109</span><span id="line-109">                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());</span>
-<span class="source-line-no">110</span><span id="line-110">            } catch (IllegalAccessException|InstantiationException e) {</span>
-<span class="source-line-no">111</span><span id="line-111">                L.e(TAG, String.format("could not instantiate %s", clazz), e);</span>
-<span class="source-line-no">112</span><span id="line-112">                e.printStackTrace();</span>
-<span class="source-line-no">113</span><span id="line-113">            }</span>
-<span class="source-line-no">114</span><span id="line-114">        }</span>
-<span class="source-line-no">115</span><span id="line-115">    }</span>
-<span class="source-line-no">116</span><span id="line-116"></span>
-<span class="source-line-no">117</span><span id="line-117">    public static HistoryLog parse(byte[] rawStream) {</span>
-<span class="source-line-no">118</span><span id="line-118">        int typeId = Bytes.readShort(rawStream, 0) &amp; 4095;</span>
-<span class="source-line-no">119</span><span id="line-119">//        if (typeId % 256 != typeId) {</span>
-<span class="source-line-no">120</span><span id="line-120">//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));</span>
-<span class="source-line-no">121</span><span id="line-121">//            typeId = typeId % 256;</span>
-<span class="source-line-no">122</span><span id="line-122">//        }</span>
-<span class="source-line-no">123</span><span id="line-123">        HistoryLog ret = parseWithTypeId(rawStream, typeId);</span>
-<span class="source-line-no">124</span><span id="line-124">        if (ret instanceof UnknownHistoryLog) {</span>
-<span class="source-line-no">125</span><span id="line-125">            L.w(TAG, "retry HistoryLog parse on typeId " + typeId + " =&gt; " + ((byte) typeId));</span>
-<span class="source-line-no">126</span><span id="line-126">            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);</span>
-<span class="source-line-no">127</span><span id="line-127">            if (two instanceof UnknownHistoryLog) {</span>
-<span class="source-line-no">128</span><span id="line-128">                return ret;</span>
-<span class="source-line-no">129</span><span id="line-129">            }</span>
-<span class="source-line-no">130</span><span id="line-130">            return two;</span>
-<span class="source-line-no">131</span><span id="line-131">        }</span>
-<span class="source-line-no">132</span><span id="line-132">        return ret;</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {</span>
-<span class="source-line-no">136</span><span id="line-136">        HistoryLog historyLog = null;</span>
-<span class="source-line-no">137</span><span id="line-137">        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {</span>
-<span class="source-line-no">138</span><span id="line-138">            L.t(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
-<span class="source-line-no">139</span><span id="line-139">            historyLog = new UnknownHistoryLog();</span>
-<span class="source-line-no">140</span><span id="line-140">            historyLog.parse(rawStream);</span>
-<span class="source-line-no">141</span><span id="line-141">            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));</span>
-<span class="source-line-no">142</span><span id="line-142">            return historyLog;</span>
-<span class="source-line-no">143</span><span id="line-143">        }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">        try {</span>
-<span class="source-line-no">146</span><span id="line-146">            historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();</span>
-<span class="source-line-no">147</span><span id="line-147">        } catch (IllegalAccessException|InstantiationException e) {</span>
-<span class="source-line-no">148</span><span id="line-148">            L.e(TAG, "could not instantiate "+typeId, e);</span>
-<span class="source-line-no">149</span><span id="line-149">            e.printStackTrace();</span>
-<span class="source-line-no">150</span><span id="line-150">            return null;</span>
-<span class="source-line-no">151</span><span id="line-151">        }</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());</span>
-<span class="source-line-no">154</span><span id="line-154">        L.t(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
-<span class="source-line-no">155</span><span id="line-155">        historyLog.parse(rawStream);</span>
-<span class="source-line-no">156</span><span id="line-156">        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));</span>
-<span class="source-line-no">157</span><span id="line-157">        return historyLog;</span>
-<span class="source-line-no">158</span><span id="line-158">    }</span>
-<span class="source-line-no">159</span><span id="line-159">}</span>
+<span class="source-line-no">009</span><span id="line-9">import java.nio.ByteBuffer;</span>
+<span class="source-line-no">010</span><span id="line-10">import java.nio.ByteOrder;</span>
+<span class="source-line-no">011</span><span id="line-11">import java.util.HashMap;</span>
+<span class="source-line-no">012</span><span id="line-12">import java.util.Map;</span>
+<span class="source-line-no">013</span><span id="line-13">import java.util.Set;</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">public class HistoryLogParser {</span>
+<span class="source-line-no">016</span><span id="line-16">    private static final String TAG = "HistoryLogParser";</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">    public static final Set&lt;Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_TYPES = Set.of(</span>
+<span class="source-line-no">019</span><span id="line-19">        DateChangeHistoryLog.class,</span>
+<span class="source-line-no">020</span><span id="line-20">        BGHistoryLog.class,</span>
+<span class="source-line-no">021</span><span id="line-21">        DexcomG6CGMHistoryLog.class,</span>
+<span class="source-line-no">022</span><span id="line-22">        BolusDeliveryHistoryLog.class,</span>
+<span class="source-line-no">023</span><span id="line-23">        BolusCompletedHistoryLog.class,</span>
+<span class="source-line-no">024</span><span id="line-24">        BolusRequestedMsg1HistoryLog.class,</span>
+<span class="source-line-no">025</span><span id="line-25">        BolusRequestedMsg2HistoryLog.class,</span>
+<span class="source-line-no">026</span><span id="line-26">        BolusRequestedMsg3HistoryLog.class,</span>
+<span class="source-line-no">027</span><span id="line-27">        BolexCompletedHistoryLog.class,</span>
+<span class="source-line-no">028</span><span id="line-28">        BasalRateChangeHistoryLog.class,</span>
+<span class="source-line-no">029</span><span id="line-29">        BolexActivatedHistoryLog.class,</span>
+<span class="source-line-no">030</span><span id="line-30">        BolusActivatedHistoryLog.class,</span>
+<span class="source-line-no">031</span><span id="line-31">        CannulaFilledHistoryLog.class,</span>
+<span class="source-line-no">032</span><span id="line-32">        CarbEnteredHistoryLog.class,</span>
+<span class="source-line-no">033</span><span id="line-33">        CartridgeFilledHistoryLog.class,</span>
+<span class="source-line-no">034</span><span id="line-34">        CorrectionDeclinedHistoryLog.class,</span>
+<span class="source-line-no">035</span><span id="line-35">        DailyBasalHistoryLog.class,</span>
+<span class="source-line-no">036</span><span id="line-36">        DataLogCorruptionHistoryLog.class,</span>
+<span class="source-line-no">037</span><span id="line-37">        IdpActionHistoryLog.class,</span>
+<span class="source-line-no">038</span><span id="line-38">        IdpBolusHistoryLog.class,</span>
+<span class="source-line-no">039</span><span id="line-39">        IdpListHistoryLog.class,</span>
+<span class="source-line-no">040</span><span id="line-40">        FactoryResetHistoryLog.class,</span>
+<span class="source-line-no">041</span><span id="line-41">        IdpActionMsg2HistoryLog.class,</span>
+<span class="source-line-no">042</span><span id="line-42">        IdpTimeDependentSegmentHistoryLog.class,</span>
+<span class="source-line-no">043</span><span id="line-43">        LogErasedHistoryLog.class,</span>
+<span class="source-line-no">044</span><span id="line-44">        NewDayHistoryLog.class,</span>
+<span class="source-line-no">045</span><span id="line-45">        ParamChangeGlobalSettingsHistoryLog.class,</span>
+<span class="source-line-no">046</span><span id="line-46">        ParamChangePumpSettingsHistoryLog.class,</span>
+<span class="source-line-no">047</span><span id="line-47">        //ParamChangePumpSettingsHistoryLog.class,</span>
+<span class="source-line-no">048</span><span id="line-48">        ParamChangeRemSettingsHistoryLog.class,</span>
+<span class="source-line-no">049</span><span id="line-49">        ParamChangeReminderHistoryLog.class,</span>
+<span class="source-line-no">050</span><span id="line-50">        PumpingResumedHistoryLog.class,</span>
+<span class="source-line-no">051</span><span id="line-51">        PumpingSuspendedHistoryLog.class,</span>
+<span class="source-line-no">052</span><span id="line-52">        TempRateActivatedHistoryLog.class,</span>
+<span class="source-line-no">053</span><span id="line-53">        TempRateCompletedHistoryLog.class,</span>
+<span class="source-line-no">054</span><span id="line-54">        TimeChangedHistoryLog.class,</span>
+<span class="source-line-no">055</span><span id="line-55">        TubingFilledHistoryLog.class,</span>
+<span class="source-line-no">056</span><span id="line-56">        UsbConnectedHistoryLog.class,</span>
+<span class="source-line-no">057</span><span id="line-57">        //UsbConnectedHistoryLog.class,</span>
+<span class="source-line-no">058</span><span id="line-58">        UsbDisconnectedHistoryLog.class,</span>
+<span class="source-line-no">059</span><span id="line-59">        UsbEnumeratedHistoryLog.class,</span>
+<span class="source-line-no">060</span><span id="line-60">        AlarmActivatedHistoryLog.class,</span>
+<span class="source-line-no">061</span><span id="line-61">        AlertActivatedHistoryLog.class,</span>
+<span class="source-line-no">062</span><span id="line-62">        AlarmClearedHistoryLog.class,</span>
+<span class="source-line-no">063</span><span id="line-63">        CgmDataSampleHistoryLog.class,</span>
+<span class="source-line-no">064</span><span id="line-64">        CgmCalibrationHistoryLog.class,</span>
+<span class="source-line-no">065</span><span id="line-65">        CgmDataGxHistoryLog.class,</span>
+<span class="source-line-no">066</span><span id="line-66">        CgmCalibrationGxHistoryLog.class,</span>
+<span class="source-line-no">067</span><span id="line-67">        CgmAlertAckDexHistoryLog.class,</span>
+<span class="source-line-no">068</span><span id="line-68">        CgmAlertActivatedDexHistoryLog.class,</span>
+<span class="source-line-no">069</span><span id="line-69">        CgmAlertActivatedFsl2HistoryLog.class,</span>
+<span class="source-line-no">070</span><span id="line-70">        CgmAlertActivatedHistoryLog.class,</span>
+<span class="source-line-no">071</span><span id="line-71">        CgmAlertClearedDexHistoryLog.class,</span>
+<span class="source-line-no">072</span><span id="line-72">        CgmAlertClearedFsl2HistoryLog.class,</span>
+<span class="source-line-no">073</span><span id="line-73">        CgmAlertClearedHistoryLog.class,</span>
+<span class="source-line-no">074</span><span id="line-74">        CgmDataFsl2HistoryLog.class,</span>
+<span class="source-line-no">075</span><span id="line-75">        CgmDataFsl3HistoryLog.class,</span>
+<span class="source-line-no">076</span><span id="line-76">        HypoMinimizerSuspendHistoryLog.class,</span>
+<span class="source-line-no">077</span><span id="line-77">        HypoMinimizerResumeHistoryLog.class,</span>
+<span class="source-line-no">078</span><span id="line-78">        BasalDeliveryHistoryLog.class,</span>
+<span class="source-line-no">079</span><span id="line-79">        CgmJoinSessionFsl2HistoryLog.class,</span>
+<span class="source-line-no">080</span><span id="line-80">        CgmJoinSessionFsl3HistoryLog.class,</span>
+<span class="source-line-no">081</span><span id="line-81">        CgmJoinSessionG7HistoryLog.class,</span>
+<span class="source-line-no">082</span><span id="line-82">        CgmJoinSessionHistoryLog.class,</span>
+<span class="source-line-no">083</span><span id="line-83">        CgmStartSessionHistoryLog.class,</span>
+<span class="source-line-no">084</span><span id="line-84">        CgmStartSessionFsl2HistoryLog.class,</span>
+<span class="source-line-no">085</span><span id="line-85">        CgmStopSessionHistoryLog.class,</span>
+<span class="source-line-no">086</span><span id="line-86">        CgmStopSessionFsl2HistoryLog.class,</span>
+<span class="source-line-no">087</span><span id="line-87">        CgmStopSessionFsl3HistoryLog.class,</span>
+<span class="source-line-no">088</span><span id="line-88">        CgmStopSessionG7HistoryLog.class,</span>
+<span class="source-line-no">089</span><span id="line-89">        DailyStatusHistoryLog.class,</span>
+<span class="source-line-no">090</span><span id="line-90">        ControlIQPcmChangeHistoryLog.class,</span>
+<span class="source-line-no">091</span><span id="line-91">        ControlIQUserModeChangeHistoryLog.class,</span>
+<span class="source-line-no">092</span><span id="line-92">        DexcomG7CGMHistoryLog.class,</span>
+<span class="source-line-no">093</span><span id="line-93">        MalfunctionHistoryLog.class,</span>
+<span class="source-line-no">094</span><span id="line-94">        PlgsPeriodicHistoryLog.class,</span>
+<span class="source-line-no">095</span><span id="line-95">        ShelfModeHistoryLog.class,</span>
+<span class="source-line-no">096</span><span id="line-96">        ArmInitHistoryLog.class,</span>
+<span class="source-line-no">097</span><span id="line-97">        AlertClearedHistoryLog.class,</span>
+<span class="source-line-no">098</span><span id="line-98">        VersionInfoHistoryLog.class,</span>
+<span class="source-line-no">099</span><span id="line-99">        UpdateStatusHistoryLog.class,</span>
+<span class="source-line-no">100</span><span id="line-100">        VersionsAHistoryLog.class</span>
+<span class="source-line-no">101</span><span id="line-101">        // MESSAGES_END</span>
+<span class="source-line-no">102</span><span id="line-102">    );</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
+<span class="source-line-no">104</span><span id="line-104">    public static Map&lt;Integer, Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_IDS = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">105</span><span id="line-105">    public static Map&lt;Class&lt;? extends HistoryLog&gt;, Integer&gt; LOG_MESSAGE_CLASS_TO_ID = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">106</span><span id="line-106"></span>
+<span class="source-line-no">107</span><span id="line-107">    static {</span>
+<span class="source-line-no">108</span><span id="line-108">        for (Class&lt;? extends HistoryLog&gt; clazz : LOG_MESSAGE_TYPES) {</span>
+<span class="source-line-no">109</span><span id="line-109">            try {</span>
+<span class="source-line-no">110</span><span id="line-110">                LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);</span>
+<span class="source-line-no">111</span><span id="line-111">                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());</span>
+<span class="source-line-no">112</span><span id="line-112">            } catch (IllegalAccessException|InstantiationException e) {</span>
+<span class="source-line-no">113</span><span id="line-113">                L.e(TAG, String.format("could not instantiate %s", clazz), e);</span>
+<span class="source-line-no">114</span><span id="line-114">                e.printStackTrace();</span>
+<span class="source-line-no">115</span><span id="line-115">            }</span>
+<span class="source-line-no">116</span><span id="line-116">        }</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    public static HistoryLog parse(byte[] rawStream) {</span>
+<span class="source-line-no">120</span><span id="line-120">        // Little endian, unsigned</span>
+<span class="source-line-no">121</span><span id="line-121">        int typeId = rawStream[0];</span>
+<span class="source-line-no">122</span><span id="line-122">        if (typeId &lt; 0) {</span>
+<span class="source-line-no">123</span><span id="line-123">            typeId += 512;</span>
+<span class="source-line-no">124</span><span id="line-124">        }</span>
+<span class="source-line-no">125</span><span id="line-125">        if (rawStream[1] &gt; 0) {</span>
+<span class="source-line-no">126</span><span id="line-126">            typeId += 256 * rawStream[1];</span>
+<span class="source-line-no">127</span><span id="line-127">        }</span>
+<span class="source-line-no">128</span><span id="line-128">//        if (typeId % 256 != typeId) {</span>
+<span class="source-line-no">129</span><span id="line-129">//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));</span>
+<span class="source-line-no">130</span><span id="line-130">//            typeId = typeId % 256;</span>
+<span class="source-line-no">131</span><span id="line-131">//        }</span>
+<span class="source-line-no">132</span><span id="line-132">        HistoryLog ret = parseWithTypeId(rawStream, typeId);</span>
+<span class="source-line-no">133</span><span id="line-133">        if (ret instanceof UnknownHistoryLog) {</span>
+<span class="source-line-no">134</span><span id="line-134">            L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " =&gt; " + ((byte) typeId));</span>
+<span class="source-line-no">135</span><span id="line-135">            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);</span>
+<span class="source-line-no">136</span><span id="line-136">            if (!(two instanceof UnknownHistoryLog)) {</span>
+<span class="source-line-no">137</span><span id="line-137">                return two;</span>
+<span class="source-line-no">138</span><span id="line-138">            }</span>
+<span class="source-line-no">139</span><span id="line-139">            if ((byte) typeId &lt; 0) {</span>
+<span class="source-line-no">140</span><span id="line-140">                L.w(TAG, "retry2 HistoryLog parse on typeId " + ((byte) typeId) + " =&gt; " + (((byte) typeId) + 512));</span>
+<span class="source-line-no">141</span><span id="line-141">                HistoryLog three = parseWithTypeId(rawStream, (((byte) typeId) + 512));</span>
+<span class="source-line-no">142</span><span id="line-142">                if (!(three instanceof UnknownHistoryLog)) {</span>
+<span class="source-line-no">143</span><span id="line-143">                    return three;</span>
+<span class="source-line-no">144</span><span id="line-144">                }</span>
+<span class="source-line-no">145</span><span id="line-145">            }</span>
+<span class="source-line-no">146</span><span id="line-146">        }</span>
+<span class="source-line-no">147</span><span id="line-147">        return ret;</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {</span>
+<span class="source-line-no">151</span><span id="line-151">        HistoryLog historyLog = null;</span>
+<span class="source-line-no">152</span><span id="line-152">        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {</span>
+<span class="source-line-no">153</span><span id="line-153">            L.t(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
+<span class="source-line-no">154</span><span id="line-154">            historyLog = new UnknownHistoryLog();</span>
+<span class="source-line-no">155</span><span id="line-155">            historyLog.parse(rawStream);</span>
+<span class="source-line-no">156</span><span id="line-156">            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));</span>
+<span class="source-line-no">157</span><span id="line-157">            return historyLog;</span>
+<span class="source-line-no">158</span><span id="line-158">        }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">        try {</span>
+<span class="source-line-no">161</span><span id="line-161">            historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();</span>
+<span class="source-line-no">162</span><span id="line-162">        } catch (IllegalAccessException|InstantiationException e) {</span>
+<span class="source-line-no">163</span><span id="line-163">            L.e(TAG, "could not instantiate "+typeId, e);</span>
+<span class="source-line-no">164</span><span id="line-164">            e.printStackTrace();</span>
+<span class="source-line-no">165</span><span id="line-165">            return null;</span>
+<span class="source-line-no">166</span><span id="line-166">        }</span>
+<span class="source-line-no">167</span><span id="line-167"></span>
+<span class="source-line-no">168</span><span id="line-168">        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());</span>
+<span class="source-line-no">169</span><span id="line-169">        L.t(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
+<span class="source-line-no">170</span><span id="line-170">        historyLog.parse(rawStream);</span>
+<span class="source-line-no">171</span><span id="line-171">        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));</span>
+<span class="source-line-no">172</span><span id="line-172">        return historyLog;</span>
+<span class="source-line-no">173</span><span id="line-173">    }</span>
+<span class="source-line-no">174</span><span id="line-174">}</span>
 
 
 
