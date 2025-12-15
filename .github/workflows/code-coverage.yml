@@ -28,7 +28,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
-          script: ./gradlew connectedCheck
+          script: ./scripts/ci-connected-check.sh
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
