@@ -122,18 +122,27 @@ public class HistoryLogParser {
         if (typeId < 0) {
             typeId += 512;
         }
+        if (rawStream[1] > 0) {
+            typeId += 256 * rawStream[1];
+        }
 //        if (typeId % 256 != typeId) {
 //            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
 //            typeId = typeId % 256;
 //        }
         HistoryLog ret = parseWithTypeId(rawStream, typeId);
         if (ret instanceof UnknownHistoryLog) {
-            L.w(TAG, "retry HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
+            L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
             HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);
-            if (two instanceof UnknownHistoryLog) {
-                return ret;
+            if (!(two instanceof UnknownHistoryLog)) {
+                return two;
             }
-            return two;
+            if ((byte) typeId < 0) {
+                L.w(TAG, "retry2 HistoryLog parse on typeId " + ((byte) typeId) + " => " + (((byte) typeId) + 512));
+                HistoryLog three = parseWithTypeId(rawStream, (((byte) typeId) + 512));
+                if (!(three instanceof UnknownHistoryLog)) {
+                    return three;
+                }
+            }
         }
         return ret;
     }
