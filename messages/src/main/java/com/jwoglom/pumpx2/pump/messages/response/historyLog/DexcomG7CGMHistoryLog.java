@@ -65,9 +65,8 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
-        int typeIdWithFlags = 0x1000 | 399;
         return HistoryLog.fillCargo(Bytes.combine(
-            Bytes.firstTwoBytesLittleEndian(typeIdWithFlags),
+            new byte[]{ (byte) 399, 0x11 },
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(glucoseValueStatusRaw), 

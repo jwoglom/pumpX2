@@ -6,6 +6,8 @@ import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -115,7 +117,11 @@ public class HistoryLogParser {
     }
 
     public static HistoryLog parse(byte[] rawStream) {
-        int typeId = Bytes.readShort(rawStream, 0) & 4095;
+        // Little endian, unsigned
+        int typeId = rawStream[0];
+        if (typeId < 0) {
+            typeId += 512;
+        }
 //        if (typeId % 256 != typeId) {
 //            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
 //            typeId = typeId % 256;

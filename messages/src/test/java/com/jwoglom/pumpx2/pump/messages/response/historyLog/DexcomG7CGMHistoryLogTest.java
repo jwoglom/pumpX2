@@ -6,6 +6,11 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 public class DexcomG7CGMHistoryLogTest {
+    /*
+     * Bluetooth comm sent history logs are little-endian.
+     * But Tandem Source appears to store/process them as big-endian, see tconnectsync code.
+     * This means that history log strings between the two are not directly comparable.
+     */
     @Test
     public void testDexcomG7CGMHistoryLog1() throws DecoderException {
         DexcomG7CGMHistoryLog expected = new DexcomG7CGMHistoryLog(
