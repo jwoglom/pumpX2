@@ -80,6 +80,7 @@ public class MalfunctionStatusResponse extends NotificationMessage {
             {0, 0}, // empty
             {3, 8230}, // 3-0x2026
             {18, 8311}, // 18-0x2077 (codeA=18, codeB=8311, remaining={2,3,10}
+            {26, 8322}, // 26-0x2082 (cargo: 26,0,0,0,-126,32,0,0,1,1,0)
     };
 
     public boolean hasMalfunction() {
