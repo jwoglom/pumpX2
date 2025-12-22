@@ -141,24 +141,25 @@
 <span class="source-line-no">124</span><span id="line-124">            {0, 0}, // empty</span>
 <span class="source-line-no">125</span><span id="line-125">            {3, 8230}, // 3-0x2026</span>
 <span class="source-line-no">126</span><span id="line-126">            {18, 8311}, // 18-0x2077 (codeA=18, codeB=8311, remaining={2,3,10}</span>
-<span class="source-line-no">127</span><span id="line-127">    };</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    public boolean hasMalfunction() {</span>
-<span class="source-line-no">130</span><span id="line-130">        for (long[] code : IGNORABLE_CODES) {</span>
-<span class="source-line-no">131</span><span id="line-131">            if (code[0] == getCodeA() &amp;&amp; code[1] == getCodeB()) {</span>
-<span class="source-line-no">132</span><span id="line-132">                return false;</span>
-<span class="source-line-no">133</span><span id="line-133">            }</span>
-<span class="source-line-no">134</span><span id="line-134">        }</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">        return true;</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    @Override</span>
-<span class="source-line-no">140</span><span id="line-140">    public int size() {</span>
-<span class="source-line-no">141</span><span id="line-141">        return (hasMalfunction() &amp;&amp;</span>
-<span class="source-line-no">142</span><span id="line-142">                !StringUtils.isBlank(getErrorString())) ? 1 : 0;</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144">}</span>
+<span class="source-line-no">127</span><span id="line-127">            {26, 8322}, // 26-0x2082 (cargo: 26,0,0,0,-126,32,0,0,1,1,0)</span>
+<span class="source-line-no">128</span><span id="line-128">    };</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">    public boolean hasMalfunction() {</span>
+<span class="source-line-no">131</span><span id="line-131">        for (long[] code : IGNORABLE_CODES) {</span>
+<span class="source-line-no">132</span><span id="line-132">            if (code[0] == getCodeA() &amp;&amp; code[1] == getCodeB()) {</span>
+<span class="source-line-no">133</span><span id="line-133">                return false;</span>
+<span class="source-line-no">134</span><span id="line-134">            }</span>
+<span class="source-line-no">135</span><span id="line-135">        }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">        return true;</span>
+<span class="source-line-no">138</span><span id="line-138">    }</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">    @Override</span>
+<span class="source-line-no">141</span><span id="line-141">    public int size() {</span>
+<span class="source-line-no">142</span><span id="line-142">        return (hasMalfunction() &amp;&amp;</span>
+<span class="source-line-no">143</span><span id="line-143">                !StringUtils.isBlank(getErrorString())) ? 1 : 0;</span>
+<span class="source-line-no">144</span><span id="line-144">    }</span>
+<span class="source-line-no">145</span><span id="line-145">}</span>
 
 
 
