@@ -1,10 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
+import androidx.annotation.Nullable;
+
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationEnum;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 
@@ -61,7 +64,7 @@ public class ReminderStatusResponse extends NotificationMessage {
         return getReminders().size();
     }
 
-    public enum ReminderType {
+    public enum ReminderType implements NotificationEnum {
         LOW_BG_REMINDER(0),
         HIGH_BG_REMINDER(1),
         SITE_CHANGE_REMINDER(2),
@@ -135,6 +138,20 @@ public class ReminderStatusResponse extends NotificationMessage {
 
         public int id() {
             return id;
+        }
+
+        @Override
+        public int getId() {
+            return id;
+        }
+
+        public String toString() {
+            return name();
+        }
+
+        @Nullable public String getDescription() {
+            if (name().startsWith("DEFAULT_REMINDER")) return null;
+            return name();
         }
 
         public static Set<ReminderType> fromBitmask(BigInteger bitmask) {

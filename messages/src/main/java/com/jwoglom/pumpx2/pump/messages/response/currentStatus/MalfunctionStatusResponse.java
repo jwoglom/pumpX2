@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationEnum;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 
@@ -24,7 +25,7 @@ import java.util.Locale;
     characteristic=Characteristic.CURRENT_STATUS,
     request= MalfunctionStatusRequest.class
 )
-public class MalfunctionStatusResponse extends NotificationMessage {
+public class MalfunctionStatusResponse extends NotificationMessage implements NotificationEnum {
     
     private long codeA;
     private long codeB;
@@ -83,19 +84,58 @@ public class MalfunctionStatusResponse extends NotificationMessage {
             {26, 8322}, // 26-0x2082 (cargo: 26,0,0,0,-126,32,0,0,1,1,0)
     };
 
-    public boolean hasMalfunction() {
+    /**
+     * If the provided response ACTUALLY appears to be a pump malfunction,
+     * and not just a matching ID from a concurrent alert or alarm code.
+     *
+     * @param otherMessages other {@link NotificationMessage} implementations (e.g.
+     *                      {@link AlarmStatusResponse}, {@link AlertStatusResponse}) which are also
+     *                      present as concurrent notifications along with this reported malfunction
+     * @return if the malfunction code appears to be valid due to not having any other matching
+     *         concurrent notifications
+     */
+    public boolean hasMalfunction(NotificationMessage... otherMessages) {
         for (long[] code : IGNORABLE_CODES) {
             if (code[0] == getCodeA() && code[1] == getCodeB()) {
                 return false;
             }
         }
 
+        if (matchesKnownIds(otherMessages)) {
+            return false;
+        }
+
         return true;
     }
+
+    public boolean matchesKnownIds(NotificationMessage... otherMessages) {
+        if (otherMessages == null) {
+            return false;
+        }
+
+        for (NotificationMessage message : otherMessages) {
+            if (message.notificationIds().contains((int) getCodeA())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     @Override
     public int size() {
         return (hasMalfunction() &&
                 !StringUtils.isBlank(getErrorString())) ? 1 : 0;
+    }
+
+    @Override
+    public int getId() {
+        return (int) getCodeA();
+    }
+
+    @Override
+    public String getDescription() {
+        return getErrorString();
     }
 }

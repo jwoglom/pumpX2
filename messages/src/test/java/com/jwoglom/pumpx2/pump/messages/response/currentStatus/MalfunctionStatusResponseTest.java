@@ -4,6 +4,7 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -35,12 +36,14 @@ public class MalfunctionStatusResponseTest {
         assertEquals(12, parsedRes.getCodeA());
         assertEquals(0x2071, parsedRes.getCodeB());
         assertEquals("12-0x2071", parsedRes.getErrorString());
+
+        // is malfunction when no matching concurrent alert/alarm messages with id 12
+        assertTrue(parsedRes.hasMalfunction());
     }
 
-    // 3-0x2026 - unknown and seems to be ignorable
+    // 3-0x2026 - unknown and seems to be ignorable. Likely concurrent with PumpResetAlarm
     @Test
-    @Ignore("ignored in code")
-    public void testMalfunction2StatusResponse_3_0x2026_unknown() throws DecoderException {
+    public void testMalfunction2StatusResponse_3_0x2026_pumpResetAlarmIgnored() throws DecoderException {
         MalfunctionStatusResponse expected = new MalfunctionStatusResponse(
                 3, 8230, new byte[]{2,-1,-1}
         );
@@ -56,12 +59,16 @@ public class MalfunctionStatusResponseTest {
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(3, parsedRes.getCodeA());
         assertEquals(0x2026, parsedRes.getCodeB());
-        assertEquals("3-0x2026", parsedRes.getErrorString());
+        // assertEquals("3-0x2026", parsedRes.getErrorString());
+
+        assertFalse(parsedRes.hasMalfunction(
+                new AlarmStatusResponse(AlarmStatusResponse.AlarmResponseType.PUMP_RESET_ALARM)
+        ));
     }
 
-    // 18-0x2077 -- appears on new pump
+    // 18-0x2077 -- appears on new pump. likely RESUME_PUMP_ALARM
     @Test
-    public void testMalfunction_ignorable_18_0x2077() throws DecoderException {
+    public void testMalfunction_ignorable_18_0x2077_resumePumpAlarmIgnored() throws DecoderException {
         MalfunctionStatusResponse expected = new MalfunctionStatusResponse(
                 18, 8311, new byte[]{2, 3, 10}
         );
@@ -78,6 +85,10 @@ public class MalfunctionStatusResponseTest {
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(18, parsedRes.getCodeA());
         assertEquals(0x2077, parsedRes.getCodeB());
-        assertFalse(parsedRes.hasMalfunction());
+        // assertFalse(parsedRes.hasMalfunction());
+
+        assertFalse(parsedRes.hasMalfunction(
+                new AlarmStatusResponse(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM)
+        ));
     }
 }

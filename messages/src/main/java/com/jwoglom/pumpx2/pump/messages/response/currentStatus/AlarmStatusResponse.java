@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationEnum;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -32,6 +33,11 @@ public class AlarmStatusResponse extends NotificationMessage {
         parse(cargo);
     }
 
+    public AlarmStatusResponse(AlarmResponseType... alarms) {
+        this.cargo = buildCargo(AlarmResponseType.toBitmask(alarms));
+        parse(cargo);
+    }
+
     private static byte[] buildCargo(BigInteger byte0uint64) {
         return Bytes.toUint64(byte0uint64.longValue());
     }
@@ -52,42 +58,42 @@ public class AlarmStatusResponse extends NotificationMessage {
         return alarms==null ? 0 : alarms.size();
     }
 
-    public enum AlarmResponseType {
-        CARTRIDGE_ALARM(0),
-        CARTRIDGE_ALARM2(1),
+    public enum AlarmResponseType implements NotificationEnum {
+        CARTRIDGE_ALARM(0, "There is an issue with the cartridge and it needs to be replaced."),
+        CARTRIDGE_ALARM2(1, "There is an issue with the cartridge and it needs to be replaced."),
         OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
         PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),
         DEFAULT_ALARM_4(4),
-        CARTRIDGE_ALARM3(5),
-        CARTRIDGE_ALARM4(6),
+        CARTRIDGE_ALARM3(5, "There is an issue with the cartridge and it needs to be replaced."),
+        CARTRIDGE_ALARM4(6, "There is an issue with the cartridge and it needs to be replaced."),
         AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),
         EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),
-        CARTRIDGE_ALARM5(9),
-        TEMPERATURE_ALARM(10),
-        TEMPERATURE_ALARM2(11),
+        CARTRIDGE_ALARM5(9, "There is an issue with the cartridge and it needs to be replaced."),
+        TEMPERATURE_ALARM(10, "Pump temperature is out of range and insulin cannot be safely delivered."),
+        TEMPERATURE_ALARM2(11, "Pump temperature is out of range and insulin cannot be safely delivered."),
         BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),
         DEFAULT_ALARM_13(13),
-        INVALID_DATE_ALARM(14),
-        TEMPERATURE_ALARM3(15),
-        CARTRIDGE_ALARM6(16),
+        INVALID_DATE_ALARM(14, "The pump's configured date is invalid."),
+        TEMPERATURE_ALARM3(15, "Pump temperature is out of range and insulin cannot be safely delivered."),
+        CARTRIDGE_ALARM6(16, "There is an issue with the cartridge and it needs to be replaced."),
         DEFAULT_ALARM_17(17),
         RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),
         DEFAULT_ALARM_19(19),
-        CARTRIDGE_ALARM7(20),
-        ALTITUDE_ALARM(21),
-        STUCK_BUTTON_ALARM(22),
+        CARTRIDGE_ALARM7(20, "There is an issue with the cartridge and it needs to be replaced."),
+        ALTITUDE_ALARM(21, "Pump altitude is out of range and insulin cannot be safely delivered."),
+        STUCK_BUTTON_ALARM(22, "The pump button may be stuck or has been pressed for too long a period of time."),
         RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),
-        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24),
+        ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24, "Pump atmospheric pressure is out of range and insulin cannot be safely delivered."),
         CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),
         OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
         DEFAULT_ALARM_27(27),
         DEFAULT_ALARM_28(28),
-        CARTRIDGE_ALARM10(29),
-        CARTRIDGE_ALARM11(30),
-        CARTRIDGE_ALARM12(31),
+        CARTRIDGE_ALARM10(29, "There is an issue with the cartridge and it needs to be replaced."),
+        CARTRIDGE_ALARM11(30, "There is an issue with the cartridge and it needs to be replaced."),
+        CARTRIDGE_ALARM12(31, "There is an issue with the cartridge and it needs to be replaced."),
         DEFAULT_ALARM_32(32),
         DEFAULT_ALARM_33(33),
-        CARTRIDGE_ALARM_34(34, "There is an issue with the cartridge and it cannot be used. You need to reload a new cartridge and then resume insulin delivery."),
+        CARTRIDGE_ALARM_34(34, "There is an issue with the cartridge and it needs to be replaced."),
         DEFAULT_ALARM_35(35),
         DEFAULT_ALARM_36(36),
         DEFAULT_ALARM_37(37),
@@ -134,8 +140,16 @@ public class AlarmStatusResponse extends NotificationMessage {
         public int bitmask() {
             return bitmask;
         }
+
+        public int getId() {
+            return bitmask;
+        }
         public String getDescription() {
             return description;
+        }
+
+        public boolean isKnownAlarm() {
+            return description != null && !description.isBlank();
         }
 
         public static BigInteger toBitmask(AlarmResponseType ...types) {
@@ -174,5 +188,19 @@ public class AlarmStatusResponse extends NotificationMessage {
 
     public Set<AlarmResponseType> getAlarms() {
         return AlarmResponseType.fromBitmask(getIntMap());
+    }
+
+
+    @Override
+    public Set<Integer> notificationIds() {
+        Set<Integer> ids = new HashSet<>();
+
+        for (AlarmResponseType alert : getAlarms()) {
+            if (alert.isKnownAlarm()) {
+                ids.add(alert.getId());
+            }
+        }
+
+        return ids;
     }
 }

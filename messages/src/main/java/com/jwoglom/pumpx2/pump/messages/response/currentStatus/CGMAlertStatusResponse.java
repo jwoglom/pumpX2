@@ -1,10 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
+import androidx.annotation.Nullable;
+
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.NotificationEnum;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
 
@@ -60,7 +63,7 @@ public class CGMAlertStatusResponse extends NotificationMessage {
         return getCgmAlerts().size();
     }
 
-    public enum CGMAlert {
+    public enum CGMAlert implements NotificationEnum {
         DEFAULT_CGM_ALERT_0(0),
         FIXED_LOW_CGM_ALERT(1),
         HIGH_CGM_ALERT(2),
@@ -134,6 +137,22 @@ public class CGMAlertStatusResponse extends NotificationMessage {
 
         public int id() {
             return id;
+        }
+
+        @Override
+        public int getId() {
+            return id;
+        }
+
+        public String toString() {
+            return name();
+        }
+
+        @Nullable
+        @Override
+        public String getDescription() {
+            if (name().startsWith("DEFAULT_CGM_ALERT")) return null;
+            return name();
         }
 
         public static CGMAlert fromId(int id) {

@@ -115,31 +115,42 @@ public class NotificationBundle {
     }
 
     /**
-     * @return list of raw alert/alarm enums or string errors
+     * @return list of raw alert/alarm enums or string errors. Union type of {@link NotificationEnum}:
+     * <ul>
+     *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse.AlertResponseType}</li>
+     *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse.AlarmResponseType}</li>
+     *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse.ReminderType}</li>
+     *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse.CGMAlert}</li>
+     *     <li>{@link MalfunctionStatusResponse}</li>
+     * </ul>
      */
-    public List<Object> get() {
-        ArrayList<Object> slugs = new ArrayList<>();
+    public List<NotificationEnum> get() {
+        ArrayList<NotificationEnum> slugs = new ArrayList<>();
+
+        ArrayList<NotificationMessage> alarmAndAlerts = new ArrayList<>();
 
         if (alertStatusResponse != null) {
             alertStatusResponse.getAlerts().stream().sorted().forEach(slugs::add);
-        }
-        if (reminderStatusResponse != null) {
-            reminderStatusResponse.getReminders().stream().sorted().forEach(slugs::add);
+            alarmAndAlerts.add(alertStatusResponse);
         }
         if (alarmStatusResponse != null) {
             alarmStatusResponse.getAlarms().stream().sorted().forEach(slugs::add);
+            alarmAndAlerts.add(alarmStatusResponse);
+        }
+        if (reminderStatusResponse != null) {
+            reminderStatusResponse.getReminders().stream().sorted().forEach(slugs::add);
         }
         if (cgmAlertStatusResponse != null) {
             cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(slugs::add);
         }
         if (malfunctionStatusResponse != null) {
-            if (malfunctionStatusResponse.hasMalfunction() &&
+            if (malfunctionStatusResponse.hasMalfunction(alarmAndAlerts.toArray(new NotificationMessage[0])) &&
                 !StringUtils.isBlank(malfunctionStatusResponse.getErrorString()))
             {
                 slugs.add(malfunctionStatusResponse);
             }
         }
-        // todo remaining
+        // todo remaining once understood
 
         return slugs;
     }
@@ -153,29 +164,39 @@ public class NotificationBundle {
     }
 
     public int getNotificationCount() {
-        int count=0;
+        int count = 0;
 
-        if (this.alertStatusResponse!=null) {
-            count += this.alertStatusResponse.size();
+        ArrayList<NotificationMessage> alarmAndAlerts = new ArrayList<>();
+
+        if (this.alarmStatusResponse != null) {
+            count += this.alarmStatusResponse.size();
+            alarmAndAlerts.add(this.alarmStatusResponse);
         }
 
-        if (this.reminderStatusResponse!=null) {
+        if (this.alertStatusResponse != null) {
+            count += this.alertStatusResponse.size();
+            alarmAndAlerts.add(this.alertStatusResponse);
+        }
+
+        if (this.reminderStatusResponse != null) {
             count += this.reminderStatusResponse.size();
         }
 
-        if (this.cgmAlertStatusResponse!=null) {
+        if (this.cgmAlertStatusResponse != null) {
             count += this.cgmAlertStatusResponse.size();
         }
 
-        if (this.malfunctionStatusResponse!=null) {
-            count += this.malfunctionStatusResponse.size();
+        if (this.malfunctionStatusResponse != null) {
+            if (this.malfunctionStatusResponse.hasMalfunction(alarmAndAlerts.toArray(new NotificationMessage[0]))) {
+                count += this.malfunctionStatusResponse.size();
+            }
         }
 
-        if (this.otherNotificationStatusResponse!=null) {
+        if (this.otherNotificationStatusResponse != null) {
             count += this.otherNotificationStatusResponse.size();
         }
 
-        if (this.otherNotification2StatusResponse!=null) {
+        if (this.otherNotification2StatusResponse != null) {
             count += this.otherNotification2StatusResponse.size();
         }
 
