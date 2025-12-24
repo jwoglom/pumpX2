@@ -82,9 +82,14 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code><a href="../../models/NotificationEnum.html" title="interface in com.jwoglom.pumpx2.pump.messages.models">NotificationEnum</a></code></dd>
+</dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-40">MalfunctionStatusResponse</a></span>
-<span class="extends-implements">extends <a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a></span></div>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-41">MalfunctionStatusResponse</a></span>
+<span class="extends-implements">extends <a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a>
+implements <a href="../../models/NotificationEnum.html" title="interface in com.jwoglom.pumpx2.pump.messages.models">NotificationEnum</a></span></div>
 <div class="block">Malfunction code to report to Tandem is getErrorString
 
 
@@ -179,17 +184,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCodeB()" class="member-name-link">getCodeB</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getErrorString()" class="member-name-link">getErrorString</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getErrorString()" class="member-name-link">getErrorString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRemaining()" class="member-name-link">getRemaining</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasMalfunction()" class="member-name-link">hasMalfunction</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasMalfunction(com.jwoglom.pumpx2.pump.messages.models.NotificationMessage...)" class="member-name-link">hasMalfunction</a><wbr>(<a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a>...&nbsp;otherMessages)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If the provided response ACTUALLY appears to be a pump malfunction,
+ and not just a matching ID from a concurrent alert or alarm code.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#matchesKnownIds(com.jwoglom.pumpx2.pump.messages.models.NotificationMessage...)" class="member-name-link">matchesKnownIds</a><wbr>(<a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a>...&nbsp;otherMessages)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for MalfunctionStatusResponse:
  <code>codeA</code><code>Bytes.readUint32(raw, 0)</code>
@@ -198,21 +215,24 @@ loadScripts(document, 'script');</script>
  <code>errorString</code><code>getErrorString()</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.NotificationMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a></h3>
-<code><a href="../../models/NotificationMessage.html#isEmpty()">isEmpty</a></code></div>
+<code><a href="../../models/NotificationMessage.html#isEmpty()">isEmpty</a>, <a href="../../models/NotificationMessage.html#notificationIds()">notificationIds</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#equals(java.lang.Object)">equals</a>, <a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.NotificationEnum">Methods inherited from interface&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/NotificationEnum.html" title="interface in com.jwoglom.pumpx2.pump.messages.models">NotificationEnum</a></h3>
+<code><a href="../../models/NotificationEnum.html#toString()">toString</a></code></div>
 </section>
 </li>
 </ul>
@@ -227,7 +247,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="IGNORABLE_CODES">
 <h3>IGNORABLE_CODES</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[][]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-123">IGNORABLE_CODES</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[][]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-124">IGNORABLE_CODES</a></span></div>
 </section>
 </li>
 </ul>
@@ -241,13 +261,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MalfunctionStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-56">MalfunctionStatusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-57">MalfunctionStatusResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,byte[])">
 <h3>MalfunctionStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-58">MalfunctionStatusResponse</a></span><wbr><span class="parameters">(long&nbsp;codeA,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-59">MalfunctionStatusResponse</a></span><wbr><span class="parameters">(long&nbsp;codeA,
  long&nbsp;codeB,
  byte[]&nbsp;remaining)</span></div>
 </section>
@@ -263,7 +283,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-73">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-74">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for MalfunctionStatusResponse:</caption>
  <tr><td><code>codeA</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
@@ -280,7 +300,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;codeA,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-99">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;codeA,
  long&nbsp;codeB,
  byte[]&nbsp;remaining)</span></div>
 <div class="block"><table border="1">
@@ -300,40 +320,77 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCodeA()">
 <h3>getCodeA</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-106">getCodeA</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-107">getCodeA</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCodeB()">
 <h3>getCodeB</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-110">getCodeB</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-111">getCodeB</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRemaining()">
 <h3>getRemaining</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-114">getRemaining</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-115">getRemaining</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getErrorString()">
 <h3>getErrorString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-118">getErrorString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-119">getErrorString</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="hasMalfunction()">
+<section class="detail" id="hasMalfunction(com.jwoglom.pumpx2.pump.messages.models.NotificationMessage...)">
 <h3>hasMalfunction</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-130">hasMalfunction</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-141">hasMalfunction</a></span><wbr><span class="parameters">(<a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a>...&nbsp;otherMessages)</span></div>
+<div class="block">If the provided response ACTUALLY appears to be a pump malfunction,
+ and not just a matching ID from a concurrent alert or alarm code.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>otherMessages</code> - other <a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models"><code>NotificationMessage</code></a> implementations (e.g.
+                      <a href="AlarmStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>AlarmStatusResponse</code></a>, <a href="AlertStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>AlertStatusResponse</code></a>) which are also
+                      present as concurrent notifications along with this reported malfunction</dd>
+<dt>Returns:</dt>
+<dd>if the malfunction code appears to be valid due to not having any other matching
+         concurrent notifications</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="matchesKnownIds(com.jwoglom.pumpx2.pump.messages.models.NotificationMessage...)">
+<h3>matchesKnownIds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-155">matchesKnownIds</a></span><wbr><span class="parameters">(<a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a>...&nbsp;otherMessages)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="size()">
 <h3>size</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-140">size</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-170">size</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../models/NotificationMessage.html#size()">size</a></code>&nbsp;in class&nbsp;<code><a href="../../models/NotificationMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">NotificationMessage</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getId()">
+<h3>getId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-176">getId</a></span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../models/NotificationEnum.html#getId()">getId</a></code>&nbsp;in interface&nbsp;<code><a href="../../models/NotificationEnum.html" title="interface in com.jwoglom.pumpx2.pump.messages.models">NotificationEnum</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDescription()">
+<h3>getDescription</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionStatusResponse.html#line-181">getDescription</a></span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../models/NotificationEnum.html#getDescription()">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../../models/NotificationEnum.html" title="interface in com.jwoglom.pumpx2.pump.messages.models">NotificationEnum</a></code></dd>
 </dl>
 </section>
 </li>
