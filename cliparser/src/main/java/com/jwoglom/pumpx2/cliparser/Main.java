@@ -246,11 +246,83 @@ public class Main {
         }
     }
 
+    /**
+     * Converts a JSON value to the appropriate type for a constructor parameter.
+     * Handles primitive types by converting JSON numeric/boolean values appropriately.
+     */
+    private static Object convertToParameterType(Object value, Class<?> targetType) {
+        if (value == null) {
+            if (targetType.isPrimitive()) {
+                throw new IllegalArgumentException("Cannot pass null for primitive type " + targetType.getName());
+            }
+            return null;
+        }
+
+        // Handle primitive types
+        if (targetType == int.class || targetType == Integer.class) {
+            return ((Number) value).intValue();
+        } else if (targetType == long.class || targetType == Long.class) {
+            return ((Number) value).longValue();
+        } else if (targetType == short.class || targetType == Short.class) {
+            return ((Number) value).shortValue();
+        } else if (targetType == byte.class || targetType == Byte.class) {
+            return ((Number) value).byteValue();
+        } else if (targetType == double.class || targetType == Double.class) {
+            return ((Number) value).doubleValue();
+        } else if (targetType == float.class || targetType == Float.class) {
+            return ((Number) value).floatValue();
+        } else if (targetType == boolean.class || targetType == Boolean.class) {
+            return (Boolean) value;
+        } else if (targetType == char.class || targetType == Character.class) {
+            String s = value.toString();
+            return s.isEmpty() ? '\0' : s.charAt(0);
+        } else if (targetType == String.class) {
+            return value.toString();
+        } else {
+            // For other types, try direct cast
+            return targetType.cast(value);
+        }
+    }
+
+    /**
+     * Extracts JSON object keys in their original order from the raw JSON string.
+     * JSONObject uses HashMap which doesn't preserve insertion order, so we parse
+     * the original string to get the key order.
+     */
+    private static List<String> extractJsonKeysInOrder(String jsonString) {
+        List<String> keys = new ArrayList<>();
+        // Match quoted strings that are followed by a colon (JSON object keys)
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\"([^\"]+)\"\\s*:");
+        java.util.regex.Matcher matcher = pattern.matcher(jsonString);
+        while (matcher.find()) {
+            keys.add(matcher.group(1));
+        }
+        return keys;
+    }
+
     public static String encode(String txId, String messageName, String messageParamsJson) throws InstantiationException, IllegalAccessException, NumberFormatException, IllegalArgumentException, InvocationTargetException {
         if (messageParamsJson == null || messageParamsJson.isEmpty()) {
             messageParamsJson = "{}";
         }
-        JSONObject messageParams = new JSONObject(messageParamsJson);
+        
+        // Determine if input is array (positional) or object (named)
+        String trimmed = messageParamsJson.trim();
+        boolean isArray = trimmed.startsWith("[");
+        
+        JSONArray paramsArray = null;
+        JSONObject paramsObject = null;
+        List<String> orderedKeys = null;
+        int paramCount;
+        
+        if (isArray) {
+            paramsArray = new JSONArray(messageParamsJson);
+            paramCount = paramsArray.length();
+        } else {
+            paramsObject = new JSONObject(messageParamsJson);
+            orderedKeys = extractJsonKeysInOrder(messageParamsJson);
+            paramCount = paramsObject.length();
+        }
+        
         Class<? extends Message> messageClass = null;
         for (Messages m : Messages.values()) {
             if (m.name().equals(messageName)) {
@@ -271,7 +343,7 @@ public class Main {
         Message message = null;
         Object[] params = null;
         for (Constructor<?> constructor : messageClass.getConstructors()) {
-            if (constructor.getParameterCount() == messageParams.length()) {
+            if (constructor.getParameterCount() == paramCount) {
                 if (constructor.getParameterCount() == 0) {
                     message = (Message) constructor.newInstance();
                     message.fillWithEmptyCargo();
@@ -279,28 +351,33 @@ public class Main {
                     break;
                 }
                 params = new Object[constructor.getParameterCount()];
-                int i = 0;
-                for (Parameter parameter : constructor.getParameters()) {
-                    if (messageParams.has(parameter.getName())) {
-                        Object value = messageParams.get(parameter.getName());
-                        // For primitive types, autoboxing handles the conversion
-                        // For non-primitive types, we need explicit casting
-                        if (parameter.getType().isPrimitive()) {
-                            params[i] = value;
-                        } else {
-                            params[i] = parameter.getType().cast(value);
-                        }
+                Parameter[] parameters = constructor.getParameters();
+                
+                for (int i = 0; i < parameters.length; i++) {
+                    Parameter parameter = parameters[i];
+                    Object value = null;
+                    
+                    if (isArray) {
+                        // Array format: positional arguments [val1, val2, ...]
+                        value = paramsArray.get(i);
                     } else {
-                        params[i] = null;
+                        // Object format: try named match first, fall back to ordered keys
+                        if (paramsObject.has(parameter.getName())) {
+                            value = paramsObject.get(parameter.getName());
+                        } else if (i < orderedKeys.size()) {
+                            // Use the key order extracted from the original JSON string
+                            value = paramsObject.get(orderedKeys.get(i));
+                        }
                     }
-                    i++;
+                    
+                    params[i] = convertToParameterType(value, parameter.getType());
                 }
                 message = (Message) constructor.newInstance(params);
                 break;
             }
         }
         if (message == null) {
-            System.err.println("Unable to build message " + messageName + " with params " + messageParams + ": no constructor was found with " + messageParams.length() + " parameters");
+            System.err.println("Unable to build message " + messageName + " with params " + (isArray ? paramsArray : paramsObject) + ": no constructor was found with " + paramCount + " parameters");
             System.exit(1);
         }
         byte currentTxId = (byte) Integer.valueOf(txId).byteValue();

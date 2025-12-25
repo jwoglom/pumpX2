@@ -35,8 +35,10 @@ tasks.javadoc {
 }
 
 // resolves InaccessibleObjectException in ReflectionToStringBuilder
+// -parameters enables reflection to access constructor parameter names
 tasks.withType(JavaCompile) {
     options.compilerArgs += [
+        '-parameters',
         '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     ]
 }
