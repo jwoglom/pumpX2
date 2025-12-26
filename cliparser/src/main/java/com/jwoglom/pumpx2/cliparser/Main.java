@@ -475,6 +475,19 @@ public class Main {
             return s.isEmpty() ? '\0' : s.charAt(0);
         } else if (targetType == String.class) {
             return value.toString();
+        } else if (targetType == byte[].class) {
+            // Handle byte array - if value is a String, assume it's hex and decode it
+            if (value instanceof String) {
+                try {
+                    return Hex.decodeHex((String) value);
+                } catch (DecoderException e) {
+                    throw new IllegalArgumentException("Cannot decode hex string to byte array: " + value, e);
+                }
+            } else if (value instanceof byte[]) {
+                return value;
+            } else {
+                throw new IllegalArgumentException("Cannot convert " + value.getClass().getName() + " to byte[]");
+            }
         } else {
             // For other types, try direct cast
             return targetType.cast(value);
