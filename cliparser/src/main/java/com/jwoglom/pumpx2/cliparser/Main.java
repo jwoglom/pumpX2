@@ -441,18 +441,39 @@ public class Main {
 
         // Handle primitive types
         if (targetType == int.class || targetType == Integer.class) {
+            if (value instanceof String) {
+                return Integer.parseInt((String) value);
+            }
             return ((Number) value).intValue();
         } else if (targetType == long.class || targetType == Long.class) {
+            if (value instanceof String) {
+                return Long.parseLong((String) value);
+            }
             return ((Number) value).longValue();
         } else if (targetType == short.class || targetType == Short.class) {
+            if (value instanceof String) {
+                return Short.parseShort((String) value);
+            }
             return ((Number) value).shortValue();
         } else if (targetType == byte.class || targetType == Byte.class) {
+            if (value instanceof String) {
+                return Byte.parseByte((String) value);
+            }
             return ((Number) value).byteValue();
         } else if (targetType == double.class || targetType == Double.class) {
+            if (value instanceof String) {
+                return Double.parseDouble((String) value);
+            }
             return ((Number) value).doubleValue();
         } else if (targetType == float.class || targetType == Float.class) {
+            if (value instanceof String) {
+                return Float.parseFloat((String) value);
+            }
             return ((Number) value).floatValue();
         } else if (targetType == boolean.class || targetType == Boolean.class) {
+            if (value instanceof String) {
+                return Boolean.parseBoolean((String) value);
+            }
             return (Boolean) value;
         } else if (targetType == char.class || targetType == Character.class) {
             String s = value.toString();
