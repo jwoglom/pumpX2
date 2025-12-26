@@ -83,7 +83,7 @@ public class JpakeAuthBuilder {
         }
     }
 
-    static byte[] pairingCodeToBytes(String pairingCode) {
+    public static byte[] pairingCodeToBytes(String pairingCode) {
         //return pairingCode.getBytes(StandardCharsets.UTF_8);
         byte[] ret = new byte[pairingCode.length()]; // should always be 6
         for (int i=0; i<pairingCode.length(); i++) {

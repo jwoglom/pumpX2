@@ -166,6 +166,10 @@ public class Main {
                 break;
             case "jpake":
                 System.out.println(jpakeAuthEncoder(args[1]));
+                break;
+            case "jpake-server":
+                System.out.println(jpakeAuthServer(args[1]));
+                break;
             default:
                 System.err.println("Nothing to do.");
                 break;
@@ -237,7 +241,177 @@ public class Main {
             return result.toString();
         }
     }
-    
+
+    private static String jpakeAuthServer(String pairingCode) {
+        try {
+            // Initialize server-side EcJpake with the pairing code
+            io.particle.crypto.EcJpake serverJpake = new io.particle.crypto.EcJpake(
+                io.particle.crypto.EcJpake.Role.SERVER,
+                JpakeAuthBuilder.pairingCodeToBytes(pairingCode)
+            );
+
+            Scanner scanner = new Scanner(System.in);
+            byte txId = 0;
+
+            // Generate server's round 1 (330 bytes total)
+            byte[] serverRound1 = serverJpake.getRound1();
+
+            // Step 1a: Send first 165 bytes
+            byte[] serverRound1a = Arrays.copyOfRange(serverRound1, 0, 165);
+            JSONObject resp1a = new JSONObject();
+            resp1a.put("messageName", "Jpake1aResponse");
+            resp1a.put("centralChallengeHash", Hex.encodeHexString(serverRound1a));
+            System.out.println("JPAKE_1A: " + encode(txId, "Jpake1aResponse", resp1a.toString()));
+            System.out.flush();
+            txId++;
+
+            // Read client's round 1a
+            if (!scanner.hasNextLine()) {
+                return errorJson("No client response for round 1a");
+            }
+            String clientHex1a = scanner.nextLine().trim();
+            Message clientMsg1a = parse(clientHex1a);
+            if (!(clientMsg1a instanceof com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest)) {
+                return errorJson("Expected Jpake1aRequest, got: " + (clientMsg1a != null ? clientMsg1a.getClass().getName() : "null"));
+            }
+            byte[] clientRound1a = ((com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1aRequest) clientMsg1a).getCentralChallengeHash();
+
+            // Step 1b: Send next 165 bytes
+            byte[] serverRound1b = Arrays.copyOfRange(serverRound1, 165, 330);
+            JSONObject resp1b = new JSONObject();
+            resp1b.put("messageName", "Jpake1bResponse");
+            resp1b.put("centralChallengeHash", Hex.encodeHexString(serverRound1b));
+            System.out.println("JPAKE_1B: " + encode(txId, "Jpake1bResponse", resp1b.toString()));
+            System.out.flush();
+            txId++;
+
+            // Read client's round 1b
+            if (!scanner.hasNextLine()) {
+                return errorJson("No client response for round 1b");
+            }
+            String clientHex1b = scanner.nextLine().trim();
+            Message clientMsg1b = parse(clientHex1b);
+            if (!(clientMsg1b instanceof com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest)) {
+                return errorJson("Expected Jpake1bRequest, got: " + (clientMsg1b != null ? clientMsg1b.getClass().getName() : "null"));
+            }
+            byte[] clientRound1b = ((com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake1bRequest) clientMsg1b).getCentralChallengeHash();
+
+            // Combine client's round 1 data and feed to EcJpake
+            byte[] clientRound1Full = Bytes.combine(clientRound1a, clientRound1b);
+            serverJpake.readRound1(clientRound1Full);
+
+            // Generate and send server's round 2
+            byte[] serverRound2 = serverJpake.getRound2();
+            JSONObject resp2 = new JSONObject();
+            resp2.put("messageName", "Jpake2Response");
+            resp2.put("centralChallengeHash", Hex.encodeHexString(serverRound2));
+            System.out.println("JPAKE_2: " + encode(txId, "Jpake2Response", resp2.toString()));
+            System.out.flush();
+            txId++;
+
+            // Read client's round 2
+            if (!scanner.hasNextLine()) {
+                return errorJson("No client response for round 2");
+            }
+            String clientHex2 = scanner.nextLine().trim();
+            Message clientMsg2 = parse(clientHex2);
+            if (!(clientMsg2 instanceof com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request)) {
+                return errorJson("Expected Jpake2Request, got: " + (clientMsg2 != null ? clientMsg2.getClass().getName() : "null"));
+            }
+            byte[] clientRound2 = ((com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request) clientMsg2).getCentralChallengeHash();
+            serverJpake.readRound2(clientRound2);
+
+            // Derive the shared secret
+            byte[] derivedSecret = serverJpake.deriveSecret();
+
+            // Round 3: Session key exchange
+            // Read client's session key request
+            if (!scanner.hasNextLine()) {
+                return errorJson("No client response for round 3");
+            }
+            String clientHex3 = scanner.nextLine().trim();
+            Message clientMsg3 = parse(clientHex3);
+            if (!(clientMsg3 instanceof com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake3SessionKeyRequest)) {
+                return errorJson("Expected Jpake3SessionKeyRequest, got: " + (clientMsg3 != null ? clientMsg3.getClass().getName() : "null"));
+            }
+
+            // Generate server nonce for round 3
+            byte[] serverNonce3 = new byte[8];
+            new java.security.SecureRandom().nextBytes(serverNonce3);
+            byte[] reserved3 = new byte[4]; // All zeros
+
+            JSONObject resp3 = new JSONObject();
+            resp3.put("messageName", "Jpake3SessionKeyResponse");
+            resp3.put("deviceKeyNonce", Hex.encodeHexString(serverNonce3));
+            resp3.put("deviceKeyReserved", Hex.encodeHexString(reserved3));
+            System.out.println("JPAKE_3: " + encode(txId, "Jpake3SessionKeyResponse", resp3.toString()));
+            System.out.flush();
+            txId++;
+
+            // Round 4: Key confirmation
+            // Read client's key confirmation
+            if (!scanner.hasNextLine()) {
+                return errorJson("No client response for round 4");
+            }
+            String clientHex4 = scanner.nextLine().trim();
+            Message clientMsg4 = parse(clientHex4);
+            if (!(clientMsg4 instanceof com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest)) {
+                return errorJson("Expected Jpake4KeyConfirmationRequest, got: " + (clientMsg4 != null ? clientMsg4.getClass().getName() : "null"));
+            }
+
+            com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest req4 =
+                (com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake4KeyConfirmationRequest) clientMsg4;
+            byte[] clientNonce4 = req4.getNonce();
+            byte[] clientHashDigest = req4.getHashDigest();
+
+            // Validate client's HMAC
+            byte[] expectedClientHash = com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256.hmacSha256(
+                clientNonce4,
+                com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf.build(serverNonce3, derivedSecret)
+            );
+
+            if (!Arrays.equals(expectedClientHash, clientHashDigest)) {
+                return errorJson("Client HMAC validation failed");
+            }
+
+            // Generate server's response for round 4
+            byte[] serverNonce4 = new byte[8];
+            new java.security.SecureRandom().nextBytes(serverNonce4);
+            byte[] serverHashDigest = com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256.hmacSha256(
+                serverNonce4,
+                com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf.build(serverNonce3, derivedSecret)
+            );
+
+            JSONObject resp4 = new JSONObject();
+            resp4.put("messageName", "Jpake4KeyConfirmationResponse");
+            resp4.put("nonce", Hex.encodeHexString(serverNonce4));
+            resp4.put("hashDigest", Hex.encodeHexString(serverHashDigest));
+            System.out.println("JPAKE_4: " + encode(txId, "Jpake4KeyConfirmationResponse", resp4.toString()));
+            System.out.flush();
+            txId++;
+
+            // Success! Return the derived secret
+            JSONObject result = new JSONObject();
+            result.put("derivedSecret", Hex.encodeHexString(derivedSecret));
+            result.put("serverNonce", Hex.encodeHexString(serverNonce3));
+            result.put("messageName", "JpakeAuthResult");
+            result.put("txId", "" + txId);
+            return result.toString();
+
+        } catch (Exception e) {
+            JSONObject result = new JSONObject();
+            result.put("error", "Exception during server JPAKE authentication: " + e.getMessage());
+            e.printStackTrace();
+            return result.toString();
+        }
+    }
+
+    private static String errorJson(String message) {
+        JSONObject result = new JSONObject();
+        result.put("error", message);
+        return result.toString();
+    }
+
 
 
     private static void assertTrue(String msg, boolean ok) {
