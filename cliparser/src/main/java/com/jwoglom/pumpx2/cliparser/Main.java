@@ -267,7 +267,6 @@ public class Main {
             // Step 1a: Send first 165 bytes
             byte[] serverRound1a = Arrays.copyOfRange(serverRound1, 0, 165);
             JSONObject resp1a = new JSONObject();
-            resp1a.put("messageName", "Jpake1aResponse");
             resp1a.put("centralChallengeHash", Hex.encodeHexString(serverRound1a));
             System.out.println("JPAKE_1A: " + encode(String.valueOf((int)txId), "Jpake1aResponse", resp1a.toString()));
             System.out.flush();
@@ -287,7 +286,6 @@ public class Main {
             // Step 1b: Send next 165 bytes
             byte[] serverRound1b = Arrays.copyOfRange(serverRound1, 165, 330);
             JSONObject resp1b = new JSONObject();
-            resp1b.put("messageName", "Jpake1bResponse");
             resp1b.put("centralChallengeHash", Hex.encodeHexString(serverRound1b));
             System.out.println("JPAKE_1B: " + encode(String.valueOf((int)txId), "Jpake1bResponse", resp1b.toString()));
             System.out.flush();
@@ -311,7 +309,6 @@ public class Main {
             // Generate and send server's round 2
             byte[] serverRound2 = serverJpake.getRound2();
             JSONObject resp2 = new JSONObject();
-            resp2.put("messageName", "Jpake2Response");
             resp2.put("centralChallengeHash", Hex.encodeHexString(serverRound2));
             System.out.println("JPAKE_2: " + encode(String.valueOf((int)txId), "Jpake2Response", resp2.toString()));
             System.out.flush();
@@ -349,7 +346,6 @@ public class Main {
             byte[] reserved3 = new byte[4]; // All zeros
 
             JSONObject resp3 = new JSONObject();
-            resp3.put("messageName", "Jpake3SessionKeyResponse");
             resp3.put("deviceKeyNonce", Hex.encodeHexString(serverNonce3));
             resp3.put("deviceKeyReserved", Hex.encodeHexString(reserved3));
             System.out.println("JPAKE_3: " + encode(String.valueOf((int)txId), "Jpake3SessionKeyResponse", resp3.toString()));
@@ -390,7 +386,6 @@ public class Main {
             );
 
             JSONObject resp4 = new JSONObject();
-            resp4.put("messageName", "Jpake4KeyConfirmationResponse");
             resp4.put("nonce", Hex.encodeHexString(serverNonce4));
             resp4.put("hashDigest", Hex.encodeHexString(serverHashDigest));
             System.out.println("JPAKE_4: " + encode(String.valueOf((int)txId), "Jpake4KeyConfirmationResponse", resp4.toString()));
