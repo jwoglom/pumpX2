@@ -148,6 +148,14 @@ public abstract class TandemPump {
     }
 
     /**
+     * Callback with authentication progress
+     * @param jpakeStep The {@link com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder.JpakeStep}
+     *                  affiliated with the current step of the authentication progress with
+     *                  approximate percent completion.
+     */
+    public void onJpakeProgress(JpakeAuthBuilder.JpakeStep jpakeStep) {}
+
+    /**
      * Callback invoked when we receive the response to a command sent to the pump.
      * Note that authentication responses are not returned here, they are handled inside of
      * {@link TandemBluetoothHandler} and considered an implementation detail of the PumpX2 library.

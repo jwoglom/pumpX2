@@ -528,44 +528,54 @@ public class TandemBluetoothHandler {
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
                     Timber.d("JpakeAuthResp1a: %s", resp);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     Timber.d("JpakeAuthReq1b: %s", req);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake1bResponse) {
                     Jpake1bResponse resp = (Jpake1bResponse) response.message().get();
                     Timber.d("JpakeAuthResp1b: %s", resp);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     Timber.d("JpakeAuthReq2: %s", req);
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake2Response) {
                     Jpake2Response resp = (Jpake2Response) response.message().get();
                     Timber.d("JpakeAuthResp2: %s", resp);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     Timber.d("JpakeAuthReq3: %s", req);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake3SessionKeyResponse) {
                     Jpake3SessionKeyResponse resp = (Jpake3SessionKeyResponse) response.message().get();
                     Timber.d("JpakeAuthResp3: %s", resp);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     Timber.d("JpakeAuthReq4: %s", req);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake4KeyConfirmationResponse) {
                     Jpake4KeyConfirmationResponse resp = (Jpake4KeyConfirmationResponse) response.message().get();
                     Timber.d("JpakeAuthResp4: %s", resp);
+                    tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     if (req == null) {
                         if (JpakeAuthBuilder.getInstance().done()) {
                             Timber.i("JpakeAuth DONE: PumpConnected");
+                            tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                             PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                             byte[] derivedSecret = JpakeAuthBuilder.getInstance().getDerivedSecret();
                             PumpState.setJpakeDerivedSecret(context, Hex.encodeHexString(derivedSecret));
@@ -574,6 +584,7 @@ public class TandemBluetoothHandler {
                             this.internalOnPumpConnected(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
                             Timber.w("JpakeAuth DONE: Invalid");
+                            tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                             tandemPump.onInvalidPairingCode(peripheral, resp);
                         }
                     }

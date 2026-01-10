@@ -251,20 +251,32 @@ public class JpakeAuthBuilder {
     }
 
     public enum JpakeStep {
-        BOOTSTRAP_INITIAL,
-        ROUND_1A_SENT,
-        ROUND_1A_RECEIVED,
-        ROUND_1B_SENT,
-        ROUND_1B_RECEIVED,
-        ROUND_2_SENT,
-        ROUND_2_RECEIVED,
-        CONFIRM_INITIAL,
-        CONFIRM_3_SENT,
-        CONFIRM_3_RECEIVED,
-        CONFIRM_4_SENT,
-        CONFIRM_4_RECEIVED,
-        COMPLETE,
-        INVALID
+        BOOTSTRAP_INITIAL(0),
+        ROUND_1A_SENT(0),
+        ROUND_1A_RECEIVED(10),
+        ROUND_1B_SENT(20),
+        ROUND_1B_RECEIVED(30),
+        ROUND_2_SENT(40),
+        ROUND_2_RECEIVED(50),
+        CONFIRM_INITIAL(50),
+        CONFIRM_3_SENT(60),
+        CONFIRM_3_RECEIVED(70),
+        CONFIRM_4_SENT(80),
+        CONFIRM_4_RECEIVED(90),
+        COMPLETE(100),
+        INVALID(0)
+
+        ;
+
+        private int progressPercent;
+
+        JpakeStep(int progressPercent) {
+            this.progressPercent = progressPercent;
+        }
+
+        public int getProgressPercent() {
+            return progressPercent;
+        }
     }
 
     public boolean done() {
