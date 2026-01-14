@@ -706,7 +706,10 @@ public class Main {
 
     @SuppressWarnings("deprecation")
     public static Message parse(String rawHex, String ...extra) throws DecoderException {
-        byte[] initialRead = Hex.decodeHex(rawHex);
+        List<String> packets = splitRawHexPackets(rawHex, extra);
+        String firstRawHex = packets.remove(0);
+        String[] remainingRawHex = packets.toArray(new String[0]);
+        byte[] initialRead = Hex.decodeHex(firstRawHex);
         int txId = initialRead[1];
         int opCode = initialRead[2];
         Message message = null;
@@ -746,7 +749,7 @@ public class Main {
             e.printStackTrace();
         }
         try {
-            return testRequest(rawHex, txId, characteristic.getUuid(), message, extra);
+            return testRequest(firstRawHex, txId, characteristic.getUuid(), message, remainingRawHex);
         } catch (IllegalStateException e) {
             System.err.print("Needs more packets"); // for "+opCode+": "+e.getMessage());
             return null;
@@ -754,7 +757,10 @@ public class Main {
     }
 
     public static Message testRequest(String rawHex, int txId, @Nullable UUID uuid, Message expected, String ...extraRawHex) throws DecoderException {
-        byte[] initialRead = Hex.decodeHex(rawHex);
+        List<String> packets = splitRawHexPackets(rawHex, extraRawHex);
+        String firstRawHex = packets.remove(0);
+        String[] remainingRawHex = packets.toArray(new String[0]);
+        byte[] initialRead = Hex.decodeHex(firstRawHex);
 
         if (uuid == null) {
             uuid = CharacteristicUUID.determine(expected);
@@ -766,7 +772,7 @@ public class Main {
         PacketArrayList packetArrayList = tron.buildPacketArrayList(messageType);
         PumpResponseMessage resp = BTResponseParser.parse(tron.message(), packetArrayList, initialRead, uuid);
 
-        for (String exRawHex : extraRawHex) {
+        for (String exRawHex : remainingRawHex) {
             System.err.print("extraRawHex: "+exRawHex);
             byte[] nextRead = Hex.decodeHex(exRawHex);
             resp = BTResponseParser.parse(tron.message(), packetArrayList, nextRead, uuid);
@@ -776,38 +782,6 @@ public class Main {
 
         if (!resp.message().isPresent()) {
             System.err.print("Message not fully formed");
-
-            // Hack to split messages which contain two packets into individual packets for parsing
-            if (!rawHex.substring(0, 2).equals("00") && extraRawHex.length == 0) {
-                String op = rawHex.substring(2, 4);
-                int num = Integer.parseInt(rawHex.substring(0, 2), 16);
-                List<String> messages = new ArrayList<>();
-                String remainder = rawHex;
-                System.err.println("rawHex: "+remainder);
-                for (int i=num-1; i>=0; i--) {
-                    System.err.println("i="+i+" num="+num);
-                    String spl = Integer.toHexString(i) + op;
-                    if (spl.length() == 3) {
-                        spl = "0"+spl;
-                    }
-                    System.err.println("spl:"+spl);
-                    String[] split = remainder.split(spl);
-                    messages.add(split[0]);
-                    System.err.println("messages:"+messages);
-                    if (split.length > 1) {
-                        remainder = spl + split[1];
-                    } else {
-                        remainder = "";
-                    }
-                    System.err.println("remainder: "+remainder);
-                }
-                if (!remainder.isEmpty()) {
-                    messages.add(remainder);
-                }
-                String firstRawHex = messages.remove(0);
-                String[] newExtra = messages.toArray(new String[0]);
-                return testRequest(firstRawHex, txId, uuid, expected, newExtra);
-            }
             return null;
         }
         Message parsedMessage = resp.message().get();
@@ -823,6 +797,25 @@ public class Main {
         }
 
         return parsedMessage;
+    }
+
+    private static List<String> splitRawHexPackets(String rawHex, String ...extraRawHex) {
+        List<String> packets = new ArrayList<>();
+        for (String entry : concatRawHexInputs(rawHex, extraRawHex)) {
+            for (String token : entry.split("[,\\s]+")) {
+                if (!token.isEmpty()) {
+                    packets.add(token);
+                }
+            }
+        }
+        return packets;
+    }
+
+    private static List<String> concatRawHexInputs(String rawHex, String ...extraRawHex) {
+        List<String> packets = new ArrayList<>();
+        packets.add(rawHex);
+        packets.addAll(Arrays.asList(extraRawHex));
+        return packets;
     }
 
     public static String parseHistoryLog(String rawHex) throws DecoderException {
