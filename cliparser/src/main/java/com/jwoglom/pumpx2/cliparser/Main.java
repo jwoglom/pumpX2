@@ -232,20 +232,28 @@ public class Main {
                 result.put("serverNonce", Hex.encodeHexString(builder.getServerNonce()));
                 result.put("messageName", "JpakeAuthResult");
                 result.put("txId", "" + txId);
+                System.out.println(result.toString());
+                System.out.flush();
                 return result.toString();
             } else if (builder.invalid()) {
                 JSONObject result = new JSONObject();
                 result.put("error", "JPAKE authentication failed - HMAC validation failed at step " + builder.getStep().name());
+                System.out.println(result.toString());
+                System.out.flush();
                 return result.toString();
             } else {
                 JSONObject result = new JSONObject();
                 result.put("error", "JPAKE authentication incomplete at step " + builder.getStep().name());
+                System.out.println(result.toString());
+                System.out.flush();
                 return result.toString();
             }
             
         } catch (Exception e) {
             JSONObject result = new JSONObject();
             result.put("error", "Exception during JPAKE authentication: " + e.getMessage());
+            System.out.println(result.toString());
+            System.out.flush();
             return result.toString();
         }
     }
