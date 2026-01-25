@@ -497,7 +497,12 @@ public class TandemBluetoothHandler {
                             !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                         if (response.message().get() instanceof ErrorResponse) {
                             if (!PumpState.tconnectAppConnectionSharing) {
-                                tandemPump.onPumpCriticalError(peripheral, TandemError.ERROR_RESPONSE.withExtra("in response to " + requestMessage));
+                                tandemPump.onPumpCriticalError(peripheral,
+                                        TandemError.ERROR_RESPONSE
+                                                .withExtra("in response to " + requestMessage)
+                                                .withErrorResponse((ErrorResponse) response.message().get())
+                                                .withInitiatingMessage(requestMessage)
+                                );
                             }
                             return;
                         } else {
