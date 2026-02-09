@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
+import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
@@ -63,7 +64,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -83,6 +86,50 @@ public class TandemBluetoothHandler {
     private TandemPump tandemPump;
     private final Handler handler;
     public Long periodicTimeSinceResetInterval = 120_000L;
+
+    private static final long QUALIFYING_EVENTS_HEALTH_CHECK_INTERVAL_MS = 30_000L;
+    private static final long QUALIFYING_EVENTS_STALE_TIMEOUT_MS = 120_000L;
+    private static final long NOTIFICATION_RETRY_DELAY_MS = 2_000L;
+    private static final int MAX_NOTIFICATION_ENABLE_ATTEMPTS = 5;
+
+    private final Map<UUID, Integer> notificationEnableAttempts = new HashMap<>();
+    private final AtomicBoolean qualifyingEventsNotifying = new AtomicBoolean(false);
+    private final AtomicBoolean qualifyingEventMonitorActive = new AtomicBoolean(false);
+    private volatile long lastQualifyingEventTimestamp = 0L;
+    @Nullable
+    private volatile BluetoothPeripheral currentConnectedPeripheral = null;
+
+    private final Runnable qualifyingEventHealthCheckRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!qualifyingEventMonitorActive.get()) {
+                return;
+            }
+
+            BluetoothPeripheral peripheral = currentConnectedPeripheral;
+            if (peripheral == null || !ConnectionState.CONNECTED.equals(peripheral.getState())) {
+                Timber.d("Qualifying event health check: skipping because peripheral is %s",
+                        peripheral == null ? "null" : peripheral.getState());
+            } else {
+                long now = System.currentTimeMillis();
+                long lastEvent = lastQualifyingEventTimestamp;
+                boolean stale = lastEvent > 0 && (now - lastEvent) > QUALIFYING_EVENTS_STALE_TIMEOUT_MS;
+                boolean notifyActive = qualifyingEventsNotifying.get();
+
+                if (!notifyActive || stale) {
+                    Timber.w("Qualifying event health check triggered: notifyActive=%s stale=%s ageMs=%d",
+                            notifyActive, stale, lastEvent > 0 ? now - lastEvent : -1);
+                    ensureNotificationEnabled(peripheral,
+                            CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS,
+                            stale ? "qualifying event stream stale" : "notification inactive");
+                }
+            }
+
+            if (qualifyingEventMonitorActive.get()) {
+                handler.postDelayed(this, QUALIFYING_EVENTS_HEALTH_CHECK_INTERVAL_MS);
+            }
+        }
+    };
 
     /**
      * Initializes PumpX2.
@@ -140,6 +187,153 @@ public class TandemBluetoothHandler {
         remainingConnectionInitializationSteps.addAll(Arrays.asList(ConnectionInitializationStep.values()));
         remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.ALREADY_INITIALIZED);
         remainingCharacteristicNotificationsInit.addAll(CharacteristicUUID.ENABLED_NOTIFICATIONS);
+        synchronized (notificationEnableAttempts) {
+            notificationEnableAttempts.clear();
+        }
+        qualifyingEventsNotifying.set(false);
+        qualifyingEventMonitorActive.set(false);
+        lastQualifyingEventTimestamp = 0L;
+    }
+
+    private void startQualifyingEventMonitor(BluetoothPeripheral peripheral) {
+        currentConnectedPeripheral = peripheral;
+        qualifyingEventMonitorActive.set(true);
+        handler.removeCallbacks(qualifyingEventHealthCheckRunnable);
+        qualifyingEventsNotifying.set(false);
+        lastQualifyingEventTimestamp = System.currentTimeMillis();
+        handler.postDelayed(qualifyingEventHealthCheckRunnable, QUALIFYING_EVENTS_HEALTH_CHECK_INTERVAL_MS);
+    }
+
+    private void stopQualifyingEventMonitor() {
+        qualifyingEventMonitorActive.set(false);
+        handler.removeCallbacks(qualifyingEventHealthCheckRunnable);
+        qualifyingEventsNotifying.set(false);
+        lastQualifyingEventTimestamp = 0L;
+        currentConnectedPeripheral = null;
+    }
+
+    private UUID getServiceUuidForCharacteristic(UUID characteristicUuid) {
+        if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(characteristicUuid)) {
+            return ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
+        }
+        return ServiceUUID.PUMP_SERVICE_UUID;
+    }
+
+    private void requestNotify(BluetoothPeripheral peripheral, UUID characteristicUuid, boolean enable, String reason) {
+        UUID serviceUUID = getServiceUuidForCharacteristic(characteristicUuid);
+
+        if (enable) {
+            int attempt = incrementNotificationEnableAttempt(peripheral, characteristicUuid, reason);
+            if (attempt == -1) {
+                return;
+            }
+
+            if (!ConnectionState.CONNECTED.equals(peripheral.getState())) {
+                Timber.d("Deferring notify enable for %s because state is %s (%s)",
+                        CharacteristicUUID.which(characteristicUuid), peripheral.getState(), reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (peripheral not connected)");
+                return;
+            }
+
+            BluetoothGattCharacteristic characteristic = peripheral.getCharacteristic(serviceUUID, characteristicUuid);
+            if (characteristic == null) {
+                Timber.w("Characteristic %s missing while enabling notifications (%s), retrying",
+                        CharacteristicUUID.which(characteristicUuid), reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (characteristic missing)");
+                return;
+            }
+
+            Timber.i("Setting notify=true for %s (%s) [attempt=%d reason=%s]", characteristicUuid,
+                    CharacteristicUUID.which(characteristicUuid), attempt, reason);
+
+            boolean enqueued = peripheral.setNotify(characteristic, true);
+            if (!enqueued) {
+                Timber.w("setNotify returned false for %s (%s) [attempt=%d reason=%s]", characteristicUuid,
+                        CharacteristicUUID.which(characteristicUuid), attempt, reason);
+                decrementNotificationEnableAttempt(characteristicUuid);
+                scheduleNotificationRetry(peripheral, characteristicUuid, reason + " (enqueue failed)");
+            }
+        } else {
+            BluetoothGattCharacteristic characteristic = peripheral.getCharacteristic(serviceUUID, characteristicUuid);
+            synchronized (notificationEnableAttempts) {
+                notificationEnableAttempts.remove(characteristicUuid);
+            }
+            Timber.i("Setting notify=false for %s (%s) [reason=%s]", characteristicUuid,
+                    CharacteristicUUID.which(characteristicUuid), reason);
+            if (characteristic == null) {
+                Timber.d("Skipping disable notify for %s because characteristic is unavailable", CharacteristicUUID.which(characteristicUuid));
+                return;
+            }
+            if (!peripheral.setNotify(characteristic, false)) {
+                Timber.w("setNotify returned false while disabling %s (%s)", characteristicUuid, CharacteristicUUID.which(characteristicUuid));
+            }
+        }
+    }
+
+    private void scheduleNotificationRetry(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        handler.postDelayed(() -> {
+            if (!ConnectionState.CONNECTED.equals(peripheral.getState())) {
+                Timber.d("Skipping notify retry for %s because peripheral state is %s (%s)",
+                        CharacteristicUUID.which(characteristicUuid), peripheral.getState(), reason);
+                return;
+            }
+            requestNotify(peripheral, characteristicUuid, true, reason);
+        }, NOTIFICATION_RETRY_DELAY_MS);
+    }
+
+    private int incrementNotificationEnableAttempt(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        synchronized (notificationEnableAttempts) {
+            int current = notificationEnableAttempts.getOrDefault(characteristicUuid, 0);
+            if (current >= MAX_NOTIFICATION_ENABLE_ATTEMPTS) {
+                if (current != Integer.MAX_VALUE) {
+                    Timber.e("Exceeded notification enable attempts for %s after %d tries (%s)",
+                            CharacteristicUUID.which(characteristicUuid), current, reason);
+                    notificationEnableAttempts.put(characteristicUuid, Integer.MAX_VALUE);
+                    tandemPump.onPumpCriticalError(peripheral,
+                            TandemError.NOTIFICATION_STATE_FAILED.withExtra(
+                                    "characteristic: " + CharacteristicUUID.which(characteristicUuid)
+                                            + ", attempts: " + current + ", reason: " + reason));
+                } else {
+                    Timber.d("Notification enable attempts exhausted for %s, skipping re-enable", CharacteristicUUID.which(characteristicUuid));
+                }
+                return -1;
+            }
+            int attempt = current + 1;
+            notificationEnableAttempts.put(characteristicUuid, attempt);
+            return attempt;
+        }
+    }
+
+    private void decrementNotificationEnableAttempt(UUID characteristicUuid) {
+        synchronized (notificationEnableAttempts) {
+            int current = notificationEnableAttempts.getOrDefault(characteristicUuid, 0);
+            if (current <= 1) {
+                notificationEnableAttempts.remove(characteristicUuid);
+            } else if (current != Integer.MAX_VALUE) {
+                notificationEnableAttempts.put(characteristicUuid, current - 1);
+            }
+        }
+    }
+
+    private void ensureNotificationEnabled(BluetoothPeripheral peripheral, UUID characteristicUuid, String reason) {
+        handler.post(() -> requestNotify(peripheral, characteristicUuid, true, reason));
+    }
+
+    private void installNotificationSubscriptions(BluetoothPeripheral peripheral, String reason) {
+        CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> requestNotify(peripheral, uuid, true, reason));
+    }
+
+    private void handleServiceChanged(BluetoothPeripheral peripheral, byte[] value) {
+        Timber.w("Received SERVICE_CHANGED indication (%s); reinstalling notifications", Hex.encodeHexString(value));
+        qualifyingEventsNotifying.set(false);
+
+        synchronized (notificationEnableAttempts) {
+            notificationEnableAttempts.keySet().removeAll(CharacteristicUUID.ENABLED_NOTIFICATIONS);
+        }
+
+        handler.post(() -> installNotificationSubscriptions(peripheral, "service changed indication"));
     }
 
     // Callback for peripheral-specific events
@@ -177,13 +371,7 @@ public class TandemBluetoothHandler {
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
             // Try to turn on notifications for other characteristics
-            CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
-                UUID serviceUUID = ServiceUUID.PUMP_SERVICE_UUID;
-                if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
-                    serviceUUID = ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
-                }
-                peripheral.setNotify(serviceUUID, uuid, true);
-            });
+            installNotificationSubscriptions(peripheral, "initial service discovery");
 
             Timber.i("TandemBluetoothHandler: waiting for Bluetooth initialization callback");
             remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.SERVICES_DISCOVERED);
@@ -210,7 +398,7 @@ public class TandemBluetoothHandler {
                             if (PumpState.processedResponseMessages > 0) {
                                 if (sentOnPumpConnected.compareAndSet(false, true)) {
                                     Timber.i("AlreadyAuthenticated#%d: processed %d response messages, with set opcode, so triggering onPumpConnected", ii, PumpState.processedResponseMessages);
-                                    tandemPump.onPumpConnected(peripheral);
+                                    internalOnPumpConnected(peripheral);
                                 } else {
                                     Timber.d("AlreadyAuthenticated#%d: sentOnPumpConnected", ii);
                                 }
@@ -230,7 +418,7 @@ public class TandemBluetoothHandler {
                         if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                             if (sentOnPumpConnected.compareAndSet(false, true)) {
                                 Timber.i("AlreadyAuthenticated#final: no response messages, but pump still initialized, so triggering onPumpConnected");
-                                tandemPump.onPumpConnected(peripheral);
+                                internalOnPumpConnected(peripheral);
                             } else {
                                 Timber.d("AlreadyAuthenticated#final: sentOnPumpConnected");
                             }
@@ -266,6 +454,24 @@ public class TandemBluetoothHandler {
                 final boolean isNotifying = peripheral.isNotifying(characteristic);
                 Timber.d("SUCCESS: Notify set to '%s' for %s (%s)", isNotifying, characteristic.getUuid(), CharacteristicUUID.which(characteristic.getUuid()));
 
+                if (!isNotifying) {
+                    Timber.w("Notification unexpectedly disabled for %s, attempting to re-enable", CharacteristicUUID.which(characteristic.getUuid()));
+                    if (CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.equals(characteristic.getUuid())) {
+                        qualifyingEventsNotifying.set(false);
+                    }
+                    ensureNotificationEnabled(peripheral, characteristic.getUuid(), "notification state update reported disabled");
+                    return;
+                }
+
+                if (CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.equals(characteristic.getUuid())) {
+                    qualifyingEventsNotifying.set(true);
+                    lastQualifyingEventTimestamp = System.currentTimeMillis();
+                }
+
+                synchronized (notificationEnableAttempts) {
+                    notificationEnableAttempts.remove(characteristic.getUuid());
+                }
+
                 synchronized (remainingCharacteristicNotificationsInit) {
                     remainingCharacteristicNotificationsInit.remove(characteristic.getUuid());
                     if (remainingCharacteristicNotificationsInit.isEmpty()) {
@@ -278,6 +484,7 @@ public class TandemBluetoothHandler {
                 Timber.e("ERROR: Changing notification state failed for %s (%s)", CharacteristicUUID.which(characteristic.getUuid()), status);
                 TandemError error = TandemError.NOTIFICATION_STATE_FAILED.withExtra("characteristic: " + CharacteristicUUID.which(characteristic.getUuid()) + ", status: " + status);
                 if (CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS.equals(characteristic.getUuid())) {
+                    qualifyingEventsNotifying.set(false);
                     error = TandemError.PAIRING_CANNOT_BEGIN.withCause(error);
                 }
                 tandemPump.onPumpCriticalError(peripheral, error);
@@ -337,11 +544,16 @@ public class TandemBluetoothHandler {
                 } else if (peripheral.getName().startsWith("tslim X2")) {
                     tandemPump.onPumpModel(peripheral, KnownDeviceModel.TSLIM_X2);
                 }
+            } else if (characteristicUUID.equals(CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS)) {
+                handleServiceChanged(peripheral, value);
+                return;
             } else if (characteristicUUID.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS)) {
                 // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
                 // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);
                 Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(value);
                 Timber.i("RECEIVE-EVENTS: %s", events);
+                qualifyingEventsNotifying.set(true);
+                lastQualifyingEventTimestamp = System.currentTimeMillis();
                 tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
@@ -412,7 +624,7 @@ public class TandemBluetoothHandler {
                                     Timber.d("Scheduling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
                                     handler.postDelayed(() -> {
                                         Timber.d("Calling delayed onPumpConnected for relyOnConnectionSharingForAuthentication");
-                                        tandemPump.onPumpConnected(peripheral);
+                                        internalOnPumpConnected(peripheral);
                                     }, 500);
                                 }
                                 PumpState.tconnectAppAlreadyAuthenticated = true;
@@ -609,8 +821,9 @@ public class TandemBluetoothHandler {
         }
 
         private void internalOnPumpConnected(BluetoothPeripheral peripheral) {
+            startQualifyingEventMonitor(peripheral);
             tandemPump.onPumpConnected(peripheral);
-            if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
+            if (tandemPump.config.getEnablePeriodicTSR().orElse(true)) {
                 this.setupPeriodicTimeSinceReset(peripheral);
             }
         }
@@ -671,6 +884,7 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectedPeripheral(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
+            currentConnectedPeripheral = peripheral;
             this.reconnectDelay = 250;
         }
 
@@ -689,6 +903,7 @@ public class TandemBluetoothHandler {
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
             PumpState.clearRequestMessages();
             Packetize.txId.reset();
+            stopQualifyingEventMonitor();
             resetRemainingConnectionInitializationSteps();
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in %d ms", reconnectDelay);
@@ -796,6 +1011,7 @@ public class TandemBluetoothHandler {
     }
 
     public void stop() {
+        stopQualifyingEventMonitor();
         central.stopScan();
         central.close();
     }
