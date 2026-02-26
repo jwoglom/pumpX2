@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @MessageProps(
     opCode=73,
@@ -57,6 +58,15 @@ public class ReminderStatusResponse extends NotificationMessage {
 
     public Set<ReminderType> getReminders() {
         return ReminderType.fromBitmask(getIntMap());
+    }
+
+    @Override
+    public Set<Integer> notificationIds() {
+        return getReminders()
+            .stream()
+            .filter(this::isKnown)
+            .map(this::getId)
+            .collect(Collectors.toSet());
     }
 
     @Override
@@ -149,8 +159,14 @@ public class ReminderStatusResponse extends NotificationMessage {
             return name();
         }
 
-        @Nullable public String getDescription() {
-            if (name().startsWith("DEFAULT_REMINDER")) return null;
+        public boolean isKnown() {
+            return !name().startsWith("DEFAULT_REMINDER");
+        }
+
+        @Nullable
+        @Override
+        public String getDescription() {
+            if (!isKnown()) return null;
             return name();
         }
 

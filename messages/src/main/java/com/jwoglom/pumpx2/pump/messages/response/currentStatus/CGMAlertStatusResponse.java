@@ -59,6 +59,15 @@ public class CGMAlertStatusResponse extends NotificationMessage {
     }
 
     @Override
+    public Set<Integer> notificationIds() {
+        return getCgmAlerts()
+            .stream()
+            .filter(this::isKnown)
+            .map(this::getId)
+            .collect(Collectors.toSet());
+    }
+
+    @Override
     public int size() {
         return getCgmAlerts().size();
     }
@@ -148,10 +157,14 @@ public class CGMAlertStatusResponse extends NotificationMessage {
             return name();
         }
 
+        public boolean isKnown() {
+            return !name().startsWith("DEFAULT_CGM_ALERT");
+        }
+
         @Nullable
         @Override
         public String getDescription() {
-            if (name().startsWith("DEFAULT_CGM_ALERT")) return null;
+            if (!isKnown()) return null;
             return name();
         }
 

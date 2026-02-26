@@ -154,7 +154,7 @@ public class AlertStatusResponse extends NotificationMessage {
             return description;
         }
 
-        public boolean isKnownAlert() {
+        public boolean isKnown() {
             return description != null && !description.isBlank();
         }
 
@@ -192,7 +192,7 @@ public class AlertStatusResponse extends NotificationMessage {
         Set<Integer> ids = new HashSet<>();
 
         for (AlertResponseType alert : getAlerts()) {
-            if (alert.isKnownAlert()) {
+            if (alert.isKnown()) {
                 ids.add(alert.getId());
             }
         }

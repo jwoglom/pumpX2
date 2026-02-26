@@ -125,26 +125,27 @@ public class NotificationBundle {
      * </ul>
      */
     public List<NotificationEnum> get() {
+        ArrayList<NotificationMessage> notificationMessages = new ArrayList<>();
         ArrayList<NotificationEnum> slugs = new ArrayList<>();
 
-        ArrayList<NotificationMessage> alarmAndAlerts = new ArrayList<>();
-
         if (alertStatusResponse != null) {
+            notificationMessages.add(alertStatusResponse);
             alertStatusResponse.getAlerts().stream().sorted().forEach(slugs::add);
-            alarmAndAlerts.add(alertStatusResponse);
         }
         if (alarmStatusResponse != null) {
+            notificationMessages.add(alarmStatusResponse);
             alarmStatusResponse.getAlarms().stream().sorted().forEach(slugs::add);
-            alarmAndAlerts.add(alarmStatusResponse);
         }
         if (reminderStatusResponse != null) {
+            notificationMessages.add(reminderStatusResponse);
             reminderStatusResponse.getReminders().stream().sorted().forEach(slugs::add);
         }
         if (cgmAlertStatusResponse != null) {
+            notificationMessages.add(cgmAlertStatusResponse);
             cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(slugs::add);
         }
         if (malfunctionStatusResponse != null) {
-            if (malfunctionStatusResponse.hasMalfunction(alarmAndAlerts.toArray(new NotificationMessage[0])) &&
+            if (malfunctionStatusResponse.hasMalfunction(notificationMessages.toArray(new NotificationMessage[0])) &&
                 !StringUtils.isBlank(malfunctionStatusResponse.getErrorString()))
             {
                 slugs.add(malfunctionStatusResponse);

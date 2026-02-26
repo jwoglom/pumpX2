@@ -144,11 +144,12 @@ public class AlarmStatusResponse extends NotificationMessage {
         public int getId() {
             return bitmask;
         }
+
         public String getDescription() {
             return description;
         }
 
-        public boolean isKnownAlarm() {
+        public boolean isKnown() {
             return description != null && !description.isBlank();
         }
 
@@ -196,7 +197,7 @@ public class AlarmStatusResponse extends NotificationMessage {
         Set<Integer> ids = new HashSet<>();
 
         for (AlarmResponseType alert : getAlarms()) {
-            if (alert.isKnownAlarm()) {
+            if (alert.isKnown()) {
                 ids.add(alert.getId());
             }
         }
