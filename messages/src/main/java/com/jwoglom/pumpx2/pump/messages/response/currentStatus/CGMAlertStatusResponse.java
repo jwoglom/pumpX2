@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @MessageProps(
     opCode=75,
@@ -62,8 +63,8 @@ public class CGMAlertStatusResponse extends NotificationMessage {
     public Set<Integer> notificationIds() {
         return getCgmAlerts()
             .stream()
-            .filter(this::isKnown)
-            .map(this::getId)
+            .filter(CGMAlert::isKnown)
+            .map(CGMAlert::getId)
             .collect(Collectors.toSet());
     }
 

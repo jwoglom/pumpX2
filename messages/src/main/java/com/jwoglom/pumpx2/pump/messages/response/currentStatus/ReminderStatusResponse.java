@@ -64,8 +64,8 @@ public class ReminderStatusResponse extends NotificationMessage {
     public Set<Integer> notificationIds() {
         return getReminders()
             .stream()
-            .filter(this::isKnown)
-            .map(this::getId)
+            .filter(ReminderType::isKnown)
+            .map(ReminderType::getId)
             .collect(Collectors.toSet());
     }
 
