@@ -175,66 +175,67 @@
 <span class="source-line-no">158</span><span id="line-158">        public int getId() {</span>
 <span class="source-line-no">159</span><span id="line-159">            return bitmask;</span>
 <span class="source-line-no">160</span><span id="line-160">        }</span>
-<span class="source-line-no">161</span><span id="line-161">        public String getDescription() {</span>
-<span class="source-line-no">162</span><span id="line-162">            return description;</span>
-<span class="source-line-no">163</span><span id="line-163">        }</span>
-<span class="source-line-no">164</span><span id="line-164"></span>
-<span class="source-line-no">165</span><span id="line-165">        public boolean isKnownAlarm() {</span>
-<span class="source-line-no">166</span><span id="line-166">            return description != null &amp;&amp; !description.isBlank();</span>
-<span class="source-line-no">167</span><span id="line-167">        }</span>
-<span class="source-line-no">168</span><span id="line-168"></span>
-<span class="source-line-no">169</span><span id="line-169">        public static BigInteger toBitmask(AlarmResponseType ...types) {</span>
-<span class="source-line-no">170</span><span id="line-170">            BigInteger ret = BigInteger.ZERO;</span>
-<span class="source-line-no">171</span><span id="line-171">            for (AlarmResponseType type : types) {</span>
-<span class="source-line-no">172</span><span id="line-172">                ret = ret.setBit(type.bitmask());</span>
-<span class="source-line-no">173</span><span id="line-173">            }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">            return ret;</span>
-<span class="source-line-no">176</span><span id="line-176">        }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</span>
-<span class="source-line-no">179</span><span id="line-179">            Set&lt;AlarmResponseType&gt; current = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">180</span><span id="line-180">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
-<span class="source-line-no">181</span><span id="line-181">                if (intMap.testBit(type.bitmask())) {</span>
-<span class="source-line-no">182</span><span id="line-182">                    current.add(type);</span>
-<span class="source-line-no">183</span><span id="line-183">                }</span>
-<span class="source-line-no">184</span><span id="line-184">            }</span>
-<span class="source-line-no">185</span><span id="line-185"></span>
-<span class="source-line-no">186</span><span id="line-186">            return current;</span>
-<span class="source-line-no">187</span><span id="line-187">        }</span>
-<span class="source-line-no">188</span><span id="line-188"></span>
-<span class="source-line-no">189</span><span id="line-189">        public static AlarmResponseType fromSingularId(long id) {</span>
-<span class="source-line-no">190</span><span id="line-190">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
-<span class="source-line-no">191</span><span id="line-191">                if (id == type.bitmask()) {</span>
-<span class="source-line-no">192</span><span id="line-192">                    return type;</span>
-<span class="source-line-no">193</span><span id="line-193">                }</span>
-<span class="source-line-no">194</span><span id="line-194">            }</span>
-<span class="source-line-no">195</span><span id="line-195">            return null;</span>
-<span class="source-line-no">196</span><span id="line-196">        }</span>
-<span class="source-line-no">197</span><span id="line-197"></span>
-<span class="source-line-no">198</span><span id="line-198">        public String toString() {</span>
-<span class="source-line-no">199</span><span id="line-199">            return name();</span>
-<span class="source-line-no">200</span><span id="line-200">        }</span>
-<span class="source-line-no">201</span><span id="line-201">    }</span>
-<span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">    public Set&lt;AlarmResponseType&gt; getAlarms() {</span>
-<span class="source-line-no">204</span><span id="line-204">        return AlarmResponseType.fromBitmask(getIntMap());</span>
-<span class="source-line-no">205</span><span id="line-205">    }</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">161</span><span id="line-161"></span>
+<span class="source-line-no">162</span><span id="line-162">        public String getDescription() {</span>
+<span class="source-line-no">163</span><span id="line-163">            return description;</span>
+<span class="source-line-no">164</span><span id="line-164">        }</span>
+<span class="source-line-no">165</span><span id="line-165"></span>
+<span class="source-line-no">166</span><span id="line-166">        public boolean isKnown() {</span>
+<span class="source-line-no">167</span><span id="line-167">            return description != null &amp;&amp; !description.isBlank();</span>
+<span class="source-line-no">168</span><span id="line-168">        }</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">        public static BigInteger toBitmask(AlarmResponseType ...types) {</span>
+<span class="source-line-no">171</span><span id="line-171">            BigInteger ret = BigInteger.ZERO;</span>
+<span class="source-line-no">172</span><span id="line-172">            for (AlarmResponseType type : types) {</span>
+<span class="source-line-no">173</span><span id="line-173">                ret = ret.setBit(type.bitmask());</span>
+<span class="source-line-no">174</span><span id="line-174">            }</span>
+<span class="source-line-no">175</span><span id="line-175"></span>
+<span class="source-line-no">176</span><span id="line-176">            return ret;</span>
+<span class="source-line-no">177</span><span id="line-177">        }</span>
+<span class="source-line-no">178</span><span id="line-178"></span>
+<span class="source-line-no">179</span><span id="line-179">        public static Set&lt;AlarmResponseType&gt; fromBitmask(BigInteger intMap) {</span>
+<span class="source-line-no">180</span><span id="line-180">            Set&lt;AlarmResponseType&gt; current = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">181</span><span id="line-181">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
+<span class="source-line-no">182</span><span id="line-182">                if (intMap.testBit(type.bitmask())) {</span>
+<span class="source-line-no">183</span><span id="line-183">                    current.add(type);</span>
+<span class="source-line-no">184</span><span id="line-184">                }</span>
+<span class="source-line-no">185</span><span id="line-185">            }</span>
+<span class="source-line-no">186</span><span id="line-186"></span>
+<span class="source-line-no">187</span><span id="line-187">            return current;</span>
+<span class="source-line-no">188</span><span id="line-188">        }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">        public static AlarmResponseType fromSingularId(long id) {</span>
+<span class="source-line-no">191</span><span id="line-191">            for (AlarmResponseType type : AlarmResponseType.values()) {</span>
+<span class="source-line-no">192</span><span id="line-192">                if (id == type.bitmask()) {</span>
+<span class="source-line-no">193</span><span id="line-193">                    return type;</span>
+<span class="source-line-no">194</span><span id="line-194">                }</span>
+<span class="source-line-no">195</span><span id="line-195">            }</span>
+<span class="source-line-no">196</span><span id="line-196">            return null;</span>
+<span class="source-line-no">197</span><span id="line-197">        }</span>
+<span class="source-line-no">198</span><span id="line-198"></span>
+<span class="source-line-no">199</span><span id="line-199">        public String toString() {</span>
+<span class="source-line-no">200</span><span id="line-200">            return name();</span>
+<span class="source-line-no">201</span><span id="line-201">        }</span>
+<span class="source-line-no">202</span><span id="line-202">    }</span>
+<span class="source-line-no">203</span><span id="line-203"></span>
+<span class="source-line-no">204</span><span id="line-204">    public Set&lt;AlarmResponseType&gt; getAlarms() {</span>
+<span class="source-line-no">205</span><span id="line-205">        return AlarmResponseType.fromBitmask(getIntMap());</span>
+<span class="source-line-no">206</span><span id="line-206">    }</span>
 <span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">    @Override</span>
-<span class="source-line-no">209</span><span id="line-209">    public Set&lt;Integer&gt; notificationIds() {</span>
-<span class="source-line-no">210</span><span id="line-210">        Set&lt;Integer&gt; ids = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">211</span><span id="line-211"></span>
-<span class="source-line-no">212</span><span id="line-212">        for (AlarmResponseType alert : getAlarms()) {</span>
-<span class="source-line-no">213</span><span id="line-213">            if (alert.isKnownAlarm()) {</span>
-<span class="source-line-no">214</span><span id="line-214">                ids.add(alert.getId());</span>
-<span class="source-line-no">215</span><span id="line-215">            }</span>
-<span class="source-line-no">216</span><span id="line-216">        }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">        return ids;</span>
-<span class="source-line-no">219</span><span id="line-219">    }</span>
-<span class="source-line-no">220</span><span id="line-220">}</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">    @Override</span>
+<span class="source-line-no">210</span><span id="line-210">    public Set&lt;Integer&gt; notificationIds() {</span>
+<span class="source-line-no">211</span><span id="line-211">        Set&lt;Integer&gt; ids = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">212</span><span id="line-212"></span>
+<span class="source-line-no">213</span><span id="line-213">        for (AlarmResponseType alert : getAlarms()) {</span>
+<span class="source-line-no">214</span><span id="line-214">            if (alert.isKnown()) {</span>
+<span class="source-line-no">215</span><span id="line-215">                ids.add(alert.getId());</span>
+<span class="source-line-no">216</span><span id="line-216">            }</span>
+<span class="source-line-no">217</span><span id="line-217">        }</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">        return ids;</span>
+<span class="source-line-no">220</span><span id="line-220">    }</span>
+<span class="source-line-no">221</span><span id="line-221">}</span>
 
 
 
