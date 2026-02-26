@@ -118,7 +118,7 @@ public class ReminderStatusResponse extends NotificationMessage {
         DEFAULT_REMINDER_40(40),
         DEFAULT_REMINDER_41(41),
         DEFAULT_REMINDER_42(42),
-        DEFAULT_REMINDER_43(42),
+        DEFAULT_REMINDER_43(43),
         DEFAULT_REMINDER_44(44),
         DEFAULT_REMINDER_45(45),
         DEFAULT_REMINDER_46(46),

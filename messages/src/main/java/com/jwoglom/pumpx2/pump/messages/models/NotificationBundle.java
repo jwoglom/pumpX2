@@ -165,43 +165,7 @@ public class NotificationBundle {
     }
 
     public int getNotificationCount() {
-        int count = 0;
-
-        ArrayList<NotificationMessage> alarmAndAlerts = new ArrayList<>();
-
-        if (this.alarmStatusResponse != null) {
-            count += this.alarmStatusResponse.size();
-            alarmAndAlerts.add(this.alarmStatusResponse);
-        }
-
-        if (this.alertStatusResponse != null) {
-            count += this.alertStatusResponse.size();
-            alarmAndAlerts.add(this.alertStatusResponse);
-        }
-
-        if (this.reminderStatusResponse != null) {
-            count += this.reminderStatusResponse.size();
-        }
-
-        if (this.cgmAlertStatusResponse != null) {
-            count += this.cgmAlertStatusResponse.size();
-        }
-
-        if (this.malfunctionStatusResponse != null) {
-            if (this.malfunctionStatusResponse.hasMalfunction(alarmAndAlerts.toArray(new NotificationMessage[0]))) {
-                count += this.malfunctionStatusResponse.size();
-            }
-        }
-
-        if (this.otherNotificationStatusResponse != null) {
-            count += this.otherNotificationStatusResponse.size();
-        }
-
-        if (this.otherNotification2StatusResponse != null) {
-            count += this.otherNotification2StatusResponse.size();
-        }
-
-        return count;
+        return get().size();
     }
 
 
