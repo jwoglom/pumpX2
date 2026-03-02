@@ -8,6 +8,7 @@ import com.jwoglom.pumpx2.pump.TandemError;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.Packetize;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
@@ -193,19 +194,26 @@ public abstract class TandemPump {
      * @param scanResult the result of the Bluetooth search, including e.g. connection strength, if
      *                   the pump was discovered as a result of a Bluetooth search; if the pump is
      *                   already bonded to the device, then is null.
+     * @param readyState state derived from BLE manufacturer advertisement bytes for Mobi pumps.
      * @return true if we should connect to the detected pump, false otherwise
      */
-    public boolean onPumpDiscovered(BluetoothPeripheral peripheral, @Nullable ScanResult scanResult) {
-        Timber.i("TandemPump: onPumpDiscovered(peripheral=%s, addr=%s, scanResult=%s)", peripheral.getName(), peripheral.getAddress(), scanResult);
+    public boolean onPumpDiscovered(BluetoothPeripheral peripheral, @Nullable ScanResult scanResult, PumpReadyState readyState) {
+        Timber.i("TandemPump: onPumpDiscovered(peripheral=%s, addr=%s, scanResult=%s, readyState=%s)", peripheral.getName(), peripheral.getAddress(), scanResult, readyState);
         if (filterToBluetoothMac.isPresent()) {
             if (filterToBluetoothMac.get().equals(peripheral.getAddress())) {
                 Timber.i("TandemPump: found matching MAC (%s)", peripheral.getAddress());
-                return true;
             } else {
                 Timber.i("TandemPump: Ignoring peripheral with mismatching MAC (found %s, expected %s)", peripheral.getAddress(), filterToBluetoothMac.get());
                 return false;
             }
         }
+
+        String name = peripheral.getName();
+        boolean isMobi = name != null && name.startsWith(BluetoothConstants.DEVICE_NAME_TANDEM_MOBI);
+        if (isMobi) {
+            return readyState == PumpReadyState.PICKED_UP_WITH_TAP;
+        }
+
         return true;
     }
 

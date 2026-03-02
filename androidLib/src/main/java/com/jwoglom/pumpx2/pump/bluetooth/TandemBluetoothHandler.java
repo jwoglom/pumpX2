@@ -10,6 +10,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
 
@@ -63,7 +64,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -135,6 +138,7 @@ public class TandemBluetoothHandler {
 
     private final Set<ConnectionInitializationStep> remainingConnectionInitializationSteps = new HashSet<>();
     private final Set<UUID> remainingCharacteristicNotificationsInit = new HashSet<>();
+    private final Map<String, PumpReadyState> pumpReadyStateByAddress = new HashMap<>();
 
     private synchronized void resetRemainingConnectionInitializationSteps() {
         remainingConnectionInitializationSteps.addAll(Arrays.asList(ConnectionInitializationStep.values()));
@@ -690,6 +694,9 @@ public class TandemBluetoothHandler {
             PumpState.clearRequestMessages();
             Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
+            synchronized (pumpReadyStateByAddress) {
+                pumpReadyStateByAddress.remove(peripheral.getAddress());
+            }
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in %d ms", reconnectDelay);
                 // Reconnect to this device when it becomes available again
@@ -701,6 +708,11 @@ public class TandemBluetoothHandler {
         @Override
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
             Timber.i("PUMP-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
+            PumpReadyState readyState = parsePumpReadyState(scanResult);
+            if (!shouldEmitPumpReadyStateUpdate(peripheral.getAddress(), readyState)) {
+                return;
+            }
+            Timber.i("PUMP-READY-STATE(%s): addr=%s readyState=%s", peripheral.getName(), peripheral.getAddress(), readyState);
 
 //            if (peripheral.getAddress().equals(PumpState.getSavedBluetoothMAC(context))) {
 //                Timber.d("Pump has same address as saved pump (%s), auto connecting", peripheral.getAddress());
@@ -709,7 +721,7 @@ public class TandemBluetoothHandler {
 //                return;
 //            }
 
-            if (tandemPump.onPumpDiscovered(peripheral, scanResult)) {
+            if (tandemPump.onPumpDiscovered(peripheral, scanResult, readyState)) {
                 Timber.i("TandemBluetoothHandler: stopping scan in preparation for pump peripheral connection");
                 central.stopScan();
                 Timber.i("PUMP-CONNECT(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
@@ -776,7 +788,7 @@ public class TandemBluetoothHandler {
         if (alreadyBondedPump.isPresent()) {
             BluetoothPeripheral peripheral = alreadyBondedPump.get();
             Timber.i("TandemBluetoothHandler: Already bonded to Tandem peripheral: %s (%s)", peripheral.getName(), peripheral.getAddress());
-            if (tandemPump.onPumpDiscovered(peripheral, null)) {
+            if (tandemPump.onPumpDiscovered(peripheral, null, PumpReadyState.UNKNOWN)) {
                 central.autoConnectPeripheral(peripheral, peripheralCallback);
                 return;
             } else {
@@ -789,6 +801,9 @@ public class TandemBluetoothHandler {
 
     public void startScan() {
         Timber.i("TandemBluetoothHandler: startScan");
+        synchronized (pumpReadyStateByAddress) {
+            pumpReadyStateByAddress.clear();
+        }
         // Scan for peripherals with a certain service UUIDs
         central.startPairingPopupHack();
 
@@ -798,5 +813,39 @@ public class TandemBluetoothHandler {
     public void stop() {
         central.stopScan();
         central.close();
+    }
+
+    private boolean shouldEmitPumpReadyStateUpdate(String peripheralAddress, PumpReadyState readyState) {
+        synchronized (pumpReadyStateByAddress) {
+            PumpReadyState previous = pumpReadyStateByAddress.get(peripheralAddress);
+            if (previous == readyState) {
+                return false;
+            }
+            pumpReadyStateByAddress.put(peripheralAddress, readyState);
+            return true;
+        }
+    }
+
+    private PumpReadyState parsePumpReadyState(@Nullable ScanResult scanResult) {
+        if (scanResult == null || scanResult.getScanRecord() == null) {
+            return PumpReadyState.UNKNOWN;
+        }
+        SparseArray<byte[]> manufacturerSpecificData = scanResult.getScanRecord().getManufacturerSpecificData();
+        if (manufacturerSpecificData == null || manufacturerSpecificData.size() == 0) {
+            return PumpReadyState.UNKNOWN;
+        }
+
+        for (int i = 0; i < manufacturerSpecificData.size(); i++) {
+            byte[] payload = manufacturerSpecificData.valueAt(i);
+            if (payload == null || payload.length == 0) {
+                continue;
+            }
+            PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+            if (state != PumpReadyState.UNKNOWN) {
+                return state;
+            }
+        }
+
+        return PumpReadyState.UNKNOWN;
     }
 }
