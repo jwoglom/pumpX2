@@ -208,12 +208,6 @@ public abstract class TandemPump {
             }
         }
 
-        String name = peripheral.getName();
-        boolean isMobi = name != null && name.startsWith(BluetoothConstants.DEVICE_NAME_TANDEM_MOBI);
-        if (isMobi) {
-            return readyState == PumpReadyState.PICKED_UP_WITH_TAP;
-        }
-
         return true;
     }
 
