@@ -3,10 +3,12 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.ParcelUuid;
 import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
@@ -23,6 +25,8 @@ import com.welie.blessed.ScanFailure;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -92,9 +96,6 @@ public abstract class TandemPumpFinder {
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
             Timber.i("PUMP-FINDER-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
             PumpReadyState readyState = parsePumpReadyState(scanResult);
-            if (!shouldEmitPumpReadyStateUpdate(peripheral.getAddress(), readyState)) {
-                return;
-            }
             Timber.i("PUMP-FINDER-READY-STATE(%s): addr=%s readyState=%s", peripheral.getName(), peripheral.getAddress(), readyState);
             instance.onDiscoveredPump(peripheral, scanResult, readyState);
         }
@@ -143,7 +144,21 @@ public abstract class TandemPumpFinder {
 
     private void immediateScanForPeripherals() {
         Timber.d("TandemPumpFinder: Scanning for all Tandem peripherals");
-        central.scanForPeripheralsWithServices(new UUID[]{ServiceUUID.PUMP_SERVICE_UUID});
+        Optional<BluetoothPeripheral> alreadyBondedPump = getAlreadyBondedPump();
+        ArrayList<ScanFilter> scanFilters = new ArrayList<>();
+        scanFilters.add(new ScanFilter.Builder()
+                .setServiceUuid(ParcelUuid.fromString(ServiceUUID.PUMP_SERVICE_UUID.toString()))
+                .build());
+        alreadyBondedPump.ifPresent(alreadyBonded -> {
+            scanFilters.add(new ScanFilter.Builder()
+                    .setDeviceName(alreadyBonded.getName())
+                    .build());
+            scanFilters.add(new ScanFilter.Builder()
+                    .setDeviceAddress(alreadyBonded.getAddress())
+                    .build());
+        });
+        Timber.i("TandemPumpFinder: using ScanFilters: %s", scanFilters);
+        central.scanForPeripheralsUsingFilters(scanFilters);
     }
 
     public void startScan() {
@@ -167,17 +182,6 @@ public abstract class TandemPumpFinder {
         central.close();
     }
 
-    private boolean shouldEmitPumpReadyStateUpdate(String peripheralAddress, PumpReadyState readyState) {
-        synchronized (pumpReadyStateByAddress) {
-            PumpReadyState previous = pumpReadyStateByAddress.get(peripheralAddress);
-            if (previous == readyState) {
-                return false;
-            }
-            pumpReadyStateByAddress.put(peripheralAddress, readyState);
-            return true;
-        }
-    }
-
     private PumpReadyState parsePumpReadyState(@Nullable ScanResult scanResult) {
         if (scanResult == null || scanResult.getScanRecord() == null) {
             return PumpReadyState.UNKNOWN;
@@ -193,11 +197,29 @@ public abstract class TandemPumpFinder {
             if (payload == null || payload.length == 0) {
                 continue;
             }
-            PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+            PumpReadyState state = decodePumpReadyStateFromPayload(payload);
             if (state != PumpReadyState.UNKNOWN) {
                 return state;
             }
         }
+        return PumpReadyState.UNKNOWN;
+    }
+
+    private PumpReadyState decodePumpReadyStateFromPayload(byte[] payload) {
+        // Primary assumption (matches iOS path): state byte is at end of manufacturer payload.
+        PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+        if (state != PumpReadyState.UNKNOWN) {
+            return state;
+        }
+
+        // Fallback: some Android stacks/carriers can shift payload fields; scan for known values.
+        for (int i = payload.length - 1; i >= 0; i--) {
+            state = PumpReadyState.fromManufacturerStateByte(payload[i]);
+            if (state != PumpReadyState.UNKNOWN) {
+                return state;
+            }
+        }
+
         return PumpReadyState.UNKNOWN;
     }
 }

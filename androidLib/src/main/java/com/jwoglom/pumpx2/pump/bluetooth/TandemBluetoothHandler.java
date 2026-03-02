@@ -840,7 +840,25 @@ public class TandemBluetoothHandler {
             if (payload == null || payload.length == 0) {
                 continue;
             }
-            PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+            PumpReadyState state = decodePumpReadyStateFromPayload(payload);
+            if (state != PumpReadyState.UNKNOWN) {
+                return state;
+            }
+        }
+
+        return PumpReadyState.UNKNOWN;
+    }
+
+    private PumpReadyState decodePumpReadyStateFromPayload(byte[] payload) {
+        // Primary assumption (matches iOS path): state byte is at end of manufacturer payload.
+        PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+        if (state != PumpReadyState.UNKNOWN) {
+            return state;
+        }
+
+        // Fallback: some Android stacks/carriers can shift payload fields; scan for known values.
+        for (int i = payload.length - 1; i >= 0; i--) {
+            state = PumpReadyState.fromManufacturerStateByte(payload[i]);
             if (state != PumpReadyState.UNKNOWN) {
                 return state;
             }
