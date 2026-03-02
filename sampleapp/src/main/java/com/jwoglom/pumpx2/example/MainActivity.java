@@ -10,6 +10,7 @@ import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_HISTORY_LOG_STREAM
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_INITIATE_BOLUS_RESPONSE_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.GOT_LAST_BOLUS_RESPONSE_AFTER_CANCEL_RECEIVER;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_COMPLETE_INTENT;
+import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_DISCOVERY_READY_STATE_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE3_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE1_INTENT;
 import static com.jwoglom.pumpx2.example.PumpX2TandemPump.PUMP_CONNECTED_STAGE2_INTENT;
@@ -194,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(gotBolusPermissionRevokedReceiver, new IntentFilter(GOT_BOLUS_PERMISSION_REVOKED), Context.RECEIVER_NOT_EXPORTED);
         registerReceiver(pumpConnectedInvalidChallengeReceiver, new IntentFilter(PUMP_INVALID_CHALLENGE_INTENT), Context.RECEIVER_NOT_EXPORTED);
         registerReceiver(pumpErrorReceiver, new IntentFilter(PUMP_ERROR_INTENT), Context.RECEIVER_NOT_EXPORTED);
+        registerReceiver(pumpDiscoveryReadyStateReceiver, new IntentFilter(PUMP_DISCOVERY_READY_STATE_INTENT), Context.RECEIVER_NOT_EXPORTED);
 
         L.i("MainActivity", "Build.MANUFACTURER=" + Build.MANUFACTURER+" Build.MODEL=" + Build.MODEL + " Build.SDK_INT=" + Build.VERSION.SDK_INT);
     }
@@ -354,6 +356,17 @@ public class MainActivity extends AppCompatActivity {
             String name = intent.getStringExtra("name");
 
             statusText.setText("Connecting to " + name);
+            statusText.postInvalidate();
+        }
+    };
+
+    private final BroadcastReceiver pumpDiscoveryReadyStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String name = intent.getStringExtra("name");
+            String readyState = intent.getStringExtra("readyState");
+            Timber.i("PUMP DISCOVERY READY STATE: name=%s readyState=%s", name, readyState);
+            statusText.setText("Pump discovery: " + name + " (" + readyState + ")");
             statusText.postInvalidate();
         }
     };

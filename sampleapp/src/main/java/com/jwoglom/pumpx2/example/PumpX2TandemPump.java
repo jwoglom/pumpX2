@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.example;
 
 import static com.jwoglom.pumpx2.example.MainActivity.INTENT_PACKAGE;
 
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
+import com.jwoglom.pumpx2.pump.bluetooth.PumpReadyState;
 import com.jwoglom.pumpx2.pump.bluetooth.TandemPump;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
@@ -64,6 +66,7 @@ public class PumpX2TandemPump extends TandemPump {
     public static final String GOT_BOLUS_PERMISSION_REVOKED = "jwoglom.pumpx2.bolusPermissionRevoked";
     public static final String PUMP_INVALID_CHALLENGE_INTENT = "jwoglom.pumpx2.invalidchallenge";
     public static final String PUMP_ERROR_INTENT = "jwoglom.pumpx2.error";
+    public static final String PUMP_DISCOVERY_READY_STATE_INTENT = "jwoglom.pumpx2.pumpdiscoveryreadystate";
 
     boolean bolusInProgress = false;
     int lastBolusId = -1;
@@ -293,6 +296,21 @@ public class PumpX2TandemPump extends TandemPump {
         intent.putExtra("address", peripheral.getAddress());
         intent.putExtra("centralChallengeCargo", Hex.encodeHexString(centralChallenge.getCargo()));
         context.sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean onPumpDiscovered(
+            BluetoothPeripheral peripheral,
+            ScanResult scanResult,
+            PumpReadyState readyState
+    ) {
+        Intent intent = new Intent(PUMP_DISCOVERY_READY_STATE_INTENT);
+        intent.setPackage(INTENT_PACKAGE);
+        intent.putExtra("address", peripheral.getAddress());
+        intent.putExtra("name", peripheral.getName());
+        intent.putExtra("readyState", readyState.name());
+        context.sendBroadcast(intent);
+        return super.onPumpDiscovered(peripheral, scanResult, readyState);
     }
 
     @Override
