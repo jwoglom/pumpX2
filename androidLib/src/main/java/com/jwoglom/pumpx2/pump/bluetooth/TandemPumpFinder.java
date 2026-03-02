@@ -7,6 +7,7 @@ import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
 
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -75,11 +78,12 @@ public abstract class TandemPumpFinder {
      * @param peripheral the BluetoothPeripheral for the discovered pump
      * @param scanResult the ScanResult for the discovered pump
      */
-    public abstract void onDiscoveredPump(BluetoothPeripheral peripheral, ScanResult scanResult);
+    public abstract void onDiscoveredPump(BluetoothPeripheral peripheral, ScanResult scanResult, PumpReadyState readyState);
     public abstract void onBluetoothState(boolean isBluetoothEnabled);
 
     private BluetoothCentralManager central;
     private final TandemPumpFinder instance = this;
+    private final Map<String, PumpReadyState> pumpReadyStateByAddress = new HashMap<>();
 
     // Callback for generic BT events
     private final BluetoothCentralManagerCallback bluetoothCentralManagerCallback = new BluetoothCentralManagerCallback() {
@@ -87,8 +91,12 @@ public abstract class TandemPumpFinder {
         @Override
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
             Timber.i("PUMP-FINDER-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
-
-            instance.onDiscoveredPump(peripheral, scanResult);
+            PumpReadyState readyState = parsePumpReadyState(scanResult);
+            if (!shouldEmitPumpReadyStateUpdate(peripheral.getAddress(), readyState)) {
+                return;
+            }
+            Timber.i("PUMP-FINDER-READY-STATE(%s): addr=%s readyState=%s", peripheral.getName(), peripheral.getAddress(), readyState);
+            instance.onDiscoveredPump(peripheral, scanResult, readyState);
         }
 
         @Override
@@ -140,6 +148,9 @@ public abstract class TandemPumpFinder {
 
     public void startScan() {
         Timber.i("TandemPumpFinder: startScan");
+        synchronized (pumpReadyStateByAddress) {
+            pumpReadyStateByAddress.clear();
+        }
         // Scan for peripherals with a certain service UUIDs
         central.startPairingPopupHack();
 
@@ -154,5 +165,39 @@ public abstract class TandemPumpFinder {
     public void stop() {
         central.stopScan();
         central.close();
+    }
+
+    private boolean shouldEmitPumpReadyStateUpdate(String peripheralAddress, PumpReadyState readyState) {
+        synchronized (pumpReadyStateByAddress) {
+            PumpReadyState previous = pumpReadyStateByAddress.get(peripheralAddress);
+            if (previous == readyState) {
+                return false;
+            }
+            pumpReadyStateByAddress.put(peripheralAddress, readyState);
+            return true;
+        }
+    }
+
+    private PumpReadyState parsePumpReadyState(@Nullable ScanResult scanResult) {
+        if (scanResult == null || scanResult.getScanRecord() == null) {
+            return PumpReadyState.UNKNOWN;
+        }
+
+        SparseArray<byte[]> manufacturerSpecificData = scanResult.getScanRecord().getManufacturerSpecificData();
+        if (manufacturerSpecificData == null || manufacturerSpecificData.size() == 0) {
+            return PumpReadyState.UNKNOWN;
+        }
+
+        for (int i = 0; i < manufacturerSpecificData.size(); i++) {
+            byte[] payload = manufacturerSpecificData.valueAt(i);
+            if (payload == null || payload.length == 0) {
+                continue;
+            }
+            PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
+            if (state != PumpReadyState.UNKNOWN) {
+                return state;
+            }
+        }
+        return PumpReadyState.UNKNOWN;
     }
 }
