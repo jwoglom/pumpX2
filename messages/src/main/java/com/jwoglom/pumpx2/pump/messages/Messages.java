@@ -228,10 +228,10 @@ import com.jwoglom.pumpx2.pump.messages.response.control.PlaySoundResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HighestAamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
@@ -395,8 +395,8 @@ public enum Messages {
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
     DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
     FILL_TUBING_STATE_STREAM(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
-    OTHER_NOTIFICATION2_STATUS(OtherNotification2StatusRequest.class, OtherNotification2StatusResponse.class),
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
+    HIGHEST_AAM(HighestAamRequest.class, HighestAamResponse.class),
     SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
     GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),

@@ -8,22 +8,22 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
 
 @MessageProps(
-    opCode=120,
+    opCode=118,
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
-    response= MalfunctionStatusResponse.class
+    response=MalfunctionStatusResponse.class
 )
 public class MalfunctionStatusRequest extends Message {
     public MalfunctionStatusRequest() {
         this.cargo = EMPTY;
     }
 
-    public void parse(byte[] raw) { 
+    public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        
+
     }
 
-    
+
 }
