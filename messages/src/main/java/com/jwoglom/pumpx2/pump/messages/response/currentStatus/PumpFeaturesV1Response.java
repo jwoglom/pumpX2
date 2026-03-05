@@ -76,7 +76,7 @@ public class PumpFeaturesV1Response extends PumpFeaturesAbstractResponse {
 //        UNKNOWN_20(1048576),
 //        UNKNOWN_21(2097152),
 //        UNKNOWN_22(4194304),
-//        UNKNOWN_23(8388608),
+        CONTROL_IQ_PRO_SUPPORTED(8388608),          // position: 23
 //        UNKNOWN_24(16777216),
         AUTO_POP_SUPPORTED(33554432),                  // position: 25
 //        UNKNOWN_26(67108864),
