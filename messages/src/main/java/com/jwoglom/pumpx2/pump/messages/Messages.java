@@ -13,6 +13,10 @@ import com.jwoglom.pumpx2.pump.messages.request.authentication.Jpake2Request;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentEnterChangeCartridgeModeStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentDetectingCartridgeStateStreamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentFillTubingStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentLoadCartridgeStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.LoadCartridgeStateStreamResponse;
+import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentPrimeNudgeStateStreamRequest;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.PrimeNudgeStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ApiVersionRequest;
@@ -414,6 +418,8 @@ public enum Messages {
     EXIT_FILL_TUBING_MODE(ExitFillTubingModeRequest.class, ExitFillTubingModeResponse.class),
     EXIT_FILL_TUBING_MODE_STATE_STREAM(NonexistentExitFillTubingModeStateStreamRequest.class, ExitFillTubingModeStateStreamResponse.class),
     FILL_CANNULA_STATE_STREAM(NonexistentFillCannulaStateStreamRequest.class, FillCannulaStateStreamResponse.class),
+    LOAD_CARTRIDGE_STATE_STREAM(NonexistentLoadCartridgeStateStreamRequest.class, LoadCartridgeStateStreamResponse.class),
+    PRIME_NUDGE_STATE_STREAM(NonexistentPrimeNudgeStateStreamRequest.class, PrimeNudgeStateStreamResponse.class),
     SET_MAX_BOLUS_LIMIT(SetMaxBolusLimitRequest.class, SetMaxBolusLimitResponse.class),
     SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),
     SET_PUMP_SOUNDS(SetPumpSoundsRequest.class, SetPumpSoundsResponse.class),
