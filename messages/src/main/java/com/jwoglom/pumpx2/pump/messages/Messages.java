@@ -151,8 +151,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequ
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionBRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionBResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamBitsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusCRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusCResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmStatusBRequest;
@@ -233,7 +233,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.DisconnectPumpRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DisconnectPumpResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillTubingStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionBitmaskStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HighestAamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRequest;
@@ -358,7 +358,7 @@ public enum Messages {
     LOAD_STATUS(LoadStatusRequest.class, LoadStatusResponse.class),
     TEMP_RATE_STATUS(TempRateStatusRequest.class, TempRateStatusResponse.class),
     PUMP_VERSION_B(PumpVersionBRequest.class, PumpVersionBResponse.class),
-    ACTIVE_AAM_STATUS(ActiveAamStatusRequest.class, ActiveAamStatusResponse.class),
+    ACTIVE_AAM_BITS(ActiveAamBitsRequest.class, ActiveAamBitsResponse.class),
     LAST_BOLUS_STATUS_C(LastBolusStatusCRequest.class, LastBolusStatusCResponse.class),
     CGM_STATUS_B(CgmStatusBRequest.class, CgmStatusBResponse.class),
     BLE_SOFTWARE_INFO(BleSoftwareInfoRequest.class, BleSoftwareInfoResponse.class),
@@ -399,7 +399,7 @@ public enum Messages {
     PLAY_SOUND(PlaySoundRequest.class, PlaySoundResponse.class),
     DISCONNECT_PUMP(DisconnectPumpRequest.class, DisconnectPumpResponse.class),
     FILL_TUBING_STATE_STREAM(NonexistentFillTubingStateStreamRequest.class, FillTubingStateStreamResponse.class),
-    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
+    MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionBitmaskStatusResponse.class),
     HIGHEST_AAM(HighestAamRequest.class, HighestAamResponse.class),
     SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),

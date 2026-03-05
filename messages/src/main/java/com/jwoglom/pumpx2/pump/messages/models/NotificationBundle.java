@@ -3,18 +3,18 @@ package com.jwoglom.pumpx2.pump.messages.models;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamBitsResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HighestAamResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionBitmaskStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
@@ -33,8 +33,8 @@ public class NotificationBundle {
     private ReminderStatusResponse reminderStatusResponse;
     private AlarmStatusResponse alarmStatusResponse;
     private CGMAlertStatusResponse cgmAlertStatusResponse;
-    private MalfunctionStatusResponse malfunctionStatusResponse;
-    private ActiveAamStatusResponse activeAamStatusResponse;
+    private MalfunctionBitmaskStatusResponse malfunctionBitmaskStatusResponse;
+    private Map<ActiveAamBitsResponse.AamType, ActiveAamBitsResponse> activeAamBitsResponses = new HashMap<>();
     private HighestAamResponse highestAamResponse;
 
     private Map<Class<? extends Message>, Instant> lastUpdatedTimes = new HashMap<>();
@@ -46,8 +46,8 @@ public class NotificationBundle {
                 new CGMAlertStatusRequest(),
                 new MalfunctionStatusRequest(),
                 new HighestAamRequest(),
-                new ActiveAamStatusRequest(new byte[]{2}),
-                new ActiveAamStatusRequest(new byte[]{4})
+                new ActiveAamBitsRequest(new byte[]{2}),
+                new ActiveAamBitsRequest(new byte[]{4})
         );
     }
 
@@ -57,9 +57,9 @@ public class NotificationBundle {
                 ReminderStatusResponse.class,
                 AlarmStatusResponse.class,
                 CGMAlertStatusResponse.class,
-                MalfunctionStatusResponse.class,
+                MalfunctionBitmaskStatusResponse.class,
                 HighestAamResponse.class,
-                ActiveAamStatusResponse.class
+                ActiveAamBitsResponse.class
         );
     }
 
@@ -79,8 +79,8 @@ public class NotificationBundle {
         this.reminderStatusResponse = bundle.reminderStatusResponse;
         this.alarmStatusResponse = bundle.alarmStatusResponse;
         this.cgmAlertStatusResponse = bundle.cgmAlertStatusResponse;
-        this.malfunctionStatusResponse = bundle.malfunctionStatusResponse;
-        this.activeAamStatusResponse = bundle.activeAamStatusResponse;
+        this.malfunctionBitmaskStatusResponse = bundle.malfunctionBitmaskStatusResponse;
+        this.activeAamBitsResponses = new HashMap<>(bundle.activeAamBitsResponses);
         this.highestAamResponse = bundle.highestAamResponse;
         this.lastUpdatedTimes = bundle.lastUpdatedTimes;
     }
@@ -100,12 +100,13 @@ public class NotificationBundle {
         } else if (message instanceof CGMAlertStatusResponse) {
             cgmAlertStatusResponse = (CGMAlertStatusResponse) message;
             lastUpdatedTimes.put(CGMAlertStatusResponse.class, Instant.now());
-        } else if (message instanceof MalfunctionStatusResponse) {
-            malfunctionStatusResponse = (MalfunctionStatusResponse) message;
-            lastUpdatedTimes.put(MalfunctionStatusResponse.class, Instant.now());
-        } else if (message instanceof ActiveAamStatusResponse) {
-            activeAamStatusResponse = (ActiveAamStatusResponse) message;
-            lastUpdatedTimes.put(ActiveAamStatusResponse.class, Instant.now());
+        } else if (message instanceof MalfunctionBitmaskStatusResponse) {
+            malfunctionBitmaskStatusResponse = (MalfunctionBitmaskStatusResponse) message;
+            lastUpdatedTimes.put(MalfunctionBitmaskStatusResponse.class, Instant.now());
+        } else if (message instanceof ActiveAamBitsResponse) {
+            ActiveAamBitsResponse activeAamBitsResponse = (ActiveAamBitsResponse) message;
+            activeAamBitsResponses.put(activeAamBitsResponse.getAamType(), activeAamBitsResponse);
+            lastUpdatedTimes.put(ActiveAamBitsResponse.class, Instant.now());
         } else if (message instanceof HighestAamResponse) {
             highestAamResponse = (HighestAamResponse) message;
             lastUpdatedTimes.put(HighestAamResponse.class, Instant.now());
@@ -145,7 +146,10 @@ public class NotificationBundle {
             cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(slugs::add);
         }
         if (highestAamResponse != null) {
+            ActiveAamBitsResponse activeMalfunctionBits =
+                activeAamBitsResponses.get(ActiveAamBitsResponse.AamType.MALFUNCTION);
             if (highestAamResponse.hasMalfunction(notificationMessages.toArray(new NotificationMessage[0])) &&
+                highestAamResponse.matchesActiveMalfunction(activeMalfunctionBits, malfunctionBitmaskStatusResponse) &&
                 !StringUtils.isBlank(highestAamResponse.getErrorString()))
             {
                 slugs.add(highestAamResponse);

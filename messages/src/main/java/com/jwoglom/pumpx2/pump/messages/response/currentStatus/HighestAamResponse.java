@@ -4,14 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
-import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationEnum;
 import com.jwoglom.pumpx2.pump.messages.models.NotificationMessage;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
 
-import java.math.BigInteger;
 import java.util.Locale;
 
 /**
@@ -27,60 +25,79 @@ import java.util.Locale;
 )
 public class HighestAamResponse extends NotificationMessage implements NotificationEnum {
 
-    private long codeA;
-    private long codeB;
+    private long aamId;
+    private long faultId;
     private byte[] remaining;
 
     private String errorString;
 
     public HighestAamResponse() {}
 
-    public HighestAamResponse(long codeA, long codeB, byte[] remaining) {
-        this.cargo = buildCargo(codeA, codeB, remaining);
+    public HighestAamResponse(long aamId, long faultId, byte[] remaining) {
+        this.cargo = buildCargo(aamId, faultId, remaining);
         parse(cargo);
-
     }
 
     public void parse(byte[] raw) {
-        Validate.isTrue(raw.length >= props().size());
+        Validate.isTrue(
+            raw.length == props().size() || raw.length == props().size() - 1,
+            "Unexpected HighestAamResponse payload length: %d",
+            raw.length
+        );
         this.cargo = raw;
-        this.codeA = Bytes.readUint32(raw, 0);
-        this.codeB = Bytes.readUint32(raw, 4);
+        this.aamId = Bytes.readUint32(raw, 0);
+        this.faultId = Bytes.readUint32(raw, 4);
         this.remaining = Bytes.dropFirstN(raw, 8);
         this.errorString = getErrorString();
-
     }
 
-
-    public static byte[] buildCargo(long codeA, long codeB, byte[] remaining) {
+    public static byte[] buildCargo(long aamId, long faultId, byte[] remaining) {
         return Bytes.combine(
-            Bytes.toUint32(codeA),
-            Bytes.toUint32(codeB),
+            Bytes.toUint32(aamId),
+            Bytes.toUint32(faultId),
             remaining
         );
     }
 
-    public long getCodeA() {
-        return codeA;
+    public long getAamId() {
+        return aamId;
     }
 
-    public long getCodeB() {
-        return codeB;
+    public long getFaultId() {
+        return faultId;
     }
 
     public byte[] getRemaining() {
         return remaining;
     }
 
+    public String getFaultIdAsHex() {
+        return Long.toString(getFaultId(), 16);
+    }
+
+    /**
+     * Backward-compatible alias for getAamId().
+     */
+    public long getCodeA() {
+        return getAamId();
+    }
+
+    /**
+     * Backward-compatible alias for getFaultId().
+     */
+    public long getCodeB() {
+        return getFaultId();
+    }
+
     public String getErrorString() {
         if (!hasMalfunction()) return "";
-        return String.format(Locale.US, "%d-%#x", getCodeA(), getCodeB());
+        return String.format(Locale.US, "%d-0x%s", getAamId(), getFaultIdAsHex());
     }
 
     public long[][] IGNORABLE_CODES = new long[][]{
             {0, 0}, // empty
             {3, 8230}, // 3-0x2026
-            {18, 8311}, // 18-0x2077 (codeA=18, codeB=8311, remaining={2,3,10}
+            {18, 8311}, // 18-0x2077 (aamId=18, faultId=8311, remaining={2,3,10}
             {26, 8322}, // 26-0x2082 (cargo: 26,0,0,0,-126,32,0,0,1,1,0)
     };
 
@@ -96,7 +113,7 @@ public class HighestAamResponse extends NotificationMessage implements Notificat
      */
     public boolean hasMalfunction(NotificationMessage... otherMessages) {
         for (long[] code : IGNORABLE_CODES) {
-            if (code[0] == getCodeA() && code[1] == getCodeB()) {
+            if (code[0] == getAamId() && code[1] == getFaultId()) {
                 return false;
             }
         }
@@ -114,12 +131,29 @@ public class HighestAamResponse extends NotificationMessage implements Notificat
         }
 
         for (NotificationMessage message : otherMessages) {
-            if (message.notificationIds().contains((int) getCodeA())) {
+            if (message.notificationIds().contains((int) getAamId())) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public boolean matchesActiveMalfunction(
+        ActiveAamBitsResponse activeMalfunctionBits,
+        MalfunctionBitmaskStatusResponse malfunctionBitmaskStatusResponse
+    ) {
+        if (activeMalfunctionBits != null &&
+            activeMalfunctionBits.getAamType() == ActiveAamBitsResponse.AamType.MALFUNCTION)
+        {
+            return activeMalfunctionBits.hasActiveBit((int) getAamId());
+        }
+
+        if (malfunctionBitmaskStatusResponse != null) {
+            return malfunctionBitmaskStatusResponse.hasMalfunctionBit((int) getAamId());
+        }
+
+        return true;
     }
 
 
@@ -131,7 +165,7 @@ public class HighestAamResponse extends NotificationMessage implements Notificat
 
     @Override
     public int getId() {
-        return (int) getCodeA();
+        return (int) getAamId();
     }
 
     @Override

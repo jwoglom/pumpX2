@@ -1,7 +1,0 @@
-package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
-
-import org.junit.Test;
-
-public class ActiveAamStatusResponseTest {
-    // TODO: add tests with captured BLE payloads
-}

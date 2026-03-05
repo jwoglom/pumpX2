@@ -7,22 +7,22 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamBitsResponse;
 
 @MessageProps(
     opCode=-110,
     size=1,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
-    response=ActiveAamStatusResponse.class,
+    response=ActiveAamBitsResponse.class,
     minApi=KnownApiVersion.MOBI_API_V3_5
 )
-public class ActiveAamStatusRequest extends Message {
-    public ActiveAamStatusRequest() {
+public class ActiveAamBitsRequest extends Message {
+    public ActiveAamBitsRequest() {
         this.cargo = EMPTY;
     }
 
-    public ActiveAamStatusRequest(byte[] raw) {
+    public ActiveAamBitsRequest(byte[] raw) {
         this.cargo = raw;
         parse(raw);
     }

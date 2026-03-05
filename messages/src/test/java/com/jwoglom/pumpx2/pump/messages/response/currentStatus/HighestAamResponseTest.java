@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -29,8 +30,9 @@ public class HighestAamResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(12, parsedRes.getCodeA());
-        assertEquals(0x2071, parsedRes.getCodeB());
+        assertEquals(12, parsedRes.getAamId());
+        assertEquals(0x2071, parsedRes.getFaultId());
+        assertEquals("2071", parsedRes.getFaultIdAsHex());
         assertEquals("12-0x2071", parsedRes.getErrorString());
         assertTrue(parsedRes.hasMalfunction());
     }
@@ -51,8 +53,8 @@ public class HighestAamResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(3, parsedRes.getCodeA());
-        assertEquals(0x2026, parsedRes.getCodeB());
+        assertEquals(3, parsedRes.getAamId());
+        assertEquals(0x2026, parsedRes.getFaultId());
 
         assertFalse(parsedRes.hasMalfunction(
                 new AlarmStatusResponse(AlarmStatusResponse.AlarmResponseType.PUMP_RESET_ALARM)
@@ -75,11 +77,24 @@ public class HighestAamResponseTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
-        assertEquals(18, parsedRes.getCodeA());
-        assertEquals(0x2077, parsedRes.getCodeB());
+        assertEquals(18, parsedRes.getAamId());
+        assertEquals(0x2077, parsedRes.getFaultId());
 
         assertFalse(parsedRes.hasMalfunction(
                 new AlarmStatusResponse(AlarmStatusResponse.AlarmResponseType.RESUME_PUMP_ALARM)
         ));
+    }
+
+    @Test
+    public void testHighestAamResponse_parse10BytePayload() {
+        byte[] raw10 = HighestAamResponse.buildCargo(12, 0x2071, new byte[]{4, -1});
+        HighestAamResponse parsed = new HighestAamResponse();
+        parsed.parse(raw10);
+
+        assertEquals(12, parsed.getAamId());
+        assertEquals(0x2071, parsed.getFaultId());
+        assertEquals("2071", parsed.getFaultIdAsHex());
+        assertArrayEquals(new byte[]{4, -1}, parsed.getRemaining());
+        assertEquals("12-0x2071", parsed.getErrorString());
     }
 }

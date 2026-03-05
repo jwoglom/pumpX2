@@ -5,14 +5,14 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionBitmaskStatusResponse;
 
 @MessageProps(
     opCode=118,
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
-    response=MalfunctionStatusResponse.class
+    response=MalfunctionBitmaskStatusResponse.class
 )
 public class MalfunctionStatusRequest extends Message {
     public MalfunctionStatusRequest() {

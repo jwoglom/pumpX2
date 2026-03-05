@@ -15,7 +15,7 @@ public abstract class NotificationMessage extends Message {
 
     /**
      * @return notification IDs which, if present in
-     * {@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse}
+     * {@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionBitmaskStatusResponse}
      * should hide the associated malfunction response
      */
     public Set<Integer> notificationIds() {
