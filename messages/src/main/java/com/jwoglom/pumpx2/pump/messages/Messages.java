@@ -444,6 +444,12 @@ public enum Messages {
             Validate.isTrue(m.requestProps().minApi().equals(m.responseProps().minApi()), "the minApi should match for " + m);
         }
 
+        // Canonical resolution for duplicated CONTROL_STREAM opcodes.
+        // -29 is represented by DetectingCartridgeStateStreamResponse (also supports load-cartridge variant)
+        // -23 is represented by ExitFillTubingModeStateStreamResponse (also supports prime/pumping variants)
+        OPCODES.put(Pair.of(Characteristic.CONTROL_STREAM, (int) new DetectingCartridgeStateStreamResponse().opCode()), DetectingCartridgeStateStreamResponse.class);
+        OPCODES.put(Pair.of(Characteristic.CONTROL_STREAM, (int) new ExitFillTubingModeStateStreamResponse().opCode()), ExitFillTubingModeStateStreamResponse.class);
+
         for (Characteristic c : Characteristic.values()) {
             int errorOpcode = new ErrorResponse().opCode();
             if (!OPCODES.containsKey(Pair.of(c, errorOpcode))) {

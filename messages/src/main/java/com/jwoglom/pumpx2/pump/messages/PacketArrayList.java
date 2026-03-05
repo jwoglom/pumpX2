@@ -174,6 +174,24 @@ public class PacketArrayList {
             this.expectedCargoSize = 10;
             this.actualExpectedCargoSize = 10;
         }
+        // DetectingCartridgeStateStreamResponse / LoadCartridgeStateStreamResponse
+        // can report either 2-byte progress or 1-byte state payloads.
+        else if (-29 == opCode && (1 == cargoSize || 25 == cargoSize)) {
+            this.expectedCargoSize = 1;
+            this.actualExpectedCargoSize = 1;
+        } else if (-29 == opCode && (2 == cargoSize || 26 == cargoSize)) {
+            this.expectedCargoSize = 2;
+            this.actualExpectedCargoSize = 2;
+        }
+        // ExitFillTubingModeStateStreamResponse / PrimeNudgeStateStreamResponse use 1 byte,
+        // while PumpingStateStreamResponse uses 5 bytes.
+        else if (-23 == opCode && (1 == cargoSize || 25 == cargoSize)) {
+            this.expectedCargoSize = 1;
+            this.actualExpectedCargoSize = 1;
+        } else if (-23 == opCode && (5 == cargoSize || 29 == cargoSize)) {
+            this.expectedCargoSize = 5;
+            this.actualExpectedCargoSize = 5;
+        }
 
 
 

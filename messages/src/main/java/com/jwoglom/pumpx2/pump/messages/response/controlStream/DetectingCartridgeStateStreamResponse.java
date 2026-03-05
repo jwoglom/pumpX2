@@ -25,6 +25,8 @@ import com.jwoglom.pumpx2.pump.messages.request.controlStream.NonexistentDetecti
 public class DetectingCartridgeStateStreamResponse extends Message {
     
     private int percentComplete;
+    private int stateId;
+    private boolean loadCartridgeState;
     
     public DetectingCartridgeStateStreamResponse() {}
     
@@ -41,20 +43,41 @@ public class DetectingCartridgeStateStreamResponse extends Message {
 
     public void parse(byte[] raw) {
         raw = removeSignedRequestHmacBytes(raw);
-        Validate.isTrue(raw.length == props().size());
+        Validate.isTrue(raw.length == 1 || raw.length == 2);
         this.cargo = raw;
-        this.percentComplete = Bytes.readShort(raw, 0);
+        if (raw.length == 2) {
+            this.percentComplete = Bytes.readShort(raw, 0);
+            this.stateId = this.percentComplete;
+            this.loadCartridgeState = false;
+        } else {
+            this.stateId = raw[0];
+            this.percentComplete = this.stateId;
+            this.loadCartridgeState = true;
+        }
         
     }
 
     
-    public static byte[] buildCargo(int state) {
+    public static byte[] buildCargo(int percentComplete) {
         return Bytes.combine(
-            Bytes.firstTwoBytesLittleEndian(state));
+            Bytes.firstTwoBytesLittleEndian(percentComplete));
+    }
+
+    public static byte[] buildLoadCartridgeCargo(int stateId) {
+        return Bytes.combine(
+            new byte[]{ (byte) stateId });
     }
     
     public int getPercentComplete() {
         return percentComplete;
+    }
+
+    public int getStateId() {
+        return stateId;
+    }
+
+    public boolean isLoadCartridgeState() {
+        return loadCartridgeState;
     }
 
     public boolean isComplete() {

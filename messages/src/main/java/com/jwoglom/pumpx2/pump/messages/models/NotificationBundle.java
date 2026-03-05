@@ -3,18 +3,18 @@ package com.jwoglom.pumpx2.pump.messages.models;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Arrays;
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotification2StatusRequest;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlertStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HighestAamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.MalfunctionStatusResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotification2StatusResponse;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 
@@ -34,8 +34,8 @@ public class NotificationBundle {
     private AlarmStatusResponse alarmStatusResponse;
     private CGMAlertStatusResponse cgmAlertStatusResponse;
     private MalfunctionStatusResponse malfunctionStatusResponse;
-    private OtherNotificationStatusResponse otherNotificationStatusResponse;
-    private OtherNotification2StatusResponse otherNotification2StatusResponse;
+    private ActiveAamStatusResponse activeAamStatusResponse;
+    private HighestAamResponse highestAamResponse;
 
     private Map<Class<? extends Message>, Instant> lastUpdatedTimes = new HashMap<>();
 
@@ -45,9 +45,9 @@ public class NotificationBundle {
                 new AlarmStatusRequest(),
                 new CGMAlertStatusRequest(),
                 new MalfunctionStatusRequest(),
-                new OtherNotification2StatusRequest(),
-                new OtherNotificationStatusRequest(new byte[]{2}),
-                new OtherNotificationStatusRequest(new byte[]{4})
+                new HighestAamRequest(),
+                new ActiveAamStatusRequest(new byte[]{2}),
+                new ActiveAamStatusRequest(new byte[]{4})
         );
     }
 
@@ -58,8 +58,8 @@ public class NotificationBundle {
                 AlarmStatusResponse.class,
                 CGMAlertStatusResponse.class,
                 MalfunctionStatusResponse.class,
-                OtherNotification2StatusResponse.class,
-                OtherNotificationStatusResponse.class
+                HighestAamResponse.class,
+                ActiveAamStatusResponse.class
         );
     }
 
@@ -80,8 +80,8 @@ public class NotificationBundle {
         this.alarmStatusResponse = bundle.alarmStatusResponse;
         this.cgmAlertStatusResponse = bundle.cgmAlertStatusResponse;
         this.malfunctionStatusResponse = bundle.malfunctionStatusResponse;
-        this.otherNotificationStatusResponse = bundle.otherNotificationStatusResponse;
-        this.otherNotification2StatusResponse = bundle.otherNotification2StatusResponse;
+        this.activeAamStatusResponse = bundle.activeAamStatusResponse;
+        this.highestAamResponse = bundle.highestAamResponse;
         this.lastUpdatedTimes = bundle.lastUpdatedTimes;
     }
 
@@ -103,12 +103,12 @@ public class NotificationBundle {
         } else if (message instanceof MalfunctionStatusResponse) {
             malfunctionStatusResponse = (MalfunctionStatusResponse) message;
             lastUpdatedTimes.put(MalfunctionStatusResponse.class, Instant.now());
-        } else if (message instanceof OtherNotificationStatusResponse) {
-            otherNotificationStatusResponse = (OtherNotificationStatusResponse) message;
-            lastUpdatedTimes.put(OtherNotificationStatusResponse.class, Instant.now());
-        } else if (message instanceof OtherNotification2StatusResponse) {
-            otherNotification2StatusResponse = (OtherNotification2StatusResponse) message;
-            lastUpdatedTimes.put(OtherNotification2StatusResponse.class, Instant.now());
+        } else if (message instanceof ActiveAamStatusResponse) {
+            activeAamStatusResponse = (ActiveAamStatusResponse) message;
+            lastUpdatedTimes.put(ActiveAamStatusResponse.class, Instant.now());
+        } else if (message instanceof HighestAamResponse) {
+            highestAamResponse = (HighestAamResponse) message;
+            lastUpdatedTimes.put(HighestAamResponse.class, Instant.now());
         }
 
         return this;
@@ -121,7 +121,7 @@ public class NotificationBundle {
      *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.AlarmStatusResponse.AlarmResponseType}</li>
      *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.ReminderStatusResponse.ReminderType}</li>
      *     <li>{@link com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse.CGMAlert}</li>
-     *     <li>{@link MalfunctionStatusResponse}</li>
+     *     <li>{@link HighestAamResponse}</li>
      * </ul>
      */
     public List<NotificationEnum> get() {
@@ -144,11 +144,11 @@ public class NotificationBundle {
             notificationMessages.add(cgmAlertStatusResponse);
             cgmAlertStatusResponse.getCgmAlerts().stream().sorted().forEach(slugs::add);
         }
-        if (malfunctionStatusResponse != null) {
-            if (malfunctionStatusResponse.hasMalfunction(notificationMessages.toArray(new NotificationMessage[0])) &&
-                !StringUtils.isBlank(malfunctionStatusResponse.getErrorString()))
+        if (highestAamResponse != null) {
+            if (highestAamResponse.hasMalfunction(notificationMessages.toArray(new NotificationMessage[0])) &&
+                !StringUtils.isBlank(highestAamResponse.getErrorString()))
             {
-                slugs.add(malfunctionStatusResponse);
+                slugs.add(highestAamResponse);
             }
         }
         // todo remaining once understood
