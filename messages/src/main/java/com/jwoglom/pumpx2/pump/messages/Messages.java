@@ -115,6 +115,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.IDPSettingsRequest
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.EnterChangeCartridgeModeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.EnterChangeCartridgeModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.AdditionalBolusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.AdditionalBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.InitiateBolusRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.InitiateBolusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionRequest;
@@ -137,14 +139,66 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationReques
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LocalizationResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.BolusPermissionReleaseRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionReleaseResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg70Request;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg70Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode110Request;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode110Response;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg66Request;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg66Response;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcodeNeg124Request;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcodeNeg124Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LoadStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TempRateStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpVersionBRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionBResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ActiveAamStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusCRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusCResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmStatusBRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusBResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BleSoftwareInfoRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BleSoftwareInfoResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentActiveIdpValuesResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusBRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ExtendedBolusStatusBResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.SecretMenuRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.SecretMenuResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEgvGuiDataBRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentEgvGuiDataBResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.StreamDataReadinessRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.StreamDataReadinessResponse;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmSupportPackageStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SendTipsControlGenericTestRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SendTipsControlGenericTestResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.FactoryResetBRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.FactoryResetBResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.StreamDataPreflightRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.UserInteractionRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.UserInteractionResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.ActivateShelfModeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.ActivateShelfModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetSensorTypeRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetSensorTypeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CgmHighLowAlertRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CgmHighLowAlertResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CgmRiseFallAlertRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CgmRiseFallAlertResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.CgmOutOfRangeAlertRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.CgmOutOfRangeAlertResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetBgReminderRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetBgReminderResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetMissedMealBolusReminderRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetMissedMealBolusReminderResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetSiteChangeReminderRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetLowInsulinAlertRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetLowInsulinAlertResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetAutoOffAlertRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.FactoryResetRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.FactoryResetResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.PrimeTubingSuspendRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.PrimeTubingSuspendResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetModesRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetSleepScheduleRequest;
@@ -161,8 +215,6 @@ import com.jwoglom.pumpx2.pump.messages.request.control.EnterFillTubingModeReque
 import com.jwoglom.pumpx2.pump.messages.response.control.EnterFillTubingModeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.OtherNotificationStatusRequest;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.OtherNotificationStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.DismissNotificationResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetG6TransmitterIdRequest;
@@ -184,8 +236,6 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetDexcomG7PairingCodeRe
 import com.jwoglom.pumpx2.pump.messages.response.control.SetDexcomG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.FillCannulaRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.FillCannulaResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode30Request;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode30Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetSavedG7PairingCodeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.GetSavedG7PairingCodeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GetG6TransmitterHardwareInfoRequest;
@@ -204,8 +254,6 @@ import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSettingsResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSegmentRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSegmentResponse;
-import com.jwoglom.pumpx2.pump.messages.request.currentStatus.UnknownMobiOpcode20Request;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.UnknownMobiOpcode20Response;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.EnterChangeCartridgeModeStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.DetectingCartridgeStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.ExitChangeCartridgeModeRequest;
@@ -290,6 +338,7 @@ public enum Messages {
     LAST_BOLUS_STATUS_V2(LastBolusStatusV2Request.class, LastBolusStatusV2Response.class),
     IDP_SETTINGS(IDPSettingsRequest.class, IDPSettingsResponse.class),
     CHANGE_CARTRIDGE(EnterChangeCartridgeModeRequest.class, EnterChangeCartridgeModeResponse.class),
+    ADDITIONAL_BOLUS(AdditionalBolusRequest.class, AdditionalBolusResponse.class),
     INITIATE_BOLUS(InitiateBolusRequest.class, InitiateBolusResponse.class),
     BOLUS_PERMISSION(BolusPermissionRequest.class, BolusPermissionResponse.class),
     COMMON_SOFTWARE_INFO(CommonSoftwareInfoRequest.class, CommonSoftwareInfoResponse.class),
@@ -301,10 +350,36 @@ public enum Messages {
     REMOTE_CARB_ENTRY(RemoteCarbEntryRequest.class, RemoteCarbEntryResponse.class),
     LOCALIZATION(LocalizationRequest.class, LocalizationResponse.class),
     BOLUS_PERMISSION_RELEASE(BolusPermissionReleaseRequest.class, BolusPermissionReleaseResponse.class),
-    UNKNOWN_MOBI_OPCODE_NEG70(UnknownMobiOpcodeNeg70Request.class, UnknownMobiOpcodeNeg70Response.class),
     UNKNOWN_MOBI_OPCODE110(UnknownMobiOpcode110Request.class, UnknownMobiOpcode110Response.class),
-    UNKNOWN_MOBI_OPCODE_NEG66(UnknownMobiOpcodeNeg66Request.class, UnknownMobiOpcodeNeg66Response.class),
-    UNKNOWN_MOBI_OPCODE_NEG124(UnknownMobiOpcodeNeg124Request.class, UnknownMobiOpcodeNeg124Response.class),
+    LOAD_STATUS(LoadStatusRequest.class, LoadStatusResponse.class),
+    TEMP_RATE_STATUS(TempRateStatusRequest.class, TempRateStatusResponse.class),
+    PUMP_VERSION_B(PumpVersionBRequest.class, PumpVersionBResponse.class),
+    ACTIVE_AAM_STATUS(ActiveAamStatusRequest.class, ActiveAamStatusResponse.class),
+    LAST_BOLUS_STATUS_C(LastBolusStatusCRequest.class, LastBolusStatusCResponse.class),
+    CGM_STATUS_B(CgmStatusBRequest.class, CgmStatusBResponse.class),
+    BLE_SOFTWARE_INFO(BleSoftwareInfoRequest.class, BleSoftwareInfoResponse.class),
+    CURRENT_ACTIVE_IDP_VALUES(CurrentActiveIdpValuesRequest.class, CurrentActiveIdpValuesResponse.class),
+    EXTENDED_BOLUS_STATUS_B(ExtendedBolusStatusBRequest.class, ExtendedBolusStatusBResponse.class),
+    SECRET_MENU(SecretMenuRequest.class, SecretMenuResponse.class),
+    CURRENT_EGV_GUI_DATA_B(CurrentEgvGuiDataBRequest.class, CurrentEgvGuiDataBResponse.class),
+    STREAM_DATA_READINESS(StreamDataReadinessRequest.class, StreamDataReadinessResponse.class),
+    CGM_SUPPORT_PACKAGE_STATUS(CgmSupportPackageStatusRequest.class, CgmSupportPackageStatusResponse.class),
+    SEND_TIPS_CONTROL_GENERIC_TEST(SendTipsControlGenericTestRequest.class, SendTipsControlGenericTestResponse.class),
+    FACTORY_RESET_B(FactoryResetBRequest.class, FactoryResetBResponse.class),
+    STREAM_DATA_PREFLIGHT(StreamDataPreflightRequest.class, StreamDataPreflightResponse.class),
+    USER_INTERACTION(UserInteractionRequest.class, UserInteractionResponse.class),
+    ACTIVATE_SHELF_MODE(ActivateShelfModeRequest.class, ActivateShelfModeResponse.class),
+    SET_SENSOR_TYPE(SetSensorTypeRequest.class, SetSensorTypeResponse.class),
+    CGM_HIGH_LOW_ALERT(CgmHighLowAlertRequest.class, CgmHighLowAlertResponse.class),
+    CGM_RISE_FALL_ALERT(CgmRiseFallAlertRequest.class, CgmRiseFallAlertResponse.class),
+    CGM_OUT_OF_RANGE_ALERT(CgmOutOfRangeAlertRequest.class, CgmOutOfRangeAlertResponse.class),
+    SET_BG_REMINDER(SetBgReminderRequest.class, SetBgReminderResponse.class),
+    SET_MISSED_MEAL_BOLUS_REMINDER(SetMissedMealBolusReminderRequest.class, SetMissedMealBolusReminderResponse.class),
+    SET_SITE_CHANGE_REMINDER(SetSiteChangeReminderRequest.class, SetSiteChangeReminderResponse.class),
+    SET_LOW_INSULIN_ALERT(SetLowInsulinAlertRequest.class, SetLowInsulinAlertResponse.class),
+    SET_AUTO_OFF_ALERT(SetAutoOffAlertRequest.class, SetAutoOffAlertResponse.class),
+    FACTORY_RESET(FactoryResetRequest.class, FactoryResetResponse.class),
+    PRIME_TUBING_SUSPEND(PrimeTubingSuspendRequest.class, PrimeTubingSuspendResponse.class),
     SET_MODES(SetModesRequest.class, SetModesResponse.class),
     SET_SLEEP_SCHEDULE(SetSleepScheduleRequest.class, SetSleepScheduleResponse.class),
     SET_TEMP_RATE(SetTempRateRequest.class, SetTempRateResponse.class),
@@ -313,7 +388,6 @@ public enum Messages {
     CHANGE_CONTROL_IQ_SETTINGS(ChangeControlIQSettingsRequest.class, ChangeControlIQSettingsResponse.class),
     ENTER_FILL_TUBING_MODE(EnterFillTubingModeRequest.class, EnterFillTubingModeResponse.class),
     SET_QUICK_BOLUS_SETTINGS(SetQuickBolusSettingsRequest.class, SetQuickBolusSettingsResponse.class),
-    OTHER_NOTIFICATION_STATUS(OtherNotificationStatusRequest.class, OtherNotificationStatusResponse.class),
     DISMISS_NOTIFICATION(DismissNotificationRequest.class, DismissNotificationResponse.class),
     SET_G6_TRANSMITTER_ID(SetG6TransmitterIdRequest.class, SetG6TransmitterIdResponse.class),
     START_DEXCOM_G6_SENSOR_SESSION(StartDexcomG6SensorSessionRequest.class, StartDexcomG6SensorSessionResponse.class),
@@ -325,7 +399,6 @@ public enum Messages {
     MALFUNCTION_STATUS(MalfunctionStatusRequest.class, MalfunctionStatusResponse.class),
     SET_DEXCOM_G7_PAIRING_CODE(SetDexcomG7PairingCodeRequest.class, SetDexcomG7PairingCodeResponse.class),
     FILL_CANNULA(FillCannulaRequest.class, FillCannulaResponse.class),
-    UNKNOWN_MOBI_OPCODE30(UnknownMobiOpcode30Request.class, UnknownMobiOpcode30Response.class),
     GET_SAVED_G7_PAIRING_CODE(GetSavedG7PairingCodeRequest.class, GetSavedG7PairingCodeResponse.class),
     GET_G6_TRANSMITTER_HARDWARE_INFO(GetG6TransmitterHardwareInfoRequest.class, GetG6TransmitterHardwareInfoResponse.class),
     CHANGE_TIME_DATE(ChangeTimeDateRequest.class, ChangeTimeDateResponse.class),
@@ -335,7 +408,6 @@ public enum Messages {
     DELETE_IDP(DeleteIDPRequest.class, DeleteIDPResponse.class),
     SET_IDP_SETTINGS(SetIDPSettingsRequest.class, SetIDPSettingsResponse.class),
     SET_IDP_SEGMENT(SetIDPSegmentRequest.class, SetIDPSegmentResponse.class),
-    UNKNOWN_MOBI_OPCODE20(UnknownMobiOpcode20Request.class, UnknownMobiOpcode20Response.class),
     CHANGE_CARTRIDGE_STATE_STREAM(NonexistentEnterChangeCartridgeModeStateStreamRequest.class, EnterChangeCartridgeModeStateStreamResponse.class),
     DETECTING_CARTRIDGE_STATE_STREAM(NonexistentDetectingCartridgeStateStreamRequest.class, DetectingCartridgeStateStreamResponse.class),
     EXIT_CHANGE_CARTRIDGE_MODE(ExitChangeCartridgeModeRequest.class, ExitChangeCartridgeModeResponse.class),
