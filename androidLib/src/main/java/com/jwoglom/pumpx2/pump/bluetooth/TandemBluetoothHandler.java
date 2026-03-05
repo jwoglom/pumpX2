@@ -520,8 +520,12 @@ public class TandemBluetoothHandler {
                         }
                     }
                 } else {
-                    Timber.w("Couldn't process the response message for '%s' -- we likely need more packets. This should resolve when fetching the next BT packet.", Hex.encodeHexString(parser.getValue()));
-                    PumpState.savePacketArrayList(characteristic, txId, packetArrayList);
+                    if (packetArrayList.needsMorePacket()) {
+                        Timber.w("Couldn't process the response message for '%s' -- we likely need more packets. This should resolve when fetching the next BT packet.", Hex.encodeHexString(parser.getValue()));
+                        PumpState.savePacketArrayList(characteristic, txId, packetArrayList);
+                    } else {
+                        Timber.w("Dropping unprocessable complete response message for '%s' (txId=%d, characteristic=%s)", Hex.encodeHexString(parser.getValue()), txId, characteristic);
+                    }
                     return;
                 }
 

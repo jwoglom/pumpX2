@@ -48,7 +48,15 @@ public class BTResponseParser {
                 L.t(TAG, "Parsing message with opcode "+b4);
                 Message msg = Messages.parse(copyOfRange, b4, Characteristic.of(uuid));
                 if (msg == null) {
-                    L.w(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s)\tFAILURE: %s, %s: %s", txId, CharacteristicUUID.which(uuid), b4, message.signed(), Hex.encodeHexString(copyOfRange)));
+                    L.w(TAG, String.format(
+                            "UNPROCESSABLE-MESSAGE(txId=%-3d, %s, opCode=%d, signed=%s): raw=%s cargo=%s",
+                            txId,
+                            CharacteristicUUID.which(uuid),
+                            b4,
+                            message.signed(),
+                            Hex.encodeHexString(output),
+                            Hex.encodeHexString(copyOfRange)));
+                    return new PumpResponseMessage(output);
                 } else {
                     L.i(TAG, String.format("PARSED-MESSAGE(txId=%-3d, %s):\t%s", txId, CharacteristicUUID.which(uuid), msg));
                 }
