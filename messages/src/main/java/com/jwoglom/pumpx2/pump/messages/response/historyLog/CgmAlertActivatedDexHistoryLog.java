@@ -7,8 +7,8 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusRes
 
 @HistoryLogProps(
     opCode = 369,
-    displayName = "CGM Alert Activated (Dex)",
-    internalName = "LID_CGM_ALERT_ACTIVATED_DEX"
+    displayName = "CGM Alert Activated B",
+    internalName = "LID_CGM_ALERT_ACTIVATED_B"
 )
 public class CgmAlertActivatedDexHistoryLog extends HistoryLog {
 

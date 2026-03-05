@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 57,
     displayName = "Personal Profile (IDP) Action 2/2",
+    internalName = "LID_IDP_MSG2",
     usedByTidepool = true
 )
 public class IdpActionMsg2HistoryLog extends HistoryLog {

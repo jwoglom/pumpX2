@@ -6,7 +6,8 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 70,
-    displayName = "Personal Profile (IDP) Bolus Data Change",
+    displayName = "IDP Bolus",
+    internalName = "LID_IDP_BOLUS",
     usedByTidepool = true
 )
 public class IdpBolusHistoryLog extends HistoryLog {

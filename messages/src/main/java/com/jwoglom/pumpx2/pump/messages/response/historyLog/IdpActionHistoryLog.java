@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 69,
     displayName = "Personal Profile (IDP) Action 1/2",
+    internalName = "LID_IDP",
     usedByTidepool = true
 )
 public class IdpActionHistoryLog extends HistoryLog {

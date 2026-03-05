@@ -31,7 +31,7 @@ public class CgmDataFsl3HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 480, 0},
+            new byte[]{(byte)(480 & 0xFF), (byte)(480 >> 8)}, // 480 = 0x01E0
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

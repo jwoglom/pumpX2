@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 404,
-    displayName = "CGM Start Session (FSL2)",
+    displayName = "CGM Start Session FSL2",
     internalName = "LID_CGM_START_SESSION_FSL2"
 )
 public class CgmStartSessionFsl2HistoryLog extends HistoryLog {

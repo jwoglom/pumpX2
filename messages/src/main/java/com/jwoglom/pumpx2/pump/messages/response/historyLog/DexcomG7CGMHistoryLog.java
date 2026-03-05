@@ -8,7 +8,7 @@ import java.util.Set;
 
 @HistoryLogProps(
     opCode = 399,
-    displayName = "Dexcom G7 CGM Data",
+    displayName = "CGM Data G7",
     internalName = "LID_CGM_DATA_G7",
     usedByTconnectsync = true
 )

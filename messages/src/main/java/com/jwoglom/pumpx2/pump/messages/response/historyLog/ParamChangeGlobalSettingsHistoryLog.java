@@ -6,7 +6,8 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 74,
-    displayName = "Global Settings Change",
+    displayName = "Param Global Settings",
+    internalName = "LID_PARAM_GLOBAL_SETTINGS",
     usedByTidepool = true
 )
 public class ParamChangeGlobalSettingsHistoryLog extends HistoryLog {

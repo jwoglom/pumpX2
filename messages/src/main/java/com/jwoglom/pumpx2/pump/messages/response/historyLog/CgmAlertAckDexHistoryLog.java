@@ -7,8 +7,8 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusRes
 
 @HistoryLogProps(
     opCode = 371,
-    displayName = "CGM Alert Ack (Dex)",
-    internalName = "LID_CGM_ALERT_ACK_DEX"
+    displayName = "CGM Alert Ack B",
+    internalName = "LID_CGM_ALERT_ACK_B"
 )
 public class CgmAlertAckDexHistoryLog extends HistoryLog {
 

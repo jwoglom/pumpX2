@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 406,
-    displayName = "CGM Join Session (FSL2)",
+    displayName = "CGM Join Session FSL2",
     internalName = "LID_CGM_JOIN_SESSION_FSL2"
 )
 public class CgmJoinSessionFsl2HistoryLog extends HistoryLog {

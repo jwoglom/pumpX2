@@ -31,7 +31,7 @@ public class CgmStopSessionG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 447, 0},
+            new byte[]{(byte)(447 & 0xFF), (byte)(447 >> 8)}, // 447 = 0x01BF
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

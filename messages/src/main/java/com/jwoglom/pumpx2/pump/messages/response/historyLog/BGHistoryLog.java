@@ -20,12 +20,14 @@ public class BGHistoryLog extends HistoryLog {
     private float iob;
     private int targetBG;
     private int isf;
-    private long spare;
-    
+    private int selectedIOB;
+    private int bgSourceType;
+    private int spare;
+
     public BGHistoryLog() {}
-    
-    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSourceId, float iob, int targetBG, int isf, long spare) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSourceId, iob, targetBG, isf, spare);
+
+    public BGHistoryLog(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSourceId, float iob, int targetBG, int isf, int selectedIOB, int bgSourceType, int spare) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bg, cgmCalibration, bgSourceId, iob, targetBG, isf, selectedIOB, bgSourceType, spare);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bg = bg;
@@ -34,8 +36,10 @@ public class BGHistoryLog extends HistoryLog {
         this.iob = iob;
         this.targetBG = targetBG;
         this.isf = isf;
+        this.selectedIOB = selectedIOB;
+        this.bgSourceType = bgSourceType;
         this.spare = spare;
-        
+
     }
 
     public int typeId() {
@@ -52,23 +56,27 @@ public class BGHistoryLog extends HistoryLog {
         this.iob = Bytes.readFloat(raw, 14);
         this.targetBG = Bytes.readShort(raw, 18);
         this.isf = Bytes.readShort(raw, 20);
-        this.spare = Bytes.readUint32(raw, 22);
+        this.selectedIOB = raw[22];
+        this.bgSourceType = raw[23];
+        this.spare = Bytes.readShort(raw, 24);
         
     }
 
     
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, long spare) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, int selectedIOB, int bgSourceType, int spare) {
         return Bytes.combine(
             new byte[]{ 16, 0 },
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(bg), 
-            new byte[]{ (byte) cgmCalibration }, 
-            new byte[]{ (byte) bgSource }, 
-            Bytes.toFloat(iob), 
-            Bytes.firstTwoBytesLittleEndian(targetBG), 
-            Bytes.firstTwoBytesLittleEndian(isf), 
-            Bytes.toUint32(spare));
+            Bytes.firstTwoBytesLittleEndian(bg),
+            new byte[]{ (byte) cgmCalibration },
+            new byte[]{ (byte) bgSource },
+            Bytes.toFloat(iob),
+            Bytes.firstTwoBytesLittleEndian(targetBG),
+            Bytes.firstTwoBytesLittleEndian(isf),
+            new byte[]{ (byte) selectedIOB },
+            new byte[]{ (byte) bgSourceType },
+            Bytes.firstTwoBytesLittleEndian(spare));
     }
 
     /**
@@ -117,10 +125,15 @@ public class BGHistoryLog extends HistoryLog {
         return isf;
     }
 
-    /**
-     * @return TODO(unknown): always 1?
-     */
-    public long getSpare() {
+    public int getSelectedIOB() {
+        return selectedIOB;
+    }
+
+    public int getBgSourceType() {
+        return bgSourceType;
+    }
+
+    public int getSpare() {
         return spare;
     }
     

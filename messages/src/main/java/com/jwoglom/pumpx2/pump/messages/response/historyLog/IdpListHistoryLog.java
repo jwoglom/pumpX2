@@ -8,7 +8,8 @@ import java.math.BigInteger;
 
 @HistoryLogProps(
     opCode = 71,
-    displayName = "Personal Profile (IDP) List",
+    displayName = "IDP List",
+    internalName = "LID_IDP_LIST",
     usedByTidepool = true
 )
 public class IdpListHistoryLog extends HistoryLog {

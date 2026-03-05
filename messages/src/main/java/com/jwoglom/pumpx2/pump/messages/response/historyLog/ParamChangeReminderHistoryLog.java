@@ -8,7 +8,8 @@ import java.math.BigInteger;
 
 @HistoryLogProps(
     opCode = 96,
-    displayName = "Reminder Time Based Parameter Change",
+    displayName = "Param Reminder",
+    internalName = "LID_PARAM_REMINDER",
     usedByTidepool = true
 )
 public class ParamChangeReminderHistoryLog extends HistoryLog {

@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 214,
-    displayName = "CGM Stop Session",
+    displayName = "CGM Stop Session GX",
     internalName = "LID_CGM_STOP_SESSION_GX"
 )
 public class CgmStopSessionHistoryLog extends HistoryLog {

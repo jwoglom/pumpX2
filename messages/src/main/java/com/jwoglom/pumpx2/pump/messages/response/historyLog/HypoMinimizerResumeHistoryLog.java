@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 199,
     displayName = "Hypo Minimizer Resume",
+    internalName = "LID_HYPO_MINIMIZER_RESUME",
     usedByTidepool = true
 )
 public class HypoMinimizerResumeHistoryLog extends HistoryLog {

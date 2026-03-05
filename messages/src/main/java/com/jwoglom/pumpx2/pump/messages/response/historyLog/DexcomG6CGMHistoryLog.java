@@ -87,9 +87,10 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
     }
 
     public enum GlucoseValueStatus {
-        NORMAL(0),
-        HIGH(1),
-        LOW(2)
+        PRECISE_VALUE(0),
+        SPECIAL_HIGH(1),
+        SPECIAL_LOW(2),
+        DO_NOT_SHOW(6)
 
         ;
         private int id;

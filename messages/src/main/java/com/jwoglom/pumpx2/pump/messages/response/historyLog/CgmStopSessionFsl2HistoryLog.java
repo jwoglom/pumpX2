@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 405,
-    displayName = "CGM Stop Session (FSL2)",
+    displayName = "CGM Stop Session FSL2",
     internalName = "LID_CGM_STOP_SESSION_FSL2"
 )
 public class CgmStopSessionFsl2HistoryLog extends HistoryLog {

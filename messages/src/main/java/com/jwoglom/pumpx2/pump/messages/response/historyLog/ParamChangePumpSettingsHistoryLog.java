@@ -6,7 +6,8 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 73,
-    displayName = "Pump Settings Parameter Change",
+    displayName = "Param Pump Settings",
+    internalName = "LID_PARAM_PUMP_SETTINGS",
     usedByTidepool = true
 )
 public class ParamChangePumpSettingsHistoryLog extends HistoryLog {

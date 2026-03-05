@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 @HistoryLogProps(
     opCode = 212,
-    displayName = "CGM Start Session",
+    displayName = "CGM Start Session GX",
     internalName = "LID_CGM_START_SESSION_GX"
 )
 public class CgmStartSessionHistoryLog extends HistoryLog {

@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 210,
     displayName = "CGM Calibration GX",
+    internalName = "LID_CGM_CAL_GX",
     usedByTidepool = true
 )
 public class CgmCalibrationGxHistoryLog extends HistoryLog {

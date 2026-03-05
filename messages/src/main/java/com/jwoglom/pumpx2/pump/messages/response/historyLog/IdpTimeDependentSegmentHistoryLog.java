@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 68,
     displayName = "Personal Profile (IDP) Time Dependent Segment",
+    internalName = "LID_IDP_TD_SEG",
     usedByTidepool = true
 )
 public class IdpTimeDependentSegmentHistoryLog extends HistoryLog {

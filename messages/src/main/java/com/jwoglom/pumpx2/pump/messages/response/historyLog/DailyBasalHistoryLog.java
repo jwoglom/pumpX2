@@ -12,6 +12,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 @HistoryLogProps(
     opCode = 81,
     displayName = "Daily Basal",
+    internalName = "LID_DAILY_BASAL",
     usedByTidepool = true
 )
 public class DailyBasalHistoryLog extends HistoryLog {

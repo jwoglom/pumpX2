@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 0,
     displayName = "Log Erased",
+    internalName = "LID_LOG_ERASED",
     usedByTidepool = true
 )
 public class LogErasedHistoryLog extends HistoryLog {

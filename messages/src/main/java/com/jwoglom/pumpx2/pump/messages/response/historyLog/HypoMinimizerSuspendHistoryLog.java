@@ -8,7 +8,8 @@ import java.math.BigInteger;
 
 @HistoryLogProps(
     opCode = 198,
-    displayName = "Hypo Minimizer Suspend"
+    displayName = "Hypo Minimizer Suspend",
+    internalName = "LID_HYPO_MINIMIZER_SUSPEND"
 )
 public class HypoMinimizerSuspendHistoryLog extends HistoryLog {
     

@@ -66,7 +66,7 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
         this.userOverride = raw[22] != 0;
         this.declinedCorrection = raw[23] != 0;
         this.selectedIOB = raw[24];
-        this.spare2 = raw[1];
+        this.spare2 = raw[25];
         
     }
 

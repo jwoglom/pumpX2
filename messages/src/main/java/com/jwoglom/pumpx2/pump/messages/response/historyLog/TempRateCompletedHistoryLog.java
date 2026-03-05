@@ -9,6 +9,7 @@ import java.math.BigInteger;
 @HistoryLogProps(
     opCode = 15,
     displayName = "Temporary Basal Rate Completed",
+    internalName = "LID_TEMP_RATE_COMPLETED",
     usedByTidepool = true
 )
 public class TempRateCompletedHistoryLog extends HistoryLog {
