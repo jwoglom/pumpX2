@@ -24,6 +24,10 @@ public class CharacteristicUUID {
     public static final UUID CONTROL_CHARACTERISTICS = UUID.fromString("7B83FFFC-9F77-4E5C-8064-AAE2C24838B9");
     public static final UUID CONTROL_STREAM_CHARACTERISTICS = UUID.fromString("7B83FFFD-9F77-4E5C-8064-AAE2C24838B9");
 
+    // Tandem TDU service characteristics (seen in Mobi app)
+    public static final UUID TDU_FILE_POINT_CHARACTERISTICS = UUID.fromString("7B83FFE7-9F77-4E5C-8064-AAE2C24838B9");
+    public static final UUID TDU_CONTROL_POINT_CHARACTERISTICS = UUID.fromString("7B83FFE8-9F77-4E5C-8064-AAE2C24838B9");
+
     // Service Changed generic BT characteristic (on GENERIC_ATTRIBUTE_SERVICE_UUID)
     public static final UUID SERVICE_CHANGED_CHARACTERISTICS = UUID.fromString("00002A05-0000-1000-8000-00805F9B34FB"); // There is an extra 0 in this UUID from Tandem (000002A05-0000-1000-8000-00805F9B34FB)
 
@@ -95,6 +99,10 @@ public class CharacteristicUUID {
             return "CONTROL";
         } else if (CONTROL_STREAM_CHARACTERISTICS.equals(uuid)) {
             return "CONTROL_STREAM";
+        } else if (TDU_FILE_POINT_CHARACTERISTICS.equals(uuid)) {
+            return "TDU_FILE_POINT";
+        } else if (TDU_CONTROL_POINT_CHARACTERISTICS.equals(uuid)) {
+            return "TDU_CONTROL_POINT";
         } else if (SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
             return "SERVICE_CHANGED";
         } else if (NOTIFICATION_CCCD.equals(uuid)) {
