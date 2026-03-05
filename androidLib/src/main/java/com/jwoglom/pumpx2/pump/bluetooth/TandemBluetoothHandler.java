@@ -490,7 +490,13 @@ public class TandemBluetoothHandler {
 
                 } catch (Exception e) {
                     Timber.e(e, "Unable to parse pump response message '%s'", Hex.encodeHexString(parser.getValue()));
-                    throw e;
+                    tandemPump.onPumpCriticalError(
+                            peripheral,
+                            TandemError.UNPROCESSABLE_MESSAGE
+                                    .withExtra("raw bytes: " + Hex.encodeHexString(parser.getValue()))
+                                    .withInitiatingMessage(requestMessage)
+                    );
+                    return;
                 }
 
                 PumpState.processedResponseMessagesFromUs++;

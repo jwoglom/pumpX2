@@ -20,7 +20,7 @@ public class PumpResponseMessage {
     }
     public PumpResponseMessage(byte[] data, Message message) {
         this.data = data;
-        this.message = Optional.of(message);
+        this.message = Optional.ofNullable(message);
         this.qualifyingEvents = Optional.empty();
     }
     public PumpResponseMessage(byte[] data, Set<QualifyingEvent> qualifyingEvents) {

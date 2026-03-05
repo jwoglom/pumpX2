@@ -17,6 +17,7 @@ public enum TandemError {
     SET_MTU_FAILED("Set MTU"),
     ERROR_RESPONSE("Error response from pump"),
     INVALID_SIGNED_HMAC_SIGNATURE("Invalid signed HMAC signature"),
+    UNPROCESSABLE_MESSAGE("Unprocessable message from pump"),
     ;
 
     private String message;
