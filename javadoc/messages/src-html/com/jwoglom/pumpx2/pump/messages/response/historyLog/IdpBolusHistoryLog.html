@@ -23,95 +23,96 @@
 <span class="source-line-no">006</span><span id="line-6"></span>
 <span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
 <span class="source-line-no">008</span><span id="line-8">    opCode = 70,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "Personal Profile (IDP) Bolus Data Change",</span>
-<span class="source-line-no">010</span><span id="line-10">    usedByTidepool = true</span>
-<span class="source-line-no">011</span><span id="line-11">)</span>
-<span class="source-line-no">012</span><span id="line-12">public class IdpBolusHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">013</span><span id="line-13">    </span>
-<span class="source-line-no">014</span><span id="line-14">    private int idp;</span>
-<span class="source-line-no">015</span><span id="line-15">    private int modification;</span>
-<span class="source-line-no">016</span><span id="line-16">    private int bolusStatus;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int insulinDuration;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int maxBolusSize;</span>
-<span class="source-line-no">019</span><span id="line-19">    private int bolusEntryType;</span>
-<span class="source-line-no">020</span><span id="line-20">    </span>
-<span class="source-line-no">021</span><span id="line-21">    public IdpBolusHistoryLog() {}</span>
-<span class="source-line-no">022</span><span id="line-22">    public IdpBolusHistoryLog(long pumpTimeSec, long sequenceNum, int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
-<span class="source-line-no">023</span><span id="line-23">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">024</span><span id="line-24">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, idp, modification, bolusStatus, insulinDuration, maxBolusSize, bolusEntryType);</span>
-<span class="source-line-no">025</span><span id="line-25">        this.idp = idp;</span>
-<span class="source-line-no">026</span><span id="line-26">        this.modification = modification;</span>
-<span class="source-line-no">027</span><span id="line-27">        this.bolusStatus = bolusStatus;</span>
-<span class="source-line-no">028</span><span id="line-28">        this.insulinDuration = insulinDuration;</span>
-<span class="source-line-no">029</span><span id="line-29">        this.maxBolusSize = maxBolusSize;</span>
-<span class="source-line-no">030</span><span id="line-30">        this.bolusEntryType = bolusEntryType;</span>
-<span class="source-line-no">031</span><span id="line-31">        </span>
-<span class="source-line-no">032</span><span id="line-32">    }</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    public IdpBolusHistoryLog(int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
-<span class="source-line-no">035</span><span id="line-35">        this(0, 0, idp, modification, bolusStatus, insulinDuration, maxBolusSize, bolusEntryType);</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    public int typeId() {</span>
-<span class="source-line-no">039</span><span id="line-39">        return 70;</span>
-<span class="source-line-no">040</span><span id="line-40">    }</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">    /**</span>
-<span class="source-line-no">043</span><span id="line-43">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">044</span><span id="line-44">     * &lt;caption&gt;Parsed fields for IdpBolusHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">045</span><span id="line-45">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modification&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;maxBolusSize&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusEntryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;/table&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     */</span>
-<span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">054</span><span id="line-54">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">055</span><span id="line-55">        this.cargo = raw;</span>
-<span class="source-line-no">056</span><span id="line-56">        parseBase(raw);</span>
-<span class="source-line-no">057</span><span id="line-57">        this.idp = raw[10];</span>
-<span class="source-line-no">058</span><span id="line-58">        this.modification = raw[11];</span>
-<span class="source-line-no">059</span><span id="line-59">        this.bolusStatus = raw[12];</span>
-<span class="source-line-no">060</span><span id="line-60">        this.insulinDuration = Bytes.readShort(raw, 14);</span>
-<span class="source-line-no">061</span><span id="line-61">        this.maxBolusSize = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">062</span><span id="line-62">        this.bolusEntryType = raw[18];</span>
-<span class="source-line-no">063</span><span id="line-63">        </span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
-<span class="source-line-no">067</span><span id="line-67">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">068</span><span id="line-68">            new byte[]{70, 0},</span>
-<span class="source-line-no">069</span><span id="line-69">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">071</span><span id="line-71">            new byte[]{ (byte) idp }, </span>
-<span class="source-line-no">072</span><span id="line-72">            new byte[]{ (byte) modification }, </span>
-<span class="source-line-no">073</span><span id="line-73">            new byte[]{ (byte) bolusStatus }, </span>
-<span class="source-line-no">074</span><span id="line-74">            Bytes.firstTwoBytesLittleEndian(insulinDuration), </span>
-<span class="source-line-no">075</span><span id="line-75">            Bytes.firstTwoBytesLittleEndian(maxBolusSize), </span>
-<span class="source-line-no">076</span><span id="line-76">            new byte[]{ (byte) bolusEntryType }));</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78">    public int getIdp() {</span>
-<span class="source-line-no">079</span><span id="line-79">        return idp;</span>
-<span class="source-line-no">080</span><span id="line-80">    }</span>
-<span class="source-line-no">081</span><span id="line-81">    public int getModification() {</span>
-<span class="source-line-no">082</span><span id="line-82">        return modification;</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84">    public int getBolusStatus() {</span>
-<span class="source-line-no">085</span><span id="line-85">        return bolusStatus;</span>
-<span class="source-line-no">086</span><span id="line-86">    }</span>
-<span class="source-line-no">087</span><span id="line-87">    public int getInsulinDuration() {</span>
-<span class="source-line-no">088</span><span id="line-88">        return insulinDuration;</span>
-<span class="source-line-no">089</span><span id="line-89">    }</span>
-<span class="source-line-no">090</span><span id="line-90">    public int getMaxBolusSize() {</span>
-<span class="source-line-no">091</span><span id="line-91">        return maxBolusSize;</span>
-<span class="source-line-no">092</span><span id="line-92">    }</span>
-<span class="source-line-no">093</span><span id="line-93">    public int getBolusEntryType() {</span>
-<span class="source-line-no">094</span><span id="line-94">        return bolusEntryType;</span>
-<span class="source-line-no">095</span><span id="line-95">    }</span>
-<span class="source-line-no">096</span><span id="line-96">    </span>
-<span class="source-line-no">097</span><span id="line-97">}</span>
+<span class="source-line-no">009</span><span id="line-9">    displayName = "IDP Bolus",</span>
+<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_IDP_BOLUS",</span>
+<span class="source-line-no">011</span><span id="line-11">    usedByTidepool = true</span>
+<span class="source-line-no">012</span><span id="line-12">)</span>
+<span class="source-line-no">013</span><span id="line-13">public class IdpBolusHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">014</span><span id="line-14">    </span>
+<span class="source-line-no">015</span><span id="line-15">    private int idp;</span>
+<span class="source-line-no">016</span><span id="line-16">    private int modification;</span>
+<span class="source-line-no">017</span><span id="line-17">    private int bolusStatus;</span>
+<span class="source-line-no">018</span><span id="line-18">    private int insulinDuration;</span>
+<span class="source-line-no">019</span><span id="line-19">    private int maxBolusSize;</span>
+<span class="source-line-no">020</span><span id="line-20">    private int bolusEntryType;</span>
+<span class="source-line-no">021</span><span id="line-21">    </span>
+<span class="source-line-no">022</span><span id="line-22">    public IdpBolusHistoryLog() {}</span>
+<span class="source-line-no">023</span><span id="line-23">    public IdpBolusHistoryLog(long pumpTimeSec, long sequenceNum, int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
+<span class="source-line-no">024</span><span id="line-24">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">025</span><span id="line-25">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, idp, modification, bolusStatus, insulinDuration, maxBolusSize, bolusEntryType);</span>
+<span class="source-line-no">026</span><span id="line-26">        this.idp = idp;</span>
+<span class="source-line-no">027</span><span id="line-27">        this.modification = modification;</span>
+<span class="source-line-no">028</span><span id="line-28">        this.bolusStatus = bolusStatus;</span>
+<span class="source-line-no">029</span><span id="line-29">        this.insulinDuration = insulinDuration;</span>
+<span class="source-line-no">030</span><span id="line-30">        this.maxBolusSize = maxBolusSize;</span>
+<span class="source-line-no">031</span><span id="line-31">        this.bolusEntryType = bolusEntryType;</span>
+<span class="source-line-no">032</span><span id="line-32">        </span>
+<span class="source-line-no">033</span><span id="line-33">    }</span>
+<span class="source-line-no">034</span><span id="line-34"></span>
+<span class="source-line-no">035</span><span id="line-35">    public IdpBolusHistoryLog(int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
+<span class="source-line-no">036</span><span id="line-36">        this(0, 0, idp, modification, bolusStatus, insulinDuration, maxBolusSize, bolusEntryType);</span>
+<span class="source-line-no">037</span><span id="line-37">    }</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    public int typeId() {</span>
+<span class="source-line-no">040</span><span id="line-40">        return 70;</span>
+<span class="source-line-no">041</span><span id="line-41">    }</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    /**</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">045</span><span id="line-45">     * &lt;caption&gt;Parsed fields for IdpBolusHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modification&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;maxBolusSize&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusEntryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;/table&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     */</span>
+<span class="source-line-no">054</span><span id="line-54">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">055</span><span id="line-55">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">056</span><span id="line-56">        this.cargo = raw;</span>
+<span class="source-line-no">057</span><span id="line-57">        parseBase(raw);</span>
+<span class="source-line-no">058</span><span id="line-58">        this.idp = raw[10];</span>
+<span class="source-line-no">059</span><span id="line-59">        this.modification = raw[11];</span>
+<span class="source-line-no">060</span><span id="line-60">        this.bolusStatus = raw[12];</span>
+<span class="source-line-no">061</span><span id="line-61">        this.insulinDuration = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">062</span><span id="line-62">        this.maxBolusSize = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">063</span><span id="line-63">        this.bolusEntryType = raw[18];</span>
+<span class="source-line-no">064</span><span id="line-64">        </span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {</span>
+<span class="source-line-no">068</span><span id="line-68">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">069</span><span id="line-69">            new byte[]{70, 0},</span>
+<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">072</span><span id="line-72">            new byte[]{ (byte) idp }, </span>
+<span class="source-line-no">073</span><span id="line-73">            new byte[]{ (byte) modification }, </span>
+<span class="source-line-no">074</span><span id="line-74">            new byte[]{ (byte) bolusStatus }, </span>
+<span class="source-line-no">075</span><span id="line-75">            Bytes.firstTwoBytesLittleEndian(insulinDuration), </span>
+<span class="source-line-no">076</span><span id="line-76">            Bytes.firstTwoBytesLittleEndian(maxBolusSize), </span>
+<span class="source-line-no">077</span><span id="line-77">            new byte[]{ (byte) bolusEntryType }));</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79">    public int getIdp() {</span>
+<span class="source-line-no">080</span><span id="line-80">        return idp;</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82">    public int getModification() {</span>
+<span class="source-line-no">083</span><span id="line-83">        return modification;</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85">    public int getBolusStatus() {</span>
+<span class="source-line-no">086</span><span id="line-86">        return bolusStatus;</span>
+<span class="source-line-no">087</span><span id="line-87">    }</span>
+<span class="source-line-no">088</span><span id="line-88">    public int getInsulinDuration() {</span>
+<span class="source-line-no">089</span><span id="line-89">        return insulinDuration;</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91">    public int getMaxBolusSize() {</span>
+<span class="source-line-no">092</span><span id="line-92">        return maxBolusSize;</span>
+<span class="source-line-no">093</span><span id="line-93">    }</span>
+<span class="source-line-no">094</span><span id="line-94">    public int getBolusEntryType() {</span>
+<span class="source-line-no">095</span><span id="line-95">        return bolusEntryType;</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97">    </span>
+<span class="source-line-no">098</span><span id="line-98">}</span>
 
 
 

@@ -80,6 +80,10 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="LoadCartridgeStateStreamResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.controlStream">LoadCartridgeStateStreamResponse</a></code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-40">DetectingCartridgeStateStreamResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
@@ -147,27 +151,38 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;state)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;percentComplete)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for DetectingCartridgeStateStreamResponse.buildCargo(...):
  OffsetDescription
- 0<code>firstTwoBytesLittleEndian(state) [byte 0]</code>
- 1<code>firstTwoBytesLittleEndian(state) [byte 1]</code>
+ 0<code>firstTwoBytesLittleEndian(percentComplete) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(percentComplete) [byte 1]</code>
  </div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildLoadCartridgeCargo(int)" class="member-name-link">buildLoadCartridgeCargo</a><wbr>(int&nbsp;stateId)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPercentComplete()" class="member-name-link">getPercentComplete</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPercentComplete()" class="member-name-link">getPercentComplete</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateId()" class="member-name-link">getStateId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isComplete()" class="member-name-link">isComplete</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isLoadCartridgeState()" class="member-name-link">isLoadCartridgeState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for DetectingCartridgeStateStreamResponse:
  <code>percentComplete</code><code>Bytes.readShort(raw, 0)</code>
+ <code>stateId</code><code>this.percentComplete</code>
+ <code>loadCartridgeState</code><code>false</code>
  </div>
 </div>
 </div>
@@ -193,19 +208,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DetectingCartridgeStateStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-53">DetectingCartridgeStateStreamResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-55">DetectingCartridgeStateStreamResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>DetectingCartridgeStateStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-55">DetectingCartridgeStateStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;percentComplete)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-57">DetectingCartridgeStateStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;percentComplete)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>DetectingCartridgeStateStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-60">DetectingCartridgeStateStreamResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-62">DetectingCartridgeStateStreamResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 </ul>
@@ -219,10 +234,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-72">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-76">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for DetectingCartridgeStateStreamResponse:</caption>
  <tr><td><code>percentComplete</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>stateId</code></td><td><code>this.percentComplete</code></td></tr>
+ <tr><td><code>loadCartridgeState</code></td><td><code>false</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -233,25 +250,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-89">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;state)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-101">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;percentComplete)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for DetectingCartridgeStateStreamResponse.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>firstTwoBytesLittleEndian(state) [byte 0]</code></td></tr>
- <tr><td>1</td><td><code>firstTwoBytesLittleEndian(state) [byte 1]</code></td></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(percentComplete) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(percentComplete) [byte 1]</code></td></tr>
  </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildLoadCartridgeCargo(int)">
+<h3>buildLoadCartridgeCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-106">buildLoadCartridgeCargo</a></span><wbr><span class="parameters">(int&nbsp;stateId)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPercentComplete()">
 <h3>getPercentComplete</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-94">getPercentComplete</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-111">getPercentComplete</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStateId()">
+<h3>getStateId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-115">getStateId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isLoadCartridgeState()">
+<h3>isLoadCartridgeState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-119">isLoadCartridgeState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isComplete()">
 <h3>isComplete</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-98">isComplete</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/DetectingCartridgeStateStreamResponse.html#line-123">isComplete</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -37,7 +37,7 @@
 <span class="source-line-no">020</span><span id="line-20">    }</span>
 <span class="source-line-no">021</span><span id="line-21">    public PumpResponseMessage(byte[] data, Message message) {</span>
 <span class="source-line-no">022</span><span id="line-22">        this.data = data;</span>
-<span class="source-line-no">023</span><span id="line-23">        this.message = Optional.of(message);</span>
+<span class="source-line-no">023</span><span id="line-23">        this.message = Optional.ofNullable(message);</span>
 <span class="source-line-no">024</span><span id="line-24">        this.qualifyingEvents = Optional.empty();</span>
 <span class="source-line-no">025</span><span id="line-25">    }</span>
 <span class="source-line-no">026</span><span id="line-26">    public PumpResponseMessage(byte[] data, Set&lt;QualifyingEvent&gt; qualifyingEvents) {</span>

@@ -20,32 +20,38 @@
 <span class="source-line-no">003</span><span id="line-3">import java.util.UUID;</span>
 <span class="source-line-no">004</span><span id="line-4"></span>
 <span class="source-line-no">005</span><span id="line-5">public class ServiceUUID {</span>
-<span class="source-line-no">006</span><span id="line-6">    // Pump-specific UUID used for all known functions</span>
-<span class="source-line-no">007</span><span id="line-7">    public static final UUID PUMP_SERVICE_UUID = UUID.fromString("0000fdfb-0000-1000-8000-00805f9b34fb");</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">    // Bluetooth Device Information service (DIS)</span>
-<span class="source-line-no">010</span><span id="line-10">    public static final UUID DIS_SERVICE_UUID = UUID.fromString("0000180A-0000-1000-8000-00805f9b34fb");</span>
-<span class="source-line-no">011</span><span id="line-11"></span>
-<span class="source-line-no">012</span><span id="line-12">    // Generic Access service</span>
-<span class="source-line-no">013</span><span id="line-13">    public static final UUID GENERIC_ACCESS_SERVICE_UUID = UUID.fromString("00001800-0000-1000-8000-00805f9b34fb");</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">    // Generic Attribute service</span>
-<span class="source-line-no">016</span><span id="line-16">    public static final UUID GENERIC_ATTRIBUTE_SERVICE_UUID = UUID.fromString("00001801-0000-1000-8000-00805f9b34fb");</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    public static String which(UUID uuid) {</span>
-<span class="source-line-no">019</span><span id="line-19">        if (uuid.equals(PUMP_SERVICE_UUID)) {</span>
-<span class="source-line-no">020</span><span id="line-20">            return "PUMP_SERVICE";</span>
-<span class="source-line-no">021</span><span id="line-21">        } else if (uuid.equals(DIS_SERVICE_UUID)) {</span>
-<span class="source-line-no">022</span><span id="line-22">            return "DIS_SERVICE";</span>
-<span class="source-line-no">023</span><span id="line-23">        } else if (uuid.equals(GENERIC_ACCESS_SERVICE_UUID)) {</span>
-<span class="source-line-no">024</span><span id="line-24">            return "GENERIC_ACCESS_SERVICE";</span>
-<span class="source-line-no">025</span><span id="line-25">        } else if (uuid.equals(GENERIC_ATTRIBUTE_SERVICE_UUID)) {</span>
-<span class="source-line-no">026</span><span id="line-26">            return "GENERIC_ATTRIBUTE_SERVICE";</span>
-<span class="source-line-no">027</span><span id="line-27">        } else {</span>
-<span class="source-line-no">028</span><span id="line-28">            return "unknown (" + uuid + ")";</span>
-<span class="source-line-no">029</span><span id="line-29">        }</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31">}</span>
+<span class="source-line-no">006</span><span id="line-6">    // Tandem TIP service UUID (aka Pump service in this project)</span>
+<span class="source-line-no">007</span><span id="line-7">    public static final UUID TIP_SERVICE_UUID = UUID.fromString("0000fdfb-0000-1000-8000-00805f9b34fb");</span>
+<span class="source-line-no">008</span><span id="line-8">    public static final UUID PUMP_SERVICE_UUID = TIP_SERVICE_UUID;</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">    // Tandem TDU service UUID (used by Mobi app alongside TIP)</span>
+<span class="source-line-no">011</span><span id="line-11">    public static final UUID TDU_SERVICE_UUID = UUID.fromString("0000fdfa-0000-1000-8000-00805f9b34fb");</span>
+<span class="source-line-no">012</span><span id="line-12"></span>
+<span class="source-line-no">013</span><span id="line-13">    // Bluetooth Device Information service (DIS)</span>
+<span class="source-line-no">014</span><span id="line-14">    public static final UUID DIS_SERVICE_UUID = UUID.fromString("0000180A-0000-1000-8000-00805f9b34fb");</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16">    // Generic Access service</span>
+<span class="source-line-no">017</span><span id="line-17">    public static final UUID GENERIC_ACCESS_SERVICE_UUID = UUID.fromString("00001800-0000-1000-8000-00805f9b34fb");</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">    // Generic Attribute service</span>
+<span class="source-line-no">020</span><span id="line-20">    public static final UUID GENERIC_ATTRIBUTE_SERVICE_UUID = UUID.fromString("00001801-0000-1000-8000-00805f9b34fb");</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">    public static String which(UUID uuid) {</span>
+<span class="source-line-no">023</span><span id="line-23">        if (uuid.equals(PUMP_SERVICE_UUID)) {</span>
+<span class="source-line-no">024</span><span id="line-24">            return "PUMP_SERVICE";</span>
+<span class="source-line-no">025</span><span id="line-25">        } else if (uuid.equals(TDU_SERVICE_UUID)) {</span>
+<span class="source-line-no">026</span><span id="line-26">            return "TDU_SERVICE";</span>
+<span class="source-line-no">027</span><span id="line-27">        } else if (uuid.equals(DIS_SERVICE_UUID)) {</span>
+<span class="source-line-no">028</span><span id="line-28">            return "DIS_SERVICE";</span>
+<span class="source-line-no">029</span><span id="line-29">        } else if (uuid.equals(GENERIC_ACCESS_SERVICE_UUID)) {</span>
+<span class="source-line-no">030</span><span id="line-30">            return "GENERIC_ACCESS_SERVICE";</span>
+<span class="source-line-no">031</span><span id="line-31">        } else if (uuid.equals(GENERIC_ATTRIBUTE_SERVICE_UUID)) {</span>
+<span class="source-line-no">032</span><span id="line-32">            return "GENERIC_ATTRIBUTE_SERVICE";</span>
+<span class="source-line-no">033</span><span id="line-33">        } else {</span>
+<span class="source-line-no">034</span><span id="line-34">            return "unknown (" + uuid + ")";</span>
+<span class="source-line-no">035</span><span id="line-35">        }</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37">}</span>
 
 
 

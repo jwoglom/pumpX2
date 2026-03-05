@@ -48,7 +48,7 @@
 <span class="source-line-no">031</span><span id="line-31"></span>
 <span class="source-line-no">032</span><span id="line-32">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
 <span class="source-line-no">033</span><span id="line-33">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">034</span><span id="line-34">            new byte[]{(byte) 480, 0},</span>
+<span class="source-line-no">034</span><span id="line-34">            new byte[]{(byte)(480 &amp; 0xFF), (byte)(480 &gt;&gt; 8)}, // 480 = 0x01E0</span>
 <span class="source-line-no">035</span><span id="line-35">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">036</span><span id="line-36">            Bytes.toUint32(sequenceNum)));</span>
 <span class="source-line-no">037</span><span id="line-37">    }</span>

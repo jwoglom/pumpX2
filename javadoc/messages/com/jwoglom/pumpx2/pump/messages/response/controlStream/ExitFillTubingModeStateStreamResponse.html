@@ -80,8 +80,12 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="PrimeNudgeStateStreamResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.controlStream">PrimeNudgeStateStreamResponse</a></code>, <code><a href="PumpingStateStreamResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.controlStream">PumpingStateStreamResponse</a></code></dd>
+</dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-40">ExitFillTubingModeStateStreamResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-43">ExitFillTubingModeStateStreamResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
 <div class="block">Stream message sent by pump while exiting fill tubing mode.
 
@@ -121,6 +125,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="ExitFillTubingModeStateStreamResponse.PumpingState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.PumpingState</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -143,8 +150,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ExitFillTubingModeStateStreamResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">ExitFillTubingModeStateStreamResponse</a><wbr>(int&nbsp;stateId)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,long)" class="member-name-link">ExitFillTubingModeStateStreamResponse</a><wbr>(boolean&nbsp;isPumpingStateSetAfterStartUp,
+ long&nbsp;stateBitmask)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">ExitFillTubingModeStateStreamResponse</a><wbr>(int&nbsp;stateId)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -168,19 +178,34 @@ loadScripts(document, 'script');</script>
  0<code>(byte) state</code>
  </div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildPumpingCargo(boolean,long)" class="member-name-link">buildPumpingCargo</a><wbr>(boolean&nbsp;isPumpingStateSetAfterStartUp,
+ long&nbsp;stateBitmask)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsPumpingStateSetAfterStartUp()" class="member-name-link">getIsPumpingStateSetAfterStartUp</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateId()" class="member-name-link">getStateId</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateBitmask()" class="member-name-link">getStateBitmask</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStateId()" class="member-name-link">getStateId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="ExitFillTubingModeStateStreamResponse.PumpingState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.PumpingState</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStates()" class="member-name-link">getStates</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for ExitFillTubingModeStateStreamResponse:
- <code>stateId</code><code>raw[0]</code>
+ <code>stateId</code><code>raw[0] &amp; 0xFF</code>
  <code>state</code><code>getState()</code>
+ <code>isPumpingStateSetAfterStartUp</code><code>raw[0] != 0</code>
+ <code>stateBitmask</code><code>Bytes.readUint32(raw, 1)</code>
  </div>
 </div>
 </div>
@@ -206,13 +231,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ExitFillTubingModeStateStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-54">ExitFillTubingModeStateStreamResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-59">ExitFillTubingModeStateStreamResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>ExitFillTubingModeStateStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-56">ExitFillTubingModeStateStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;stateId)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-61">ExitFillTubingModeStateStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;stateId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean,long)">
+<h3>ExitFillTubingModeStateStreamResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-67">ExitFillTubingModeStateStreamResponse</a></span><wbr><span class="parameters">(boolean&nbsp;isPumpingStateSetAfterStartUp,
+ long&nbsp;stateBitmask)</span></div>
 </section>
 </li>
 </ul>
@@ -226,11 +258,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-69">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ExitFillTubingModeStateStreamResponse:</caption>
- <tr><td><code>stateId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>stateId</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
  <tr><td><code>state</code></td><td><code>getState()</code></td></tr>
+ <tr><td><code>isPumpingStateSetAfterStartUp</code></td><td><code>raw[0] != 0</code></td></tr>
+ <tr><td><code>stateBitmask</code></td><td><code>Bytes.readUint32(raw, 1)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -241,7 +275,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-86">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;state)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-105">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;state)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for ExitFillTubingModeStateStreamResponse.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
@@ -250,15 +284,40 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="buildPumpingCargo(boolean,long)">
+<h3>buildPumpingCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-110">buildPumpingCargo</a></span><wbr><span class="parameters">(boolean&nbsp;isPumpingStateSetAfterStartUp,
+ long&nbsp;stateBitmask)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="getStateId()">
 <h3>getStateId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-91">getStateId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-116">getStateId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-96">getState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-121">getState</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIsPumpingStateSetAfterStartUp()">
+<h3>getIsPumpingStateSetAfterStartUp</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-125">getIsPumpingStateSetAfterStartUp</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStateBitmask()">
+<h3>getStateBitmask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-129">getStateBitmask</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStates()">
+<h3>getStates</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="ExitFillTubingModeStateStreamResponse.PumpingState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.PumpingState</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.html#line-133">getStates</a></span>()</div>
 </section>
 </li>
 </ul>
