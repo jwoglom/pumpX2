@@ -24,187 +24,214 @@
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.builders.IOBRequestBuilder;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.builders.LastBolusStatusRequestBuilder;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;</span>
-<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;</span>
-<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;</span>
-<span class="source-line-no">015</span><span id="line-15">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;</span>
-<span class="source-line-no">016</span><span id="line-16">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;</span>
-<span class="source-line-no">017</span><span id="line-17">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;</span>
-<span class="source-line-no">018</span><span id="line-18">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatusRequest;</span>
-<span class="source-line-no">019</span><span id="line-19">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;</span>
-<span class="source-line-no">020</span><span id="line-20">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;</span>
-<span class="source-line-no">021</span><span id="line-21">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;</span>
-<span class="source-line-no">022</span><span id="line-22">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">import org.json.JSONObject;</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">import java.util.HashSet;</span>
-<span class="source-line-no">034</span><span id="line-34">import java.util.Set;</span>
-<span class="source-line-no">035</span><span id="line-35">import java.util.TreeSet;</span>
-<span class="source-line-no">036</span><span id="line-36">import java.util.function.Supplier;</span>
-<span class="source-line-no">037</span><span id="line-37">import java.util.stream.Collectors;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;</span>
+<span class="source-line-no">015</span><span id="line-15">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;</span>
+<span class="source-line-no">016</span><span id="line-16">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;</span>
+<span class="source-line-no">017</span><span id="line-17">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;</span>
+<span class="source-line-no">018</span><span id="line-18">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;</span>
+<span class="source-line-no">019</span><span id="line-19">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ControlIQSleepScheduleRequest;</span>
+<span class="source-line-no">020</span><span id="line-20">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatusRequest;</span>
+<span class="source-line-no">021</span><span id="line-21">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;</span>
+<span class="source-line-no">022</span><span id="line-22">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSettingsRequest;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LoadStatusRequest;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;</span>
 <span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">/**</span>
-<span class="source-line-no">040</span><span id="line-40"> * A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request</span>
-<span class="source-line-no">041</span><span id="line-41"> * messages which can be sent (via `sendPumpCommand`) to receive more information about the event</span>
-<span class="source-line-no">042</span><span id="line-42"> * which just occurred, in logic matching the Tandem mobile app, is included. To get these</span>
-<span class="source-line-no">043</span><span id="line-43"> * instantiated request messages, you can invoke:</span>
-<span class="source-line-no">044</span><span id="line-44"> *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)</span>
-<span class="source-line-no">045</span><span id="line-45"> *</span>
-<span class="source-line-no">046</span><span id="line-46"> * Note that if t:connect app connection sharing is enabled and the t:connect app is running,</span>
-<span class="source-line-no">047</span><span id="line-47"> * you can use enableSendSharedConnectionResponseMessages and get the response from these callbacks</span>
-<span class="source-line-no">048</span><span id="line-48"> * for free, without duplicating requests.</span>
-<span class="source-line-no">049</span><span id="line-49"> */</span>
-<span class="source-line-no">050</span><span id="line-50">public enum QualifyingEvent {</span>
-<span class="source-line-no">051</span><span id="line-51">    ALERT(1, Set.of(</span>
-<span class="source-line-no">052</span><span id="line-52">            AlertStatusRequest::new)),</span>
-<span class="source-line-no">053</span><span id="line-53">    ALARM(2, Set.of(</span>
-<span class="source-line-no">054</span><span id="line-54">            AlarmStatusRequest::new)),</span>
-<span class="source-line-no">055</span><span id="line-55">    REMINDER(4, Set.of(</span>
-<span class="source-line-no">056</span><span id="line-56">            ReminderStatusRequest::new)),</span>
-<span class="source-line-no">057</span><span id="line-57">    MALFUNCTION(8, Set.of(</span>
-<span class="source-line-no">058</span><span id="line-58">            MalfunctionStatusRequest::new)),</span>
-<span class="source-line-no">059</span><span id="line-59">    CGM_ALERT(16, Set.of(</span>
-<span class="source-line-no">060</span><span id="line-60">            CGMAlertStatusRequest::new)),</span>
-<span class="source-line-no">061</span><span id="line-61">    HOME_SCREEN_CHANGE(32, Set.of(</span>
-<span class="source-line-no">062</span><span id="line-62">            CurrentBasalStatusRequest::new,</span>
-<span class="source-line-no">063</span><span id="line-63">            CurrentEGVGuiDataRequest::new,</span>
-<span class="source-line-no">064</span><span id="line-64">            HomeScreenMirrorRequest::new,</span>
-<span class="source-line-no">065</span><span id="line-65">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
-<span class="source-line-no">066</span><span id="line-66">    PUMP_SUSPEND(64, Set.of(</span>
-<span class="source-line-no">067</span><span id="line-67">            InsulinStatusRequest::new,</span>
-<span class="source-line-no">068</span><span id="line-68">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</span>
-<span class="source-line-no">069</span><span id="line-69">    PUMP_RESUME(128, Set.of(</span>
-<span class="source-line-no">070</span><span id="line-70">            InsulinStatusRequest::new,</span>
-<span class="source-line-no">071</span><span id="line-71">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
-<span class="source-line-no">072</span><span id="line-72">            CurrentEGVGuiDataRequest::new,</span>
-<span class="source-line-no">073</span><span id="line-73">            ProfileStatusRequest::new)),</span>
-<span class="source-line-no">074</span><span id="line-74">    TIME_CHANGE(256, Set.of(</span>
-<span class="source-line-no">075</span><span id="line-75">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
-<span class="source-line-no">076</span><span id="line-76">            CGMStatusRequest::new,</span>
-<span class="source-line-no">077</span><span id="line-77">            TimeSinceResetRequest::new)),</span>
-<span class="source-line-no">078</span><span id="line-78">    BASAL_CHANGE(512, Set.of(</span>
-<span class="source-line-no">079</span><span id="line-79">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
-<span class="source-line-no">080</span><span id="line-80">            HomeScreenMirrorRequest::new,</span>
-<span class="source-line-no">081</span><span id="line-81">            CurrentBasalStatusRequest::new,</span>
-<span class="source-line-no">082</span><span id="line-82">            TempRateRequest::new)),</span>
-<span class="source-line-no">083</span><span id="line-83">    BOLUS_CHANGE(1024, Set.of(</span>
-<span class="source-line-no">084</span><span id="line-84">            CurrentBolusStatusRequest::new,</span>
-<span class="source-line-no">085</span><span id="line-85">            ExtendedBolusStatusRequest::new,</span>
-<span class="source-line-no">086</span><span id="line-86">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
-<span class="source-line-no">087</span><span id="line-87">    IOB_CHANGE(2048, Set.of(</span>
-<span class="source-line-no">088</span><span id="line-88">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</span>
-<span class="source-line-no">089</span><span id="line-89">    EXTENDED_BOLUS_CHANGE(4096, Set.of(</span>
-<span class="source-line-no">090</span><span id="line-90">            ExtendedBolusStatusRequest::new,</span>
-<span class="source-line-no">091</span><span id="line-91">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
-<span class="source-line-no">092</span><span id="line-92">    PROFILE_CHANGE(8192, Set.of(</span>
-<span class="source-line-no">093</span><span id="line-93">            ProfileStatusRequest::new)),</span>
-<span class="source-line-no">094</span><span id="line-94">    BG(16384, Set.of(</span>
-<span class="source-line-no">095</span><span id="line-95">            LastBGRequest::new)),</span>
-<span class="source-line-no">096</span><span id="line-96">    CGM_CHANGE(32768, Set.of(</span>
-<span class="source-line-no">097</span><span id="line-97">            CGMStatusRequest::new,</span>
-<span class="source-line-no">098</span><span id="line-98">            CurrentEGVGuiDataRequest::new,</span>
-<span class="source-line-no">099</span><span id="line-99">            HomeScreenMirrorRequest::new)),</span>
-<span class="source-line-no">100</span><span id="line-100">    BATTERY(65536, Set.of(</span>
-<span class="source-line-no">101</span><span id="line-101">            () -&gt; CurrentBatteryRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
-<span class="source-line-no">102</span><span id="line-102">    BASAL_IQ(131072, Set.of(</span>
-<span class="source-line-no">103</span><span id="line-103">            BasalIQSettingsRequest::new)),</span>
-<span class="source-line-no">104</span><span id="line-104">    REMAINING_INSULIN(262144, Set.of(</span>
-<span class="source-line-no">105</span><span id="line-105">            InsulinStatusRequest::new)),</span>
-<span class="source-line-no">106</span><span id="line-106">    SUSPEND_COMM(524288),</span>
-<span class="source-line-no">107</span><span id="line-107">    ACTIVE_SEGMENT_CHANGE(1048576, Set.of(</span>
-<span class="source-line-no">108</span><span id="line-108">            ProfileStatusRequest::new)),</span>
-<span class="source-line-no">109</span><span id="line-109">    BASAL_IQ_STATUS(2097152, Set.of(</span>
-<span class="source-line-no">110</span><span id="line-110">            BasalIQSettingsRequest::new,</span>
-<span class="source-line-no">111</span><span id="line-111">            BasalIQStatusRequest::new)),</span>
-<span class="source-line-no">112</span><span id="line-112">    CONTROL_IQ_INFO(4194304, Set.of(</span>
-<span class="source-line-no">113</span><span id="line-113">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
-<span class="source-line-no">114</span><span id="line-114">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()),</span>
-<span class="source-line-no">115</span><span id="line-115">            ControlIQSleepScheduleRequest::new)),</span>
-<span class="source-line-no">116</span><span id="line-116">    CONTROL_IQ_SLEEP(8388608, Set.of(</span>
-<span class="source-line-no">117</span><span id="line-117">            ControlIQSleepScheduleRequest::new)),</span>
-<span class="source-line-no">118</span><span id="line-118">    BOLUS_PERMISSION_REVOKED(2147483648L, Set.of(</span>
-<span class="source-line-no">119</span><span id="line-119">            () -&gt; {</span>
-<span class="source-line-no">120</span><span id="line-120">                if (PumpStateSupplier.inProgressBolusId != null &amp;&amp; PumpStateSupplier.inProgressBolusId.get() != null) {</span>
-<span class="source-line-no">121</span><span id="line-121">                    return new BolusPermissionChangeReasonRequest(PumpStateSupplier.inProgressBolusId.get());</span>
-<span class="source-line-no">122</span><span id="line-122">                }</span>
-<span class="source-line-no">123</span><span id="line-123">                return null;</span>
-<span class="source-line-no">124</span><span id="line-124">            }</span>
-<span class="source-line-no">125</span><span id="line-125">    )),</span>
-<span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">    ;</span>
-<span class="source-line-no">128</span><span id="line-128">    private final long id;</span>
-<span class="source-line-no">129</span><span id="line-129">    private final Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers;</span>
-<span class="source-line-no">130</span><span id="line-130">    QualifyingEvent(long id) {</span>
-<span class="source-line-no">131</span><span id="line-131">        this.id = id;</span>
-<span class="source-line-no">132</span><span id="line-132">        this.suggestedHandlers = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    QualifyingEvent(long id, Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers) {</span>
-<span class="source-line-no">136</span><span id="line-136">        this.id = id;</span>
-<span class="source-line-no">137</span><span id="line-137">        this.suggestedHandlers = suggestedHandlers;</span>
-<span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139"></span>
-<span class="source-line-no">140</span><span id="line-140">    public final long getId() {</span>
-<span class="source-line-no">141</span><span id="line-141">        return id;</span>
-<span class="source-line-no">142</span><span id="line-142">    }</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">    public final Set&lt;Supplier&lt;? extends Message&gt;&gt; getSuggestedHandlers() {</span>
-<span class="source-line-no">145</span><span id="line-145">        return suggestedHandlers;</span>
-<span class="source-line-no">146</span><span id="line-146">    }</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">    public static Set&lt;QualifyingEvent&gt; fromBitmask(long bitmask) {</span>
-<span class="source-line-no">149</span><span id="line-149">        Set&lt;QualifyingEvent&gt; ret = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">150</span><span id="line-150">        for (QualifyingEvent e : values()) {</span>
-<span class="source-line-no">151</span><span id="line-151">            if ((bitmask &amp; e.getId()) != 0) {</span>
-<span class="source-line-no">152</span><span id="line-152">                ret.add(e);</span>
-<span class="source-line-no">153</span><span id="line-153">            }</span>
-<span class="source-line-no">154</span><span id="line-154">        }</span>
-<span class="source-line-no">155</span><span id="line-155">        return ret;</span>
+<span class="source-line-no">039</span><span id="line-39">import org.json.JSONObject;</span>
+<span class="source-line-no">040</span><span id="line-40"></span>
+<span class="source-line-no">041</span><span id="line-41">import java.util.HashSet;</span>
+<span class="source-line-no">042</span><span id="line-42">import java.util.Set;</span>
+<span class="source-line-no">043</span><span id="line-43">import java.util.TreeSet;</span>
+<span class="source-line-no">044</span><span id="line-44">import java.util.function.Supplier;</span>
+<span class="source-line-no">045</span><span id="line-45">import java.util.stream.Collectors;</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">/**</span>
+<span class="source-line-no">048</span><span id="line-48"> * A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request</span>
+<span class="source-line-no">049</span><span id="line-49"> * messages which can be sent (via `sendPumpCommand`) to receive more information about the event</span>
+<span class="source-line-no">050</span><span id="line-50"> * which just occurred, in logic matching the Tandem mobile app, is included. To get these</span>
+<span class="source-line-no">051</span><span id="line-51"> * instantiated request messages, you can invoke:</span>
+<span class="source-line-no">052</span><span id="line-52"> *     QualifyingEvent.groupSuggestedHandlers(qualifyingEvents)</span>
+<span class="source-line-no">053</span><span id="line-53"> *</span>
+<span class="source-line-no">054</span><span id="line-54"> * Note that if t:connect app connection sharing is enabled and the t:connect app is running,</span>
+<span class="source-line-no">055</span><span id="line-55"> * you can use enableSendSharedConnectionResponseMessages and get the response from these callbacks</span>
+<span class="source-line-no">056</span><span id="line-56"> * for free, without duplicating requests.</span>
+<span class="source-line-no">057</span><span id="line-57"> */</span>
+<span class="source-line-no">058</span><span id="line-58">public enum QualifyingEvent {</span>
+<span class="source-line-no">059</span><span id="line-59">    ALERT(1, Set.of(</span>
+<span class="source-line-no">060</span><span id="line-60">            AlertStatusRequest::new)),</span>
+<span class="source-line-no">061</span><span id="line-61">    ALARM(2, Set.of(</span>
+<span class="source-line-no">062</span><span id="line-62">            AlarmStatusRequest::new,</span>
+<span class="source-line-no">063</span><span id="line-63">            HighestAamRequest::new,</span>
+<span class="source-line-no">064</span><span id="line-64">            () -&gt; activeAamBitsRequest(2))),</span>
+<span class="source-line-no">065</span><span id="line-65">    REMINDER(4, Set.of(</span>
+<span class="source-line-no">066</span><span id="line-66">            ReminderStatusRequest::new)),</span>
+<span class="source-line-no">067</span><span id="line-67">    MALFUNCTION(8, Set.of(</span>
+<span class="source-line-no">068</span><span id="line-68">            MalfunctionStatusRequest::new,</span>
+<span class="source-line-no">069</span><span id="line-69">            HighestAamRequest::new,</span>
+<span class="source-line-no">070</span><span id="line-70">            () -&gt; activeAamBitsRequest(4))),</span>
+<span class="source-line-no">071</span><span id="line-71">    CGM_ALERT(16, Set.of(</span>
+<span class="source-line-no">072</span><span id="line-72">            CGMAlertStatusRequest::new)),</span>
+<span class="source-line-no">073</span><span id="line-73">    HOME_SCREEN_CHANGE(32, Set.of(</span>
+<span class="source-line-no">074</span><span id="line-74">            CurrentBasalStatusRequest::new,</span>
+<span class="source-line-no">075</span><span id="line-75">            CurrentEGVGuiDataRequest::new,</span>
+<span class="source-line-no">076</span><span id="line-76">            HomeScreenMirrorRequest::new,</span>
+<span class="source-line-no">077</span><span id="line-77">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
+<span class="source-line-no">078</span><span id="line-78">    PUMP_SUSPEND(64, Set.of(</span>
+<span class="source-line-no">079</span><span id="line-79">            InsulinStatusRequest::new,</span>
+<span class="source-line-no">080</span><span id="line-80">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</span>
+<span class="source-line-no">081</span><span id="line-81">    PUMP_RESUME(128, Set.of(</span>
+<span class="source-line-no">082</span><span id="line-82">            InsulinStatusRequest::new,</span>
+<span class="source-line-no">083</span><span id="line-83">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
+<span class="source-line-no">084</span><span id="line-84">            CurrentEGVGuiDataRequest::new,</span>
+<span class="source-line-no">085</span><span id="line-85">            ProfileStatusRequest::new)),</span>
+<span class="source-line-no">086</span><span id="line-86">    TIME_CHANGE(256, Set.of(</span>
+<span class="source-line-no">087</span><span id="line-87">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
+<span class="source-line-no">088</span><span id="line-88">            CGMStatusRequest::new,</span>
+<span class="source-line-no">089</span><span id="line-89">            TimeSinceResetRequest::new)),</span>
+<span class="source-line-no">090</span><span id="line-90">    BASAL_CHANGE(512, Set.of(</span>
+<span class="source-line-no">091</span><span id="line-91">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
+<span class="source-line-no">092</span><span id="line-92">            HomeScreenMirrorRequest::new,</span>
+<span class="source-line-no">093</span><span id="line-93">            CurrentBasalStatusRequest::new,</span>
+<span class="source-line-no">094</span><span id="line-94">            TempRateRequest::new)),</span>
+<span class="source-line-no">095</span><span id="line-95">    BOLUS_CHANGE(1024, Set.of(</span>
+<span class="source-line-no">096</span><span id="line-96">            CurrentBolusStatusRequest::new,</span>
+<span class="source-line-no">097</span><span id="line-97">            ExtendedBolusStatusRequest::new,</span>
+<span class="source-line-no">098</span><span id="line-98">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
+<span class="source-line-no">099</span><span id="line-99">    IOB_CHANGE(2048, Set.of(</span>
+<span class="source-line-no">100</span><span id="line-100">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()))),</span>
+<span class="source-line-no">101</span><span id="line-101">    EXTENDED_BOLUS_CHANGE(4096, Set.of(</span>
+<span class="source-line-no">102</span><span id="line-102">            ExtendedBolusStatusRequest::new,</span>
+<span class="source-line-no">103</span><span id="line-103">            () -&gt; LastBolusStatusRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
+<span class="source-line-no">104</span><span id="line-104">    PROFILE_CHANGE(8192, Set.of(</span>
+<span class="source-line-no">105</span><span id="line-105">            ProfileStatusRequest::new)),</span>
+<span class="source-line-no">106</span><span id="line-106">    BG(16384, Set.of(</span>
+<span class="source-line-no">107</span><span id="line-107">            LastBGRequest::new)),</span>
+<span class="source-line-no">108</span><span id="line-108">    CGM_CHANGE(32768, Set.of(</span>
+<span class="source-line-no">109</span><span id="line-109">            CGMStatusRequest::new,</span>
+<span class="source-line-no">110</span><span id="line-110">            CurrentEGVGuiDataRequest::new,</span>
+<span class="source-line-no">111</span><span id="line-111">            HomeScreenMirrorRequest::new)),</span>
+<span class="source-line-no">112</span><span id="line-112">    BATTERY(65536, Set.of(</span>
+<span class="source-line-no">113</span><span id="line-113">            () -&gt; CurrentBatteryRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()))),</span>
+<span class="source-line-no">114</span><span id="line-114">    BASAL_IQ(131072, Set.of(</span>
+<span class="source-line-no">115</span><span id="line-115">            BasalIQSettingsRequest::new)),</span>
+<span class="source-line-no">116</span><span id="line-116">    REMAINING_INSULIN(262144, Set.of(</span>
+<span class="source-line-no">117</span><span id="line-117">            InsulinStatusRequest::new)),</span>
+<span class="source-line-no">118</span><span id="line-118">    PUMP_COMMUNICATIONS_SUSPENDED(524288),</span>
+<span class="source-line-no">119</span><span id="line-119">    ACTIVE_PROFILE_SEGMENT_CHANGE(1048576, Set.of(</span>
+<span class="source-line-no">120</span><span id="line-120">            ProfileStatusRequest::new)),</span>
+<span class="source-line-no">121</span><span id="line-121">    BASAL_IQ_STATUS(2097152, Set.of(</span>
+<span class="source-line-no">122</span><span id="line-122">            BasalIQSettingsRequest::new,</span>
+<span class="source-line-no">123</span><span id="line-123">            BasalIQStatusRequest::new)),</span>
+<span class="source-line-no">124</span><span id="line-124">    CONTROL_IQ_INFO(4194304, Set.of(</span>
+<span class="source-line-no">125</span><span id="line-125">            () -&gt; IOBRequestBuilder.create(PumpStateSupplier.controlIQSupported.get()),</span>
+<span class="source-line-no">126</span><span id="line-126">            () -&gt; ControlIQInfoRequestBuilder.create(PumpStateSupplier.pumpApiVersion.get()),</span>
+<span class="source-line-no">127</span><span id="line-127">            ControlIQSleepScheduleRequest::new)),</span>
+<span class="source-line-no">128</span><span id="line-128">    CONTROL_IQ_SLEEP(8388608, Set.of(</span>
+<span class="source-line-no">129</span><span id="line-129">            ControlIQSleepScheduleRequest::new)),</span>
+<span class="source-line-no">130</span><span id="line-130">    GLOBAL_PUMP_SETTINGS(16777216, Set.of(</span>
+<span class="source-line-no">131</span><span id="line-131">            GlobalMaxBolusSettingsRequest::new,</span>
+<span class="source-line-no">132</span><span id="line-132">            BasalLimitSettingsRequest::new,</span>
+<span class="source-line-no">133</span><span id="line-133">            LocalizationRequest::new,</span>
+<span class="source-line-no">134</span><span id="line-134">            PumpGlobalsRequest::new,</span>
+<span class="source-line-no">135</span><span id="line-135">            PumpSettingsRequest::new)),</span>
+<span class="source-line-no">136</span><span id="line-136">    SNOOZE_STATUS(33554432),</span>
+<span class="source-line-no">137</span><span id="line-137">    PUMPING_STATUS(67108864, Set.of(</span>
+<span class="source-line-no">138</span><span id="line-138">            LoadStatusRequest::new)),</span>
+<span class="source-line-no">139</span><span id="line-139">    PUMP_RESET(134217728),</span>
+<span class="source-line-no">140</span><span id="line-140">    HEARTBEAT(268435456),</span>
+<span class="source-line-no">141</span><span id="line-141">    BOLUS_PERMISSION_REVOKED(2147483648L, Set.of(</span>
+<span class="source-line-no">142</span><span id="line-142">            () -&gt; {</span>
+<span class="source-line-no">143</span><span id="line-143">                if (PumpStateSupplier.inProgressBolusId != null &amp;&amp; PumpStateSupplier.inProgressBolusId.get() != null) {</span>
+<span class="source-line-no">144</span><span id="line-144">                    return new BolusPermissionChangeReasonRequest(PumpStateSupplier.inProgressBolusId.get());</span>
+<span class="source-line-no">145</span><span id="line-145">                }</span>
+<span class="source-line-no">146</span><span id="line-146">                return null;</span>
+<span class="source-line-no">147</span><span id="line-147">            }</span>
+<span class="source-line-no">148</span><span id="line-148">    )),</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">    ;</span>
+<span class="source-line-no">151</span><span id="line-151">    private final long id;</span>
+<span class="source-line-no">152</span><span id="line-152">    private final Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers;</span>
+<span class="source-line-no">153</span><span id="line-153">    QualifyingEvent(long id) {</span>
+<span class="source-line-no">154</span><span id="line-154">        this.id = id;</span>
+<span class="source-line-no">155</span><span id="line-155">        this.suggestedHandlers = new HashSet&lt;&gt;();</span>
 <span class="source-line-no">156</span><span id="line-156">    }</span>
 <span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">    public static Set&lt;QualifyingEvent&gt; fromRawBtBytes(byte[] raw) {</span>
-<span class="source-line-no">159</span><span id="line-159">        return fromBitmask(Bytes.readUint32(raw, 0));</span>
-<span class="source-line-no">160</span><span id="line-160">    }</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">    public static Set&lt;? extends Message&gt; groupSuggestedHandlers(Set&lt;QualifyingEvent&gt; events) {</span>
-<span class="source-line-no">163</span><span id="line-163">        Set&lt;Supplier&lt;? extends Message&gt;&gt; messages = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">164</span><span id="line-164">        for (QualifyingEvent e : events) {</span>
-<span class="source-line-no">165</span><span id="line-165">            messages.addAll(e.suggestedHandlers);</span>
-<span class="source-line-no">166</span><span id="line-166">        }</span>
-<span class="source-line-no">167</span><span id="line-167">        return messages.stream().map(Supplier::get).collect(Collectors.toSet());</span>
-<span class="source-line-no">168</span><span id="line-168">    }</span>
-<span class="source-line-no">169</span><span id="line-169"></span>
-<span class="source-line-no">170</span><span id="line-170">    public static int toBitmask(QualifyingEvent...states) {</span>
-<span class="source-line-no">171</span><span id="line-171">        int bitmask = 0;</span>
-<span class="source-line-no">172</span><span id="line-172">        for (QualifyingEvent e : states) {</span>
-<span class="source-line-no">173</span><span id="line-173">            bitmask |= e.getId();</span>
-<span class="source-line-no">174</span><span id="line-174">        }</span>
-<span class="source-line-no">175</span><span id="line-175">        return bitmask;</span>
-<span class="source-line-no">176</span><span id="line-176">    }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">    public String jsonToString() {</span>
-<span class="source-line-no">179</span><span id="line-179">        JSONObject obj = new JSONObject();</span>
-<span class="source-line-no">180</span><span id="line-180">        obj.put("event", name());</span>
-<span class="source-line-no">181</span><span id="line-181">        return obj.toString(0);</span>
-<span class="source-line-no">182</span><span id="line-182">    }</span>
-<span class="source-line-no">183</span><span id="line-183"></span>
-<span class="source-line-no">184</span><span id="line-184">    public JSONObject asJsonObject() {</span>
-<span class="source-line-no">185</span><span id="line-185">        JSONObject obj = new JSONObject();</span>
-<span class="source-line-no">186</span><span id="line-186">        obj.put("event", name());</span>
-<span class="source-line-no">187</span><span id="line-187">        return obj;</span>
-<span class="source-line-no">188</span><span id="line-188">    }</span>
-<span class="source-line-no">189</span><span id="line-189"></span>
-<span class="source-line-no">190</span><span id="line-190">}</span>
+<span class="source-line-no">158</span><span id="line-158">    QualifyingEvent(long id, Set&lt;Supplier&lt;? extends Message&gt;&gt; suggestedHandlers) {</span>
+<span class="source-line-no">159</span><span id="line-159">        this.id = id;</span>
+<span class="source-line-no">160</span><span id="line-160">        this.suggestedHandlers = suggestedHandlers;</span>
+<span class="source-line-no">161</span><span id="line-161">    }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">    public final long getId() {</span>
+<span class="source-line-no">164</span><span id="line-164">        return id;</span>
+<span class="source-line-no">165</span><span id="line-165">    }</span>
+<span class="source-line-no">166</span><span id="line-166"></span>
+<span class="source-line-no">167</span><span id="line-167">    public final Set&lt;Supplier&lt;? extends Message&gt;&gt; getSuggestedHandlers() {</span>
+<span class="source-line-no">168</span><span id="line-168">        return suggestedHandlers;</span>
+<span class="source-line-no">169</span><span id="line-169">    }</span>
+<span class="source-line-no">170</span><span id="line-170"></span>
+<span class="source-line-no">171</span><span id="line-171">    public static Set&lt;QualifyingEvent&gt; fromBitmask(long bitmask) {</span>
+<span class="source-line-no">172</span><span id="line-172">        Set&lt;QualifyingEvent&gt; ret = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">173</span><span id="line-173">        for (QualifyingEvent e : values()) {</span>
+<span class="source-line-no">174</span><span id="line-174">            if ((bitmask &amp; e.getId()) != 0) {</span>
+<span class="source-line-no">175</span><span id="line-175">                ret.add(e);</span>
+<span class="source-line-no">176</span><span id="line-176">            }</span>
+<span class="source-line-no">177</span><span id="line-177">        }</span>
+<span class="source-line-no">178</span><span id="line-178">        return ret;</span>
+<span class="source-line-no">179</span><span id="line-179">    }</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">    public static Set&lt;QualifyingEvent&gt; fromRawBtBytes(byte[] raw) {</span>
+<span class="source-line-no">182</span><span id="line-182">        return fromBitmask(Bytes.readUint32(raw, 0));</span>
+<span class="source-line-no">183</span><span id="line-183">    }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">    public static Set&lt;? extends Message&gt; groupSuggestedHandlers(Set&lt;QualifyingEvent&gt; events) {</span>
+<span class="source-line-no">186</span><span id="line-186">        Set&lt;Supplier&lt;? extends Message&gt;&gt; messages = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">187</span><span id="line-187">        for (QualifyingEvent e : events) {</span>
+<span class="source-line-no">188</span><span id="line-188">            messages.addAll(e.suggestedHandlers);</span>
+<span class="source-line-no">189</span><span id="line-189">        }</span>
+<span class="source-line-no">190</span><span id="line-190">        return messages.stream().map(Supplier::get).collect(Collectors.toSet());</span>
+<span class="source-line-no">191</span><span id="line-191">    }</span>
+<span class="source-line-no">192</span><span id="line-192"></span>
+<span class="source-line-no">193</span><span id="line-193">    public static int toBitmask(QualifyingEvent...states) {</span>
+<span class="source-line-no">194</span><span id="line-194">        int bitmask = 0;</span>
+<span class="source-line-no">195</span><span id="line-195">        for (QualifyingEvent e : states) {</span>
+<span class="source-line-no">196</span><span id="line-196">            bitmask |= e.getId();</span>
+<span class="source-line-no">197</span><span id="line-197">        }</span>
+<span class="source-line-no">198</span><span id="line-198">        return bitmask;</span>
+<span class="source-line-no">199</span><span id="line-199">    }</span>
+<span class="source-line-no">200</span><span id="line-200"></span>
+<span class="source-line-no">201</span><span id="line-201">    public String jsonToString() {</span>
+<span class="source-line-no">202</span><span id="line-202">        JSONObject obj = new JSONObject();</span>
+<span class="source-line-no">203</span><span id="line-203">        obj.put("event", name());</span>
+<span class="source-line-no">204</span><span id="line-204">        return obj.toString(0);</span>
+<span class="source-line-no">205</span><span id="line-205">    }</span>
+<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">207</span><span id="line-207">    public JSONObject asJsonObject() {</span>
+<span class="source-line-no">208</span><span id="line-208">        JSONObject obj = new JSONObject();</span>
+<span class="source-line-no">209</span><span id="line-209">        obj.put("event", name());</span>
+<span class="source-line-no">210</span><span id="line-210">        return obj;</span>
+<span class="source-line-no">211</span><span id="line-211">    }</span>
+<span class="source-line-no">212</span><span id="line-212"></span>
+<span class="source-line-no">213</span><span id="line-213">    private static ActiveAamBitsRequest activeAamBitsRequest(int aamType) {</span>
+<span class="source-line-no">214</span><span id="line-214">        return new ActiveAamBitsRequest(new byte[]{(byte) aamType});</span>
+<span class="source-line-no">215</span><span id="line-215">    }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">}</span>
 
 
 

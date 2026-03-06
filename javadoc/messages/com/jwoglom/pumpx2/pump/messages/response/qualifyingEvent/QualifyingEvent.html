@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/constant/Constable.html" title="class or interface in java.lang.constant" class="external-link">Constable</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public enum </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-50">QualifyingEvent</a></span>
+<div class="type-signature"><span class="modifiers">public enum </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-58">QualifyingEvent</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</span></div>
 <div class="block">A list of all QualifyingEvents which can be sent from the pump. For some events, a set of request
  messages which can be sent (via `sendPumpCommand`) to receive more information about the event
@@ -116,7 +116,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#ACTIVE_SEGMENT_CHANGE" class="member-name-link">ACTIVE_SEGMENT_CHANGE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#ACTIVE_PROFILE_SEGMENT_CHANGE" class="member-name-link">ACTIVE_PROFILE_SEGMENT_CHANGE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="#ALARM" class="member-name-link">ALARM</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -146,6 +146,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#EXTENDED_BOLUS_CHANGE" class="member-name-link">EXTENDED_BOLUS_CHANGE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="#GLOBAL_PUMP_SETTINGS" class="member-name-link">GLOBAL_PUMP_SETTINGS</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="#HEARTBEAT" class="member-name-link">HEARTBEAT</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="#HOME_SCREEN_CHANGE" class="member-name-link">HOME_SCREEN_CHANGE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#IOB_CHANGE" class="member-name-link">IOB_CHANGE</a></code></div>
@@ -154,18 +158,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#PROFILE_CHANGE" class="member-name-link">PROFILE_CHANGE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="#PUMP_COMMUNICATIONS_SUSPENDED" class="member-name-link">PUMP_COMMUNICATIONS_SUSPENDED</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="#PUMP_RESET" class="member-name-link">PUMP_RESET</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="#PUMP_RESUME" class="member-name-link">PUMP_RESUME</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#PUMP_SUSPEND" class="member-name-link">PUMP_SUSPEND</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#REMAINING_INSULIN" class="member-name-link">REMAINING_INSULIN</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#PUMPING_STATUS" class="member-name-link">PUMPING_STATUS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#REMINDER" class="member-name-link">REMINDER</a></code></div>
+<div class="col-first even-row-color"><code><a href="#REMAINING_INSULIN" class="member-name-link">REMAINING_INSULIN</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="#SUSPEND_COMM" class="member-name-link">SUSPEND_COMM</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#REMINDER" class="member-name-link">REMINDER</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="#TIME_CHANGE" class="member-name-link">TIME_CHANGE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#SNOOZE_STATUS" class="member-name-link">SNOOZE_STATUS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="#TIME_CHANGE" class="member-name-link">TIME_CHANGE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -238,151 +248,181 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="ALERT">
 <h3>ALERT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-51">ALERT</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-59">ALERT</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="ALARM">
 <h3>ALARM</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-53">ALARM</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-61">ALARM</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="REMINDER">
 <h3>REMINDER</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-55">REMINDER</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-65">REMINDER</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="MALFUNCTION">
 <h3>MALFUNCTION</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-57">MALFUNCTION</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-67">MALFUNCTION</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CGM_ALERT">
 <h3>CGM_ALERT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-59">CGM_ALERT</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-71">CGM_ALERT</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="HOME_SCREEN_CHANGE">
 <h3>HOME_SCREEN_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-61">HOME_SCREEN_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-73">HOME_SCREEN_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="PUMP_SUSPEND">
 <h3>PUMP_SUSPEND</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-66">PUMP_SUSPEND</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-78">PUMP_SUSPEND</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="PUMP_RESUME">
 <h3>PUMP_RESUME</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-69">PUMP_RESUME</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-81">PUMP_RESUME</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="TIME_CHANGE">
 <h3>TIME_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-74">TIME_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-86">TIME_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BASAL_CHANGE">
 <h3>BASAL_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-78">BASAL_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-90">BASAL_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BOLUS_CHANGE">
 <h3>BOLUS_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-83">BOLUS_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-95">BOLUS_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="IOB_CHANGE">
 <h3>IOB_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-87">IOB_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-99">IOB_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="EXTENDED_BOLUS_CHANGE">
 <h3>EXTENDED_BOLUS_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-89">EXTENDED_BOLUS_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-101">EXTENDED_BOLUS_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="PROFILE_CHANGE">
 <h3>PROFILE_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-92">PROFILE_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-104">PROFILE_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BG">
 <h3>BG</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-94">BG</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-106">BG</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CGM_CHANGE">
 <h3>CGM_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-96">CGM_CHANGE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-108">CGM_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BATTERY">
 <h3>BATTERY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-100">BATTERY</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-112">BATTERY</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BASAL_IQ">
 <h3>BASAL_IQ</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-102">BASAL_IQ</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-114">BASAL_IQ</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="REMAINING_INSULIN">
 <h3>REMAINING_INSULIN</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-104">REMAINING_INSULIN</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-116">REMAINING_INSULIN</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="SUSPEND_COMM">
-<h3>SUSPEND_COMM</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-106">SUSPEND_COMM</a></span></div>
+<section class="detail" id="PUMP_COMMUNICATIONS_SUSPENDED">
+<h3>PUMP_COMMUNICATIONS_SUSPENDED</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-118">PUMP_COMMUNICATIONS_SUSPENDED</a></span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="ACTIVE_SEGMENT_CHANGE">
-<h3>ACTIVE_SEGMENT_CHANGE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-107">ACTIVE_SEGMENT_CHANGE</a></span></div>
+<section class="detail" id="ACTIVE_PROFILE_SEGMENT_CHANGE">
+<h3>ACTIVE_PROFILE_SEGMENT_CHANGE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-119">ACTIVE_PROFILE_SEGMENT_CHANGE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BASAL_IQ_STATUS">
 <h3>BASAL_IQ_STATUS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-109">BASAL_IQ_STATUS</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-121">BASAL_IQ_STATUS</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CONTROL_IQ_INFO">
 <h3>CONTROL_IQ_INFO</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-112">CONTROL_IQ_INFO</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-124">CONTROL_IQ_INFO</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CONTROL_IQ_SLEEP">
 <h3>CONTROL_IQ_SLEEP</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-116">CONTROL_IQ_SLEEP</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-128">CONTROL_IQ_SLEEP</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="GLOBAL_PUMP_SETTINGS">
+<h3>GLOBAL_PUMP_SETTINGS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-130">GLOBAL_PUMP_SETTINGS</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="SNOOZE_STATUS">
+<h3>SNOOZE_STATUS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-136">SNOOZE_STATUS</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="PUMPING_STATUS">
+<h3>PUMPING_STATUS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-137">PUMPING_STATUS</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="PUMP_RESET">
+<h3>PUMP_RESET</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-139">PUMP_RESET</a></span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="HEARTBEAT">
+<h3>HEARTBEAT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-140">HEARTBEAT</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BOLUS_PERMISSION_REVOKED">
 <h3>BOLUS_PERMISSION_REVOKED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-118">BOLUS_PERMISSION_REVOKED</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-141">BOLUS_PERMISSION_REVOKED</a></span></div>
 </section>
 </li>
 </ul>
@@ -396,7 +436,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="values()">
 <h3>values</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-50">values</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-58">values</a></span>()</div>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 <dl class="notes">
@@ -408,7 +448,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="valueOf(java.lang.String)">
 <h3>valueOf</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-50">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-58">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Returns the enum constant of this class with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this class.  (Extraneous whitespace characters are 
@@ -427,49 +467,49 @@ not permitted.)</div>
 <li>
 <section class="detail" id="getId()">
 <h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-140">getId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-163">getId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSuggestedHandlers()">
 <h3>getSuggestedHandlers</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;? extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-144">getSuggestedHandlers</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;? extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-167">getSuggestedHandlers</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="fromBitmask(long)">
 <h3>fromBitmask</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-148">fromBitmask</a></span><wbr><span class="parameters">(long&nbsp;bitmask)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-171">fromBitmask</a></span><wbr><span class="parameters">(long&nbsp;bitmask)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="fromRawBtBytes(byte[])">
 <h3>fromRawBtBytes</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-158">fromRawBtBytes</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-181">fromRawBtBytes</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="groupSuggestedHandlers(java.util.Set)">
 <h3>groupSuggestedHandlers</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-162">groupSuggestedHandlers</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;&nbsp;events)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-185">groupSuggestedHandlers</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>&gt;&nbsp;events)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="toBitmask(com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent...)">
 <h3>toBitmask</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-170">toBitmask</a></span><wbr><span class="parameters">(<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>...&nbsp;states)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-193">toBitmask</a></span><wbr><span class="parameters">(<a href="QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a>...&nbsp;states)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="jsonToString()">
 <h3>jsonToString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-178">jsonToString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-201">jsonToString</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="asJsonObject()">
 <h3>asJsonObject</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.json.JSONObject</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-184">asJsonObject</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.json.JSONObject</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#line-207">asJsonObject</a></span>()</div>
 </section>
 </li>
 </ul>
