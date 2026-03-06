@@ -7,10 +7,12 @@ import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.IOBRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.LastBolusStatusRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalIQStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BolusPermissionChangeReasonRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMAlertStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusRequest;
@@ -19,11 +21,17 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBasalStatus
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentBolusStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentEGVGuiDataRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ExtendedBolusStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.GlobalMaxBolusSettingsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HighestAamRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.HomeScreenMirrorRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.InsulinStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBGRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LoadStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.MalfunctionStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ProfileStatusRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpSettingsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ReminderStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TimeSinceResetRequest;
@@ -51,11 +59,15 @@ public enum QualifyingEvent {
     ALERT(1, Set.of(
             AlertStatusRequest::new)),
     ALARM(2, Set.of(
-            AlarmStatusRequest::new)),
+            AlarmStatusRequest::new,
+            HighestAamRequest::new,
+            () -> activeAamBitsRequest(2))),
     REMINDER(4, Set.of(
             ReminderStatusRequest::new)),
     MALFUNCTION(8, Set.of(
-            MalfunctionStatusRequest::new)),
+            MalfunctionStatusRequest::new,
+            HighestAamRequest::new,
+            () -> activeAamBitsRequest(4))),
     CGM_ALERT(16, Set.of(
             CGMAlertStatusRequest::new)),
     HOME_SCREEN_CHANGE(32, Set.of(
@@ -103,8 +115,8 @@ public enum QualifyingEvent {
             BasalIQSettingsRequest::new)),
     REMAINING_INSULIN(262144, Set.of(
             InsulinStatusRequest::new)),
-    SUSPEND_COMM(524288),
-    ACTIVE_SEGMENT_CHANGE(1048576, Set.of(
+    PUMP_COMMUNICATIONS_SUSPENDED(524288),
+    ACTIVE_PROFILE_SEGMENT_CHANGE(1048576, Set.of(
             ProfileStatusRequest::new)),
     BASAL_IQ_STATUS(2097152, Set.of(
             BasalIQSettingsRequest::new,
@@ -115,6 +127,17 @@ public enum QualifyingEvent {
             ControlIQSleepScheduleRequest::new)),
     CONTROL_IQ_SLEEP(8388608, Set.of(
             ControlIQSleepScheduleRequest::new)),
+    GLOBAL_PUMP_SETTINGS(16777216, Set.of(
+            GlobalMaxBolusSettingsRequest::new,
+            BasalLimitSettingsRequest::new,
+            LocalizationRequest::new,
+            PumpGlobalsRequest::new,
+            PumpSettingsRequest::new)),
+    SNOOZE_STATUS(33554432),
+    PUMPING_STATUS(67108864, Set.of(
+            LoadStatusRequest::new)),
+    PUMP_RESET(134217728),
+    HEARTBEAT(268435456),
     BOLUS_PERMISSION_REVOKED(2147483648L, Set.of(
             () -> {
                 if (PumpStateSupplier.inProgressBolusId != null && PumpStateSupplier.inProgressBolusId.get() != null) {
@@ -185,6 +208,10 @@ public enum QualifyingEvent {
         JSONObject obj = new JSONObject();
         obj.put("event", name());
         return obj;
+    }
+
+    private static ActiveAamBitsRequest activeAamBitsRequest(int aamType) {
+        return new ActiveAamBitsRequest(new byte[]{(byte) aamType});
     }
 
 }

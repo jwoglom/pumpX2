@@ -57,6 +57,7 @@ import com.welie.blessed.ConnectionState;
 import com.welie.blessed.GattStatus;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.ScanFailure;
+import com.welie.blessed.WriteType;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
@@ -69,6 +70,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -82,6 +84,7 @@ import com.jwoglom.pumpx2.util.timber.DebugTree;
  * The back-of-house which allows {@link TandemPump}, the client-accessible frontend, to work.
  */
 public class TandemBluetoothHandler {
+    private static final byte[] CLEAR_QUALIFYING_EVENTS_VALUE = new byte[]{0, 0, 0, 0};
     private final Context context;
     private TandemPump tandemPump;
     private final Handler handler;
@@ -139,6 +142,14 @@ public class TandemBluetoothHandler {
     private final Set<ConnectionInitializationStep> remainingConnectionInitializationSteps = new HashSet<>();
     private final Set<UUID> remainingCharacteristicNotificationsInit = new HashSet<>();
     private final Map<String, PumpReadyState> pumpReadyStateByAddress = new HashMap<>();
+
+    static Set<QualifyingEvent> normalizeQualifyingEvents(Set<QualifyingEvent> rawEvents) {
+        Set<QualifyingEvent> normalizedEvents = new TreeSet<>(rawEvents);
+        if (normalizedEvents.contains(QualifyingEvent.BOLUS_CHANGE)) {
+            normalizedEvents.remove(QualifyingEvent.EXTENDED_BOLUS_CHANGE);
+        }
+        return normalizedEvents;
+    }
 
     private synchronized void resetRemainingConnectionInitializationSteps() {
         remainingConnectionInitializationSteps.addAll(Arrays.asList(ConnectionInitializationStep.values()));
@@ -344,8 +355,18 @@ public class TandemBluetoothHandler {
             } else if (characteristicUUID.equals(CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS)) {
                 // little-endian uint32: `struct.unpack("<I", bytes.fromhex("..."))`
                 // Integer eventType = parser.getIntValue(20, ByteOrder.LITTLE_ENDIAN);
-                Set<QualifyingEvent> events = QualifyingEvent.fromRawBtBytes(value);
-                Timber.i("RECEIVE-EVENTS: %s", events);
+                Set<QualifyingEvent> rawEvents = QualifyingEvent.fromRawBtBytes(value);
+                Set<QualifyingEvent> events = normalizeQualifyingEvents(rawEvents);
+                if (!rawEvents.isEmpty()) {
+                    clearQualifyingEvents(peripheral);
+                }
+                if (rawEvents.equals(events)) {
+                    Timber.i("RECEIVE-EVENTS: %s", events);
+                } else {
+                    Timber.i("RECEIVE-EVENTS: %s -> %s", rawEvents, events);
+                }
+                // Future history log coordination would hook in here, after normalization/ack
+                // and before dispatching the callback.
                 tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
@@ -627,6 +648,20 @@ public class TandemBluetoothHandler {
             if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
                 this.setupPeriodicTimeSinceReset(peripheral);
             }
+        }
+
+        private void clearQualifyingEvents(@NotNull BluetoothPeripheral peripheral) {
+            if (PumpState.onlySnoopBluetooth) {
+                Timber.d("TandemBluetoothHandler: onlySnoopBluetooth blocked qualifying event clear");
+                return;
+            }
+
+            Timber.d("TandemBluetoothHandler: clearing QUALIFYING_EVENTS characteristic");
+            peripheral.writeCharacteristic(
+                    ServiceUUID.PUMP_SERVICE_UUID,
+                    CharacteristicUUID.QUALIFYING_EVENTS_CHARACTERISTICS,
+                    CLEAR_QUALIFYING_EVENTS_VALUE,
+                    WriteType.WITH_RESPONSE);
         }
 
         private void setupPeriodicTimeSinceReset(BluetoothPeripheral peripheral) {
