@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
+import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.util.timber.DebugTree;
 import com.jwoglom.pumpx2.util.timber.LConfigurator;
 import com.welie.blessed.BluetoothCentralManager;
@@ -32,6 +33,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import timber.log.Timber;
 
@@ -41,6 +43,9 @@ import timber.log.Timber;
  * to one of them.
  */
 public abstract class TandemPumpFinder {
+    // Keep dedupe disabled by default while we debug ready-state transitions.
+    private static final boolean ENABLE_DEDUPED_READY_STATE_UPDATES = false;
+
     private final Context context;
     private final Handler handler;
 
@@ -96,6 +101,9 @@ public abstract class TandemPumpFinder {
         public void onDiscoveredPeripheral(@NotNull BluetoothPeripheral peripheral, @NotNull ScanResult scanResult) {
             Timber.i("PUMP-FINDER-DISCOVERED(%s): addr=%s connState=%s bondState=%s", peripheral.getName(), peripheral.getAddress(), peripheral.getState(), peripheral.getBondState());
             PumpReadyState readyState = parsePumpReadyState(scanResult);
+            if (ENABLE_DEDUPED_READY_STATE_UPDATES && !shouldEmitPumpReadyStateUpdate(peripheral.getAddress(), readyState)) {
+                return;
+            }
             Timber.i("PUMP-FINDER-READY-STATE(%s): addr=%s readyState=%s", peripheral.getName(), peripheral.getAddress(), readyState);
             instance.onDiscoveredPump(peripheral, scanResult, readyState);
         }
@@ -182,6 +190,28 @@ public abstract class TandemPumpFinder {
         central.close();
     }
 
+    private boolean shouldEmitPumpReadyStateUpdate(String peripheralAddress, PumpReadyState readyState) {
+        synchronized (pumpReadyStateByAddress) {
+            PumpReadyState previous = pumpReadyStateByAddress.get(peripheralAddress);
+            if (previous == readyState) {
+                return false;
+            }
+            pumpReadyStateByAddress.put(peripheralAddress, readyState);
+            return true;
+        }
+    }
+
+    private static <C> List<C> sparseArrayToList(SparseArray<C> sparseArray) {
+        if (sparseArray == null) {
+            return null;
+        }
+        List<C> arrayList = new ArrayList<C>(sparseArray.size());
+        for (int i = 0; i < sparseArray.size(); i++) {
+            arrayList.add(sparseArray.valueAt(i));
+        }
+        return arrayList;
+    }
+
     private PumpReadyState parsePumpReadyState(@Nullable ScanResult scanResult) {
         if (scanResult == null || scanResult.getScanRecord() == null) {
             return PumpReadyState.UNKNOWN;
@@ -206,20 +236,7 @@ public abstract class TandemPumpFinder {
     }
 
     private PumpReadyState decodePumpReadyStateFromPayload(byte[] payload) {
-        // Primary assumption (matches iOS path): state byte is at end of manufacturer payload.
-        PumpReadyState state = PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
-        if (state != PumpReadyState.UNKNOWN) {
-            return state;
-        }
-
-        // Fallback: some Android stacks/carriers can shift payload fields; scan for known values.
-        for (int i = payload.length - 1; i >= 0; i--) {
-            state = PumpReadyState.fromManufacturerStateByte(payload[i]);
-            if (state != PumpReadyState.UNKNOWN) {
-                return state;
-            }
-        }
-
-        return PumpReadyState.UNKNOWN;
+        // Match TandemKit parsing: use the trailing manufacturer-data byte as the ready-state.
+        return PumpReadyState.fromManufacturerStateByte(payload[payload.length - 1]);
     }
 }
