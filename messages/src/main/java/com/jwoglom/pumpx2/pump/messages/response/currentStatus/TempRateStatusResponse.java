@@ -3,12 +3,13 @@ package com.jwoglom.pumpx2.pump.messages.response.currentStatus;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.helpers.Dates;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest;
 
-import java.math.BigInteger;
+import java.time.Instant;
 
 @MessageProps(
     opCode=31,
@@ -18,10 +19,12 @@ import java.math.BigInteger;
     request=TempRateStatusRequest.class
 )
 public class TempRateStatusResponse extends Message {
-    private long unknown1;
-    private long unknown2;
-    private long unknown3;
-    private long unknown4;
+    private boolean active;
+    private int tempRateId;
+    private int percentage;
+    private long startTimeRaw;
+    private long secondsSincePumpReset;
+    private long duration;
 
     public TempRateStatusResponse() {
         this.cargo = EMPTY;
@@ -36,27 +39,43 @@ public class TempRateStatusResponse extends Message {
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.unknown1 = Bytes.readUint32(raw, 0);
-        this.unknown2 = Bytes.readUint32(raw, 4);
-        this.unknown3 = Bytes.readUint32(raw, 8);
-        this.unknown4 = Bytes.readUint32(raw, 12);
-
+        this.active = raw[0] != 0;
+        this.tempRateId = Bytes.readShort(raw, 1);
+        this.percentage = (int) (raw[3] & 255);
+        this.startTimeRaw = Bytes.readUint32(raw, 4);
+        this.secondsSincePumpReset = Bytes.readUint32(raw, 8);
+        this.duration = Bytes.readUint32(raw, 12);
     }
 
 
-    public long getUnknown1() {
-        return unknown1;
+    public boolean getActive() {
+        return active;
     }
 
-    public long getUnknown2() {
-        return unknown2;
+    public int getTempRateId() {
+        return tempRateId;
     }
 
-    public long getUnknown3() {
-        return unknown3;
+    public int getPercentage() {
+        return percentage;
     }
 
-    public long getUnknown4() {
-        return unknown4;
+    public long getStartTimeRaw() {
+        return startTimeRaw;
+    }
+
+    /**
+     * @return the evaluation of startTimeRaw against the pump epoch (Jan 1, 2008)
+     */
+    public Instant getStartTimeInstant() {
+        return Dates.fromJan12008EpochSecondsToDate(startTimeRaw);
+    }
+
+    public long getSecondsSincePumpReset() {
+        return secondsSincePumpReset;
+    }
+
+    public long getDuration() {
+        return duration;
     }
 }

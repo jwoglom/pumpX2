@@ -4,17 +4,19 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
-import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusCResponse;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV3Response;
 
 @MessageProps(
     opCode=-70,
+    minApi=KnownApiVersion.MOBI_API_V3_5,
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
-    response=LastBolusStatusCResponse.class
+    response=LastBolusStatusV3Response.class
 )
-public class LastBolusStatusCRequest extends Message {
-    public LastBolusStatusCRequest() {
+public class LastBolusStatusV3Request extends Message {
+    public LastBolusStatusV3Request() {
         this.cargo = EMPTY;
     }
 

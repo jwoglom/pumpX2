@@ -2,6 +2,6 @@ package com.jwoglom.pumpx2.pump.messages.request.currentStatus;
 
 import org.junit.Test;
 
-public class ExtendedBolusStatusBRequestTest {
+public class LastBolusStatusV3RequestTest {
     // TODO: add tests with captured BLE payloads
 }
