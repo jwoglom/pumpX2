@@ -39,6 +39,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -81,9 +82,22 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-24">CgmSupportPackageStatusResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-50">CgmSupportPackageStatusResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Response message for <a href="../../request/currentStatus/CgmSupportPackageStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmSupportPackageStatusRequest</code></a>, opCode -55, size 0
+<div class="block">Response to CgmSupportPackageStatusRequest.
+
+ Binary layout (2 bytes total):
+   offset 0 (1 byte): status        - 0 = ACK/success, 1 = NACK/failure
+   offset 1 (1 byte): validity      - nonzero = true, CGM support package is valid
+
+ The Tandem app reads byte[0] as ResponseStatus (ACK=0, NACK=1) and
+ byte[1] as a boolean validity flag via Byte_ExtKt.readBoolean (nonzero = true).
+
+
+
+ <br>
+
+ Response message for <a href="../../request/currentStatus/CgmSupportPackageStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmSupportPackageStatusRequest</code></a>, opCode -55, size 2
 
  <br>
 
@@ -91,10 +105,11 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-55</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>2</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CgmSupportPackageStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmSupportPackageStatusRequest</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_FUTURE"><code>KnownApiVersion.API_FUTURE</code></a></code>&nbsp;</td></tr>
  </table></div>
 </section>
 <section class="summary">
@@ -118,6 +133,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CgmSupportPackageStatusResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,boolean)" class="member-name-link">CgmSupportPackageStatusResponse</a><wbr>(int&nbsp;status,
+ boolean&nbsp;validity)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -126,15 +144,41 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,boolean)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;status,
+ boolean&nbsp;validity)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">
+ Byte layout for CgmSupportPackageStatusResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) (status &amp; 0xFF)</code>
+ 1<code>(byte) (validity ? 1 : 0)</code>
+ </div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValidity()" class="member-name-link">getValidity</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSuccess()" class="member-name-link">isSuccess</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for CgmSupportPackageStatusResponse:
+ <code>status</code><code>raw[0] &amp; 0xFF</code>
+ <code>validity</code><code>(raw[1] &amp; 0xFF) != 0</code>
+ </div>
+</div>
 </div>
 </div>
 </div>
@@ -158,7 +202,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmSupportPackageStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-32">CgmSupportPackageStatusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-62">CgmSupportPackageStatusResponse</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,boolean)">
+<h3>CgmSupportPackageStatusResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-64">CgmSupportPackageStatusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+ boolean&nbsp;validity)</span></div>
 </section>
 </li>
 </ul>
@@ -172,10 +223,59 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-34">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-77">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CgmSupportPackageStatusResponse:</caption>
+ <tr><td><code>status</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ <tr><td><code>validity</code></td><td><code>(raw[1] &amp; 0xFF) != 0</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(int,boolean)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-92">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+ boolean&nbsp;validity)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for CgmSupportPackageStatusResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>(byte) (status &amp; 0xFF)</code></td></tr>
+ <tr><td>1</td><td><code>(byte) (validity ? 1 : 0)</code></td></tr>
+ </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatus()">
+<h3>getStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-101">getStatus</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw status byte: 0 = ACK (success), 1 = NACK (failure)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isSuccess()">
+<h3>isSuccess</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-108">isSuccess</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the status is ACK (success), false if NACK</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getValidity()">
+<h3>getValidity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-116">getValidity</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if the CGM support package is valid (byte[1] nonzero),
+         as reported by the Tandem app's CGMSupportPackageStatusCargo.validity()</dd>
 </dl>
 </section>
 </li>

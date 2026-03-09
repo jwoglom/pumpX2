@@ -17,41 +17,123 @@
 <div class="source-container">
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.response.currentStatus;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
-<span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">/**</span>
-<span class="source-line-no">010</span><span id="line-10"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest}, opCode -55, size 0</span>
-<span class="source-line-no">011</span><span id="line-11"> *</span>
-<span class="source-line-no">012</span><span id="line-12"> * &lt;br&gt;</span>
-<span class="source-line-no">013</span><span id="line-13"> *</span>
-<span class="source-line-no">014</span><span id="line-14"> * </span>
-<span class="source-line-no">015</span><span id="line-15"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-55&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;/table&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> */</span>
-<span class="source-line-no">024</span><span id="line-24">@MessageProps(</span>
-<span class="source-line-no">025</span><span id="line-25">    opCode=-55,</span>
-<span class="source-line-no">026</span><span id="line-26">    size=0,</span>
-<span class="source-line-no">027</span><span id="line-27">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">028</span><span id="line-28">    characteristic=Characteristic.CURRENT_STATUS,</span>
-<span class="source-line-no">029</span><span id="line-29">    request=CgmSupportPackageStatusRequest.class</span>
-<span class="source-line-no">030</span><span id="line-30">)</span>
-<span class="source-line-no">031</span><span id="line-31">public class CgmSupportPackageStatusResponse extends Message {</span>
-<span class="source-line-no">032</span><span id="line-32">    public CgmSupportPackageStatusResponse() {}</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">035</span><span id="line-35">        this.cargo = raw;</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37">}</span>
+<span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"> * Response to CgmSupportPackageStatusRequest.</span>
+<span class="source-line-no">014</span><span id="line-14"> *</span>
+<span class="source-line-no">015</span><span id="line-15"> * Binary layout (2 bytes total):</span>
+<span class="source-line-no">016</span><span id="line-16"> *   offset 0 (1 byte): status        - 0 = ACK/success, 1 = NACK/failure</span>
+<span class="source-line-no">017</span><span id="line-17"> *   offset 1 (1 byte): validity      - nonzero = true, CGM support package is valid</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * The Tandem app reads byte[0] as ResponseStatus (ACK=0, NACK=1) and</span>
+<span class="source-line-no">020</span><span id="line-20"> * byte[1] as a boolean validity flag via Byte_ExtKt.readBoolean (nonzero = true).</span>
+<span class="source-line-no">021</span><span id="line-21"> */</span>
+<span class="source-line-no">022</span><span id="line-22">/**</span>
+<span class="source-line-no">023</span><span id="line-23"> * Response to CgmSupportPackageStatusRequest.</span>
+<span class="source-line-no">024</span><span id="line-24"> *</span>
+<span class="source-line-no">025</span><span id="line-25"> * Binary layout (2 bytes total):</span>
+<span class="source-line-no">026</span><span id="line-26"> *   offset 0 (1 byte): status        - 0 = ACK/success, 1 = NACK/failure</span>
+<span class="source-line-no">027</span><span id="line-27"> *   offset 1 (1 byte): validity      - nonzero = true, CGM support package is valid</span>
+<span class="source-line-no">028</span><span id="line-28"> *</span>
+<span class="source-line-no">029</span><span id="line-29"> * The Tandem app reads byte[0] as ResponseStatus (ACK=0, NACK=1) and</span>
+<span class="source-line-no">030</span><span id="line-30"> * byte[1] as a boolean validity flag via Byte_ExtKt.readBoolean (nonzero = true).</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33"> *</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;br&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> *</span>
+<span class="source-line-no">036</span><span id="line-36"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest}, opCode -55, size 2</span>
+<span class="source-line-no">037</span><span id="line-37"> *</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;br&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> *</span>
+<span class="source-line-no">040</span><span id="line-40"> * </span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-55&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;2&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">048</span><span id="line-48"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_FUTURE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49"> * &lt;/table&gt;</span>
+<span class="source-line-no">050</span><span id="line-50"> */@MessageProps(</span>
+<span class="source-line-no">051</span><span id="line-51">    opCode=-55,</span>
+<span class="source-line-no">052</span><span id="line-52">    size=2,</span>
+<span class="source-line-no">053</span><span id="line-53">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">054</span><span id="line-54">    characteristic=Characteristic.CURRENT_STATUS,</span>
+<span class="source-line-no">055</span><span id="line-55">    request=CgmSupportPackageStatusRequest.class,</span>
+<span class="source-line-no">056</span><span id="line-56">    minApi=KnownApiVersion.API_FUTURE</span>
+<span class="source-line-no">057</span><span id="line-57">)</span>
+<span class="source-line-no">058</span><span id="line-58">public class CgmSupportPackageStatusResponse extends Message {</span>
+<span class="source-line-no">059</span><span id="line-59">    private int status;</span>
+<span class="source-line-no">060</span><span id="line-60">    private boolean validity;</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    public CgmSupportPackageStatusResponse() {}</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    public CgmSupportPackageStatusResponse(int status, boolean validity) {</span>
+<span class="source-line-no">065</span><span id="line-65">        this.cargo = buildCargo(status, validity);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.status = status;</span>
+<span class="source-line-no">067</span><span id="line-67">        this.validity = validity;</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    /**</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;caption&gt;Parsed fields for CgmSupportPackageStatusResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;validity&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[1] &amp;amp; 0xFF) != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;/table&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     */</span>
+<span class="source-line-no">077</span><span id="line-77">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">078</span><span id="line-78">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">079</span><span id="line-79">        this.cargo = raw;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.status = raw[0] &amp; 0xFF;</span>
+<span class="source-line-no">081</span><span id="line-81">        this.validity = (raw[1] &amp; 0xFF) != 0;</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    /**</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;caption&gt;Byte layout for CgmSupportPackageStatusResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (status &amp;amp; 0xFF)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (validity ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;/table&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     */</span>
+<span class="source-line-no">092</span><span id="line-92">    public static byte[] buildCargo(int status, boolean validity) {</span>
+<span class="source-line-no">093</span><span id="line-93">        return Bytes.combine(</span>
+<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) (status &amp; 0xFF) },</span>
+<span class="source-line-no">095</span><span id="line-95">            new byte[]{ (byte) (validity ? 1 : 0) });</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    /**</span>
+<span class="source-line-no">099</span><span id="line-99">     * @return the raw status byte: 0 = ACK (success), 1 = NACK (failure)</span>
+<span class="source-line-no">100</span><span id="line-100">     */</span>
+<span class="source-line-no">101</span><span id="line-101">    public int getStatus() {</span>
+<span class="source-line-no">102</span><span id="line-102">        return status;</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    /**</span>
+<span class="source-line-no">106</span><span id="line-106">     * @return true if the status is ACK (success), false if NACK</span>
+<span class="source-line-no">107</span><span id="line-107">     */</span>
+<span class="source-line-no">108</span><span id="line-108">    public boolean isSuccess() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return status == 0;</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    /**</span>
+<span class="source-line-no">113</span><span id="line-113">     * @return true if the CGM support package is valid (byte[1] nonzero),</span>
+<span class="source-line-no">114</span><span id="line-114">     *         as reported by the Tandem app's CGMSupportPackageStatusCargo.validity()</span>
+<span class="source-line-no">115</span><span id="line-115">     */</span>
+<span class="source-line-no">116</span><span id="line-116">    public boolean getValidity() {</span>
+<span class="source-line-no">117</span><span id="line-117">        return validity;</span>
+<span class="source-line-no">118</span><span id="line-118">    }</span>
+<span class="source-line-no">119</span><span id="line-119">}</span>
 
 
 

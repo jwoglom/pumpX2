@@ -25,106 +25,105 @@
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;</span>
 <span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">import java.math.BigInteger;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">/**</span>
-<span class="source-line-no">014</span><span id="line-14"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest}, opCode -89, size 7</span>
+<span class="source-line-no">011</span><span id="line-11">/**</span>
+<span class="source-line-no">012</span><span id="line-12"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest}, opCode -89, size 7</span>
+<span class="source-line-no">013</span><span id="line-13"> *</span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;br&gt;</span>
 <span class="source-line-no">015</span><span id="line-15"> *</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;br&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
-<span class="source-line-no">018</span><span id="line-18"> * </span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-89&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;7&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;/table&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> */</span>
-<span class="source-line-no">028</span><span id="line-28">@MessageProps(</span>
-<span class="source-line-no">029</span><span id="line-29">    opCode=-89,</span>
-<span class="source-line-no">030</span><span id="line-30">    size=7,</span>
-<span class="source-line-no">031</span><span id="line-31">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">032</span><span id="line-32">    characteristic=Characteristic.CURRENT_STATUS,</span>
-<span class="source-line-no">033</span><span id="line-33">    request=LocalizationRequest.class</span>
-<span class="source-line-no">034</span><span id="line-34">)</span>
-<span class="source-line-no">035</span><span id="line-35">public class LocalizationResponse extends Message {</span>
-<span class="source-line-no">036</span><span id="line-36">    </span>
-<span class="source-line-no">037</span><span id="line-37">    private int glucoseOUM;</span>
-<span class="source-line-no">038</span><span id="line-38">    private int regionSetting;</span>
-<span class="source-line-no">039</span><span id="line-39">    private int languageSelected;</span>
-<span class="source-line-no">040</span><span id="line-40">    private long languagesAvailableBitmask;</span>
+<span class="source-line-no">016</span><span id="line-16"> * </span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-89&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;7&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;/table&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> */</span>
+<span class="source-line-no">026</span><span id="line-26">@MessageProps(</span>
+<span class="source-line-no">027</span><span id="line-27">    opCode=-89,</span>
+<span class="source-line-no">028</span><span id="line-28">    size=7,</span>
+<span class="source-line-no">029</span><span id="line-29">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">030</span><span id="line-30">    characteristic=Characteristic.CURRENT_STATUS,</span>
+<span class="source-line-no">031</span><span id="line-31">    request=LocalizationRequest.class</span>
+<span class="source-line-no">032</span><span id="line-32">)</span>
+<span class="source-line-no">033</span><span id="line-33">public class LocalizationResponse extends Message {</span>
+<span class="source-line-no">034</span><span id="line-34">    </span>
+<span class="source-line-no">035</span><span id="line-35">    private int glucoseUOM;</span>
+<span class="source-line-no">036</span><span id="line-36">    private int languageSelected;</span>
+<span class="source-line-no">037</span><span id="line-37">    private int regionSetting;</span>
+<span class="source-line-no">038</span><span id="line-38">    private long languagesAvailableBitmask;</span>
+<span class="source-line-no">039</span><span id="line-39">    </span>
+<span class="source-line-no">040</span><span id="line-40">    public LocalizationResponse() {}</span>
 <span class="source-line-no">041</span><span id="line-41">    </span>
-<span class="source-line-no">042</span><span id="line-42">    public LocalizationResponse() {}</span>
-<span class="source-line-no">043</span><span id="line-43">    </span>
-<span class="source-line-no">044</span><span id="line-44">    public LocalizationResponse(int glucoseOUM, int regionSetting, int languageSelected, long languagesAvailableBitmask) {</span>
-<span class="source-line-no">045</span><span id="line-45">        this.cargo = buildCargo(glucoseOUM, regionSetting, languageSelected, languagesAvailableBitmask);</span>
-<span class="source-line-no">046</span><span id="line-46">        // note: these may be out of order</span>
-<span class="source-line-no">047</span><span id="line-47">        this.glucoseOUM = glucoseOUM;</span>
-<span class="source-line-no">048</span><span id="line-48">        this.regionSetting = regionSetting;</span>
-<span class="source-line-no">049</span><span id="line-49">        this.languageSelected = languageSelected;</span>
-<span class="source-line-no">050</span><span id="line-50">        this.languagesAvailableBitmask = languagesAvailableBitmask;</span>
-<span class="source-line-no">051</span><span id="line-51">        </span>
-<span class="source-line-no">052</span><span id="line-52">    }</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    /**</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;caption&gt;Parsed fields for LocalizationResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseOUM&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;regionSetting&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;languageSelected&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;languagesAvailableBitmask&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 3)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;/table&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     */</span>
-<span class="source-line-no">063</span><span id="line-63">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">064</span><span id="line-64">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">065</span><span id="line-65">        this.cargo = raw;</span>
-<span class="source-line-no">066</span><span id="line-66">        // note: these may be out of order</span>
-<span class="source-line-no">067</span><span id="line-67">        this.glucoseOUM = raw[0];</span>
-<span class="source-line-no">068</span><span id="line-68">        this.regionSetting = raw[1];</span>
-<span class="source-line-no">069</span><span id="line-69">        this.languageSelected = raw[2];</span>
-<span class="source-line-no">070</span><span id="line-70">        this.languagesAvailableBitmask = Bytes.readUint32(raw, 3);</span>
-<span class="source-line-no">071</span><span id="line-71">        </span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    </span>
-<span class="source-line-no">075</span><span id="line-75">    /**</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;caption&gt;Byte layout for LocalizationResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) glucoseOUM&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) regionSetting&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) languageSelected&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;/table&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     */</span>
-<span class="source-line-no">088</span><span id="line-88">    public static byte[] buildCargo(int glucoseOUM, int regionSetting, int languageSelected, long languagesAvailableBitmask) {</span>
-<span class="source-line-no">089</span><span id="line-89">        return Bytes.combine(</span>
-<span class="source-line-no">090</span><span id="line-90">            // note: these may be out of order</span>
-<span class="source-line-no">091</span><span id="line-91">            new byte[]{ (byte) glucoseOUM }, </span>
-<span class="source-line-no">092</span><span id="line-92">            new byte[]{ (byte) regionSetting }, </span>
-<span class="source-line-no">093</span><span id="line-93">            new byte[]{ (byte) languageSelected }, </span>
-<span class="source-line-no">094</span><span id="line-94">            Bytes.toUint32(languagesAvailableBitmask));</span>
-<span class="source-line-no">095</span><span id="line-95">    }</span>
-<span class="source-line-no">096</span><span id="line-96">    </span>
-<span class="source-line-no">097</span><span id="line-97">    public int getGlucoseOUM() {</span>
-<span class="source-line-no">098</span><span id="line-98">        return glucoseOUM;</span>
-<span class="source-line-no">099</span><span id="line-99">    }</span>
-<span class="source-line-no">100</span><span id="line-100">    public int getRegionSetting() {</span>
-<span class="source-line-no">101</span><span id="line-101">        return regionSetting;</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103">    public int getLanguageSelected() {</span>
-<span class="source-line-no">104</span><span id="line-104">        return languageSelected;</span>
-<span class="source-line-no">105</span><span id="line-105">    }</span>
-<span class="source-line-no">106</span><span id="line-106">    public long getLanguagesAvailableBitmask() {</span>
-<span class="source-line-no">107</span><span id="line-107">        return languagesAvailableBitmask;</span>
-<span class="source-line-no">108</span><span id="line-108">    }</span>
-<span class="source-line-no">109</span><span id="line-109">    </span>
-<span class="source-line-no">110</span><span id="line-110">}</span>
+<span class="source-line-no">042</span><span id="line-42">    public LocalizationResponse(int glucoseUOM, int languageSelected, int regionSetting, long languagesAvailableBitmask) {</span>
+<span class="source-line-no">043</span><span id="line-43">        this.cargo = buildCargo(glucoseUOM, languageSelected, regionSetting, languagesAvailableBitmask);</span>
+<span class="source-line-no">044</span><span id="line-44">        this.glucoseUOM = glucoseUOM;</span>
+<span class="source-line-no">045</span><span id="line-45">        this.languageSelected = languageSelected;</span>
+<span class="source-line-no">046</span><span id="line-46">        this.regionSetting = regionSetting;</span>
+<span class="source-line-no">047</span><span id="line-47">        this.languagesAvailableBitmask = languagesAvailableBitmask;</span>
+<span class="source-line-no">048</span><span id="line-48">        </span>
+<span class="source-line-no">049</span><span id="line-49">    }</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">    /**</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;caption&gt;Parsed fields for LocalizationResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseUOM&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;languageSelected&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;regionSetting&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;languagesAvailableBitmask&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 3)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;/table&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     */</span>
+<span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">062</span><span id="line-62">        this.cargo = raw;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.glucoseUOM = raw[0];</span>
+<span class="source-line-no">064</span><span id="line-64">        this.languageSelected = raw[1];</span>
+<span class="source-line-no">065</span><span id="line-65">        this.regionSetting = raw[2];</span>
+<span class="source-line-no">066</span><span id="line-66">        this.languagesAvailableBitmask = Bytes.readUint32(raw, 3);</span>
+<span class="source-line-no">067</span><span id="line-67">        </span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    </span>
+<span class="source-line-no">071</span><span id="line-71">    /**</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;caption&gt;Byte layout for LocalizationResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) glucoseUOM&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) languageSelected&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) regionSetting&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(languagesAvailableBitmask) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;/table&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     */</span>
+<span class="source-line-no">084</span><span id="line-84">    public static byte[] buildCargo(int glucoseUOM, int languageSelected, int regionSetting, long languagesAvailableBitmask) {</span>
+<span class="source-line-no">085</span><span id="line-85">        return Bytes.combine(</span>
+<span class="source-line-no">086</span><span id="line-86">            new byte[]{ (byte) glucoseUOM },</span>
+<span class="source-line-no">087</span><span id="line-87">            new byte[]{ (byte) languageSelected }, </span>
+<span class="source-line-no">088</span><span id="line-88">            new byte[]{ (byte) regionSetting },</span>
+<span class="source-line-no">089</span><span id="line-89">            Bytes.toUint32(languagesAvailableBitmask));</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91">    </span>
+<span class="source-line-no">092</span><span id="line-92">    public int getGlucoseUOM() {</span>
+<span class="source-line-no">093</span><span id="line-93">        return glucoseUOM;</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    public int getGlucoseOUM() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return glucoseUOM;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99">    public int getLanguageSelected() {</span>
+<span class="source-line-no">100</span><span id="line-100">        return languageSelected;</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102">    public int getRegionSetting() {</span>
+<span class="source-line-no">103</span><span id="line-103">        return regionSetting;</span>
+<span class="source-line-no">104</span><span id="line-104">    }</span>
+<span class="source-line-no">105</span><span id="line-105">    public long getLanguagesAvailableBitmask() {</span>
+<span class="source-line-no">106</span><span id="line-106">        return languagesAvailableBitmask;</span>
+<span class="source-line-no">107</span><span id="line-107">    }</span>
+<span class="source-line-no">108</span><span id="line-108">    </span>
+<span class="source-line-no">109</span><span id="line-109">}</span>
 
 
 

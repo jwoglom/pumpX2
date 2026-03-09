@@ -39,6 +39,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -81,9 +82,34 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-24">CurrentActiveIdpValuesResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-75">CurrentActiveIdpValuesResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Response message for <a href="../../request/currentStatus/CurrentActiveIdpValuesRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentActiveIdpValuesRequest</code></a>, opCode -105, size 0
+<div class="block">Returns the currently active insulin delivery profile (IDP) parameter values
+ in effect right now, based on the active time segment.
+
+ Byte layout of the cargo (10 bytes total):
+   bytes 0-3:  currentCarbRatio (uint32 LE) - carb ratio in 1000-increments
+   byte  4:    unknown/padding
+   bytes 5-6:  currentTargetBg (uint16 LE) - target blood glucose in mg/dL
+   bytes 6-7:  currentInsulinDuration (uint16 LE) - insulin duration in minutes
+   bytes 8-9:  currentIsf (uint16 LE) - insulin sensitivity factor in mg/dL per unit
+
+ Note: bytes 5-6 (currentTargetBg) and bytes 6-7 (currentInsulinDuration) share byte 6.
+ In practice, currentTargetBg is always less than 256 (its high byte at position 6 is 0),
+ so byte 6 carries only the low byte of currentInsulinDuration. This matches the decompiled
+ Tandem Mobi Android app (CurrentActiveIDPValuesResponse$CurrentActiveIDPValuesCargo):
+   field c (C8235b, index 29) → currentCarbRatio  (readUint32 from offset 0)
+   field d (C8708a, index 0)  → currentTargetBg   (readUint16 from copyFrom(bytes, 5, 2))
+   field e (C8708a, index 1)  → currentInsulinDuration (readUint16 from copyFrom(bytes, 6, 2))
+   field f (C8708a, index 2)  → currentIsf         (readUint16 from copyFrom(bytes, 8, 2))</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>IDPSegmentResponse</code></a></li>
+<li><a href="IDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code><br>
+
+ Response message for com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest, opCode -105, size 10
 
  <br>
 
@@ -91,11 +117,14 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-105</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/currentStatus/CurrentActiveIdpValuesRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentActiveIdpValuesRequest</code></a></code>&nbsp;</td></tr>
- </table></div>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>10</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code>com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest</code>&nbsp;</td></tr>
+ </table></code></a></li>
+</ul>
+</dd>
+</dl>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -118,6 +147,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CurrentActiveIdpValuesResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,int,int,int)" class="member-name-link">CurrentActiveIdpValuesResponse</a><wbr>(long&nbsp;currentCarbRatio,
+ int&nbsp;currentTargetBg,
+ int&nbsp;currentInsulinDuration,
+ int&nbsp;currentIsf)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -126,15 +160,43 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,int,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;currentCarbRatio,
+ int&nbsp;currentTargetBg,
+ int&nbsp;currentInsulinDuration,
+ int&nbsp;currentIsf)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the cargo byte array for this response.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentCarbRatio()" class="member-name-link">getCurrentCarbRatio</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentInsulinDuration()" class="member-name-link">getCurrentInsulinDuration</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentIsf()" class="member-name-link">getCurrentIsf</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentTargetBg()" class="member-name-link">getCurrentTargetBg</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for CurrentActiveIdpValuesResponse:
+ <code>currentCarbRatio</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>currentTargetBg</code><code>Bytes.readShort(raw, 5)</code>
+ <code>currentInsulinDuration</code><code>Bytes.readShort(raw, 6)</code>
+ <code>currentIsf</code><code>Bytes.readShort(raw, 8)</code>
+ </div>
+</div>
 </div>
 </div>
 </div>
@@ -158,7 +220,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CurrentActiveIdpValuesResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-32">CurrentActiveIdpValuesResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-109">CurrentActiveIdpValuesResponse</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,int,int,int)">
+<h3>CurrentActiveIdpValuesResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-111">CurrentActiveIdpValuesResponse</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
+ int&nbsp;currentTargetBg,
+ int&nbsp;currentInsulinDuration,
+ int&nbsp;currentIsf)</span></div>
 </section>
 </li>
 </ul>
@@ -172,10 +243,87 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-34">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-128">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CurrentActiveIdpValuesResponse:</caption>
+ <tr><td><code>currentCarbRatio</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>currentTargetBg</code></td><td><code>Bytes.readShort(raw, 5)</code></td></tr>
+ <tr><td><code>currentInsulinDuration</code></td><td><code>Bytes.readShort(raw, 6)</code></td></tr>
+ <tr><td><code>currentIsf</code></td><td><code>Bytes.readShort(raw, 8)</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(long,int,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-166">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
+ int&nbsp;currentTargetBg,
+ int&nbsp;currentInsulinDuration,
+ int&nbsp;currentIsf)</span></div>
+<div class="block">Builds the cargo byte array for this response.
+
+ Because <code>currentTargetBg</code> (bytes 5-6) and <code>currentInsulinDuration</code> (bytes 6-7)
+ share byte 6, this method assumes <code>currentTargetBg &lt; 256</code> (its high byte = 0) so
+ that byte 6 carries only the low byte of <code>currentInsulinDuration</code> without conflict.
+ <br>
+ <table border="1">
+ <caption>Byte layout for CurrentActiveIdpValuesResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>toUint32(currentCarbRatio) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(currentCarbRatio) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(currentCarbRatio) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(currentCarbRatio) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>(byte) (0)</code></td></tr>
+ <tr><td>5</td><td><code>new byte[]{byte5} [element 0]</code></td></tr>
+ <tr><td>6</td><td><code>new byte[]{byte6} [element 1]</code></td></tr>
+ <tr><td>7</td><td><code>new byte[]{byte7} [element 2]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(currentIsf) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(currentIsf) [byte 1]</code></td></tr>
+ </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentCarbRatio()">
+<h3>getCurrentCarbRatio</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-187">getCurrentCarbRatio</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>carb ratio in 1000-increments. A value of 10000 means 10 g/U.
+ See <a href="../../models/InsulinUnit.html#from1000To1(java.lang.Long)"><code>InsulinUnit.from1000To1(Long)</code></a>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentTargetBg()">
+<h3>getCurrentTargetBg</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-194">getCurrentTargetBg</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>target blood glucose in mg/dL used for Control-IQ corrections</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentInsulinDuration()">
+<h3>getCurrentInsulinDuration</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-201">getCurrentInsulinDuration</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Control-IQ insulin duration in minutes</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCurrentIsf()">
+<h3>getCurrentIsf</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-208">getCurrentIsf</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>insulin sensitivity factor in mg/dL per unit</dd>
 </dl>
 </section>
 </li>

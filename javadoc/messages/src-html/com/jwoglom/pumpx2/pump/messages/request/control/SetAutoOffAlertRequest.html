@@ -18,45 +18,117 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">/**</span>
-<span class="source-line-no">010</span><span id="line-10"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse}, opCode -32, size 0</span>
-<span class="source-line-no">011</span><span id="line-11"> *</span>
-<span class="source-line-no">012</span><span id="line-12"> * &lt;br&gt;</span>
-<span class="source-line-no">013</span><span id="line-13"> *</span>
-<span class="source-line-no">014</span><span id="line-14"> * </span>
-<span class="source-line-no">015</span><span id="line-15"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-32&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;/table&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> */</span>
-<span class="source-line-no">025</span><span id="line-25">@MessageProps(</span>
-<span class="source-line-no">026</span><span id="line-26">    opCode=-32,</span>
-<span class="source-line-no">027</span><span id="line-27">    size=0,</span>
-<span class="source-line-no">028</span><span id="line-28">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">029</span><span id="line-29">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">030</span><span id="line-30">    response=SetAutoOffAlertResponse.class,</span>
-<span class="source-line-no">031</span><span id="line-31">    signed=true</span>
-<span class="source-line-no">032</span><span id="line-32">)</span>
-<span class="source-line-no">033</span><span id="line-33">public class SetAutoOffAlertRequest extends Message {</span>
-<span class="source-line-no">034</span><span id="line-34">    public SetAutoOffAlertRequest() {</span>
-<span class="source-line-no">035</span><span id="line-35">        this.cargo = EMPTY;</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">039</span><span id="line-39">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">040</span><span id="line-40">        this.cargo = raw;</span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42">}</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse;</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"> * Sets the Auto-Off alert configuration.</span>
+<span class="source-line-no">014</span><span id="line-14"> *</span>
+<span class="source-line-no">015</span><span id="line-15"> * Cargo layout (4 bytes, little-endian):</span>
+<span class="source-line-no">016</span><span id="line-16"> *   [0]   enableAutoOff    uint8   - 0=disabled, 1=enabled</span>
+<span class="source-line-no">017</span><span id="line-17"> *   [1-2] autoOffDuration  uint16  - duration in minutes before auto-off</span>
+<span class="source-line-no">018</span><span id="line-18"> *   [3]   bitmask          uint8   - change bitmask (bits: 0=enableAutoOff, 1=autoOffDuration)</span>
+<span class="source-line-no">019</span><span id="line-19"> */</span>
+<span class="source-line-no">020</span><span id="line-20">/**</span>
+<span class="source-line-no">021</span><span id="line-21"> * Sets the Auto-Off alert configuration.</span>
+<span class="source-line-no">022</span><span id="line-22"> *</span>
+<span class="source-line-no">023</span><span id="line-23"> * Cargo layout (4 bytes, little-endian):</span>
+<span class="source-line-no">024</span><span id="line-24"> *   [0]   enableAutoOff    uint8   - 0=disabled, 1=enabled</span>
+<span class="source-line-no">025</span><span id="line-25"> *   [1-2] autoOffDuration  uint16  - duration in minutes before auto-off</span>
+<span class="source-line-no">026</span><span id="line-26"> *   [3]   bitmask          uint8   - change bitmask (bits: 0=enableAutoOff, 1=autoOffDuration)</span>
+<span class="source-line-no">027</span><span id="line-27"> *</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29"> *</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;br&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse}, opCode -32, size 4</span>
+<span class="source-line-no">033</span><span id="line-33"> *</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;br&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> *</span>
+<span class="source-line-no">036</span><span id="line-36"> * </span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-32&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;4&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetAutoOffAlertResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;/table&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> */@MessageProps(</span>
+<span class="source-line-no">047</span><span id="line-47">    opCode=-32,</span>
+<span class="source-line-no">048</span><span id="line-48">    size=4,</span>
+<span class="source-line-no">049</span><span id="line-49">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">050</span><span id="line-50">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">051</span><span id="line-51">    response=SetAutoOffAlertResponse.class,</span>
+<span class="source-line-no">052</span><span id="line-52">    signed=true</span>
+<span class="source-line-no">053</span><span id="line-53">)</span>
+<span class="source-line-no">054</span><span id="line-54">public class SetAutoOffAlertRequest extends Message {</span>
+<span class="source-line-no">055</span><span id="line-55">    private boolean enableAutoOff;</span>
+<span class="source-line-no">056</span><span id="line-56">    private int autoOffDuration;</span>
+<span class="source-line-no">057</span><span id="line-57">    private int bitmask;</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    public SetAutoOffAlertRequest() {}</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">    public SetAutoOffAlertRequest(boolean enableAutoOff, int autoOffDuration, int bitmask) {</span>
+<span class="source-line-no">062</span><span id="line-62">        this.enableAutoOff = enableAutoOff;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.autoOffDuration = autoOffDuration;</span>
+<span class="source-line-no">064</span><span id="line-64">        this.bitmask = bitmask;</span>
+<span class="source-line-no">065</span><span id="line-65">        this.cargo = buildCargo(enableAutoOff, autoOffDuration, bitmask);</span>
+<span class="source-line-no">066</span><span id="line-66">    }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    /**</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;caption&gt;Byte layout for SetAutoOffAlertRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enableAutoOff ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(autoOffDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(autoOffDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bitmask&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;/table&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     */</span>
+<span class="source-line-no">078</span><span id="line-78">    public static byte[] buildCargo(boolean enableAutoOff, int autoOffDuration, int bitmask) {</span>
+<span class="source-line-no">079</span><span id="line-79">        return Bytes.combine(</span>
+<span class="source-line-no">080</span><span id="line-80">            new byte[]{ (byte) (enableAutoOff ? 1 : 0) },</span>
+<span class="source-line-no">081</span><span id="line-81">            Bytes.firstTwoBytesLittleEndian(autoOffDuration),</span>
+<span class="source-line-no">082</span><span id="line-82">            new byte[]{ (byte) bitmask }</span>
+<span class="source-line-no">083</span><span id="line-83">        );</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    /**</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;caption&gt;Parsed fields for SetAutoOffAlertRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enableAutoOff&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[0] &amp;amp; 0xFF) != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;autoOffDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bitmask&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;/table&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     */</span>
+<span class="source-line-no">094</span><span id="line-94">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">095</span><span id="line-95">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">096</span><span id="line-96">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">097</span><span id="line-97">        this.cargo = raw;</span>
+<span class="source-line-no">098</span><span id="line-98">        this.enableAutoOff = (raw[0] &amp; 0xFF) != 0;</span>
+<span class="source-line-no">099</span><span id="line-99">        this.autoOffDuration = Bytes.readShort(raw, 1);</span>
+<span class="source-line-no">100</span><span id="line-100">        this.bitmask = raw[3] &amp; 0xFF;</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    public boolean isEnableAutoOff() {</span>
+<span class="source-line-no">104</span><span id="line-104">        return enableAutoOff;</span>
+<span class="source-line-no">105</span><span id="line-105">    }</span>
+<span class="source-line-no">106</span><span id="line-106"></span>
+<span class="source-line-no">107</span><span id="line-107">    public int getAutoOffDuration() {</span>
+<span class="source-line-no">108</span><span id="line-108">        return autoOffDuration;</span>
+<span class="source-line-no">109</span><span id="line-109">    }</span>
+<span class="source-line-no">110</span><span id="line-110"></span>
+<span class="source-line-no">111</span><span id="line-111">    public int getBitmask() {</span>
+<span class="source-line-no">112</span><span id="line-112">        return bitmask;</span>
+<span class="source-line-no">113</span><span id="line-113">    }</span>
+<span class="source-line-no">114</span><span id="line-114">}</span>
 
 
 

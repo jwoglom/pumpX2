@@ -23,211 +23,214 @@
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">/**</span>
-<span class="source-line-no">012</span><span id="line-12"> * TODO: size may always be 51 and not 60, collect more samples</span>
-<span class="source-line-no">013</span><span id="line-13"> */</span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * TODO: size may always be 51 and not 60, collect more samples</span>
-<span class="source-line-no">016</span><span id="line-16"> *</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18"> *</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;br&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> *</span>
-<span class="source-line-no">021</span><span id="line-21"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest}, opCode -113, size 60</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;br&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> *</span>
-<span class="source-line-no">025</span><span id="line-25"> * </span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-113&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;60&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;variableSize&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">034</span><span id="line-34"> * &lt;/table&gt;</span>
-<span class="source-line-no">035</span><span id="line-35"> */@MessageProps(</span>
-<span class="source-line-no">036</span><span id="line-36">    opCode=-113,</span>
-<span class="source-line-no">037</span><span id="line-37">    size=60, // OR 51</span>
-<span class="source-line-no">038</span><span id="line-38">    variableSize=true,</span>
-<span class="source-line-no">039</span><span id="line-39">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">040</span><span id="line-40">    characteristic=Characteristic.CURRENT_STATUS,</span>
-<span class="source-line-no">041</span><span id="line-41">    request=CommonSoftwareInfoRequest.class</span>
-<span class="source-line-no">042</span><span id="line-42">)</span>
-<span class="source-line-no">043</span><span id="line-43">public class CommonSoftwareInfoResponse extends Message {</span>
-<span class="source-line-no">044</span><span id="line-44">    </span>
-<span class="source-line-no">045</span><span id="line-45">    private String appSoftwareVersion;</span>
-<span class="source-line-no">046</span><span id="line-46">    private long appSoftwarePartNumber;</span>
-<span class="source-line-no">047</span><span id="line-47">    private long appSoftwarePartDashNumber;</span>
-<span class="source-line-no">048</span><span id="line-48">    private long appSoftwarePartRevisionNumber;</span>
-<span class="source-line-no">049</span><span id="line-49">    private String bootloaderVersion;</span>
-<span class="source-line-no">050</span><span id="line-50">    private long bootloaderPartNumber;</span>
-<span class="source-line-no">051</span><span id="line-51">    private Long bootloaderPartDashNumber;</span>
-<span class="source-line-no">052</span><span id="line-52">    private Long bootloaderPartRevisionNumber;</span>
-<span class="source-line-no">053</span><span id="line-53">    </span>
-<span class="source-line-no">054</span><span id="line-54">    public CommonSoftwareInfoResponse() {}</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public CommonSoftwareInfoResponse(byte[] raw) {</span>
-<span class="source-line-no">057</span><span id="line-57">        this.cargo = raw;</span>
-<span class="source-line-no">058</span><span id="line-58">        parse(raw);</span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60">    </span>
-<span class="source-line-no">061</span><span id="line-61">    public CommonSoftwareInfoResponse(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwarePartDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber, long bootloaderPartDashNumber, long bootloaderPartRevisionNumber) {</span>
-<span class="source-line-no">062</span><span id="line-62">        this.cargo = buildCargo(appSoftwareVersion, appSoftwarePartNumber, appSoftwarePartDashNumber, appSoftwarePartRevisionNumber, bootloaderVersion, bootloaderPartNumber, bootloaderPartDashNumber, bootloaderPartRevisionNumber);</span>
-<span class="source-line-no">063</span><span id="line-63">        this.appSoftwareVersion = appSoftwareVersion;</span>
-<span class="source-line-no">064</span><span id="line-64">        this.appSoftwarePartNumber = appSoftwarePartNumber;</span>
-<span class="source-line-no">065</span><span id="line-65">        this.appSoftwarePartDashNumber = appSoftwarePartDashNumber;</span>
-<span class="source-line-no">066</span><span id="line-66">        this.appSoftwarePartRevisionNumber = appSoftwarePartRevisionNumber;</span>
-<span class="source-line-no">067</span><span id="line-67">        this.bootloaderVersion = bootloaderVersion;</span>
-<span class="source-line-no">068</span><span id="line-68">        this.bootloaderPartNumber = bootloaderPartNumber;</span>
-<span class="source-line-no">069</span><span id="line-69">        this.bootloaderPartDashNumber = bootloaderPartDashNumber;</span>
-<span class="source-line-no">070</span><span id="line-70">        this.bootloaderPartRevisionNumber = bootloaderPartRevisionNumber;</span>
-<span class="source-line-no">071</span><span id="line-71">        </span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    public CommonSoftwareInfoResponse(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwarePartDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber) {</span>
-<span class="source-line-no">075</span><span id="line-75">        this.cargo = buildCargo(appSoftwareVersion, appSoftwarePartNumber, appSoftwarePartDashNumber, appSoftwarePartRevisionNumber, bootloaderVersion, bootloaderPartNumber, null, null);</span>
-<span class="source-line-no">076</span><span id="line-76">        this.appSoftwareVersion = appSoftwareVersion;</span>
-<span class="source-line-no">077</span><span id="line-77">        this.appSoftwarePartNumber = appSoftwarePartNumber;</span>
-<span class="source-line-no">078</span><span id="line-78">        this.appSoftwarePartDashNumber = appSoftwarePartDashNumber;</span>
-<span class="source-line-no">079</span><span id="line-79">        this.appSoftwarePartRevisionNumber = appSoftwarePartRevisionNumber;</span>
-<span class="source-line-no">080</span><span id="line-80">        this.bootloaderVersion = bootloaderVersion;</span>
-<span class="source-line-no">081</span><span id="line-81">        this.bootloaderPartNumber = bootloaderPartNumber;</span>
-<span class="source-line-no">082</span><span id="line-82">        this.bootloaderPartDashNumber = null;</span>
-<span class="source-line-no">083</span><span id="line-83">        this.bootloaderPartRevisionNumber = null;</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    }</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    /**</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;caption&gt;Parsed fields for CommonSoftwareInfoResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwareVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 0, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartDashNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartRevisionNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 26)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 30, 17)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 47)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartDashNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 51)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartRevisionNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 55)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;/table&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     */</span>
-<span class="source-line-no">100</span><span id="line-100">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">101</span><span id="line-101">        //Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">102</span><span id="line-102">        this.cargo = raw;</span>
-<span class="source-line-no">103</span><span id="line-103">        this.appSoftwareVersion = Bytes.readString(raw, 0, 18);</span>
-<span class="source-line-no">104</span><span id="line-104">        this.appSoftwarePartNumber = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">105</span><span id="line-105">        this.appSoftwarePartDashNumber = Bytes.readUint32(raw, 22);</span>
-<span class="source-line-no">106</span><span id="line-106">        this.appSoftwarePartRevisionNumber = Bytes.readUint32(raw, 26);</span>
-<span class="source-line-no">107</span><span id="line-107">        this.bootloaderVersion = Bytes.readString(raw, 30, 17);</span>
-<span class="source-line-no">108</span><span id="line-108">        this.bootloaderPartNumber = Bytes.readUint32(raw, 47);</span>
-<span class="source-line-no">109</span><span id="line-109">        if (raw.length == 60) {</span>
-<span class="source-line-no">110</span><span id="line-110">            this.bootloaderPartDashNumber = Bytes.readUint32(raw, 51);</span>
-<span class="source-line-no">111</span><span id="line-111">            this.bootloaderPartRevisionNumber = Bytes.readUint32(raw, 55);</span>
-<span class="source-line-no">112</span><span id="line-112">        }</span>
-<span class="source-line-no">113</span><span id="line-113">        </span>
-<span class="source-line-no">114</span><span id="line-114">    }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">    </span>
-<span class="source-line-no">117</span><span id="line-117">    /**</span>
-<span class="source-line-no">118</span><span id="line-118">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">119</span><span id="line-119">     * &lt;caption&gt;Byte layout for CommonSoftwareInfoResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">120</span><span id="line-120">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">121</span><span id="line-121">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">126</span><span id="line-126">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">129</span><span id="line-129">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">130</span><span id="line-130">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">131</span><span id="line-131">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">132</span><span id="line-132">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">133</span><span id="line-133">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">134</span><span id="line-134">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">135</span><span id="line-135">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">136</span><span id="line-136">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">137</span><span id="line-137">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">138</span><span id="line-138">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">139</span><span id="line-139">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">140</span><span id="line-140">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">141</span><span id="line-141">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">142</span><span id="line-142">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">143</span><span id="line-143">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">144</span><span id="line-144">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">145</span><span id="line-145">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">146</span><span id="line-146">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">147</span><span id="line-147">     * &lt;tr&gt;&lt;td&gt;26&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">148</span><span id="line-148">     * &lt;tr&gt;&lt;td&gt;27&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">149</span><span id="line-149">     * &lt;tr&gt;&lt;td&gt;28&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">150</span><span id="line-150">     * &lt;tr&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">151</span><span id="line-151">     * &lt;tr&gt;&lt;td&gt;30&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">152</span><span id="line-152">     * &lt;tr&gt;&lt;td&gt;31&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">153</span><span id="line-153">     * &lt;tr&gt;&lt;td&gt;32&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">154</span><span id="line-154">     * &lt;tr&gt;&lt;td&gt;33&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">155</span><span id="line-155">     * &lt;tr&gt;&lt;td&gt;34&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">156</span><span id="line-156">     * &lt;tr&gt;&lt;td&gt;35&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">157</span><span id="line-157">     * &lt;tr&gt;&lt;td&gt;36&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">158</span><span id="line-158">     * &lt;tr&gt;&lt;td&gt;37&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">159</span><span id="line-159">     * &lt;tr&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">160</span><span id="line-160">     * &lt;tr&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">161</span><span id="line-161">     * &lt;tr&gt;&lt;td&gt;40&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">162</span><span id="line-162">     * &lt;tr&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">163</span><span id="line-163">     * &lt;tr&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">164</span><span id="line-164">     * &lt;tr&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">165</span><span id="line-165">     * &lt;tr&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">166</span><span id="line-166">     * &lt;tr&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">167</span><span id="line-167">     * &lt;tr&gt;&lt;td&gt;46&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">168</span><span id="line-168">     * &lt;tr&gt;&lt;td&gt;47&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">169</span><span id="line-169">     * &lt;tr&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">170</span><span id="line-170">     * &lt;tr&gt;&lt;td&gt;49&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">171</span><span id="line-171">     * &lt;tr&gt;&lt;td&gt;50&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">172</span><span id="line-172">     * &lt;/table&gt;</span>
-<span class="source-line-no">173</span><span id="line-173">     */</span>
-<span class="source-line-no">174</span><span id="line-174">    public static byte[] buildCargo(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwareDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber, Long bootloaderPartDashNumber, Long bootloaderPartRevisionNumber) {</span>
-<span class="source-line-no">175</span><span id="line-175">        return Bytes.combine(</span>
-<span class="source-line-no">176</span><span id="line-176">            Bytes.writeString(appSoftwareVersion, 18),</span>
-<span class="source-line-no">177</span><span id="line-177">            Bytes.toUint32(appSoftwarePartNumber), </span>
-<span class="source-line-no">178</span><span id="line-178">            Bytes.toUint32(appSoftwareDashNumber), </span>
-<span class="source-line-no">179</span><span id="line-179">            Bytes.toUint32(appSoftwarePartRevisionNumber), </span>
-<span class="source-line-no">180</span><span id="line-180">            Bytes.writeString(bootloaderVersion, 17),</span>
-<span class="source-line-no">181</span><span id="line-181">            Bytes.toUint32(bootloaderPartNumber),</span>
-<span class="source-line-no">182</span><span id="line-182">                (bootloaderPartDashNumber == null &amp;&amp; bootloaderPartRevisionNumber == null) ?</span>
-<span class="source-line-no">183</span><span id="line-183">                    new byte[0] : Bytes.combine(</span>
-<span class="source-line-no">184</span><span id="line-184">                        Bytes.toUint32(bootloaderPartDashNumber),</span>
-<span class="source-line-no">185</span><span id="line-185">                        Bytes.toUint32(bootloaderPartRevisionNumber)));</span>
-<span class="source-line-no">186</span><span id="line-186">    }</span>
-<span class="source-line-no">187</span><span id="line-187">    </span>
-<span class="source-line-no">188</span><span id="line-188">    public String getAppSoftwareVersion() {</span>
-<span class="source-line-no">189</span><span id="line-189">        return appSoftwareVersion;</span>
-<span class="source-line-no">190</span><span id="line-190">    }</span>
-<span class="source-line-no">191</span><span id="line-191">    public long getAppSoftwarePartNumber() {</span>
-<span class="source-line-no">192</span><span id="line-192">        return appSoftwarePartNumber;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"> * TODO: size may always be 51 and not 60, collect more samples</span>
+<span class="source-line-no">014</span><span id="line-14"> */</span>
+<span class="source-line-no">015</span><span id="line-15">/**</span>
+<span class="source-line-no">016</span><span id="line-16"> * TODO: size may always be 51 and not 60, collect more samples</span>
+<span class="source-line-no">017</span><span id="line-17"> *</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19"> *</span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;br&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> *</span>
+<span class="source-line-no">022</span><span id="line-22"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest}, opCode -113, size 60</span>
+<span class="source-line-no">023</span><span id="line-23"> *</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;br&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"> * </span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-113&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;60&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;variableSize&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_FUTURE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;/table&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> */@MessageProps(</span>
+<span class="source-line-no">038</span><span id="line-38">    opCode=-113,</span>
+<span class="source-line-no">039</span><span id="line-39">    size=60, // OR 51</span>
+<span class="source-line-no">040</span><span id="line-40">    variableSize=true,</span>
+<span class="source-line-no">041</span><span id="line-41">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">042</span><span id="line-42">    characteristic=Characteristic.CURRENT_STATUS,</span>
+<span class="source-line-no">043</span><span id="line-43">    request=CommonSoftwareInfoRequest.class,</span>
+<span class="source-line-no">044</span><span id="line-44">    minApi=KnownApiVersion.API_FUTURE</span>
+<span class="source-line-no">045</span><span id="line-45">)</span>
+<span class="source-line-no">046</span><span id="line-46">public class CommonSoftwareInfoResponse extends Message {</span>
+<span class="source-line-no">047</span><span id="line-47">    </span>
+<span class="source-line-no">048</span><span id="line-48">    private String appSoftwareVersion;</span>
+<span class="source-line-no">049</span><span id="line-49">    private long appSoftwarePartNumber;</span>
+<span class="source-line-no">050</span><span id="line-50">    private long appSoftwarePartDashNumber;</span>
+<span class="source-line-no">051</span><span id="line-51">    private long appSoftwarePartRevisionNumber;</span>
+<span class="source-line-no">052</span><span id="line-52">    private String bootloaderVersion;</span>
+<span class="source-line-no">053</span><span id="line-53">    private long bootloaderPartNumber;</span>
+<span class="source-line-no">054</span><span id="line-54">    private Long bootloaderPartDashNumber;</span>
+<span class="source-line-no">055</span><span id="line-55">    private Long bootloaderPartRevisionNumber;</span>
+<span class="source-line-no">056</span><span id="line-56">    </span>
+<span class="source-line-no">057</span><span id="line-57">    public CommonSoftwareInfoResponse() {}</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    public CommonSoftwareInfoResponse(byte[] raw) {</span>
+<span class="source-line-no">060</span><span id="line-60">        this.cargo = raw;</span>
+<span class="source-line-no">061</span><span id="line-61">        parse(raw);</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63">    </span>
+<span class="source-line-no">064</span><span id="line-64">    public CommonSoftwareInfoResponse(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwarePartDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber, long bootloaderPartDashNumber, long bootloaderPartRevisionNumber) {</span>
+<span class="source-line-no">065</span><span id="line-65">        this.cargo = buildCargo(appSoftwareVersion, appSoftwarePartNumber, appSoftwarePartDashNumber, appSoftwarePartRevisionNumber, bootloaderVersion, bootloaderPartNumber, bootloaderPartDashNumber, bootloaderPartRevisionNumber);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.appSoftwareVersion = appSoftwareVersion;</span>
+<span class="source-line-no">067</span><span id="line-67">        this.appSoftwarePartNumber = appSoftwarePartNumber;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.appSoftwarePartDashNumber = appSoftwarePartDashNumber;</span>
+<span class="source-line-no">069</span><span id="line-69">        this.appSoftwarePartRevisionNumber = appSoftwarePartRevisionNumber;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.bootloaderVersion = bootloaderVersion;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.bootloaderPartNumber = bootloaderPartNumber;</span>
+<span class="source-line-no">072</span><span id="line-72">        this.bootloaderPartDashNumber = bootloaderPartDashNumber;</span>
+<span class="source-line-no">073</span><span id="line-73">        this.bootloaderPartRevisionNumber = bootloaderPartRevisionNumber;</span>
+<span class="source-line-no">074</span><span id="line-74">        </span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public CommonSoftwareInfoResponse(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwarePartDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber) {</span>
+<span class="source-line-no">078</span><span id="line-78">        this.cargo = buildCargo(appSoftwareVersion, appSoftwarePartNumber, appSoftwarePartDashNumber, appSoftwarePartRevisionNumber, bootloaderVersion, bootloaderPartNumber, null, null);</span>
+<span class="source-line-no">079</span><span id="line-79">        this.appSoftwareVersion = appSoftwareVersion;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.appSoftwarePartNumber = appSoftwarePartNumber;</span>
+<span class="source-line-no">081</span><span id="line-81">        this.appSoftwarePartDashNumber = appSoftwarePartDashNumber;</span>
+<span class="source-line-no">082</span><span id="line-82">        this.appSoftwarePartRevisionNumber = appSoftwarePartRevisionNumber;</span>
+<span class="source-line-no">083</span><span id="line-83">        this.bootloaderVersion = bootloaderVersion;</span>
+<span class="source-line-no">084</span><span id="line-84">        this.bootloaderPartNumber = bootloaderPartNumber;</span>
+<span class="source-line-no">085</span><span id="line-85">        this.bootloaderPartDashNumber = null;</span>
+<span class="source-line-no">086</span><span id="line-86">        this.bootloaderPartRevisionNumber = null;</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    }</span>
+<span class="source-line-no">089</span><span id="line-89"></span>
+<span class="source-line-no">090</span><span id="line-90">    /**</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;caption&gt;Parsed fields for CommonSoftwareInfoResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwareVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 0, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartDashNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appSoftwarePartRevisionNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 26)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 30, 17)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 47)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartDashNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 51)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bootloaderPartRevisionNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 55)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;/table&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     */</span>
+<span class="source-line-no">103</span><span id="line-103">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">104</span><span id="line-104">        //Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">105</span><span id="line-105">        this.cargo = raw;</span>
+<span class="source-line-no">106</span><span id="line-106">        this.appSoftwareVersion = Bytes.readString(raw, 0, 18);</span>
+<span class="source-line-no">107</span><span id="line-107">        this.appSoftwarePartNumber = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">108</span><span id="line-108">        this.appSoftwarePartDashNumber = Bytes.readUint32(raw, 22);</span>
+<span class="source-line-no">109</span><span id="line-109">        this.appSoftwarePartRevisionNumber = Bytes.readUint32(raw, 26);</span>
+<span class="source-line-no">110</span><span id="line-110">        this.bootloaderVersion = Bytes.readString(raw, 30, 17);</span>
+<span class="source-line-no">111</span><span id="line-111">        this.bootloaderPartNumber = Bytes.readUint32(raw, 47);</span>
+<span class="source-line-no">112</span><span id="line-112">        if (raw.length == 60) {</span>
+<span class="source-line-no">113</span><span id="line-113">            this.bootloaderPartDashNumber = Bytes.readUint32(raw, 51);</span>
+<span class="source-line-no">114</span><span id="line-114">            this.bootloaderPartRevisionNumber = Bytes.readUint32(raw, 55);</span>
+<span class="source-line-no">115</span><span id="line-115">        }</span>
+<span class="source-line-no">116</span><span id="line-116">        </span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    </span>
+<span class="source-line-no">120</span><span id="line-120">    /**</span>
+<span class="source-line-no">121</span><span id="line-121">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">122</span><span id="line-122">     * &lt;caption&gt;Byte layout for CommonSoftwareInfoResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">129</span><span id="line-129">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">130</span><span id="line-130">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">131</span><span id="line-131">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">132</span><span id="line-132">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">133</span><span id="line-133">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">134</span><span id="line-134">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">135</span><span id="line-135">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">136</span><span id="line-136">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">137</span><span id="line-137">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">138</span><span id="line-138">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">139</span><span id="line-139">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">140</span><span id="line-140">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">141</span><span id="line-141">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(appSoftwareVersion, 18) [byte 17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">142</span><span id="line-142">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">143</span><span id="line-143">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">144</span><span id="line-144">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">145</span><span id="line-145">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">146</span><span id="line-146">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">147</span><span id="line-147">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">148</span><span id="line-148">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">149</span><span id="line-149">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwareDashNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">150</span><span id="line-150">     * &lt;tr&gt;&lt;td&gt;26&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">151</span><span id="line-151">     * &lt;tr&gt;&lt;td&gt;27&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">152</span><span id="line-152">     * &lt;tr&gt;&lt;td&gt;28&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">153</span><span id="line-153">     * &lt;tr&gt;&lt;td&gt;29&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(appSoftwarePartRevisionNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">154</span><span id="line-154">     * &lt;tr&gt;&lt;td&gt;30&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">155</span><span id="line-155">     * &lt;tr&gt;&lt;td&gt;31&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">156</span><span id="line-156">     * &lt;tr&gt;&lt;td&gt;32&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">157</span><span id="line-157">     * &lt;tr&gt;&lt;td&gt;33&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">158</span><span id="line-158">     * &lt;tr&gt;&lt;td&gt;34&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">159</span><span id="line-159">     * &lt;tr&gt;&lt;td&gt;35&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">160</span><span id="line-160">     * &lt;tr&gt;&lt;td&gt;36&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">161</span><span id="line-161">     * &lt;tr&gt;&lt;td&gt;37&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">162</span><span id="line-162">     * &lt;tr&gt;&lt;td&gt;38&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">163</span><span id="line-163">     * &lt;tr&gt;&lt;td&gt;39&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">164</span><span id="line-164">     * &lt;tr&gt;&lt;td&gt;40&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">165</span><span id="line-165">     * &lt;tr&gt;&lt;td&gt;41&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">166</span><span id="line-166">     * &lt;tr&gt;&lt;td&gt;42&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">167</span><span id="line-167">     * &lt;tr&gt;&lt;td&gt;43&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">168</span><span id="line-168">     * &lt;tr&gt;&lt;td&gt;44&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">169</span><span id="line-169">     * &lt;tr&gt;&lt;td&gt;45&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">170</span><span id="line-170">     * &lt;tr&gt;&lt;td&gt;46&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(bootloaderVersion, 17) [byte 16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">171</span><span id="line-171">     * &lt;tr&gt;&lt;td&gt;47&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">172</span><span id="line-172">     * &lt;tr&gt;&lt;td&gt;48&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">173</span><span id="line-173">     * &lt;tr&gt;&lt;td&gt;49&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">174</span><span id="line-174">     * &lt;tr&gt;&lt;td&gt;50&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(bootloaderPartNumber) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">175</span><span id="line-175">     * &lt;/table&gt;</span>
+<span class="source-line-no">176</span><span id="line-176">     */</span>
+<span class="source-line-no">177</span><span id="line-177">    public static byte[] buildCargo(String appSoftwareVersion, long appSoftwarePartNumber, long appSoftwareDashNumber, long appSoftwarePartRevisionNumber, String bootloaderVersion, long bootloaderPartNumber, Long bootloaderPartDashNumber, Long bootloaderPartRevisionNumber) {</span>
+<span class="source-line-no">178</span><span id="line-178">        return Bytes.combine(</span>
+<span class="source-line-no">179</span><span id="line-179">            Bytes.writeString(appSoftwareVersion, 18),</span>
+<span class="source-line-no">180</span><span id="line-180">            Bytes.toUint32(appSoftwarePartNumber), </span>
+<span class="source-line-no">181</span><span id="line-181">            Bytes.toUint32(appSoftwareDashNumber), </span>
+<span class="source-line-no">182</span><span id="line-182">            Bytes.toUint32(appSoftwarePartRevisionNumber), </span>
+<span class="source-line-no">183</span><span id="line-183">            Bytes.writeString(bootloaderVersion, 17),</span>
+<span class="source-line-no">184</span><span id="line-184">            Bytes.toUint32(bootloaderPartNumber),</span>
+<span class="source-line-no">185</span><span id="line-185">                (bootloaderPartDashNumber == null &amp;&amp; bootloaderPartRevisionNumber == null) ?</span>
+<span class="source-line-no">186</span><span id="line-186">                    new byte[0] : Bytes.combine(</span>
+<span class="source-line-no">187</span><span id="line-187">                        Bytes.toUint32(bootloaderPartDashNumber),</span>
+<span class="source-line-no">188</span><span id="line-188">                        Bytes.toUint32(bootloaderPartRevisionNumber)));</span>
+<span class="source-line-no">189</span><span id="line-189">    }</span>
+<span class="source-line-no">190</span><span id="line-190">    </span>
+<span class="source-line-no">191</span><span id="line-191">    public String getAppSoftwareVersion() {</span>
+<span class="source-line-no">192</span><span id="line-192">        return appSoftwareVersion;</span>
 <span class="source-line-no">193</span><span id="line-193">    }</span>
-<span class="source-line-no">194</span><span id="line-194">    public long getAppSoftwarePartDashNumber() {</span>
-<span class="source-line-no">195</span><span id="line-195">        return appSoftwarePartDashNumber;</span>
+<span class="source-line-no">194</span><span id="line-194">    public long getAppSoftwarePartNumber() {</span>
+<span class="source-line-no">195</span><span id="line-195">        return appSoftwarePartNumber;</span>
 <span class="source-line-no">196</span><span id="line-196">    }</span>
-<span class="source-line-no">197</span><span id="line-197">    public long getAppSoftwarePartRevisionNumber() {</span>
-<span class="source-line-no">198</span><span id="line-198">        return appSoftwarePartRevisionNumber;</span>
+<span class="source-line-no">197</span><span id="line-197">    public long getAppSoftwarePartDashNumber() {</span>
+<span class="source-line-no">198</span><span id="line-198">        return appSoftwarePartDashNumber;</span>
 <span class="source-line-no">199</span><span id="line-199">    }</span>
-<span class="source-line-no">200</span><span id="line-200">    public String getBootloaderVersion() {</span>
-<span class="source-line-no">201</span><span id="line-201">        return bootloaderVersion;</span>
+<span class="source-line-no">200</span><span id="line-200">    public long getAppSoftwarePartRevisionNumber() {</span>
+<span class="source-line-no">201</span><span id="line-201">        return appSoftwarePartRevisionNumber;</span>
 <span class="source-line-no">202</span><span id="line-202">    }</span>
-<span class="source-line-no">203</span><span id="line-203">    public long getBootloaderPartNumber() {</span>
-<span class="source-line-no">204</span><span id="line-204">        return bootloaderPartNumber;</span>
+<span class="source-line-no">203</span><span id="line-203">    public String getBootloaderVersion() {</span>
+<span class="source-line-no">204</span><span id="line-204">        return bootloaderVersion;</span>
 <span class="source-line-no">205</span><span id="line-205">    }</span>
-<span class="source-line-no">206</span><span id="line-206">    public Long getBootloaderPartDashNumber() {</span>
-<span class="source-line-no">207</span><span id="line-207">        return bootloaderPartDashNumber;</span>
+<span class="source-line-no">206</span><span id="line-206">    public long getBootloaderPartNumber() {</span>
+<span class="source-line-no">207</span><span id="line-207">        return bootloaderPartNumber;</span>
 <span class="source-line-no">208</span><span id="line-208">    }</span>
-<span class="source-line-no">209</span><span id="line-209">    public Long getBootloaderPartRevisionNumber() {</span>
-<span class="source-line-no">210</span><span id="line-210">        return bootloaderPartRevisionNumber;</span>
+<span class="source-line-no">209</span><span id="line-209">    public Long getBootloaderPartDashNumber() {</span>
+<span class="source-line-no">210</span><span id="line-210">        return bootloaderPartDashNumber;</span>
 <span class="source-line-no">211</span><span id="line-211">    }</span>
-<span class="source-line-no">212</span><span id="line-212">    </span>
-<span class="source-line-no">213</span><span id="line-213">}</span>
+<span class="source-line-no">212</span><span id="line-212">    public Long getBootloaderPartRevisionNumber() {</span>
+<span class="source-line-no">213</span><span id="line-213">        return bootloaderPartRevisionNumber;</span>
+<span class="source-line-no">214</span><span id="line-214">    }</span>
+<span class="source-line-no">215</span><span id="line-215">    </span>
+<span class="source-line-no">216</span><span id="line-216">}</span>
 
 
 

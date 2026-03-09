@@ -18,45 +18,135 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">/**</span>
-<span class="source-line-no">010</span><span id="line-10"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse}, opCode -36, size 0</span>
-<span class="source-line-no">011</span><span id="line-11"> *</span>
-<span class="source-line-no">012</span><span id="line-12"> * &lt;br&gt;</span>
-<span class="source-line-no">013</span><span id="line-13"> *</span>
-<span class="source-line-no">014</span><span id="line-14"> * </span>
-<span class="source-line-no">015</span><span id="line-15"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-36&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;/table&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> */</span>
-<span class="source-line-no">025</span><span id="line-25">@MessageProps(</span>
-<span class="source-line-no">026</span><span id="line-26">    opCode=-36,</span>
-<span class="source-line-no">027</span><span id="line-27">    size=0,</span>
-<span class="source-line-no">028</span><span id="line-28">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">029</span><span id="line-29">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">030</span><span id="line-30">    response=SetSiteChangeReminderResponse.class,</span>
-<span class="source-line-no">031</span><span id="line-31">    signed=true</span>
-<span class="source-line-no">032</span><span id="line-32">)</span>
-<span class="source-line-no">033</span><span id="line-33">public class SetSiteChangeReminderRequest extends Message {</span>
-<span class="source-line-no">034</span><span id="line-34">    public SetSiteChangeReminderRequest() {</span>
-<span class="source-line-no">035</span><span id="line-35">        this.cargo = EMPTY;</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">039</span><span id="line-39">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">040</span><span id="line-40">        this.cargo = raw;</span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42">}</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse;</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"> * Sets a site change reminder configuration.</span>
+<span class="source-line-no">014</span><span id="line-14"> *</span>
+<span class="source-line-no">015</span><span id="line-15"> * Cargo layout (7 bytes, little-endian):</span>
+<span class="source-line-no">016</span><span id="line-16"> *   [0]   enable       uint8   - 0=disabled, 1=enabled</span>
+<span class="source-line-no">017</span><span id="line-17"> *   [1]   dayCount     uint8   - number of days between site changes (truncated from short to 1 byte)</span>
+<span class="source-line-no">018</span><span id="line-18"> *   [2-5] timeOfDay    uint32  - time of day in minutes since midnight</span>
+<span class="source-line-no">019</span><span id="line-19"> *   [6]   bitmask      uint8   - change bitmask (bits: 0=enable, 1=dayCount, 2=timeOfDay)</span>
+<span class="source-line-no">020</span><span id="line-20"> *</span>
+<span class="source-line-no">021</span><span id="line-21"> * Note: dayCount uses Short_ExtKt.toByteArray(short) which returns a single byte (low-order byte).</span>
+<span class="source-line-no">022</span><span id="line-22"> */</span>
+<span class="source-line-no">023</span><span id="line-23">/**</span>
+<span class="source-line-no">024</span><span id="line-24"> * Sets a site change reminder configuration.</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"> * Cargo layout (7 bytes, little-endian):</span>
+<span class="source-line-no">027</span><span id="line-27"> *   [0]   enable       uint8   - 0=disabled, 1=enabled</span>
+<span class="source-line-no">028</span><span id="line-28"> *   [1]   dayCount     uint8   - number of days between site changes (truncated from short to 1 byte)</span>
+<span class="source-line-no">029</span><span id="line-29"> *   [2-5] timeOfDay    uint32  - time of day in minutes since midnight</span>
+<span class="source-line-no">030</span><span id="line-30"> *   [6]   bitmask      uint8   - change bitmask (bits: 0=enable, 1=dayCount, 2=timeOfDay)</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"> * Note: dayCount uses Short_ExtKt.toByteArray(short) which returns a single byte (low-order byte).</span>
+<span class="source-line-no">033</span><span id="line-33"> *</span>
+<span class="source-line-no">034</span><span id="line-34"></span>
+<span class="source-line-no">035</span><span id="line-35"> *</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;br&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> *</span>
+<span class="source-line-no">038</span><span id="line-38"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse}, opCode -36, size 7</span>
+<span class="source-line-no">039</span><span id="line-39"> *</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;br&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> *</span>
+<span class="source-line-no">042</span><span id="line-42"> * </span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-36&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;7&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">048</span><span id="line-48"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetSiteChangeReminderResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">050</span><span id="line-50"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51"> * &lt;/table&gt;</span>
+<span class="source-line-no">052</span><span id="line-52"> */@MessageProps(</span>
+<span class="source-line-no">053</span><span id="line-53">    opCode=-36,</span>
+<span class="source-line-no">054</span><span id="line-54">    size=7,</span>
+<span class="source-line-no">055</span><span id="line-55">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">056</span><span id="line-56">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">057</span><span id="line-57">    response=SetSiteChangeReminderResponse.class,</span>
+<span class="source-line-no">058</span><span id="line-58">    signed=true</span>
+<span class="source-line-no">059</span><span id="line-59">)</span>
+<span class="source-line-no">060</span><span id="line-60">public class SetSiteChangeReminderRequest extends Message {</span>
+<span class="source-line-no">061</span><span id="line-61">    private boolean enable;</span>
+<span class="source-line-no">062</span><span id="line-62">    private int dayCount;</span>
+<span class="source-line-no">063</span><span id="line-63">    private long timeOfDayMinutes;</span>
+<span class="source-line-no">064</span><span id="line-64">    private int bitmask;</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public SetSiteChangeReminderRequest() {}</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    public SetSiteChangeReminderRequest(boolean enable, int dayCount, long timeOfDayMinutes, int bitmask) {</span>
+<span class="source-line-no">069</span><span id="line-69">        this.enable = enable;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.dayCount = dayCount;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.timeOfDayMinutes = timeOfDayMinutes;</span>
+<span class="source-line-no">072</span><span id="line-72">        this.bitmask = bitmask;</span>
+<span class="source-line-no">073</span><span id="line-73">        this.cargo = buildCargo(enable, dayCount, timeOfDayMinutes, bitmask);</span>
+<span class="source-line-no">074</span><span id="line-74">    }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">    /**</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;caption&gt;Byte layout for SetSiteChangeReminderRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enable ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) dayCount&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeOfDayMinutes) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeOfDayMinutes) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeOfDayMinutes) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(timeOfDayMinutes) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bitmask&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;/table&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     */</span>
+<span class="source-line-no">089</span><span id="line-89">    public static byte[] buildCargo(boolean enable, int dayCount, long timeOfDayMinutes, int bitmask) {</span>
+<span class="source-line-no">090</span><span id="line-90">        return Bytes.combine(</span>
+<span class="source-line-no">091</span><span id="line-91">            new byte[]{ (byte) (enable ? 1 : 0) },</span>
+<span class="source-line-no">092</span><span id="line-92">            new byte[]{ (byte) dayCount },</span>
+<span class="source-line-no">093</span><span id="line-93">            Bytes.toUint32(timeOfDayMinutes),</span>
+<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) bitmask }</span>
+<span class="source-line-no">095</span><span id="line-95">        );</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    /**</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;caption&gt;Parsed fields for SetSiteChangeReminderRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enable&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[0] &amp;amp; 0xFF) != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;dayCount&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timeOfDayMinutes&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bitmask&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[6] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;/table&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     */</span>
+<span class="source-line-no">107</span><span id="line-107">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">108</span><span id="line-108">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">109</span><span id="line-109">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">110</span><span id="line-110">        this.cargo = raw;</span>
+<span class="source-line-no">111</span><span id="line-111">        this.enable = (raw[0] &amp; 0xFF) != 0;</span>
+<span class="source-line-no">112</span><span id="line-112">        this.dayCount = raw[1] &amp; 0xFF;</span>
+<span class="source-line-no">113</span><span id="line-113">        this.timeOfDayMinutes = Bytes.readUint32(raw, 2);</span>
+<span class="source-line-no">114</span><span id="line-114">        this.bitmask = raw[6] &amp; 0xFF;</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">    public boolean isEnable() {</span>
+<span class="source-line-no">118</span><span id="line-118">        return enable;</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    public int getDayCount() {</span>
+<span class="source-line-no">122</span><span id="line-122">        return dayCount;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    public long getTimeOfDayMinutes() {</span>
+<span class="source-line-no">126</span><span id="line-126">        return timeOfDayMinutes;</span>
+<span class="source-line-no">127</span><span id="line-127">    }</span>
+<span class="source-line-no">128</span><span id="line-128"></span>
+<span class="source-line-no">129</span><span id="line-129">    public int getBitmask() {</span>
+<span class="source-line-no">130</span><span id="line-130">        return bitmask;</span>
+<span class="source-line-no">131</span><span id="line-131">    }</span>
+<span class="source-line-no">132</span><span id="line-132">}</span>
 
 
 

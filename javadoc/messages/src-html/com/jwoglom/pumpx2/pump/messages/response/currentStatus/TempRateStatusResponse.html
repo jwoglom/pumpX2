@@ -20,87 +20,108 @@
 <span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest;</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">import java.math.BigInteger;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13">/**</span>
-<span class="source-line-no">014</span><span id="line-14"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest}, opCode 31, size 16</span>
-<span class="source-line-no">015</span><span id="line-15"> *</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;br&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
-<span class="source-line-no">018</span><span id="line-18"> * </span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;31&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;16&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;/table&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> */</span>
-<span class="source-line-no">028</span><span id="line-28">@MessageProps(</span>
-<span class="source-line-no">029</span><span id="line-29">    opCode=31,</span>
-<span class="source-line-no">030</span><span id="line-30">    size=16,</span>
-<span class="source-line-no">031</span><span id="line-31">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">032</span><span id="line-32">    characteristic=Characteristic.CURRENT_STATUS,</span>
-<span class="source-line-no">033</span><span id="line-33">    request=TempRateStatusRequest.class</span>
-<span class="source-line-no">034</span><span id="line-34">)</span>
-<span class="source-line-no">035</span><span id="line-35">public class TempRateStatusResponse extends Message {</span>
-<span class="source-line-no">036</span><span id="line-36">    private long unknown1;</span>
-<span class="source-line-no">037</span><span id="line-37">    private long unknown2;</span>
-<span class="source-line-no">038</span><span id="line-38">    private long unknown3;</span>
-<span class="source-line-no">039</span><span id="line-39">    private long unknown4;</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    public TempRateStatusResponse() {</span>
-<span class="source-line-no">042</span><span id="line-42">        this.cargo = EMPTY;</span>
-<span class="source-line-no">043</span><span id="line-43">    }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public TempRateStatusResponse(byte[] raw) {</span>
-<span class="source-line-no">047</span><span id="line-47">        this.cargo = raw;</span>
-<span class="source-line-no">048</span><span id="line-48">        parse(raw);</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    /**</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;caption&gt;Parsed fields for TempRateStatusResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 4)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown3&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 8)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown4&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 12)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;/table&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     */</span>
-<span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">062</span><span id="line-62">        this.cargo = raw;</span>
-<span class="source-line-no">063</span><span id="line-63">        this.unknown1 = Bytes.readUint32(raw, 0);</span>
-<span class="source-line-no">064</span><span id="line-64">        this.unknown2 = Bytes.readUint32(raw, 4);</span>
-<span class="source-line-no">065</span><span id="line-65">        this.unknown3 = Bytes.readUint32(raw, 8);</span>
-<span class="source-line-no">066</span><span id="line-66">        this.unknown4 = Bytes.readUint32(raw, 12);</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">    }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    public long getUnknown1() {</span>
-<span class="source-line-no">072</span><span id="line-72">        return unknown1;</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">    public long getUnknown2() {</span>
-<span class="source-line-no">076</span><span id="line-76">        return unknown2;</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    public long getUnknown3() {</span>
-<span class="source-line-no">080</span><span id="line-80">        return unknown3;</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    public long getUnknown4() {</span>
-<span class="source-line-no">084</span><span id="line-84">        return unknown4;</span>
-<span class="source-line-no">085</span><span id="line-85">    }</span>
-<span class="source-line-no">086</span><span id="line-86">}</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.helpers.Dates;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">import java.time.Instant;</span>
+<span class="source-line-no">013</span><span id="line-13"></span>
+<span class="source-line-no">014</span><span id="line-14">/**</span>
+<span class="source-line-no">015</span><span id="line-15"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest}, opCode 31, size 16</span>
+<span class="source-line-no">016</span><span id="line-16"> *</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;br&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * </span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;31&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;16&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.TempRateStatusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;/table&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> */</span>
+<span class="source-line-no">029</span><span id="line-29">@MessageProps(</span>
+<span class="source-line-no">030</span><span id="line-30">    opCode=31,</span>
+<span class="source-line-no">031</span><span id="line-31">    size=16,</span>
+<span class="source-line-no">032</span><span id="line-32">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">033</span><span id="line-33">    characteristic=Characteristic.CURRENT_STATUS,</span>
+<span class="source-line-no">034</span><span id="line-34">    request=TempRateStatusRequest.class</span>
+<span class="source-line-no">035</span><span id="line-35">)</span>
+<span class="source-line-no">036</span><span id="line-36">public class TempRateStatusResponse extends Message {</span>
+<span class="source-line-no">037</span><span id="line-37">    private boolean active;</span>
+<span class="source-line-no">038</span><span id="line-38">    private int tempRateId;</span>
+<span class="source-line-no">039</span><span id="line-39">    private int percentage;</span>
+<span class="source-line-no">040</span><span id="line-40">    private long startTimeRaw;</span>
+<span class="source-line-no">041</span><span id="line-41">    private long secondsSincePumpReset;</span>
+<span class="source-line-no">042</span><span id="line-42">    private long duration;</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public TempRateStatusResponse() {</span>
+<span class="source-line-no">045</span><span id="line-45">        this.cargo = EMPTY;</span>
+<span class="source-line-no">046</span><span id="line-46">    }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public TempRateStatusResponse(byte[] raw) {</span>
+<span class="source-line-no">050</span><span id="line-50">        this.cargo = raw;</span>
+<span class="source-line-no">051</span><span id="line-51">        parse(raw);</span>
+<span class="source-line-no">052</span><span id="line-52">    }</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">    /**</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;caption&gt;Parsed fields for TempRateStatusResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;active&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;tempRateId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;percentage&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(int) (raw[3] &amp;amp; 255)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;startTimeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 4)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">061</span><span id="line-61">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;secondsSincePumpReset&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 8)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;duration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 12)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">063</span><span id="line-63">     * &lt;/table&gt;</span>
+<span class="source-line-no">064</span><span id="line-64">     */</span>
+<span class="source-line-no">065</span><span id="line-65">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">066</span><span id="line-66">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">067</span><span id="line-67">        this.cargo = raw;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.active = raw[0] != 0;</span>
+<span class="source-line-no">069</span><span id="line-69">        this.tempRateId = Bytes.readShort(raw, 1);</span>
+<span class="source-line-no">070</span><span id="line-70">        this.percentage = (int) (raw[3] &amp; 255);</span>
+<span class="source-line-no">071</span><span id="line-71">        this.startTimeRaw = Bytes.readUint32(raw, 4);</span>
+<span class="source-line-no">072</span><span id="line-72">        this.secondsSincePumpReset = Bytes.readUint32(raw, 8);</span>
+<span class="source-line-no">073</span><span id="line-73">        this.duration = Bytes.readUint32(raw, 12);</span>
+<span class="source-line-no">074</span><span id="line-74">    }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public boolean getActive() {</span>
+<span class="source-line-no">078</span><span id="line-78">        return active;</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    public int getTempRateId() {</span>
+<span class="source-line-no">082</span><span id="line-82">        return tempRateId;</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">    public int getPercentage() {</span>
+<span class="source-line-no">086</span><span id="line-86">        return percentage;</span>
+<span class="source-line-no">087</span><span id="line-87">    }</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">    public long getStartTimeRaw() {</span>
+<span class="source-line-no">090</span><span id="line-90">        return startTimeRaw;</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    /**</span>
+<span class="source-line-no">094</span><span id="line-94">     * @return the evaluation of startTimeRaw against the pump epoch (Jan 1, 2008)</span>
+<span class="source-line-no">095</span><span id="line-95">     */</span>
+<span class="source-line-no">096</span><span id="line-96">    public Instant getStartTimeInstant() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return Dates.fromJan12008EpochSecondsToDate(startTimeRaw);</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">    public long getSecondsSincePumpReset() {</span>
+<span class="source-line-no">101</span><span id="line-101">        return secondsSincePumpReset;</span>
+<span class="source-line-no">102</span><span id="line-102">    }</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
+<span class="source-line-no">104</span><span id="line-104">    public long getDuration() {</span>
+<span class="source-line-no">105</span><span id="line-105">        return duration;</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107">}</span>
 
 
 

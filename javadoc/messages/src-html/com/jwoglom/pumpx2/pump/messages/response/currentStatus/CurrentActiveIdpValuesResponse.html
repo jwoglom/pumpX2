@@ -21,37 +21,211 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest;</span>
-<span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">/**</span>
-<span class="source-line-no">010</span><span id="line-10"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest}, opCode -105, size 0</span>
-<span class="source-line-no">011</span><span id="line-11"> *</span>
-<span class="source-line-no">012</span><span id="line-12"> * &lt;br&gt;</span>
-<span class="source-line-no">013</span><span id="line-13"> *</span>
-<span class="source-line-no">014</span><span id="line-14"> * </span>
-<span class="source-line-no">015</span><span id="line-15"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-105&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;/table&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> */</span>
-<span class="source-line-no">024</span><span id="line-24">@MessageProps(</span>
-<span class="source-line-no">025</span><span id="line-25">    opCode=-105,</span>
-<span class="source-line-no">026</span><span id="line-26">    size=0,</span>
-<span class="source-line-no">027</span><span id="line-27">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">028</span><span id="line-28">    characteristic=Characteristic.CURRENT_STATUS,</span>
-<span class="source-line-no">029</span><span id="line-29">    request=CurrentActiveIdpValuesRequest.class</span>
-<span class="source-line-no">030</span><span id="line-30">)</span>
-<span class="source-line-no">031</span><span id="line-31">public class CurrentActiveIdpValuesResponse extends Message {</span>
-<span class="source-line-no">032</span><span id="line-32">    public CurrentActiveIdpValuesResponse() {}</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">035</span><span id="line-35">        this.cargo = raw;</span>
-<span class="source-line-no">036</span><span id="line-36">    }</span>
-<span class="source-line-no">037</span><span id="line-37">}</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest;</span>
+<span class="source-line-no">009</span><span id="line-9"></span>
+<span class="source-line-no">010</span><span id="line-10">import org.apache.commons.lang3.Validate;</span>
+<span class="source-line-no">011</span><span id="line-11"></span>
+<span class="source-line-no">012</span><span id="line-12">/**</span>
+<span class="source-line-no">013</span><span id="line-13"> * Returns the currently active insulin delivery profile (IDP) parameter values</span>
+<span class="source-line-no">014</span><span id="line-14"> * in effect right now, based on the active time segment.</span>
+<span class="source-line-no">015</span><span id="line-15"> *</span>
+<span class="source-line-no">016</span><span id="line-16"> * Byte layout of the cargo (10 bytes total):</span>
+<span class="source-line-no">017</span><span id="line-17"> *   bytes 0-3:  currentCarbRatio (uint32 LE) - carb ratio in 1000-increments</span>
+<span class="source-line-no">018</span><span id="line-18"> *   byte  4:    unknown/padding</span>
+<span class="source-line-no">019</span><span id="line-19"> *   bytes 5-6:  currentTargetBg (uint16 LE) - target blood glucose in mg/dL</span>
+<span class="source-line-no">020</span><span id="line-20"> *   bytes 6-7:  currentInsulinDuration (uint16 LE) - insulin duration in minutes</span>
+<span class="source-line-no">021</span><span id="line-21"> *   bytes 8-9:  currentIsf (uint16 LE) - insulin sensitivity factor in mg/dL per unit</span>
+<span class="source-line-no">022</span><span id="line-22"> *</span>
+<span class="source-line-no">023</span><span id="line-23"> * Note: bytes 5-6 (currentTargetBg) and bytes 6-7 (currentInsulinDuration) share byte 6.</span>
+<span class="source-line-no">024</span><span id="line-24"> * In practice, currentTargetBg is always less than 256 (its high byte at position 6 is 0),</span>
+<span class="source-line-no">025</span><span id="line-25"> * so byte 6 carries only the low byte of currentInsulinDuration. This matches the decompiled</span>
+<span class="source-line-no">026</span><span id="line-26"> * Tandem Mobi Android app (CurrentActiveIDPValuesResponse$CurrentActiveIDPValuesCargo):</span>
+<span class="source-line-no">027</span><span id="line-27"> *   field c (C8235b, index 29) → currentCarbRatio  (readUint32 from offset 0)</span>
+<span class="source-line-no">028</span><span id="line-28"> *   field d (C8708a, index 0)  → currentTargetBg   (readUint16 from copyFrom(bytes, 5, 2))</span>
+<span class="source-line-no">029</span><span id="line-29"> *   field e (C8708a, index 1)  → currentInsulinDuration (readUint16 from copyFrom(bytes, 6, 2))</span>
+<span class="source-line-no">030</span><span id="line-30"> *   field f (C8708a, index 2)  → currentIsf         (readUint16 from copyFrom(bytes, 8, 2))</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse</span>
+<span class="source-line-no">033</span><span id="line-33"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse</span>
+<span class="source-line-no">034</span><span id="line-34"> */</span>
+<span class="source-line-no">035</span><span id="line-35">/**</span>
+<span class="source-line-no">036</span><span id="line-36"> * Returns the currently active insulin delivery profile (IDP) parameter values</span>
+<span class="source-line-no">037</span><span id="line-37"> * in effect right now, based on the active time segment.</span>
+<span class="source-line-no">038</span><span id="line-38"> *</span>
+<span class="source-line-no">039</span><span id="line-39"> * Byte layout of the cargo (10 bytes total):</span>
+<span class="source-line-no">040</span><span id="line-40"> *   bytes 0-3:  currentCarbRatio (uint32 LE) - carb ratio in 1000-increments</span>
+<span class="source-line-no">041</span><span id="line-41"> *   byte  4:    unknown/padding</span>
+<span class="source-line-no">042</span><span id="line-42"> *   bytes 5-6:  currentTargetBg (uint16 LE) - target blood glucose in mg/dL</span>
+<span class="source-line-no">043</span><span id="line-43"> *   bytes 6-7:  currentInsulinDuration (uint16 LE) - insulin duration in minutes</span>
+<span class="source-line-no">044</span><span id="line-44"> *   bytes 8-9:  currentIsf (uint16 LE) - insulin sensitivity factor in mg/dL per unit</span>
+<span class="source-line-no">045</span><span id="line-45"> *</span>
+<span class="source-line-no">046</span><span id="line-46"> * Note: bytes 5-6 (currentTargetBg) and bytes 6-7 (currentInsulinDuration) share byte 6.</span>
+<span class="source-line-no">047</span><span id="line-47"> * In practice, currentTargetBg is always less than 256 (its high byte at position 6 is 0),</span>
+<span class="source-line-no">048</span><span id="line-48"> * so byte 6 carries only the low byte of currentInsulinDuration. This matches the decompiled</span>
+<span class="source-line-no">049</span><span id="line-49"> * Tandem Mobi Android app (CurrentActiveIDPValuesResponse$CurrentActiveIDPValuesCargo):</span>
+<span class="source-line-no">050</span><span id="line-50"> *   field c (C8235b, index 29) → currentCarbRatio  (readUint32 from offset 0)</span>
+<span class="source-line-no">051</span><span id="line-51"> *   field d (C8708a, index 0)  → currentTargetBg   (readUint16 from copyFrom(bytes, 5, 2))</span>
+<span class="source-line-no">052</span><span id="line-52"> *   field e (C8708a, index 1)  → currentInsulinDuration (readUint16 from copyFrom(bytes, 6, 2))</span>
+<span class="source-line-no">053</span><span id="line-53"> *   field f (C8708a, index 2)  → currentIsf         (readUint16 from copyFrom(bytes, 8, 2))</span>
+<span class="source-line-no">054</span><span id="line-54"> *</span>
+<span class="source-line-no">055</span><span id="line-55"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse</span>
+<span class="source-line-no">056</span><span id="line-56"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSettingsResponse</span>
+<span class="source-line-no">057</span><span id="line-57"> *</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59"> *</span>
+<span class="source-line-no">060</span><span id="line-60"> * &lt;br&gt;</span>
+<span class="source-line-no">061</span><span id="line-61"> *</span>
+<span class="source-line-no">062</span><span id="line-62"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest}, opCode -105, size 10</span>
+<span class="source-line-no">063</span><span id="line-63"> *</span>
+<span class="source-line-no">064</span><span id="line-64"> * &lt;br&gt;</span>
+<span class="source-line-no">065</span><span id="line-65"> *</span>
+<span class="source-line-no">066</span><span id="line-66"> * </span>
+<span class="source-line-no">067</span><span id="line-67"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">068</span><span id="line-68"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">069</span><span id="line-69"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-105&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;10&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CURRENT_STATUS}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74"> * &lt;/table&gt;</span>
+<span class="source-line-no">075</span><span id="line-75"> */@MessageProps(</span>
+<span class="source-line-no">076</span><span id="line-76">    opCode=-105,</span>
+<span class="source-line-no">077</span><span id="line-77">    size=10,</span>
+<span class="source-line-no">078</span><span id="line-78">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">079</span><span id="line-79">    characteristic=Characteristic.CURRENT_STATUS,</span>
+<span class="source-line-no">080</span><span id="line-80">    request=CurrentActiveIdpValuesRequest.class</span>
+<span class="source-line-no">081</span><span id="line-81">)</span>
+<span class="source-line-no">082</span><span id="line-82">public class CurrentActiveIdpValuesResponse extends Message {</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    /**</span>
+<span class="source-line-no">085</span><span id="line-85">     * Carb ratio expressed in 1000-increments.</span>
+<span class="source-line-no">086</span><span id="line-86">     * A value of 10000 means 10 g/U.</span>
+<span class="source-line-no">087</span><span id="line-87">     * See {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1000To1(Long)}.</span>
+<span class="source-line-no">088</span><span id="line-88">     */</span>
+<span class="source-line-no">089</span><span id="line-89">    private long currentCarbRatio;</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    /**</span>
+<span class="source-line-no">092</span><span id="line-92">     * Target blood glucose in mg/dL used for Control-IQ corrections.</span>
+<span class="source-line-no">093</span><span id="line-93">     * Typical range: 80-200 mg/dL (always less than 256, so fits in a single byte).</span>
+<span class="source-line-no">094</span><span id="line-94">     */</span>
+<span class="source-line-no">095</span><span id="line-95">    private int currentTargetBg;</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    /**</span>
+<span class="source-line-no">098</span><span id="line-98">     * Duration of insulin action in minutes (Control-IQ insulin duration setting).</span>
+<span class="source-line-no">099</span><span id="line-99">     * Typical values: 120, 180, 240, or 300 minutes (2-5 hours).</span>
+<span class="source-line-no">100</span><span id="line-100">     */</span>
+<span class="source-line-no">101</span><span id="line-101">    private int currentInsulinDuration;</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    /**</span>
+<span class="source-line-no">104</span><span id="line-104">     * Insulin sensitivity factor (correction factor) in mg/dL per unit.</span>
+<span class="source-line-no">105</span><span id="line-105">     * A value of 30 means 1 U corrects 30 mg/dL.</span>
+<span class="source-line-no">106</span><span id="line-106">     */</span>
+<span class="source-line-no">107</span><span id="line-107">    private int currentIsf;</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109">    public CurrentActiveIdpValuesResponse() {}</span>
+<span class="source-line-no">110</span><span id="line-110"></span>
+<span class="source-line-no">111</span><span id="line-111">    public CurrentActiveIdpValuesResponse(long currentCarbRatio, int currentTargetBg, int currentInsulinDuration, int currentIsf) {</span>
+<span class="source-line-no">112</span><span id="line-112">        this.cargo = buildCargo(currentCarbRatio, currentTargetBg, currentInsulinDuration, currentIsf);</span>
+<span class="source-line-no">113</span><span id="line-113">        this.currentCarbRatio = currentCarbRatio;</span>
+<span class="source-line-no">114</span><span id="line-114">        this.currentTargetBg = currentTargetBg;</span>
+<span class="source-line-no">115</span><span id="line-115">        this.currentInsulinDuration = currentInsulinDuration;</span>
+<span class="source-line-no">116</span><span id="line-116">        this.currentIsf = currentIsf;</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    /**</span>
+<span class="source-line-no">120</span><span id="line-120">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">121</span><span id="line-121">     * &lt;caption&gt;Parsed fields for CurrentActiveIdpValuesResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentCarbRatio&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentTargetBg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 5)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentInsulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 6)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentIsf&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 8)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;/table&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     */</span>
+<span class="source-line-no">128</span><span id="line-128">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">129</span><span id="line-129">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">130</span><span id="line-130">        this.cargo = raw;</span>
+<span class="source-line-no">131</span><span id="line-131">        // bytes 0-3: currentCarbRatio (uint32 LE)</span>
+<span class="source-line-no">132</span><span id="line-132">        this.currentCarbRatio = Bytes.readUint32(raw, 0);</span>
+<span class="source-line-no">133</span><span id="line-133">        // byte 4: unknown/padding — not parsed</span>
+<span class="source-line-no">134</span><span id="line-134">        // bytes 5-6: currentTargetBg (uint16 LE)</span>
+<span class="source-line-no">135</span><span id="line-135">        // Note: byte 6 is shared with currentInsulinDuration's low byte.</span>
+<span class="source-line-no">136</span><span id="line-136">        // In practice currentTargetBg &lt; 256, so its high byte (byte 6) = 0.</span>
+<span class="source-line-no">137</span><span id="line-137">        this.currentTargetBg = Bytes.readShort(raw, 5);</span>
+<span class="source-line-no">138</span><span id="line-138">        // bytes 6-7: currentInsulinDuration in minutes (uint16 LE)</span>
+<span class="source-line-no">139</span><span id="line-139">        this.currentInsulinDuration = Bytes.readShort(raw, 6);</span>
+<span class="source-line-no">140</span><span id="line-140">        // bytes 8-9: currentIsf (uint16 LE)</span>
+<span class="source-line-no">141</span><span id="line-141">        this.currentIsf = Bytes.readShort(raw, 8);</span>
+<span class="source-line-no">142</span><span id="line-142">    }</span>
+<span class="source-line-no">143</span><span id="line-143"></span>
+<span class="source-line-no">144</span><span id="line-144">    /**</span>
+<span class="source-line-no">145</span><span id="line-145">     * Builds the cargo byte array for this response.</span>
+<span class="source-line-no">146</span><span id="line-146">     *</span>
+<span class="source-line-no">147</span><span id="line-147">     * Because {@code currentTargetBg} (bytes 5-6) and {@code currentInsulinDuration} (bytes 6-7)</span>
+<span class="source-line-no">148</span><span id="line-148">     * share byte 6, this method assumes {@code currentTargetBg &lt; 256} (its high byte = 0) so</span>
+<span class="source-line-no">149</span><span id="line-149">     * that byte 6 carries only the low byte of {@code currentInsulinDuration} without conflict.</span>
+<span class="source-line-no">150</span><span id="line-150">     * &lt;br&gt;</span>
+<span class="source-line-no">151</span><span id="line-151">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">152</span><span id="line-152">     * &lt;caption&gt;Byte layout for CurrentActiveIdpValuesResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">153</span><span id="line-153">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">154</span><span id="line-154">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(currentCarbRatio) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">155</span><span id="line-155">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(currentCarbRatio) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">156</span><span id="line-156">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(currentCarbRatio) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">157</span><span id="line-157">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(currentCarbRatio) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">158</span><span id="line-158">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">159</span><span id="line-159">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{byte5} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">160</span><span id="line-160">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{byte6} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">161</span><span id="line-161">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{byte7} [element 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">162</span><span id="line-162">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(currentIsf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">163</span><span id="line-163">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(currentIsf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">164</span><span id="line-164">     * &lt;/table&gt;</span>
+<span class="source-line-no">165</span><span id="line-165">     */</span>
+<span class="source-line-no">166</span><span id="line-166">    public static byte[] buildCargo(long currentCarbRatio, int currentTargetBg, int currentInsulinDuration, int currentIsf) {</span>
+<span class="source-line-no">167</span><span id="line-167">        // The 3-byte region [5,6,7] covers:</span>
+<span class="source-line-no">168</span><span id="line-168">        //   byte 5 = targetBg low byte</span>
+<span class="source-line-no">169</span><span id="line-169">        //   byte 6 = targetBg high byte (0, since targetBg &lt; 256) = insulinDuration low byte</span>
+<span class="source-line-no">170</span><span id="line-170">        //   byte 7 = insulinDuration high byte</span>
+<span class="source-line-no">171</span><span id="line-171">        byte byte5 = (byte) (currentTargetBg &amp; 0xFF);</span>
+<span class="source-line-no">172</span><span id="line-172">        byte byte6 = (byte) (currentInsulinDuration &amp; 0xFF);  // targetBg high byte assumed 0</span>
+<span class="source-line-no">173</span><span id="line-173">        byte byte7 = (byte) ((currentInsulinDuration &gt;&gt; 8) &amp; 0xFF);</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">        return Bytes.combine(</span>
+<span class="source-line-no">176</span><span id="line-176">            Bytes.toUint32(currentCarbRatio),           // bytes 0-3</span>
+<span class="source-line-no">177</span><span id="line-177">            new byte[]{0},                              // byte  4: unknown/padding</span>
+<span class="source-line-no">178</span><span id="line-178">            new byte[]{byte5, byte6, byte7},            // bytes 5-7: targetBg + insulinDuration (overlapping)</span>
+<span class="source-line-no">179</span><span id="line-179">            Bytes.firstTwoBytesLittleEndian(currentIsf) // bytes 8-9: ISF</span>
+<span class="source-line-no">180</span><span id="line-180">        );</span>
+<span class="source-line-no">181</span><span id="line-181">    }</span>
+<span class="source-line-no">182</span><span id="line-182"></span>
+<span class="source-line-no">183</span><span id="line-183">    /**</span>
+<span class="source-line-no">184</span><span id="line-184">     * @return carb ratio in 1000-increments. A value of 10000 means 10 g/U.</span>
+<span class="source-line-no">185</span><span id="line-185">     * See {@link com.jwoglom.pumpx2.pump.messages.models.InsulinUnit#from1000To1(Long)}.</span>
+<span class="source-line-no">186</span><span id="line-186">     */</span>
+<span class="source-line-no">187</span><span id="line-187">    public long getCurrentCarbRatio() {</span>
+<span class="source-line-no">188</span><span id="line-188">        return currentCarbRatio;</span>
+<span class="source-line-no">189</span><span id="line-189">    }</span>
+<span class="source-line-no">190</span><span id="line-190"></span>
+<span class="source-line-no">191</span><span id="line-191">    /**</span>
+<span class="source-line-no">192</span><span id="line-192">     * @return target blood glucose in mg/dL used for Control-IQ corrections</span>
+<span class="source-line-no">193</span><span id="line-193">     */</span>
+<span class="source-line-no">194</span><span id="line-194">    public int getCurrentTargetBg() {</span>
+<span class="source-line-no">195</span><span id="line-195">        return currentTargetBg;</span>
+<span class="source-line-no">196</span><span id="line-196">    }</span>
+<span class="source-line-no">197</span><span id="line-197"></span>
+<span class="source-line-no">198</span><span id="line-198">    /**</span>
+<span class="source-line-no">199</span><span id="line-199">     * @return Control-IQ insulin duration in minutes</span>
+<span class="source-line-no">200</span><span id="line-200">     */</span>
+<span class="source-line-no">201</span><span id="line-201">    public int getCurrentInsulinDuration() {</span>
+<span class="source-line-no">202</span><span id="line-202">        return currentInsulinDuration;</span>
+<span class="source-line-no">203</span><span id="line-203">    }</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">    /**</span>
+<span class="source-line-no">206</span><span id="line-206">     * @return insulin sensitivity factor in mg/dL per unit</span>
+<span class="source-line-no">207</span><span id="line-207">     */</span>
+<span class="source-line-no">208</span><span id="line-208">    public int getCurrentIsf() {</span>
+<span class="source-line-no">209</span><span id="line-209">        return currentIsf;</span>
+<span class="source-line-no">210</span><span id="line-210">    }</span>
+<span class="source-line-no">211</span><span id="line-211">}</span>
 
 
 

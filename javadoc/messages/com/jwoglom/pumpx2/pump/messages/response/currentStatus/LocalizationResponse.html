@@ -39,6 +39,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -81,7 +82,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-28">LocalizationResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-26">LocalizationResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
 <div class="block">Response message for <a href="../../request/currentStatus/LocalizationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LocalizationRequest</code></a>, opCode -89, size 7
 
@@ -118,9 +119,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">LocalizationResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,long)" class="member-name-link">LocalizationResponse</a><wbr>(int&nbsp;glucoseOUM,
- int&nbsp;regionSetting,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,long)" class="member-name-link">LocalizationResponse</a><wbr>(int&nbsp;glucoseUOM,
  int&nbsp;languageSelected,
+ int&nbsp;regionSetting,
  long&nbsp;languagesAvailableBitmask)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
@@ -138,17 +139,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,int,long)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;glucoseOUM,
- int&nbsp;regionSetting,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,int,long)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;glucoseUOM,
  int&nbsp;languageSelected,
+ int&nbsp;regionSetting,
  long&nbsp;languagesAvailableBitmask)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for LocalizationResponse.buildCargo(...):
  OffsetDescription
- 0<code>(byte) glucoseOUM</code>
- 1<code>(byte) regionSetting</code>
- 2<code>(byte) languageSelected</code>
+ 0<code>(byte) glucoseUOM</code>
+ 1<code>(byte) languageSelected</code>
+ 2<code>(byte) regionSetting</code>
  3<code>toUint32(languagesAvailableBitmask) [byte 0]</code>
  4<code>toUint32(languagesAvailableBitmask) [byte 1]</code>
  5<code>toUint32(languagesAvailableBitmask) [byte 2]</code>
@@ -158,23 +159,26 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseOUM()" class="member-name-link">getGlucoseOUM</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLanguagesAvailableBitmask()" class="member-name-link">getLanguagesAvailableBitmask</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseUOM()" class="member-name-link">getGlucoseUOM</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLanguageSelected()" class="member-name-link">getLanguageSelected</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLanguagesAvailableBitmask()" class="member-name-link">getLanguagesAvailableBitmask</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRegionSetting()" class="member-name-link">getRegionSetting</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLanguageSelected()" class="member-name-link">getLanguageSelected</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRegionSetting()" class="member-name-link">getRegionSetting</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for LocalizationResponse:
- <code>glucoseOUM</code><code>raw[0]</code>
- <code>regionSetting</code><code>raw[1]</code>
- <code>languageSelected</code><code>raw[2]</code>
+ <code>glucoseUOM</code><code>raw[0]</code>
+ <code>languageSelected</code><code>raw[1]</code>
+ <code>regionSetting</code><code>raw[2]</code>
  <code>languagesAvailableBitmask</code><code>Bytes.readUint32(raw, 3)</code>
  </div>
 </div>
@@ -201,15 +205,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>LocalizationResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-42">LocalizationResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-40">LocalizationResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,long)">
 <h3>LocalizationResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-44">LocalizationResponse</a></span><wbr><span class="parameters">(int&nbsp;glucoseOUM,
- int&nbsp;regionSetting,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-42">LocalizationResponse</a></span><wbr><span class="parameters">(int&nbsp;glucoseUOM,
  int&nbsp;languageSelected,
+ int&nbsp;regionSetting,
  long&nbsp;languagesAvailableBitmask)</span></div>
 </section>
 </li>
@@ -224,12 +228,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-63">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-60">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for LocalizationResponse:</caption>
- <tr><td><code>glucoseOUM</code></td><td><code>raw[0]</code></td></tr>
- <tr><td><code>regionSetting</code></td><td><code>raw[1]</code></td></tr>
- <tr><td><code>languageSelected</code></td><td><code>raw[2]</code></td></tr>
+ <tr><td><code>glucoseUOM</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>languageSelected</code></td><td><code>raw[1]</code></td></tr>
+ <tr><td><code>regionSetting</code></td><td><code>raw[2]</code></td></tr>
  <tr><td><code>languagesAvailableBitmask</code></td><td><code>Bytes.readUint32(raw, 3)</code></td></tr>
  </table></div>
 <dl class="notes">
@@ -241,16 +245,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-88">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;glucoseOUM,
- int&nbsp;regionSetting,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-84">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;glucoseUOM,
  int&nbsp;languageSelected,
+ int&nbsp;regionSetting,
  long&nbsp;languagesAvailableBitmask)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for LocalizationResponse.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>(byte) glucoseOUM</code></td></tr>
- <tr><td>1</td><td><code>(byte) regionSetting</code></td></tr>
- <tr><td>2</td><td><code>(byte) languageSelected</code></td></tr>
+ <tr><td>0</td><td><code>(byte) glucoseUOM</code></td></tr>
+ <tr><td>1</td><td><code>(byte) languageSelected</code></td></tr>
+ <tr><td>2</td><td><code>(byte) regionSetting</code></td></tr>
  <tr><td>3</td><td><code>toUint32(languagesAvailableBitmask) [byte 0]</code></td></tr>
  <tr><td>4</td><td><code>toUint32(languagesAvailableBitmask) [byte 1]</code></td></tr>
  <tr><td>5</td><td><code>toUint32(languagesAvailableBitmask) [byte 2]</code></td></tr>
@@ -259,27 +263,33 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getGlucoseOUM()">
-<h3>getGlucoseOUM</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-97">getGlucoseOUM</a></span>()</div>
+<section class="detail" id="getGlucoseUOM()">
+<h3>getGlucoseUOM</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-92">getGlucoseUOM</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getRegionSetting()">
-<h3>getRegionSetting</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-100">getRegionSetting</a></span>()</div>
+<section class="detail" id="getGlucoseOUM()">
+<h3>getGlucoseOUM</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-96">getGlucoseOUM</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLanguageSelected()">
 <h3>getLanguageSelected</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-103">getLanguageSelected</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-99">getLanguageSelected</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRegionSetting()">
+<h3>getRegionSetting</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-102">getRegionSetting</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLanguagesAvailableBitmask()">
 <h3>getLanguagesAvailableBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-106">getLanguagesAvailableBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LocalizationResponse.html#line-105">getLanguagesAvailableBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

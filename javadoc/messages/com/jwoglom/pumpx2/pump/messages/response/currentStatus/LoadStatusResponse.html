@@ -39,6 +39,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -47,7 +48,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -76,15 +77,13 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">com.jwoglom.pumpx2.pump.messages.Message</a>
-<div class="inheritance"><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">com.jwoglom.pumpx2.pump.messages.models.StatusMessage</a>
 <div class="inheritance">com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-29">LoadStatusResponse</a></span>
-<span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-25">LoadStatusResponse</a></span>
+<span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
 <div class="block">Response message for <a href="../../request/currentStatus/LoadStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LoadStatusRequest</code></a>, opCode 21, size 3
 
  <br>
@@ -101,6 +100,27 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="LoadStatusResponse.LoadState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="LoadStatusResponse.PrimeNudgeStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeNudgeStatus</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="LoadStatusResponse.PrimeTubingStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeTubingStatus</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -120,11 +140,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">LoadStatusResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,int,int)" class="member-name-link">LoadStatusResponse</a><wbr>(boolean&nbsp;isLoadingActive,
+ int&nbsp;loadStateId,
+ int&nbsp;primeStatusId)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,int)" class="member-name-link">LoadStatusResponse</a><wbr>(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ int&nbsp;primeStatusId)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">LoadStatusResponse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">LoadStatusResponse</a><wbr>(int&nbsp;status,
  int&nbsp;unknown)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 </div>
 </section>
 </li>
@@ -133,45 +163,88 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;status,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,int,int)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;isLoadingActive,
+ int&nbsp;loadStateId,
+ int&nbsp;primeStatusId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,int)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ int&nbsp;primeStatusId)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeTubingStatus,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeNudgeStatus)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ <a href="LoadStatusResponse.PrimeTubingStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeTubingStatus</a>&nbsp;primeTubingStatus,
+ <a href="LoadStatusResponse.PrimeNudgeStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeNudgeStatus</a>&nbsp;primeNudgeStatus)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#buildCargo(int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;status,
  int&nbsp;unknown)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">
- Byte layout for LoadStatusResponse.buildCargo(...):
- OffsetDescription
- 0<code>(byte) status</code>
- 1<code>firstTwoBytesLittleEndian(unknown) [byte 0]</code>
- 2<code>firstTwoBytesLittleEndian(unknown) [byte 1]</code>
- </div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsInLoadingState()" class="member-name-link">getIsInLoadingState</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Matches Tandem's derived helper: true when loadState is one of
+ CHANGE_CARTRIDGE / LOAD_CARTRIDGE / PRIME_TUBING.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsLoadingActive()" class="member-name-link">getIsLoadingActive</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUnknown()" class="member-name-link">getUnknown</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIsLoadingActiveId()" class="member-name-link">getIsLoadingActiveId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadState()" class="member-name-link">getLoadState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLoadStateId()" class="member-name-link">getLoadStateId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LoadStatusResponse.PrimeNudgeStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeNudgeStatus</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrimeNudgeStatus()" class="member-name-link">getPrimeNudgeStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrimeStatusId()" class="member-name-link">getPrimeStatusId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LoadStatusResponse.PrimeTubingStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeTubingStatus</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrimeTubingStatus()" class="member-name-link">getPrimeTubingStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getUnknown()" class="member-name-link">getUnknown</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for LoadStatusResponse:
- <code>status</code><code>raw[0]</code>
- <code>unknown</code><code>Bytes.readShort(raw, 1)</code>
+ <code>isLoadingActiveId</code><code>raw[0] &amp; 0xFF</code>
+ <code>isLoadingActive</code><code>this.isLoadingActiveId != 0</code>
+ <code>loadStateId</code><code>raw[1] &amp; 0xFF</code>
+ <code>loadState</code><code>LoadState.fromId(loadStateId)</code>
+ <code>primeStatusId</code><code>raw[2] &amp; 0xFF</code>
+ <code>primeTubingStatus</code><code>loadState == LoadState.PRIME_TUBING ? PrimeTubingStatus.fromId(primeStatusId) : null</code>
+ <code>primeNudgeStatus</code><code>loadState == LoadState.PRIME_NUDGE ? PrimeNudgeStatus.fromId(primeStatusId) : null</code>
  </div>
 </div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.StatusMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></h3>
-<code><a href="../../models/StatusMessage.html#isStatusOK()">isStatusOK</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#equals(java.lang.Object)">equals</a>, <a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
@@ -192,20 +265,40 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>LoadStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-40">LoadStatusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-42">LoadStatusResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>LoadStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-44">LoadStatusResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-46">LoadStatusResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean,int,int)">
+<h3>LoadStatusResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-50">LoadStatusResponse</a></span><wbr><span class="parameters">(boolean&nbsp;isLoadingActive,
+ int&nbsp;loadStateId,
+ int&nbsp;primeStatusId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,int)">
+<h3>LoadStatusResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-55">LoadStatusResponse</a></span><wbr><span class="parameters">(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ int&nbsp;primeStatusId)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>LoadStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-49">LoadStatusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-64">LoadStatusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;unknown)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block">Legacy constructor maintained for compatibility with prior pumpx2 releases where
+ byte 0 was incorrectly treated as "status" and bytes 1/2 as an opaque short.</div>
 </section>
 </li>
 </ul>
@@ -219,11 +312,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-62">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-82">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for LoadStatusResponse:</caption>
- <tr><td><code>status</code></td><td><code>raw[0]</code></td></tr>
- <tr><td><code>unknown</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>isLoadingActiveId</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ <tr><td><code>isLoadingActive</code></td><td><code>this.isLoadingActiveId != 0</code></td></tr>
+ <tr><td><code>loadStateId</code></td><td><code>raw[1] &amp; 0xFF</code></td></tr>
+ <tr><td><code>loadState</code></td><td><code>LoadState.fromId(loadStateId)</code></td></tr>
+ <tr><td><code>primeStatusId</code></td><td><code>raw[2] &amp; 0xFF</code></td></tr>
+ <tr><td><code>primeTubingStatus</code></td><td><code>loadState == LoadState.PRIME_TUBING ? PrimeTubingStatus.fromId(primeStatusId) : null</code></td></tr>
+ <tr><td><code>primeNudgeStatus</code></td><td><code>loadState == LoadState.PRIME_NUDGE ? PrimeNudgeStatus.fromId(primeStatusId) : null</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -232,35 +330,108 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="buildCargo(boolean,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-94">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;isLoadingActive,
+ int&nbsp;loadStateId,
+ int&nbsp;primeStatusId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-102">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ int&nbsp;primeStatusId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeTubingStatus,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeNudgeStatus)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-106">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;isLoadingActive,
+ <a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a>&nbsp;loadState,
+ <a href="LoadStatusResponse.PrimeTubingStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeTubingStatus</a>&nbsp;primeTubingStatus,
+ <a href="LoadStatusResponse.PrimeNudgeStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeNudgeStatus</a>&nbsp;primeNudgeStatus)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="buildCargo(int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-78">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-120">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;unknown)</span></div>
-<div class="block"><table border="1">
- <caption>Byte layout for LoadStatusResponse.buildCargo(...):</caption>
- <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>(byte) status</code></td></tr>
- <tr><td>1</td><td><code>firstTwoBytesLittleEndian(unknown) [byte 0]</code></td></tr>
- <tr><td>2</td><td><code>firstTwoBytesLittleEndian(unknown) [byte 1]</code></td></tr>
- </table></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block">Legacy helper maintained for compatibility with older code.
+ Equivalent to <code>byte[0]=status, byte[1]=unknown&amp;0xFF, byte[2]=(unknown&gt;&gt;8)&amp;0xFF</code>.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIsLoadingActiveId()">
+<h3>getIsLoadingActiveId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-129">getIsLoadingActiveId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIsLoadingActive()">
+<h3>getIsLoadingActive</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-133">getIsLoadingActive</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLoadStateId()">
+<h3>getLoadStateId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-137">getLoadStateId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLoadState()">
+<h3>getLoadState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LoadStatusResponse.LoadState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.LoadState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-141">getLoadState</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPrimeStatusId()">
+<h3>getPrimeStatusId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-145">getPrimeStatusId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPrimeTubingStatus()">
+<h3>getPrimeTubingStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LoadStatusResponse.PrimeTubingStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeTubingStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-149">getPrimeTubingStatus</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPrimeNudgeStatus()">
+<h3>getPrimeNudgeStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LoadStatusResponse.PrimeNudgeStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse.PrimeNudgeStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-153">getPrimeNudgeStatus</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIsInLoadingState()">
+<h3>getIsInLoadingState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-161">getIsInLoadingState</a></span>()</div>
+<div class="block">Matches Tandem's derived helper: true when loadState is one of
+ CHANGE_CARTRIDGE / LOAD_CARTRIDGE / PRIME_TUBING.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-84">getStatus</a></span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
-<dt>Returns:</dt>
-<dd>0 if successful</dd>
-</dl>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-171">getStatus</a></span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block">Legacy compatibility alias for older pumpx2 versions where this was interpreted
+ as a command status.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUnknown()">
 <h3>getUnknown</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-89">getUnknown</a></span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#line-179">getUnknown</a></span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block">Legacy compatibility alias for older pumpx2 versions.</div>
 </section>
 </li>
 </ul>

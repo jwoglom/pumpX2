@@ -39,6 +39,7 @@ loadScripts(document, 'script');</script>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
@@ -47,7 +48,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -76,14 +77,30 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">com.jwoglom.pumpx2.pump.messages.Message</a>
+<div class="inheritance"><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">com.jwoglom.pumpx2.pump.messages.models.StatusMessage</a>
 <div class="inheritance">com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-25">StreamDataPreflightResponse</a></span>
-<span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Response message for <a href="../../request/control/StreamDataPreflightRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>StreamDataPreflightRequest</code></a>, opCode -125, size 0
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-53">StreamDataPreflightResponse</a></span>
+<span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
+<div class="block">Response to a StreamDataPreflightRequest.
+
+ Cargo layout (3 bytes, after HMAC removal):
+   raw[0]: status       (uint8, 0 = ACK/success)
+   raw[1]: statusTypeId (uint8, PreflightStatusType ordinal)
+   raw[2]: streamTypeId (uint8, PreflightStreamType ordinal)
+
+ Derived from the decompiled Tandem Mobi Android app:
+   StreamDataPreflightResponse$StreamDataPreflightCargo (C2884c cases 25 and 26)
+
+
+
+ <br>
+
+ Response message for <a href="../../request/control/StreamDataPreflightRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>StreamDataPreflightRequest</code></a>, opCode -125, size 3
 
  <br>
 
@@ -91,15 +108,34 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-125</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>3</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>request</code>&nbsp;</th><td>&nbsp;<code><a href="../../request/control/StreamDataPreflightRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>StreamDataPreflightRequest</code></a></code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>minApi</code>&nbsp;</th><td>&nbsp;<code><a href="../../models/KnownApiVersion.html#API_FUTURE"><code>KnownApiVersion.API_FUTURE</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>signed</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
  </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="StreamDataPreflightResponse.PreflightStatusType.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStatusType</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="StreamDataPreflightResponse.PreflightStreamType.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStreamType</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -119,6 +155,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">StreamDataPreflightResponse</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">StreamDataPreflightResponse</a><wbr>(int&nbsp;status,
+ int&nbsp;statusTypeId,
+ int&nbsp;streamTypeId)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -127,18 +167,49 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;status,
+ int&nbsp;statusTypeId,
+ int&nbsp;streamTypeId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">
+ Byte layout for StreamDataPreflightResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
+ 1<code>(byte) statusTypeId</code>
+ 2<code>(byte) streamTypeId</code>
+ </div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StreamDataPreflightResponse.PreflightStatusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStatusType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatusType()" class="member-name-link">getStatusType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatusTypeId()" class="member-name-link">getStatusTypeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="StreamDataPreflightResponse.PreflightStreamType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStreamType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamType()" class="member-name-link">getStreamType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamTypeId()" class="member-name-link">getStreamTypeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.models.StatusMessage">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.models.<a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></h3>
+<code><a href="../../models/StatusMessage.html#isStatusOK()">isStatusOK</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#equals(java.lang.Object)">equals</a>, <a href="../../Message.html#fillWithEmptyCargo()">fillWithEmptyCargo</a>, <a href="../../Message.html#getCargo()">getCargo</a>, <a href="../../Message.html#getCharacteristic()">getCharacteristic</a>, <a href="../../Message.html#getRequestClass()">getRequestClass</a>, <a href="../../Message.html#getRequestProps()">getRequestProps</a>, <a href="../../Message.html#getResponseClass()">getResponseClass</a>, <a href="../../Message.html#getResponseOpCode()">getResponseOpCode</a>, <a href="../../Message.html#getResponseProps()">getResponseProps</a>, <a href="../../Message.html#getResponseSize()">getResponseSize</a>, <a href="../../Message.html#jsonToString()">jsonToString</a>, <a href="../../Message.html#messageName()">messageName</a>, <a href="../../Message.html#opCode()">opCode</a>, <a href="../../Message.html#props()">props</a>, <a href="../../Message.html#removeSignedRequestHmacBytes(byte%5B%5D)">removeSignedRequestHmacBytes</a>, <a href="../../Message.html#signed()">signed</a>, <a href="../../Message.html#stream()">stream</a>, <a href="../../Message.html#toString()">toString</a>, <a href="../../Message.html#type()">type</a>, <a href="../../Message.html#verboseToString()">verboseToString</a></code></div>
@@ -159,7 +230,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>StreamDataPreflightResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-34">StreamDataPreflightResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-68">StreamDataPreflightResponse</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,int)">
+<h3>StreamDataPreflightResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-70">StreamDataPreflightResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+ int&nbsp;statusTypeId,
+ int&nbsp;streamTypeId)</span></div>
 </section>
 </li>
 </ul>
@@ -173,11 +252,62 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-36">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-77">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(int,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-104">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+ int&nbsp;statusTypeId,
+ int&nbsp;streamTypeId)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for StreamDataPreflightResponse.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>(byte) status</code></td></tr>
+ <tr><td>1</td><td><code>(byte) statusTypeId</code></td></tr>
+ <tr><td>2</td><td><code>(byte) streamTypeId</code></td></tr>
+ </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatus()">
+<h3>getStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-112">getStatus</a></span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
+<dt>Returns:</dt>
+<dd>0 if successful</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatusTypeId()">
+<h3>getStatusTypeId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-117">getStatusTypeId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatusType()">
+<h3>getStatusType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="StreamDataPreflightResponse.PreflightStatusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStatusType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-121">getStatusType</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStreamTypeId()">
+<h3>getStreamTypeId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-125">getStreamTypeId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStreamType()">
+<h3>getStreamType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="StreamDataPreflightResponse.PreflightStreamType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse.PreflightStreamType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#line-129">getStreamType</a></span>()</div>
 </section>
 </li>
 </ul>
