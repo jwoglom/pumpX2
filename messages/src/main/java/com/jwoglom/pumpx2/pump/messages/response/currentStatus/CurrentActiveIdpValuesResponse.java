@@ -95,9 +95,9 @@ public class CurrentActiveIdpValuesResponse extends Message {
     /**
      * Builds the cargo byte array for this response.
      *
-     * Because currentTargetBg (bytes 5-6) and currentInsulinDuration (bytes 6-7) share byte 6,
-     * this method assumes currentTargetBg < 256 (its high byte = 0) so that byte 6 carries only
-     * the low byte of currentInsulinDuration without conflict.
+     * Because {@code currentTargetBg} (bytes 5-6) and {@code currentInsulinDuration} (bytes 6-7)
+     * share byte 6, this method assumes {@code currentTargetBg < 256} (its high byte = 0) so
+     * that byte 6 carries only the low byte of {@code currentInsulinDuration} without conflict.
      */
     public static byte[] buildCargo(long currentCarbRatio, int currentTargetBg, int currentInsulinDuration, int currentIsf) {
         // The 3-byte region [5,6,7] covers:

@@ -88,7 +88,7 @@ public class LoadStatusResponse extends Message {
 
     /**
      * Legacy helper maintained for compatibility with older code.
-     * Equivalent to packing byte[0]=status, byte[1]=unknown&0xFF, byte[2]=(unknown>>8)&0xFF.
+     * Equivalent to {@code byte[0]=status, byte[1]=unknown&0xFF, byte[2]=(unknown>>8)&0xFF}.
      */
     @Deprecated
     public static byte[] buildCargo(int status, int unknown) {
