@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest;
 
 /**
@@ -17,7 +18,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfo
     variableSize=true,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CURRENT_STATUS,
-    request=CommonSoftwareInfoRequest.class
+    request=CommonSoftwareInfoRequest.class,
+    minApi=KnownApiVersion.API_FUTURE
 )
 public class CommonSoftwareInfoResponse extends Message {
     

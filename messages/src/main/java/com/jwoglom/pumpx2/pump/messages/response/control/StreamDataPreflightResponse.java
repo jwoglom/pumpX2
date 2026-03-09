@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.StreamDataPreflightRequest;
 
@@ -25,6 +26,7 @@ import com.jwoglom.pumpx2.pump.messages.request.control.StreamDataPreflightReque
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CONTROL,
     request=StreamDataPreflightRequest.class,
+    minApi=KnownApiVersion.API_FUTURE,
     signed=true
 )
 public class StreamDataPreflightResponse extends StatusMessage {

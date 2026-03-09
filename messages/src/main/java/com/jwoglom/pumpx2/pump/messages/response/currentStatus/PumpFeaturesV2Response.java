@@ -25,6 +25,13 @@ public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
     private int status;
     private int supportedFeatureIndexId;
     private long pumpFeaturesBitmask;
+    private Set<PumpFeaturesV1Response.PumpFeatureType> primaryFeatures;
+    private Set<ControlIqProFeatureType> controlIqProFeatures;
+    private Set<ControlFeatureType> controlFeatures;
+    private Set<ControlIqFeatureType> controlIqFeatures;
+    private Set<DexcomFeatureType> dexcomFeatures;
+    private Set<AbbottFeatureType> abbottFeatures;
+    private Set<SecondaryFeatureType> secondaryFeatures;
     
     public PumpFeaturesV2Response() {}
     
@@ -33,6 +40,7 @@ public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
         this.status = status;
         this.supportedFeatureIndexId = supportedFeatureIndex;
         this.pumpFeaturesBitmask = pumpFeaturesBitmask;
+        initializeFeatureSets();
         
     }
 
@@ -42,6 +50,7 @@ public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
         this.status = raw[0];
         this.supportedFeatureIndexId = raw[1];
         this.pumpFeaturesBitmask = Bytes.readUint32(raw, 2);
+        initializeFeatureSets();
         
     }
 
@@ -71,53 +80,57 @@ public class PumpFeaturesV2Response extends PumpFeaturesAbstractResponse {
     }
 
     public Set<PumpFeaturesV1Response.PumpFeatureType> getPrimaryFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.MAIN_FEATURES) {
-            return null;
-        }
-
-        return PumpFeaturesV1Response.PumpFeatureType.fromBitmask(BigInteger.valueOf(getPumpFeaturesBitmask()));
+        return primaryFeatures;
     }
 
     public Set<ControlIqProFeatureType> getControlIqProFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.CONTROL_IQ_PRO_FEATURES) {
-            return null;
-        }
-        return ControlIqProFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return controlIqProFeatures;
     }
 
     public Set<ControlFeatureType> getControlFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.CONTROL_FEATURES) {
-            return null;
-        }
-        return ControlFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return controlFeatures;
     }
 
     public Set<ControlIqFeatureType> getControlIqFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.CONTROL_IQ_FEATURES) {
-            return null;
-        }
-        return ControlIqFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return controlIqFeatures;
     }
 
     public Set<DexcomFeatureType> getDexcomFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.DEXCOM_FEATURES) {
-            return null;
-        }
-        return DexcomFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return dexcomFeatures;
     }
 
     public Set<AbbottFeatureType> getAbbottFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.ABBOTT_FEATURES) {
-            return null;
-        }
-        return AbbottFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return abbottFeatures;
     }
 
     public Set<SecondaryFeatureType> getSecondaryFeatures() {
-        if (getSupportedFeatureIndex() != SupportedFeatureIndex.SECONDARY_FEATURES) {
-            return null;
-        }
-        return SecondaryFeatureType.fromBitmask(getPumpFeaturesBitmask());
+        return secondaryFeatures;
+    }
+
+    private void initializeFeatureSets() {
+        SupportedFeatureIndex featureIndex = getSupportedFeatureIndex();
+
+        this.primaryFeatures = featureIndex == SupportedFeatureIndex.MAIN_FEATURES
+                ? PumpFeaturesV1Response.PumpFeatureType.fromBitmask(BigInteger.valueOf(getPumpFeaturesBitmask()))
+                : null;
+        this.controlIqProFeatures = featureIndex == SupportedFeatureIndex.CONTROL_IQ_PRO_FEATURES
+                ? ControlIqProFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
+        this.controlFeatures = featureIndex == SupportedFeatureIndex.CONTROL_FEATURES
+                ? ControlFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
+        this.controlIqFeatures = featureIndex == SupportedFeatureIndex.CONTROL_IQ_FEATURES
+                ? ControlIqFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
+        this.dexcomFeatures = featureIndex == SupportedFeatureIndex.DEXCOM_FEATURES
+                ? DexcomFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
+        this.abbottFeatures = featureIndex == SupportedFeatureIndex.ABBOTT_FEATURES
+                ? AbbottFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
+        this.secondaryFeatures = featureIndex == SupportedFeatureIndex.SECONDARY_FEATURES
+                ? SecondaryFeatureType.fromBitmask(getPumpFeaturesBitmask())
+                : null;
     }
 
     public enum SupportedFeatureIndex {

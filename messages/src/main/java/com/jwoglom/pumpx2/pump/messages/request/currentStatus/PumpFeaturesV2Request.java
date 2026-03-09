@@ -22,6 +22,10 @@ public class PumpFeaturesV2Request extends Message {
         this.cargo = Bytes.firstByteLittleEndian(input);
     }
 
+    public PumpFeaturesV2Request(PumpFeaturesV2Response.SupportedFeatureIndex supportedFeature) {
+        this.cargo = Bytes.firstByteLittleEndian(supportedFeature.id());
+    }
+
     public PumpFeaturesV2Request() {
         this(2);
     }

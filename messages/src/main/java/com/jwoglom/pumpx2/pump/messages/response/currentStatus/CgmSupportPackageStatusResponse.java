@@ -6,6 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageStatusRequest;
 
 /**
@@ -23,7 +24,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmSupportPackageS
     size=2,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CURRENT_STATUS,
-    request=CgmSupportPackageStatusRequest.class
+    request=CgmSupportPackageStatusRequest.class,
+    minApi=KnownApiVersion.API_FUTURE
 )
 public class CgmSupportPackageStatusResponse extends Message {
     private int status;

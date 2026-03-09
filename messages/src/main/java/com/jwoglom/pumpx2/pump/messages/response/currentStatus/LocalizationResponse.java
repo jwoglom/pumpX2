@@ -8,8 +8,6 @@ import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LocalizationRequest;
 
-import java.math.BigInteger;
-
 @MessageProps(
     opCode=-89,
     size=7,
@@ -19,19 +17,18 @@ import java.math.BigInteger;
 )
 public class LocalizationResponse extends Message {
     
-    private int glucoseOUM;
-    private int regionSetting;
+    private int glucoseUOM;
     private int languageSelected;
+    private int regionSetting;
     private long languagesAvailableBitmask;
     
     public LocalizationResponse() {}
     
-    public LocalizationResponse(int glucoseOUM, int regionSetting, int languageSelected, long languagesAvailableBitmask) {
-        this.cargo = buildCargo(glucoseOUM, regionSetting, languageSelected, languagesAvailableBitmask);
-        // note: these may be out of order
-        this.glucoseOUM = glucoseOUM;
-        this.regionSetting = regionSetting;
+    public LocalizationResponse(int glucoseUOM, int languageSelected, int regionSetting, long languagesAvailableBitmask) {
+        this.cargo = buildCargo(glucoseUOM, languageSelected, regionSetting, languagesAvailableBitmask);
+        this.glucoseUOM = glucoseUOM;
         this.languageSelected = languageSelected;
+        this.regionSetting = regionSetting;
         this.languagesAvailableBitmask = languagesAvailableBitmask;
         
     }
@@ -39,32 +36,34 @@ public class LocalizationResponse extends Message {
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        // note: these may be out of order
-        this.glucoseOUM = raw[0];
-        this.regionSetting = raw[1];
-        this.languageSelected = raw[2];
+        this.glucoseUOM = raw[0];
+        this.languageSelected = raw[1];
+        this.regionSetting = raw[2];
         this.languagesAvailableBitmask = Bytes.readUint32(raw, 3);
         
     }
 
     
-    public static byte[] buildCargo(int glucoseOUM, int regionSetting, int languageSelected, long languagesAvailableBitmask) {
+    public static byte[] buildCargo(int glucoseUOM, int languageSelected, int regionSetting, long languagesAvailableBitmask) {
         return Bytes.combine(
-            // note: these may be out of order
-            new byte[]{ (byte) glucoseOUM }, 
-            new byte[]{ (byte) regionSetting }, 
+            new byte[]{ (byte) glucoseUOM },
             new byte[]{ (byte) languageSelected }, 
+            new byte[]{ (byte) regionSetting },
             Bytes.toUint32(languagesAvailableBitmask));
     }
     
-    public int getGlucoseOUM() {
-        return glucoseOUM;
+    public int getGlucoseUOM() {
+        return glucoseUOM;
     }
-    public int getRegionSetting() {
-        return regionSetting;
+
+    public int getGlucoseOUM() {
+        return glucoseUOM;
     }
     public int getLanguageSelected() {
         return languageSelected;
+    }
+    public int getRegionSetting() {
+        return regionSetting;
     }
     public long getLanguagesAvailableBitmask() {
         return languagesAvailableBitmask;
