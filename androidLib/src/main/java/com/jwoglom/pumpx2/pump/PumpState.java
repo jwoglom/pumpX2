@@ -50,6 +50,8 @@ public class PumpState {
         savedPacketArrayList.clear();
         processedResponseMessages = 0;
         processedResponseMessagesFromUs = 0;
+        resetInitialConnectionNoReplyFailures();
+        clearInitialConnectionHardAuthFailure();
     }
 
     public static String exportState(Context context) {
@@ -242,6 +244,13 @@ public class PumpState {
         }
     }
 
+    public static boolean hasPendingAuthorizationRequest() {
+        synchronized (requestMessages) {
+            return requestMessages.entrySet().stream()
+                    .anyMatch(e -> e.getKey().first == Characteristic.AUTHORIZATION && !e.getValue().first);
+        }
+    }
+
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
     public static synchronized void savePacketArrayList(Characteristic c, byte txId, PacketArrayList l) {
         Pair<Characteristic, Byte> key = Pair.create(c, txId);
@@ -307,9 +316,36 @@ public class PumpState {
     public static int processedResponseMessagesFromUs = 0;
 
     /**
+     * Count of consecutive initial-connection windows where requests were sent but no replies were
+     * received. Used to avoid aggressively unbonding after a single transient timeout.
+     */
+    public static int initialConnectionNoReplyFailures = 0;
+
+    public static void resetInitialConnectionNoReplyFailures() {
+        initialConnectionNoReplyFailures = 0;
+    }
+
+    public static int incrementInitialConnectionNoReplyFailures() {
+        return ++initialConnectionNoReplyFailures;
+    }
+
+    /**
+     * Tracks whether the current connection encountered a hard authentication failure where the
+     * existing bond/pairing is likely invalid.
+     */
+    public static boolean initialConnectionHardAuthFailure = false;
+
+    public static void markInitialConnectionHardAuthFailure() {
+        initialConnectionHardAuthFailure = true;
+    }
+
+    public static void clearInitialConnectionHardAuthFailure() {
+        initialConnectionHardAuthFailure = false;
+    }
+
+    /**
      * Used in the TandemPump constructor to set the pairing code type.
      */
     public static PairingCodeType pairingCodeType = PairingCodeType.LONG_16CHAR;
 
 }
-
