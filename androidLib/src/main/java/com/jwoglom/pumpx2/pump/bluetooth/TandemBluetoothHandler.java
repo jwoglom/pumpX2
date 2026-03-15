@@ -51,6 +51,7 @@ import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
+import com.welie.blessed.BondState;
 import com.welie.blessed.BluetoothPeripheralCallback;
 import com.welie.blessed.ConnectionPriority;
 import com.welie.blessed.ConnectionState;
@@ -264,7 +265,7 @@ public class TandemBluetoothHandler {
                         int repliesReceived = PumpState.processedResponseMessages;
                         boolean authInProgress = PumpState.hasPendingAuthorizationRequest();
                         boolean hardAuthFailure = PumpState.initialConnectionHardAuthFailure;
-                        int bondState = peripheral.getBondState();
+                        BondState bondState = peripheral.getBondState();
                         Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d authInProgress=%s hardAuthFailure=%s bondState=%s", requestsSent, repliesReceived, authInProgress, hardAuthFailure, bondState);
                         if (repliesReceived > 0) {
                             PumpState.resetInitialConnectionNoReplyFailures();
@@ -277,7 +278,7 @@ public class TandemBluetoothHandler {
                             boolean shouldUnbond = unbondAfterInitialConnectionHardFailuresCount != null
                                     && hardAuthFailure
                                     && !authInProgress
-                                    && bondState == BluetoothDevice.BOND_BONDED
+                                    && bondState == BondState.BONDED
                                     && noReplyFailures >= unbondAfterInitialConnectionHardFailuresCount;
                             Timber.w("InitialPumpConnectionStuck event=no_response_window action=disconnect requestsSent=%d repliesReceived=%d noReplyFailures=%d unbondAfterInitialConnectionHardFailuresCount=%s authInProgress=%s hardAuthFailure=%s bondState=%s shouldUnbond=%s", requestsSent, repliesReceived, noReplyFailures, String.valueOf(unbondAfterInitialConnectionHardFailuresCount), authInProgress, hardAuthFailure, bondState, shouldUnbond);
                             peripheral.cancelConnection();
