@@ -2,6 +2,8 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
@@ -55,6 +57,10 @@ public abstract class TandemPump {
     private int appInstanceId = 1;
     private KnownDeviceModel deviceModel;
     TandemConfig config;
+    private static final long INITIAL_AUTH_RETRY_DELAY_MS = 1200L;
+    private static final int INITIAL_AUTH_MAX_RETRIES = 5;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
+
 
     public TandemPump(Context context, TandemConfig config) {
         this.context = context;
@@ -87,9 +93,25 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the connected pump
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
-        Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
-        if (!PumpState.relyOnConnectionSharingForAuthentication) {
+        onInitialPumpConnection(peripheral, 0);
+    }
 
+    private void onInitialPumpConnection(BluetoothPeripheral peripheral, int attempt) {
+        Timber.i("TandemPump: onInitialPumpConnection (%d), attempt=%d, bondState=%s", appInstanceId, attempt, peripheral.getBondState());
+
+        if (!peripheral.getBondState().name().equals("BONDED")) {
+            if (attempt >= INITIAL_AUTH_MAX_RETRIES) {
+                Timber.w("TandemPump: pairing prompt likely not yet accepted after %d attempts", attempt);
+                onPairingPromptNotAcceptedYet(peripheral);
+                return;
+            }
+
+            Timber.i("TandemPump: delaying initial auth until bonding completes (attempt %d/%d)", attempt + 1, INITIAL_AUTH_MAX_RETRIES);
+            mainHandler.postDelayed(() -> onInitialPumpConnection(peripheral, attempt + 1), INITIAL_AUTH_RETRY_DELAY_MS);
+            return;
+        }
+
+        if (!PumpState.relyOnConnectionSharingForAuthentication) {
             // send CentralChallengeRequest for old-firmware tslim X2 only.
             // otherwise directly invoke onWaitingForPairingCode
             AbstractCentralChallengeRequest request = CentralChallengeRequestBuilder.create(appInstanceId);
@@ -99,6 +121,16 @@ public abstract class TandemPump {
                 onWaitingForPairingCode(peripheral, null);
             }
         }
+    }
+
+    /**
+     * Callback invoked when pairing is still pending at the platform level.
+     * Override this to provide user UX that prompts for accepting the Bluetooth pairing dialog.
+     *
+     * @param peripheral the BluetoothPeripheral representing the connected pump
+     */
+    public void onPairingPromptNotAcceptedYet(BluetoothPeripheral peripheral) {
+        onPumpCriticalError(peripheral, TandemError.PAIRING_PROMPT_NOT_ACCEPTED_YET);
     }
 
     /**

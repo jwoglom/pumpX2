@@ -262,9 +262,19 @@ public class TandemBluetoothHandler {
                     if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                         int requestsSent = Packetize.txId.get();
                         int repliesReceived = PumpState.processedResponseMessages;
-                        Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
+                        String bondState = peripheral.getBondState().name();
+                        Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d bondState=%s", requestsSent, repliesReceived, bondState);
+
+                        // While platform pairing is still pending, avoid declaring the connection "stuck"
+                        // and let the application prompt the user to accept the pairing dialog.
+                        if (!"BONDED".equals(bondState)) {
+                            Timber.i("InitialPumpConnectionChecker: skipping stuck/unbond flow because pairing is still pending: bondState=%s", bondState);
+                            tandemPump.onPairingPromptNotAcceptedYet(peripheral);
+                            return;
+                        }
+
                         if (requestsSent > 0 && repliesReceived == 0) {
-                            Timber.w("InitialPumpConnectionStuck: not getting pump replies. Disconnecting and unbonding: bondState=%s", peripheral.getBondState());
+                            Timber.w("InitialPumpConnectionStuck: not getting pump replies after bonded. Disconnecting and unbonding: bondState=%s", bondState);
                             peripheral.cancelConnection();
                             central.removeBond(peripheral.getAddress());
                         }
