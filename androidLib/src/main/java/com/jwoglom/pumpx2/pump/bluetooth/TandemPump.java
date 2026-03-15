@@ -27,6 +27,7 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralC
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
+import com.welie.blessed.BondState;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
 
@@ -99,7 +100,7 @@ public abstract class TandemPump {
     private void onInitialPumpConnection(BluetoothPeripheral peripheral, int attempt) {
         Timber.i("TandemPump: onInitialPumpConnection (%d), attempt=%d, bondState=%s", appInstanceId, attempt, peripheral.getBondState());
 
-        if (!peripheral.getBondState().name().equals("BONDED")) {
+        if (peripheral.getBondState() != BondState.BONDED) {
             if (attempt >= INITIAL_AUTH_MAX_RETRIES) {
                 Timber.w("TandemPump: pairing prompt likely not yet accepted after %d attempts", attempt);
                 onPairingPromptNotAcceptedYet(peripheral);

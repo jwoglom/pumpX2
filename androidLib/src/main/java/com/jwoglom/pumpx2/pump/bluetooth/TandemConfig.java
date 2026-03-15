@@ -11,6 +11,7 @@ public class TandemConfig {
     private Optional<String> filterToBluetoothMac = Optional.empty();
     private Optional<PairingCodeType> pairingCodeType = Optional.empty();
     private Optional<Boolean> enablePeriodicTSR = Optional.empty();
+    private Optional<Integer> unbondAfterInitialConnectionHardFailuresCount = Optional.empty();
 
     public TandemConfig() {}
 
@@ -38,5 +39,14 @@ public class TandemConfig {
     }
     public Optional<Boolean> getEnablePeriodicTSR() {
         return enablePeriodicTSR;
+    }
+
+    public TandemConfig withUnbondAfterInitialConnectionHardFailuresCount(Integer count) {
+        this.unbondAfterInitialConnectionHardFailuresCount = Optional.ofNullable(count);
+        return this;
+    }
+
+    public Optional<Integer> getUnbondAfterInitialConnectionHardFailuresCount() {
+        return unbondAfterInitialConnectionHardFailuresCount;
     }
 }
