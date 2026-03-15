@@ -51,6 +51,7 @@ import com.welie.blessed.BluetoothBytesParser;
 import com.welie.blessed.BluetoothCentralManager;
 import com.welie.blessed.BluetoothCentralManagerCallback;
 import com.welie.blessed.BluetoothPeripheral;
+import com.welie.blessed.BondState;
 import com.welie.blessed.BluetoothPeripheralCallback;
 import com.welie.blessed.ConnectionPriority;
 import com.welie.blessed.ConnectionState;
@@ -262,11 +263,33 @@ public class TandemBluetoothHandler {
                     if (remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
                         int requestsSent = Packetize.txId.get();
                         int repliesReceived = PumpState.processedResponseMessages;
-                        Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
+                        boolean authInProgress = PumpState.hasPendingAuthorizationRequest();
+                        boolean hardAuthFailure = PumpState.initialConnectionHardAuthFailure;
+                        BondState bondState = peripheral.getBondState();
+                        Timber.d("InitialPumpConnectionChecker: requestsSent=%d repliesReceived=%d authInProgress=%s hardAuthFailure=%s bondState=%s", requestsSent, repliesReceived, authInProgress, hardAuthFailure, bondState);
+                        if (repliesReceived > 0) {
+                            PumpState.resetInitialConnectionNoReplyFailures();
+                        }
                         if (requestsSent > 0 && repliesReceived == 0) {
-                            Timber.w("InitialPumpConnectionStuck: not getting pump replies. Disconnecting and unbonding: bondState=%s", peripheral.getBondState());
+                            int noReplyFailures = PumpState.incrementInitialConnectionNoReplyFailures();
+                            Integer unbondAfterInitialConnectionHardFailuresCount = tandemPump.config
+                                    .getUnbondAfterInitialConnectionHardFailuresCount()
+                                    .orElse(null);
+                            boolean shouldUnbond = unbondAfterInitialConnectionHardFailuresCount != null
+                                    && hardAuthFailure
+                                    && !authInProgress
+                                    && bondState == BondState.BONDED
+                                    && noReplyFailures >= unbondAfterInitialConnectionHardFailuresCount;
+                            Timber.w("InitialPumpConnectionStuck event=no_response_window action=disconnect requestsSent=%d repliesReceived=%d noReplyFailures=%d unbondAfterInitialConnectionHardFailuresCount=%s authInProgress=%s hardAuthFailure=%s bondState=%s shouldUnbond=%s", requestsSent, repliesReceived, noReplyFailures, String.valueOf(unbondAfterInitialConnectionHardFailuresCount), authInProgress, hardAuthFailure, bondState, shouldUnbond);
                             peripheral.cancelConnection();
-                            central.removeBond(peripheral.getAddress());
+                            if (shouldUnbond) {
+                                Timber.w("InitialPumpConnectionStuck event=hard_auth_failure action=disconnect_and_unbond address=%s noReplyFailures=%d", peripheral.getAddress(), noReplyFailures);
+                                central.removeBond(peripheral.getAddress());
+                            } else {
+                                Timber.i("InitialPumpConnectionStuck event=no_response_window action=disconnect_only address=%s", peripheral.getAddress());
+                            }
+                        } else {
+                            Timber.d("InitialPumpConnectionChecker event=no_response_window action=none reason=responses_or_no_requests requestsSent=%d repliesReceived=%d", requestsSent, repliesReceived);
                         }
                     }
                 }, 5000);
@@ -558,10 +581,13 @@ public class TandemBluetoothHandler {
                 } else if (msg instanceof PumpChallengeResponse) {
                     PumpChallengeResponse resp = (PumpChallengeResponse) response.message().get();
                     if (resp.getSuccess()) {
+                        PumpState.clearInitialConnectionHardAuthFailure();
+                        PumpState.resetInitialConnectionNoReplyFailures();
                         PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                         this.internalOnPumpConnected(peripheral);
                     } else {
-                        Timber.w("Invalid pairing code: %s", resp);
+                        PumpState.markInitialConnectionHardAuthFailure();
+                        Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=legacy response=%s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
                 // JPAKE
@@ -615,6 +641,8 @@ public class TandemBluetoothHandler {
                     if (req == null) {
                         if (JpakeAuthBuilder.getInstance().done()) {
                             Timber.i("JpakeAuth DONE: PumpConnected");
+                            PumpState.clearInitialConnectionHardAuthFailure();
+                            PumpState.resetInitialConnectionNoReplyFailures();
                             tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                             PumpState.setSavedBluetoothMAC(context, peripheral.getAddress());
                             byte[] derivedSecret = JpakeAuthBuilder.getInstance().getDerivedSecret();
@@ -623,7 +651,8 @@ public class TandemBluetoothHandler {
                             PumpState.setJpakeServerNonce(context, Hex.encodeHexString(serverNonce));
                             this.internalOnPumpConnected(peripheral);
                         } else if (JpakeAuthBuilder.getInstance().invalid()) {
-                            Timber.w("JpakeAuth DONE: Invalid");
+                            PumpState.markInitialConnectionHardAuthFailure();
+                            Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=jpake");
                             tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                             tandemPump.onInvalidPairingCode(peripheral, resp);
                         }
@@ -720,6 +749,8 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectedPeripheral(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
+            PumpState.clearInitialConnectionHardAuthFailure();
+            PumpState.resetInitialConnectionNoReplyFailures();
             this.reconnectDelay = 250;
         }
 
