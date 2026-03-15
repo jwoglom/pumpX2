@@ -2,6 +2,8 @@ package com.jwoglom.pumpx2.pump.bluetooth;
 
 import android.bluetooth.le.ScanResult;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.jwoglom.pumpx2.pump.PumpState;
 import com.jwoglom.pumpx2.pump.TandemError;
@@ -25,6 +27,7 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractCentralC
 import com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.welie.blessed.BluetoothPeripheral;
+import com.welie.blessed.BondState;
 import com.welie.blessed.HciStatus;
 import com.welie.blessed.WriteType;
 
@@ -55,6 +58,10 @@ public abstract class TandemPump {
     private int appInstanceId = 1;
     private KnownDeviceModel deviceModel;
     TandemConfig config;
+
+    private static final long INITIAL_AUTH_WRITE_RETRY_DELAY_MS = 1000L;
+    private static final int INITIAL_AUTH_WRITE_MAX_RETRIES = 5;
+    private final Handler initialAuthHandler = new Handler(Looper.getMainLooper());
 
     public TandemPump(Context context, TandemConfig config) {
         this.context = context;
@@ -87,18 +94,48 @@ public abstract class TandemPump {
      * @param peripheral the BluetoothPeripheral representing the connected pump
      */
     public void onInitialPumpConnection(BluetoothPeripheral peripheral) {
-        Timber.i("TandemPump: onInitialPumpConnection (" + appInstanceId + ")");
-        if (!PumpState.relyOnConnectionSharingForAuthentication) {
+        Timber.i("TandemPump: onInitialPumpConnection (%d)", appInstanceId);
+        startAuthenticationWhenBonded(peripheral, 0);
+    }
 
-            // send CentralChallengeRequest for old-firmware tslim X2 only.
-            // otherwise directly invoke onWaitingForPairingCode
-            AbstractCentralChallengeRequest request = CentralChallengeRequestBuilder.create(appInstanceId);
-            if (request != null && deviceModel != KnownDeviceModel.MOBI) {
-                sendCommand(peripheral, request);
-            } else {
-                onWaitingForPairingCode(peripheral, null);
-            }
+    private void startAuthenticationWhenBonded(BluetoothPeripheral peripheral, int retryAttempt) {
+        if (PumpState.relyOnConnectionSharingForAuthentication) {
+            return;
         }
+
+        if (!isBondingComplete(peripheral)) {
+            Timber.i("InitialPumpConnectionAuthGate: pairing not complete (bondState=%s, retryAttempt=%d)", peripheral.getBondState(), retryAttempt);
+            onPairingPromptNotAcceptedYet(peripheral, retryAttempt);
+            if (retryAttempt >= INITIAL_AUTH_WRITE_MAX_RETRIES) {
+                Timber.w("InitialPumpConnectionAuthGate: max retries reached while waiting for bond completion");
+                return;
+            }
+            initialAuthHandler.postDelayed(() -> startAuthenticationWhenBonded(peripheral, retryAttempt + 1), INITIAL_AUTH_WRITE_RETRY_DELAY_MS * (retryAttempt + 1));
+            return;
+        }
+
+        // send CentralChallengeRequest for old-firmware tslim X2 only.
+        // otherwise directly invoke onWaitingForPairingCode
+        AbstractCentralChallengeRequest request = CentralChallengeRequestBuilder.create(appInstanceId);
+        if (request != null && deviceModel != KnownDeviceModel.MOBI) {
+            sendCommand(peripheral, request);
+        } else {
+            onWaitingForPairingCode(peripheral, null);
+        }
+    }
+
+    private boolean isBondingComplete(BluetoothPeripheral peripheral) {
+        return peripheral.getBondState() == BondState.BONDED;
+    }
+
+    /**
+     * Callback invoked when authentication startup is paused because Android system Bluetooth
+     * pairing has not completed yet (e.g., user has not accepted the pairing prompt).
+     * @param peripheral the BluetoothPeripheral representing the pump
+     * @param retryAttempt the current auth-start retry attempt number
+     */
+    public void onPairingPromptNotAcceptedYet(BluetoothPeripheral peripheral, int retryAttempt) {
+        onPumpCriticalError(peripheral, TandemError.PAIRING_PROMPT_NOT_ACCEPTED_YET.withExtra("retryAttempt=" + retryAttempt + ", bondState=" + peripheral.getBondState()));
     }
 
     /**
