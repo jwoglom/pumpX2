@@ -270,6 +270,14 @@ public class TandemBluetoothHandler {
                         if (repliesReceived > 0) {
                             PumpState.resetInitialConnectionNoReplyFailures();
                         }
+
+                        boolean pairingPending = bondState != BondState.BONDED;
+                        if (pairingPending) {
+                            Timber.i("InitialPumpConnectionChecker event=pairing_pending action=wait requestsSent=%d repliesReceived=%d bondState=%s", requestsSent, repliesReceived, bondState);
+                            tandemPump.onPairingPromptNotAcceptedYet(peripheral, 0);
+                            return;
+                        }
+
                         if (requestsSent > 0 && repliesReceived == 0) {
                             int noReplyFailures = PumpState.incrementInitialConnectionNoReplyFailures();
                             Integer unbondAfterInitialConnectionHardFailuresCount = tandemPump.config
