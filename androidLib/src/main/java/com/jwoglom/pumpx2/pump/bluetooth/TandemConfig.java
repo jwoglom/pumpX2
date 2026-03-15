@@ -16,6 +16,15 @@ public class TandemConfig {
      * Null (default) means never unbond automatically.
      */
     private Optional<Integer> unbondAfterInitialConnectionHardFailuresCount = Optional.empty();
+    /**
+     * Number of initial auth/no-reply disconnects allowed within a rolling window
+     * before automatic reconnect attempts are paused.
+     */
+    private Optional<Integer> initialDisconnectRetryMaxCount = Optional.empty();
+    /**
+     * Rolling time window (milliseconds) used for {@link #initialDisconnectRetryMaxCount}.
+     */
+    private Optional<Long> initialDisconnectRetryWindowMs = Optional.empty();
 
     public TandemConfig() {}
 
@@ -39,6 +48,16 @@ public class TandemConfig {
         return this;
     }
 
+    public TandemConfig withInitialDisconnectRetryMaxCount(Integer initialDisconnectRetryMaxCount) {
+        this.initialDisconnectRetryMaxCount = Optional.ofNullable(initialDisconnectRetryMaxCount);
+        return this;
+    }
+
+    public TandemConfig withInitialDisconnectRetryWindowMs(Long initialDisconnectRetryWindowMs) {
+        this.initialDisconnectRetryWindowMs = Optional.ofNullable(initialDisconnectRetryWindowMs);
+        return this;
+    }
+
     public Optional<PairingCodeType> getPairingCodeType() {
         return pairingCodeType;
     }
@@ -52,5 +71,13 @@ public class TandemConfig {
 
     public Optional<Integer> getUnbondAfterInitialConnectionHardFailuresCount() {
         return unbondAfterInitialConnectionHardFailuresCount;
+    }
+
+    public Optional<Integer> getInitialDisconnectRetryMaxCount() {
+        return initialDisconnectRetryMaxCount;
+    }
+
+    public Optional<Long> getInitialDisconnectRetryWindowMs() {
+        return initialDisconnectRetryWindowMs;
     }
 }
