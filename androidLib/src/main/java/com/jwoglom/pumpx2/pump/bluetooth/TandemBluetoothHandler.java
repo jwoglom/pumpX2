@@ -65,7 +65,9 @@ import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -130,6 +132,12 @@ public class TandemBluetoothHandler {
 
     public BluetoothCentralManager central;
     private static TandemBluetoothHandler instance = null;
+
+    private enum InitialDisconnectReason {
+        NONE,
+        INITIAL_AUTH_NO_REPLY,
+        PAIRING_INCOMPLETE_OR_MISSED_PROMPT
+    }
 
     private enum ConnectionInitializationStep {
         SERVICES_DISCOVERED,
@@ -289,6 +297,7 @@ public class TandemBluetoothHandler {
                                     && bondState == BondState.BONDED
                                     && noReplyFailures >= unbondAfterInitialConnectionHardFailuresCount;
                             Timber.w("InitialPumpConnectionStuck event=no_response_window action=disconnect requestsSent=%d repliesReceived=%d noReplyFailures=%d unbondAfterInitialConnectionHardFailuresCount=%s authInProgress=%s hardAuthFailure=%s bondState=%s shouldUnbond=%s", requestsSent, repliesReceived, noReplyFailures, String.valueOf(unbondAfterInitialConnectionHardFailuresCount), authInProgress, hardAuthFailure, bondState, shouldUnbond);
+                            markPendingInitialDisconnectReason(InitialDisconnectReason.INITIAL_AUTH_NO_REPLY);
                             peripheral.cancelConnection();
                             if (shouldUnbond) {
                                 Timber.w("InitialPumpConnectionStuck event=hard_auth_failure action=disconnect_and_unbond address=%s noReplyFailures=%d", peripheral.getAddress(), noReplyFailures);
@@ -681,6 +690,7 @@ public class TandemBluetoothHandler {
         }
 
         private void internalOnPumpConnected(BluetoothPeripheral peripheral) {
+            resetRecentInitialDisconnectFailures();
             tandemPump.onPumpConnected(peripheral);
             if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
                 this.setupPeriodicTimeSinceReset(peripheral);
@@ -752,6 +762,42 @@ public class TandemBluetoothHandler {
     };
 
     // Callback for generic BT events
+    private final Deque<Long> recentInitialDisconnectFailureTimesMs = new ArrayDeque<>();
+    private InitialDisconnectReason pendingInitialDisconnectReason = InitialDisconnectReason.NONE;
+    private long pendingInitialDisconnectReasonAtMs = 0L;
+
+    private final int defaultInitialDisconnectRetryMaxCount = 3;
+    private final long defaultInitialDisconnectRetryWindowMs = 120_000L;
+
+    private synchronized void markPendingInitialDisconnectReason(InitialDisconnectReason reason) {
+        pendingInitialDisconnectReason = reason;
+        pendingInitialDisconnectReasonAtMs = System.currentTimeMillis();
+    }
+
+    private synchronized InitialDisconnectReason consumePendingInitialDisconnectReason() {
+        long ageMs = System.currentTimeMillis() - pendingInitialDisconnectReasonAtMs;
+        InitialDisconnectReason out = ageMs <= 15_000L ? pendingInitialDisconnectReason : InitialDisconnectReason.NONE;
+        pendingInitialDisconnectReason = InitialDisconnectReason.NONE;
+        pendingInitialDisconnectReasonAtMs = 0L;
+        return out;
+    }
+
+    private synchronized int recordRecentInitialDisconnectFailure() {
+        long now = System.currentTimeMillis();
+        long windowMs = tandemPump.config.getInitialDisconnectRetryWindowMs().orElse(defaultInitialDisconnectRetryWindowMs);
+        while (!recentInitialDisconnectFailureTimesMs.isEmpty() && now - recentInitialDisconnectFailureTimesMs.peekFirst() > windowMs) {
+            recentInitialDisconnectFailureTimesMs.removeFirst();
+        }
+        recentInitialDisconnectFailureTimesMs.addLast(now);
+        return recentInitialDisconnectFailureTimesMs.size();
+    }
+
+    private synchronized void resetRecentInitialDisconnectFailures() {
+        recentInitialDisconnectFailureTimesMs.clear();
+        pendingInitialDisconnectReason = InitialDisconnectReason.NONE;
+        pendingInitialDisconnectReasonAtMs = 0L;
+    }
+
     private final BluetoothCentralManagerCallback bluetoothCentralManagerCallback = new BluetoothCentralManagerCallback() {
 
         @Override
@@ -774,13 +820,45 @@ public class TandemBluetoothHandler {
 
         @Override
         public void onDisconnectedPeripheral(@NotNull final BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
-            Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms)", peripheral.getName(), status, reconnectDelay);
+            InitialDisconnectReason disconnectReason = consumePendingInitialDisconnectReason();
+            boolean wasInitialized = remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED);
+            boolean authPending = PumpState.hasPendingAuthorizationRequest();
+            int repliesReceived = PumpState.processedResponseMessages;
+            BondState bondState = peripheral.getBondState();
+
+            if (disconnectReason == InitialDisconnectReason.NONE && wasInitialized && repliesReceived == 0 && authPending) {
+                disconnectReason = InitialDisconnectReason.INITIAL_AUTH_NO_REPLY;
+            }
+            if (disconnectReason == InitialDisconnectReason.NONE && wasInitialized && bondState != BondState.BONDED && repliesReceived == 0) {
+                disconnectReason = InitialDisconnectReason.PAIRING_INCOMPLETE_OR_MISSED_PROMPT;
+            }
+
+            Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms reason=%s)", peripheral.getName(), status, reconnectDelay, disconnectReason);
             PumpState.clearRequestMessages();
             Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
             synchronized (pumpReadyStateByAddress) {
                 pumpReadyStateByAddress.remove(peripheral.getAddress());
             }
+
+            if (disconnectReason == InitialDisconnectReason.PAIRING_INCOMPLETE_OR_MISSED_PROMPT) {
+                int failuresInWindow = recordRecentInitialDisconnectFailure();
+                Timber.w("ReconnectPaused event=pairing_incomplete_or_missed_prompt action=await_user failuresInWindow=%d bondState=%s", failuresInWindow, bondState);
+                tandemPump.onPairingPromptNotAcceptedYet(peripheral, failuresInWindow);
+                return;
+            }
+
+            if (disconnectReason == InitialDisconnectReason.INITIAL_AUTH_NO_REPLY) {
+                int failuresInWindow = recordRecentInitialDisconnectFailure();
+                int maxRetryCount = tandemPump.config.getInitialDisconnectRetryMaxCount().orElse(defaultInitialDisconnectRetryMaxCount);
+                if (failuresInWindow >= maxRetryCount) {
+                    Timber.w("ReconnectPaused event=initial_auth_no_reply action=manual_reinit_required failuresInWindow=%d maxRetryCount=%d", failuresInWindow, maxRetryCount);
+                    tandemPump.onPairingPromptNotAcceptedYet(peripheral, failuresInWindow);
+                    return;
+                }
+                Timber.w("ReconnectBackoff event=initial_auth_no_reply action=retry failuresInWindow=%d maxRetryCount=%d", failuresInWindow, maxRetryCount);
+            }
+
             if (tandemPump.onPumpDisconnected(peripheral, status)) {
                 Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in %d ms", reconnectDelay);
                 // Reconnect to this device when it becomes available again
