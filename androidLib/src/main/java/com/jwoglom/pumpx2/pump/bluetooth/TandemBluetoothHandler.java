@@ -271,14 +271,15 @@ public class TandemBluetoothHandler {
                         }
                         if (requestsSent > 0 && repliesReceived == 0) {
                             int noReplyFailures = PumpState.incrementInitialConnectionNoReplyFailures();
-                            int unbondAfterInitialConnectionHardFailuresCount = tandemPump.config
+                            Integer unbondAfterInitialConnectionHardFailuresCount = tandemPump.config
                                     .getUnbondAfterInitialConnectionHardFailuresCount()
-                                    .orElse(Integer.MAX_VALUE);
-                            boolean shouldUnbond = hardAuthFailure
+                                    .orElse(null);
+                            boolean shouldUnbond = unbondAfterInitialConnectionHardFailuresCount != null
+                                    && hardAuthFailure
                                     && !authInProgress
                                     && bondState == BluetoothDevice.BOND_BONDED
                                     && noReplyFailures >= unbondAfterInitialConnectionHardFailuresCount;
-                            Timber.w("InitialPumpConnectionStuck event=no_response_window action=disconnect requestsSent=%d repliesReceived=%d noReplyFailures=%d unbondAfterInitialConnectionHardFailuresCount=%d authInProgress=%s hardAuthFailure=%s bondState=%s shouldUnbond=%s", requestsSent, repliesReceived, noReplyFailures, unbondAfterInitialConnectionHardFailuresCount, authInProgress, hardAuthFailure, bondState, shouldUnbond);
+                            Timber.w("InitialPumpConnectionStuck event=no_response_window action=disconnect requestsSent=%d repliesReceived=%d noReplyFailures=%d unbondAfterInitialConnectionHardFailuresCount=%s authInProgress=%s hardAuthFailure=%s bondState=%s shouldUnbond=%s", requestsSent, repliesReceived, noReplyFailures, String.valueOf(unbondAfterInitialConnectionHardFailuresCount), authInProgress, hardAuthFailure, bondState, shouldUnbond);
                             peripheral.cancelConnection();
                             if (shouldUnbond) {
                                 Timber.w("InitialPumpConnectionStuck event=hard_auth_failure action=disconnect_and_unbond address=%s noReplyFailures=%d", peripheral.getAddress(), noReplyFailures);

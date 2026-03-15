@@ -11,6 +11,10 @@ public class TandemConfig {
     private Optional<String> filterToBluetoothMac = Optional.empty();
     private Optional<PairingCodeType> pairingCodeType = Optional.empty();
     private Optional<Boolean> enablePeriodicTSR = Optional.empty();
+    /**
+     * Number of consecutive initial-connection hard-failure windows required before unbonding.
+     * Null (default) means never unbond automatically.
+     */
     private Optional<Integer> unbondAfterInitialConnectionHardFailuresCount = Optional.empty();
 
     public TandemConfig() {}
