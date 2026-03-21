@@ -38,6 +38,10 @@ public class CommonSoftwareInfoRequest extends Message {
         this(mcuType.id());
     }
 
+    public CommonSoftwareInfoRequest(byte[] raw) {
+        parse(raw);
+    }
+
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
