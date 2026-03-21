@@ -24,29 +24,41 @@ import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionReleaseR
     minApi=KnownApiVersion.API_V2_5
 )
 public class BolusPermissionReleaseRequest extends Message {
-    private long bolusId;
+    private int bolusID;
+    private int reserve;
 
     public BolusPermissionReleaseRequest() {}
 
-    public BolusPermissionReleaseRequest(long bolusId) {
-        this.cargo = buildCargo(bolusId);
-        this.bolusId = bolusId;
+    public BolusPermissionReleaseRequest(int bolusID) {
+        this(bolusID, 0);
     }
 
-    public static byte[] buildCargo(long bolusId) {
-        return Bytes.combine(
-                Bytes.toUint32(bolusId)
-        );
+    public BolusPermissionReleaseRequest(int bolusID, int reserve) {
+        this.cargo = buildCargo(bolusID, reserve);
+        this.bolusID = bolusID;
+        this.reserve = reserve;
     }
 
     public void parse(byte[] raw) {
         raw = removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.bolusId = Bytes.readUint32(raw, 0);
+        this.bolusID = Bytes.readShort(raw, 0);
+        this.reserve = Bytes.readShort(raw, 2);
     }
 
-    public long getBolusId() {
-        return bolusId;
+    public static byte[] buildCargo(int bolusID, int reserve) {
+        return Bytes.combine(
+            Bytes.firstTwoBytesLittleEndian(bolusID),
+            Bytes.firstTwoBytesLittleEndian(reserve)
+        );
+    }
+
+    public int getBolusID() {
+        return bolusID;
+    }
+
+    public int getReserve() {
+        return reserve;
     }
 }

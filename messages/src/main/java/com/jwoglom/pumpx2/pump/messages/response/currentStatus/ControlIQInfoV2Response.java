@@ -25,12 +25,13 @@ public class ControlIQInfoV2Response extends ControlIQInfoAbstractResponse {
     private int byte8;
     private int controlStateType;
     private int exerciseChoice;
-    private int exerciseDuration;
-    
+    private long exerciseDuration;
+    private long exerciseTimeRemaining;
+
     public ControlIQInfoV2Response() {}
-    
-    public ControlIQInfoV2Response(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration) {
-        this.cargo = buildCargo(closedLoopEnabled, weight, weightUnit, totalDailyInsulin, currentUserModeType, byte6, byte7, byte8, controlStateType, exerciseChoice, exerciseDuration);
+
+    public ControlIQInfoV2Response(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining) {
+        this.cargo = buildCargo(closedLoopEnabled, weight, weightUnit, totalDailyInsulin, currentUserModeType, byte6, byte7, byte8, controlStateType, exerciseChoice, exerciseDuration, exerciseTimeRemaining);
         this.closedLoopEnabled = closedLoopEnabled;
         this.weight = weight;
         this.weightUnit = weightUnit;
@@ -42,7 +43,8 @@ public class ControlIQInfoV2Response extends ControlIQInfoAbstractResponse {
         this.controlStateType = controlStateType;
         this.exerciseChoice = exerciseChoice;
         this.exerciseDuration = exerciseDuration;
-        
+        this.exerciseTimeRemaining = exerciseTimeRemaining;
+
     }
 
     public void parse(byte[] raw) {
@@ -58,25 +60,26 @@ public class ControlIQInfoV2Response extends ControlIQInfoAbstractResponse {
         this.byte8 = raw[8];
         this.controlStateType = raw[9];
         this.exerciseChoice = raw[10];
-        this.exerciseDuration = raw[11];
-        
+        this.exerciseDuration = Bytes.readUint32(raw, 11);
+        this.exerciseTimeRemaining = Bytes.readUint32(raw, 15);
+
     }
 
     
-    public static byte[] buildCargo(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration) {
+    public static byte[] buildCargo(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining) {
         return Bytes.combine(
-            new byte[]{ (byte) (closedLoopEnabled ? 1 : 0) }, 
-            Bytes.firstTwoBytesLittleEndian(weight), 
-            new byte[]{ (byte) weightUnit }, 
-            new byte[]{ (byte) totalDailyInsulin }, 
-            new byte[]{ (byte) currentUserModeType }, 
-            new byte[]{ (byte) byte6 }, 
-            new byte[]{ (byte) byte7 }, 
-            new byte[]{ (byte) byte8 }, 
-            new byte[]{ (byte) controlStateType }, 
-            new byte[]{ (byte) exerciseChoice }, 
-            new byte[]{ (byte) exerciseDuration },
-            Bytes.emptyBytes(7));
+            new byte[]{ (byte) (closedLoopEnabled ? 1 : 0) },
+            Bytes.firstTwoBytesLittleEndian(weight),
+            new byte[]{ (byte) weightUnit },
+            new byte[]{ (byte) totalDailyInsulin },
+            new byte[]{ (byte) currentUserModeType },
+            new byte[]{ (byte) byte6 },
+            new byte[]{ (byte) byte7 },
+            new byte[]{ (byte) byte8 },
+            new byte[]{ (byte) controlStateType },
+            new byte[]{ (byte) exerciseChoice },
+            Bytes.toUint32(exerciseDuration),
+            Bytes.toUint32(exerciseTimeRemaining));
     }
     
     public boolean getClosedLoopEnabled() {
@@ -109,8 +112,11 @@ public class ControlIQInfoV2Response extends ControlIQInfoAbstractResponse {
     public int getExerciseChoice() {
         return exerciseChoice;
     }
-    public int getExerciseDuration() {
+    public long getExerciseDuration() {
         return exerciseDuration;
     }
-    
+    public long getExerciseTimeRemaining() {
+        return exerciseTimeRemaining;
+    }
+
 }

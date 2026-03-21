@@ -21,7 +21,8 @@ public class GetG6TransmitterHardwareInfoResponse extends Message {
     private String transmitterHardwareRevision;
     private String transmitterBleHardwareId;
     private String transmitterSoftwareNumber;
-    private byte[] unusedRemaining;
+    private String transmitterPairingCode;
+    private String transmitterSerialNumber;
     
     public GetG6TransmitterHardwareInfoResponse() {
         this.cargo = EMPTY;
@@ -40,7 +41,8 @@ public class GetG6TransmitterHardwareInfoResponse extends Message {
         this.transmitterHardwareRevision = Bytes.readString(raw, 16, 16);
         this.transmitterBleHardwareId = Bytes.readString(raw, 32, 16);
         this.transmitterSoftwareNumber = Bytes.readString(raw, 48, 16);
-        this.unusedRemaining = Bytes.dropFirstN(raw, 64);
+        this.transmitterPairingCode = Bytes.readString(raw, 64, 16);
+        this.transmitterSerialNumber = Bytes.readString(raw, 80, 16);
         
     }
 
@@ -61,7 +63,11 @@ public class GetG6TransmitterHardwareInfoResponse extends Message {
         return transmitterSoftwareNumber;
     }
 
-    public byte[] getUnusedRemaining() {
-        return unusedRemaining;
+    public String getTransmitterPairingCode() {
+        return transmitterPairingCode;
+    }
+
+    public String getTransmitterSerialNumber() {
+        return transmitterSerialNumber;
     }
 }

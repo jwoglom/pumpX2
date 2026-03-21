@@ -17,13 +17,13 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetMaxBasalLimitRespons
     response=SetMaxBasalLimitResponse.class
 )
 public class SetMaxBasalLimitRequest extends Message { 
-    private int maxHourlyBasalMilliunits;
+    private long maxHourlyBasalMilliunits;
     
     public SetMaxBasalLimitRequest() {}
 
     public static final int MIN_BASAL_LIMIT_MILLIUNITS = 1_000;
     public static final int MAX_BASAL_LIMIT_MILLIUNITS = 15_000;
-    public SetMaxBasalLimitRequest(int maxHourlyBasalMilliunits) {
+    public SetMaxBasalLimitRequest(long maxHourlyBasalMilliunits) {
         Validate.isTrue(maxHourlyBasalMilliunits >= MIN_BASAL_LIMIT_MILLIUNITS, "hourly basal limit must be greater than 1 unit");
         Validate.isTrue(maxHourlyBasalMilliunits <= MAX_BASAL_LIMIT_MILLIUNITS, "basal limit must be less than or equal to 15 units");
         this.cargo = buildCargo(maxHourlyBasalMilliunits);
@@ -35,18 +35,15 @@ public class SetMaxBasalLimitRequest extends Message {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
-        this.maxHourlyBasalMilliunits = Bytes.readShort(raw, 0);
+        this.maxHourlyBasalMilliunits = Bytes.readUint32(raw, 0);
         
     }
 
     
-    public static byte[] buildCargo(int maxHourlyBasalMilliunits) {
-        return Bytes.combine(
-            Bytes.firstTwoBytesLittleEndian(maxHourlyBasalMilliunits),
-            new byte[2]
-        );
+    public static byte[] buildCargo(long maxHourlyBasalMilliunits) {
+        return Bytes.toUint32(maxHourlyBasalMilliunits);
     }
-    public int getMaxHourlyBasalMilliunits() {
+    public long getMaxHourlyBasalMilliunits() {
         return maxHourlyBasalMilliunits;
     }
     

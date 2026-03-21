@@ -43,16 +43,16 @@ public class CancelBolusResponse extends Message {
         this.cargo = raw;
         this.statusId = raw[0];
         this.bolusId = Bytes.readShort(raw, 1);
-        this.reasonId = Bytes.readShort(raw, 3);
+        this.reasonId = raw[3];
         
     }
 
     
     public static byte[] buildCargo(int status, int bolusId, int reason) {
         return Bytes.combine(
-            new byte[]{ (byte) status }, 
+            new byte[]{ (byte) status },
             Bytes.firstTwoBytesLittleEndian(bolusId),
-            Bytes.firstTwoBytesLittleEndian(reason));
+            new byte[]{ (byte) reason, 0 });
     }
     
     public int getStatusId() {

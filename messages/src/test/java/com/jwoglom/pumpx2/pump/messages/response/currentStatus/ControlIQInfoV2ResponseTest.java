@@ -14,8 +14,8 @@ public class ControlIQInfoV2ResponseTest {
     @Test
     public void testControlIQInfoV2Response_old() throws DecoderException {
         ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
-            // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration
-                true, 150, 1, 75, 1, 0, 1, 1, 3, 0, 0
+            // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining
+                true, 150, 1, 75, 1, 0, 1, 1, 3, 0, 0L, 0L
         );
 
         ControlIQInfoV2Response parsedRes = (ControlIQInfoV2Response) MessageTester.test(
@@ -33,8 +33,8 @@ public class ControlIQInfoV2ResponseTest {
     public void testControlIQInfoV2Response_standard() throws DecoderException {
         // ControlIQInfoV2Response[byte6=1,byte7=2,byte8=0,closedLoopEnabled=true,controlStateType=3,currentUserModeType=0,exerciseChoice=0,exerciseDuration=0,totalDailyInsulin=75,weight=150,weightUnit=1
         ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
-                // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration
-                true, 150, 1, 75, 0, 1, 2, 0, 3, 0, 0
+                // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining
+                true, 150, 1, 75, 0, 1, 2, 0, 3, 0, 0L, 0L
         );
 
         ControlIQInfoV2Response parsedRes = (ControlIQInfoV2Response) MessageTester.test(
@@ -53,8 +53,8 @@ public class ControlIQInfoV2ResponseTest {
     public void testControlIQInfoV2Response_sleep() throws DecoderException {
         // ControlIQInfoV2Response[byte6=0,byte7=1,byte8=0,closedLoopEnabled=true,controlStateType=3,currentUserModeType=1,exerciseChoice=0,exerciseDuration=0,totalDailyInsulin=75,weight=150,weightUnit=1]
         ControlIQInfoV2Response expected = new ControlIQInfoV2Response(
-                // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration
-                true, 150, 1, 75, 1, 0, 1, 0, 3, 0, 0
+                // boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining
+                true, 150, 1, 75, 1, 0, 1, 0, 3, 0, 0L, 0L
         );
 
         ControlIQInfoV2Response parsedRes = (ControlIQInfoV2Response) MessageTester.test(

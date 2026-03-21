@@ -6,6 +6,8 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingSource;
+import com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingType;
 import com.jwoglom.pumpx2.shared.Hex;
 
 import org.apache.commons.codec.DecoderException;
@@ -17,7 +19,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200239,timeSinceReset=461710145]
         initPumpState("6VeDeRAL5DCigGw2", 461710145L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(180, false, true, 1200173L, 10676);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(180, false, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 1200173L, 10676);
 
         /**
          * 00533353073923851bb40000bfb4    51      response.currentStatus.LastBGResponse   LastBGResponse[bgSource=0,bgTimestamp=461710137,bgValue=180
@@ -46,7 +48,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200239,timeSinceReset=461710145]
         initPumpState("6VeDeRAL5DCigGw2", 461710145L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(185, false, true, 1200239L, 10677);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(185, false, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 1200239L, 10677);
 
 
         /**
@@ -75,7 +77,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1200296,timeSinceReset=461710202]
         initPumpState("6VeDeRAL5DCigGw2", 461710202L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(186, false, true, 1200239L, 10678);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(186, false, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 1200239L, 10678);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "02ceb6ce23ba000000016f501200b6297a23851b",
@@ -96,7 +98,7 @@ public class RemoteBgEntryRequestTest {
         // TimeSinceResetResponse[pumpTime=1079252,timeSinceReset=461589158
         initPumpState("6VeDeRAL5DCigGw2", 461589158L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(142, false, true, 1079274L, 10652);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(142, false, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 1079274L, 10652);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "023cb63c238e00000001ea7710009c29bc4a831b",
@@ -116,7 +118,7 @@ public class RemoteBgEntryRequestTest {
     public void testRemoteBgEntryRequest_G7Calibrate_169mgdl() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(169, true, true, 2887044L, 0);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(169, true, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 2887044L, 0);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "02d6b6d623a900010001840d2c00000052cf5a20",
@@ -135,7 +137,7 @@ public class RemoteBgEntryRequestTest {
     public void testRemoteBgEntryRequest_G7Calibrate_170mgdl() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(170, true, true, 2887044L, 0);
+        RemoteBgEntryRequest expected = new RemoteBgEntryRequest(170, true, BloodGlucoseReadingType.MANUAL, BloodGlucoseReadingSource.REMOTE, 2887044L, 0);
 
         RemoteBgEntryRequest parsedReq = (RemoteBgEntryRequest) MessageTester.test(
                 "02e1b6e123aa00010001840d2c00000082cf5a20",

@@ -22,13 +22,18 @@ public class DismissNotificationRequest extends Message {
     private long notificationId;
     private int notificationTypeId;
     private NotificationType notificationType;
+    private boolean executeExtraAction;
 
     public DismissNotificationRequest() {
         this.cargo = EMPTY;
     }
 
     public DismissNotificationRequest(NotificationType notificationType, long notificationId) {
-        parse(buildCargo(notificationId, notificationType.id));
+        this(notificationType, notificationId, false);
+    }
+
+    public DismissNotificationRequest(NotificationType notificationType, long notificationId, boolean executeExtraAction) {
+        parse(buildCargo(notificationId, notificationType.id, executeExtraAction));
     }
 
     public DismissNotificationRequest(byte[] raw) {
@@ -36,19 +41,21 @@ public class DismissNotificationRequest extends Message {
         parse(raw);
     }
 
-    public void parse(byte[] raw) { 
+    public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.notificationId = Bytes.readUint32(raw, 0);
-        this.notificationTypeId = Bytes.readShort(raw, 4);
+        this.notificationTypeId = raw[4] & 0xFF;
+        this.executeExtraAction = (raw[5] & 0xFF) != 0;
         this.notificationType = getNotificationType();
     }
 
-    public static byte[] buildCargo(long notificationId, int notificationTypeId) {
+    public static byte[] buildCargo(long notificationId, int notificationTypeId, boolean executeExtraAction) {
         return Bytes.combine(
                 Bytes.toUint32(notificationId),
-                Bytes.firstTwoBytesLittleEndian(notificationTypeId)
+                Bytes.firstByteLittleEndian(notificationTypeId),
+                Bytes.firstByteLittleEndian(executeExtraAction ? 1 : 0)
         );
     }
 
@@ -60,6 +67,10 @@ public class DismissNotificationRequest extends Message {
 
     public int getNotificationTypeId() {
         return notificationTypeId;
+    }
+
+    public boolean getExecuteExtraAction() {
+        return executeExtraAction;
     }
 
     public NotificationType getNotificationType() {
