@@ -58,10 +58,10 @@ public class BolexCompletedHistoryLog extends HistoryLog {
             new byte[]{21, 0},
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(completionStatus), 
-            Bytes.firstTwoBytesLittleEndian(bolusId), 
-            Bytes.toFloat(iob), 
-            Bytes.toFloat(insulinDelivered), 
+            Bytes.firstTwoBytesLittleEndian(completionStatus),
+            Bytes.firstTwoBytesLittleEndian(bolusId),
+            Bytes.toFloat(iob),
+            Bytes.toFloat(insulinDelivered),
             Bytes.toFloat(insulinRequested));
     }
     
