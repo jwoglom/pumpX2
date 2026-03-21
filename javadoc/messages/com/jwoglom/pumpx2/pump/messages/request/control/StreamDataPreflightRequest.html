@@ -82,9 +82,23 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-27">StreamDataPreflightRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-55">StreamDataPreflightRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Request message for <a href="../../response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StreamDataPreflightResponse</code></a>, opCode -126, size 0
+<div class="block">Sends a preflight request before streaming CGM data.
+
+ Cargo layout (3 + N bytes):
+   raw[0]:   streamType (uint8, PreflightStreamType ordinal)
+   raw[1-2]: length     (uint16 LE)
+   raw[3..]: hmac       (variable length byte array)
+
+ Derived from the decompiled Tandem Mobi Android app:
+   StreamDataPreflightRequest$StreamDataPreflightRequestCargo
+
+
+
+ <br>
+
+ Request message for <a href="../../response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StreamDataPreflightResponse</code></a>, opCode -126, size 3
 
  <br>
 
@@ -92,7 +106,8 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-126</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>3</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>variableSize</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StreamDataPreflightResponse</code></a></code>&nbsp;</td></tr>
@@ -121,6 +136,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">StreamDataPreflightRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,byte%5B%5D)" class="member-name-link">StreamDataPreflightRequest</a><wbr>(int&nbsp;streamType,
+ int&nbsp;length,
+ byte[]&nbsp;hmac)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -129,15 +148,44 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,byte%5B%5D)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;streamType,
+ int&nbsp;length,
+ byte[]&nbsp;hmac)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">
+ Byte layout for StreamDataPreflightRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) streamType</code>
+ 1<code>firstTwoBytesLittleEndian(length) [byte 0]</code>
+ 2<code>firstTwoBytesLittleEndian(length) [byte 1]</code>
+ </div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHmac()" class="member-name-link">getHmac</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLength()" class="member-name-link">getLength</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamType()" class="member-name-link">getStreamType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for StreamDataPreflightRequest:
+ <code>streamType</code><code>raw[0] &amp; 0xFF</code>
+ <code>length</code><code>Bytes.readShort(raw, 1)</code>
+ <code>hmac</code><code>Arrays.copyOfRange(raw, 3, raw.length)</code>
+ </div>
+</div>
 </div>
 </div>
 </div>
@@ -161,7 +209,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>StreamDataPreflightRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-37">StreamDataPreflightRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-71">StreamDataPreflightRequest</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,byte[])">
+<h3>StreamDataPreflightRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-73">StreamDataPreflightRequest</a></span><wbr><span class="parameters">(int&nbsp;streamType,
+ int&nbsp;length,
+ byte[]&nbsp;hmac)</span></div>
 </section>
 </li>
 </ul>
@@ -175,11 +231,50 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-41">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-88">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for StreamDataPreflightRequest:</caption>
+ <tr><td><code>streamType</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ <tr><td><code>length</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
+ <tr><td><code>hmac</code></td><td><code>Arrays.copyOfRange(raw, 3, raw.length)</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(int,int,byte[])">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-105">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;streamType,
+ int&nbsp;length,
+ byte[]&nbsp;hmac)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for StreamDataPreflightRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>(byte) streamType</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(length) [byte 0]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(length) [byte 1]</code></td></tr>
+ </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStreamType()">
+<h3>getStreamType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-113">getStreamType</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLength()">
+<h3>getLength</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-117">getLength</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getHmac()">
+<h3>getHmac</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-121">getHmac</a></span>()</div>
 </section>
 </li>
 </ul>

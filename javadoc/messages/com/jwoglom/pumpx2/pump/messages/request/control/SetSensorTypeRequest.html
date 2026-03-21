@@ -82,9 +82,19 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-25">SetSensorTypeRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-44">SetSensorTypeRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Request message for <a href="../../response/control/SetSensorTypeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSensorTypeResponse</code></a>, opCode -64, size 0
+<div class="block">Sets the CGM sensor type on the pump (SetCGMSensorType).
+ Required when changing between CGM sensor types before pair.
+
+ Cargo layout (1 byte):
+   [0] cgmSensorType  uint8  - CGMSensorType ordinal
+
+
+
+ <br>
+
+ Request message for <a href="../../response/control/SetSensorTypeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSensorTypeResponse</code></a>, opCode -64, size 1
 
  <br>
 
@@ -92,7 +102,7 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-64</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>1</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/control/SetSensorTypeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSensorTypeResponse</code></a></code>&nbsp;</td></tr>
@@ -120,6 +130,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SetSensorTypeRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">SetSensorTypeRequest</a><wbr>(int&nbsp;cgmSensorType)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response.CgmSensorType)" class="member-name-link">SetSensorTypeRequest</a><wbr>(<a href="../../response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a>&nbsp;sensorType)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -128,15 +142,29 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;cgmSensorType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmSensorType()" class="member-name-link">getCgmSensorType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmSensorTypeType()" class="member-name-link">getCgmSensorTypeType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for SetSensorTypeRequest:
+ <code>cgmSensorType</code><code>raw[0] &amp; 0xFF</code>
+ </div>
+</div>
 </div>
 </div>
 </div>
@@ -160,7 +188,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetSensorTypeRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-34">SetSensorTypeRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-55">SetSensorTypeRequest</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int)">
+<h3>SetSensorTypeRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-57">SetSensorTypeRequest</a></span><wbr><span class="parameters">(int&nbsp;cgmSensorType)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response.CgmSensorType)">
+<h3>SetSensorTypeRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-62">SetSensorTypeRequest</a></span><wbr><span class="parameters">(<a href="../../response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a>&nbsp;sensorType)</span></div>
 </section>
 </li>
 </ul>
@@ -172,13 +212,35 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="buildCargo(int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-66">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;cgmSensorType)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-38">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-76">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for SetSensorTypeRequest:</caption>
+ <tr><td><code>cgmSensorType</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCgmSensorType()">
+<h3>getCgmSensorType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-83">getCgmSensorType</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCgmSensorTypeType()">
+<h3>getCgmSensorTypeType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#line-87">getCgmSensorTypeType</a></span>()</div>
 </section>
 </li>
 </ul>

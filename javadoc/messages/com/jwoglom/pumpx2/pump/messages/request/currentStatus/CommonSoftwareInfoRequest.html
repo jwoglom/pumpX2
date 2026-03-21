@@ -48,7 +48,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -82,15 +82,15 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-37">CommonSoftwareInfoRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-36">CommonSoftwareInfoRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">TODO: size may always be 1 and not 0, collect more samples
+<div class="block">Requests software info for a specific MCU type.
 
 
 
  <br>
 
- Request message for <a href="../../response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a>, opCode -114, size 0
+ Request message for <a href="../../response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a>, opCode -114, size 1
 
  <br>
 
@@ -98,8 +98,7 @@ loadScripts(document, 'script');</script>
  <table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-114</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>0</code>&nbsp;</td></tr>
- <tr><th>&nbsp;<code>variableSize</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>1</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>type</code>&nbsp;</th><td>&nbsp;<code><a href="../../MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>characteristic</code>&nbsp;</th><td>&nbsp;<code><a href="../../bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>response</code>&nbsp;</th><td>&nbsp;<code><a href="../../response/currentStatus/CommonSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CommonSoftwareInfoResponse</code></a></code>&nbsp;</td></tr>
@@ -108,6 +107,21 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CommonSoftwareInfoRequest.MCUType.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -127,8 +141,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CommonSoftwareInfoRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">CommonSoftwareInfoRequest</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">CommonSoftwareInfoRequest</a><wbr>(int&nbsp;mcuTypeId)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest.MCUType)" class="member-name-link">CommonSoftwareInfoRequest</a><wbr>(<a href="CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a>&nbsp;mcuType)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -137,15 +153,30 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;mcuType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMcuType()" class="member-name-link">getMcuType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMcuTypeId()" class="member-name-link">getMcuTypeId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for CommonSoftwareInfoRequest:
+ <code>mcuTypeId</code><code>raw[0] &amp; 0xFF</code>
+ <code>mcuType</code><code>MCUType.fromId(mcuTypeId)</code>
+ </div>
+</div>
 </div>
 </div>
 </div>
@@ -169,13 +200,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CommonSoftwareInfoRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-47">CommonSoftwareInfoRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-48">CommonSoftwareInfoRequest</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(byte[])">
+<section class="detail" id="&lt;init&gt;(int)">
 <h3>CommonSoftwareInfoRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-50">CommonSoftwareInfoRequest</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-52">CommonSoftwareInfoRequest</a></span><wbr><span class="parameters">(int&nbsp;mcuTypeId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.request.currentStatus.CommonSoftwareInfoRequest.MCUType)">
+<h3>CommonSoftwareInfoRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-58">CommonSoftwareInfoRequest</a></span><wbr><span class="parameters">(<a href="CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a>&nbsp;mcuType)</span></div>
 </section>
 </li>
 </ul>
@@ -189,11 +226,34 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-54">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-69">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for CommonSoftwareInfoRequest:</caption>
+ <tr><td><code>mcuTypeId</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ <tr><td><code>mcuType</code></td><td><code>MCUType.fromId(mcuTypeId)</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-76">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;mcuType)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMcuTypeId()">
+<h3>getMcuTypeId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-80">getMcuTypeId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMcuType()">
+<h3>getMcuType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/currentStatus/CommonSoftwareInfoRequest.html#line-84">getMcuType</a></span>()</div>
 </section>
 </li>
 </ul>

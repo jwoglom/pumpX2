@@ -18,48 +18,127 @@
 <pre><span class="source-line-no">001</span><span id="line-1">package com.jwoglom.pumpx2.pump.messages.request.control;</span>
 <span class="source-line-no">002</span><span id="line-2"></span>
 <span class="source-line-no">003</span><span id="line-3">import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;</span>
-<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.Message;</span>
-<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
-<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
-<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse;</span>
-<span class="source-line-no">009</span><span id="line-9"></span>
-<span class="source-line-no">010</span><span id="line-10">/**</span>
-<span class="source-line-no">011</span><span id="line-11"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse}, opCode -126, size 0</span>
-<span class="source-line-no">012</span><span id="line-12"> *</span>
-<span class="source-line-no">013</span><span id="line-13"> * &lt;br&gt;</span>
-<span class="source-line-no">014</span><span id="line-14"> *</span>
-<span class="source-line-no">015</span><span id="line-15"> * </span>
-<span class="source-line-no">016</span><span id="line-16"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-126&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;0&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_FUTURE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;/table&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> */</span>
-<span class="source-line-no">027</span><span id="line-27">@MessageProps(</span>
-<span class="source-line-no">028</span><span id="line-28">    opCode=-126,</span>
-<span class="source-line-no">029</span><span id="line-29">    size=0,</span>
-<span class="source-line-no">030</span><span id="line-30">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">031</span><span id="line-31">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">032</span><span id="line-32">    response=StreamDataPreflightResponse.class,</span>
-<span class="source-line-no">033</span><span id="line-33">    minApi=KnownApiVersion.API_FUTURE,</span>
-<span class="source-line-no">034</span><span id="line-34">    signed=true</span>
-<span class="source-line-no">035</span><span id="line-35">)</span>
-<span class="source-line-no">036</span><span id="line-36">public class StreamDataPreflightRequest extends Message {</span>
-<span class="source-line-no">037</span><span id="line-37">    public StreamDataPreflightRequest() {</span>
-<span class="source-line-no">038</span><span id="line-38">        this.cargo = EMPTY;</span>
-<span class="source-line-no">039</span><span id="line-39">    }</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">042</span><span id="line-42">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">043</span><span id="line-43">        this.cargo = raw;</span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
-<span class="source-line-no">045</span><span id="line-45">}</span>
+<span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
+<span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.Message;</span>
+<span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
+<span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
+<span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse;</span>
+<span class="source-line-no">010</span><span id="line-10"></span>
+<span class="source-line-no">011</span><span id="line-11">import java.util.Arrays;</span>
+<span class="source-line-no">012</span><span id="line-12"></span>
+<span class="source-line-no">013</span><span id="line-13">/**</span>
+<span class="source-line-no">014</span><span id="line-14"> * Sends a preflight request before streaming CGM data.</span>
+<span class="source-line-no">015</span><span id="line-15"> *</span>
+<span class="source-line-no">016</span><span id="line-16"> * Cargo layout (3 + N bytes):</span>
+<span class="source-line-no">017</span><span id="line-17"> *   raw[0]:   streamType (uint8, PreflightStreamType ordinal)</span>
+<span class="source-line-no">018</span><span id="line-18"> *   raw[1-2]: length     (uint16 LE)</span>
+<span class="source-line-no">019</span><span id="line-19"> *   raw[3..]: hmac       (variable length byte array)</span>
+<span class="source-line-no">020</span><span id="line-20"> *</span>
+<span class="source-line-no">021</span><span id="line-21"> * Derived from the decompiled Tandem Mobi Android app:</span>
+<span class="source-line-no">022</span><span id="line-22"> *   StreamDataPreflightRequest$StreamDataPreflightRequestCargo</span>
+<span class="source-line-no">023</span><span id="line-23"> */</span>
+<span class="source-line-no">024</span><span id="line-24">/**</span>
+<span class="source-line-no">025</span><span id="line-25"> * Sends a preflight request before streaming CGM data.</span>
+<span class="source-line-no">026</span><span id="line-26"> *</span>
+<span class="source-line-no">027</span><span id="line-27"> * Cargo layout (3 + N bytes):</span>
+<span class="source-line-no">028</span><span id="line-28"> *   raw[0]:   streamType (uint8, PreflightStreamType ordinal)</span>
+<span class="source-line-no">029</span><span id="line-29"> *   raw[1-2]: length     (uint16 LE)</span>
+<span class="source-line-no">030</span><span id="line-30"> *   raw[3..]: hmac       (variable length byte array)</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"> * Derived from the decompiled Tandem Mobi Android app:</span>
+<span class="source-line-no">033</span><span id="line-33"> *   StreamDataPreflightRequest$StreamDataPreflightRequestCargo</span>
+<span class="source-line-no">034</span><span id="line-34"> *</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36"> *</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;br&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> *</span>
+<span class="source-line-no">039</span><span id="line-39"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse}, opCode -126, size 3</span>
+<span class="source-line-no">040</span><span id="line-40"> *</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;br&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> *</span>
+<span class="source-line-no">043</span><span id="line-43"> * </span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-126&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;3&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">048</span><span id="line-48"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;variableSize&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">050</span><span id="line-50"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.StreamDataPreflightResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_FUTURE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">053</span><span id="line-53"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">054</span><span id="line-54"> * &lt;/table&gt;</span>
+<span class="source-line-no">055</span><span id="line-55"> */@MessageProps(</span>
+<span class="source-line-no">056</span><span id="line-56">    opCode=-126,</span>
+<span class="source-line-no">057</span><span id="line-57">    size=3,</span>
+<span class="source-line-no">058</span><span id="line-58">    variableSize=true,</span>
+<span class="source-line-no">059</span><span id="line-59">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">060</span><span id="line-60">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">061</span><span id="line-61">    response=StreamDataPreflightResponse.class,</span>
+<span class="source-line-no">062</span><span id="line-62">    minApi=KnownApiVersion.API_FUTURE,</span>
+<span class="source-line-no">063</span><span id="line-63">    signed=true</span>
+<span class="source-line-no">064</span><span id="line-64">)</span>
+<span class="source-line-no">065</span><span id="line-65">public class StreamDataPreflightRequest extends Message {</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    private int streamType;</span>
+<span class="source-line-no">068</span><span id="line-68">    private int length;</span>
+<span class="source-line-no">069</span><span id="line-69">    private byte[] hmac;</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    public StreamDataPreflightRequest() {}</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public StreamDataPreflightRequest(int streamType, int length, byte[] hmac) {</span>
+<span class="source-line-no">074</span><span id="line-74">        this.cargo = buildCargo(streamType, length, hmac);</span>
+<span class="source-line-no">075</span><span id="line-75">        this.streamType = streamType;</span>
+<span class="source-line-no">076</span><span id="line-76">        this.length = length;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.hmac = hmac;</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    /**</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;caption&gt;Parsed fields for StreamDataPreflightRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;streamType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;length&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;hmac&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 3, raw.length)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;/table&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     */</span>
+<span class="source-line-no">088</span><span id="line-88">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">089</span><span id="line-89">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">090</span><span id="line-90">        this.cargo = raw;</span>
+<span class="source-line-no">091</span><span id="line-91">        this.streamType = raw[0] &amp; 0xFF;</span>
+<span class="source-line-no">092</span><span id="line-92">        this.length = Bytes.readShort(raw, 1);</span>
+<span class="source-line-no">093</span><span id="line-93">        this.hmac = Arrays.copyOfRange(raw, 3, raw.length);</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    /**</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;caption&gt;Byte layout for StreamDataPreflightRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) streamType&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(length) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(length) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;/table&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     */</span>
+<span class="source-line-no">105</span><span id="line-105">    public static byte[] buildCargo(int streamType, int length, byte[] hmac) {</span>
+<span class="source-line-no">106</span><span id="line-106">        return Bytes.combine(</span>
+<span class="source-line-no">107</span><span id="line-107">            new byte[]{ (byte) streamType },</span>
+<span class="source-line-no">108</span><span id="line-108">            Bytes.firstTwoBytesLittleEndian(length),</span>
+<span class="source-line-no">109</span><span id="line-109">            hmac</span>
+<span class="source-line-no">110</span><span id="line-110">        );</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    public int getStreamType() {</span>
+<span class="source-line-no">114</span><span id="line-114">        return streamType;</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">    public int getLength() {</span>
+<span class="source-line-no">118</span><span id="line-118">        return length;</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    public byte[] getHmac() {</span>
+<span class="source-line-no">122</span><span id="line-122">        return hmac;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124">}</span>
 
 
 
