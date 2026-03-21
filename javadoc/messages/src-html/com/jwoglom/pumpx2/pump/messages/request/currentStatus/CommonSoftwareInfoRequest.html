@@ -76,56 +76,60 @@
 <span class="source-line-no">059</span><span id="line-59">        this(mcuType.id());</span>
 <span class="source-line-no">060</span><span id="line-60">    }</span>
 <span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;caption&gt;Parsed fields for CommonSoftwareInfoRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mcuTypeId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mcuType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;MCUType.fromId(mcuTypeId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;/table&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     */</span>
-<span class="source-line-no">069</span><span id="line-69">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">070</span><span id="line-70">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">071</span><span id="line-71">        this.cargo = raw;</span>
-<span class="source-line-no">072</span><span id="line-72">        this.mcuTypeId = raw[0] &amp; 0xFF;</span>
-<span class="source-line-no">073</span><span id="line-73">        this.mcuType = MCUType.fromId(mcuTypeId);</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    public static byte[] buildCargo(int mcuType) {</span>
-<span class="source-line-no">077</span><span id="line-77">        return new byte[]{ (byte) mcuType };</span>
+<span class="source-line-no">062</span><span id="line-62">    public CommonSoftwareInfoRequest(byte[] raw) {</span>
+<span class="source-line-no">063</span><span id="line-63">        parse(raw);</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    /**</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;caption&gt;Parsed fields for CommonSoftwareInfoRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mcuTypeId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mcuType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;MCUType.fromId(mcuTypeId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;/table&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     */</span>
+<span class="source-line-no">073</span><span id="line-73">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">074</span><span id="line-74">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">075</span><span id="line-75">        this.cargo = raw;</span>
+<span class="source-line-no">076</span><span id="line-76">        this.mcuTypeId = raw[0] &amp; 0xFF;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.mcuType = MCUType.fromId(mcuTypeId);</span>
 <span class="source-line-no">078</span><span id="line-78">    }</span>
 <span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">    public int getMcuTypeId() {</span>
-<span class="source-line-no">081</span><span id="line-81">        return mcuTypeId;</span>
+<span class="source-line-no">080</span><span id="line-80">    public static byte[] buildCargo(int mcuType) {</span>
+<span class="source-line-no">081</span><span id="line-81">        return new byte[]{ (byte) mcuType };</span>
 <span class="source-line-no">082</span><span id="line-82">    }</span>
 <span class="source-line-no">083</span><span id="line-83"></span>
-<span class="source-line-no">084</span><span id="line-84">    public MCUType getMcuType() {</span>
-<span class="source-line-no">085</span><span id="line-85">        return mcuType;</span>
+<span class="source-line-no">084</span><span id="line-84">    public int getMcuTypeId() {</span>
+<span class="source-line-no">085</span><span id="line-85">        return mcuTypeId;</span>
 <span class="source-line-no">086</span><span id="line-86">    }</span>
 <span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">    public enum MCUType {</span>
-<span class="source-line-no">089</span><span id="line-89">        ARM(0),</span>
-<span class="source-line-no">090</span><span id="line-90">        BLE(1),</span>
-<span class="source-line-no">091</span><span id="line-91">        MSP(2),</span>
-<span class="source-line-no">092</span><span id="line-92">        UNKNOWN(3),</span>
-<span class="source-line-no">093</span><span id="line-93">        ;</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">        private final int id;</span>
-<span class="source-line-no">096</span><span id="line-96">        MCUType(int id) {</span>
-<span class="source-line-no">097</span><span id="line-97">            this.id = id;</span>
-<span class="source-line-no">098</span><span id="line-98">        }</span>
-<span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">        public int id() {</span>
-<span class="source-line-no">101</span><span id="line-101">            return id;</span>
+<span class="source-line-no">088</span><span id="line-88">    public MCUType getMcuType() {</span>
+<span class="source-line-no">089</span><span id="line-89">        return mcuType;</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">    public enum MCUType {</span>
+<span class="source-line-no">093</span><span id="line-93">        ARM(0),</span>
+<span class="source-line-no">094</span><span id="line-94">        BLE(1),</span>
+<span class="source-line-no">095</span><span id="line-95">        MSP(2),</span>
+<span class="source-line-no">096</span><span id="line-96">        UNKNOWN(3),</span>
+<span class="source-line-no">097</span><span id="line-97">        ;</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">        private final int id;</span>
+<span class="source-line-no">100</span><span id="line-100">        MCUType(int id) {</span>
+<span class="source-line-no">101</span><span id="line-101">            this.id = id;</span>
 <span class="source-line-no">102</span><span id="line-102">        }</span>
 <span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">        public static MCUType fromId(int id) {</span>
-<span class="source-line-no">105</span><span id="line-105">            for (MCUType m : values()) {</span>
-<span class="source-line-no">106</span><span id="line-106">                if (m.id == id) return m;</span>
-<span class="source-line-no">107</span><span id="line-107">            }</span>
-<span class="source-line-no">108</span><span id="line-108">            return UNKNOWN;</span>
-<span class="source-line-no">109</span><span id="line-109">        }</span>
-<span class="source-line-no">110</span><span id="line-110">    }</span>
-<span class="source-line-no">111</span><span id="line-111">}</span>
+<span class="source-line-no">104</span><span id="line-104">        public int id() {</span>
+<span class="source-line-no">105</span><span id="line-105">            return id;</span>
+<span class="source-line-no">106</span><span id="line-106">        }</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">        public static MCUType fromId(int id) {</span>
+<span class="source-line-no">109</span><span id="line-109">            for (MCUType m : values()) {</span>
+<span class="source-line-no">110</span><span id="line-110">                if (m.id == id) return m;</span>
+<span class="source-line-no">111</span><span id="line-111">            }</span>
+<span class="source-line-no">112</span><span id="line-112">            return UNKNOWN;</span>
+<span class="source-line-no">113</span><span id="line-113">        }</span>
+<span class="source-line-no">114</span><span id="line-114">    }</span>
+<span class="source-line-no">115</span><span id="line-115">}</span>
 
 
 
