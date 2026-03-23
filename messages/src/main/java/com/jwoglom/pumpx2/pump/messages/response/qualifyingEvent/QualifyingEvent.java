@@ -7,6 +7,7 @@ import com.jwoglom.pumpx2.pump.messages.builders.CurrentBatteryRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.IOBRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.builders.LastBolusStatusRequestBuilder;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlertStatusRequest;
@@ -183,11 +184,32 @@ public enum QualifyingEvent {
     }
 
     public static Set<? extends Message> groupSuggestedHandlers(Set<QualifyingEvent> events) {
+        ApiVersion apiVersion = null;
+        if (PumpStateSupplier.pumpApiVersion != null) {
+            apiVersion = PumpStateSupplier.pumpApiVersion.get();
+        }
+        return groupSuggestedHandlers(events, apiVersion);
+    }
+
+    public static Set<? extends Message> groupSuggestedHandlers(Set<QualifyingEvent> events, ApiVersion apiVersion) {
         Set<Supplier<? extends Message>> messages = new HashSet<>();
         for (QualifyingEvent e : events) {
             messages.addAll(e.suggestedHandlers);
         }
-        return messages.stream().map(Supplier::get).collect(Collectors.toSet());
+        return messages.stream()
+                .map(Supplier::get)
+                .filter(message -> message != null && supportsApiVersion(message, apiVersion))
+                .collect(Collectors.toSet());
+    }
+
+    private static boolean supportsApiVersion(Message message, ApiVersion apiVersion) {
+        if (apiVersion == null) {
+            return true;
+        }
+
+        ApiVersion minApi = message.props().minApi().get();
+        return apiVersion.greaterThan(minApi) ||
+                (apiVersion.getMajor() == minApi.getMajor() && apiVersion.getMinor() == minApi.getMinor());
     }
 
     public static int toBitmask(QualifyingEvent...states) {

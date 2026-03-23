@@ -24,11 +24,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Bundle of notification related responses for easier processing
  */
 public class NotificationBundle {
+    private ApiVersion apiVersion;
     private AlertStatusResponse alertStatusResponse;
     private ReminderStatusResponse reminderStatusResponse;
     private AlarmStatusResponse alarmStatusResponse;
@@ -40,7 +42,15 @@ public class NotificationBundle {
     private Map<Class<? extends Message>, Instant> lastUpdatedTimes = new HashMap<>();
 
     public static List<Message> allRequests() {
-        return Arrays.asList(
+        return allRequests(null);
+    }
+
+    public List<Message> allRequestsForPump() {
+        return allRequests(apiVersion);
+    }
+
+    public static List<Message> allRequests(ApiVersion apiVersion) {
+        List<Message> requests = Arrays.asList(
                 new AlertStatusRequest(),
                 new AlarmStatusRequest(),
                 new CGMAlertStatusRequest(),
@@ -49,6 +59,20 @@ public class NotificationBundle {
                 new ActiveAamBitsRequest(new byte[]{2}),
                 new ActiveAamBitsRequest(new byte[]{4})
         );
+
+        if (apiVersion == null) {
+            return requests;
+        }
+
+        return requests.stream()
+                .filter(request -> supportsApiVersion(request, apiVersion))
+                .collect(Collectors.toList());
+    }
+
+    private static boolean supportsApiVersion(Message message, ApiVersion apiVersion) {
+        ApiVersion minApi = message.props().minApi().get();
+        return apiVersion.greaterThan(minApi) ||
+                (apiVersion.getMajor() == minApi.getMajor() && apiVersion.getMinor() == minApi.getMinor());
     }
 
     public static List<Class<? extends Message>> responseClasses() {
@@ -74,7 +98,12 @@ public class NotificationBundle {
     public NotificationBundle() {
     }
 
+    public NotificationBundle(ApiVersion apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
     public NotificationBundle(NotificationBundle bundle) {
+        this.apiVersion = bundle.apiVersion;
         this.alertStatusResponse = bundle.alertStatusResponse;
         this.reminderStatusResponse = bundle.reminderStatusResponse;
         this.alarmStatusResponse = bundle.alarmStatusResponse;
@@ -83,6 +112,14 @@ public class NotificationBundle {
         this.activeAamBitsResponses = new HashMap<>(bundle.activeAamBitsResponses);
         this.highestAamResponse = bundle.highestAamResponse;
         this.lastUpdatedTimes = bundle.lastUpdatedTimes;
+    }
+
+    public void setApiVersion(ApiVersion apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    public ApiVersion getApiVersion() {
+        return apiVersion;
     }
 
     public NotificationBundle add(Message message) {
