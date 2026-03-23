@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
+import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.ActiveAamBitsRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.AlarmStatusRequest;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BasalLimitSettingsRequest;
@@ -146,6 +147,29 @@ public class QualifyingEventTest {
     public void testQualifyingEvent_groupSuggestedHandlers_pumpingStatusChangeUsesLoadStatus() {
         Set<? extends Message> messages = QualifyingEvent.groupSuggestedHandlers(Set.of(PUMPING_STATUS));
         assertEquals(Set.of(LoadStatusRequest.class), messageClasses(messages));
+    }
+
+    @Test
+    public void testQualifyingEvent_groupSuggestedHandlers_excludesUnsupportedForOlderApi() {
+        Set<? extends Message> messages = QualifyingEvent.groupSuggestedHandlers(
+                Set.of(ALARM, BOLUS_PERMISSION_REVOKED),
+                KnownApiVersion.API_V2_1.get());
+        assertEquals(Set.of(
+                        AlarmStatusRequest.class,
+                        HighestAamRequest.class),
+                messageClasses(messages));
+    }
+
+    @Test
+    public void testQualifyingEvent_groupSuggestedHandlers_includesSupportedForMobiApi() {
+        Set<? extends Message> messages = QualifyingEvent.groupSuggestedHandlers(
+                Set.of(ALARM),
+                KnownApiVersion.MOBI_API_V3_5.get());
+        assertEquals(Set.of(
+                        AlarmStatusRequest.class,
+                        HighestAamRequest.class,
+                        ActiveAamBitsRequest.class),
+                messageClasses(messages));
     }
 
     private static Set<Class<? extends Message>> messageClasses(Set<? extends Message> messages) {
