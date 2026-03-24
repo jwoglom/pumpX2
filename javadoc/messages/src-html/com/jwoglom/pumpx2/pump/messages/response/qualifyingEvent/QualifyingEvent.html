@@ -225,35 +225,34 @@
 <span class="source-line-no">208</span><span id="line-208">        }</span>
 <span class="source-line-no">209</span><span id="line-209"></span>
 <span class="source-line-no">210</span><span id="line-210">        ApiVersion minApi = message.props().minApi().get();</span>
-<span class="source-line-no">211</span><span id="line-211">        return apiVersion.greaterThan(minApi) ||</span>
-<span class="source-line-no">212</span><span id="line-212">                (apiVersion.getMajor() == minApi.getMajor() &amp;&amp; apiVersion.getMinor() == minApi.getMinor());</span>
-<span class="source-line-no">213</span><span id="line-213">    }</span>
-<span class="source-line-no">214</span><span id="line-214"></span>
-<span class="source-line-no">215</span><span id="line-215">    public static int toBitmask(QualifyingEvent...states) {</span>
-<span class="source-line-no">216</span><span id="line-216">        int bitmask = 0;</span>
-<span class="source-line-no">217</span><span id="line-217">        for (QualifyingEvent e : states) {</span>
-<span class="source-line-no">218</span><span id="line-218">            bitmask |= e.getId();</span>
-<span class="source-line-no">219</span><span id="line-219">        }</span>
-<span class="source-line-no">220</span><span id="line-220">        return bitmask;</span>
-<span class="source-line-no">221</span><span id="line-221">    }</span>
-<span class="source-line-no">222</span><span id="line-222"></span>
-<span class="source-line-no">223</span><span id="line-223">    public String jsonToString() {</span>
-<span class="source-line-no">224</span><span id="line-224">        JSONObject obj = new JSONObject();</span>
-<span class="source-line-no">225</span><span id="line-225">        obj.put("event", name());</span>
-<span class="source-line-no">226</span><span id="line-226">        return obj.toString(0);</span>
-<span class="source-line-no">227</span><span id="line-227">    }</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">    public JSONObject asJsonObject() {</span>
-<span class="source-line-no">230</span><span id="line-230">        JSONObject obj = new JSONObject();</span>
-<span class="source-line-no">231</span><span id="line-231">        obj.put("event", name());</span>
-<span class="source-line-no">232</span><span id="line-232">        return obj;</span>
-<span class="source-line-no">233</span><span id="line-233">    }</span>
-<span class="source-line-no">234</span><span id="line-234"></span>
-<span class="source-line-no">235</span><span id="line-235">    private static ActiveAamBitsRequest activeAamBitsRequest(int aamType) {</span>
-<span class="source-line-no">236</span><span id="line-236">        return new ActiveAamBitsRequest(new byte[]{(byte) aamType});</span>
-<span class="source-line-no">237</span><span id="line-237">    }</span>
-<span class="source-line-no">238</span><span id="line-238"></span>
-<span class="source-line-no">239</span><span id="line-239">}</span>
+<span class="source-line-no">211</span><span id="line-211">        return apiVersion.compareTo(minApi) &gt;= 0;</span>
+<span class="source-line-no">212</span><span id="line-212">    }</span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">    public static int toBitmask(QualifyingEvent...states) {</span>
+<span class="source-line-no">215</span><span id="line-215">        int bitmask = 0;</span>
+<span class="source-line-no">216</span><span id="line-216">        for (QualifyingEvent e : states) {</span>
+<span class="source-line-no">217</span><span id="line-217">            bitmask |= e.getId();</span>
+<span class="source-line-no">218</span><span id="line-218">        }</span>
+<span class="source-line-no">219</span><span id="line-219">        return bitmask;</span>
+<span class="source-line-no">220</span><span id="line-220">    }</span>
+<span class="source-line-no">221</span><span id="line-221"></span>
+<span class="source-line-no">222</span><span id="line-222">    public String jsonToString() {</span>
+<span class="source-line-no">223</span><span id="line-223">        JSONObject obj = new JSONObject();</span>
+<span class="source-line-no">224</span><span id="line-224">        obj.put("event", name());</span>
+<span class="source-line-no">225</span><span id="line-225">        return obj.toString(0);</span>
+<span class="source-line-no">226</span><span id="line-226">    }</span>
+<span class="source-line-no">227</span><span id="line-227"></span>
+<span class="source-line-no">228</span><span id="line-228">    public JSONObject asJsonObject() {</span>
+<span class="source-line-no">229</span><span id="line-229">        JSONObject obj = new JSONObject();</span>
+<span class="source-line-no">230</span><span id="line-230">        obj.put("event", name());</span>
+<span class="source-line-no">231</span><span id="line-231">        return obj;</span>
+<span class="source-line-no">232</span><span id="line-232">    }</span>
+<span class="source-line-no">233</span><span id="line-233"></span>
+<span class="source-line-no">234</span><span id="line-234">    private static ActiveAamBitsRequest activeAamBitsRequest(int aamType) {</span>
+<span class="source-line-no">235</span><span id="line-235">        return new ActiveAamBitsRequest(new byte[]{(byte) aamType});</span>
+<span class="source-line-no">236</span><span id="line-236">    }</span>
+<span class="source-line-no">237</span><span id="line-237"></span>
+<span class="source-line-no">238</span><span id="line-238">}</span>
 
 
 
