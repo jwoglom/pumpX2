@@ -71,8 +71,7 @@ public class NotificationBundle {
 
     private static boolean supportsApiVersion(Message message, ApiVersion apiVersion) {
         ApiVersion minApi = message.props().minApi().get();
-        return apiVersion.greaterThan(minApi) ||
-                (apiVersion.getMajor() == minApi.getMajor() && apiVersion.getMinor() == minApi.getMinor());
+        return apiVersion.compareTo(minApi) >= 0;
     }
 
     public static List<Class<? extends Message>> responseClasses() {

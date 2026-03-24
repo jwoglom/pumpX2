@@ -32,4 +32,20 @@ public enum KnownApiVersion {
     public ApiVersion get() {
         return new ApiVersion(major, minor);
     }
+
+    public int compareVersionTo(KnownApiVersion other) {
+        return get().compareTo(other.get());
+    }
+
+    public int compareVersionTo(ApiVersion other) {
+        return get().compareTo(other);
+    }
+
+    public boolean greaterThan(KnownApiVersion other) {
+        return compareVersionTo(other) > 0;
+    }
+
+    public boolean greaterThan(ApiVersion other) {
+        return compareVersionTo(other) > 0;
+    }
 }
