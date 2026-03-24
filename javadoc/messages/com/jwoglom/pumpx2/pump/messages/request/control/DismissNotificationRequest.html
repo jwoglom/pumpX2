@@ -140,6 +140,10 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest.NotificationType,long)" class="member-name-link">DismissNotificationRequest</a><wbr>(<a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;notificationType,
  long&nbsp;notificationId)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest.NotificationType,long,boolean)" class="member-name-link">DismissNotificationRequest</a><wbr>(<a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;notificationType,
+ long&nbsp;notificationId,
+ boolean&nbsp;executeExtraAction)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -155,8 +159,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;notificationId,
- int&nbsp;notificationTypeId)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,int,boolean)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;notificationId,
+ int&nbsp;notificationTypeId,
+ boolean&nbsp;executeExtraAction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for DismissNotificationRequest.buildCargo(...):
@@ -165,26 +170,30 @@ loadScripts(document, 'script');</script>
  1<code>toUint32(notificationId) [byte 1]</code>
  2<code>toUint32(notificationId) [byte 2]</code>
  3<code>toUint32(notificationId) [byte 3]</code>
- 4<code>firstTwoBytesLittleEndian(notificationTypeId) [byte 0]</code>
- 5<code>firstTwoBytesLittleEndian(notificationTypeId) [byte 1]</code>
+ 4<code>firstByteLittleEndian(notificationTypeId) [byte 0]</code>
+ 5<code>firstByteLittleEndian(executeExtraAction ? 1 : 0) [byte 0]</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationId()" class="member-name-link">getNotificationId</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExecuteExtraAction()" class="member-name-link">getExecuteExtraAction</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationType()" class="member-name-link">getNotificationType</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationId()" class="member-name-link">getNotificationId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationTypeId()" class="member-name-link">getNotificationTypeId</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationType()" class="member-name-link">getNotificationType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNotificationTypeId()" class="member-name-link">getNotificationTypeId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for DismissNotificationRequest:
  <code>notificationId</code><code>Bytes.readUint32(raw, 0)</code>
- <code>notificationTypeId</code><code>Bytes.readShort(raw, 4)</code>
+ <code>notificationTypeId</code><code>raw[4] &amp; 0xFF</code>
+ <code>executeExtraAction</code><code>(raw[5] &amp; 0xFF) != 0</code>
  <code>notificationType</code><code>getNotificationType()</code>
  </div>
 </div>
@@ -211,20 +220,28 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DismissNotificationRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-42">DismissNotificationRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-43">DismissNotificationRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest.NotificationType,long)">
 <h3>DismissNotificationRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-46">DismissNotificationRequest</a></span><wbr><span class="parameters">(<a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;notificationType,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-47">DismissNotificationRequest</a></span><wbr><span class="parameters">(<a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;notificationType,
  long&nbsp;notificationId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.request.control.DismissNotificationRequest.NotificationType,long,boolean)">
+<h3>DismissNotificationRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-51">DismissNotificationRequest</a></span><wbr><span class="parameters">(<a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a>&nbsp;notificationType,
+ long&nbsp;notificationId,
+ boolean&nbsp;executeExtraAction)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>DismissNotificationRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-50">DismissNotificationRequest</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-55">DismissNotificationRequest</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 </ul>
@@ -238,11 +255,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-63">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-69">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for DismissNotificationRequest:</caption>
  <tr><td><code>notificationId</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
- <tr><td><code>notificationTypeId</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ <tr><td><code>notificationTypeId</code></td><td><code>raw[4] &amp; 0xFF</code></td></tr>
+ <tr><td><code>executeExtraAction</code></td><td><code>(raw[5] &amp; 0xFF) != 0</code></td></tr>
  <tr><td><code>notificationType</code></td><td><code>getNotificationType()</code></td></tr>
  </table></div>
 <dl class="notes">
@@ -252,10 +270,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,int)">
+<section class="detail" id="buildCargo(long,int,boolean)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-84">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;notificationId,
- int&nbsp;notificationTypeId)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-91">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;notificationId,
+ int&nbsp;notificationTypeId,
+ boolean&nbsp;executeExtraAction)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for DismissNotificationRequest.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
@@ -263,27 +282,33 @@ loadScripts(document, 'script');</script>
  <tr><td>1</td><td><code>toUint32(notificationId) [byte 1]</code></td></tr>
  <tr><td>2</td><td><code>toUint32(notificationId) [byte 2]</code></td></tr>
  <tr><td>3</td><td><code>toUint32(notificationId) [byte 3]</code></td></tr>
- <tr><td>4</td><td><code>firstTwoBytesLittleEndian(notificationTypeId) [byte 0]</code></td></tr>
- <tr><td>5</td><td><code>firstTwoBytesLittleEndian(notificationTypeId) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>firstByteLittleEndian(notificationTypeId) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>firstByteLittleEndian(executeExtraAction ? 1 : 0) [byte 0]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNotificationId()">
 <h3>getNotificationId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-93">getNotificationId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-101">getNotificationId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNotificationTypeId()">
 <h3>getNotificationTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-97">getNotificationTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-105">getNotificationTypeId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getExecuteExtraAction()">
+<h3>getExecuteExtraAction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-109">getExecuteExtraAction</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNotificationType()">
 <h3>getNotificationType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-101">getNotificationType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DismissNotificationRequest.NotificationType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">DismissNotificationRequest.NotificationType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DismissNotificationRequest.html#line-113">getNotificationType</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -174,8 +174,8 @@ loadScripts(document, 'script');</script>
  0<code>(byte) status</code>
  1<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
  2<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
- 3<code>firstTwoBytesLittleEndian(reason) [byte 0]</code>
- 4<code>firstTwoBytesLittleEndian(reason) [byte 1]</code>
+ 3<code>new byte[]{(byte) reason} [element 0]</code>
+ 4<code>new byte[]{0} [element 1]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -200,7 +200,7 @@ loadScripts(document, 'script');</script>
  Parsed fields for CancelBolusResponse:
  <code>statusId</code><code>raw[0]</code>
  <code>bolusId</code><code>Bytes.readShort(raw, 1)</code>
- <code>reasonId</code><code>Bytes.readShort(raw, 3)</code>
+ <code>reasonId</code><code>raw[3]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
@@ -256,7 +256,7 @@ loadScripts(document, 'script');</script>
  <caption>Parsed fields for CancelBolusResponse:</caption>
  <tr><td><code>statusId</code></td><td><code>raw[0]</code></td></tr>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 1)</code></td></tr>
- <tr><td><code>reasonId</code></td><td><code>Bytes.readShort(raw, 3)</code></td></tr>
+ <tr><td><code>reasonId</code></td><td><code>raw[3]</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -276,8 +276,8 @@ loadScripts(document, 'script');</script>
  <tr><td>0</td><td><code>(byte) status</code></td></tr>
  <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
  <tr><td>2</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
- <tr><td>3</td><td><code>firstTwoBytesLittleEndian(reason) [byte 0]</code></td></tr>
- <tr><td>4</td><td><code>firstTwoBytesLittleEndian(reason) [byte 1]</code></td></tr>
+ <tr><td>3</td><td><code>new byte[]{(byte) reason} [element 0]</code></td></tr>
+ <tr><td>4</td><td><code>new byte[]{0} [element 1]</code></td></tr>
  </table></div>
 </section>
 </li>

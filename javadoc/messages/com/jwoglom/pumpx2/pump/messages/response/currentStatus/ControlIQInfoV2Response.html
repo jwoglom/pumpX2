@@ -129,7 +129,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ControlIQInfoV2Response</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,int,int,int,int,int,int,int,int,int,int)" class="member-name-link">ControlIQInfoV2Response</a><wbr>(boolean&nbsp;closedLoopEnabled,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,int,int,int,int,int,int,int,int,int,long,long)" class="member-name-link">ControlIQInfoV2Response</a><wbr>(boolean&nbsp;closedLoopEnabled,
  int&nbsp;weight,
  int&nbsp;weightUnit,
  int&nbsp;totalDailyInsulin,
@@ -139,7 +139,8 @@ loadScripts(document, 'script');</script>
  int&nbsp;byte8,
  int&nbsp;controlStateType,
  int&nbsp;exerciseChoice,
- int&nbsp;exerciseDuration)</code></div>
+ long&nbsp;exerciseDuration,
+ long&nbsp;exerciseTimeRemaining)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -156,7 +157,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,int,int,int,int,int,int,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;closedLoopEnabled,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,int,int,int,int,int,int,int,int,int,long,long)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;closedLoopEnabled,
  int&nbsp;weight,
  int&nbsp;weightUnit,
  int&nbsp;totalDailyInsulin,
@@ -166,7 +167,8 @@ loadScripts(document, 'script');</script>
  int&nbsp;byte8,
  int&nbsp;controlStateType,
  int&nbsp;exerciseChoice,
- int&nbsp;exerciseDuration)</code></div>
+ long&nbsp;exerciseDuration,
+ long&nbsp;exerciseTimeRemaining)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for ControlIQInfoV2Response.buildCargo(...):
@@ -182,7 +184,14 @@ loadScripts(document, 'script');</script>
  8<code>(byte) byte8</code>
  9<code>(byte) controlStateType</code>
  10<code>(byte) exerciseChoice</code>
- 11<code>(byte) exerciseDuration</code>
+ 11<code>toUint32(exerciseDuration) [byte 0]</code>
+ 12<code>toUint32(exerciseDuration) [byte 1]</code>
+ 13<code>toUint32(exerciseDuration) [byte 2]</code>
+ 14<code>toUint32(exerciseDuration) [byte 3]</code>
+ 15<code>toUint32(exerciseTimeRemaining) [byte 0]</code>
+ 16<code>toUint32(exerciseTimeRemaining) [byte 1]</code>
+ 17<code>toUint32(exerciseTimeRemaining) [byte 2]</code>
+ 18<code>toUint32(exerciseTimeRemaining) [byte 3]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -206,21 +215,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExerciseChoice()" class="member-name-link">getExerciseChoice</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExerciseDuration()" class="member-name-link">getExerciseDuration</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalDailyInsulin()" class="member-name-link">getTotalDailyInsulin</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExerciseTimeRemaining()" class="member-name-link">getExerciseTimeRemaining</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWeight()" class="member-name-link">getWeight</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalDailyInsulin()" class="member-name-link">getTotalDailyInsulin</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWeightUnitId()" class="member-name-link">getWeightUnitId</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWeight()" class="member-name-link">getWeight</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWeightUnitId()" class="member-name-link">getWeightUnitId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for ControlIQInfoV2Response:
  <code>closedLoopEnabled</code><code>raw[0] != 0</code>
@@ -233,7 +245,8 @@ loadScripts(document, 'script');</script>
  <code>byte8</code><code>raw[8]</code>
  <code>controlStateType</code><code>raw[9]</code>
  <code>exerciseChoice</code><code>raw[10]</code>
- <code>exerciseDuration</code><code>raw[11]</code>
+ <code>exerciseDuration</code><code>Bytes.readUint32(raw, 11)</code>
+ <code>exerciseTimeRemaining</code><code>Bytes.readUint32(raw, 15)</code>
  </div>
 </div>
 </div>
@@ -262,13 +275,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlIQInfoV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-44">ControlIQInfoV2Response</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-45">ControlIQInfoV2Response</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(boolean,int,int,int,int,int,int,int,int,int,int)">
+<section class="detail" id="&lt;init&gt;(boolean,int,int,int,int,int,int,int,int,int,long,long)">
 <h3>ControlIQInfoV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-46">ControlIQInfoV2Response</a></span><wbr><span class="parameters">(boolean&nbsp;closedLoopEnabled,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-47">ControlIQInfoV2Response</a></span><wbr><span class="parameters">(boolean&nbsp;closedLoopEnabled,
  int&nbsp;weight,
  int&nbsp;weightUnit,
  int&nbsp;totalDailyInsulin,
@@ -278,7 +291,8 @@ loadScripts(document, 'script');</script>
  int&nbsp;byte8,
  int&nbsp;controlStateType,
  int&nbsp;exerciseChoice,
- int&nbsp;exerciseDuration)</span></div>
+ long&nbsp;exerciseDuration,
+ long&nbsp;exerciseTimeRemaining)</span></div>
 </section>
 </li>
 </ul>
@@ -292,7 +306,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-78">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlIQInfoV2Response:</caption>
  <tr><td><code>closedLoopEnabled</code></td><td><code>raw[0] != 0</code></td></tr>
@@ -305,7 +319,8 @@ loadScripts(document, 'script');</script>
  <tr><td><code>byte8</code></td><td><code>raw[8]</code></td></tr>
  <tr><td><code>controlStateType</code></td><td><code>raw[9]</code></td></tr>
  <tr><td><code>exerciseChoice</code></td><td><code>raw[10]</code></td></tr>
- <tr><td><code>exerciseDuration</code></td><td><code>raw[11]</code></td></tr>
+ <tr><td><code>exerciseDuration</code></td><td><code>Bytes.readUint32(raw, 11)</code></td></tr>
+ <tr><td><code>exerciseTimeRemaining</code></td><td><code>Bytes.readUint32(raw, 15)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -314,9 +329,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(boolean,int,int,int,int,int,int,int,int,int,int)">
+<section class="detail" id="buildCargo(boolean,int,int,int,int,int,int,int,int,int,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-114">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;closedLoopEnabled,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-125">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;closedLoopEnabled,
  int&nbsp;weight,
  int&nbsp;weightUnit,
  int&nbsp;totalDailyInsulin,
@@ -326,7 +341,8 @@ loadScripts(document, 'script');</script>
  int&nbsp;byte8,
  int&nbsp;controlStateType,
  int&nbsp;exerciseChoice,
- int&nbsp;exerciseDuration)</span></div>
+ long&nbsp;exerciseDuration,
+ long&nbsp;exerciseTimeRemaining)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for ControlIQInfoV2Response.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
@@ -341,74 +357,87 @@ loadScripts(document, 'script');</script>
  <tr><td>8</td><td><code>(byte) byte8</code></td></tr>
  <tr><td>9</td><td><code>(byte) controlStateType</code></td></tr>
  <tr><td>10</td><td><code>(byte) exerciseChoice</code></td></tr>
- <tr><td>11</td><td><code>(byte) exerciseDuration</code></td></tr>
+ <tr><td>11</td><td><code>toUint32(exerciseDuration) [byte 0]</code></td></tr>
+ <tr><td>12</td><td><code>toUint32(exerciseDuration) [byte 1]</code></td></tr>
+ <tr><td>13</td><td><code>toUint32(exerciseDuration) [byte 2]</code></td></tr>
+ <tr><td>14</td><td><code>toUint32(exerciseDuration) [byte 3]</code></td></tr>
+ <tr><td>15</td><td><code>toUint32(exerciseTimeRemaining) [byte 0]</code></td></tr>
+ <tr><td>16</td><td><code>toUint32(exerciseTimeRemaining) [byte 1]</code></td></tr>
+ <tr><td>17</td><td><code>toUint32(exerciseTimeRemaining) [byte 2]</code></td></tr>
+ <tr><td>18</td><td><code>toUint32(exerciseTimeRemaining) [byte 3]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getClosedLoopEnabled()">
 <h3>getClosedLoopEnabled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-130">getClosedLoopEnabled</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-141">getClosedLoopEnabled</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getWeight()">
 <h3>getWeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-133">getWeight</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-144">getWeight</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getWeightUnitId()">
 <h3>getWeightUnitId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-136">getWeightUnitId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-147">getWeightUnitId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTotalDailyInsulin()">
 <h3>getTotalDailyInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-139">getTotalDailyInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-150">getTotalDailyInsulin</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentUserModeTypeId()">
 <h3>getCurrentUserModeTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-142">getCurrentUserModeTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-153">getCurrentUserModeTypeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getByte6()">
 <h3>getByte6</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-145">getByte6</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-156">getByte6</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getByte7()">
 <h3>getByte7</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-148">getByte7</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-159">getByte7</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getByte8()">
 <h3>getByte8</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-151">getByte8</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-162">getByte8</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getControlStateType()">
 <h3>getControlStateType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-154">getControlStateType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-165">getControlStateType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExerciseChoice()">
 <h3>getExerciseChoice</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-157">getExerciseChoice</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-168">getExerciseChoice</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExerciseDuration()">
 <h3>getExerciseDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-160">getExerciseDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-171">getExerciseDuration</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getExerciseTimeRemaining()">
+<h3>getExerciseTimeRemaining</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV2Response.html#line-174">getExerciseTimeRemaining</a></span>()</div>
 </section>
 </li>
 </ul>

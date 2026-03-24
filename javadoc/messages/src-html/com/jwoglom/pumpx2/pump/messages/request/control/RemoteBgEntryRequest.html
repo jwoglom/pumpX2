@@ -23,158 +23,204 @@
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.Message;</span>
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
-<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
-<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;</span>
-<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * Adds the BG entered in the bolus window to the pump as a BG entry.</span>
-<span class="source-line-no">016</span><span id="line-16"> *</span>
-<span class="source-line-no">017</span><span id="line-17"> * pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse</span>
-<span class="source-line-no">018</span><span id="line-18"> * via {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
-<span class="source-line-no">019</span><span id="line-19"> */</span>
-<span class="source-line-no">020</span><span id="line-20">/**</span>
-<span class="source-line-no">021</span><span id="line-21"> * Adds the BG entered in the bolus window to the pump as a BG entry.</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"> * pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse</span>
-<span class="source-line-no">024</span><span id="line-24"> * via {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
-<span class="source-line-no">025</span><span id="line-25"> *</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingSource;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingType;</span>
+<span class="source-line-no">011</span><span id="line-11">import com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16">/**</span>
+<span class="source-line-no">017</span><span id="line-17"> * Adds the BG entered in the bolus window to the pump as a BG entry.</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse</span>
+<span class="source-line-no">020</span><span id="line-20"> * via {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
+<span class="source-line-no">021</span><span id="line-21"> */</span>
+<span class="source-line-no">022</span><span id="line-22">/**</span>
+<span class="source-line-no">023</span><span id="line-23"> * Adds the BG entered in the bolus window to the pump as a BG entry.</span>
+<span class="source-line-no">024</span><span id="line-24"> *</span>
+<span class="source-line-no">025</span><span id="line-25"> * pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse</span>
+<span class="source-line-no">026</span><span id="line-26"> * via {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
 <span class="source-line-no">027</span><span id="line-27"> *</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;br&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
 <span class="source-line-no">029</span><span id="line-29"> *</span>
-<span class="source-line-no">030</span><span id="line-30"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse}, opCode -74, size 11</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;br&gt;</span>
 <span class="source-line-no">031</span><span id="line-31"> *</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;br&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse}, opCode -74, size 11</span>
 <span class="source-line-no">033</span><span id="line-33"> *</span>
-<span class="source-line-no">034</span><span id="line-34"> * </span>
-<span class="source-line-no">035</span><span id="line-35"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-74&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;11&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44"> * &lt;/table&gt;</span>
-<span class="source-line-no">045</span><span id="line-45"> */@MessageProps(</span>
-<span class="source-line-no">046</span><span id="line-46">    opCode=-74,</span>
-<span class="source-line-no">047</span><span id="line-47">    size=11, // 35 with 24 byte padding</span>
-<span class="source-line-no">048</span><span id="line-48">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">049</span><span id="line-49">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">050</span><span id="line-50">    response=RemoteBgEntryResponse.class,</span>
-<span class="source-line-no">051</span><span id="line-51">    signed=true,</span>
-<span class="source-line-no">052</span><span id="line-52">    minApi=KnownApiVersion.API_V2_5</span>
-<span class="source-line-no">053</span><span id="line-53">)</span>
-<span class="source-line-no">054</span><span id="line-54">public class RemoteBgEntryRequest extends Message {</span>
-<span class="source-line-no">055</span><span id="line-55">    private int bg;</span>
-<span class="source-line-no">056</span><span id="line-56">    private boolean useForCgmCalibration;</span>
-<span class="source-line-no">057</span><span id="line-57">    private boolean isAutopopBg;</span>
-<span class="source-line-no">058</span><span id="line-58">    private long pumpTime;</span>
-<span class="source-line-no">059</span><span id="line-59">    private int bolusId;</span>
-<span class="source-line-no">060</span><span id="line-60">    </span>
-<span class="source-line-no">061</span><span id="line-61">    public RemoteBgEntryRequest() {}</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    /**</span>
-<span class="source-line-no">064</span><span id="line-64">     * Creates a request to add a data point of the current BG to the provided bolus ID (which must</span>
-<span class="source-line-no">065</span><span id="line-65">     * be in progress; in a state between calling {@link BolusPermissionRequest} and {@link InitiateBolusRequest})</span>
-<span class="source-line-no">066</span><span id="line-66">     * @param bg the blood glucose value in mg/dL</span>
-<span class="source-line-no">067</span><span id="line-67">     * @param useForCgmCalibration if the BG should be used to calibrate the active G6 or G7 CGM sensor</span>
-<span class="source-line-no">068</span><span id="line-68">     * @param isAutopopBg true if the BG was autopopulated from the CGM; false if manually entered</span>
-<span class="source-line-no">069</span><span id="line-69">     * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
-<span class="source-line-no">070</span><span id="line-70">     * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}</span>
-<span class="source-line-no">071</span><span id="line-71">     */</span>
-<span class="source-line-no">072</span><span id="line-72">    public RemoteBgEntryRequest(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
-<span class="source-line-no">073</span><span id="line-73">        this.cargo = buildCargo(bg, useForCgmCalibration, isAutopopBg, pumpTimeSecondsSinceBoot, bolusId);</span>
-<span class="source-line-no">074</span><span id="line-74">        this.bg = bg;</span>
-<span class="source-line-no">075</span><span id="line-75">        this.useForCgmCalibration = useForCgmCalibration;</span>
-<span class="source-line-no">076</span><span id="line-76">        this.isAutopopBg = isAutopopBg;</span>
-<span class="source-line-no">077</span><span id="line-77">        this.pumpTime = pumpTimeSecondsSinceBoot;</span>
-<span class="source-line-no">078</span><span id="line-78">        this.bolusId = bolusId;</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    /**</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;caption&gt;Parsed fields for RemoteBgEntryRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;useForCgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[2] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isAutopopBg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[4] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 5)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 9)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;/table&gt;</span>
-<span class="source-line-no">090</span><span id="line-90">     */</span>
-<span class="source-line-no">091</span><span id="line-91">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">092</span><span id="line-92">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">093</span><span id="line-93">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">094</span><span id="line-94">        this.cargo = raw;</span>
-<span class="source-line-no">095</span><span id="line-95">        this.bg = Bytes.readShort(raw, 0);</span>
-<span class="source-line-no">096</span><span id="line-96">        this.useForCgmCalibration = (raw[2] == 1);</span>
-<span class="source-line-no">097</span><span id="line-97">        this.isAutopopBg = (raw[4] == 1);</span>
-<span class="source-line-no">098</span><span id="line-98">        this.pumpTime = Bytes.readUint32(raw, 5);</span>
-<span class="source-line-no">099</span><span id="line-99">        this.bolusId = Bytes.readShort(raw, 9);</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">    /**</span>
-<span class="source-line-no">104</span><span id="line-104">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">105</span><span id="line-105">     * &lt;caption&gt;Byte layout for RemoteBgEntryRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (useForCgmCalibration ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (isAutopopBg ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">118</span><span id="line-118">     * &lt;/table&gt;</span>
-<span class="source-line-no">119</span><span id="line-119">     */</span>
-<span class="source-line-no">120</span><span id="line-120">    public static byte[] buildCargo(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTime, int bolusId) {</span>
-<span class="source-line-no">121</span><span id="line-121">        return Bytes.combine(</span>
-<span class="source-line-no">122</span><span id="line-122">            Bytes.firstTwoBytesLittleEndian(bg),</span>
-<span class="source-line-no">123</span><span id="line-123">            new byte[]{(byte) (useForCgmCalibration ? 1 : 0)},</span>
-<span class="source-line-no">124</span><span id="line-124">            new byte[]{0},</span>
-<span class="source-line-no">125</span><span id="line-125">            new byte[]{(byte) (isAutopopBg ? 1 : 0)},</span>
-<span class="source-line-no">126</span><span id="line-126">            Bytes.toUint32(pumpTime),</span>
-<span class="source-line-no">127</span><span id="line-127">            Bytes.firstTwoBytesLittleEndian(bolusId)</span>
-<span class="source-line-no">128</span><span id="line-128">        );</span>
-<span class="source-line-no">129</span><span id="line-129">    }</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">    public int getBG() {</span>
-<span class="source-line-no">132</span><span id="line-132">        return bg;</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    public boolean getIsAutopopBg() {</span>
-<span class="source-line-no">136</span><span id="line-136">        return isAutopopBg;</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    public boolean isAutopopBg() {</span>
-<span class="source-line-no">140</span><span id="line-140">        return isAutopopBg;</span>
-<span class="source-line-no">141</span><span id="line-141">    }</span>
-<span class="source-line-no">142</span><span id="line-142"></span>
-<span class="source-line-no">143</span><span id="line-143">    public boolean isUseForCgmCalibration() {</span>
-<span class="source-line-no">144</span><span id="line-144">        return useForCgmCalibration;</span>
-<span class="source-line-no">145</span><span id="line-145">    }</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    public boolean getUseForCgmCalibration() {</span>
-<span class="source-line-no">148</span><span id="line-148">        return useForCgmCalibration;</span>
-<span class="source-line-no">149</span><span id="line-149">    }</span>
-<span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">    public long getPumpTime() {</span>
-<span class="source-line-no">152</span><span id="line-152">        return pumpTime;</span>
-<span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">    public int getBolusId() {</span>
-<span class="source-line-no">156</span><span id="line-156">        return bolusId;</span>
-<span class="source-line-no">157</span><span id="line-157">    }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159"></span>
-<span class="source-line-no">160</span><span id="line-160">}</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;br&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> *</span>
+<span class="source-line-no">036</span><span id="line-36"> * </span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-74&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;11&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.RemoteBgEntryResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> * &lt;/table&gt;</span>
+<span class="source-line-no">047</span><span id="line-47"> */@MessageProps(</span>
+<span class="source-line-no">048</span><span id="line-48">    opCode=-74,</span>
+<span class="source-line-no">049</span><span id="line-49">    size=11, // 35 with 24 byte padding</span>
+<span class="source-line-no">050</span><span id="line-50">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">051</span><span id="line-51">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">052</span><span id="line-52">    response=RemoteBgEntryResponse.class,</span>
+<span class="source-line-no">053</span><span id="line-53">    signed=true,</span>
+<span class="source-line-no">054</span><span id="line-54">    minApi=KnownApiVersion.API_V2_5</span>
+<span class="source-line-no">055</span><span id="line-55">)</span>
+<span class="source-line-no">056</span><span id="line-56">public class RemoteBgEntryRequest extends Message {</span>
+<span class="source-line-no">057</span><span id="line-57">    private int bg;</span>
+<span class="source-line-no">058</span><span id="line-58">    private boolean useForCgmCalibration;</span>
+<span class="source-line-no">059</span><span id="line-59">    private BloodGlucoseReadingType entryType;</span>
+<span class="source-line-no">060</span><span id="line-60">    private BloodGlucoseReadingSource source;</span>
+<span class="source-line-no">061</span><span id="line-61">    private long pumpTime;</span>
+<span class="source-line-no">062</span><span id="line-62">    private int bolusId;</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    public RemoteBgEntryRequest() {}</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    /**</span>
+<span class="source-line-no">067</span><span id="line-67">     * Creates a request to add a data point of the current BG to the provided bolus ID (which must</span>
+<span class="source-line-no">068</span><span id="line-68">     * be in progress; in a state between calling {@link BolusPermissionRequest} and {@link InitiateBolusRequest})</span>
+<span class="source-line-no">069</span><span id="line-69">     * @param bg the blood glucose value in mg/dL</span>
+<span class="source-line-no">070</span><span id="line-70">     * @param useForCgmCalibration if the BG should be used to calibrate the active G6 or G7 CGM sensor</span>
+<span class="source-line-no">071</span><span id="line-71">     * @param entryType the type of BG reading (MANUAL or AUTO from CGM)</span>
+<span class="source-line-no">072</span><span id="line-72">     * @param source the source of the BG reading (PUMP or REMOTE via BLE)</span>
+<span class="source-line-no">073</span><span id="line-73">     * @param pumpTimeSecondsSinceBoot the output of {@link TimeSinceResetResponse#getPumpTimeSecondsSinceReset()}</span>
+<span class="source-line-no">074</span><span id="line-74">     * @param bolusId the bolus ID returned from {@link BolusPermissionResponse#getBolusId()}</span>
+<span class="source-line-no">075</span><span id="line-75">     */</span>
+<span class="source-line-no">076</span><span id="line-76">    public RemoteBgEntryRequest(int bg, boolean useForCgmCalibration, BloodGlucoseReadingType entryType, BloodGlucoseReadingSource source, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
+<span class="source-line-no">077</span><span id="line-77">        this.cargo = buildCargo(bg, useForCgmCalibration, entryType, source, pumpTimeSecondsSinceBoot, bolusId);</span>
+<span class="source-line-no">078</span><span id="line-78">        this.bg = bg;</span>
+<span class="source-line-no">079</span><span id="line-79">        this.useForCgmCalibration = useForCgmCalibration;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.entryType = entryType;</span>
+<span class="source-line-no">081</span><span id="line-81">        this.source = source;</span>
+<span class="source-line-no">082</span><span id="line-82">        this.pumpTime = pumpTimeSecondsSinceBoot;</span>
+<span class="source-line-no">083</span><span id="line-83">        this.bolusId = bolusId;</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    /**</span>
+<span class="source-line-no">087</span><span id="line-87">     * @deprecated Use {@link #RemoteBgEntryRequest(int, boolean, BloodGlucoseReadingType, BloodGlucoseReadingSource, long, int)} instead.</span>
+<span class="source-line-no">088</span><span id="line-88">     * This constructor hardcodes entryType to MANUAL and maps isAutopopBg to source (true=REMOTE, false=PUMP).</span>
+<span class="source-line-no">089</span><span id="line-89">     */</span>
+<span class="source-line-no">090</span><span id="line-90">    @Deprecated</span>
+<span class="source-line-no">091</span><span id="line-91">    public RemoteBgEntryRequest(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTimeSecondsSinceBoot, int bolusId) {</span>
+<span class="source-line-no">092</span><span id="line-92">        this(bg, useForCgmCalibration,</span>
+<span class="source-line-no">093</span><span id="line-93">             BloodGlucoseReadingType.MANUAL,</span>
+<span class="source-line-no">094</span><span id="line-94">             isAutopopBg ? BloodGlucoseReadingSource.REMOTE : BloodGlucoseReadingSource.PUMP,</span>
+<span class="source-line-no">095</span><span id="line-95">             pumpTimeSecondsSinceBoot, bolusId);</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    /**</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;caption&gt;Parsed fields for RemoteBgEntryRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bg&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;useForCgmCalibration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(raw[2] == 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;entryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;BloodGlucoseReadingType.fromId(raw[3])&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;source&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;BloodGlucoseReadingSource.fromId(raw[4])&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 5)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 9)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;/table&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     */</span>
+<span class="source-line-no">109</span><span id="line-109">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">110</span><span id="line-110">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">111</span><span id="line-111">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">112</span><span id="line-112">        this.cargo = raw;</span>
+<span class="source-line-no">113</span><span id="line-113">        this.bg = Bytes.readShort(raw, 0);</span>
+<span class="source-line-no">114</span><span id="line-114">        this.useForCgmCalibration = (raw[2] == 1);</span>
+<span class="source-line-no">115</span><span id="line-115">        this.entryType = BloodGlucoseReadingType.fromId(raw[3]);</span>
+<span class="source-line-no">116</span><span id="line-116">        this.source = BloodGlucoseReadingSource.fromId(raw[4]);</span>
+<span class="source-line-no">117</span><span id="line-117">        this.pumpTime = Bytes.readUint32(raw, 5);</span>
+<span class="source-line-no">118</span><span id="line-118">        this.bolusId = Bytes.readShort(raw, 9);</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">    /**</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     * &lt;caption&gt;Byte layout for RemoteBgEntryRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bg) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (useForCgmCalibration ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">129</span><span id="line-129">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) entryType.id()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">130</span><span id="line-130">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) source.id()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">131</span><span id="line-131">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">132</span><span id="line-132">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">133</span><span id="line-133">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">134</span><span id="line-134">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTime) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">135</span><span id="line-135">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">136</span><span id="line-136">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">137</span><span id="line-137">     * &lt;/table&gt;</span>
+<span class="source-line-no">138</span><span id="line-138">     */</span>
+<span class="source-line-no">139</span><span id="line-139">    public static byte[] buildCargo(int bg, boolean useForCgmCalibration, BloodGlucoseReadingType entryType, BloodGlucoseReadingSource source, long pumpTime, int bolusId) {</span>
+<span class="source-line-no">140</span><span id="line-140">        return Bytes.combine(</span>
+<span class="source-line-no">141</span><span id="line-141">            Bytes.firstTwoBytesLittleEndian(bg),</span>
+<span class="source-line-no">142</span><span id="line-142">            new byte[]{(byte) (useForCgmCalibration ? 1 : 0)},</span>
+<span class="source-line-no">143</span><span id="line-143">            new byte[]{(byte) entryType.id()},</span>
+<span class="source-line-no">144</span><span id="line-144">            new byte[]{(byte) source.id()},</span>
+<span class="source-line-no">145</span><span id="line-145">            Bytes.toUint32(pumpTime),</span>
+<span class="source-line-no">146</span><span id="line-146">            Bytes.firstTwoBytesLittleEndian(bolusId)</span>
+<span class="source-line-no">147</span><span id="line-147">        );</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">    /**</span>
+<span class="source-line-no">151</span><span id="line-151">     * @deprecated Use {@link #buildCargo(int, boolean, BloodGlucoseReadingType, BloodGlucoseReadingSource, long, int)} instead.</span>
+<span class="source-line-no">152</span><span id="line-152">     */</span>
+<span class="source-line-no">153</span><span id="line-153">    @Deprecated</span>
+<span class="source-line-no">154</span><span id="line-154">    public static byte[] buildCargo(int bg, boolean useForCgmCalibration, boolean isAutopopBg, long pumpTime, int bolusId) {</span>
+<span class="source-line-no">155</span><span id="line-155">        return buildCargo(bg, useForCgmCalibration,</span>
+<span class="source-line-no">156</span><span id="line-156">            BloodGlucoseReadingType.MANUAL,</span>
+<span class="source-line-no">157</span><span id="line-157">            isAutopopBg ? BloodGlucoseReadingSource.REMOTE : BloodGlucoseReadingSource.PUMP,</span>
+<span class="source-line-no">158</span><span id="line-158">            pumpTime, bolusId);</span>
+<span class="source-line-no">159</span><span id="line-159">    }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">    public int getBG() {</span>
+<span class="source-line-no">162</span><span id="line-162">        return bg;</span>
+<span class="source-line-no">163</span><span id="line-163">    }</span>
+<span class="source-line-no">164</span><span id="line-164"></span>
+<span class="source-line-no">165</span><span id="line-165">    public BloodGlucoseReadingType getEntryType() {</span>
+<span class="source-line-no">166</span><span id="line-166">        return entryType;</span>
+<span class="source-line-no">167</span><span id="line-167">    }</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">    public BloodGlucoseReadingSource getSource() {</span>
+<span class="source-line-no">170</span><span id="line-170">        return source;</span>
+<span class="source-line-no">171</span><span id="line-171">    }</span>
+<span class="source-line-no">172</span><span id="line-172"></span>
+<span class="source-line-no">173</span><span id="line-173">    /**</span>
+<span class="source-line-no">174</span><span id="line-174">     * @deprecated Use {@link #getSource()} instead. Returns true if source is REMOTE.</span>
+<span class="source-line-no">175</span><span id="line-175">     */</span>
+<span class="source-line-no">176</span><span id="line-176">    @Deprecated</span>
+<span class="source-line-no">177</span><span id="line-177">    public boolean getIsAutopopBg() {</span>
+<span class="source-line-no">178</span><span id="line-178">        return source == BloodGlucoseReadingSource.REMOTE;</span>
+<span class="source-line-no">179</span><span id="line-179">    }</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">    /**</span>
+<span class="source-line-no">182</span><span id="line-182">     * @deprecated Use {@link #getSource()} instead. Returns true if source is REMOTE.</span>
+<span class="source-line-no">183</span><span id="line-183">     */</span>
+<span class="source-line-no">184</span><span id="line-184">    @Deprecated</span>
+<span class="source-line-no">185</span><span id="line-185">    public boolean isAutopopBg() {</span>
+<span class="source-line-no">186</span><span id="line-186">        return source == BloodGlucoseReadingSource.REMOTE;</span>
+<span class="source-line-no">187</span><span id="line-187">    }</span>
+<span class="source-line-no">188</span><span id="line-188"></span>
+<span class="source-line-no">189</span><span id="line-189">    public boolean isUseForCgmCalibration() {</span>
+<span class="source-line-no">190</span><span id="line-190">        return useForCgmCalibration;</span>
+<span class="source-line-no">191</span><span id="line-191">    }</span>
+<span class="source-line-no">192</span><span id="line-192"></span>
+<span class="source-line-no">193</span><span id="line-193">    public boolean getUseForCgmCalibration() {</span>
+<span class="source-line-no">194</span><span id="line-194">        return useForCgmCalibration;</span>
+<span class="source-line-no">195</span><span id="line-195">    }</span>
+<span class="source-line-no">196</span><span id="line-196"></span>
+<span class="source-line-no">197</span><span id="line-197">    public long getPumpTime() {</span>
+<span class="source-line-no">198</span><span id="line-198">        return pumpTime;</span>
+<span class="source-line-no">199</span><span id="line-199">    }</span>
+<span class="source-line-no">200</span><span id="line-200"></span>
+<span class="source-line-no">201</span><span id="line-201">    public int getBolusId() {</span>
+<span class="source-line-no">202</span><span id="line-202">        return bolusId;</span>
+<span class="source-line-no">203</span><span id="line-203">    }</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205"></span>
+<span class="source-line-no">206</span><span id="line-206">}</span>
 
 
 

@@ -160,7 +160,18 @@ loadScripts(document, 'script');</script>
  int&nbsp;profileInsulinDuration,
  int&nbsp;carbEntry,
  int&nbsp;idpSourceId)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(java.lang.String,int,int,int,int,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;firstSegmentProfileCarbRatio,
+ int&nbsp;firstSegmentProfileStartTime,
+ int&nbsp;firstSegmentProfileBasalRate,
+ int&nbsp;firstSegmentProfileTargetBG,
+ int&nbsp;firstSegmentProfileISF,
+ int&nbsp;profileInsulinDuration,
+ int&nbsp;carbEntry,
+ int&nbsp;idpSourceId)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for CreateIDPRequest.buildCargo(...):
  OffsetDescription
@@ -181,12 +192,12 @@ loadScripts(document, 'script');</script>
  14<code>writeString(name, 17) [byte 14]</code>
  15<code>writeString(name, 17) [byte 15]</code>
  16<code>writeString(name, 17) [byte 16]</code>
- 17<code>firstTwoBytesLittleEndian(firstSegmentProfileCarbRatio) [byte 0]</code>
- 18<code>firstTwoBytesLittleEndian(firstSegmentProfileCarbRatio) [byte 1]</code>
- 19<code>new byte[]{0} [element 0]</code>
- 20<code>new byte[]{0} [element 1]</code>
- 21<code>new byte[]{0} [element 0]</code>
- 22<code>new byte[]{0} [element 1]</code>
+ 17<code>toUint32(firstSegmentProfileCarbRatio) [byte 0]</code>
+ 18<code>toUint32(firstSegmentProfileCarbRatio) [byte 1]</code>
+ 19<code>toUint32(firstSegmentProfileCarbRatio) [byte 2]</code>
+ 20<code>toUint32(firstSegmentProfileCarbRatio) [byte 3]</code>
+ 21<code>firstTwoBytesLittleEndian(firstSegmentProfileStartTime) [byte 0]</code>
+ 22<code>firstTwoBytesLittleEndian(firstSegmentProfileStartTime) [byte 1]</code>
  23<code>firstTwoBytesLittleEndian(firstSegmentProfileBasalRate) [byte 0]</code>
  24<code>firstTwoBytesLittleEndian(firstSegmentProfileBasalRate) [byte 1]</code>
  25<code>firstTwoBytesLittleEndian(firstSegmentProfileTargetBG) [byte 0]</code>
@@ -199,14 +210,17 @@ loadScripts(document, 'script');</script>
  32<code>(byte) carbEntry</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileBasalRate()" class="member-name-link">getFirstSegmentProfileBasalRate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileCarbRatio()" class="member-name-link">getFirstSegmentProfileCarbRatio</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileBasalRate()" class="member-name-link">getFirstSegmentProfileBasalRate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileISF()" class="member-name-link">getFirstSegmentProfileISF</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileCarbRatio()" class="member-name-link">getFirstSegmentProfileCarbRatio</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileISF()" class="member-name-link">getFirstSegmentProfileISF</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileStartTime()" class="member-name-link">getFirstSegmentProfileStartTime</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFirstSegmentProfileTargetBG()" class="member-name-link">getFirstSegmentProfileTargetBG</a>()</code></div>
@@ -229,7 +243,8 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for CreateIDPRequest:
  <code>profileName</code><code>Bytes.readString(raw, 0, 16)</code>
- <code>firstSegmentProfileCarbRatio</code><code>Bytes.readShort(raw, 17)</code>
+ <code>firstSegmentProfileCarbRatio</code><code>(int) Bytes.readUint32(raw, 17)</code>
+ <code>firstSegmentProfileStartTime</code><code>Bytes.readShort(raw, 21)</code>
  <code>firstSegmentProfileBasalRate</code><code>Bytes.readShort(raw, 23)</code>
  <code>firstSegmentProfileTargetBG</code><code>Bytes.readShort(raw, 25)</code>
  <code>firstSegmentProfileISF</code><code>Bytes.readShort(raw, 27)</code>
@@ -261,13 +276,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CreateIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-50">CreateIDPRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-51">CreateIDPRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,int,int,int,int,int,int)">
 <h3>CreateIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-55">CreateIDPRequest</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-56">CreateIDPRequest</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName,
  int&nbsp;firstSegmentProfileCarbRatio,
  int&nbsp;firstSegmentProfileBasalRate,
  int&nbsp;firstSegmentProfileTargetBG,
@@ -280,7 +295,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,int)">
 <h3>CreateIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-70">CreateIDPRequest</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-72">CreateIDPRequest</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName,
  int&nbsp;sourceIdpId)</span></div>
 <div class="block">Duplicating an existing profile. The given IDP id is copied to the new profile.</div>
 </section>
@@ -296,11 +311,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-96">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-99">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CreateIDPRequest:</caption>
  <tr><td><code>profileName</code></td><td><code>Bytes.readString(raw, 0, 16)</code></td></tr>
- <tr><td><code>firstSegmentProfileCarbRatio</code></td><td><code>Bytes.readShort(raw, 17)</code></td></tr>
+ <tr><td><code>firstSegmentProfileCarbRatio</code></td><td><code>(int) Bytes.readUint32(raw, 17)</code></td></tr>
+ <tr><td><code>firstSegmentProfileStartTime</code></td><td><code>Bytes.readShort(raw, 21)</code></td></tr>
  <tr><td><code>firstSegmentProfileBasalRate</code></td><td><code>Bytes.readShort(raw, 23)</code></td></tr>
  <tr><td><code>firstSegmentProfileTargetBG</code></td><td><code>Bytes.readShort(raw, 25)</code></td></tr>
  <tr><td><code>firstSegmentProfileISF</code></td><td><code>Bytes.readShort(raw, 27)</code></td></tr>
@@ -317,8 +333,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(java.lang.String,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-155">buildCargo</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-117">buildCargo</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  int&nbsp;firstSegmentProfileCarbRatio,
+ int&nbsp;firstSegmentProfileBasalRate,
+ int&nbsp;firstSegmentProfileTargetBG,
+ int&nbsp;firstSegmentProfileISF,
+ int&nbsp;profileInsulinDuration,
+ int&nbsp;carbEntry,
+ int&nbsp;idpSourceId)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(java.lang.String,int,int,int,int,int,int,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-160">buildCargo</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;firstSegmentProfileCarbRatio,
+ int&nbsp;firstSegmentProfileStartTime,
  int&nbsp;firstSegmentProfileBasalRate,
  int&nbsp;firstSegmentProfileTargetBG,
  int&nbsp;firstSegmentProfileISF,
@@ -345,12 +375,12 @@ loadScripts(document, 'script');</script>
  <tr><td>14</td><td><code>writeString(name, 17) [byte 14]</code></td></tr>
  <tr><td>15</td><td><code>writeString(name, 17) [byte 15]</code></td></tr>
  <tr><td>16</td><td><code>writeString(name, 17) [byte 16]</code></td></tr>
- <tr><td>17</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileCarbRatio) [byte 0]</code></td></tr>
- <tr><td>18</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileCarbRatio) [byte 1]</code></td></tr>
- <tr><td>19</td><td><code>new byte[]{0} [element 0]</code></td></tr>
- <tr><td>20</td><td><code>new byte[]{0} [element 1]</code></td></tr>
- <tr><td>21</td><td><code>new byte[]{0} [element 0]</code></td></tr>
- <tr><td>22</td><td><code>new byte[]{0} [element 1]</code></td></tr>
+ <tr><td>17</td><td><code>toUint32(firstSegmentProfileCarbRatio) [byte 0]</code></td></tr>
+ <tr><td>18</td><td><code>toUint32(firstSegmentProfileCarbRatio) [byte 1]</code></td></tr>
+ <tr><td>19</td><td><code>toUint32(firstSegmentProfileCarbRatio) [byte 2]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(firstSegmentProfileCarbRatio) [byte 3]</code></td></tr>
+ <tr><td>21</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileStartTime) [byte 0]</code></td></tr>
+ <tr><td>22</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileStartTime) [byte 1]</code></td></tr>
  <tr><td>23</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileBasalRate) [byte 0]</code></td></tr>
  <tr><td>24</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileBasalRate) [byte 1]</code></td></tr>
  <tr><td>25</td><td><code>firstTwoBytesLittleEndian(firstSegmentProfileTargetBG) [byte 0]</code></td></tr>
@@ -367,49 +397,55 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getProfileName()">
 <h3>getProfileName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-170">getProfileName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-174">getProfileName</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstSegmentProfileCarbRatio()">
 <h3>getFirstSegmentProfileCarbRatio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-173">getFirstSegmentProfileCarbRatio</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-177">getFirstSegmentProfileCarbRatio</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFirstSegmentProfileStartTime()">
+<h3>getFirstSegmentProfileStartTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-180">getFirstSegmentProfileStartTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstSegmentProfileBasalRate()">
 <h3>getFirstSegmentProfileBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-176">getFirstSegmentProfileBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-183">getFirstSegmentProfileBasalRate</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileCarbEntry()">
 <h3>getProfileCarbEntry</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-179">getProfileCarbEntry</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-186">getProfileCarbEntry</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstSegmentProfileTargetBG()">
 <h3>getFirstSegmentProfileTargetBG</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-184">getFirstSegmentProfileTargetBG</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-191">getFirstSegmentProfileTargetBG</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstSegmentProfileISF()">
 <h3>getFirstSegmentProfileISF</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-188">getFirstSegmentProfileISF</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-195">getFirstSegmentProfileISF</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileInsulinDuration()">
 <h3>getProfileInsulinDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-192">getProfileInsulinDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-199">getProfileInsulinDuration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSourceIdpId()">
 <h3>getSourceIdpId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-196">getSourceIdpId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#line-203">getSourceIdpId</a></span>()</div>
 </section>
 </li>
 </ul>

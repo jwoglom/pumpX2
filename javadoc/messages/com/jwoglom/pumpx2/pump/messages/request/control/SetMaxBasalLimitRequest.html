@@ -132,7 +132,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SetMaxBasalLimitRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">SetMaxBasalLimitRequest</a><wbr>(int&nbsp;maxHourlyBasalMilliunits)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long)" class="member-name-link">SetMaxBasalLimitRequest</a><wbr>(long&nbsp;maxHourlyBasalMilliunits)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -149,16 +149,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;maxHourlyBasalMilliunits)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">
- Byte layout for SetMaxBasalLimitRequest.buildCargo(...):
- OffsetDescription
- 0<code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 0]</code>
- 1<code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 1]</code>
- </div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;maxHourlyBasalMilliunits)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxHourlyBasalMilliunits()" class="member-name-link">getMaxHourlyBasalMilliunits</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
@@ -166,7 +159,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for SetMaxBasalLimitRequest:
- <code>maxHourlyBasalMilliunits</code><code>Bytes.readShort(raw, 0)</code>
+ <code>maxHourlyBasalMilliunits</code><code>Bytes.readUint32(raw, 0)</code>
  </div>
 </div>
 </div>
@@ -232,9 +225,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(int)">
+<section class="detail" id="&lt;init&gt;(long)">
 <h3>SetMaxBasalLimitRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-42">SetMaxBasalLimitRequest</a></span><wbr><span class="parameters">(int&nbsp;maxHourlyBasalMilliunits)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-42">SetMaxBasalLimitRequest</a></span><wbr><span class="parameters">(long&nbsp;maxHourlyBasalMilliunits)</span></div>
 </section>
 </li>
 </ul>
@@ -251,7 +244,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-56">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetMaxBasalLimitRequest:</caption>
- <tr><td><code>maxHourlyBasalMilliunits</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>maxHourlyBasalMilliunits</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -260,21 +253,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(int)">
+<section class="detail" id="buildCargo(long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-73">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;maxHourlyBasalMilliunits)</span></div>
-<div class="block"><table border="1">
- <caption>Byte layout for SetMaxBasalLimitRequest.buildCargo(...):</caption>
- <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 0]</code></td></tr>
- <tr><td>1</td><td><code>firstTwoBytesLittleEndian(maxHourlyBasalMilliunits) [byte 1]</code></td></tr>
- </table></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-65">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;maxHourlyBasalMilliunits)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMaxHourlyBasalMilliunits()">
 <h3>getMaxHourlyBasalMilliunits</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-79">getMaxHourlyBasalMilliunits</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetMaxBasalLimitRequest.html#line-68">getMaxHourlyBasalMilliunits</a></span>()</div>
 </section>
 </li>
 </ul>

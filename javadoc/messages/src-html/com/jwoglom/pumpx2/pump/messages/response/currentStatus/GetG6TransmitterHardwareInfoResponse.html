@@ -53,60 +53,67 @@
 <span class="source-line-no">036</span><span id="line-36">    private String transmitterHardwareRevision;</span>
 <span class="source-line-no">037</span><span id="line-37">    private String transmitterBleHardwareId;</span>
 <span class="source-line-no">038</span><span id="line-38">    private String transmitterSoftwareNumber;</span>
-<span class="source-line-no">039</span><span id="line-39">    private byte[] unusedRemaining;</span>
-<span class="source-line-no">040</span><span id="line-40">    </span>
-<span class="source-line-no">041</span><span id="line-41">    public GetG6TransmitterHardwareInfoResponse() {</span>
-<span class="source-line-no">042</span><span id="line-42">        this.cargo = EMPTY;</span>
-<span class="source-line-no">043</span><span id="line-43">        </span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public GetG6TransmitterHardwareInfoResponse(byte[] raw) {</span>
-<span class="source-line-no">047</span><span id="line-47">        this.cargo = raw;</span>
-<span class="source-line-no">048</span><span id="line-48">        parse(raw);</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    /**</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;caption&gt;Parsed fields for GetG6TransmitterHardwareInfoResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterFirmwareVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 0, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterHardwareRevision&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 16, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterBleHardwareId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 32, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterSoftwareNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 48, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unusedRemaining&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.dropFirstN(raw, 64)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;/table&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     */</span>
-<span class="source-line-no">061</span><span id="line-61">    public void parse(byte[] raw) { </span>
-<span class="source-line-no">062</span><span id="line-62">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">063</span><span id="line-63">        this.cargo = raw;</span>
-<span class="source-line-no">064</span><span id="line-64">        this.transmitterFirmwareVersion = Bytes.readString(raw, 0, 16);</span>
-<span class="source-line-no">065</span><span id="line-65">        this.transmitterHardwareRevision = Bytes.readString(raw, 16, 16);</span>
-<span class="source-line-no">066</span><span id="line-66">        this.transmitterBleHardwareId = Bytes.readString(raw, 32, 16);</span>
-<span class="source-line-no">067</span><span id="line-67">        this.transmitterSoftwareNumber = Bytes.readString(raw, 48, 16);</span>
-<span class="source-line-no">068</span><span id="line-68">        this.unusedRemaining = Bytes.dropFirstN(raw, 64);</span>
-<span class="source-line-no">069</span><span id="line-69">        </span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    public String getTransmitterFirmwareVersion() {</span>
-<span class="source-line-no">074</span><span id="line-74">        return transmitterFirmwareVersion;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    public String getTransmitterHardwareRevision() {</span>
-<span class="source-line-no">078</span><span id="line-78">        return transmitterHardwareRevision;</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    public String getTransmitterBleHardwareId() {</span>
-<span class="source-line-no">082</span><span id="line-82">        return transmitterBleHardwareId;</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    public String getTransmitterSoftwareNumber() {</span>
-<span class="source-line-no">086</span><span id="line-86">        return transmitterSoftwareNumber;</span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    public byte[] getUnusedRemaining() {</span>
-<span class="source-line-no">090</span><span id="line-90">        return unusedRemaining;</span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92">}</span>
+<span class="source-line-no">039</span><span id="line-39">    private String transmitterPairingCode;</span>
+<span class="source-line-no">040</span><span id="line-40">    private String transmitterSerialNumber;</span>
+<span class="source-line-no">041</span><span id="line-41">    </span>
+<span class="source-line-no">042</span><span id="line-42">    public GetG6TransmitterHardwareInfoResponse() {</span>
+<span class="source-line-no">043</span><span id="line-43">        this.cargo = EMPTY;</span>
+<span class="source-line-no">044</span><span id="line-44">        </span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    public GetG6TransmitterHardwareInfoResponse(byte[] raw) {</span>
+<span class="source-line-no">048</span><span id="line-48">        this.cargo = raw;</span>
+<span class="source-line-no">049</span><span id="line-49">        parse(raw);</span>
+<span class="source-line-no">050</span><span id="line-50">    }</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">    /**</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;caption&gt;Parsed fields for GetG6TransmitterHardwareInfoResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterFirmwareVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 0, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterHardwareRevision&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 16, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterBleHardwareId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 32, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterSoftwareNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 48, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterPairingCode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 64, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterSerialNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 80, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">061</span><span id="line-61">     * &lt;/table&gt;</span>
+<span class="source-line-no">062</span><span id="line-62">     */</span>
+<span class="source-line-no">063</span><span id="line-63">    public void parse(byte[] raw) { </span>
+<span class="source-line-no">064</span><span id="line-64">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">065</span><span id="line-65">        this.cargo = raw;</span>
+<span class="source-line-no">066</span><span id="line-66">        this.transmitterFirmwareVersion = Bytes.readString(raw, 0, 16);</span>
+<span class="source-line-no">067</span><span id="line-67">        this.transmitterHardwareRevision = Bytes.readString(raw, 16, 16);</span>
+<span class="source-line-no">068</span><span id="line-68">        this.transmitterBleHardwareId = Bytes.readString(raw, 32, 16);</span>
+<span class="source-line-no">069</span><span id="line-69">        this.transmitterSoftwareNumber = Bytes.readString(raw, 48, 16);</span>
+<span class="source-line-no">070</span><span id="line-70">        this.transmitterPairingCode = Bytes.readString(raw, 64, 16);</span>
+<span class="source-line-no">071</span><span id="line-71">        this.transmitterSerialNumber = Bytes.readString(raw, 80, 16);</span>
+<span class="source-line-no">072</span><span id="line-72">        </span>
+<span class="source-line-no">073</span><span id="line-73">    }</span>
+<span class="source-line-no">074</span><span id="line-74"></span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">    public String getTransmitterFirmwareVersion() {</span>
+<span class="source-line-no">077</span><span id="line-77">        return transmitterFirmwareVersion;</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    public String getTransmitterHardwareRevision() {</span>
+<span class="source-line-no">081</span><span id="line-81">        return transmitterHardwareRevision;</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    public String getTransmitterBleHardwareId() {</span>
+<span class="source-line-no">085</span><span id="line-85">        return transmitterBleHardwareId;</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    public String getTransmitterSoftwareNumber() {</span>
+<span class="source-line-no">089</span><span id="line-89">        return transmitterSoftwareNumber;</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">    public String getTransmitterPairingCode() {</span>
+<span class="source-line-no">093</span><span id="line-93">        return transmitterPairingCode;</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    public String getTransmitterSerialNumber() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return transmitterSerialNumber;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99">}</span>
 
 
 

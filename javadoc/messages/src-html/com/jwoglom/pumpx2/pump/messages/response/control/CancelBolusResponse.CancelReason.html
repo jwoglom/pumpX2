@@ -81,7 +81,7 @@
 <span class="source-line-no">064</span><span id="line-64">     * &lt;caption&gt;Parsed fields for CancelBolusResponse:&lt;/caption&gt;</span>
 <span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;statusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 3)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">068</span><span id="line-68">     * &lt;/table&gt;</span>
 <span class="source-line-no">069</span><span id="line-69">     */</span>
 <span class="source-line-no">070</span><span id="line-70">    public void parse(byte[] raw) {</span>
@@ -90,7 +90,7 @@
 <span class="source-line-no">073</span><span id="line-73">        this.cargo = raw;</span>
 <span class="source-line-no">074</span><span id="line-74">        this.statusId = raw[0];</span>
 <span class="source-line-no">075</span><span id="line-75">        this.bolusId = Bytes.readShort(raw, 1);</span>
-<span class="source-line-no">076</span><span id="line-76">        this.reasonId = Bytes.readShort(raw, 3);</span>
+<span class="source-line-no">076</span><span id="line-76">        this.reasonId = raw[3];</span>
 <span class="source-line-no">077</span><span id="line-77">        </span>
 <span class="source-line-no">078</span><span id="line-78">    }</span>
 <span class="source-line-no">079</span><span id="line-79"></span>
@@ -102,15 +102,15 @@
 <span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(reason) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(reason) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) reason} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">090</span><span id="line-90">     * &lt;/table&gt;</span>
 <span class="source-line-no">091</span><span id="line-91">     */</span>
 <span class="source-line-no">092</span><span id="line-92">    public static byte[] buildCargo(int status, int bolusId, int reason) {</span>
 <span class="source-line-no">093</span><span id="line-93">        return Bytes.combine(</span>
-<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) status }, </span>
+<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) status },</span>
 <span class="source-line-no">095</span><span id="line-95">            Bytes.firstTwoBytesLittleEndian(bolusId),</span>
-<span class="source-line-no">096</span><span id="line-96">            Bytes.firstTwoBytesLittleEndian(reason));</span>
+<span class="source-line-no">096</span><span id="line-96">            new byte[]{ (byte) reason, 0 });</span>
 <span class="source-line-no">097</span><span id="line-97">    }</span>
 <span class="source-line-no">098</span><span id="line-98">    </span>
 <span class="source-line-no">099</span><span id="line-99">    public int getStatusId() {</span>

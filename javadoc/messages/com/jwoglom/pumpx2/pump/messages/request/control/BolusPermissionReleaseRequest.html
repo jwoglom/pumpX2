@@ -129,8 +129,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">BolusPermissionReleaseRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long)" class="member-name-link">BolusPermissionReleaseRequest</a><wbr>(long&nbsp;bolusId)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">BolusPermissionReleaseRequest</a><wbr>(int&nbsp;bolusID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">BolusPermissionReleaseRequest</a><wbr>(int&nbsp;bolusID,
+ int&nbsp;reserve)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -146,26 +149,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;bolusId)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;bolusID,
+ int&nbsp;reserve)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for BolusPermissionReleaseRequest.buildCargo(...):
  OffsetDescription
- 0<code>toUint32(bolusId) [byte 0]</code>
- 1<code>toUint32(bolusId) [byte 1]</code>
- 2<code>toUint32(bolusId) [byte 2]</code>
- 3<code>toUint32(bolusId) [byte 3]</code>
+ 0<code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code>
+ 1<code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code>
+ 2<code>firstTwoBytesLittleEndian(reserve) [byte 0]</code>
+ 3<code>firstTwoBytesLittleEndian(reserve) [byte 1]</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusID()" class="member-name-link">getBolusID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReserve()" class="member-name-link">getReserve</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for BolusPermissionReleaseRequest:
- <code>bolusId</code><code>Bytes.readUint32(raw, 0)</code>
+ <code>bolusID</code><code>Bytes.readShort(raw, 0)</code>
+ <code>reserve</code><code>Bytes.readShort(raw, 2)</code>
  </div>
 </div>
 </div>
@@ -191,13 +199,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BolusPermissionReleaseRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-53">BolusPermissionReleaseRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-54">BolusPermissionReleaseRequest</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(long)">
+<section class="detail" id="&lt;init&gt;(int)">
 <h3>BolusPermissionReleaseRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-55">BolusPermissionReleaseRequest</a></span><wbr><span class="parameters">(long&nbsp;bolusId)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-56">BolusPermissionReleaseRequest</a></span><wbr><span class="parameters">(int&nbsp;bolusID)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int)">
+<h3>BolusPermissionReleaseRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-60">BolusPermissionReleaseRequest</a></span><wbr><span class="parameters">(int&nbsp;bolusID,
+ int&nbsp;reserve)</span></div>
 </section>
 </li>
 </ul>
@@ -209,26 +224,13 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="buildCargo(long)">
-<h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-70">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;bolusId)</span></div>
-<div class="block"><table border="1">
- <caption>Byte layout for BolusPermissionReleaseRequest.buildCargo(...):</caption>
- <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>toUint32(bolusId) [byte 0]</code></td></tr>
- <tr><td>1</td><td><code>toUint32(bolusId) [byte 1]</code></td></tr>
- <tr><td>2</td><td><code>toUint32(bolusId) [byte 2]</code></td></tr>
- <tr><td>3</td><td><code>toUint32(bolusId) [byte 3]</code></td></tr>
- </table></div>
-</section>
-</li>
-<li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-82">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-73">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BolusPermissionReleaseRequest:</caption>
- <tr><td><code>bolusId</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
+ <tr><td><code>bolusID</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
+ <tr><td><code>reserve</code></td><td><code>Bytes.readShort(raw, 2)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -237,9 +239,30 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getBolusId()">
-<h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-89">getBolusId</a></span>()</div>
+<section class="detail" id="buildCargo(int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-91">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bolusID,
+ int&nbsp;reserve)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for BolusPermissionReleaseRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(reserve) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(reserve) [byte 1]</code></td></tr>
+ </table></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBolusID()">
+<h3>getBolusID</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-98">getBolusID</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getReserve()">
+<h3>getReserve</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/BolusPermissionReleaseRequest.html#line-102">getReserve</a></span>()</div>
 </section>
 </li>
 </ul>

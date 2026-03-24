@@ -56,129 +56,143 @@
 <span class="source-line-no">039</span><span id="line-39">    private int byte8;</span>
 <span class="source-line-no">040</span><span id="line-40">    private int controlStateType;</span>
 <span class="source-line-no">041</span><span id="line-41">    private int exerciseChoice;</span>
-<span class="source-line-no">042</span><span id="line-42">    private int exerciseDuration;</span>
-<span class="source-line-no">043</span><span id="line-43">    </span>
-<span class="source-line-no">044</span><span id="line-44">    public ControlIQInfoV2Response() {}</span>
-<span class="source-line-no">045</span><span id="line-45">    </span>
-<span class="source-line-no">046</span><span id="line-46">    public ControlIQInfoV2Response(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration) {</span>
-<span class="source-line-no">047</span><span id="line-47">        this.cargo = buildCargo(closedLoopEnabled, weight, weightUnit, totalDailyInsulin, currentUserModeType, byte6, byte7, byte8, controlStateType, exerciseChoice, exerciseDuration);</span>
-<span class="source-line-no">048</span><span id="line-48">        this.closedLoopEnabled = closedLoopEnabled;</span>
-<span class="source-line-no">049</span><span id="line-49">        this.weight = weight;</span>
-<span class="source-line-no">050</span><span id="line-50">        this.weightUnit = weightUnit;</span>
-<span class="source-line-no">051</span><span id="line-51">        this.totalDailyInsulin = totalDailyInsulin;</span>
-<span class="source-line-no">052</span><span id="line-52">        this.currentUserModeType = currentUserModeType;</span>
-<span class="source-line-no">053</span><span id="line-53">        this.byte6 = byte6;</span>
-<span class="source-line-no">054</span><span id="line-54">        this.byte7 = byte7;</span>
-<span class="source-line-no">055</span><span id="line-55">        this.byte8 = byte8;</span>
-<span class="source-line-no">056</span><span id="line-56">        this.controlStateType = controlStateType;</span>
-<span class="source-line-no">057</span><span id="line-57">        this.exerciseChoice = exerciseChoice;</span>
-<span class="source-line-no">058</span><span id="line-58">        this.exerciseDuration = exerciseDuration;</span>
-<span class="source-line-no">059</span><span id="line-59">        </span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
+<span class="source-line-no">042</span><span id="line-42">    private long exerciseDuration;</span>
+<span class="source-line-no">043</span><span id="line-43">    private long exerciseTimeRemaining;</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    public ControlIQInfoV2Response() {}</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    public ControlIQInfoV2Response(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining) {</span>
+<span class="source-line-no">048</span><span id="line-48">        this.cargo = buildCargo(closedLoopEnabled, weight, weightUnit, totalDailyInsulin, currentUserModeType, byte6, byte7, byte8, controlStateType, exerciseChoice, exerciseDuration, exerciseTimeRemaining);</span>
+<span class="source-line-no">049</span><span id="line-49">        this.closedLoopEnabled = closedLoopEnabled;</span>
+<span class="source-line-no">050</span><span id="line-50">        this.weight = weight;</span>
+<span class="source-line-no">051</span><span id="line-51">        this.weightUnit = weightUnit;</span>
+<span class="source-line-no">052</span><span id="line-52">        this.totalDailyInsulin = totalDailyInsulin;</span>
+<span class="source-line-no">053</span><span id="line-53">        this.currentUserModeType = currentUserModeType;</span>
+<span class="source-line-no">054</span><span id="line-54">        this.byte6 = byte6;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.byte7 = byte7;</span>
+<span class="source-line-no">056</span><span id="line-56">        this.byte8 = byte8;</span>
+<span class="source-line-no">057</span><span id="line-57">        this.controlStateType = controlStateType;</span>
+<span class="source-line-no">058</span><span id="line-58">        this.exerciseChoice = exerciseChoice;</span>
+<span class="source-line-no">059</span><span id="line-59">        this.exerciseDuration = exerciseDuration;</span>
+<span class="source-line-no">060</span><span id="line-60">        this.exerciseTimeRemaining = exerciseTimeRemaining;</span>
 <span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;caption&gt;Parsed fields for ControlIQInfoV2Response:&lt;/caption&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;closedLoopEnabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weight&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weightUnit&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;totalDailyInsulin&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentUserModeType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte6&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte7&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte8&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;controlStateType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseChoice&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;/table&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     */</span>
-<span class="source-line-no">078</span><span id="line-78">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">079</span><span id="line-79">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">080</span><span id="line-80">        this.cargo = raw;</span>
-<span class="source-line-no">081</span><span id="line-81">        this.closedLoopEnabled = raw[0] != 0;</span>
-<span class="source-line-no">082</span><span id="line-82">        this.weight = Bytes.readShort(raw, 1);</span>
-<span class="source-line-no">083</span><span id="line-83">        this.weightUnit = raw[3];</span>
-<span class="source-line-no">084</span><span id="line-84">        this.totalDailyInsulin = raw[4];</span>
-<span class="source-line-no">085</span><span id="line-85">        this.currentUserModeType = raw[5];</span>
-<span class="source-line-no">086</span><span id="line-86">        this.byte6 = raw[6];</span>
-<span class="source-line-no">087</span><span id="line-87">        this.byte7 = raw[7];</span>
-<span class="source-line-no">088</span><span id="line-88">        this.byte8 = raw[8];</span>
-<span class="source-line-no">089</span><span id="line-89">        this.controlStateType = raw[9];</span>
-<span class="source-line-no">090</span><span id="line-90">        this.exerciseChoice = raw[10];</span>
-<span class="source-line-no">091</span><span id="line-91">        this.exerciseDuration = raw[11];</span>
-<span class="source-line-no">092</span><span id="line-92">        </span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    </span>
-<span class="source-line-no">096</span><span id="line-96">    /**</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;caption&gt;Byte layout for ControlIQInfoV2Response.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (closedLoopEnabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) weightUnit&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) totalDailyInsulin&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) currentUserModeType&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte6&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte7&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte8&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) controlStateType&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) exerciseChoice&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) exerciseDuration&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;/table&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     */</span>
-<span class="source-line-no">114</span><span id="line-114">    public static byte[] buildCargo(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, int exerciseDuration) {</span>
-<span class="source-line-no">115</span><span id="line-115">        return Bytes.combine(</span>
-<span class="source-line-no">116</span><span id="line-116">            new byte[]{ (byte) (closedLoopEnabled ? 1 : 0) }, </span>
-<span class="source-line-no">117</span><span id="line-117">            Bytes.firstTwoBytesLittleEndian(weight), </span>
-<span class="source-line-no">118</span><span id="line-118">            new byte[]{ (byte) weightUnit }, </span>
-<span class="source-line-no">119</span><span id="line-119">            new byte[]{ (byte) totalDailyInsulin }, </span>
-<span class="source-line-no">120</span><span id="line-120">            new byte[]{ (byte) currentUserModeType }, </span>
-<span class="source-line-no">121</span><span id="line-121">            new byte[]{ (byte) byte6 }, </span>
-<span class="source-line-no">122</span><span id="line-122">            new byte[]{ (byte) byte7 }, </span>
-<span class="source-line-no">123</span><span id="line-123">            new byte[]{ (byte) byte8 }, </span>
-<span class="source-line-no">124</span><span id="line-124">            new byte[]{ (byte) controlStateType }, </span>
-<span class="source-line-no">125</span><span id="line-125">            new byte[]{ (byte) exerciseChoice }, </span>
-<span class="source-line-no">126</span><span id="line-126">            new byte[]{ (byte) exerciseDuration },</span>
-<span class="source-line-no">127</span><span id="line-127">            Bytes.emptyBytes(7));</span>
-<span class="source-line-no">128</span><span id="line-128">    }</span>
-<span class="source-line-no">129</span><span id="line-129">    </span>
-<span class="source-line-no">130</span><span id="line-130">    public boolean getClosedLoopEnabled() {</span>
-<span class="source-line-no">131</span><span id="line-131">        return closedLoopEnabled;</span>
-<span class="source-line-no">132</span><span id="line-132">    }</span>
-<span class="source-line-no">133</span><span id="line-133">    public int getWeight() {</span>
-<span class="source-line-no">134</span><span id="line-134">        return weight;</span>
-<span class="source-line-no">135</span><span id="line-135">    }</span>
-<span class="source-line-no">136</span><span id="line-136">    public int getWeightUnitId() {</span>
-<span class="source-line-no">137</span><span id="line-137">        return weightUnit;</span>
-<span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139">    public int getTotalDailyInsulin() {</span>
-<span class="source-line-no">140</span><span id="line-140">        return totalDailyInsulin;</span>
-<span class="source-line-no">141</span><span id="line-141">    }</span>
-<span class="source-line-no">142</span><span id="line-142">    public int getCurrentUserModeTypeId() {</span>
-<span class="source-line-no">143</span><span id="line-143">        return currentUserModeType;</span>
-<span class="source-line-no">144</span><span id="line-144">    }</span>
-<span class="source-line-no">145</span><span id="line-145">    public int getByte6() {</span>
-<span class="source-line-no">146</span><span id="line-146">        return byte6;</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148">    public int getByte7() {</span>
-<span class="source-line-no">149</span><span id="line-149">        return byte7;</span>
-<span class="source-line-no">150</span><span id="line-150">    }</span>
-<span class="source-line-no">151</span><span id="line-151">    public int getByte8() {</span>
-<span class="source-line-no">152</span><span id="line-152">        return byte8;</span>
-<span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154">    public int getControlStateType() {</span>
-<span class="source-line-no">155</span><span id="line-155">        return controlStateType;</span>
-<span class="source-line-no">156</span><span id="line-156">    }</span>
-<span class="source-line-no">157</span><span id="line-157">    public int getExerciseChoice() {</span>
-<span class="source-line-no">158</span><span id="line-158">        return exerciseChoice;</span>
-<span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160">    public int getExerciseDuration() {</span>
-<span class="source-line-no">161</span><span id="line-161">        return exerciseDuration;</span>
-<span class="source-line-no">162</span><span id="line-162">    }</span>
-<span class="source-line-no">163</span><span id="line-163">    </span>
-<span class="source-line-no">164</span><span id="line-164">}</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    /**</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;caption&gt;Parsed fields for ControlIQInfoV2Response:&lt;/caption&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;closedLoopEnabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weight&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weightUnit&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;totalDailyInsulin&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentUserModeType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte6&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte7&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;byte8&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;controlStateType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseChoice&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 11)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseTimeRemaining&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 15)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;/table&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     */</span>
+<span class="source-line-no">081</span><span id="line-81">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">082</span><span id="line-82">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">083</span><span id="line-83">        this.cargo = raw;</span>
+<span class="source-line-no">084</span><span id="line-84">        this.closedLoopEnabled = raw[0] != 0;</span>
+<span class="source-line-no">085</span><span id="line-85">        this.weight = Bytes.readShort(raw, 1);</span>
+<span class="source-line-no">086</span><span id="line-86">        this.weightUnit = raw[3];</span>
+<span class="source-line-no">087</span><span id="line-87">        this.totalDailyInsulin = raw[4];</span>
+<span class="source-line-no">088</span><span id="line-88">        this.currentUserModeType = raw[5];</span>
+<span class="source-line-no">089</span><span id="line-89">        this.byte6 = raw[6];</span>
+<span class="source-line-no">090</span><span id="line-90">        this.byte7 = raw[7];</span>
+<span class="source-line-no">091</span><span id="line-91">        this.byte8 = raw[8];</span>
+<span class="source-line-no">092</span><span id="line-92">        this.controlStateType = raw[9];</span>
+<span class="source-line-no">093</span><span id="line-93">        this.exerciseChoice = raw[10];</span>
+<span class="source-line-no">094</span><span id="line-94">        this.exerciseDuration = Bytes.readUint32(raw, 11);</span>
+<span class="source-line-no">095</span><span id="line-95">        this.exerciseTimeRemaining = Bytes.readUint32(raw, 15);</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    }</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">    </span>
+<span class="source-line-no">100</span><span id="line-100">    /**</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;caption&gt;Byte layout for ControlIQInfoV2Response.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (closedLoopEnabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(weight) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) weightUnit&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) totalDailyInsulin&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) currentUserModeType&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte6&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte7&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) byte8&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) controlStateType&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) exerciseChoice&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseDuration) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">118</span><span id="line-118">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseDuration) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">119</span><span id="line-119">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseTimeRemaining) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">120</span><span id="line-120">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseTimeRemaining) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">121</span><span id="line-121">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseTimeRemaining) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(exerciseTimeRemaining) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;/table&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     */</span>
+<span class="source-line-no">125</span><span id="line-125">    public static byte[] buildCargo(boolean closedLoopEnabled, int weight, int weightUnit, int totalDailyInsulin, int currentUserModeType, int byte6, int byte7, int byte8, int controlStateType, int exerciseChoice, long exerciseDuration, long exerciseTimeRemaining) {</span>
+<span class="source-line-no">126</span><span id="line-126">        return Bytes.combine(</span>
+<span class="source-line-no">127</span><span id="line-127">            new byte[]{ (byte) (closedLoopEnabled ? 1 : 0) },</span>
+<span class="source-line-no">128</span><span id="line-128">            Bytes.firstTwoBytesLittleEndian(weight),</span>
+<span class="source-line-no">129</span><span id="line-129">            new byte[]{ (byte) weightUnit },</span>
+<span class="source-line-no">130</span><span id="line-130">            new byte[]{ (byte) totalDailyInsulin },</span>
+<span class="source-line-no">131</span><span id="line-131">            new byte[]{ (byte) currentUserModeType },</span>
+<span class="source-line-no">132</span><span id="line-132">            new byte[]{ (byte) byte6 },</span>
+<span class="source-line-no">133</span><span id="line-133">            new byte[]{ (byte) byte7 },</span>
+<span class="source-line-no">134</span><span id="line-134">            new byte[]{ (byte) byte8 },</span>
+<span class="source-line-no">135</span><span id="line-135">            new byte[]{ (byte) controlStateType },</span>
+<span class="source-line-no">136</span><span id="line-136">            new byte[]{ (byte) exerciseChoice },</span>
+<span class="source-line-no">137</span><span id="line-137">            Bytes.toUint32(exerciseDuration),</span>
+<span class="source-line-no">138</span><span id="line-138">            Bytes.toUint32(exerciseTimeRemaining));</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
+<span class="source-line-no">140</span><span id="line-140">    </span>
+<span class="source-line-no">141</span><span id="line-141">    public boolean getClosedLoopEnabled() {</span>
+<span class="source-line-no">142</span><span id="line-142">        return closedLoopEnabled;</span>
+<span class="source-line-no">143</span><span id="line-143">    }</span>
+<span class="source-line-no">144</span><span id="line-144">    public int getWeight() {</span>
+<span class="source-line-no">145</span><span id="line-145">        return weight;</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147">    public int getWeightUnitId() {</span>
+<span class="source-line-no">148</span><span id="line-148">        return weightUnit;</span>
+<span class="source-line-no">149</span><span id="line-149">    }</span>
+<span class="source-line-no">150</span><span id="line-150">    public int getTotalDailyInsulin() {</span>
+<span class="source-line-no">151</span><span id="line-151">        return totalDailyInsulin;</span>
+<span class="source-line-no">152</span><span id="line-152">    }</span>
+<span class="source-line-no">153</span><span id="line-153">    public int getCurrentUserModeTypeId() {</span>
+<span class="source-line-no">154</span><span id="line-154">        return currentUserModeType;</span>
+<span class="source-line-no">155</span><span id="line-155">    }</span>
+<span class="source-line-no">156</span><span id="line-156">    public int getByte6() {</span>
+<span class="source-line-no">157</span><span id="line-157">        return byte6;</span>
+<span class="source-line-no">158</span><span id="line-158">    }</span>
+<span class="source-line-no">159</span><span id="line-159">    public int getByte7() {</span>
+<span class="source-line-no">160</span><span id="line-160">        return byte7;</span>
+<span class="source-line-no">161</span><span id="line-161">    }</span>
+<span class="source-line-no">162</span><span id="line-162">    public int getByte8() {</span>
+<span class="source-line-no">163</span><span id="line-163">        return byte8;</span>
+<span class="source-line-no">164</span><span id="line-164">    }</span>
+<span class="source-line-no">165</span><span id="line-165">    public int getControlStateType() {</span>
+<span class="source-line-no">166</span><span id="line-166">        return controlStateType;</span>
+<span class="source-line-no">167</span><span id="line-167">    }</span>
+<span class="source-line-no">168</span><span id="line-168">    public int getExerciseChoice() {</span>
+<span class="source-line-no">169</span><span id="line-169">        return exerciseChoice;</span>
+<span class="source-line-no">170</span><span id="line-170">    }</span>
+<span class="source-line-no">171</span><span id="line-171">    public long getExerciseDuration() {</span>
+<span class="source-line-no">172</span><span id="line-172">        return exerciseDuration;</span>
+<span class="source-line-no">173</span><span id="line-173">    }</span>
+<span class="source-line-no">174</span><span id="line-174">    public long getExerciseTimeRemaining() {</span>
+<span class="source-line-no">175</span><span id="line-175">        return exerciseTimeRemaining;</span>
+<span class="source-line-no">176</span><span id="line-176">    }</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">}</span>
 
 
 

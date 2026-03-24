@@ -145,21 +145,25 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTransmitterHardwareRevision()" class="member-name-link">getTransmitterHardwareRevision</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTransmitterPairingCode()" class="member-name-link">getTransmitterPairingCode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTransmitterSerialNumber()" class="member-name-link">getTransmitterSerialNumber</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTransmitterSoftwareNumber()" class="member-name-link">getTransmitterSoftwareNumber</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUnusedRemaining()" class="member-name-link">getUnusedRemaining</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for GetG6TransmitterHardwareInfoResponse:
  <code>transmitterFirmwareVersion</code><code>Bytes.readString(raw, 0, 16)</code>
  <code>transmitterHardwareRevision</code><code>Bytes.readString(raw, 16, 16)</code>
  <code>transmitterBleHardwareId</code><code>Bytes.readString(raw, 32, 16)</code>
  <code>transmitterSoftwareNumber</code><code>Bytes.readString(raw, 48, 16)</code>
- <code>unusedRemaining</code><code>Bytes.dropFirstN(raw, 64)</code>
+ <code>transmitterPairingCode</code><code>Bytes.readString(raw, 64, 16)</code>
+ <code>transmitterSerialNumber</code><code>Bytes.readString(raw, 80, 16)</code>
  </div>
 </div>
 </div>
@@ -185,13 +189,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>GetG6TransmitterHardwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-41">GetG6TransmitterHardwareInfoResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-42">GetG6TransmitterHardwareInfoResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>GetG6TransmitterHardwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-46">GetG6TransmitterHardwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-47">GetG6TransmitterHardwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 </ul>
@@ -205,14 +209,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-63">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for GetG6TransmitterHardwareInfoResponse:</caption>
  <tr><td><code>transmitterFirmwareVersion</code></td><td><code>Bytes.readString(raw, 0, 16)</code></td></tr>
  <tr><td><code>transmitterHardwareRevision</code></td><td><code>Bytes.readString(raw, 16, 16)</code></td></tr>
  <tr><td><code>transmitterBleHardwareId</code></td><td><code>Bytes.readString(raw, 32, 16)</code></td></tr>
  <tr><td><code>transmitterSoftwareNumber</code></td><td><code>Bytes.readString(raw, 48, 16)</code></td></tr>
- <tr><td><code>unusedRemaining</code></td><td><code>Bytes.dropFirstN(raw, 64)</code></td></tr>
+ <tr><td><code>transmitterPairingCode</code></td><td><code>Bytes.readString(raw, 64, 16)</code></td></tr>
+ <tr><td><code>transmitterSerialNumber</code></td><td><code>Bytes.readString(raw, 80, 16)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -223,31 +228,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTransmitterFirmwareVersion()">
 <h3>getTransmitterFirmwareVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-73">getTransmitterFirmwareVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-76">getTransmitterFirmwareVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransmitterHardwareRevision()">
 <h3>getTransmitterHardwareRevision</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-77">getTransmitterHardwareRevision</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-80">getTransmitterHardwareRevision</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransmitterBleHardwareId()">
 <h3>getTransmitterBleHardwareId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-81">getTransmitterBleHardwareId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-84">getTransmitterBleHardwareId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransmitterSoftwareNumber()">
 <h3>getTransmitterSoftwareNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-85">getTransmitterSoftwareNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-88">getTransmitterSoftwareNumber</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getUnusedRemaining()">
-<h3>getUnusedRemaining</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-89">getUnusedRemaining</a></span>()</div>
+<section class="detail" id="getTransmitterPairingCode()">
+<h3>getTransmitterPairingCode</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-92">getTransmitterPairingCode</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTransmitterSerialNumber()">
+<h3>getTransmitterSerialNumber</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/GetG6TransmitterHardwareInfoResponse.html#line-96">getTransmitterSerialNumber</a></span>()</div>
 </section>
 </li>
 </ul>
