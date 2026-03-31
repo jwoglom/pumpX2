@@ -16,7 +16,7 @@ public class SetIDPSettingsRequestTest {
     public void testSetIDPSettingsRequest_profile1_carbEntryOn() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 240, 1, SetIDPSettingsRequest.ChangeType.CHANGE_CARB_ENTRY);
+        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 1, 240, 1, SetIDPSettingsRequest.ChangeType.CHANGE_CARB_ENTRY);
 
         SetIDPSettingsRequest parsedReq = (SetIDPSettingsRequest) MessageTester.test(
                 "0109ac091e0101f00001043d493e20068b9bf3e9",
@@ -35,7 +35,7 @@ public class SetIDPSettingsRequestTest {
     public void testSetIDPSettingsRequest_profile1_insulinDuration4h() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 240, 1, SetIDPSettingsRequest.ChangeType.CHANGE_INSULIN_DURATION);
+        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 1, 240, 1, SetIDPSettingsRequest.ChangeType.CHANGE_INSULIN_DURATION);
 
         SetIDPSettingsRequest parsedReq = (SetIDPSettingsRequest) MessageTester.test(
                 "01f5acf51e0101f000010122493e206e6dc237ab",
@@ -52,7 +52,7 @@ public class SetIDPSettingsRequestTest {
     public void testSetIDPSettingsRequest_profile1_insulinDuration5h() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 300, 1, SetIDPSettingsRequest.ChangeType.CHANGE_INSULIN_DURATION);
+        SetIDPSettingsRequest expected = new SetIDPSettingsRequest(1, 1, 300, 1, SetIDPSettingsRequest.ChangeType.CHANGE_INSULIN_DURATION);
 
         SetIDPSettingsRequest parsedReq = (SetIDPSettingsRequest) MessageTester.test(
                 "0110ac101e01012c0101014f493e206cd2e4e729",

@@ -45,9 +45,11 @@ public class IDPManager {
         private IDPSettingsResponse idpSettingsResponse;
         private List<IDPSegmentResponse> segments = new ArrayList<>();
         boolean isActiveProfile;
-        public Profile(IDPSettingsResponse idpSettingsResponse, boolean isActiveProfile) {
+        int profileIndex;
+        public Profile(IDPSettingsResponse idpSettingsResponse, boolean isActiveProfile, int profileIndex) {
             this.idpSettingsResponse = idpSettingsResponse;
             this.isActiveProfile = isActiveProfile;
+            this.profileIndex = profileIndex;
         }
 
         public boolean isComplete() {
@@ -67,8 +69,12 @@ public class IDPManager {
             return segments;
         }
 
+        public int getProfileIndex() {
+            return profileIndex;
+        }
+
         public Message deleteProfileMessage() {
-            return new DeleteIDPRequest(getIdpId());
+            return new DeleteIDPRequest(getIdpId(), profileIndex);
         }
 
         public Message duplicateProfileMessage(String newProfileName) {
@@ -76,13 +82,13 @@ public class IDPManager {
         }
 
         public Message setActiveProfileMessage() {
-            return new SetActiveIDPRequest(getIdpId());
+            return new SetActiveIDPRequest(getIdpId(), profileIndex);
         }
 
         public Message deleteSegmentMessage(IDPSegmentResponse segment) {
             Validate.isTrue(segment.getIdpId() == getIdpId());
             Validate.isTrue(segment.getSegmentIndex() != 0, "Deleting the 0th segment index is not supported");
-            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),
+            return new SetIDPSegmentRequest(getIdpId(), profileIndex, segment.getSegmentIndex(),
                     SetIDPSegmentRequest.IDPSegmentOperation.DELETE_SEGMENT_ID,
                     segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),
                     segment.getIdpStatusId());
@@ -91,7 +97,7 @@ public class IDPManager {
         public Message modifySegmentMessage(IDPSegmentResponse segment) {
             Validate.isTrue(segment.getIdpId() == getIdpId());
             int statusId = 0;
-            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, segment.getSegmentIndex(),
+            return new SetIDPSegmentRequest(getIdpId(), profileIndex, segment.getSegmentIndex(),
                     SetIDPSegmentRequest.IDPSegmentOperation.MODIFY_SEGMENT_ID,
                     segment.getProfileStartTime(), segment.getProfileBasalRate(), segment.getProfileCarbRatio(), segment.getProfileTargetBG(), segment.getProfileISF(),
                     IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
@@ -102,8 +108,24 @@ public class IDPManager {
                             IDPSegmentResponse.IDPSegmentStatus.START_TIME));
         }
 
+        public Message modifySegmentMessage(int segmentIndex, int profileStartTime, int profileBasalRateMilliunits, long profileCarbRatio, int profileTargetBG, int profileISF) {
+            return new SetIDPSegmentRequest(getIdpId(), profileIndex, segmentIndex,
+                    SetIDPSegmentRequest.IDPSegmentOperation.MODIFY_SEGMENT_ID,
+                    profileStartTime, profileBasalRateMilliunits, profileCarbRatio, profileTargetBG, profileISF,
+                    IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
+                            IDPSegmentResponse.IDPSegmentStatus.BASAL_RATE,
+                            IDPSegmentResponse.IDPSegmentStatus.CARB_RATIO,
+                            IDPSegmentResponse.IDPSegmentStatus.TARGET_BG,
+                            IDPSegmentResponse.IDPSegmentStatus.CORRECTION_FACTOR,
+                            IDPSegmentResponse.IDPSegmentStatus.START_TIME));
+        }
+
+        public Message modifySegmentMessage(int segmentIndex, MinsTime profileStartTime, float profileBasalRateUnits, long profileCarbRatio, int profileTargetBG, int profileISF) {
+            return modifySegmentMessage(segmentIndex, profileStartTime.encode(), (int) InsulinUnit.from1To1000(profileBasalRateUnits), profileCarbRatio, profileTargetBG, profileISF);
+        }
+
         public Message createSegmentMessage(int profileStartTime, int profileBasalRateMilliunits, long profileCarbRatio, int profileTargetBG, int profileISF) {
-            return new SetIDPSegmentRequest(getIdpId(), 0 /* ??? */, 0,
+            return new SetIDPSegmentRequest(getIdpId(), profileIndex, 0,
                     SetIDPSegmentRequest.IDPSegmentOperation.CREATE_SEGMENT,
                     profileStartTime, profileBasalRateMilliunits, profileCarbRatio, profileTargetBG, profileISF,
                     IDPSegmentResponse.IDPSegmentStatus.toBitmask( // 31
@@ -204,7 +226,8 @@ public class IDPManager {
                 int activeSlot = profileStatusResponse.getActiveIdpSlotId();
                 int activeIdpId = profileStatusResponse.getIdpSlotIds().get(activeSlot);
                 boolean isActiveProfile = idpId == activeIdpId;
-                profiles.add(new Profile((IDPSettingsResponse) message, isActiveProfile));
+                int slotIndex = profileStatusResponse.getIdpSlotIds().indexOf(idpId);
+                profiles.add(new Profile((IDPSettingsResponse) message, isActiveProfile, slotIndex));
             }
             profiles.sort((a,b) -> profileStatusResponse.getIdpSlotIds().indexOf(a.getIdpId()) - profileStatusResponse.getIdpSlotIds().indexOf(b.getIdpId()));
         } else if (message instanceof IDPSegmentResponse) {

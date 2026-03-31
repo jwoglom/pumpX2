@@ -16,7 +16,7 @@ public class DeleteIDPRequestTest {
     public void testDeleteIDPRequest_idpId2() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        DeleteIDPRequest expected = new DeleteIDPRequest(2);
+        DeleteIDPRequest expected = new DeleteIDPRequest(2, 1);
 
         DeleteIDPRequest parsedReq = (DeleteIDPRequest) MessageTester.test(
                 "014dae4d1a0201c0493e208cb42b3ffcb6f3f0a9",
@@ -33,7 +33,7 @@ public class DeleteIDPRequestTest {
     public void testDeleteIDPRequest_idpId1() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        DeleteIDPRequest expected = new DeleteIDPRequest(1);
+        DeleteIDPRequest expected = new DeleteIDPRequest(1, 1);
 
         DeleteIDPRequest parsedReq = (DeleteIDPRequest) MessageTester.test(
                 "0153ae531a0101cf493e200e7a1458b74d619de6",

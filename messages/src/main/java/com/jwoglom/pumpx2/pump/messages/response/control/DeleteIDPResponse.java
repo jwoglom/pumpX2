@@ -40,7 +40,7 @@ public class DeleteIDPResponse extends StatusMessage {
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.status = raw[0];
-
+        this.deletedIdpId = raw[1];
     }
 
     

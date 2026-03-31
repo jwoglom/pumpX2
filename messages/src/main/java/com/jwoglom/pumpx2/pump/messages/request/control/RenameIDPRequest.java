@@ -22,42 +22,57 @@ import com.jwoglom.pumpx2.pump.messages.response.control.RenameIDPResponse;
     modifiesInsulinDelivery=true,
     supportedDevices=SupportedDevices.MOBI_ONLY
 )
-public class RenameIDPRequest extends Message { 
+public class RenameIDPRequest extends Message {
     private int idpId;
+    private int profileIndex;
     private String profileName;
-    
+
     public RenameIDPRequest() {}
 
     /**
-     * @param idpId ID of insulin delivery profile (NOT SLOT)
-     * @param profileName new name to set on profile
+     * @deprecated Use {@link #RenameIDPRequest(int, int, String)} instead to pass the correct profileIndex.
      */
+    @Deprecated
     public RenameIDPRequest(int idpId, String profileName) {
-        this.cargo = buildCargo(idpId, profileName);
-        this.idpId = idpId;
-        this.profileName = profileName;
-        
+        this(idpId, 0, profileName);
     }
 
-    public void parse(byte[] raw) { 
+    /**
+     * @param idpId ID of insulin delivery profile (NOT SLOT)
+     * @param profileIndex the slot index (0-5) of this profile in ProfileStatusResponse
+     * @param profileName new name to set on profile
+     */
+    public RenameIDPRequest(int idpId, int profileIndex, String profileName) {
+        this.cargo = buildCargo(idpId, profileIndex, profileName);
+        this.idpId = idpId;
+        this.profileIndex = profileIndex;
+        this.profileName = profileName;
+
+    }
+
+    public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.idpId = raw[0];
+        this.profileIndex = raw[1];
         this.profileName = Bytes.readString(raw, 2, 16);
     }
 
-    
-    public static byte[] buildCargo(int idpId, String profileName) {
+
+    public static byte[] buildCargo(int idpId, int profileIndex, String profileName) {
         return Bytes.combine(
             new byte[]{ (byte) idpId },
-            new byte[]{ 1 },
+            new byte[]{ (byte) profileIndex },
             Bytes.writeString(profileName, 16),
             new byte[]{ 0 }
         );
     }
     public int getIdpId() {
         return idpId;
+    }
+    public int getProfileIndex() {
+        return profileIndex;
     }
     public String getProfileName() {
         return profileName;

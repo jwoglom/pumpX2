@@ -19,39 +19,54 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetIDPSettingsResponse;
 public class SetIDPSettingsRequest extends Message {
 
     private int idpId;
+    private int profileIndex;
     private int profileInsulinDuration;
     private int profileCarbEntry;
     private int changeTypeId;
     private ChangeType changeType;
-    
+
     public SetIDPSettingsRequest() {}
 
+    /**
+     * @deprecated Use {@link #SetIDPSettingsRequest(int, int, int, int, ChangeType)} instead to pass the correct profileIndex.
+     */
+    @Deprecated
     public SetIDPSettingsRequest(int idpId, int profileInsulinDuration, int profileCarbEntry, ChangeType changeType) {
-        this.cargo = buildCargo(idpId, profileInsulinDuration, profileCarbEntry, changeType.id);
+        this(idpId, 0, profileInsulinDuration, profileCarbEntry, changeType);
+    }
+
+    /**
+     * @param idpId the insulin delivery profile ID (NOT SLOT)
+     * @param profileIndex the slot index (0-5) of this profile in ProfileStatusResponse
+     */
+    public SetIDPSettingsRequest(int idpId, int profileIndex, int profileInsulinDuration, int profileCarbEntry, ChangeType changeType) {
+        this.cargo = buildCargo(idpId, profileIndex, profileInsulinDuration, profileCarbEntry, changeType.id);
         this.idpId = idpId;
+        this.profileIndex = profileIndex;
         this.profileInsulinDuration = profileInsulinDuration;
         this.profileCarbEntry = profileCarbEntry;
         this.changeTypeId = changeType.id;
         this.changeType = getChangeType();
-        
+
     }
 
-    public void parse(byte[] raw) { 
+    public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.idpId = raw[0];
+        this.profileIndex = raw[1];
         this.profileInsulinDuration = Bytes.readShort(raw, 2);
         this.profileCarbEntry = raw[4];
         this.changeTypeId = raw[5];
         this.changeType = getChangeType();
-        
+
     }
 
-    
-    public static byte[] buildCargo(int idpId, int profileInsulinDuration, int profileCarbEntry, int changeTypeId) {
+
+    public static byte[] buildCargo(int idpId, int profileIndex, int profileInsulinDuration, int profileCarbEntry, int changeTypeId) {
         return Bytes.combine(
-            new byte[] {(byte) idpId, 1},
+            new byte[] {(byte) idpId, (byte) profileIndex},
             Bytes.firstTwoBytesLittleEndian(profileInsulinDuration),
             new byte[]{ (byte) profileCarbEntry, (byte) changeTypeId }
         );
@@ -65,6 +80,9 @@ public class SetIDPSettingsRequest extends Message {
         return idpId;
     }
 
+    public int getProfileIndex() {
+        return profileIndex;
+    }
 
     public enum ChangeType {
         CHANGE_INSULIN_DURATION(1),

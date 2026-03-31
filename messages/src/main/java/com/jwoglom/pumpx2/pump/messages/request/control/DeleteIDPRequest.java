@@ -19,34 +19,52 @@ import com.jwoglom.pumpx2.pump.messages.response.control.DeleteIDPResponse;
     modifiesInsulinDelivery=true,
     supportedDevices=SupportedDevices.MOBI_ONLY
 )
-public class DeleteIDPRequest extends Message { 
+public class DeleteIDPRequest extends Message {
     private int idpId;
-    
+    private int profileIndex;
+
     public DeleteIDPRequest() {}
 
+    /**
+     * @deprecated Use {@link #DeleteIDPRequest(int, int)} instead to pass the correct profileIndex.
+     */
+    @Deprecated
     public DeleteIDPRequest(int idpId) {
-        this.cargo = buildCargo(idpId);
-        this.idpId = idpId;
-        
+        this(idpId, 0);
     }
 
-    public void parse(byte[] raw) { 
+    /**
+     * @param idpId the insulin delivery profile ID (NOT SLOT)
+     * @param profileIndex the slot index (0-5) of this profile in ProfileStatusResponse
+     */
+    public DeleteIDPRequest(int idpId, int profileIndex) {
+        this.cargo = buildCargo(idpId, profileIndex);
+        this.idpId = idpId;
+        this.profileIndex = profileIndex;
+
+    }
+
+    public void parse(byte[] raw) {
         raw = this.removeSignedRequestHmacBytes(raw);
         Validate.isTrue(raw.length == props().size());
         this.cargo = raw;
         this.idpId = raw[0];
-        
+        this.profileIndex = raw[1];
+
     }
 
-    
-    public static byte[] buildCargo(int idpId) {
+
+    public static byte[] buildCargo(int idpId, int profileIndex) {
         return Bytes.combine(
             new byte[]{ (byte) idpId },
-            new byte[]{ 1 }
+            new byte[]{ (byte) profileIndex }
         );
     }
     public int getIdpId() {
         return idpId;
+    }
+    public int getProfileIndex() {
+        return profileIndex;
     }
     
     

@@ -27,6 +27,8 @@ public class CreateIDPRequest extends Message {
     private int firstSegmentProfileTargetBG; // uint16 at offset 25-26
     private int firstSegmentProfileISF; // uint16 at offset 27-28
     private int profileInsulinDuration; // uint16 at offset 29-30
+    private int timeSegmentBitmask; // uint8 at offset 31. Bitmask of which time segment fields are set: bit0=basalRate(1), bit1=carbRatio(2), bit2=targetBG(4), bit3=correctionFactor(8), bit4=startTime(16). 31=all for new profiles, 0 for duplicates.
+    private int bolusSettingsBitmask; // uint8 at offset 32. Bitmask of which bolus settings are set: bit0=insulinDuration(1), bit1=maxBolus(2), bit2=carbEntry(4). 5=insulinDuration+carbEntry for new profiles, 0 for duplicates.
     private int profileCarbEntry; // uint8 at offset 34 (boolean: 1=enabled)
     private int sourceIdpId; // uint8 at offset 33 (-1/0xFF = new profile, otherwise source IDP id to duplicate)
     
@@ -36,7 +38,14 @@ public class CreateIDPRequest extends Message {
      * Creating a new profile.
      */
     public CreateIDPRequest(String profileName, int firstSegmentProfileCarbRatio, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int profileCarbEntry) {
-        this.cargo = buildCargo(profileName, firstSegmentProfileCarbRatio, 0, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, profileCarbEntry, -1);
+        this(profileName, firstSegmentProfileCarbRatio, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, profileCarbEntry, 31, 5);
+    }
+
+    /**
+     * Creating a new profile with explicit bitmask values.
+     */
+    public CreateIDPRequest(String profileName, int firstSegmentProfileCarbRatio, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int profileCarbEntry, int timeSegmentBitmask, int bolusSettingsBitmask) {
+        this.cargo = buildCargo(profileName, firstSegmentProfileCarbRatio, 0, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, timeSegmentBitmask, bolusSettingsBitmask, profileCarbEntry, -1);
         this.profileName = profileName;
         this.firstSegmentProfileCarbRatio = firstSegmentProfileCarbRatio;
         this.firstSegmentProfileStartTime = 0;
@@ -44,6 +53,8 @@ public class CreateIDPRequest extends Message {
         this.firstSegmentProfileTargetBG = firstSegmentProfileTargetBG;
         this.firstSegmentProfileISF = firstSegmentProfileISF;
         this.profileInsulinDuration = profileInsulinDuration;
+        this.timeSegmentBitmask = timeSegmentBitmask;
+        this.bolusSettingsBitmask = bolusSettingsBitmask;
         this.profileCarbEntry = profileCarbEntry;
         this.sourceIdpId = -1;
     }
@@ -52,7 +63,7 @@ public class CreateIDPRequest extends Message {
      * Duplicating an existing profile. The given IDP id is copied to the new profile.
      */
     public CreateIDPRequest(String profileName, int sourceIdpId) {
-        this.cargo = buildCargo(profileName, 0, 0, 0, 0, 0, 0, sourceIdpId);
+        this.cargo = buildCargo(profileName, 0, 0, 0, 0, 0, 0, 0, 0, 0, sourceIdpId);
         this.profileName = profileName;
         this.firstSegmentProfileCarbRatio = 0;
         this.firstSegmentProfileStartTime = 0;
@@ -60,6 +71,8 @@ public class CreateIDPRequest extends Message {
         this.firstSegmentProfileTargetBG = 0;
         this.firstSegmentProfileISF = 0;
         this.profileInsulinDuration = 0;
+        this.timeSegmentBitmask = 0;
+        this.bolusSettingsBitmask = 0;
         this.profileCarbEntry = 0;
         this.sourceIdpId = sourceIdpId;
     }
@@ -75,18 +88,19 @@ public class CreateIDPRequest extends Message {
         this.firstSegmentProfileTargetBG = Bytes.readShort(raw, 25);
         this.firstSegmentProfileISF = Bytes.readShort(raw, 27);
         this.profileInsulinDuration = Bytes.readShort(raw, 29);
-        // bytes 31-32: timeSegmentBitmask / bolusSettingsBitmask (not parsed, hardcoded in buildCargo)
+        this.timeSegmentBitmask = raw[31] & 0xFF;
+        this.bolusSettingsBitmask = raw[32] & 0xFF;
         this.sourceIdpId = raw[33];
         this.profileCarbEntry = raw[34];
 
     }
 
     
-    public static byte[] buildCargo(String name, int firstSegmentProfileCarbRatio, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int carbEntry, int idpSourceId) {
-        return buildCargo(name, firstSegmentProfileCarbRatio, 0, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, carbEntry, idpSourceId);
+    public static byte[] buildCargo(String name, int firstSegmentProfileCarbRatio, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int timeSegmentBitmask, int bolusSettingsBitmask, int carbEntry, int idpSourceId) {
+        return buildCargo(name, firstSegmentProfileCarbRatio, 0, firstSegmentProfileBasalRate, firstSegmentProfileTargetBG, firstSegmentProfileISF, profileInsulinDuration, timeSegmentBitmask, bolusSettingsBitmask, carbEntry, idpSourceId);
     }
 
-    public static byte[] buildCargo(String name, int firstSegmentProfileCarbRatio, int firstSegmentProfileStartTime, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int carbEntry, int idpSourceId) {
+    public static byte[] buildCargo(String name, int firstSegmentProfileCarbRatio, int firstSegmentProfileStartTime, int firstSegmentProfileBasalRate, int firstSegmentProfileTargetBG, int firstSegmentProfileISF, int profileInsulinDuration, int timeSegmentBitmask, int bolusSettingsBitmask, int carbEntry, int idpSourceId) {
         return Bytes.combine(
             Bytes.writeString(name, 17),
             Bytes.toUint32(firstSegmentProfileCarbRatio), // uint32 at offset 17-20
@@ -95,7 +109,7 @@ public class CreateIDPRequest extends Message {
             Bytes.firstTwoBytesLittleEndian(firstSegmentProfileTargetBG),
             Bytes.firstTwoBytesLittleEndian(firstSegmentProfileISF),
             Bytes.firstTwoBytesLittleEndian(profileInsulinDuration),
-            idpSourceId == -1 ? new byte[] {31,5} : new byte[] {0, 0}, // timeSegmentBitmask + bolusSettingsBitmask
+            new byte[]{ (byte) timeSegmentBitmask, (byte) bolusSettingsBitmask },
             new byte[]{ (byte) idpSourceId },
             new byte[]{ (byte) carbEntry }
         );
@@ -131,5 +145,24 @@ public class CreateIDPRequest extends Message {
 
     public int getSourceIdpId() {
         return sourceIdpId;
+    }
+
+    /**
+     * @return bitmask of which time segment fields are set.
+     * Bit 0: basalRate (1), Bit 1: carbRatio (2), Bit 2: targetBG (4),
+     * Bit 3: correctionFactor (8), Bit 4: startTime (16).
+     * 31 = all fields set (new profile), 0 = none (duplicate).
+     */
+    public int getTimeSegmentBitmask() {
+        return timeSegmentBitmask;
+    }
+
+    /**
+     * @return bitmask of which bolus settings are set.
+     * Bit 0: insulinDuration (1), Bit 1: maxBolus (2), Bit 2: carbEntry (4).
+     * 5 = insulinDuration + carbEntry (new profile), 0 = none (duplicate).
+     */
+    public int getBolusSettingsBitmask() {
+        return bolusSettingsBitmask;
     }
 }
