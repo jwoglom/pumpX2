@@ -30,9 +30,14 @@ public class DeleteIDPResponse extends StatusMessage {
     public DeleteIDPResponse() {}
     
     public DeleteIDPResponse(int status) {
-        this.cargo = buildCargo(status);
+        this.cargo = buildCargo(status, 0);
         this.status = status;
-        
+    }
+
+    public DeleteIDPResponse(int status, int deletedIdpId) {
+        this.cargo = buildCargo(status, deletedIdpId);
+        this.status = status;
+        this.deletedIdpId = deletedIdpId;
     }
 
     public void parse(byte[] raw) { 
@@ -44,9 +49,9 @@ public class DeleteIDPResponse extends StatusMessage {
     }
 
     
-    public static byte[] buildCargo(int status) {
+    public static byte[] buildCargo(int status, int deletedIdpId) {
         return Bytes.combine(
-            new byte[]{ (byte) status, 2 });
+            new byte[]{ (byte) status, (byte) deletedIdpId });
     }
     
     public int getStatus() {

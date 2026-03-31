@@ -15,9 +15,7 @@ public class DeleteIDPResponseTest {
     public void testDeleteIDPResponse_deleteIdpId2() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
         
-        DeleteIDPResponse expected = new DeleteIDPResponse(
-            0
-        );
+        DeleteIDPResponse expected = new DeleteIDPResponse(0, 2);
 
         DeleteIDPResponse parsedRes = (DeleteIDPResponse) MessageTester.test(
                 "004daf4d1a000291033e208345bb76cb9e5327ede6e87a0e590223f1ab75c1f93d",
@@ -35,9 +33,7 @@ public class DeleteIDPResponseTest {
     public void testDeleteIDPResponse_deleteIdpId1() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        DeleteIDPResponse expected = new DeleteIDPResponse(
-                0
-        );
+        DeleteIDPResponse expected = new DeleteIDPResponse(0, 2);
 
         DeleteIDPResponse parsedRes = (DeleteIDPResponse) MessageTester.test(
                 "0053af531a0002a0033e20d85eaa5d3690b58e62edeac041a420ef93de1bdda8bf",
