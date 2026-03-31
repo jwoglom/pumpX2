@@ -123,7 +123,14 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">DeleteIDPRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">DeleteIDPRequest</a><wbr>(int&nbsp;idpId)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int)"><code>DeleteIDPRequest(int, int)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">DeleteIDPRequest</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -139,24 +146,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for DeleteIDPRequest.buildCargo(...):
  OffsetDescription
  0<code>(byte) idpId</code>
- 1<code>(byte) (1)</code>
+ 1<code>(byte) profileIndex</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdpId()" class="member-name-link">getIdpId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileIndex()" class="member-name-link">getProfileIndex</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for DeleteIDPRequest:
  <code>idpId</code><code>raw[0]</code>
+ <code>profileIndex</code><code>raw[1]</code>
  </div>
 </div>
 </div>
@@ -182,13 +194,29 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DeleteIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-43">DeleteIDPRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-44">DeleteIDPRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>DeleteIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-45">DeleteIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-49">DeleteIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int)"><code>DeleteIDPRequest(int, int)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int)">
+<h3>DeleteIDPRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-58">DeleteIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>idpId</code> - the insulin delivery profile ID (NOT SLOT)</dd>
+<dd><code>profileIndex</code> - the slot index (0-5) of this profile in ProfileStatusResponse</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -202,10 +230,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-57">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-72">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for DeleteIDPRequest:</caption>
  <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>profileIndex</code></td><td><code>raw[1]</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -214,21 +243,28 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(int)">
+<section class="detail" id="buildCargo(int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-74">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-90">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for DeleteIDPRequest.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
  <tr><td>0</td><td><code>(byte) idpId</code></td></tr>
- <tr><td>1</td><td><code>(byte) (1)</code></td></tr>
+ <tr><td>1</td><td><code>(byte) profileIndex</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIdpId()">
 <h3>getIdpId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-80">getIdpId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-96">getIdpId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getProfileIndex()">
+<h3>getProfileIndex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/DeleteIDPRequest.html#line-99">getProfileIndex</a></span>()</div>
 </section>
 </li>
 </ul>

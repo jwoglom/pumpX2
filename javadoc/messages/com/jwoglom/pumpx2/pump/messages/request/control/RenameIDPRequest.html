@@ -128,9 +128,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">RenameIDPRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String)" class="member-name-link">RenameIDPRequest</a><wbr>(int&nbsp;idpId,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,java.lang.String)" class="member-name-link">RenameIDPRequest</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String)" class="member-name-link">RenameIDPRequest</a><wbr>(int&nbsp;idpId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int,java.lang.String)"><code>RenameIDPRequest(int, int, String)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</div>
 </div>
 </section>
 </li>
@@ -146,14 +154,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,java.lang.String)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,java.lang.String)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for RenameIDPRequest.buildCargo(...):
  OffsetDescription
  0<code>(byte) idpId</code>
- 1<code>(byte) (1)</code>
+ 1<code>(byte) profileIndex</code>
  2<code>writeString(profileName, 16) [byte 0]</code>
  3<code>writeString(profileName, 16) [byte 1]</code>
  4<code>writeString(profileName, 16) [byte 2]</code>
@@ -176,15 +185,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIdpId()" class="member-name-link">getIdpId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileName()" class="member-name-link">getProfileName</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileIndex()" class="member-name-link">getProfileIndex</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileName()" class="member-name-link">getProfileName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for RenameIDPRequest:
  <code>idpId</code><code>raw[0]</code>
+ <code>profileIndex</code><code>raw[1]</code>
  <code>profileName</code><code>Bytes.readString(raw, 2, 16)</code>
  </div>
 </div>
@@ -211,17 +224,30 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>RenameIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-52">RenameIDPRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-53">RenameIDPRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,java.lang.String)">
 <h3>RenameIDPRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-58">RenameIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-58">RenameIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int,java.lang.String)"><code>RenameIDPRequest(int, int, String)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,java.lang.String)">
+<h3>RenameIDPRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-68">RenameIDPRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>idpId</code> - ID of insulin delivery profile (NOT SLOT)</dd>
+<dd><code>profileIndex</code> - the slot index (0-5) of this profile in ProfileStatusResponse</dd>
 <dd><code>profileName</code> - new name to set on profile</dd>
 </dl>
 </section>
@@ -237,10 +263,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-72">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-84">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for RenameIDPRequest:</caption>
  <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>profileIndex</code></td><td><code>raw[1]</code></td></tr>
  <tr><td><code>profileName</code></td><td><code>Bytes.readString(raw, 2, 16)</code></td></tr>
  </table></div>
 <dl class="notes">
@@ -250,15 +277,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(int,java.lang.String)">
+<section class="detail" id="buildCargo(int,int,java.lang.String)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-106">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-119">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;profileName)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for RenameIDPRequest.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
  <tr><td>0</td><td><code>(byte) idpId</code></td></tr>
- <tr><td>1</td><td><code>(byte) (1)</code></td></tr>
+ <tr><td>1</td><td><code>(byte) profileIndex</code></td></tr>
  <tr><td>2</td><td><code>writeString(profileName, 16) [byte 0]</code></td></tr>
  <tr><td>3</td><td><code>writeString(profileName, 16) [byte 1]</code></td></tr>
  <tr><td>4</td><td><code>writeString(profileName, 16) [byte 2]</code></td></tr>
@@ -282,13 +310,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIdpId()">
 <h3>getIdpId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-114">getIdpId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-127">getIdpId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getProfileIndex()">
+<h3>getProfileIndex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-130">getProfileIndex</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileName()">
 <h3>getProfileName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-117">getProfileName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RenameIDPRequest.html#line-133">getProfileName</a></span>()</div>
 </section>
 </li>
 </ul>

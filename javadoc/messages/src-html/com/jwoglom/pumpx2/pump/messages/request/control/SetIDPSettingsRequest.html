@@ -52,109 +52,128 @@
 <span class="source-line-no">035</span><span id="line-35">public class SetIDPSettingsRequest extends Message {</span>
 <span class="source-line-no">036</span><span id="line-36"></span>
 <span class="source-line-no">037</span><span id="line-37">    private int idpId;</span>
-<span class="source-line-no">038</span><span id="line-38">    private int profileInsulinDuration;</span>
-<span class="source-line-no">039</span><span id="line-39">    private int profileCarbEntry;</span>
-<span class="source-line-no">040</span><span id="line-40">    private int changeTypeId;</span>
-<span class="source-line-no">041</span><span id="line-41">    private ChangeType changeType;</span>
-<span class="source-line-no">042</span><span id="line-42">    </span>
-<span class="source-line-no">043</span><span id="line-43">    public SetIDPSettingsRequest() {}</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">    public SetIDPSettingsRequest(int idpId, int profileInsulinDuration, int profileCarbEntry, ChangeType changeType) {</span>
-<span class="source-line-no">046</span><span id="line-46">        this.cargo = buildCargo(idpId, profileInsulinDuration, profileCarbEntry, changeType.id);</span>
-<span class="source-line-no">047</span><span id="line-47">        this.idpId = idpId;</span>
-<span class="source-line-no">048</span><span id="line-48">        this.profileInsulinDuration = profileInsulinDuration;</span>
-<span class="source-line-no">049</span><span id="line-49">        this.profileCarbEntry = profileCarbEntry;</span>
-<span class="source-line-no">050</span><span id="line-50">        this.changeTypeId = changeType.id;</span>
-<span class="source-line-no">051</span><span id="line-51">        this.changeType = getChangeType();</span>
-<span class="source-line-no">052</span><span id="line-52">        </span>
-<span class="source-line-no">053</span><span id="line-53">    }</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    /**</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;caption&gt;Parsed fields for SetIDPSettingsRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;profileInsulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;profileCarbEntry&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeTypeId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getChangeType()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;/table&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     */</span>
-<span class="source-line-no">065</span><span id="line-65">    public void parse(byte[] raw) { </span>
-<span class="source-line-no">066</span><span id="line-66">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">067</span><span id="line-67">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">068</span><span id="line-68">        this.cargo = raw;</span>
-<span class="source-line-no">069</span><span id="line-69">        this.idpId = raw[0];</span>
-<span class="source-line-no">070</span><span id="line-70">        this.profileInsulinDuration = Bytes.readShort(raw, 2);</span>
-<span class="source-line-no">071</span><span id="line-71">        this.profileCarbEntry = raw[4];</span>
-<span class="source-line-no">072</span><span id="line-72">        this.changeTypeId = raw[5];</span>
-<span class="source-line-no">073</span><span id="line-73">        this.changeType = getChangeType();</span>
-<span class="source-line-no">074</span><span id="line-74">        </span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    </span>
-<span class="source-line-no">078</span><span id="line-78">    /**</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;caption&gt;Byte layout for SetIDPSettingsRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) idpId} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{1} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(profileInsulinDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(profileInsulinDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) profileCarbEntry} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) changeTypeId} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;/table&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     */</span>
-<span class="source-line-no">090</span><span id="line-90">    public static byte[] buildCargo(int idpId, int profileInsulinDuration, int profileCarbEntry, int changeTypeId) {</span>
-<span class="source-line-no">091</span><span id="line-91">        return Bytes.combine(</span>
-<span class="source-line-no">092</span><span id="line-92">            new byte[] {(byte) idpId, 1},</span>
-<span class="source-line-no">093</span><span id="line-93">            Bytes.firstTwoBytesLittleEndian(profileInsulinDuration),</span>
-<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) profileCarbEntry, (byte) changeTypeId }</span>
-<span class="source-line-no">095</span><span id="line-95">        );</span>
-<span class="source-line-no">096</span><span id="line-96">    }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    public int getChangeTypeId() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return changeTypeId;</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">    public int getIdpId() {</span>
-<span class="source-line-no">103</span><span id="line-103">        return idpId;</span>
-<span class="source-line-no">104</span><span id="line-104">    }</span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">    public enum ChangeType {</span>
-<span class="source-line-no">108</span><span id="line-108">        CHANGE_INSULIN_DURATION(1),</span>
-<span class="source-line-no">109</span><span id="line-109">        CHANGE_CARB_ENTRY(4),</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">        ;</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">        private final int id;</span>
-<span class="source-line-no">114</span><span id="line-114">        ChangeType(int id) {</span>
-<span class="source-line-no">115</span><span id="line-115">            this.id = id;</span>
-<span class="source-line-no">116</span><span id="line-116">        }</span>
+<span class="source-line-no">038</span><span id="line-38">    private int profileIndex;</span>
+<span class="source-line-no">039</span><span id="line-39">    private int profileInsulinDuration;</span>
+<span class="source-line-no">040</span><span id="line-40">    private int profileCarbEntry;</span>
+<span class="source-line-no">041</span><span id="line-41">    private int changeTypeId;</span>
+<span class="source-line-no">042</span><span id="line-42">    private ChangeType changeType;</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public SetIDPSettingsRequest() {}</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">    /**</span>
+<span class="source-line-no">047</span><span id="line-47">     * @deprecated Use {@link #SetIDPSettingsRequest(int, int, int, int, ChangeType)} instead to pass the correct profileIndex.</span>
+<span class="source-line-no">048</span><span id="line-48">     */</span>
+<span class="source-line-no">049</span><span id="line-49">    @Deprecated</span>
+<span class="source-line-no">050</span><span id="line-50">    public SetIDPSettingsRequest(int idpId, int profileInsulinDuration, int profileCarbEntry, ChangeType changeType) {</span>
+<span class="source-line-no">051</span><span id="line-51">        this(idpId, 0, profileInsulinDuration, profileCarbEntry, changeType);</span>
+<span class="source-line-no">052</span><span id="line-52">    }</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">    /**</span>
+<span class="source-line-no">055</span><span id="line-55">     * @param idpId the insulin delivery profile ID (NOT SLOT)</span>
+<span class="source-line-no">056</span><span id="line-56">     * @param profileIndex the slot index (0-5) of this profile in ProfileStatusResponse</span>
+<span class="source-line-no">057</span><span id="line-57">     */</span>
+<span class="source-line-no">058</span><span id="line-58">    public SetIDPSettingsRequest(int idpId, int profileIndex, int profileInsulinDuration, int profileCarbEntry, ChangeType changeType) {</span>
+<span class="source-line-no">059</span><span id="line-59">        this.cargo = buildCargo(idpId, profileIndex, profileInsulinDuration, profileCarbEntry, changeType.id);</span>
+<span class="source-line-no">060</span><span id="line-60">        this.idpId = idpId;</span>
+<span class="source-line-no">061</span><span id="line-61">        this.profileIndex = profileIndex;</span>
+<span class="source-line-no">062</span><span id="line-62">        this.profileInsulinDuration = profileInsulinDuration;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.profileCarbEntry = profileCarbEntry;</span>
+<span class="source-line-no">064</span><span id="line-64">        this.changeTypeId = changeType.id;</span>
+<span class="source-line-no">065</span><span id="line-65">        this.changeType = getChangeType();</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    /**</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;caption&gt;Parsed fields for SetIDPSettingsRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;profileIndex&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;profileInsulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;profileCarbEntry&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeTypeId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getChangeType()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;/table&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     */</span>
+<span class="source-line-no">080</span><span id="line-80">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">081</span><span id="line-81">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">082</span><span id="line-82">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">083</span><span id="line-83">        this.cargo = raw;</span>
+<span class="source-line-no">084</span><span id="line-84">        this.idpId = raw[0];</span>
+<span class="source-line-no">085</span><span id="line-85">        this.profileIndex = raw[1];</span>
+<span class="source-line-no">086</span><span id="line-86">        this.profileInsulinDuration = Bytes.readShort(raw, 2);</span>
+<span class="source-line-no">087</span><span id="line-87">        this.profileCarbEntry = raw[4];</span>
+<span class="source-line-no">088</span><span id="line-88">        this.changeTypeId = raw[5];</span>
+<span class="source-line-no">089</span><span id="line-89">        this.changeType = getChangeType();</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">    /**</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;caption&gt;Byte layout for SetIDPSettingsRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) idpId} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) profileIndex} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(profileInsulinDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(profileInsulinDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) profileCarbEntry} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) changeTypeId} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;/table&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     */</span>
+<span class="source-line-no">106</span><span id="line-106">    public static byte[] buildCargo(int idpId, int profileIndex, int profileInsulinDuration, int profileCarbEntry, int changeTypeId) {</span>
+<span class="source-line-no">107</span><span id="line-107">        return Bytes.combine(</span>
+<span class="source-line-no">108</span><span id="line-108">            new byte[] {(byte) idpId, (byte) profileIndex},</span>
+<span class="source-line-no">109</span><span id="line-109">            Bytes.firstTwoBytesLittleEndian(profileInsulinDuration),</span>
+<span class="source-line-no">110</span><span id="line-110">            new byte[]{ (byte) profileCarbEntry, (byte) changeTypeId }</span>
+<span class="source-line-no">111</span><span id="line-111">        );</span>
+<span class="source-line-no">112</span><span id="line-112">    }</span>
+<span class="source-line-no">113</span><span id="line-113"></span>
+<span class="source-line-no">114</span><span id="line-114">    public int getChangeTypeId() {</span>
+<span class="source-line-no">115</span><span id="line-115">        return changeTypeId;</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
 <span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">        public static ChangeType fromId(int id) {</span>
-<span class="source-line-no">119</span><span id="line-119">            for (ChangeType type : values()) {</span>
-<span class="source-line-no">120</span><span id="line-120">                if (type.id == id) {</span>
-<span class="source-line-no">121</span><span id="line-121">                    return type;</span>
-<span class="source-line-no">122</span><span id="line-122">                }</span>
-<span class="source-line-no">123</span><span id="line-123">            }</span>
-<span class="source-line-no">124</span><span id="line-124">            return null;</span>
-<span class="source-line-no">125</span><span id="line-125">        }</span>
-<span class="source-line-no">126</span><span id="line-126">    }</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">    public ChangeType getChangeType() {</span>
-<span class="source-line-no">129</span><span id="line-129">        return ChangeType.fromId(changeTypeId);</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">118</span><span id="line-118">    public int getIdpId() {</span>
+<span class="source-line-no">119</span><span id="line-119">        return idpId;</span>
+<span class="source-line-no">120</span><span id="line-120">    }</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">    public int getProfileIndex() {</span>
+<span class="source-line-no">123</span><span id="line-123">        return profileIndex;</span>
+<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">125</span><span id="line-125"></span>
+<span class="source-line-no">126</span><span id="line-126">    public enum ChangeType {</span>
+<span class="source-line-no">127</span><span id="line-127">        CHANGE_INSULIN_DURATION(1),</span>
+<span class="source-line-no">128</span><span id="line-128">        CHANGE_CARB_ENTRY(4),</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">        ;</span>
 <span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">    public int getProfileInsulinDuration() {</span>
-<span class="source-line-no">133</span><span id="line-133">        return profileInsulinDuration;</span>
-<span class="source-line-no">134</span><span id="line-134">    }</span>
-<span class="source-line-no">135</span><span id="line-135">    public int getProfileCarbEntry() {</span>
-<span class="source-line-no">136</span><span id="line-136">        return profileCarbEntry;</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138">    </span>
-<span class="source-line-no">139</span><span id="line-139">    </span>
-<span class="source-line-no">140</span><span id="line-140">}</span>
+<span class="source-line-no">132</span><span id="line-132">        private final int id;</span>
+<span class="source-line-no">133</span><span id="line-133">        ChangeType(int id) {</span>
+<span class="source-line-no">134</span><span id="line-134">            this.id = id;</span>
+<span class="source-line-no">135</span><span id="line-135">        }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">        public static ChangeType fromId(int id) {</span>
+<span class="source-line-no">138</span><span id="line-138">            for (ChangeType type : values()) {</span>
+<span class="source-line-no">139</span><span id="line-139">                if (type.id == id) {</span>
+<span class="source-line-no">140</span><span id="line-140">                    return type;</span>
+<span class="source-line-no">141</span><span id="line-141">                }</span>
+<span class="source-line-no">142</span><span id="line-142">            }</span>
+<span class="source-line-no">143</span><span id="line-143">            return null;</span>
+<span class="source-line-no">144</span><span id="line-144">        }</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">    public ChangeType getChangeType() {</span>
+<span class="source-line-no">148</span><span id="line-148">        return ChangeType.fromId(changeTypeId);</span>
+<span class="source-line-no">149</span><span id="line-149">    }</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">    public int getProfileInsulinDuration() {</span>
+<span class="source-line-no">152</span><span id="line-152">        return profileInsulinDuration;</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
+<span class="source-line-no">154</span><span id="line-154">    public int getProfileCarbEntry() {</span>
+<span class="source-line-no">155</span><span id="line-155">        return profileCarbEntry;</span>
+<span class="source-line-no">156</span><span id="line-156">    }</span>
+<span class="source-line-no">157</span><span id="line-157">    </span>
+<span class="source-line-no">158</span><span id="line-158">    </span>
+<span class="source-line-no">159</span><span id="line-159">}</span>
 
 
 

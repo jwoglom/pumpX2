@@ -135,11 +135,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SetIDPSettingsRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)" class="member-name-link">SetIDPSettingsRequest</a><wbr>(int&nbsp;idpId,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)" class="member-name-link">SetIDPSettingsRequest</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  int&nbsp;profileInsulinDuration,
  int&nbsp;profileCarbEntry,
  <a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a>&nbsp;changeType)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)" class="member-name-link">SetIDPSettingsRequest</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileInsulinDuration,
+ int&nbsp;profileCarbEntry,
+ <a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a>&nbsp;changeType)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)"><code>SetIDPSettingsRequest(int, int, int, int, ChangeType)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</div>
 </div>
 </section>
 </li>
@@ -155,7 +165,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(int,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  int&nbsp;profileInsulinDuration,
  int&nbsp;profileCarbEntry,
  int&nbsp;changeTypeId)</code></div>
@@ -164,7 +175,7 @@ loadScripts(document, 'script');</script>
  Byte layout for SetIDPSettingsRequest.buildCargo(...):
  OffsetDescription
  0<code>new byte[]{(byte) idpId} [element 0]</code>
- 1<code>new byte[]{1} [element 1]</code>
+ 1<code>new byte[]{(byte) profileIndex} [element 1]</code>
  2<code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 0]</code>
  3<code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 1]</code>
  4<code>new byte[]{(byte) profileCarbEntry} [element 0]</code>
@@ -184,14 +195,18 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileCarbEntry()" class="member-name-link">getProfileCarbEntry</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileIndex()" class="member-name-link">getProfileIndex</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProfileInsulinDuration()" class="member-name-link">getProfileInsulinDuration</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for SetIDPSettingsRequest:
  <code>idpId</code><code>raw[0]</code>
+ <code>profileIndex</code><code>raw[1]</code>
  <code>profileInsulinDuration</code><code>Bytes.readShort(raw, 2)</code>
  <code>profileCarbEntry</code><code>raw[4]</code>
  <code>changeTypeId</code><code>raw[5]</code>
@@ -221,16 +236,35 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetIDPSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-43">SetIDPSettingsRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-44">SetIDPSettingsRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)">
 <h3>SetIDPSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-45">SetIDPSettingsRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-49">SetIDPSettingsRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
  int&nbsp;profileInsulinDuration,
  int&nbsp;profileCarbEntry,
  <a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a>&nbsp;changeType)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#%3Cinit%3E(int,int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)"><code>SetIDPSettingsRequest(int, int, int, int, ChangeType)</code></a> instead to pass the correct profileIndex.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,int,int,com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest.ChangeType)">
+<h3>SetIDPSettingsRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-58">SetIDPSettingsRequest</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex,
+ int&nbsp;profileInsulinDuration,
+ int&nbsp;profileCarbEntry,
+ <a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a>&nbsp;changeType)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>idpId</code> - the insulin delivery profile ID (NOT SLOT)</dd>
+<dd><code>profileIndex</code> - the slot index (0-5) of this profile in ProfileStatusResponse</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -244,10 +278,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-65">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-80">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetIDPSettingsRequest:</caption>
  <tr><td><code>idpId</code></td><td><code>raw[0]</code></td></tr>
+ <tr><td><code>profileIndex</code></td><td><code>raw[1]</code></td></tr>
  <tr><td><code>profileInsulinDuration</code></td><td><code>Bytes.readShort(raw, 2)</code></td></tr>
  <tr><td><code>profileCarbEntry</code></td><td><code>raw[4]</code></td></tr>
  <tr><td><code>changeTypeId</code></td><td><code>raw[5]</code></td></tr>
@@ -260,9 +295,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(int,int,int,int)">
+<section class="detail" id="buildCargo(int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-90">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-106">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;idpId,
+ int&nbsp;profileIndex,
  int&nbsp;profileInsulinDuration,
  int&nbsp;profileCarbEntry,
  int&nbsp;changeTypeId)</span></div>
@@ -270,7 +306,7 @@ loadScripts(document, 'script');</script>
  <caption>Byte layout for SetIDPSettingsRequest.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
  <tr><td>0</td><td><code>new byte[]{(byte) idpId} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{1} [element 1]</code></td></tr>
+ <tr><td>1</td><td><code>new byte[]{(byte) profileIndex} [element 1]</code></td></tr>
  <tr><td>2</td><td><code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 0]</code></td></tr>
  <tr><td>3</td><td><code>firstTwoBytesLittleEndian(profileInsulinDuration) [byte 1]</code></td></tr>
  <tr><td>4</td><td><code>new byte[]{(byte) profileCarbEntry} [element 0]</code></td></tr>
@@ -281,31 +317,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChangeTypeId()">
 <h3>getChangeTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-98">getChangeTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-114">getChangeTypeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIdpId()">
 <h3>getIdpId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-102">getIdpId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-118">getIdpId</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getProfileIndex()">
+<h3>getProfileIndex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-122">getProfileIndex</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getChangeType()">
 <h3>getChangeType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-128">getChangeType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetIDPSettingsRequest.ChangeType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetIDPSettingsRequest.ChangeType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-147">getChangeType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileInsulinDuration()">
 <h3>getProfileInsulinDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-132">getProfileInsulinDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-151">getProfileInsulinDuration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProfileCarbEntry()">
 <h3>getProfileCarbEntry</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-135">getProfileCarbEntry</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetIDPSettingsRequest.html#line-154">getProfileCarbEntry</a></span>()</div>
 </section>
 </li>
 </ul>
