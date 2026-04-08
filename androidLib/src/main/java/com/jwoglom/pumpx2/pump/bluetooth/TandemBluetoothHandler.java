@@ -944,6 +944,10 @@ public class TandemBluetoothHandler {
         return instance;
     }
 
+    public static synchronized void resetInstance() {
+        instance = null;
+    }
+
     private void immediateConnectToPeripheral() {
         Timber.d("TandemBluetoothHandler: running immediateConnectToPeripheral");
         Optional<BluetoothPeripheral> alreadyBondedPump = getAlreadyBondedPump();
