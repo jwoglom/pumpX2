@@ -200,17 +200,36 @@ public class TandemBluetoothHandler {
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID);
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
-            // Try to turn on notifications for other characteristics
+            // Try to turn on notifications for other characteristics.
+            // Older pump firmwares (e.g. tslim X2 moonlight v7.4) do not expose every UUID we
+            // expect (CONTROL/CONTROL_STREAM are absent). blessed-android's setNotify(uuid,uuid,..)
+            // overload returns false silently when the characteristic is missing — no callback is
+            // fired, so the entry would never be removed from remainingCharacteristicNotificationsInit
+            // and the CHARACTERISTIC_NOTIFICATIONS gate would deadlock. Pre-flight here and skip
+            // absent ones so initialization can complete on those firmwares.
             CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
                 UUID serviceUUID = ServiceUUID.PUMP_SERVICE_UUID;
                 if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
                     serviceUUID = ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
+                }
+                if (peripheral.getCharacteristic(serviceUUID, uuid) == null) {
+                    Timber.w("Skipping setNotify for missing characteristic %s on this pump (firmware does not expose it)", CharacteristicUUID.which(uuid));
+                    synchronized (remainingCharacteristicNotificationsInit) {
+                        remainingCharacteristicNotificationsInit.remove(uuid);
+                        if (remainingCharacteristicNotificationsInit.isEmpty()) {
+                            remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CHARACTERISTIC_NOTIFICATIONS);
+                        }
+                    }
+                    return;
                 }
                 peripheral.setNotify(serviceUUID, uuid, true);
             });
 
             Timber.i("TandemBluetoothHandler: waiting for Bluetooth initialization callback");
             remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.SERVICES_DISCOVERED);
+            // The pre-flight loop above may have already cleared CHARACTERISTIC_NOTIFICATIONS if
+            // every required UUID was either absent or already setNotify'd; recheck now so we don't
+            // wait forever on a callback that will never come.
             checkIfInitialPumpConnectionEstablished(peripheral);
         }
 
