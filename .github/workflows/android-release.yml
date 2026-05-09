@@ -12,23 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
-      - name: List Files
-        run: find .
 
-      - name: Unit Test
-        run: ./gradlew testDebugUnitTest
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Assemble, Test & Publish (single Gradle invocation)
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          ./gradlew :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest \
+            publishAllPublicationsToGitHubPackagesRepository -PbuildRelease
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
@@ -49,13 +52,6 @@ jobs:
         if: ${{ steps.validate_gradle_wrapper.outcome == 'failure' && steps.validate_gradle_wrapper_retry.outcome == 'failure' }}
         run: |
           echo "::warning::Gradle wrapper validation failed twice (likely network reachability to Gradle checksum services)."
-
-      - name: Run Gradle Publish (Release)
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          TOKEN: ${{ secrets.TOKEN }}
-        run: |
-          ./gradlew publishAllPublicationsToGitHubPackagesRepository -PbuildRelease
 
       - name: Set RELEASE_VERSION env
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
