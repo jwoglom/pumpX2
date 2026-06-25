@@ -110,17 +110,20 @@ public class TandemBluetoothHandler {
      * callbacks (scan/connect/disconnect, the postDelayed reconnect, and the periodic
      * timeSinceReset) are dispatched on.
      *
-     * <p>By default (i.e. when {@code callbackHandler} is null, or when using any of the other
-     * constructors) all Bluetooth callbacks run on the main/UI thread, preserving historical
-     * behavior. A caller driving this library from a background executor (with no Looper of its
-     * own) can instead supply a {@link Handler} bound to a dedicated {@link android.os.HandlerThread}
-     * looper, which keeps the BLE callbacks off the UI thread and avoids saturating the main thread
-     * during connection recovery.
+     * <p>When {@code callbackHandler} is non-null, BOTH the internal scheduling {@link Handler} and
+     * the {@link BluetoothCentralManager} callback {@link Handler} are built from the supplied
+     * handler's {@link android.os.Looper}, so they are guaranteed to run on the same,
+     * caller-controlled thread, and Bluetooth callbacks are serialized on that single thread. A
+     * caller driving this library from a background executor (with no Looper of its own) can supply
+     * a {@link Handler} bound to a dedicated {@link android.os.HandlerThread} looper, which keeps the
+     * BLE callbacks off the UI thread and avoids saturating the main thread during connection
+     * recovery.
      *
-     * <p>Both the internal scheduling {@link Handler} and the {@link BluetoothCentralManager}
-     * callback {@link Handler} are derived from the supplied handler's {@link android.os.Looper},
-     * so they are guaranteed to run on the same thread (matching the prior behavior where both
-     * shared the main Looper). Bluetooth callbacks are serialized on that single thread.
+     * <p>When {@code callbackHandler} is null (the behavior of the other constructors), the legacy
+     * threading is preserved exactly: the internal scheduling handler is bound to the main Looper,
+     * while the {@link BluetoothCentralManager} callbacks are dispatched on the <em>constructing
+     * thread's</em> Looper (i.e. {@code new Handler()}). Callers that already construct this object
+     * on their own Looper-bearing thread therefore keep dispatching BLE callbacks on that thread.
      *
      * <p>NOTE: this does not change the thread on which the public {@link TandemPump} callbacks
      * (e.g. {@link TandemPump#onPumpConnected}) are ultimately invoked relative to the supplied
@@ -132,15 +135,34 @@ public class TandemBluetoothHandler {
      * @param tandemPump      an instantiated version of your class which extends {@class TandemPump}
      * @param timberTree      the {@link Timber.Tree} which is initialized for logging with Timber.
      *                        Timber initialization is skipped if null. See {@link LConfigurator}
-     * @param callbackHandler the {@link Handler} whose {@link android.os.Looper} the Bluetooth
-     *                        callbacks are dispatched on; if null, defaults to
-     *                        {@code new Handler(Looper.getMainLooper())} (the main thread).
+     * @param callbackHandler the {@link Handler} whose {@link android.os.Looper} both the internal
+     *                        scheduling handler and the Bluetooth callbacks are dispatched on; if
+     *                        null, legacy threading is used (internal handler on the main Looper,
+     *                        Bluetooth callbacks on the constructing thread's Looper).
      */
     public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree, @Nullable Handler callbackHandler) {
         this.context = context;
         this.tandemPump = tandemPump;
-        Handler effectiveHandler = (callbackHandler != null) ? callbackHandler : new Handler(Looper.getMainLooper());
-        this.handler = effectiveHandler;
+
+        final Handler centralCallbackHandler;
+        if (callbackHandler != null) {
+            // Caller supplied a Looper: run BOTH the internal scheduling Handler and the
+            // BluetoothCentralManager callbacks on it, so they are guaranteed to share a single
+            // (caller-controlled) thread. Build fresh Handlers from the Looper rather than reusing
+            // the caller's instance, so our removeCallbacks/postDelayed cannot interfere with any
+            // other use the caller makes of that Handler.
+            this.handler = new Handler(callbackHandler.getLooper());
+            centralCallbackHandler = new Handler(callbackHandler.getLooper());
+        } else {
+            // Legacy behavior, preserved exactly: this.handler is bound to the main Looper, while
+            // the BluetoothCentralManager callbacks are dispatched on the *constructing thread's*
+            // Looper (bare new Handler()). This is intentionally NOT forced to the main Looper:
+            // existing callers that construct on their own Looper-bearing thread (e.g. a dedicated
+            // HandlerThread) rely on the BLE callbacks running on that thread, and forcing them onto
+            // the main thread would be a regression.
+            this.handler = new Handler(Looper.getMainLooper());
+            centralCallbackHandler = new Handler();
+        }
 
         if (timberTree != null) {
             // Plant a tree
@@ -150,9 +172,8 @@ public class TandemBluetoothHandler {
             Timber.d("Skipped Timber tree initialization");
         }
 
-        // Create BluetoothCentral. The callback handler is built from the same Looper as
-        // this.handler so blessed's callbacks and our scheduled work share a single thread.
-        central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler(effectiveHandler.getLooper()));
+        // Create BluetoothCentral
+        central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, centralCallbackHandler);
         resetRemainingConnectionInitializationSteps();
     }
 
