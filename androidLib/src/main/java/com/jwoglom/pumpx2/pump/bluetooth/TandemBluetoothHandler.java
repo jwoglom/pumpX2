@@ -102,9 +102,45 @@ public class TandemBluetoothHandler {
      *                   Timber initialization is skipped if null. See {@link LConfigurator}
      */
     public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree) {
+        this(context, tandemPump, timberTree, null);
+    }
+
+    /**
+     * Initializes PumpX2, allowing the caller to control which thread the blessed Bluetooth
+     * callbacks (scan/connect/disconnect, the postDelayed reconnect, and the periodic
+     * timeSinceReset) are dispatched on.
+     *
+     * <p>By default (i.e. when {@code callbackHandler} is null, or when using any of the other
+     * constructors) all Bluetooth callbacks run on the main/UI thread, preserving historical
+     * behavior. A caller driving this library from a background executor (with no Looper of its
+     * own) can instead supply a {@link Handler} bound to a dedicated {@link android.os.HandlerThread}
+     * looper, which keeps the BLE callbacks off the UI thread and avoids saturating the main thread
+     * during connection recovery.
+     *
+     * <p>Both the internal scheduling {@link Handler} and the {@link BluetoothCentralManager}
+     * callback {@link Handler} are derived from the supplied handler's {@link android.os.Looper},
+     * so they are guaranteed to run on the same thread (matching the prior behavior where both
+     * shared the main Looper). Bluetooth callbacks are serialized on that single thread.
+     *
+     * <p>NOTE: this does not change the thread on which the public {@link TandemPump} callbacks
+     * (e.g. {@link TandemPump#onPumpConnected}) are ultimately invoked relative to the supplied
+     * handler — they are dispatched from the same BLE callback thread. If you move callbacks off the
+     * main thread, any UI work performed inside your {@link TandemPump} overrides must be re-posted
+     * to the main thread by your implementation.
+     *
+     * @param context         Android context
+     * @param tandemPump      an instantiated version of your class which extends {@class TandemPump}
+     * @param timberTree      the {@link Timber.Tree} which is initialized for logging with Timber.
+     *                        Timber initialization is skipped if null. See {@link LConfigurator}
+     * @param callbackHandler the {@link Handler} whose {@link android.os.Looper} the Bluetooth
+     *                        callbacks are dispatched on; if null, defaults to
+     *                        {@code new Handler(Looper.getMainLooper())} (the main thread).
+     */
+    public TandemBluetoothHandler(Context context, TandemPump tandemPump, @Nullable Timber.Tree timberTree, @Nullable Handler callbackHandler) {
         this.context = context;
         this.tandemPump = tandemPump;
-        this.handler = new Handler(Looper.getMainLooper());
+        Handler effectiveHandler = (callbackHandler != null) ? callbackHandler : new Handler(Looper.getMainLooper());
+        this.handler = effectiveHandler;
 
         if (timberTree != null) {
             // Plant a tree
@@ -114,8 +150,9 @@ public class TandemBluetoothHandler {
             Timber.d("Skipped Timber tree initialization");
         }
 
-        // Create BluetoothCentral
-        central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler());
+        // Create BluetoothCentral. The callback handler is built from the same Looper as
+        // this.handler so blessed's callbacks and our scheduled work share a single thread.
+        central = new BluetoothCentralManager(context, bluetoothCentralManagerCallback, new Handler(effectiveHandler.getLooper()));
         resetRemainingConnectionInitializationSteps();
     }
 
@@ -940,6 +977,21 @@ public class TandemBluetoothHandler {
     public static synchronized TandemBluetoothHandler getInstance(Context context, TandemPump tandemPump, @Nullable Timber.Tree logTree) {
         if (instance == null) {
             instance = new TandemBluetoothHandler(context.getApplicationContext(), tandemPump, logTree);
+        }
+        return instance;
+    }
+
+    /**
+     * Returns the singleton {@link TandemBluetoothHandler}, creating it on first call with the
+     * supplied callback {@link Handler}. See
+     * {@link #TandemBluetoothHandler(Context, TandemPump, Timber.Tree, Handler)} for the threading
+     * semantics. If the instance already exists, {@code callbackHandler} is ignored (the existing
+     * instance, and its thread binding, is returned unchanged) — call {@link #resetInstance()} first
+     * if you need to rebind.
+     */
+    public static synchronized TandemBluetoothHandler getInstance(Context context, TandemPump tandemPump, @Nullable Timber.Tree logTree, @Nullable Handler callbackHandler) {
+        if (instance == null) {
+            instance = new TandemBluetoothHandler(context.getApplicationContext(), tandemPump, logTree, callbackHandler);
         }
         return instance;
     }
