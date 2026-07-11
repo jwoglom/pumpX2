@@ -76,6 +76,7 @@ You may need to re-open the app, clear app data, and/or unpair and re-pair the d
 * `com.github.jwoglom.pumpX2:pumpx2-android`
 * `com.github.jwoglom.pumpX2:pumpx2-messages`
 * `com.github.jwoglom.pumpX2:pumpx2-shared`
+* `com.github.jwoglom.pumpX2:pumpx2-cliparser` (a runnable, executable jar with all dependencies bundled)
 
 For example, using Gradle, first add the JitPack repositories to your root project `settings.gradle`:
 ```
