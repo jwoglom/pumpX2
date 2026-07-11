@@ -89,11 +89,38 @@ public class UpdateStatusHistoryLog extends HistoryLog {
         return externalFlashStatus;
     }
 
+    /**
+     * @return raw updateSuccessful status; see {@link UpdateSuccessful} for known values
+     */
     public int getUpdateSuccessful() {
         return updateSuccessful;
     }
 
+    public UpdateSuccessful getUpdateSuccessfulEnum() {
+        return UpdateSuccessful.fromId(updateSuccessful);
+    }
+
     public long getSwPartNum() {
         return swPartNum;
+    }
+
+    public enum UpdateSuccessful {
+        NOT_SUCCESSFUL(0),
+        SUCCESSFUL(1),
+
+        ;
+        private final int id;
+        UpdateSuccessful(int id) {
+            this.id = id;
+        }
+
+        static UpdateSuccessful fromId(int id) {
+            for (UpdateSuccessful r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
     }
 }
