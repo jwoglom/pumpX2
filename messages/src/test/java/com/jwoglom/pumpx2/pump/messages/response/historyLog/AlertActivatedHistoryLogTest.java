@@ -17,8 +17,8 @@ public class AlertActivatedHistoryLogTest {
     @Test
     public void testAlertActivatedHistoryLog1() throws DecoderException {
         AlertActivatedHistoryLog expected = new AlertActivatedHistoryLog(
-            // long alertId
-                51
+            // long alertId, long faultLocatorData, long param1, float param2
+                51, 0, 0, 514.0f
         );
 
         AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -31,8 +31,8 @@ public class AlertActivatedHistoryLogTest {
     @Test
     public void testAlertActivatedHistoryLog2() throws DecoderException {
         AlertActivatedHistoryLog expected = new AlertActivatedHistoryLog(
-                // long alertId
-                48
+                // long alertId, long faultLocatorData, long param1, float param2
+                48, 8623, 0, 0.0f
         );
 
         AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -45,8 +45,8 @@ public class AlertActivatedHistoryLogTest {
     @Test
     public void testAlertActivatedHistoryLog3() throws DecoderException {
         AlertActivatedHistoryLog expected = new AlertActivatedHistoryLog(
-                // long alertId
-                11
+                // long alertId, long faultLocatorData, long param1, float param2
+                11, 8378, 0, 0.0f
         );
 
         AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -59,8 +59,8 @@ public class AlertActivatedHistoryLogTest {
     @Test
     public void testAlertActivatedHistoryLog4() throws DecoderException {
         AlertActivatedHistoryLog expected = new AlertActivatedHistoryLog(
-                // long alertId
-                0
+                // long alertId, long faultLocatorData, long param1, float param2
+                0, 8242, 102, 347.551513671875f
         );
 
         AlertActivatedHistoryLog parsedRes = (AlertActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
