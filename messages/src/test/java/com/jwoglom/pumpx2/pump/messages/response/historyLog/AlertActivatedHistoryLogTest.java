@@ -25,7 +25,7 @@ public class AlertActivatedHistoryLogTest {
                 "040024c0981aadde020033000000000000000000000000800044",
                 expected
         );
-        assertEquals(AlertStatusResponse.AlertResponseType.DEFAULT_ALERT_51, parsedRes.getAlertResponseType());
+        assertEquals(AlertStatusResponse.AlertResponseType.CONTROL_IQ_LOW, parsedRes.getAlertResponseType());
     }
 
     @Test
