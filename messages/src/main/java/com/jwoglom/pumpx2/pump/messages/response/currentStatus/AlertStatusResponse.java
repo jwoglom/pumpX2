@@ -115,7 +115,7 @@ public class AlertStatusResponse extends NotificationMessage {
         CGM_UNAVAILABLE(48, "The CGM is unavailable due to a problem with the sensor."),
         FILL_TUBING_STILL_IN_PROGRESS(49, "The fill tubing process is still in progress and was not completed."),
         DEFAULT_ALERT_50(50),
-        DEFAULT_ALERT_51(51),
+        CONTROL_IQ_LOW(51, "Control-IQ has reduced basal insulin delivery due to a low or predicted low glucose value."),
         DEFAULT_ALERT_52(52),
         DEFAULT_ALERT_53(53),
         DEVICE_PAIRED(54, "The pump was paired successfully to a Bluetooth device."),
