@@ -106,11 +106,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">NewDayHistoryLog</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float)" class="member-name-link">NewDayHistoryLog</a><wbr>(float&nbsp;commandedBasalRate)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float,long,long)" class="member-name-link">NewDayHistoryLog</a><wbr>(float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,float)" class="member-name-link">NewDayHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,float,long,long)" class="member-name-link">NewDayHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
- float&nbsp;commandedBasalRate)</code></div>
+ float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -127,12 +131,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,float)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,float,long,long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
- float&nbsp;commandedBasalRate)</code></div>
+ float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCommandedBasalRate()" class="member-name-link">getCommandedBasalRate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFeatureBitmaskIndex()" class="member-name-link">getFeatureBitmaskIndex</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFeaturesBitmask()" class="member-name-link">getFeaturesBitmask</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
@@ -140,6 +152,8 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for NewDayHistoryLog:
  <code>commandedBasalRate</code><code>Bytes.readFloat(raw, 10)</code>
+ <code>featuresBitmask</code><code>Bytes.readUint32(raw, 14)</code>
+ <code>featureBitmaskIndex</code><code>Bytes.readUint32(raw, 18)</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -168,21 +182,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-19">NewDayHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-21">NewDayHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(long,long,float)">
+<section class="detail" id="&lt;init&gt;(long,long,float,long,long)">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-20">NewDayHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-22">NewDayHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
- float&nbsp;commandedBasalRate)</span></div>
+ float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(float)">
+<section class="detail" id="&lt;init&gt;(float,long,long)">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-27">NewDayHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;commandedBasalRate)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-31">NewDayHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</span></div>
 </section>
 </li>
 </ul>
@@ -196,7 +214,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-31">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-35">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -206,10 +224,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-41">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-47">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for NewDayHistoryLog:</caption>
  <tr><td><code>commandedBasalRate</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
+ <tr><td><code>featuresBitmask</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
+ <tr><td><code>featureBitmaskIndex</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -218,17 +238,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,long,float)">
+<section class="detail" id="buildCargo(long,long,float,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-49">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-57">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
- float&nbsp;commandedBasalRate)</span></div>
+ float&nbsp;commandedBasalRate,
+ long&nbsp;featuresBitmask,
+ long&nbsp;featureBitmaskIndex)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCommandedBasalRate()">
 <h3>getCommandedBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-56">getCommandedBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-66">getCommandedBasalRate</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFeaturesBitmask()">
+<h3>getFeaturesBitmask</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-70">getFeaturesBitmask</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFeatureBitmaskIndex()">
+<h3>getFeatureBitmaskIndex</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-74">getFeatureBitmaskIndex</a></span>()</div>
 </section>
 </li>
 </ul>
