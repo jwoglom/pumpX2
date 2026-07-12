@@ -28,7 +28,7 @@ PumpX2 is an Android library is exported which can be used by other projects to 
 as well as a generic Java library for parsing messages which has no Android-specific dependencies.
 **This project is experimental and still under development.**
 
-[Discuss in #tslim-x2-dev on Discord][discord]
+[Discuss in #tandem-talk on the WeAreNotWaiting Discord][discord]
 
 **Currently supported:**
 
