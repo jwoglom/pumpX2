@@ -106,9 +106,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">VersionsAHistoryLog</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long)" class="member-name-link">VersionsAHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
- long&nbsp;sequenceNum)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long,long,long)" class="member-name-link">VersionsAHistoryLog</a><wbr>(long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,long,long,long,long)" class="member-name-link">VersionsAHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -124,12 +133,36 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
- long&nbsp;sequenceNum)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,long,long,long,long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArmPartNumber()" class="member-name-link">getArmPartNumber</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArmSwVersion()" class="member-name-link">getArmSwVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBlePartNumber()" class="member-name-link">getBlePartNumber</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBleSwVersion()" class="member-name-link">getBleSwVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for VersionsAHistoryLog:
+ <code>armPartNumber</code><code>Bytes.readUint32(raw, 10)</code>
+ <code>armSwVersion</code><code>Bytes.readUint32(raw, 14)</code>
+ <code>blePartNumber</code><code>Bytes.readUint32(raw, 18)</code>
+ <code>bleSwVersion</code><code>Bytes.readUint32(raw, 22)</code>
+ </div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -156,14 +189,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>VersionsAHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-14">VersionsAHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-19">VersionsAHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(long,long)">
+<section class="detail" id="&lt;init&gt;(long,long,long,long,long,long)">
 <h3>VersionsAHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-15">VersionsAHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
- long&nbsp;sequenceNum)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-20">VersionsAHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,long,long)">
+<h3>VersionsAHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-30">VersionsAHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</span></div>
 </section>
 </li>
 </ul>
@@ -177,7 +223,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-21">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-34">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -187,7 +233,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-25">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-47">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for VersionsAHistoryLog:</caption>
+ <tr><td><code>armPartNumber</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
+ <tr><td><code>armSwVersion</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
+ <tr><td><code>blePartNumber</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
+ <tr><td><code>bleSwVersion</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -195,10 +248,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,long)">
+<section class="detail" id="buildCargo(long,long,long,long,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-32">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
- long&nbsp;sequenceNum)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-58">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;armPartNumber,
+ long&nbsp;armSwVersion,
+ long&nbsp;blePartNumber,
+ long&nbsp;bleSwVersion)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getArmPartNumber()">
+<h3>getArmPartNumber</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-69">getArmPartNumber</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getArmSwVersion()">
+<h3>getArmSwVersion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-73">getArmSwVersion</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBlePartNumber()">
+<h3>getBlePartNumber</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-77">getBlePartNumber</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBleSwVersion()">
+<h3>getBleSwVersion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#line-81">getBleSwVersion</a></span>()</div>
 </section>
 </li>
 </ul>

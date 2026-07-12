@@ -28,31 +28,77 @@
 <span class="source-line-no">011</span><span id="line-11">)</span>
 <span class="source-line-no">012</span><span id="line-12">public class VersionsAHistoryLog extends HistoryLog {</span>
 <span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">    public VersionsAHistoryLog() {}</span>
-<span class="source-line-no">015</span><span id="line-15">    public VersionsAHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">016</span><span id="line-16">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">017</span><span id="line-17">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">014</span><span id="line-14">    private long armPartNumber;</span>
+<span class="source-line-no">015</span><span id="line-15">    private long armSwVersion;</span>
+<span class="source-line-no">016</span><span id="line-16">    private long blePartNumber;</span>
+<span class="source-line-no">017</span><span id="line-17">    private long bleSwVersion;</span>
 <span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19">    }</span>
-<span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">    public int typeId() {</span>
-<span class="source-line-no">022</span><span id="line-22">        return 307;</span>
-<span class="source-line-no">023</span><span id="line-23">    }</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">026</span><span id="line-26">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">027</span><span id="line-27">        this.cargo = raw;</span>
-<span class="source-line-no">028</span><span id="line-28">        parseBase(raw);</span>
+<span class="source-line-no">019</span><span id="line-19">    public VersionsAHistoryLog() {}</span>
+<span class="source-line-no">020</span><span id="line-20">    public VersionsAHistoryLog(long pumpTimeSec, long sequenceNum, long armPartNumber, long armSwVersion, long blePartNumber, long bleSwVersion) {</span>
+<span class="source-line-no">021</span><span id="line-21">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">022</span><span id="line-22">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, armPartNumber, armSwVersion, blePartNumber, bleSwVersion);</span>
+<span class="source-line-no">023</span><span id="line-23">        this.armPartNumber = armPartNumber;</span>
+<span class="source-line-no">024</span><span id="line-24">        this.armSwVersion = armSwVersion;</span>
+<span class="source-line-no">025</span><span id="line-25">        this.blePartNumber = blePartNumber;</span>
+<span class="source-line-no">026</span><span id="line-26">        this.bleSwVersion = bleSwVersion;</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">    }</span>
 <span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">033</span><span id="line-33">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">034</span><span id="line-34">            new byte[]{(byte) 307, 0},</span>
-<span class="source-line-no">035</span><span id="line-35">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">036</span><span id="line-36">            Bytes.toUint32(sequenceNum)));</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38">}</span>
+<span class="source-line-no">030</span><span id="line-30">    public VersionsAHistoryLog(long armPartNumber, long armSwVersion, long blePartNumber, long bleSwVersion) {</span>
+<span class="source-line-no">031</span><span id="line-31">        this(0, 0, armPartNumber, armSwVersion, blePartNumber, bleSwVersion);</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public int typeId() {</span>
+<span class="source-line-no">035</span><span id="line-35">        return 307;</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    /**</span>
+<span class="source-line-no">039</span><span id="line-39">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">040</span><span id="line-40">     * &lt;caption&gt;Parsed fields for VersionsAHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;armPartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;armSwVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;blePartNumber&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bleSwVersion&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45">     * &lt;/table&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     */</span>
+<span class="source-line-no">047</span><span id="line-47">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">048</span><span id="line-48">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">049</span><span id="line-49">        this.cargo = raw;</span>
+<span class="source-line-no">050</span><span id="line-50">        parseBase(raw);</span>
+<span class="source-line-no">051</span><span id="line-51">        this.armPartNumber = Bytes.readUint32(raw, 10);</span>
+<span class="source-line-no">052</span><span id="line-52">        this.armSwVersion = Bytes.readUint32(raw, 14);</span>
+<span class="source-line-no">053</span><span id="line-53">        this.blePartNumber = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">054</span><span id="line-54">        this.bleSwVersion = Bytes.readUint32(raw, 22);</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long armPartNumber, long armSwVersion, long blePartNumber, long bleSwVersion) {</span>
+<span class="source-line-no">059</span><span id="line-59">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">060</span><span id="line-60">            new byte[]{(byte) 307, 0},</span>
+<span class="source-line-no">061</span><span id="line-61">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">062</span><span id="line-62">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">063</span><span id="line-63">            Bytes.toUint32(armPartNumber),</span>
+<span class="source-line-no">064</span><span id="line-64">            Bytes.toUint32(armSwVersion),</span>
+<span class="source-line-no">065</span><span id="line-65">            Bytes.toUint32(blePartNumber),</span>
+<span class="source-line-no">066</span><span id="line-66">            Bytes.toUint32(bleSwVersion)));</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    public long getArmPartNumber() {</span>
+<span class="source-line-no">070</span><span id="line-70">        return armPartNumber;</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public long getArmSwVersion() {</span>
+<span class="source-line-no">074</span><span id="line-74">        return armSwVersion;</span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public long getBlePartNumber() {</span>
+<span class="source-line-no">078</span><span id="line-78">        return blePartNumber;</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    public long getBleSwVersion() {</span>
+<span class="source-line-no">082</span><span id="line-82">        return bleSwVersion;</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84">}</span>
 
 
 
