@@ -65,8 +65,9 @@ public class CgmDataGxHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(status), 
             new byte[]{ (byte) type }, 
-            new byte[]{ (byte) rate }, 
-            new byte[]{ (byte) rssi }, 
+            new byte[]{ (byte) rate },
+            new byte[]{0},
+            new byte[]{ (byte) rssi },
             Bytes.firstTwoBytesLittleEndian(value), 
             Bytes.toUint32(timestamp), 
             Bytes.toUint32(transmitterTimestamp)));
