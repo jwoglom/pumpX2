@@ -31,7 +31,7 @@ public class CgmStopSessionFsl3HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 486, 0},
+            Bytes.firstTwoBytesLittleEndian(486),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

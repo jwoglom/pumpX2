@@ -42,7 +42,7 @@ public class CgmJoinSessionG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long cgmTimestamp, long sessionSignature) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 394, 0},
+            Bytes.firstTwoBytesLittleEndian(394),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(cgmTimestamp),

@@ -53,7 +53,7 @@ public class CgmAlertAckDexHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alertId) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 371, 0},
+            Bytes.firstTwoBytesLittleEndian(371),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(alertId)));
