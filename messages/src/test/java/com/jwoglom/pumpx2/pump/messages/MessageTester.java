@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
@@ -163,5 +164,13 @@ public class MessageTester {
         for (List<Byte> partition : partitions) {
             assertTrue("Partition size " + partition.size() + " exceeds maxChunkSize 10", partition.size() <= 10);
         }
+    }
+
+    @Test
+    public void testPartitionListRejectsNonPositivePartitionSizes() {
+        byte[] testData = new byte[]{0, 1, 2};
+
+        assertThrows(IllegalArgumentException.class, () -> Packetize.partitionList(testData, 0));
+        assertThrows(IllegalArgumentException.class, () -> Packetize.partitionList(testData, -1));
     }
 }

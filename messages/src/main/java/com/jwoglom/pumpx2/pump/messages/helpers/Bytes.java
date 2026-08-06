@@ -3,8 +3,6 @@ package com.jwoglom.pumpx2.pump.messages.helpers;
 import org.apache.commons.lang3.Validate;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Arrays;
@@ -15,19 +13,19 @@ public class Bytes {
     public static int UByteMaxValue = 255; // taken from kotlin
 
     public static byte[] dropFirstN(byte[] bytes, int n) {
-        byte[] ret = new byte[bytes.length - n];
-        for (int i=0; i < bytes.length - n; i++) {
-            ret[i] = bytes[i+n];
-        }
-        return ret;
+        validateDropCount(bytes, n);
+        return Arrays.copyOfRange(bytes, n, bytes.length);
     }
 
     public static byte[] dropLastN(byte[] bytes, int n) {
-        byte[] ret = new byte[bytes.length - n];
-        for (int i=0; i < bytes.length - n; i++) {
-            ret[i] = bytes[i];
+        validateDropCount(bytes, n);
+        return Arrays.copyOf(bytes, bytes.length - n);
+    }
+
+    private static void validateDropCount(byte[] bytes, int n) {
+        if (n < 0 || n > bytes.length) {
+            throw new IllegalArgumentException("drop count must be between 0 and the array length");
         }
-        return ret;
     }
 
     public static byte[] reverse(byte[] bytes) {
@@ -45,23 +43,17 @@ public class Bytes {
         }
 
         byte[] ret = new byte[sum];
-        int i = 0;
+        int offset = 0;
         for (byte[] item : items) {
-            for (byte b : item) {
-                ret[i] = b;
-                i++;
-            }
+            System.arraycopy(item, 0, ret, offset, item.length);
+            offset += item.length;
         }
 
         return ret;
     }
 
     public static byte[] emptyBytes(int size) {
-        byte[] ret = new byte[size];
-        for (int i=0; i<size; i++) {
-            ret[i] = 0;
-        }
-        return ret;
+        return new byte[size];
     }
 
     public static int readShort(byte[] raw, int i) {
@@ -71,14 +63,21 @@ public class Bytes {
 
     public static float readFloat(byte[] raw, int i) {
         Validate.isTrue(i >= 0 && i + 3 < raw.length);
-        return ByteBuffer.wrap(Arrays.copyOfRange(raw, i, i+4)).order(ByteOrder.LITTLE_ENDIAN).getFloat();
-//        int intValue = ((raw[i+3] & UByte.MAX_VALUE) << 24) | ((raw[i+2] & UByte.MAX_VALUE) << 16) | (raw[i] & UByte.MAX_VALUE) | ((raw[i+1] & UByte.MAX_VALUE) << 8);
-//        L.w("ReadFloat", "bytes: " + Hex.encodeHexString(Arrays.copyOfRange(raw, i, i + 4)) + " intValue: " + intValue);
-//        return Float.intBitsToFloat(intValue);
+        int bits = (raw[i] & 0xFF)
+                | ((raw[i + 1] & 0xFF) << 8)
+                | ((raw[i + 2] & 0xFF) << 16)
+                | ((raw[i + 3] & 0xFF) << 24);
+        return Float.intBitsToFloat(bits);
     }
 
     public static byte[] toFloat(float f) {
-        return ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat(f).array();
+        int bits = Float.floatToRawIntBits(f);
+        return new byte[]{
+                (byte) bits,
+                (byte) (bits >>> 8),
+                (byte) (bits >>> 16),
+                (byte) (bits >>> 24)
+        };
     }
 
     public static long readUint32(byte[] bArr, int i) {
@@ -97,7 +96,11 @@ public class Bytes {
         if (i >= 0) {
             int i2 = i + 7;
             if (i2 < bArr.length) {
-                return new BigInteger(1, Bytes.reverse(Arrays.copyOfRange(bArr, i, i + 8)));
+                byte[] bigEndian = new byte[8];
+                for (int offset = 0; offset < 8; offset++) {
+                    bigEndian[7 - offset] = bArr[i + offset];
+                }
+                return new BigInteger(1, bigEndian);
             }
             throw new ArrayIndexOutOfBoundsException(i2);
         }
@@ -109,44 +112,46 @@ public class Bytes {
     }
 
     public static byte[] toUint32(long j) {
-        byte[] bArr = new byte[8];
-        ByteBuffer.wrap(bArr).order(ByteOrder.LITTLE_ENDIAN).putLong(j);
-        return Arrays.copyOfRange(bArr, 0, 4);
+        return new byte[]{
+                (byte) j,
+                (byte) (j >>> 8),
+                (byte) (j >>> 16),
+                (byte) (j >>> 24)
+        };
     }
 
     public static byte[] toUint64(long j) {
-        byte[] bArr = new byte[8];
-        ByteBuffer.wrap(bArr).order(ByteOrder.LITTLE_ENDIAN).putLong(j);
-        return bArr;
+        return new byte[]{
+                (byte) j,
+                (byte) (j >>> 8),
+                (byte) (j >>> 16),
+                (byte) (j >>> 24),
+                (byte) (j >>> 32),
+                (byte) (j >>> 40),
+                (byte) (j >>> 48),
+                (byte) (j >>> 56)
+        };
     }
 
     /**
      * The corollary of readShort()
      */
     public static byte[] firstTwoBytesLittleEndian(int i) {
-        byte[] bytes = new byte[4];
-        ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).putInt(i & 0x0000ffff);
-        return Arrays.copyOfRange(bytes, 0, 2);
+        return new byte[]{(byte) i, (byte) (i >>> 8)};
     }
 
     public static byte[] firstByteLittleEndian(int i) {
-        byte[] bytes = new byte[4];
-        ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN).putInt(i & 255);
-        return Arrays.copyOfRange(bytes, 0, 1);
+        return new byte[]{(byte) i};
     }
 
     public static String readString(byte[] raw, int i, int length) {
-        if (i >= 0 && i < raw.length) {
-            byte[] strBytes = new byte[0];
-            byte b;
-            while (i < raw.length && (b = raw[i]) > 0) {
-                strBytes = combine(strBytes, new byte[]{b});
-                if (strBytes.length >= length) {
-                    break;
-                }
-                i++;
+        if (i >= 0 && i < raw.length && length >= 0) {
+            int end = Math.min(raw.length, i + length);
+            int stringEnd = i;
+            while (stringEnd < end && raw[stringEnd] != 0) {
+                stringEnd++;
             }
-            return new String(strBytes, StandardCharsets.UTF_8);
+            return new String(raw, i, stringEnd - i, StandardCharsets.UTF_8);
         }
         throw new ArrayIndexOutOfBoundsException(i);
     }
@@ -154,11 +159,10 @@ public class Bytes {
     // null byte pads the string to the given length
     public static byte[] writeString(String input, int length) {
         byte[] encoded = input.getBytes(StandardCharsets.UTF_8);
-        for (int i=encoded.length; i < length; i++) {
-            encoded = combine(encoded, new byte[]{0});
+        if (encoded.length > length) {
+            throw new IllegalArgumentException("Encoded string exceeds fixed field width of " + length + " bytes");
         }
-
-        return encoded;
+        return Arrays.copyOf(encoded, length);
     }
 
     private static final int[] crcLookupTable = {0, 4129, 8258, 12387, 16516, 20645, 24774, 28903, 33032, 37161, 41290, 45419, 49548, 53677, 57806, 61935, 4657, 528, 12915, 8786, 21173, 17044, 29431, 25302, 37689, 33560, 45947, 41818, 54205, 50076, 62463, 58334, 9314, 13379, 1056, 5121, 25830, 29895, 17572, 21637, 42346, 46411, 34088, 38153, 58862, 62927, 50604, 54669, 13907, 9842, 5649, 1584, 30423, 26358, 22165, 18100, 46939, 42874, 38681, 34616, 63455, 59390, 55197, 51132, 18628, 22757, 26758, 30887, 2112, 6241, 10242, 14371, 51660, 55789, 59790, 63919, 35144, 39273, 43274, 47403, 23285, 19156, 31415, 27286, 6769, 2640, 14899, 10770, 56317, 52188, 64447, 60318, 39801, 35672, 47931, 43802, 27814, 31879, 19684, 23749, 11298, 15363, 3168, 7233, 60846, 64911, 52716, 56781, 44330, 48395, 36200, 40265, 32407, 28342, 24277, 20212, 15891, 11826, 7761, 3696, 65439, 61374, 57309, 53244, 48923, 44858, 40793, 36728, 37256, 33193, 45514, 41451, 53516, 49453, 61774, 57711, 4224, 161, 12482, 8419, 20484, 16421, 28742, 24679, 33721, 37784, 41979, 46042, 49981, 54044, 58239, 62302, 689, 4752, 8947, 13010, 16949, 21012, 25207, 29270, 46570, 42443, 38312, 34185, 62830, 58703, 54572, 50445, 13538, 9411, 5280, 1153, 29798, 25671, 21540, 17413, 42971, 47098, 34713, 38840, 59231, 63358, 50973, 55100, 9939, 14066, 1681, 5808, 26199, 30326, 17941, 22068, 55628, 51565, 63758, 59695, 39368, 35305, 47498, 43435, 22596, 18533, 30726, 26663, 6336, 2273, 14466, 10403, 52093, 56156, 60223, 64286, 35833, 39896, 43963, 48026, 19061, 23124, 27191, 31254, 2801, 6864, 10931, 14994, 64814, 60687, 56684, 52557, 48554, 44427, 40424, 36297, 31782, 27655, 23652, 19525, 15522, 11395, 7392, 3265, 61215, 65342, 53085, 57212, 44955, 49082, 36825, 40952, 28183, 32310, 20053, 24180, 11923, 16050, 3793, 7920};
