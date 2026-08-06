@@ -117,7 +117,7 @@ public class InitiateBolusRequest extends Message {
         // 142 mg/dl, 0.13u, 13g carbs (food)
         // LastBolusStatusV2Response[bit0=1,bolusId=10652,bolusSourceId=8,bolusStatusId=3,bolusTypeBitmask=1,deliveredVolume=130,extendedBolusDuration=0,requestedVolume=130,timestamp=461589271,cargo={1,-100,41,0,0,23,75,-125,27,-126,0,0,0,3,8,1,0,0,0,0,-126,0,0,0}]
         // TimeSinceResetResponse[pumpTime=1079274,timeSinceReset=461589180]
-        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589180 ./scripts/get-single-opcode.py '033e9e3e3d820000009c29000001820000000000 023e00000d008e00000000000000000000000000 013e00000000bc4a831b9cbf19ffb856288a8afa 003e8f24a463e00cf3bbe5d305dd'
+        // Example captured packet, decoded with a local authentication key and pump reset time.
         //  0     1  2  3  4     5   6  7  8  9    10 11 12 13 14 15 16  17 18    19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36   37  38    39  40    41   42  43  44   45  46  47    48    49  50    51  52   53  54   55  56   57   58   59   60
         // {-126, 0, 0, 0, -100, 41, 0, 0, 1, -126, 0, 0, 0, 0, 0, 0, 0, 13, 0, -114, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -68, 74, -125, 27, -100, -65, 25, -1, -72, 86, 40, -118, -118, -6, -113, 36, -92, 99, -32, 12, -13, -69, -27, -45}
 
@@ -129,7 +129,7 @@ public class InitiateBolusRequest extends Message {
         // CurrentBasalStatusResponse[basalModifiedBitmask=0,currentBasalRate=0,profileBasalRate=0,cargo={0,0,0,0,0,0,0,0,0}]
         // CurrentBolusStatusResponse[bolusId=0,bolusSource=0,bolusTypeBitmask=0,requestedVolume=0,status=0,timestamp=0,cargo={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}]
         // LastBGResponse[bgSource=0,bgTimestamp=461589432,bgValue=161,cargo={-72,75,-125,27,-95,0,0}]
-        // $ PUMP_AUTHENTICATION_KEY=6VeDeRAL5DCigGw2 PUMP_TIME_SINCE_RESET=461589420
+        // Example captured packet decoded with a local authentication key and pump reset time.
         // ./scripts/get-single-opcode.py '03399e393d6e0000009d290000016e0000000000 023900000b00a100820000000000000000000000 013900000000ac4b831b7a0b7cfc14a30b9c3995 0039dc8bbbdfa2ce2ce995725407'
 
         // for (int i=0; i<56; i++){System.out.println(i+" float: "+Bytes.readFloat(parsedMessage.cargo, i)+" uint32: "+Bytes.readUint32(parsedMessage.cargo, i)+" short: "+Bytes.readShort(parsedMessage.cargo,i)); }

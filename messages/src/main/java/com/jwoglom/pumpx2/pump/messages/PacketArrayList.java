@@ -13,6 +13,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.Validate;
 
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -106,16 +107,16 @@ public class PacketArrayList {
             if (shouldIgnoreInvalidHmac(authKey)) {
                 L.e(TAG, "CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
             } else {
-                throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode+" authKey="+new String(authKey));
+                throw new InvalidCRCException("CRC validation failed for: " + ((int) this.expectedOpCode) + ". a: " + Hex.encodeHexString(a) + " lastTwoB: " + Hex.encodeHexString(lastTwoB) + ". fullCargo len=" + fullCargo.length + " opCode="+opCode);
             }
         } else if (this.isSigned) {
-            L.t(TAG, "validate(" + Hex.encodeHexString(authKey) + ") messageData: " + Hex.encodeHexString(messageData) + " len: " + messageData.length + " fullCargo: " + Hex.encodeHexString(fullCargo) + " len: " + fullCargo.length);
+            L.t(TAG, "validating signed message len=" + messageData.length + " fullCargo len=" + fullCargo.length);
             byte[] byteArray = Bytes.dropLastN(this.messageData, 20);
             byte[] bArr2 = this.messageData;
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, authKey);
-            if (!Arrays.equals(expectedHmac, hmacSha)) {
-                L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
+            if (!MessageDigest.isEqual(expectedHmac, hmacSha)) {
+                L.e(TAG, "Pump response has an invalid signature");
                 if (shouldIgnoreInvalidHmac(authKey)) {
                     return true;
                 }
@@ -267,9 +268,13 @@ public class PacketArrayList {
     }
 
     private boolean shouldIgnoreInvalidHmac(byte[] authKey) {
+        byte[] ignorePrefix = IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8);
+        if (authKey == null || authKey.length < ignorePrefix.length) {
+            return false;
+        }
         return Arrays.equals(
-                Arrays.copyOfRange(authKey, 0, IGNORE_INVALID_HMAC.length()),
-                Arrays.copyOfRange(IGNORE_INVALID_HMAC.getBytes(StandardCharsets.UTF_8), 0, IGNORE_INVALID_HMAC.length())
+                Arrays.copyOfRange(authKey, 0, ignorePrefix.length),
+                ignorePrefix
         );
     }
 
