@@ -865,6 +865,9 @@ public class Main {
 
     public static String parseHistoryLog(String rawHex) throws DecoderException {
         HistoryLog message = HistoryLogParser.parse(Hex.decodeHex(rawHex));
+        if (message == null) {
+            throw new IllegalArgumentException("Unable to parse history log: " + rawHex);
+        }
         String type = message.getClass().getName().replace("com.jwoglom.pumpx2.pump.messages.", "");
         int typeId = message.typeId();
         return typeId+"\t"+type+"\t"+rawHex+"\t"+message;
