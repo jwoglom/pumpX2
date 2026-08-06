@@ -6,7 +6,6 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.models.Packet;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.shared.L;
 
-import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -35,15 +34,18 @@ public class Packetize {
     }
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId) {
+        if (message == null) {
+            throw new IllegalArgumentException("message must not be null");
+        }
         return packetize(message, authenticationKey, currentTxId, determineMaxChunkSize(message));
     }
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId, int maxChunkSize) {
         if (message == null) {
-            L.e(TAG, "packetize has null message");
-        } else if (message.getCargo() == null) {
-            L.e(TAG, "packetize has null messagecargo messageName="+message.messageName());
-            L.e(TAG, "packetize has null messagecargo message="+message+" authKey="+Hex.encodeHexString(authenticationKey));
+            throw new IllegalArgumentException("message must not be null");
+        }
+        if (message.getCargo() == null) {
+            throw new IllegalArgumentException("message cargo must not be null: " + message.messageName());
         }
         int length = 3 + message.getCargo().length;
         if (message.signed()) {
@@ -68,7 +70,7 @@ public class Packetize {
             byte[] timeSinceReset = Bytes.toUint32(pumpStateTimeSinceReset);
             System.arraycopy(timeSinceReset, 0, messageData, length - 24, 4);
 
-            L.d(TAG, "using authenticationKey=" + Hex.encodeHexString(authenticationKey) + " pumpTimeSinceReset=" + pumpStateTimeSinceReset);
+            L.d(TAG, "signing message with pumpTimeSinceReset=" + pumpStateTimeSinceReset);
 
             byte[] hmacSha1Output = doHmacSha1(messageData, authenticationKey);
             System.arraycopy(messageData, 0, packet, 0, i);
@@ -81,15 +83,16 @@ public class Packetize {
         byte[] packetWithCRC = ArrayUtils.addAll(packet, crc);
         //L.d(TAG, "packetize packetWithCRC="+ Hex.encodeHexString(packetWithCRC));
 
-        // Fill Packet list with chunks of size 18 (maxChunkSize)
-        List<Packet> packets = new ArrayList<>();
-        List<List<Byte>> chunked = partitionList(packetWithCRC, maxChunkSize);
-
-        int b = chunked.size() - 1;
-        for (List<Byte> bytes : chunked) {
-            byte[] elem = ArrayUtils.toPrimitive(bytes.toArray(new Byte[0]));
-            packets.add(new Packet((byte) b, currentTxId, elem));
-            b--;
+        validatePartitionSize(maxChunkSize);
+        int packetCount = (packetWithCRC.length + maxChunkSize - 1) / maxChunkSize;
+        List<Packet> packets = new ArrayList<>(packetCount);
+        for (int packetIndex = 0, offset = 0; offset < packetWithCRC.length; packetIndex++, offset += maxChunkSize) {
+            byte[] chunk = Arrays.copyOfRange(
+                    packetWithCRC,
+                    offset,
+                    Math.min(offset + maxChunkSize, packetWithCRC.length));
+            int remainingChunks = packetCount - packetIndex - 1;
+            packets.add(new Packet((byte) remainingChunks, currentTxId, chunk));
         }
 
         return packets;
@@ -97,14 +100,16 @@ public class Packetize {
 
 
     public static List<List<Byte>> partitionList(byte[] packetWithCRC, int partitionSize) {
-        List<List<Byte>> partitions = new ArrayList<>();
-        List<Byte> subList = new ArrayList<>();
+        validatePartitionSize(partitionSize);
+        int partitionCount = (packetWithCRC.length + partitionSize - 1) / partitionSize;
+        List<List<Byte>> partitions = new ArrayList<>(partitionCount);
+        List<Byte> subList = new ArrayList<>(partitionSize);
 
         for (byte b : packetWithCRC) {
             subList.add(b);
             if (subList.size() == partitionSize) {
                 partitions.add(subList);
-                subList = new ArrayList<>();
+                subList = new ArrayList<>(partitionSize);
             }
         }
 
@@ -113,6 +118,12 @@ public class Packetize {
         }
 
         return partitions;
+    }
+
+    private static void validatePartitionSize(int partitionSize) {
+        if (partitionSize <= 0) {
+            throw new IllegalArgumentException("partitionSize must be positive");
+        }
     }
 
 

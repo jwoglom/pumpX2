@@ -259,8 +259,8 @@ public abstract class TandemPump {
         Timber.i("TandemPump: onPumpConnected");
 
         // hack: ensure cached in PumpState.
-        Timber.i("JpakeDerivedSecret=%s", PumpState.getJpakeDerivedSecret(context));
-        Timber.i("JpakeServerNonce=%s", PumpState.getJpakeServerNonce(context));
+        PumpState.getJpakeDerivedSecret(context);
+        PumpState.getJpakeServerNonce(context);
 
         sendCommand(peripheral, new ApiVersionRequest());
         sendCommand(peripheral, new PumpVersionRequest());
@@ -304,12 +304,12 @@ public abstract class TandemPump {
             PumpState.setJpakeServerNonce(context, "");
             PumpState.setPairingCode(context, pairingCode);
             if (StringUtils.isBlank(jpakeSecretHex)) {
-                Timber.i("PUMP-PAIR(SHORT_6CHAR, BOOTSTRAP, pairingCode=" + pairingCode + ")");
+                Timber.i("PUMP-PAIR(SHORT_6CHAR, BOOTSTRAP)");
                 JpakeAuthBuilder.clearInstance();
                 Message message = JpakeAuthBuilder.initializeWithPairingCode(pairingCode).nextRequest();
                 sendCommand(peripheral, message);
             } else {
-                Timber.i("PUMP-PAIR(SHORT_6CHAR, CONFIRM, pairingCode=" + pairingCode + ", derivedSecret=" + jpakeSecretHex + ")");
+                Timber.i("PUMP-PAIR(SHORT_6CHAR, CONFIRM)");
                 JpakeAuthBuilder.clearInstance();
                 try {
                     Message message = JpakeAuthBuilder.initializeWithDerivedSecret(pairingCode, Hex.decodeHex(jpakeSecretHex)).nextRequest();
@@ -321,7 +321,7 @@ public abstract class TandemPump {
                 }
             }
         } else if (PumpState.pairingCodeType == PairingCodeType.LONG_16CHAR) {
-            Timber.i("PUMP-PAIR(LONG_16CHAR, " + pairingCode + ")");
+            Timber.i("PUMP-PAIR(LONG_16CHAR)");
             try {
                 PumpState.setPairingCode(context, pairingCode);
                 Message message = PumpChallengeRequestBuilder.create(centralChallenge, pairingCode);

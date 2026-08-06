@@ -3,7 +3,6 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 import static org.apache.commons.codec.digest.HmacUtils.hmacSha256;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.builders.crypto.AllZeroSecureRandom;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
@@ -17,11 +16,10 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKeyResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
-import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -136,21 +134,21 @@ public class JpakeAuthBuilder {
             this.clientRound1 = this.cli.getRound1();
             byte[] challenge = Arrays.copyOfRange(this.clientRound1, 0, 165);
 
-            L.t(TAG, "Req1a: " + Hex.encodeHexString(challenge));
+            L.t(TAG, "JPAKE round 1a request created");
             request = new Jpake1aRequest(0, challenge);
 
             step = JpakeStep.ROUND_1A_SENT;
         } else if (step == JpakeStep.ROUND_1A_RECEIVED) {
             byte[] challenge = Arrays.copyOfRange(this.clientRound1, 165, 330);
 
-            L.t(TAG, "Req1b: " + Hex.encodeHexString(challenge));
+            L.t(TAG, "JPAKE round 1b request created");
             request = new Jpake1bRequest(0, challenge);
 
             step = JpakeStep.ROUND_1B_SENT;
         } else if (step == JpakeStep.ROUND_1B_RECEIVED) {
             this.clientRound2 = this.cli.getRound2();
             byte[] challenge = Arrays.copyOfRange(this.clientRound2, 0, 165);
-            L.t(TAG, "Req2: " + Hex.encodeHexString(challenge));
+            L.t(TAG, "JPAKE round 2 request created");
             request = new Jpake2Request(0, challenge);
 
             step = JpakeStep.ROUND_2_SENT;
@@ -158,7 +156,7 @@ public class JpakeAuthBuilder {
             request = new Jpake3SessionKeyRequest(0);
 
             this.derivedSecret = this.cli.deriveSecret();
-            L.t(TAG, "Req3 DerivedSecret=" + Hex.encodeHexString(derivedSecret));
+            L.t(TAG, "JPAKE derived secret established");
 
             step = JpakeStep.CONFIRM_3_SENT;
         } else if (step == JpakeStep.CONFIRM_INITIAL) {
@@ -169,10 +167,7 @@ public class JpakeAuthBuilder {
             this.clientNonce4 = generateNonce();
             byte[] hashDigest3 = HmacSha256.hmacSha256(clientNonce4, Hkdf.build(serverNonce3, derivedSecret));
 
-            L.t(TAG, "Req4: clientNonce4=" + Hex.encodeHexString(clientNonce4));
-            L.t(TAG, "Req4: derivedSecret=" + Hex.encodeHexString(derivedSecret));
-            L.t(TAG, "Req4: serverNonce3=" + Hex.encodeHexString(serverNonce3));
-            L.t(TAG, "Req4: hashDigest3=" + Hex.encodeHexString(hashDigest3));
+            L.t(TAG, "JPAKE key confirmation request created");
             request = new Jpake4KeyConfirmationRequest(0,
                     clientNonce4,
                     Jpake4KeyConfirmationRequest.RESERVED,
@@ -182,14 +177,11 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
             byte[] hashDigest4 = HmacSha256.hmacSha256(serverNonce4, Hkdf.build(serverNonce3, derivedSecret));
-            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hashDigest4))) {
+            if (MessageDigest.isEqual(this.serverHashDigest4, hashDigest4)) {
                 L.i(TAG, "JpakeAuthBuilder HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
-                L.w(TAG, "JpakeAuthBuilder HMAC SECRET DOES NOT VALIDATE hashDigest=" + Hex.encodeHexString(hashDigest4));
-                L.w(TAG, "serverNonce4=" + Hex.encodeHexString(this.serverNonce4));
-                L.w(TAG, "derivedSecret=" + Hex.encodeHexString(this.derivedSecret));
-                L.w(TAG, "serverHashDigest4=" + Hex.encodeHexString(this.serverHashDigest4));
+                L.w(TAG, "JpakeAuthBuilder HMAC secret does not validate");
                 step = JpakeStep.INVALID;
             }
 
@@ -206,37 +198,35 @@ public class JpakeAuthBuilder {
         this.receivedMessages.add(response);
         if (response instanceof Jpake1aResponse) {
             Jpake1aResponse m = (Jpake1aResponse) response;
-            L.t(TAG, "Res1a: " + Hex.encodeHexString(m.getCentralChallengeHash()));
+            L.t(TAG, "JPAKE round 1a response received");
             this.serverRound1 = m.getCentralChallengeHash();
 
             step = JpakeStep.ROUND_1A_RECEIVED;
         } else if (response instanceof Jpake1bResponse) {
             Jpake1bResponse m = (Jpake1bResponse) response;
-            L.t(TAG, "Res1b: " + Hex.encodeHexString(m.getCentralChallengeHash()));
+            L.t(TAG, "JPAKE round 1b response received");
             byte[] fullServerRound1 = Bytes.combine(this.serverRound1, m.getCentralChallengeHash());
-            L.d(TAG, "FULL_ROUND_1_RESPONSE: " + Hex.encodeHexString(fullServerRound1));
+            L.d(TAG, "JPAKE round 1 response assembled");
             this.serverRound1 = fullServerRound1;
 
             this.cli.readRound1(fullServerRound1);
             step = JpakeStep.ROUND_1B_RECEIVED;
         } else if (response instanceof Jpake2Response) {
             Jpake2Response m = (Jpake2Response) response;
-            L.t(TAG, "Res2: " + Hex.encodeHexString(m.getCentralChallengeHash()));
+            L.t(TAG, "JPAKE round 2 response received");
             this.serverRound2 = m.getCentralChallengeHash();
-            L.d(TAG, "FULL_ROUND_2_RESPONSE: " + Hex.encodeHexString(this.serverRound2));
 
             this.cli.readRound2(this.serverRound2);
             step = JpakeStep.ROUND_2_RECEIVED;
         } else if (response instanceof Jpake3SessionKeyResponse) {
             Jpake3SessionKeyResponse m = (Jpake3SessionKeyResponse) response;
-            L.t(TAG, "Res3: nonce=" + Hex.encodeHexString(m.getDeviceKeyNonce()));
-            L.t(TAG, "Res3: reserved=" + Hex.encodeHexString(m.getDeviceKeyReserved()));
+            L.t(TAG, "JPAKE session-key response received");
 
             this.serverNonce3 = m.getDeviceKeyNonce();
             step = JpakeStep.CONFIRM_3_RECEIVED;
         } else if (response instanceof Jpake4KeyConfirmationResponse) {
             Jpake4KeyConfirmationResponse m = (Jpake4KeyConfirmationResponse) response;
-            L.t(TAG, "JpakeAuthBuilder Res4: nonce=" + Hex.encodeHexString(m.getHashDigest()) + " hashDigest=" + Hex.encodeHexString(m.getNonce()));
+            L.t(TAG, "JPAKE key-confirmation response received");
 
             this.serverNonce4 = m.getNonce();
             this.serverHashDigest4 = m.getHashDigest();

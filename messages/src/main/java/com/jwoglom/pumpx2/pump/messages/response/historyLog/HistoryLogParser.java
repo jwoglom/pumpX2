@@ -6,9 +6,12 @@ import com.jwoglom.pumpx2.shared.L;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.lang.reflect.Constructor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -97,72 +100,156 @@ public class HistoryLogParser {
         AlertClearedHistoryLog.class,
         VersionInfoHistoryLog.class,
         UpdateStatusHistoryLog.class,
-        VersionsAHistoryLog.class
+        VersionsAHistoryLog.class,
+        MalfunctionAckHistoryLog.class,
+        AlarmAckHistoryLog.class,
+        ReminderActivatedHistoryLog.class,
+        AlertAckHistoryLog.class,
+        ReminderDismissedHistoryLog.class,
+        ReminderSnoozedHistoryLog.class,
+        CartridgeRemovedHistoryLog.class,
+        CartridgeInsertedHistoryLog.class,
+        ConfirmCartridgeFilledHistoryLog.class,
+        FillEstimateFinalHistoryLog.class,
+        BasalIqSettingsChangeHistoryLog.class,
+        CgmTransmitterIdHistoryLog.class,
+        CgmAnnuSettingsHistoryLog.class,
+        CgmStopSessionMsg1HistoryLog.class,
+        CgmStopSessionMsg2HistoryLog.class,
+        CgmHgaSettingsHistoryLog.class,
+        CgmLgaSettingsHistoryLog.class,
+        CgmRraSettingsHistoryLog.class,
+        CgmFraSettingsHistoryLog.class,
+        CgmOorSettingsHistoryLog.class,
+        CgmAlertAckHistoryLog.class,
+        CgmUnexpectedGeAlertHistoryLog.class,
+        CgmInactiveGxHistoryLog.class,
+        CgmTransmitterIdGxHistoryLog.class,
+        CgmStartSessionReqGxHistoryLog.class,
+        CgmStopSessionReqGxHistoryLog.class,
+        CgmTransmitterVersionGxHistoryLog.class,
+        AaSleepScheduleChangeHistoryLog.class,
+        AaDeliveryStatusChangeHistoryLog.class,
+        AaEnableSettingChangeHistoryLog.class,
+        AaTdiSettingChangeHistoryLog.class,
+        AaWeightSettingChangeHistoryLog.class,
+        CgmSessionTypeChangeHistoryLog.class,
+        WumpOcclusionDebugHistoryLog.class,
+        SnoozeActivatedHistoryLog.class,
+        AaAutoBolusRejectedHistoryLog.class,
+        TipscReqPrimeCannulaHistoryLog.class,
+        WumpCartridgeFilledHistoryLog.class,
+        WumpCartridgeRemovedHistoryLog.class,
+        AAExerciseTimeChangeHistoryLog.class,
+        AAExerciseChoiceChangeHistoryLog.class,
+        AATdiEstChangeHistoryLog.class,
+        PrimeInprocessHistoryLog.class,
+        CgmRejoinSessionHistoryLog.class,
+        CgmSensorTypeChangeHistoryLog.class,
+        CgmStartSensorReqG7HistoryLog.class,
+        CgmPairingCodeG7HistoryLog.class,
+        TipsErrorHistoryLog.class,
+        CgmCalibrationG7HistoryLog.class,
+        CgmBleCalibrationEvtG7HistoryLog.class,
+        CgmInactiveG7HistoryLog.class,
+        CgmStopSessionReqG7HistoryLog.class
         // MESSAGES_END
     );
 
     public static Map<Integer, Class<? extends HistoryLog>> LOG_MESSAGE_IDS = new HashMap<>();
     public static Map<Class<? extends HistoryLog>, Integer> LOG_MESSAGE_CLASS_TO_ID = new HashMap<>();
+    private static final Map<Integer, Constructor<? extends HistoryLog>> LOG_MESSAGE_CONSTRUCTORS = new HashMap<>();
+
+    /**
+     * Problems found while building the registry: duplicate typeIds, or classes without a
+     * usable no-arg constructor.
+     *
+     * Registry construction deliberately never throws. A throwing static initializer leaves
+     * the class permanently unusable -- every subsequent call, including for the types that
+     * registered fine, fails with NoClassDefFoundError for the remaining life of the process.
+     * A registry defect must not take down history-log parsing wholesale on a user's device.
+     * These are build-time defects, so they are asserted on by HistoryLogParserRegistryTest
+     * and logged at runtime rather than raised.
+     */
+    private static final List<String> REGISTRATION_ERRORS = new ArrayList<>();
 
     static {
-        for (Class<? extends HistoryLog> clazz : LOG_MESSAGE_TYPES) {
+        // LOG_MESSAGE_TYPES is a Set.of(), whose iteration order is randomized per JVM run.
+        // Register in a stable order so that duplicate resolution (first registration wins)
+        // and the reported errors are deterministic rather than varying between runs.
+        List<Class<? extends HistoryLog>> orderedTypes = new ArrayList<>(LOG_MESSAGE_TYPES);
+        orderedTypes.sort(Comparator.comparing(Class::getName));
+
+        for (Class<? extends HistoryLog> clazz : orderedTypes) {
             try {
-                LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);
-                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());
-            } catch (IllegalAccessException|InstantiationException e) {
-                L.e(TAG, String.format("could not instantiate %s", clazz), e);
-                e.printStackTrace();
+                Constructor<? extends HistoryLog> constructor = clazz.getDeclaredConstructor();
+                int typeId = constructor.newInstance().typeId();
+                Class<? extends HistoryLog> existing = LOG_MESSAGE_IDS.get(typeId);
+                if (existing != null) {
+                    String error = "duplicate HistoryLog typeId " + typeId + ": keeping "
+                            + existing.getName() + ", ignoring " + clazz.getName();
+                    REGISTRATION_ERRORS.add(error);
+                    L.e(TAG, error);
+                    continue;
+                }
+                LOG_MESSAGE_IDS.put(typeId, clazz);
+                LOG_MESSAGE_CLASS_TO_ID.put(clazz, typeId);
+                LOG_MESSAGE_CONSTRUCTORS.put(typeId, constructor);
+            } catch (ReflectiveOperationException e) {
+                String error = "could not register HistoryLog " + clazz.getName() + ": " + e;
+                REGISTRATION_ERRORS.add(error);
+                L.e(TAG, error, e);
             }
         }
     }
 
+    /**
+     * @return problems detected while building the registry at class-init time, in a stable
+     *         order. Empty when every entry in LOG_MESSAGE_TYPES registered cleanly.
+     */
+    public static List<String> getRegistrationErrors() {
+        return Collections.unmodifiableList(REGISTRATION_ERRORS);
+    }
+
+    /**
+     * Parses a 26-byte history-log record.
+     *
+     * The record begins with a 2-byte little-endian type ID, of which the low
+     * 12 bits identify the log type (all registered types currently use IDs
+     * 0-486; for example 395 = 0x018B). Bits above the 12-bit field are
+     * ignored so records with non-zero upper nibbles dispatch deterministically.
+     *
+     * @return a typed HistoryLog for registered type IDs, or an UnknownHistoryLog
+     *         for unregistered or unparseable records (never null)
+     */
     public static HistoryLog parse(byte[] rawStream) {
-        // Little endian, unsigned
-        int typeId = rawStream[0];
-        if (typeId < 0) {
-            typeId += 512;
-        }
-        if (rawStream[1] > 0) {
-            typeId += 256 * rawStream[1];
-        }
-//        if (typeId % 256 != typeId) {
-//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
-//            typeId = typeId % 256;
-//        }
-        HistoryLog ret = parseWithTypeId(rawStream, typeId);
-        if (ret instanceof UnknownHistoryLog) {
-            L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
-            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);
-            if (!(two instanceof UnknownHistoryLog)) {
-                return two;
-            }
-            if ((byte) typeId < 0) {
-                L.w(TAG, "retry2 HistoryLog parse on typeId " + ((byte) typeId) + " => " + (((byte) typeId) + 512));
-                HistoryLog three = parseWithTypeId(rawStream, (((byte) typeId) + 512));
-                if (!(three instanceof UnknownHistoryLog)) {
-                    return three;
-                }
-            }
-        }
-        return ret;
+        int typeId = Bytes.readShort(rawStream, 0) & 0x0FFF;
+        return parseWithTypeId(rawStream, typeId);
     }
 
     private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {
-        HistoryLog historyLog = null;
-        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {
+        Class<? extends HistoryLog> historyLogClass = LOG_MESSAGE_IDS.get(typeId);
+        if (historyLogClass == null) {
             L.t(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));
-            historyLog = new UnknownHistoryLog();
+            HistoryLog historyLog = new UnknownHistoryLog();
             historyLog.parse(rawStream);
             L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));
             return historyLog;
         }
 
+        HistoryLog historyLog;
         try {
-            historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();
-        } catch (IllegalAccessException|InstantiationException e) {
-            L.e(TAG, "could not instantiate "+typeId, e);
-            e.printStackTrace();
-            return null;
+            Constructor<? extends HistoryLog> constructor = LOG_MESSAGE_CONSTRUCTORS.get(typeId);
+            if (constructor == null || constructor.getDeclaringClass() != historyLogClass) {
+                constructor = historyLogClass.getDeclaredConstructor();
+                LOG_MESSAGE_CONSTRUCTORS.put(typeId, constructor);
+            }
+            historyLog = constructor.newInstance();
+        } catch (ReflectiveOperationException e) {
+            L.e(TAG, "could not instantiate "+typeId+", falling back to UnknownHistoryLog", e);
+            HistoryLog unknown = new UnknownHistoryLog();
+            unknown.parse(rawStream);
+            return unknown;
         }
 
         String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());

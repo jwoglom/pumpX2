@@ -31,7 +31,7 @@ public class CgmJoinSessionFsl2HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 406, 0},
+            Bytes.firstTwoBytesLittleEndian(406),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

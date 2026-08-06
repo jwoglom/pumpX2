@@ -45,7 +45,7 @@ public class DailyStatusHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 313, 0},
+            Bytes.firstTwoBytesLittleEndian(313),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{0, (byte) sensorType, (byte) userMode, (byte) pumpControlState}));

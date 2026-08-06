@@ -1,14 +1,13 @@
 package com.jwoglom.pumpx2.pump.messages.bluetooth;
 
 import org.apache.commons.lang3.StringUtils;
+
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.models.ApiVersion;
 import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.lang3.StringUtils;
-
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
@@ -38,24 +37,36 @@ public class PumpStateSupplier {
             throw new IllegalStateException("no pump authenticationKey");
         }
 
-        // stored jpake raw derived secret is decoded from hex for use in hmac
-        if (!StringUtils.isBlank(derivedSecret) && !StringUtils.isBlank(serverNonce)) {
+        // The JPAKE auth key is derived from BOTH halves, so it can only be built once both are
+        // present. Having exactly one is a normal, transient state rather than an error: a
+        // SHORT_6CHAR re-pair (TandemPump.pair(), "CONFIRM" path) deliberately keeps the stored
+        // derived secret while blanking the server nonce, and the nonce is only repopulated when
+        // the handshake completes. Treat that window as "no JPAKE key yet" and fall back to the
+        // pairing code, which is what the handshake itself authenticates with.
+        boolean hasDerivedSecret = !StringUtils.isBlank(derivedSecret);
+        boolean hasServerNonce = !StringUtils.isBlank(serverNonce);
+
+        if (hasDerivedSecret && hasServerNonce) {
+            // stored jpake raw derived secret is decoded from hex for use in hmac
             try {
                 byte[] jpakeSecret = Hex.decodeHex(derivedSecret);
                 byte[] jpakeNonce = Hex.decodeHex(serverNonce);
 
                 // hkdf of nonce and secret bytes are passed to hmac
-                byte[] authKey = Hkdf.build(jpakeNonce, jpakeSecret);
-                L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + Hex.encodeHexString(authKey) + " PUMP_JPAKE_DERIVED_SECRET=" + derivedSecret + " PUMP_JPAKE_SERVER_NONCE=" + serverNonce);
-
-                return authKey;
+                return Hkdf.build(jpakeNonce, jpakeSecret);
             } catch (DecoderException e) {
-                L.e(TAG, e);
+                // Both values are present but unparseable, which means the persisted state is
+                // corrupt. Falling back would silently sign with the wrong key, so fail loudly.
+                throw new IllegalStateException("invalid JPAKE derived secret/server nonce hex", e);
             }
         }
 
-        L.d(TAG, "DETERMINE-PUMP-AUTH-KEY-LINE PUMP_AUTHENTICATION_KEY=" + code + " PUMP_JPAKE=NULL");
-
+        if (hasDerivedSecret != hasServerNonce) {
+            L.d(TAG, "JPAKE state is incomplete (derivedSecret="
+                    + (hasDerivedSecret ? "set" : "unset") + ", serverNonce="
+                    + (hasServerNonce ? "set" : "unset")
+                    + "); falling back to the pairing code");
+        }
 
         if (code == null) return new byte[0];
 

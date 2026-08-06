@@ -579,6 +579,12 @@ public class TandemBluetoothHandler {
                     return;
                 }
 
+                // The saved multi-packet accumulator has served its purpose for this
+                // packet. Partial responses are re-saved below; if parsing threw above,
+                // it is intentionally left in place so the next packet can continue.
+                if (!characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
+                    PumpState.removeSavedPacketArrayList(characteristic, txId);
+                }
                 PumpState.processedResponseMessagesFromUs++;
                 Timber.d("Processed %s response (%d): %s (%s) (%d processed total, %d from us)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages, PumpState.processedResponseMessagesFromUs);
 
@@ -623,53 +629,53 @@ public class TandemBluetoothHandler {
                         this.internalOnPumpConnected(peripheral);
                     } else {
                         PumpState.markInitialConnectionHardAuthFailure();
-                        Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=legacy response=%s", resp);
+                        Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=legacy");
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
                 // JPAKE
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
-                    Timber.d("JpakeAuthResp1a: %s", resp);
+                    Timber.d("JpakeAuthResp1a received");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.d("JpakeAuthReq1b: %s", req);
+                    Timber.d("JpakeAuthReq1b created");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake1bResponse) {
                     Jpake1bResponse resp = (Jpake1bResponse) response.message().get();
-                    Timber.d("JpakeAuthResp1b: %s", resp);
+                    Timber.d("JpakeAuthResp1b received");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
-                    Timber.d("JpakeAuthReq2: %s", req);
+                    Timber.d("JpakeAuthReq2 created");
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake2Response) {
                     Jpake2Response resp = (Jpake2Response) response.message().get();
-                    Timber.d("JpakeAuthResp2: %s", resp);
+                    Timber.d("JpakeAuthResp2 received");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.d("JpakeAuthReq3: %s", req);
+                    Timber.d("JpakeAuthReq3 created");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake3SessionKeyResponse) {
                     Jpake3SessionKeyResponse resp = (Jpake3SessionKeyResponse) response.message().get();
-                    Timber.d("JpakeAuthResp3: %s", resp);
+                    Timber.d("JpakeAuthResp3 received");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
                     Message req = JpakeAuthBuilder.getInstance().nextRequest();
-                    Timber.d("JpakeAuthReq4: %s", req);
+                    Timber.d("JpakeAuthReq4 created");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     tandemPump.sendCommand(peripheral, req);
                 } else if (msg instanceof Jpake4KeyConfirmationResponse) {
                     Jpake4KeyConfirmationResponse resp = (Jpake4KeyConfirmationResponse) response.message().get();
-                    Timber.d("JpakeAuthResp4: %s", resp);
+                    Timber.d("JpakeAuthResp4 received");
                     tandemPump.onJpakeProgress(JpakeAuthBuilder.getInstance().getStep());
                     JpakeAuthBuilder.getInstance().processResponse(msg);
 
