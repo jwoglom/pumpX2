@@ -38,7 +38,13 @@ jobs:
       # tests reusing the already-compiled outputs. Drops `gradle build` which
       # also runs lintAnalyzeDebug, lintVitalAnalyzeRelease, and
       # testReleaseUnitTest — none of which CI ships.
-      run: ./gradlew :sampleapp:assembleDebug :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest
+      #
+      # :messages:test is listed explicitly because testDebugUnitTest only exists
+      # on the Android modules (androidLib, sampleapp). messages is a plain Java
+      # library, so without this the bulk of the suite never runs on a PR. A bare
+      # `test` would work too, but on the Android modules it also pulls in
+      # testReleaseUnitTest, which is exactly what the note above drops.
+      run: ./gradlew :sampleapp:assembleDebug :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest :messages:test
 
     - name: Upload debug APK
       uses: actions/upload-artifact@v4
