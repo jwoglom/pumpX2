@@ -47,7 +47,7 @@ public class PumpState {
         setPumpAPIVersion(null);
         setPumpSerialNum(null);
         clearRequestMessages();
-        savedPacketArrayList.clear();
+        clearSavedPacketArrayLists();
         processedResponseMessages = 0;
         processedResponseMessagesFromUs = 0;
         resetInitialConnectionNoReplyFailures();
@@ -87,20 +87,77 @@ public class PumpState {
         }
     }
 
+    /**
+     * Plaintext preferences for non-secret pump state (Bluetooth MAC, and anything else added
+     * here later). Secrets go to {@link #secretPrefs} instead.
+     */
     private static SharedPreferences prefs(Context context) {
-        return context.getSharedPreferences("PumpState", Context.MODE_PRIVATE);
+        return context.getApplicationContext().getSharedPreferences("PumpState", Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Encrypted-at-rest preferences, used only for the values below that are genuinely secret.
+     * Keeping the rest on {@link #prefs} avoids an Android Keystore round-trip on every pump
+     * state access, much of which happens on the BLE callback path.
+     */
+    private static SharedPreferences secretPrefs(Context context) {
+        SharedPreferences encrypted = PumpSecrets.prefs(context);
+        migrateLegacySecrets(context, encrypted);
+        return encrypted;
+    }
+
+    // One-time migration of the secret values from the previous plaintext "PumpState"
+    // preferences into the encrypted store, so existing pairing/JPAKE state survives an app
+    // upgrade. Non-secret keys are left where they are -- they still live in prefs(context).
+    private static boolean legacySecretsMigrated = false;
+    private static synchronized void migrateLegacySecrets(Context context, SharedPreferences encrypted) {
+        if (legacySecretsMigrated) {
+            return;
+        }
+
+        // The keys moved out of the plaintext store and into PumpSecrets. Declared here rather
+        // than as a static field because the *_PREF constants are declared further down.
+        String[] secretPrefKeys = {
+                PAIRING_CODE_PREF, JPAKE_DERIVED_SECRET_PREF, JPAKE_SERVER_NONCE_PREF
+        };
+
+        SharedPreferences legacy = context.getApplicationContext()
+                .getSharedPreferences("PumpState", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor encryptedEdit = encrypted.edit();
+        SharedPreferences.Editor legacyEdit = legacy.edit();
+        boolean foundAny = false;
+        for (String key : secretPrefKeys) {
+            String value = legacy.getString(key, null);
+            if (value == null) {
+                continue;
+            }
+            foundAny = true;
+            encryptedEdit.putString(key, value);
+            legacyEdit.remove(key);
+        }
+
+        // Only drop the plaintext copies once the encrypted write has actually landed, so an
+        // interrupted migration leaves the secrets readable rather than losing them.
+        if (!foundAny || (encryptedEdit.commit() && legacyEdit.commit())) {
+            // Latch only on success: a failed migration should be retried on the next access
+            // rather than silently leaving the secrets stranded in the plaintext store.
+            legacySecretsMigrated = true;
+        } else {
+            Timber.w("Could not migrate pump secrets to encrypted preferences; will retry");
+        }
     }
 
     // The pairing code is also called the authentication key
     private static final String PAIRING_CODE_PREF = "pairingCode";
     public static String savedPairingCode = null;
     public static void setPairingCode(Context context, String pairingCode) {
-        prefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).commit();
+        secretPrefs(context).edit().putString(PAIRING_CODE_PREF, pairingCode).commit();
         savedPairingCode = pairingCode;
     }
 
     public static String getPairingCode(Context context) {
-        savedPairingCode = prefs(context).getString(PAIRING_CODE_PREF, null);
+        savedPairingCode = secretPrefs(context).getString(PAIRING_CODE_PREF, null);
         return savedPairingCode;
     }
 
@@ -111,12 +168,12 @@ public class PumpState {
     private static final String JPAKE_DERIVED_SECRET_PREF = "jpakeDerivedSecret";
     public static String savedJpakeDerivedSecret = null;
     public static String getJpakeDerivedSecret(Context context) {
-        savedJpakeDerivedSecret = prefs(context).getString(JPAKE_DERIVED_SECRET_PREF, null);
+        savedJpakeDerivedSecret = secretPrefs(context).getString(JPAKE_DERIVED_SECRET_PREF, null);
         return savedJpakeDerivedSecret;
     }
 
     public static void setJpakeDerivedSecret(Context context, String hexDerivedSecret) {
-        prefs(context).edit().putString(JPAKE_DERIVED_SECRET_PREF, hexDerivedSecret).commit();
+        secretPrefs(context).edit().putString(JPAKE_DERIVED_SECRET_PREF, hexDerivedSecret).commit();
         savedJpakeDerivedSecret = hexDerivedSecret;
     }
 
@@ -128,12 +185,12 @@ public class PumpState {
     private static final String JPAKE_SERVER_NONCE_PREF = "jpakeServerNonce";
     public static String savedJpakeServerNonce = null;
     public static String getJpakeServerNonce(Context context) {
-        savedJpakeServerNonce = prefs(context).getString(JPAKE_SERVER_NONCE_PREF, null);
+        savedJpakeServerNonce = secretPrefs(context).getString(JPAKE_SERVER_NONCE_PREF, null);
         return savedJpakeServerNonce;
     }
 
     public static void setJpakeServerNonce(Context context, String hexDerivedSecret) {
-        prefs(context).edit().putString(JPAKE_SERVER_NONCE_PREF, hexDerivedSecret).commit();
+        secretPrefs(context).edit().putString(JPAKE_SERVER_NONCE_PREF, hexDerivedSecret).commit();
         savedJpakeServerNonce = hexDerivedSecret;
     }
 
@@ -227,7 +284,7 @@ public class PumpState {
         synchronized (requestMessages) {
             Pair<Characteristic, Byte> key = Pair.create(c, txId);
             Pair<Boolean, Message> pair = requestMessages.get(key);
-            Validate.notNull(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
+            Validate.notNull(pair, "could not find requestMessage for txId " + txId + " and char " + c);
             if (pair.first) {
                 Timber.w("txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
             }
@@ -254,12 +311,19 @@ public class PumpState {
     private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
     public static synchronized void savePacketArrayList(Characteristic c, byte txId, PacketArrayList l) {
         Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Validate.isTrue(!savedPacketArrayList.containsKey(key));
         savedPacketArrayList.put(key, l);
     }
 
     public static synchronized Optional<PacketArrayList> checkForSavedPacketArrayList(Characteristic c, byte txId) {
         return Optional.ofNullable(savedPacketArrayList.get(Pair.create(c, txId)));
+    }
+
+    public static synchronized void removeSavedPacketArrayList(Characteristic c, byte txId) {
+        savedPacketArrayList.remove(Pair.create(c, txId));
+    }
+
+    public static synchronized void clearSavedPacketArrayLists() {
+        savedPacketArrayList.clear();
     }
 
     private static boolean actionsAffectingInsulinDeliveryEnabled = false;
