@@ -25,8 +25,8 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
         this(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, 0);
     }
 
-    public BolusRequestedMsg3HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int logGeneration) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, logGeneration);
+    public BolusRequestedMsg3HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int headerHighNibble) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, headerHighNibble);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
@@ -61,9 +61,9 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
         return buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, 0);
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int logGeneration) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int headerHighNibble) {
         return Bytes.combine(
-            HistoryLog.typeIdBytes(66, logGeneration),
+            HistoryLog.typeIdBytes(66, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 

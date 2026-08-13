@@ -11,23 +11,23 @@ import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
 /**
- * Round-trip coverage for the five bolus history logs as emitted by a Tandem Mobi, whose logs
- * carry a log generation nibble of 1 in the high bits of the first two cargo bytes (so opCode 55
- * is transmitted as {@code 37 10}, not {@code 37 00}).
+ * Round-trip coverage for the five bolus history logs when the top 4 bits of the first two cargo
+ * bytes are nonzero, so that opCode 55 arrives as {@code 37 10} rather than {@code 37 00}. See
+ * {@link HistoryLog#getHeaderHighNibble()}: what those bits mean is unknown.
  *
- * <p>Every existing fixture in this package comes from a t:slim X2 and carries a generation of 0,
- * so nothing else in the suite exercises that nibble: neither the dispatch path in
- * {@link HistoryLogParser} nor the ability of {@code buildCargo} to reproduce such a record.
+ * <p>Records with a nonzero value there do occur — the {@link DexcomG7CGMHistoryLog} fixtures in
+ * this package carry 1 — but no bolus fixture did, so nothing exercised the dispatch path in
+ * {@link HistoryLogParser} or the ability of {@code buildCargo} to reproduce such a record for
+ * these five classes.
  *
- * <p><b>The field values in these fixtures are invented.</b> Only their structure is replicated
- * from a real capture: the generation nibble, one record of each opCode per bolus with a shared
- * bolusId, consecutive sequence numbers across the msg1/msg2/msg3 triple, and the msg3 identity
- * foodBolusSize + correctionBolusSize == totalBolusSize. These fixtures verify that parsing and
- * serialization agree and that the byte offsets do not move. They are not evidence for what any
- * individual field means.
+ * <p><b>These fixtures are entirely synthetic.</b> Both the field values and the choice of a high
+ * nibble of 1 are invented; they are not drawn from a capture, and they are not evidence that any
+ * particular pump emits this encoding, nor for what any individual field means. What they verify
+ * is narrower and self-contained: that {@code parse} and {@code buildCargo} agree byte for byte,
+ * that a nonzero high nibble survives that round trip, and that the byte offsets do not move.
  */
-public class BolusMobiGenerationHistoryLogTest {
-    private static final int MOBI = 1;
+public class BolusHeaderNibbleHistoryLogTest {
+    private static final int HIGH_NIBBLE = 1;
 
     // Bolus 2001: BLE-commanded standard bolus, food only.
     private static final String B1_MSG1 = "40100065cd1da0bb0d00d1070300000000000000000000000000";
@@ -51,69 +51,69 @@ public class BolusMobiGenerationHistoryLogTest {
     private static final String B3_COMPLETED = "1410486dcd1d7abc0d000300d307000008410000f8400000f840";
 
     @Test
-    public void testBolusRequestedMsg1Mobi() throws DecoderException {
-        // long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int logGeneration
+    public void testBolusRequestedMsg1HighNibble() throws DecoderException {
+        // long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int headerHighNibble
         assertRoundTrip(B1_MSG1, new BolusRequestedMsg1HistoryLog(
-                500000000L, 900000L, 2001, 3, false, 0, 0, 0.0F, 0, MOBI));
+                500000000L, 900000L, 2001, 3, false, 0, 0, 0.0F, 0, HIGH_NIBBLE));
         assertRoundTrip(B2_MSG1, new BolusRequestedMsg1HistoryLog(
-                500001000L, 900100L, 2002, 3, true, 0, 0, 0.0F, 0, MOBI));
+                500001000L, 900100L, 2002, 3, true, 0, 0, 0.0F, 0, HIGH_NIBBLE));
         assertRoundTrip(B3_MSG1, new BolusRequestedMsg1HistoryLog(
-                500002000L, 900200L, 2003, 1, true, 45, 140, 1.5F, 6000, MOBI));
+                500002000L, 900200L, 2003, 1, true, 45, 140, 1.5F, 6000, HIGH_NIBBLE));
     }
 
     @Test
-    public void testBolusRequestedMsg2Mobi() throws DecoderException {
-        // long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int logGeneration
+    public void testBolusRequestedMsg2HighNibble() throws DecoderException {
+        // long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble
         assertRoundTrip(B1_MSG2, new BolusRequestedMsg2HistoryLog(
-                500000000L, 900001L, 2001, 4, 100, 0, 0, 0, 0, true, false, 1, 0, MOBI));
+                500000000L, 900001L, 2001, 4, 100, 0, 0, 0, 0, true, false, 1, 0, HIGH_NIBBLE));
         assertRoundTrip(B2_MSG2, new BolusRequestedMsg2HistoryLog(
-                500001000L, 900101L, 2002, 4, 100, 0, 0, 0, 0, true, false, 0, 0, MOBI));
+                500001000L, 900101L, 2002, 4, 100, 0, 0, 0, 0, true, false, 0, 0, HIGH_NIBBLE));
         assertRoundTrip(B3_MSG2, new BolusRequestedMsg2HistoryLog(
-                500002000L, 900201L, 2003, 0, 100, 0, 0, 30, 110, false, false, 1, 0, MOBI));
+                500002000L, 900201L, 2003, 0, 100, 0, 0, 30, 110, false, false, 1, 0, HIGH_NIBBLE));
     }
 
     @Test
-    public void testBolusRequestedMsg3Mobi() throws DecoderException {
-        // long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int logGeneration
+    public void testBolusRequestedMsg3HighNibble() throws DecoderException {
+        // long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int headerHighNibble
         assertRoundTrip(B1_MSG3, new BolusRequestedMsg3HistoryLog(
-                500000000L, 900002L, 2001, 0, 3.5F, 0.0F, 3.5F, MOBI));
+                500000000L, 900002L, 2001, 0, 3.5F, 0.0F, 3.5F, HIGH_NIBBLE));
         assertRoundTrip(B2_MSG3, new BolusRequestedMsg3HistoryLog(
-                500001000L, 900102L, 2002, 0, 4.25F, 0.75F, 5.0F, MOBI));
+                500001000L, 900102L, 2002, 0, 4.25F, 0.75F, 5.0F, HIGH_NIBBLE));
         assertRoundTrip(B3_MSG3, new BolusRequestedMsg3HistoryLog(
-                500002000L, 900202L, 2003, 0, 7.5F, 0.25F, 7.75F, MOBI));
+                500002000L, 900202L, 2003, 0, 7.5F, 0.25F, 7.75F, HIGH_NIBBLE));
     }
 
     @Test
-    public void testBolusActivatedMobi() throws DecoderException {
-        // long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int logGeneration
+    public void testBolusActivatedHighNibble() throws DecoderException {
+        // long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int headerHighNibble
         assertRoundTrip(B1_ACTIVATED, new BolusActivatedHistoryLog(
-                500000002L, 900008L, 2001, 1, 2.25F, 3.5F, MOBI));
+                500000002L, 900008L, 2001, 1, 2.25F, 3.5F, HIGH_NIBBLE));
         assertRoundTrip(B2_ACTIVATED, new BolusActivatedHistoryLog(
-                500001002L, 900108L, 2002, 0, 1.5F, 5.0F, MOBI));
+                500001002L, 900108L, 2002, 0, 1.5F, 5.0F, HIGH_NIBBLE));
         assertRoundTrip(B3_ACTIVATED, new BolusActivatedHistoryLog(
-                500002002L, 900208L, 2003, 1, 0.75F, 7.75F, MOBI));
+                500002002L, 900208L, 2003, 1, 0.75F, 7.75F, HIGH_NIBBLE));
     }
 
     @Test
-    public void testBolusCompletedMobi() throws DecoderException {
-        // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested, int logGeneration
+    public void testBolusCompletedHighNibble() throws DecoderException {
+        // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested, int headerHighNibble
         assertRoundTrip(B1_COMPLETED, new BolusCompletedHistoryLog(
-                500000120L, 900018L, 3, 2001, 5.75F, 3.5F, 3.5F, MOBI));
+                500000120L, 900018L, 3, 2001, 5.75F, 3.5F, 3.5F, HIGH_NIBBLE));
         assertRoundTrip(B2_COMPLETED, new BolusCompletedHistoryLog(
-                500001120L, 900118L, 3, 2002, 6.5F, 5.0F, 5.0F, MOBI));
+                500001120L, 900118L, 3, 2002, 6.5F, 5.0F, 5.0F, HIGH_NIBBLE));
         assertRoundTrip(B3_COMPLETED, new BolusCompletedHistoryLog(
-                500002120L, 900218L, 3, 2003, 8.5F, 7.75F, 7.75F, MOBI));
+                500002120L, 900218L, 3, 2003, 8.5F, 7.75F, 7.75F, HIGH_NIBBLE));
     }
 
     /**
-     * A Mobi record must reach its class through the primary dispatch path. Before the log
-     * generation nibble was masked off in {@link HistoryLogParser}, opCode 55 with a generation of
-     * 1 was computed as typeId 4151, missed the registry, and was only recovered by the retry
-     * ladder, which logged a warning for every history log a Mobi user ever downloaded.
+     * A record must reach its class through the primary dispatch path. Before the high nibble was
+     * masked off in {@link HistoryLogParser}, opCode 55 with a high nibble of 1 was computed as
+     * typeId 4151, missed the registry, and was only recovered by the retry ladder, which logged a
+     * warning for every such record.
      */
     @Test
-    public void testMobiRecordsDispatchToTheCorrectClass() throws DecoderException {
-        assertEquals(MOBI, HistoryLogParser.parse(Hex.decodeHex(B1_MSG1)).getLogGeneration());
+    public void testHighNibbleRecordsDispatchToTheCorrectClass() throws DecoderException {
+        assertEquals(HIGH_NIBBLE, HistoryLogParser.parse(Hex.decodeHex(B1_MSG1)).getHeaderHighNibble());
 
         // The typeId the dispatcher looks up must already be the real opCode, so that these
         // records resolve on the first attempt rather than by falling through the retry ladder.
@@ -184,7 +184,7 @@ public class BolusMobiGenerationHistoryLogTest {
     }
 
     @Test
-    public void testEnumsDecodeMobiValues() throws DecoderException {
+    public void testEnumsDecodeFixtureValues() throws DecoderException {
         assertEquals(BolusRequestedMsg1HistoryLog.BolusType.REMOTE,
                 ((BolusRequestedMsg1HistoryLog) HistoryLogParser.parse(Hex.decodeHex(B1_MSG1))).getBolusType());
         assertEquals(BolusRequestedMsg1HistoryLog.BolusType.CARB,
@@ -230,7 +230,7 @@ public class BolusMobiGenerationHistoryLogTest {
 
     private static void assertRoundTrip(String rawHex, HistoryLog expected) throws DecoderException {
         HistoryLog parsed = HistoryLogMessageTester.testSingle(rawHex, expected);
-        assertEquals(MOBI, parsed.getLogGeneration());
+        assertEquals(HIGH_NIBBLE, parsed.getHeaderHighNibble());
         assertHexEquals(expected.getCargo(), parsed.getCargo());
     }
 }
