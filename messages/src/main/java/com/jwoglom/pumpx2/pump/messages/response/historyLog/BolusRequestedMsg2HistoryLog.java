@@ -28,7 +28,11 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     public BolusRequestedMsg2HistoryLog() {}
     
     public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);
+        this(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);
+    }
+
+    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int logGeneration) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, logGeneration);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
@@ -72,8 +76,12 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
 
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {
+        return buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int logGeneration) {
         return Bytes.combine(
-            new byte[] { (byte) 65, 0},
+            HistoryLog.typeIdBytes(65, logGeneration),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
@@ -95,8 +103,52 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     public int getBolusId() {
         return bolusId;
     }
+    /**
+     * @return the raw value of the options byte, see {@link #getBolusOption()}
+     */
     public int getOptions() {
         return options;
+    }
+
+    /**
+     * @return how the bolus was requested, or null if the raw value is not recognized
+     */
+    public BolusOption getBolusOption() {
+        return BolusOption.fromId(options);
+    }
+
+    /**
+     * How the bolus was requested. A bolus commanded over Bluetooth by an app such as this one
+     * reports {@link #BLE_STANDARD}, not {@link #STANDARD}.
+     */
+    public enum BolusOption {
+        STANDARD(0),
+        EXTENDED(1),
+        QUICK(2),
+        AUTOMATIC(3),
+        BLE_STANDARD(4),
+        BLE_EXTENDED(5),
+        EATING_SOON_AUTOMATIC(6),
+        LATE_BOLUS(7),
+        ;
+
+        private final int id;
+        BolusOption(int id) {
+            this.id = id;
+        }
+
+        public int id() {
+            return id;
+        }
+
+        public static BolusOption fromId(int id) {
+            for (BolusOption o : values()) {
+                if (o.id() == id) {
+                    return o;
+                }
+            }
+            return null;
+        }
     }
 
     /**
@@ -148,10 +200,46 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     }
 
     /**
-     * @return TODO(unknown)
+     * @return the raw value identifying which IOB algorithm the bolus calculator used,
+     * see {@link #getSelectedIOBType()}
      */
     public int getSelectedIOB() {
         return selectedIOB;
+    }
+
+    /**
+     * @return the IOB algorithm the bolus calculator used, or null if the raw value is not
+     * recognized
+     */
+    public SelectedIOBType getSelectedIOBType() {
+        return SelectedIOBType.fromId(selectedIOB);
+    }
+
+    /**
+     * The IOB algorithm used when calculating the bolus.
+     */
+    public enum SelectedIOBType {
+        MUDALIAR_IOB(0),
+        SWAN_IOB_MEAL(1),
+        ;
+
+        private final int id;
+        SelectedIOBType(int id) {
+            this.id = id;
+        }
+
+        public int id() {
+            return id;
+        }
+
+        public static SelectedIOBType fromId(int id) {
+            for (SelectedIOBType s : values()) {
+                if (s.id() == id) {
+                    return s;
+                }
+            }
+            return null;
+        }
     }
     public int getSpare2() {
         return spare2;

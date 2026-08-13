@@ -4,8 +4,6 @@ import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
-import java.util.Set;
-
 @HistoryLogProps(
     opCode = 64,
     displayName = "Bolus Requested 1/3",
@@ -26,10 +24,14 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     public BolusRequestedMsg1HistoryLog() {}
     
     public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusTypeId, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
+        this(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, 0);
+    }
+
+    public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusTypeId, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int logGeneration) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, logGeneration);
         this.bolusId = bolusId;
-        this.bolusTypeId = bolusTypeId; // probably the same bolusType enum as BolusDeliveryHistoryLog
+        this.bolusTypeId = bolusTypeId;
         this.correctionBolusIncluded = correctionBolusIncluded;
         this.carbAmount = carbAmount;
         this.bg = bg;
@@ -58,8 +60,12 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
 
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio) {
+        return buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusType, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int logGeneration) {
         return Bytes.combine(
-            new byte[]{64, 0},
+            HistoryLog.typeIdBytes(64, logGeneration),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
@@ -83,10 +89,49 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     }
 
     /**
-     * @return Bolus types
+     * @return how the bolus was requested, or null if the raw value is not recognized.
+     *
+     * <p>Note that this is a scalar enum, not the bitmask used by
+     * {@link BolusDeliveryHistoryLog#getBolusTypes()}. Decoding it as a bitmask is contradicted by
+     * the data: a raw value of 3 would decode to FOOD1|CORRECTION, but records carrying 3 also
+     * report {@link #getCorrectionBolusIncluded()} false and a correction bolus size of zero in
+     * {@link BolusRequestedMsg3HistoryLog}. As a scalar, 3 is {@link BolusType#REMOTE}, which is
+     * consistent with those records having been commanded over Bluetooth.
      */
-    public Set<BolusDeliveryHistoryLog.BolusType> getBolusType() {
-        return BolusDeliveryHistoryLog.BolusType.fromBitmask(bolusTypeId);
+    public BolusType getBolusType() {
+        return BolusType.fromId(bolusTypeId);
+    }
+
+    /**
+     * The way in which a bolus was requested, as reported by this log only.
+     *
+     * <p>Deliberately distinct from {@link BolusDeliveryHistoryLog.BolusType}, which is a bitmask
+     * of the components making up a bolus and is a different field with a different encoding.
+     */
+    public enum BolusType {
+        INSULIN(0),
+        CARB(1),
+        AUTOMATIC_CORRECTION(2),
+        REMOTE(3),
+        ;
+
+        private final int id;
+        BolusType(int id) {
+            this.id = id;
+        }
+
+        public int id() {
+            return id;
+        }
+
+        public static BolusType fromId(int id) {
+            for (BolusType b : values()) {
+                if (b.id() == id) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 
     /**
@@ -97,30 +142,46 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     }
 
     /**
-     * @return carbs in grams
+     * @return carbs in grams.
+     *
+     * <p>The ordering of this field and {@link #getBg()} is the one field pair in this log which
+     * has not been independently confirmed against a capture: every record examined so far was
+     * either commanded remotely or entered without a fingerstick, leaving both fields zero. The
+     * offsets either side of the pair are confirmed.
      */
     public int getCarbAmount() {
         return carbAmount;
     }
 
     /**
-     * @return BG in mg/dL
+     * @return BG in mg/dL. See the note on {@link #getCarbAmount()} regarding this field's offset.
      */
     public int getBg() {
         return bg;
     }
 
     /**
-     * @return current insulin on board
+     * @return current insulin on board.
+     *
+     * <p>This field is zero on some pumps which report a nonzero IOB for the same bolus in
+     * {@link BolusActivatedHistoryLog} and {@link BolusCompletedHistoryLog}. Prefer those logs as
+     * the source of IOB.
      */
     public float getIob() {
         return iob;
     }
 
     /**
-     * @return carb ratio from the insulin delivery profile
+     * @return carb ratio from the insulin delivery profile, in thousandths of a gram per unit
      */
     public long getCarbRatio() {
         return carbRatio;
+    }
+
+    /**
+     * @return carb ratio from the insulin delivery profile, in grams per unit
+     */
+    public double getCarbRatioGramsPerUnit() {
+        return carbRatio / 1000.0;
     }
 }
