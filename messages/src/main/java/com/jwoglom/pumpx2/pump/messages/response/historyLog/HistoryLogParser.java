@@ -119,11 +119,16 @@ public class HistoryLogParser {
     /**
      * Reads the typeId from the first two bytes of a raw history log.
      *
-     * <p>Those bytes are a little-endian uint16 whose low 12 bits are the typeId; the high nibble
-     * is a log format/generation discriminator (0 on t:slim X2, 1 on Mobi) and is not part of the
-     * id. This is the same mask {@link HistoryLog#parseBase} applies. Without it a Mobi opCode 55
-     * reads as typeId 4151, misses {@link #LOG_MESSAGE_IDS}, and is only recovered by the retry
-     * ladder in {@link #parse}, which logs a warning for every single history log.
+     * <p>Those bytes are a little-endian uint16 whose low 12 bits are the typeId. The top 4 bits
+     * are not part of the id and their meaning is unknown, see
+     * {@link HistoryLog#getHeaderHighNibble()}. This applies the same mask
+     * {@link HistoryLog#parseBase} already used.
+     *
+     * <p>Without the mask, a record carrying a nonzero high nibble produces an inflated typeId
+     * (opCode 55 with a nibble of 1 reads as 4151), misses {@link #LOG_MESSAGE_IDS}, and is only
+     * recovered by the retry ladder in {@link #parse}, which logs a warning for every such record.
+     * The masking also corrects dispatch for typeIds of 128-255, which the previous signed-byte
+     * arithmetic resolved to typeId+256.
      */
     public static int typeIdOf(byte[] rawStream) {
         return Bytes.readShort(rawStream, 0) & 4095;

@@ -31,8 +31,8 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
         this(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);
     }
 
-    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int logGeneration) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, logGeneration);
+    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, headerHighNibble);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
@@ -79,9 +79,9 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
         return buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int logGeneration) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {
         return Bytes.combine(
-            HistoryLog.typeIdBytes(65, logGeneration),
+            HistoryLog.typeIdBytes(65, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
@@ -118,8 +118,11 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     }
 
     /**
-     * How the bolus was requested. A bolus commanded over Bluetooth by an app such as this one
-     * reports {@link #BLE_STANDARD}, not {@link #STANDARD}.
+     * How the bolus was requested.
+     *
+     * <p><b>Value names ported from the tconnectsync Python implementation and not verified
+     * here.</b> No record committed to this repository exercises them. Confirm against a capture
+     * before relying on these labels.
      */
     public enum BolusOption {
         STANDARD(0),
@@ -217,6 +220,10 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
 
     /**
      * The IOB algorithm used when calculating the bolus.
+     *
+     * <p><b>Value names ported from the tconnectsync Python implementation and not verified
+     * here.</b> The field previously carried a {@code TODO(unknown)} javadoc; these names replace
+     * that with a secondhand attribution, not with a confirmed one.
      */
     public enum SelectedIOBType {
         MUDALIAR_IOB(0),

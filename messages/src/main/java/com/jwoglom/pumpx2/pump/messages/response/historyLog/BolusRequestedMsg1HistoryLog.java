@@ -27,9 +27,9 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
         this(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, 0);
     }
 
-    public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusTypeId, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int logGeneration) {
+    public BolusRequestedMsg1HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int bolusTypeId, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int headerHighNibble) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, logGeneration);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusTypeId, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, headerHighNibble);
         this.bolusId = bolusId;
         this.bolusTypeId = bolusTypeId;
         this.correctionBolusIncluded = correctionBolusIncluded;
@@ -63,9 +63,9 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
         return buildCargo(pumpTimeSec, sequenceNum, bolusId, bolusType, correctionBolusIncluded, carbAmount, bg, iob, carbRatio, 0);
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int logGeneration) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int headerHighNibble) {
         return Bytes.combine(
-            HistoryLog.typeIdBytes(64, logGeneration),
+            HistoryLog.typeIdBytes(64, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
@@ -91,12 +91,15 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     /**
      * @return how the bolus was requested, or null if the raw value is not recognized.
      *
-     * <p>Note that this is a scalar enum, not the bitmask used by
-     * {@link BolusDeliveryHistoryLog#getBolusTypes()}. Decoding it as a bitmask is contradicted by
-     * the data: a raw value of 3 would decode to FOOD1|CORRECTION, but records carrying 3 also
-     * report {@link #getCorrectionBolusIncluded()} false and a correction bolus size of zero in
-     * {@link BolusRequestedMsg3HistoryLog}. As a scalar, 3 is {@link BolusType#REMOTE}, which is
-     * consistent with those records having been commanded over Bluetooth.
+     * <p>Treated as a scalar enum rather than the bitmask used by
+     * {@link BolusDeliveryHistoryLog#getBolusTypes()}. <b>Unverified against this repository's
+     * fixtures.</b> The scalar reading, and the value names below, are taken from the tconnectsync
+     * Python implementation by way of the analysis attached to the linked issue; the supporting
+     * observation reported there is that records carrying a raw value of 3 also report
+     * {@link #getCorrectionBolusIncluded()} false and a correction size of zero, which a
+     * FOOD1|CORRECTION bitmask reading could not explain. The only records committed here carry 1
+     * and 2, so neither reading is discriminated by anything in this repository. Confirm against a
+     * capture before relying on this for therapy-relevant decoding.
      */
     public BolusType getBolusType() {
         return BolusType.fromId(bolusTypeId);
@@ -104,6 +107,9 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
 
     /**
      * The way in which a bolus was requested, as reported by this log only.
+     *
+     * <p>Value names ported from tconnectsync and not independently verified here; see
+     * {@link #getBolusType()}.
      *
      * <p>Deliberately distinct from {@link BolusDeliveryHistoryLog.BolusType}, which is a bitmask
      * of the components making up a bolus and is a different field with a different encoding.
@@ -144,10 +150,9 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     /**
      * @return carbs in grams.
      *
-     * <p>The ordering of this field and {@link #getBg()} is the one field pair in this log which
-     * has not been independently confirmed against a capture: every record examined so far was
-     * either commanded remotely or entered without a fingerstick, leaving both fields zero. The
-     * offsets either side of the pair are confirmed.
+     * <p>The ordering of this field and {@link #getBg()} is unconfirmed. Both are zero in every
+     * record committed to this repository, so nothing here distinguishes this ordering from the
+     * reverse.
      */
     public int getCarbAmount() {
         return carbAmount;
@@ -163,9 +168,10 @@ public class BolusRequestedMsg1HistoryLog extends HistoryLog {
     /**
      * @return current insulin on board.
      *
-     * <p>This field is zero on some pumps which report a nonzero IOB for the same bolus in
-     * {@link BolusActivatedHistoryLog} and {@link BolusCompletedHistoryLog}. Prefer those logs as
-     * the source of IOB.
+     * <p>The analysis attached to the linked issue reports this field reading zero on records
+     * whose corresponding {@link BolusActivatedHistoryLog} and {@link BolusCompletedHistoryLog}
+     * carry a nonzero IOB, and recommends preferring those logs as the source of IOB. Not
+     * reproduced here; the records committed to this repository carry a nonzero value.
      */
     public float getIob() {
         return iob;

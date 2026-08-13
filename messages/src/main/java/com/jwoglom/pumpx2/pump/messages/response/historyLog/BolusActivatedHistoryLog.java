@@ -23,9 +23,9 @@ public class BolusActivatedHistoryLog extends HistoryLog {
         this(pumpTimeSec, sequenceNum, bolusId, selectedIob, iob, bolusSize, 0);
     }
 
-    public BolusActivatedHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int logGeneration) {
+    public BolusActivatedHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int headerHighNibble) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, selectedIob, iob, bolusSize, logGeneration);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, selectedIob, iob, bolusSize, headerHighNibble);
         this.bolusId = bolusId;
         this.selectedIob = selectedIob;
         this.iob = iob;
@@ -69,9 +69,9 @@ public class BolusActivatedHistoryLog extends HistoryLog {
         return buildCargo(pumpTimeSec, sequenceNum, bolusId, selectedIob, iob, bolusSize, 0);
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int logGeneration) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int selectedIob, float iob, float bolusSize, int headerHighNibble) {
         return HistoryLog.fillCargo(Bytes.combine(
-            HistoryLog.typeIdBytes(55, logGeneration),
+            HistoryLog.typeIdBytes(55, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId),
