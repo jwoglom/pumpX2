@@ -121,13 +121,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">PumpingSuspendedHistoryLog</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">PumpingSuspendedHistoryLog</a><wbr>(int&nbsp;insulinAmount,
- int&nbsp;reasonId)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,int)" class="member-name-link">PumpingSuspendedHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
- long&nbsp;sequenceNum,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,int,int,int)" class="member-name-link">PumpingSuspendedHistoryLog</a><wbr>(long&nbsp;preSuspendState,
  int&nbsp;insulinAmount,
- int&nbsp;reasonId)</code></div>
+ int&nbsp;reasonId,
+ int&nbsp;rpaTimeout)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,long,int,int,int)" class="member-name-link">PumpingSuspendedHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;preSuspendState,
+ int&nbsp;insulinAmount,
+ int&nbsp;reasonId,
+ int&nbsp;rpaTimeout)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -144,27 +148,37 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,long,int,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
+ long&nbsp;preSuspendState,
  int&nbsp;insulinAmount,
- int&nbsp;reason)</code></div>
+ int&nbsp;reason,
+ int&nbsp;rpaTimeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInsulinAmount()" class="member-name-link">getInsulinAmount</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReason()" class="member-name-link">getReason</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreSuspendState()" class="member-name-link">getPreSuspendState</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReason()" class="member-name-link">getReason</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReasonId()" class="member-name-link">getReasonId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReasonId()" class="member-name-link">getReasonId</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRpaTimeout()" class="member-name-link">getRpaTimeout</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for PumpingSuspendedHistoryLog:
+ <code>preSuspendState</code><code>Bytes.readUint32(raw, 10)</code>
  <code>insulinAmount</code><code>Bytes.readShort(raw, 14)</code>
  <code>reasonId</code><code>raw[16]</code>
+ <code>rpaTimeout</code><code>raw[17]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -193,23 +207,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PumpingSuspendedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-18">PumpingSuspendedHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-20">PumpingSuspendedHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(long,long,int,int)">
+<section class="detail" id="&lt;init&gt;(long,long,long,int,int,int)">
 <h3>PumpingSuspendedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-19">PumpingSuspendedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-21">PumpingSuspendedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
+ long&nbsp;preSuspendState,
  int&nbsp;insulinAmount,
- int&nbsp;reasonId)</span></div>
+ int&nbsp;reasonId,
+ int&nbsp;rpaTimeout)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(int,int)">
+<section class="detail" id="&lt;init&gt;(long,int,int,int)">
 <h3>PumpingSuspendedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-27">PumpingSuspendedHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;insulinAmount,
- int&nbsp;reasonId)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-31">PumpingSuspendedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;preSuspendState,
+ int&nbsp;insulinAmount,
+ int&nbsp;reasonId,
+ int&nbsp;rpaTimeout)</span></div>
 </section>
 </li>
 </ul>
@@ -223,7 +241,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-31">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-35">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -233,11 +251,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-42">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-48">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for PumpingSuspendedHistoryLog:</caption>
+ <tr><td><code>preSuspendState</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
  <tr><td><code>insulinAmount</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
  <tr><td><code>reasonId</code></td><td><code>raw[16]</code></td></tr>
+ <tr><td><code>rpaTimeout</code></td><td><code>raw[17]</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -246,35 +266,69 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,long,int,int)">
+<section class="detail" id="buildCargo(long,long,long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-51">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-59">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
+ long&nbsp;preSuspendState,
  int&nbsp;insulinAmount,
- int&nbsp;reason)</span></div>
+ int&nbsp;reason,
+ int&nbsp;rpaTimeout)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPreSuspendState()">
+<h3>getPreSuspendState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-73">getPreSuspendState</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the state of the pump immediately before pumping was suspended
+ (Tandem's pump-logs JSON calls this property preSuspendState)</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getInsulinAmount()">
 <h3>getInsulinAmount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-64">getInsulinAmount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-90">getInsulinAmount</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>insulin amount in milliunits at the time pumping was suspended (I think this matches
- with the IOB, needs confirmation)</dd>
+<dd>an insulin reservoir quantity, in whole units, at the time pumping was suspended.
+ This is NOT the IOB: the value is byte-identical in the paired suspended and resumed
+ records which bracket a suspension, while the IOB the pump reports in LID_DAILY_BASAL
+ over the same window decays.
+
+ TODO: determine whether this is the insulin remaining in the reservoir or the current
+ cartridge fill level. Observed captures support both readings and the question is
+ unresolved: one suspend/resume pair drops 120 -> 105 across a 15 minute suspension
+ (consistent with remaining volume being consumed by a tubing prime), while another
+ capture reads 180 at a suspend roughly ten hours after a 180 unit cartridge fill
+ (which remaining volume should have decremented by then).</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getReasonId()">
 <h3>getReasonId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-67">getReasonId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-93">getReasonId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getReason()">
 <h3>getReason</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-70">getReason</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-96">getReason</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRpaTimeout()">
+<h3>getRpaTimeout</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpingSuspendedHistoryLog.html#line-105">getRpaTimeout</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the resume pump alert (RPA) timeout in minutes: how long the pump waits while
+ suspended before alerting that insulin delivery is still stopped. 0 when unset.
+ (Tandem's pump-logs JSON calls this property rpaTimeout)</dd>
+</dl>
 </section>
 </li>
 </ul>
