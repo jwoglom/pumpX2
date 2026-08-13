@@ -116,19 +116,21 @@ public class HistoryLogParser {
         }
     }
 
+    /**
+     * Reads the typeId from the first two bytes of a raw history log.
+     *
+     * <p>Those bytes are a little-endian uint16 whose low 12 bits are the typeId; the high nibble
+     * is a log format/generation discriminator (0 on t:slim X2, 1 on Mobi) and is not part of the
+     * id. This is the same mask {@link HistoryLog#parseBase} applies. Without it a Mobi opCode 55
+     * reads as typeId 4151, misses {@link #LOG_MESSAGE_IDS}, and is only recovered by the retry
+     * ladder in {@link #parse}, which logs a warning for every single history log.
+     */
+    public static int typeIdOf(byte[] rawStream) {
+        return Bytes.readShort(rawStream, 0) & 4095;
+    }
+
     public static HistoryLog parse(byte[] rawStream) {
-        // Little endian, unsigned
-        int typeId = rawStream[0];
-        if (typeId < 0) {
-            typeId += 512;
-        }
-        if (rawStream[1] > 0) {
-            typeId += 256 * rawStream[1];
-        }
-//        if (typeId % 256 != typeId) {
-//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
-//            typeId = typeId % 256;
-//        }
+        int typeId = typeIdOf(rawStream);
         HistoryLog ret = parseWithTypeId(rawStream, typeId);
         if (ret instanceof UnknownHistoryLog) {
             L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));
