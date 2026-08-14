@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.DailyBasalHistoryLog;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import java.util.Arrays;
 import org.apache.commons.codec.DecoderException;
@@ -325,5 +326,45 @@ public class DailyBasalHistoryLogTest {
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(Instant.parse("2022-02-18T00:16:25Z"), parsedRes.getPumpTimeSecInstant());
+    }
+
+    @Test
+    public void testBatteryChargeIsUnscaledPercent() throws DecoderException {
+        // byte 23 is the pump's state-of-charge, 0-100, with no scaling applied
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                "51000570941a0ec00200fa28b540b81e653f000000000041400f",
+                new DailyBasalHistoryLog(445935621, 180238, 5.661252F, 0.895F, 0.0F, false, 65, 3904)
+        );
+        assertEquals(65, parsedRes.getBatteryChargeRaw());
+        assertEquals(65.0, parsedRes.getBatteryChargePercent(), 0.0);
+    }
+
+    @Test
+    public void testLowBatteryChargeIsReportedAsLow() throws DecoderException {
+        // a 20% battery must be reported as 20%, not as the 53.9% the previous scaling emitted
+        DailyBasalHistoryLog expected = new DailyBasalHistoryLog(
+                445935621, 180238, 5.661252F, 0.895F, 0.0F, false, 20, 3714
+        );
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                Hex.encodeHexString(expected.getCargo()),
+                expected
+        );
+        assertEquals(20, parsedRes.getBatteryChargeRaw());
+        assertEquals(20.0, parsedRes.getBatteryChargePercent(), 0.0);
+        assertEquals(3714, parsedRes.getLipoMv());
+    }
+
+    @Test
+    public void testBatteryChargeAbove127IsReadUnsigned() throws DecoderException {
+        // guards against the signed read of byte 23; outside the pump's real 0-100 range but a
+        // signed read would return -1 rather than 255
+        DailyBasalHistoryLog expected = new DailyBasalHistoryLog(
+                445935621, 180238, 5.661252F, 0.895F, 0.0F, false, 255, 3904
+        );
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                Hex.encodeHexString(expected.getCargo()),
+                expected
+        );
+        assertEquals(255, parsedRes.getBatteryChargeRaw());
     }
 }
