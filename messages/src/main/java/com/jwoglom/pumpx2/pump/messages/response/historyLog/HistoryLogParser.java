@@ -122,7 +122,8 @@ public class HistoryLogParser {
      * <p>Those bytes are a little-endian uint16 whose low 12 bits are the typeId. The top 4 bits
      * are not part of the id and their meaning is unknown, see
      * {@link HistoryLog#getHeaderHighNibble()}. This applies the same mask
-     * {@link HistoryLog#parseBase} already used.
+     * {@link HistoryLog#parseBase} already used, and matches Tandem's own Mobi Android app, which
+     * reads these two bytes little endian and masks with 4095 before resolving the log type.
      *
      * <p>Without the mask, a record carrying a nonzero high nibble produces an inflated typeId
      * (opCode 55 with a nibble of 1 reads as 4151), misses {@link #LOG_MESSAGE_IDS}, and is only

@@ -54,17 +54,22 @@ public abstract class HistoryLog {
     public abstract void parse(byte[] raw);
 
     /**
-     * The first two bytes of a history log are a little-endian uint16. {@link #parseBase} masks
-     * that value with 4095 to obtain the typeId, so the top 4 bits are not part of the typeId.
+     * The first two bytes of a history log are a little-endian uint16 whose low 12 bits are the
+     * typeId, leaving these top 4 bits over.
      *
-     * <p><b>What these bits mean is unknown.</b> The only records in this repository which carry a
-     * nonzero value here are the {@link DexcomG7CGMHistoryLog} fixtures, which carry 1. No claim is
-     * made about what distinguishes those records from the ones carrying 0, and the 12/4 split
-     * itself rests only on the pre-existing mask in {@code parseBase}, not on anything observed.
+     * <p>The 12/4 split is confirmed by Tandem's own Mobi Android app, which reads the first two
+     * bytes little endian and masks with 4095 before looking up the log type
+     * ({@code HistoryLogStreamResponse$HistoryLogStreamCargo}).
      *
-     * <p>The value is read and preserved so that {@code buildCargo} can reproduce such a record
-     * byte for byte, which is the only reason this accessor exists. Do not infer a pump model, a
-     * firmware version, or a log format from it without evidence.
+     * <p><b>What the top 4 bits mean is unknown, and Tandem's app does not appear to care.</b> It
+     * masks them off and discards them: its {@code HistoryLog} model stores the raw bytes, the
+     * masked type, the timestamp, the sequence number and four 4-byte payload fields, with nothing
+     * corresponding to these bits, and nothing in the decompiled app reads them back. The only
+     * records in this repository carrying a nonzero value here are the
+     * {@link DexcomG7CGMHistoryLog} fixtures, which carry 1.
+     *
+     * <p>The value is read and preserved only so that {@code buildCargo} can reproduce such a
+     * record byte for byte. Do not infer a pump model, a firmware version, or a log format from it.
      *
      * @return the top 4 bits of the first two cargo bytes, or 0 if the cargo is not populated
      */
