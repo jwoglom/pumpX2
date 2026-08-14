@@ -23,7 +23,11 @@ public class BolusCompletedHistoryLog extends HistoryLog {
     public BolusCompletedHistoryLog() {}
     
     public BolusCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatusId, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatusId, bolusId, iob, insulinDelivered, insulinRequested);
+        this(pumpTimeSec, sequenceNum, completionStatusId, bolusId, iob, insulinDelivered, insulinRequested, 0);
+    }
+
+    public BolusCompletedHistoryLog(long pumpTimeSec, long sequenceNum, int completionStatusId, int bolusId, float iob, float insulinDelivered, float insulinRequested, int headerHighNibble) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, completionStatusId, bolusId, iob, insulinDelivered, insulinRequested, headerHighNibble);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.completionStatusId = completionStatusId;
@@ -52,8 +56,12 @@ public class BolusCompletedHistoryLog extends HistoryLog {
 
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
+        return buildCargo(pumpTimeSec, sequenceNum, completionStatus, bolusId, iob, insulinDelivered, insulinRequested, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested, int headerHighNibble) {
         return Bytes.combine(
-            new byte[]{20, 0},
+            HistoryLog.typeIdBytes(20, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(completionStatus),
@@ -91,6 +99,8 @@ public class BolusCompletedHistoryLog extends HistoryLog {
     /**
      * @return the amount of insulin delivered, in real units. Note that due to ieee float
      * precision, even if the bolus was completed fully this may differ from the units requested
+     * by one unit in the last place; compare against {@link #getInsulinRequested()} with a
+     * tolerance of {@link HistoryLog#INSULIN_FLOAT_EPSILON} rather than testing float equality
      */
     public float getInsulinDelivered() {
         return insulinDelivered;

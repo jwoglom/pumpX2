@@ -22,7 +22,11 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     public BolusRequestedMsg3HistoryLog() {}
     
     public BolusRequestedMsg3HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize);
+        this(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, 0);
+    }
+
+    public BolusRequestedMsg3HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int headerHighNibble) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, headerHighNibble);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusId = bolusId;
@@ -54,8 +58,12 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
 
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize) {
+        return buildCargo(pumpTimeSec, sequenceNum, bolusId, spare, foodBolusSize, correctionBolusSize, totalBolusSize, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize, int headerHighNibble) {
         return Bytes.combine(
-            new byte[] { (byte) 66, 0},
+            HistoryLog.typeIdBytes(66, headerHighNibble),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 
@@ -93,6 +101,12 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
      * @return the total bolus amount which is scheduled to be delivered following this message.
      * note that this may not be correctionBolusSize+foodBolusSize if the amounts are overridden,
      * or due to ieee float arithmetic
+     *
+     * <p>Where the amounts are not overridden the identity holds, but the pump recomputes the
+     * total in float, so a small number of records differ from the sum by one unit in the last
+     * place. Compare with a tolerance of {@link HistoryLog#INSULIN_FLOAT_EPSILON} rather than
+     * exact float equality, and do not use exact equality on these values as a reconciliation or
+     * deduplication key.
      */
     public float getTotalBolusSize() {
         return totalBolusSize;
