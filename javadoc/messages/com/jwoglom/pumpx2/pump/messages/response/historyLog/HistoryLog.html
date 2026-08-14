@@ -101,6 +101,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>protected byte[]</code></div>
 <div class="col-second even-row-color"><code><a href="#cargo" class="member-name-link">cargo</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final float</code></div>
+<div class="col-second odd-row-color"><code><a href="#INSULIN_FLOAT_EPSILON" class="member-name-link">INSULIN_FLOAT_EPSILON</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Tolerance, in units of insulin, for comparing the float insulin amounts reported across
+ history logs.</div>
+</div>
 </div>
 </section>
 </li>
@@ -134,27 +140,40 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCargo()" class="member-name-link">getCargo</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpTimeSec()" class="member-name-link">getPumpTimeSec</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpTimeSecInstant()" class="member-name-link">getPumpTimeSecInstant</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeaderHighNibble()" class="member-name-link">getHeaderHighNibble</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The first two bytes of a history log are a little-endian uint16 whose low 12 bits are the
+ typeId, leaving these top 4 bits over.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpTimeSec()" class="member-name-link">getPumpTimeSec</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSequenceNum()" class="member-name-link">getSequenceNum</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpTimeSecInstant()" class="member-name-link">getPumpTimeSecInstant</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../annotations/HistoryLogProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">HistoryLogProps</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#props()" class="member-name-link">props</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSequenceNum()" class="member-name-link">getSequenceNum</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../annotations/HistoryLogProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">HistoryLogProps</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#props()" class="member-name-link">props</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#typeIdBytes(int,int)" class="member-name-link">typeIdBytes</a><wbr>(int&nbsp;typeId,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds the leading two cargo bytes from a typeId and the high nibble described in
+ <a href="#getHeaderHighNibble()"><code>getHeaderHighNibble()</code></a>.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#verboseToString()" class="member-name-link">verboseToString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -176,9 +195,32 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="INSULIN_FLOAT_EPSILON">
+<h3>INSULIN_FLOAT_EPSILON</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-27">INSULIN_FLOAT_EPSILON</a></span></div>
+<div class="block">Tolerance, in units of insulin, for comparing the float insulin amounts reported across
+ history logs.
+
+ <p>Values which are arithmetically equal can differ by one unit in the last place across
+ logs, so consumers reconciling or deduplicating boluses should compare within this tolerance
+ rather than testing float equality. The observation motivating this (a requested amount
+ reading 0.25 in one log and 0.2500000298 in another, attributed to the pump recomputing
+ rather than copying the value) is reported in the analysis attached to the linked issue and
+ is not reproduced by any record committed to this repository.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog.INSULIN_FLOAT_EPSILON">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="cargo">
 <h3>cargo</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-16">cargo</a></span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-29">cargo</a></span></div>
 </section>
 </li>
 </ul>
@@ -192,7 +234,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>HistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-18">HistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-31">HistoryLog</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -206,43 +248,86 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-25">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-38">typeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPumpTimeSec()">
 <h3>getPumpTimeSec</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-28">getPumpTimeSec</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-41">getPumpTimeSec</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPumpTimeSecInstant()">
 <h3>getPumpTimeSecInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-32">getPumpTimeSecInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-45">getPumpTimeSecInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSequenceNum()">
 <h3>getSequenceNum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-37">getSequenceNum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-50">getSequenceNum</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-41">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-54">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getHeaderHighNibble()">
+<h3>getHeaderHighNibble</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-76">getHeaderHighNibble</a></span>()</div>
+<div class="block">The first two bytes of a history log are a little-endian uint16 whose low 12 bits are the
+ typeId, leaving these top 4 bits over.
+
+ <p>The 12/4 split is confirmed by Tandem's own Mobi Android app, which reads the first two
+ bytes little endian and masks with 4095 before looking up the log type
+ (<code>HistoryLogStreamResponse$HistoryLogStreamCargo</code>).
+
+ <p><b>What the top 4 bits mean is unknown, and Tandem's app does not appear to care.</b> It
+ masks them off and discards them: its <code>HistoryLog</code> model stores the raw bytes, the
+ masked type, the timestamp, the sequence number and four 4-byte payload fields, with nothing
+ corresponding to these bits, and nothing in the decompiled app reads them back. The only
+ records in this repository carrying a nonzero value here are the
+ <a href="DexcomG7CGMHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DexcomG7CGMHistoryLog</code></a> fixtures, which carry 1.
+
+ <p>The value is read and preserved only so that <code>buildCargo</code> can reproduce such a
+ record byte for byte. Do not infer a pump model, a firmware version, or a log format from it.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the top 4 bits of the first two cargo bytes, or 0 if the cargo is not populated</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="typeIdBytes(int,int)">
+<h3>typeIdBytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-92">typeIdBytes</a></span><wbr><span class="parameters">(int&nbsp;typeId,
+ int&nbsp;headerHighNibble)</span></div>
+<div class="block">Builds the leading two cargo bytes from a typeId and the high nibble described in
+ <a href="#getHeaderHighNibble()"><code>getHeaderHighNibble()</code></a>. With a nibble of 0 this is identical to the historical
+ <code>new byte[]{typeId, 0}</code>, except that it does not truncate a typeId above 255.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>typeId</code> - the history log typeId, which occupies the low 12 bits</dd>
+<dd><code>headerHighNibble</code> - the top 4 bits, of unknown meaning, see <a href="#getHeaderHighNibble()"><code>getHeaderHighNibble()</code></a></dd>
+<dt>Returns:</dt>
+<dd>the first two bytes of the cargo, little endian</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCargo()">
 <h3>getCargo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-68">getCargo</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-124">getCargo</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toString()">
 <h3>toString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-72">toString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-128">toString</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -252,19 +337,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="verboseToString()">
 <h3>verboseToString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-76">verboseToString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-132">verboseToString</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="fillCargo(byte[])">
 <h3>fillCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-80">fillCargo</a></span><wbr><span class="parameters">(byte[]&nbsp;cargo)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-136">fillCargo</a></span><wbr><span class="parameters">(byte[]&nbsp;cargo)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="props()">
 <h3>props</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../annotations/HistoryLogProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">HistoryLogProps</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-89">props</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../annotations/HistoryLogProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">HistoryLogProps</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#line-145">props</a></span>()</div>
 </section>
 </li>
 </ul>

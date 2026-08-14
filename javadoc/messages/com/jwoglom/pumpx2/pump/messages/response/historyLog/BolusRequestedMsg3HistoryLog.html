@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Fields inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#cargo">cargo</a></code></div>
+<code><a href="HistoryLog.html#cargo">cargo</a>, <a href="HistoryLog.html#INSULIN_FLOAT_EPSILON">INSULIN_FLOAT_EPSILON</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -120,6 +120,15 @@ loadScripts(document, 'script');</script>
  float&nbsp;correctionBolusSize,
  float&nbsp;totalBolusSize)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,float,float,float,int)" class="member-name-link">BolusRequestedMsg3HistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;spare,
+ float&nbsp;foodBolusSize,
+ float&nbsp;correctionBolusSize,
+ float&nbsp;totalBolusSize,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -142,56 +151,64 @@ loadScripts(document, 'script');</script>
  float&nbsp;foodBolusSize,
  float&nbsp;correctionBolusSize,
  float&nbsp;totalBolusSize)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,float,float,float,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;spare,
+ float&nbsp;foodBolusSize,
+ float&nbsp;correctionBolusSize,
+ float&nbsp;totalBolusSize,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for BolusRequestedMsg3HistoryLog.buildCargo(...):
  OffsetDescription
- 0<code>new byte[]{(byte) 66} [element 0]</code>
- 1<code>new byte[]{0} [element 1]</code>
- 2<code>toUint32(pumpTimeSec) [byte 0]</code>
- 3<code>toUint32(pumpTimeSec) [byte 1]</code>
- 4<code>toUint32(pumpTimeSec) [byte 2]</code>
- 5<code>toUint32(pumpTimeSec) [byte 3]</code>
- 6<code>toUint32(sequenceNum) [byte 0]</code>
- 7<code>toUint32(sequenceNum) [byte 1]</code>
- 8<code>toUint32(sequenceNum) [byte 2]</code>
- 9<code>toUint32(sequenceNum) [byte 3]</code>
- 10<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
- 11<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
- 12<code>firstTwoBytesLittleEndian(spare) [byte 0]</code>
- 13<code>firstTwoBytesLittleEndian(spare) [byte 1]</code>
- 14<code>toFloat(foodBolusSize) [byte 0]</code>
- 15<code>toFloat(foodBolusSize) [byte 1]</code>
- 16<code>toFloat(foodBolusSize) [byte 2]</code>
- 17<code>toFloat(foodBolusSize) [byte 3]</code>
- 18<code>toFloat(correctionBolusSize) [byte 0]</code>
- 19<code>toFloat(correctionBolusSize) [byte 1]</code>
- 20<code>toFloat(correctionBolusSize) [byte 2]</code>
- 21<code>toFloat(correctionBolusSize) [byte 3]</code>
- 22<code>toFloat(totalBolusSize) [byte 0]</code>
- 23<code>toFloat(totalBolusSize) [byte 1]</code>
- 24<code>toFloat(totalBolusSize) [byte 2]</code>
- 25<code>toFloat(totalBolusSize) [byte 3]</code>
+ 0<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 1<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 4<code>toUint32(sequenceNum) [byte 0]</code>
+ 5<code>toUint32(sequenceNum) [byte 1]</code>
+ 6<code>toUint32(sequenceNum) [byte 2]</code>
+ 7<code>toUint32(sequenceNum) [byte 3]</code>
+ 8<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 9<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 10<code>firstTwoBytesLittleEndian(spare) [byte 0]</code>
+ 11<code>firstTwoBytesLittleEndian(spare) [byte 1]</code>
+ 12<code>toFloat(foodBolusSize) [byte 0]</code>
+ 13<code>toFloat(foodBolusSize) [byte 1]</code>
+ 14<code>toFloat(foodBolusSize) [byte 2]</code>
+ 15<code>toFloat(foodBolusSize) [byte 3]</code>
+ 16<code>toFloat(correctionBolusSize) [byte 0]</code>
+ 17<code>toFloat(correctionBolusSize) [byte 1]</code>
+ 18<code>toFloat(correctionBolusSize) [byte 2]</code>
+ 19<code>toFloat(correctionBolusSize) [byte 3]</code>
+ 20<code>toFloat(totalBolusSize) [byte 0]</code>
+ 21<code>toFloat(totalBolusSize) [byte 1]</code>
+ 22<code>toFloat(totalBolusSize) [byte 2]</code>
+ 23<code>toFloat(totalBolusSize) [byte 3]</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCorrectionBolusSize()" class="member-name-link">getCorrectionBolusSize</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCorrectionBolusSize()" class="member-name-link">getCorrectionBolusSize</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFoodBolusSize()" class="member-name-link">getFoodBolusSize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFoodBolusSize()" class="member-name-link">getFoodBolusSize</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpare()" class="member-name-link">getSpare</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSpare()" class="member-name-link">getSpare</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalBolusSize()" class="member-name-link">getTotalBolusSize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTotalBolusSize()" class="member-name-link">getTotalBolusSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for BolusRequestedMsg3HistoryLog:
  <code>bolusId</code><code>Bytes.readShort(raw, 10)</code>
@@ -201,15 +218,15 @@ loadScripts(document, 'script');</script>
  <code>totalBolusSize</code><code>Bytes.readFloat(raw, 22)</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
+<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getHeaderHighNibble()">getHeaderHighNibble</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#typeIdBytes(int,int)">typeIdBytes</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -243,9 +260,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="&lt;init&gt;(long,long,int,int,float,float,float,int)">
+<h3>BolusRequestedMsg3HistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-28">BolusRequestedMsg3HistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;spare,
+ float&nbsp;foodBolusSize,
+ float&nbsp;correctionBolusSize,
+ float&nbsp;totalBolusSize,
+ int&nbsp;headerHighNibble)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(int,int,float,float,float)">
 <h3>BolusRequestedMsg3HistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-35">BolusRequestedMsg3HistoryLog</a></span><wbr><span class="parameters">(int&nbsp;bolusId,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-39">BolusRequestedMsg3HistoryLog</a></span><wbr><span class="parameters">(int&nbsp;bolusId,
  int&nbsp;spare,
  float&nbsp;foodBolusSize,
  float&nbsp;correctionBolusSize,
@@ -263,7 +293,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-39">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-43">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -273,7 +303,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-53">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-57">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BolusRequestedMsg3HistoryLog:</caption>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -291,49 +321,60 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,float,float,float)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-70">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;spare,
  float&nbsp;foodBolusSize,
  float&nbsp;correctionBolusSize,
  float&nbsp;totalBolusSize)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(long,long,int,int,float,float,float,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-104">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;spare,
+ float&nbsp;foodBolusSize,
+ float&nbsp;correctionBolusSize,
+ float&nbsp;totalBolusSize,
+ int&nbsp;headerHighNibble)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for BolusRequestedMsg3HistoryLog.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>new byte[]{(byte) 66} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{0} [element 1]</code></td></tr>
- <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
- <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
- <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
- <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
- <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
- <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
- <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
- <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
- <tr><td>10</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
- <tr><td>11</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
- <tr><td>12</td><td><code>firstTwoBytesLittleEndian(spare) [byte 0]</code></td></tr>
- <tr><td>13</td><td><code>firstTwoBytesLittleEndian(spare) [byte 1]</code></td></tr>
- <tr><td>14</td><td><code>toFloat(foodBolusSize) [byte 0]</code></td></tr>
- <tr><td>15</td><td><code>toFloat(foodBolusSize) [byte 1]</code></td></tr>
- <tr><td>16</td><td><code>toFloat(foodBolusSize) [byte 2]</code></td></tr>
- <tr><td>17</td><td><code>toFloat(foodBolusSize) [byte 3]</code></td></tr>
- <tr><td>18</td><td><code>toFloat(correctionBolusSize) [byte 0]</code></td></tr>
- <tr><td>19</td><td><code>toFloat(correctionBolusSize) [byte 1]</code></td></tr>
- <tr><td>20</td><td><code>toFloat(correctionBolusSize) [byte 2]</code></td></tr>
- <tr><td>21</td><td><code>toFloat(correctionBolusSize) [byte 3]</code></td></tr>
- <tr><td>22</td><td><code>toFloat(totalBolusSize) [byte 0]</code></td></tr>
- <tr><td>23</td><td><code>toFloat(totalBolusSize) [byte 1]</code></td></tr>
- <tr><td>24</td><td><code>toFloat(totalBolusSize) [byte 2]</code></td></tr>
- <tr><td>25</td><td><code>toFloat(totalBolusSize) [byte 3]</code></td></tr>
+ <tr><td>0</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>firstTwoBytesLittleEndian(spare) [byte 0]</code></td></tr>
+ <tr><td>11</td><td><code>firstTwoBytesLittleEndian(spare) [byte 1]</code></td></tr>
+ <tr><td>12</td><td><code>toFloat(foodBolusSize) [byte 0]</code></td></tr>
+ <tr><td>13</td><td><code>toFloat(foodBolusSize) [byte 1]</code></td></tr>
+ <tr><td>14</td><td><code>toFloat(foodBolusSize) [byte 2]</code></td></tr>
+ <tr><td>15</td><td><code>toFloat(foodBolusSize) [byte 3]</code></td></tr>
+ <tr><td>16</td><td><code>toFloat(correctionBolusSize) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>toFloat(correctionBolusSize) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>toFloat(correctionBolusSize) [byte 2]</code></td></tr>
+ <tr><td>19</td><td><code>toFloat(correctionBolusSize) [byte 3]</code></td></tr>
+ <tr><td>20</td><td><code>toFloat(totalBolusSize) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>toFloat(totalBolusSize) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>toFloat(totalBolusSize) [byte 2]</code></td></tr>
+ <tr><td>23</td><td><code>toFloat(totalBolusSize) [byte 3]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-113">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-119">getBolusId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>bolus ID</dd>
@@ -343,13 +384,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSpare()">
 <h3>getSpare</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-116">getSpare</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-122">getSpare</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFoodBolusSize()">
 <h3>getFoodBolusSize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-123">getFoodBolusSize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-129">getFoodBolusSize</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the portion of the bolus amount relating to food from carbs</dd>
@@ -359,7 +400,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCorrectionBolusSize()">
 <h3>getCorrectionBolusSize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-130">getCorrectionBolusSize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-136">getCorrectionBolusSize</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the portion of the bolus amount relating to the correction bolus from BG+IOB</dd>
@@ -369,12 +410,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTotalBolusSize()">
 <h3>getTotalBolusSize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-139">getTotalBolusSize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg3HistoryLog.html#line-151">getTotalBolusSize</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the total bolus amount which is scheduled to be delivered following this message.
  note that this may not be correctionBolusSize+foodBolusSize if the amounts are overridden,
- or due to ieee float arithmetic</dd>
+ or due to ieee float arithmetic
+
+ <p>Where the amounts are not overridden the identity holds, but the pump recomputes the
+ total in float, so a small number of records differ from the sum by one unit in the last
+ place. Compare with a tolerance of <a href="HistoryLog.html#INSULIN_FLOAT_EPSILON"><code>HistoryLog.INSULIN_FLOAT_EPSILON</code></a> rather than
+ exact float equality, and do not use exact equality on these values as a reconciliation or
+ deduplication key.</dd>
 </dl>
 </section>
 </li>

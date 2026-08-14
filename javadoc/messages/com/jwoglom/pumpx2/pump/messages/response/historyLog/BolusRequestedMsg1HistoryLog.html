@@ -48,7 +48,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -82,18 +82,35 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-9">BolusRequestedMsg1HistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-7">BolusRequestedMsg1HistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="BolusRequestedMsg1HistoryLog.BolusType.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg1HistoryLog.BolusType</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The way in which a bolus was requested, as reported by this log only.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Fields inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#cargo">cargo</a></code></div>
+<code><a href="HistoryLog.html#cargo">cargo</a>, <a href="HistoryLog.html#INSULIN_FLOAT_EPSILON">INSULIN_FLOAT_EPSILON</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -116,6 +133,17 @@ loadScripts(document, 'script');</script>
  float&nbsp;iob,
  long&nbsp;carbRatio)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,boolean,int,int,float,long,int)" class="member-name-link">BolusRequestedMsg1HistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;bolusTypeId,
+ boolean&nbsp;correctionBolusIncluded,
+ int&nbsp;carbAmount,
+ int&nbsp;bg,
+ float&nbsp;iob,
+ long&nbsp;carbRatio,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -140,55 +168,68 @@ loadScripts(document, 'script');</script>
  int&nbsp;bg,
  float&nbsp;iob,
  long&nbsp;carbRatio)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,boolean,int,int,float,long,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;bolusType,
+ boolean&nbsp;correctionBolusIncluded,
+ int&nbsp;carbAmount,
+ int&nbsp;bg,
+ float&nbsp;iob,
+ long&nbsp;carbRatio,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">
  Byte layout for BolusRequestedMsg1HistoryLog.buildCargo(...):
  OffsetDescription
- 0<code>new byte[]{64} [element 0]</code>
- 1<code>new byte[]{0} [element 1]</code>
- 2<code>toUint32(pumpTimeSec) [byte 0]</code>
- 3<code>toUint32(pumpTimeSec) [byte 1]</code>
- 4<code>toUint32(pumpTimeSec) [byte 2]</code>
- 5<code>toUint32(pumpTimeSec) [byte 3]</code>
- 6<code>toUint32(sequenceNum) [byte 0]</code>
- 7<code>toUint32(sequenceNum) [byte 1]</code>
- 8<code>toUint32(sequenceNum) [byte 2]</code>
- 9<code>toUint32(sequenceNum) [byte 3]</code>
- 10<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
- 11<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
- 12<code>(byte) bolusType</code>
- 13<code>(byte) (correctionBolusIncluded ? 1 : 0)</code>
- 14<code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code>
- 15<code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code>
- 16<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
- 17<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
- 18<code>toFloat(iob) [byte 0]</code>
- 19<code>toFloat(iob) [byte 1]</code>
- 20<code>toFloat(iob) [byte 2]</code>
- 21<code>toFloat(iob) [byte 3]</code>
- 22<code>toUint32(carbRatio) [byte 0]</code>
- 23<code>toUint32(carbRatio) [byte 1]</code>
- 24<code>toUint32(carbRatio) [byte 2]</code>
- 25<code>toUint32(carbRatio) [byte 3]</code>
+ 0<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 1<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 4<code>toUint32(sequenceNum) [byte 0]</code>
+ 5<code>toUint32(sequenceNum) [byte 1]</code>
+ 6<code>toUint32(sequenceNum) [byte 2]</code>
+ 7<code>toUint32(sequenceNum) [byte 3]</code>
+ 8<code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code>
+ 9<code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code>
+ 10<code>(byte) bolusType</code>
+ 11<code>(byte) (correctionBolusIncluded ? 1 : 0)</code>
+ 12<code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code>
+ 13<code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code>
+ 14<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
+ 15<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
+ 16<code>toFloat(iob) [byte 0]</code>
+ 17<code>toFloat(iob) [byte 1]</code>
+ 18<code>toFloat(iob) [byte 2]</code>
+ 19<code>toFloat(iob) [byte 3]</code>
+ 20<code>toUint32(carbRatio) [byte 0]</code>
+ 21<code>toUint32(carbRatio) [byte 1]</code>
+ 22<code>toUint32(carbRatio) [byte 2]</code>
+ 23<code>toUint32(carbRatio) [byte 3]</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBg()" class="member-name-link">getBg</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusType()" class="member-name-link">getBolusType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusTypeId()" class="member-name-link">getBolusTypeId</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBg()" class="member-name-link">getBg</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCarbAmount()" class="member-name-link">getCarbAmount</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCarbRatio()" class="member-name-link">getCarbRatio</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="BolusRequestedMsg1HistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg1HistoryLog.BolusType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusType()" class="member-name-link">getBolusType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusTypeId()" class="member-name-link">getBolusTypeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCarbAmount()" class="member-name-link">getCarbAmount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCarbRatio()" class="member-name-link">getCarbRatio</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCarbRatioGramsPerUnit()" class="member-name-link">getCarbRatioGramsPerUnit</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCorrectionBolusIncluded()" class="member-name-link">getCorrectionBolusIncluded</a>()</code></div>
@@ -218,7 +259,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
+<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getHeaderHighNibble()">getHeaderHighNibble</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#typeIdBytes(int,int)">typeIdBytes</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -236,13 +277,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BolusRequestedMsg1HistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-26">BolusRequestedMsg1HistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-24">BolusRequestedMsg1HistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,boolean,int,int,float,long)">
 <h3>BolusRequestedMsg1HistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-28">BolusRequestedMsg1HistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-26">BolusRequestedMsg1HistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;bolusTypeId,
@@ -251,6 +292,21 @@ loadScripts(document, 'script');</script>
  int&nbsp;bg,
  float&nbsp;iob,
  long&nbsp;carbRatio)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,int,int,boolean,int,int,float,long,int)">
+<h3>BolusRequestedMsg1HistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-30">BolusRequestedMsg1HistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;bolusTypeId,
+ boolean&nbsp;correctionBolusIncluded,
+ int&nbsp;carbAmount,
+ int&nbsp;bg,
+ float&nbsp;iob,
+ long&nbsp;carbRatio,
+ int&nbsp;headerHighNibble)</span></div>
 </section>
 </li>
 </ul>
@@ -264,7 +320,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-41">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-43">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -274,7 +330,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-57">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-59">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BolusRequestedMsg1HistoryLog:</caption>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -294,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,boolean,int,int,float,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-104">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;bolusType,
@@ -303,42 +359,55 @@ loadScripts(document, 'script');</script>
  int&nbsp;bg,
  float&nbsp;iob,
  long&nbsp;carbRatio)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(long,long,int,int,boolean,int,int,float,long,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-108">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;bolusType,
+ boolean&nbsp;correctionBolusIncluded,
+ int&nbsp;carbAmount,
+ int&nbsp;bg,
+ float&nbsp;iob,
+ long&nbsp;carbRatio,
+ int&nbsp;headerHighNibble)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for BolusRequestedMsg1HistoryLog.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>new byte[]{64} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{0} [element 1]</code></td></tr>
- <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
- <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
- <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
- <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
- <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
- <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
- <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
- <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
- <tr><td>10</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
- <tr><td>11</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
- <tr><td>12</td><td><code>(byte) bolusType</code></td></tr>
- <tr><td>13</td><td><code>(byte) (correctionBolusIncluded ? 1 : 0)</code></td></tr>
- <tr><td>14</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code></td></tr>
- <tr><td>15</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code></td></tr>
- <tr><td>16</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
- <tr><td>17</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
- <tr><td>18</td><td><code>toFloat(iob) [byte 0]</code></td></tr>
- <tr><td>19</td><td><code>toFloat(iob) [byte 1]</code></td></tr>
- <tr><td>20</td><td><code>toFloat(iob) [byte 2]</code></td></tr>
- <tr><td>21</td><td><code>toFloat(iob) [byte 3]</code></td></tr>
- <tr><td>22</td><td><code>toUint32(carbRatio) [byte 0]</code></td></tr>
- <tr><td>23</td><td><code>toUint32(carbRatio) [byte 1]</code></td></tr>
- <tr><td>24</td><td><code>toUint32(carbRatio) [byte 2]</code></td></tr>
- <tr><td>25</td><td><code>toUint32(carbRatio) [byte 3]</code></td></tr>
+ <tr><td>0</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(bolusId) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>(byte) bolusType</code></td></tr>
+ <tr><td>11</td><td><code>(byte) (correctionBolusIncluded ? 1 : 0)</code></td></tr>
+ <tr><td>12</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 0]</code></td></tr>
+ <tr><td>13</td><td><code>firstTwoBytesLittleEndian(carbAmount) [byte 1]</code></td></tr>
+ <tr><td>14</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
+ <tr><td>15</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
+ <tr><td>16</td><td><code>toFloat(iob) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>toFloat(iob) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>toFloat(iob) [byte 2]</code></td></tr>
+ <tr><td>19</td><td><code>toFloat(iob) [byte 3]</code></td></tr>
+ <tr><td>20</td><td><code>toUint32(carbRatio) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>toUint32(carbRatio) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>toUint32(carbRatio) [byte 2]</code></td></tr>
+ <tr><td>23</td><td><code>toUint32(carbRatio) [byte 3]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-121">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-125">getBolusId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the ID of the bolus operation</dd>
@@ -348,23 +417,33 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBolusTypeId()">
 <h3>getBolusTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-125">getBolusTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-129">getBolusTypeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusType()">
 <h3>getBolusType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-132">getBolusType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg1HistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg1HistoryLog.BolusType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-146">getBolusType</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>Bolus types</dd>
+<dd>how the bolus was requested, or null if the raw value is not recognized.
+
+ <p>Treated as a scalar enum rather than the bitmask used by
+ <a href="BolusDeliveryHistoryLog.html#getBolusTypes()"><code>BolusDeliveryHistoryLog.getBolusTypes()</code></a>. <b>Unverified against this repository's
+ fixtures.</b> The scalar reading, and the value names below, are taken from the tconnectsync
+ Python implementation by way of the analysis attached to the linked issue; the supporting
+ observation reported there is that records carrying a raw value of 3 also report
+ <a href="#getCorrectionBolusIncluded()"><code>getCorrectionBolusIncluded()</code></a> false and a correction size of zero, which a
+ FOOD1|CORRECTION bitmask reading could not explain. The only records committed here carry 1
+ and 2, so neither reading is discriminated by anything in this repository. Confirm against a
+ capture before relying on this for therapy-relevant decoding.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCorrectionBolusIncluded()">
 <h3>getCorrectionBolusIncluded</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-139">getCorrectionBolusIncluded</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-188">getCorrectionBolusIncluded</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>if the correction bolus is included</dd>
@@ -374,40 +453,59 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCarbAmount()">
 <h3>getCarbAmount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-146">getCarbAmount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-199">getCarbAmount</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>carbs in grams</dd>
+<dd>carbs in grams.
+
+ <p>The ordering of this field and <a href="#getBg()"><code>getBg()</code></a> is unconfirmed. Both are zero in every
+ record committed to this repository, so nothing here distinguishes this ordering from the
+ reverse.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getBg()">
 <h3>getBg</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-153">getBg</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-206">getBg</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>BG in mg/dL</dd>
+<dd>BG in mg/dL. See the note on <a href="#getCarbAmount()"><code>getCarbAmount()</code></a> regarding this field's offset.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getIob()">
 <h3>getIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-160">getIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-218">getIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>current insulin on board</dd>
+<dd>current insulin on board.
+
+ <p>The analysis attached to the linked issue reports this field reading zero on records
+ whose corresponding <a href="BolusActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BolusActivatedHistoryLog</code></a> and <a href="BolusCompletedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BolusCompletedHistoryLog</code></a>
+ carry a nonzero IOB, and recommends preferring those logs as the source of IOB. Not
+ reproduced here; the records committed to this repository carry a nonzero value.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCarbRatio()">
 <h3>getCarbRatio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-167">getCarbRatio</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-225">getCarbRatio</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>carb ratio from the insulin delivery profile</dd>
+<dd>carb ratio from the insulin delivery profile, in thousandths of a gram per unit</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCarbRatioGramsPerUnit()">
+<h3>getCarbRatioGramsPerUnit</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg1HistoryLog.html#line-232">getCarbRatioGramsPerUnit</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>carb ratio from the insulin delivery profile, in grams per unit</dd>
 </dl>
 </section>
 </li>

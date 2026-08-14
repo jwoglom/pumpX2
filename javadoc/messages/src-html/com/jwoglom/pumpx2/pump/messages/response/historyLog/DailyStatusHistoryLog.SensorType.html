@@ -70,7 +70,7 @@
 <span class="source-line-no">053</span><span id="line-53"></span>
 <span class="source-line-no">054</span><span id="line-54">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {</span>
 <span class="source-line-no">055</span><span id="line-55">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">056</span><span id="line-56">            new byte[]{(byte) 313, 0},</span>
+<span class="source-line-no">056</span><span id="line-56">            HistoryLog.typeIdBytes(313, 0),</span>
 <span class="source-line-no">057</span><span id="line-57">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">058</span><span id="line-58">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">059</span><span id="line-59">            new byte[]{0, (byte) sensorType, (byte) userMode, (byte) pumpControlState}));</span>

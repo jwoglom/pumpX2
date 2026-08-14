@@ -30,83 +30,139 @@
 <span class="source-line-no">013</span><span id="line-13">import java.util.Set;</span>
 <span class="source-line-no">014</span><span id="line-14"></span>
 <span class="source-line-no">015</span><span id="line-15">public abstract class HistoryLog {</span>
-<span class="source-line-no">016</span><span id="line-16">    protected byte[] cargo = null;</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    public HistoryLog() {}</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">021</span><span id="line-21">        this.pumpTimeSec = pumpTimeSec;</span>
-<span class="source-line-no">022</span><span id="line-22">        this.sequenceNum = sequenceNum;</span>
-<span class="source-line-no">023</span><span id="line-23">    }</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    public abstract int typeId();</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    long pumpTimeSec = -1;</span>
-<span class="source-line-no">028</span><span id="line-28">    public long getPumpTimeSec() {</span>
-<span class="source-line-no">029</span><span id="line-29">        return pumpTimeSec;</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public Instant getPumpTimeSecInstant() {</span>
-<span class="source-line-no">033</span><span id="line-33">        return Dates.fromJan12008EpochSecondsToDate(getPumpTimeSec());</span>
-<span class="source-line-no">034</span><span id="line-34">    }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    long sequenceNum = -1;</span>
-<span class="source-line-no">037</span><span id="line-37">    public long getSequenceNum() {</span>
-<span class="source-line-no">038</span><span id="line-38">        return sequenceNum;</span>
-<span class="source-line-no">039</span><span id="line-39">    }</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    public abstract void parse(byte[] raw);</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    /**</span>
-<span class="source-line-no">044</span><span id="line-44">     * Parses the typeId (checked against the superclass static typeId),</span>
-<span class="source-line-no">045</span><span id="line-45">     * pump time in seconds epoch and sequence number.</span>
-<span class="source-line-no">046</span><span id="line-46">     */</span>
-<span class="source-line-no">047</span><span id="line-47">    void parseBase(byte[] raw) {</span>
-<span class="source-line-no">048</span><span id="line-48">        int typeId = Bytes.readShort(raw, 0) &amp; 4095;</span>
-<span class="source-line-no">049</span><span id="line-49">        // skipping due to inconsistencies around signed v unsigned</span>
-<span class="source-line-no">050</span><span id="line-50">        // Validate.isTrue(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">        this.pumpTimeSec = Bytes.readUint32(raw, 2);</span>
-<span class="source-line-no">053</span><span id="line-53">        this.sequenceNum = Bytes.readUint32(raw, 6);</span>
-<span class="source-line-no">054</span><span id="line-54">    }</span>
+<span class="source-line-no">016</span><span id="line-16">    /**</span>
+<span class="source-line-no">017</span><span id="line-17">     * Tolerance, in units of insulin, for comparing the float insulin amounts reported across</span>
+<span class="source-line-no">018</span><span id="line-18">     * history logs.</span>
+<span class="source-line-no">019</span><span id="line-19">     *</span>
+<span class="source-line-no">020</span><span id="line-20">     * &lt;p&gt;Values which are arithmetically equal can differ by one unit in the last place across</span>
+<span class="source-line-no">021</span><span id="line-21">     * logs, so consumers reconciling or deduplicating boluses should compare within this tolerance</span>
+<span class="source-line-no">022</span><span id="line-22">     * rather than testing float equality. The observation motivating this (a requested amount</span>
+<span class="source-line-no">023</span><span id="line-23">     * reading 0.25 in one log and 0.2500000298 in another, attributed to the pump recomputing</span>
+<span class="source-line-no">024</span><span id="line-24">     * rather than copying the value) is reported in the analysis attached to the linked issue and</span>
+<span class="source-line-no">025</span><span id="line-25">     * is not reproduced by any record committed to this repository.</span>
+<span class="source-line-no">026</span><span id="line-26">     */</span>
+<span class="source-line-no">027</span><span id="line-27">    public static final float INSULIN_FLOAT_EPSILON = 1e-6f;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    protected byte[] cargo = null;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    public HistoryLog() {}</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">034</span><span id="line-34">        this.pumpTimeSec = pumpTimeSec;</span>
+<span class="source-line-no">035</span><span id="line-35">        this.sequenceNum = sequenceNum;</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    public abstract int typeId();</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40">    long pumpTimeSec = -1;</span>
+<span class="source-line-no">041</span><span id="line-41">    public long getPumpTimeSec() {</span>
+<span class="source-line-no">042</span><span id="line-42">        return pumpTimeSec;</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    public Instant getPumpTimeSecInstant() {</span>
+<span class="source-line-no">046</span><span id="line-46">        return Dates.fromJan12008EpochSecondsToDate(getPumpTimeSec());</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    long sequenceNum = -1;</span>
+<span class="source-line-no">050</span><span id="line-50">    public long getSequenceNum() {</span>
+<span class="source-line-no">051</span><span id="line-51">        return sequenceNum;</span>
+<span class="source-line-no">052</span><span id="line-52">    }</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">    public abstract void parse(byte[] raw);</span>
 <span class="source-line-no">055</span><span id="line-55"></span>
 <span class="source-line-no">056</span><span id="line-56">    /**</span>
-<span class="source-line-no">057</span><span id="line-57">     * Resets the pumpTimeSec and sequenceNum to 0 so they don't have to be validated in every test clause</span>
-<span class="source-line-no">058</span><span id="line-58">     */</span>
-<span class="source-line-no">059</span><span id="line-59">    void clearBaseFieldsForTesting() {</span>
-<span class="source-line-no">060</span><span id="line-60">        this.pumpTimeSec = 0;</span>
-<span class="source-line-no">061</span><span id="line-61">        this.sequenceNum = 0;</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">        for (int i=2; i&lt;10; i++) {</span>
-<span class="source-line-no">064</span><span id="line-64">            this.cargo[i] = 0;</span>
-<span class="source-line-no">065</span><span id="line-65">        }</span>
-<span class="source-line-no">066</span><span id="line-66">    }</span>
-<span class="source-line-no">067</span><span id="line-67"></span>
-<span class="source-line-no">068</span><span id="line-68">    public byte[] getCargo() {</span>
-<span class="source-line-no">069</span><span id="line-69">        return this.cargo;</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    public String toString() {</span>
-<span class="source-line-no">073</span><span id="line-73">        return JavaHelpers.autoToString(this, new HashSet&lt;&gt;());</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    public String verboseToString() {</span>
-<span class="source-line-no">077</span><span id="line-77">        return JavaHelpers.autoToStringVerbose(this, Set.of("cargo"));</span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">    public static byte[] fillCargo(byte[] cargo) {</span>
-<span class="source-line-no">081</span><span id="line-81">        if (cargo.length == 26) {</span>
-<span class="source-line-no">082</span><span id="line-82">            return cargo;</span>
-<span class="source-line-no">083</span><span id="line-83">        }</span>
-<span class="source-line-no">084</span><span id="line-84">        byte[] ret = new byte[26];</span>
-<span class="source-line-no">085</span><span id="line-85">        System.arraycopy(cargo, 0, ret, 0, cargo.length);</span>
-<span class="source-line-no">086</span><span id="line-86">        return ret;</span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    public HistoryLogProps props() {</span>
-<span class="source-line-no">090</span><span id="line-90">        return getClass().getAnnotation(HistoryLogProps.class);</span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92">}</span>
+<span class="source-line-no">057</span><span id="line-57">     * The first two bytes of a history log are a little-endian uint16 whose low 12 bits are the</span>
+<span class="source-line-no">058</span><span id="line-58">     * typeId, leaving these top 4 bits over.</span>
+<span class="source-line-no">059</span><span id="line-59">     *</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;p&gt;The 12/4 split is confirmed by Tandem's own Mobi Android app, which reads the first two</span>
+<span class="source-line-no">061</span><span id="line-61">     * bytes little endian and masks with 4095 before looking up the log type</span>
+<span class="source-line-no">062</span><span id="line-62">     * ({@code HistoryLogStreamResponse$HistoryLogStreamCargo}).</span>
+<span class="source-line-no">063</span><span id="line-63">     *</span>
+<span class="source-line-no">064</span><span id="line-64">     * &lt;p&gt;&lt;b&gt;What the top 4 bits mean is unknown, and Tandem's app does not appear to care.&lt;/b&gt; It</span>
+<span class="source-line-no">065</span><span id="line-65">     * masks them off and discards them: its {@code HistoryLog} model stores the raw bytes, the</span>
+<span class="source-line-no">066</span><span id="line-66">     * masked type, the timestamp, the sequence number and four 4-byte payload fields, with nothing</span>
+<span class="source-line-no">067</span><span id="line-67">     * corresponding to these bits, and nothing in the decompiled app reads them back. The only</span>
+<span class="source-line-no">068</span><span id="line-68">     * records in this repository carrying a nonzero value here are the</span>
+<span class="source-line-no">069</span><span id="line-69">     * {@link DexcomG7CGMHistoryLog} fixtures, which carry 1.</span>
+<span class="source-line-no">070</span><span id="line-70">     *</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;p&gt;The value is read and preserved only so that {@code buildCargo} can reproduce such a</span>
+<span class="source-line-no">072</span><span id="line-72">     * record byte for byte. Do not infer a pump model, a firmware version, or a log format from it.</span>
+<span class="source-line-no">073</span><span id="line-73">     *</span>
+<span class="source-line-no">074</span><span id="line-74">     * @return the top 4 bits of the first two cargo bytes, or 0 if the cargo is not populated</span>
+<span class="source-line-no">075</span><span id="line-75">     */</span>
+<span class="source-line-no">076</span><span id="line-76">    public int getHeaderHighNibble() {</span>
+<span class="source-line-no">077</span><span id="line-77">        if (cargo == null || cargo.length &lt; 2) {</span>
+<span class="source-line-no">078</span><span id="line-78">            return 0;</span>
+<span class="source-line-no">079</span><span id="line-79">        }</span>
+<span class="source-line-no">080</span><span id="line-80">        return (Bytes.readShort(cargo, 0) &gt;&gt;&gt; 12) &amp; 0x0F;</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    /**</span>
+<span class="source-line-no">084</span><span id="line-84">     * Builds the leading two cargo bytes from a typeId and the high nibble described in</span>
+<span class="source-line-no">085</span><span id="line-85">     * {@link #getHeaderHighNibble()}. With a nibble of 0 this is identical to the historical</span>
+<span class="source-line-no">086</span><span id="line-86">     * {@code new byte[]{typeId, 0}}, except that it does not truncate a typeId above 255.</span>
+<span class="source-line-no">087</span><span id="line-87">     *</span>
+<span class="source-line-no">088</span><span id="line-88">     * @param typeId the history log typeId, which occupies the low 12 bits</span>
+<span class="source-line-no">089</span><span id="line-89">     * @param headerHighNibble the top 4 bits, of unknown meaning, see {@link #getHeaderHighNibble()}</span>
+<span class="source-line-no">090</span><span id="line-90">     * @return the first two bytes of the cargo, little endian</span>
+<span class="source-line-no">091</span><span id="line-91">     */</span>
+<span class="source-line-no">092</span><span id="line-92">    public static byte[] typeIdBytes(int typeId, int headerHighNibble) {</span>
+<span class="source-line-no">093</span><span id="line-93">        return new byte[]{</span>
+<span class="source-line-no">094</span><span id="line-94">            (byte) (typeId &amp; 0xFF),</span>
+<span class="source-line-no">095</span><span id="line-95">            (byte) (((typeId &gt;&gt; 8) &amp; 0x0F) | ((headerHighNibble &amp; 0x0F) &lt;&lt; 4))</span>
+<span class="source-line-no">096</span><span id="line-96">        };</span>
+<span class="source-line-no">097</span><span id="line-97">    }</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">    /**</span>
+<span class="source-line-no">100</span><span id="line-100">     * Parses the typeId (checked against the superclass static typeId),</span>
+<span class="source-line-no">101</span><span id="line-101">     * pump time in seconds epoch and sequence number.</span>
+<span class="source-line-no">102</span><span id="line-102">     */</span>
+<span class="source-line-no">103</span><span id="line-103">    void parseBase(byte[] raw) {</span>
+<span class="source-line-no">104</span><span id="line-104">        int typeId = Bytes.readShort(raw, 0) &amp; 4095;</span>
+<span class="source-line-no">105</span><span id="line-105">        // skipping due to inconsistencies around signed v unsigned</span>
+<span class="source-line-no">106</span><span id="line-106">        // Validate.isTrue(typeId == typeId(), "found typeId " + typeId + " in message but expected " + typeId());</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">        this.pumpTimeSec = Bytes.readUint32(raw, 2);</span>
+<span class="source-line-no">109</span><span id="line-109">        this.sequenceNum = Bytes.readUint32(raw, 6);</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    /**</span>
+<span class="source-line-no">113</span><span id="line-113">     * Resets the pumpTimeSec and sequenceNum to 0 so they don't have to be validated in every test clause</span>
+<span class="source-line-no">114</span><span id="line-114">     */</span>
+<span class="source-line-no">115</span><span id="line-115">    void clearBaseFieldsForTesting() {</span>
+<span class="source-line-no">116</span><span id="line-116">        this.pumpTimeSec = 0;</span>
+<span class="source-line-no">117</span><span id="line-117">        this.sequenceNum = 0;</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">        for (int i=2; i&lt;10; i++) {</span>
+<span class="source-line-no">120</span><span id="line-120">            this.cargo[i] = 0;</span>
+<span class="source-line-no">121</span><span id="line-121">        }</span>
+<span class="source-line-no">122</span><span id="line-122">    }</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">    public byte[] getCargo() {</span>
+<span class="source-line-no">125</span><span id="line-125">        return this.cargo;</span>
+<span class="source-line-no">126</span><span id="line-126">    }</span>
+<span class="source-line-no">127</span><span id="line-127"></span>
+<span class="source-line-no">128</span><span id="line-128">    public String toString() {</span>
+<span class="source-line-no">129</span><span id="line-129">        return JavaHelpers.autoToString(this, new HashSet&lt;&gt;());</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">    public String verboseToString() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return JavaHelpers.autoToStringVerbose(this, Set.of("cargo"));</span>
+<span class="source-line-no">134</span><span id="line-134">    }</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">    public static byte[] fillCargo(byte[] cargo) {</span>
+<span class="source-line-no">137</span><span id="line-137">        if (cargo.length == 26) {</span>
+<span class="source-line-no">138</span><span id="line-138">            return cargo;</span>
+<span class="source-line-no">139</span><span id="line-139">        }</span>
+<span class="source-line-no">140</span><span id="line-140">        byte[] ret = new byte[26];</span>
+<span class="source-line-no">141</span><span id="line-141">        System.arraycopy(cargo, 0, ret, 0, cargo.length);</span>
+<span class="source-line-no">142</span><span id="line-142">        return ret;</span>
+<span class="source-line-no">143</span><span id="line-143">    }</span>
+<span class="source-line-no">144</span><span id="line-144"></span>
+<span class="source-line-no">145</span><span id="line-145">    public HistoryLogProps props() {</span>
+<span class="source-line-no">146</span><span id="line-146">        return getClass().getAnnotation(HistoryLogProps.class);</span>
+<span class="source-line-no">147</span><span id="line-147">    }</span>
+<span class="source-line-no">148</span><span id="line-148">}</span>
 
 
 

@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-9">BolusActivatedHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-7">BolusActivatedHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
 </section>
 <section class="summary">
@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Fields inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#cargo">cargo</a></code></div>
+<code><a href="HistoryLog.html#cargo">cargo</a>, <a href="HistoryLog.html#INSULIN_FLOAT_EPSILON">INSULIN_FLOAT_EPSILON</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -109,12 +109,35 @@ loadScripts(document, 'script');</script>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,float,float)" class="member-name-link">BolusActivatedHistoryLog</a><wbr>(int&nbsp;bolusId,
  float&nbsp;iob,
  float&nbsp;bolusSize)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">see <a href="#%3Cinit%3E(long,long,int,float,float)"><code>BolusActivatedHistoryLog(long, long, int, float, float)</code></a></div>
+</div>
+</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,float,float)" class="member-name-link">BolusActivatedHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  float&nbsp;iob,
  float&nbsp;bolusSize)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">bytes 12-13 of this log are not padding: byte 12 carries selectedIob.</div>
+</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,float,float)" class="member-name-link">BolusActivatedHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,float,float,int)" class="member-name-link">BolusActivatedHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize,
+ int&nbsp;headerHighNibble)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -131,40 +154,57 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,float,float)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,float,float)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
+ int&nbsp;selectedIob,
  float&nbsp;iob,
  float&nbsp;bolusSize)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusSize()" class="member-name-link">getBolusSize</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,float,float,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize,
+ int&nbsp;headerHighNibble)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusId()" class="member-name-link">getBolusId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIob()" class="member-name-link">getIob</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBolusSize()" class="member-name-link">getBolusSize</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIob()" class="member-name-link">getIob</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSelectedIob()" class="member-name-link">getSelectedIob</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="BolusRequestedMsg2HistoryLog.SelectedIOBType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.SelectedIOBType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSelectedIobType()" class="member-name-link">getSelectedIobType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for BolusActivatedHistoryLog:
  <code>bolusId</code><code>Bytes.readShort(raw, 10)</code>
+ <code>selectedIob</code><code>raw[12]</code>
  <code>iob</code><code>Bytes.readFloat(raw, 14)</code>
  <code>bolusSize</code><code>Bytes.readFloat(raw, 18)</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLog">Methods inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></h3>
-<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
+<code><a href="HistoryLog.html#fillCargo(byte%5B%5D)">fillCargo</a>, <a href="HistoryLog.html#getCargo()">getCargo</a>, <a href="HistoryLog.html#getHeaderHighNibble()">getHeaderHighNibble</a>, <a href="HistoryLog.html#getPumpTimeSec()">getPumpTimeSec</a>, <a href="HistoryLog.html#getPumpTimeSecInstant()">getPumpTimeSecInstant</a>, <a href="HistoryLog.html#getSequenceNum()">getSequenceNum</a>, <a href="HistoryLog.html#props()">props</a>, <a href="HistoryLog.html#toString()">toString</a>, <a href="HistoryLog.html#typeIdBytes(int,int)">typeIdBytes</a>, <a href="HistoryLog.html#verboseToString()">verboseToString</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -182,25 +222,57 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BolusActivatedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-21">BolusActivatedHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-20">BolusActivatedHistoryLog</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,int,int,float,float)">
+<h3>BolusActivatedHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-22">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,int,int,float,float,int)">
+<h3>BolusActivatedHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-26">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize,
+ int&nbsp;headerHighNibble)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,float,float)">
 <h3>BolusActivatedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-22">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-40">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  float&nbsp;iob,
  float&nbsp;bolusSize)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">bytes 12-13 of this log are not padding: byte 12 carries selectedIob. This
+ constructor assumes a selectedIob of 0, which does not round-trip a record where it is 1.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,float,float)">
 <h3>BolusActivatedHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-31">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;bolusId,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-48">BolusActivatedHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;bolusId,
  float&nbsp;iob,
  float&nbsp;bolusSize)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">see <a href="#%3Cinit%3E(long,long,int,float,float)"><code>BolusActivatedHistoryLog(long, long, int, float, float)</code></a></div>
+</div>
 </section>
 </li>
 </ul>
@@ -214,7 +286,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-35">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-53">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -224,10 +296,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-47">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-66">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BolusActivatedHistoryLog:</caption>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>selectedIob</code></td><td><code>raw[12]</code></td></tr>
  <tr><td><code>iob</code></td><td><code>Bytes.readFloat(raw, 14)</code></td></tr>
  <tr><td><code>bolusSize</code></td><td><code>Bytes.readFloat(raw, 18)</code></td></tr>
  </table></div>
@@ -238,31 +311,77 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,long,int,float,float)">
+<section class="detail" id="buildCargo(long,long,int,int,float,float)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-57">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-77">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
+ int&nbsp;selectedIob,
  float&nbsp;iob,
  float&nbsp;bolusSize)</span></div>
 </section>
 </li>
 <li>
+<section class="detail" id="buildCargo(long,long,int,int,float,float,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-81">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;bolusId,
+ int&nbsp;selectedIob,
+ float&nbsp;iob,
+ float&nbsp;bolusSize,
+ int&nbsp;headerHighNibble)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-66">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-98">getBolusId</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the ID of the bolus operation</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSelectedIob()">
+<h3>getSelectedIob</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-110">getSelectedIob</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw value of byte 12, which tracks the IOB algorithm in use.
+
+ <p>This is an inference drawn from a small number of records, in which byte 12 co-varies
+ exactly with <a href="BolusRequestedMsg2HistoryLog.html#getSelectedIOB()"><code>BolusRequestedMsg2HistoryLog.getSelectedIOB()</code></a> for the same bolus. It
+ should be confirmed against further captures before being relied upon. The byte offsets
+ either side of it are independently confirmed.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSelectedIobType()">
+<h3>getSelectedIobType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.SelectedIOBType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.SelectedIOBType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-114">getSelectedIobType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIob()">
 <h3>getIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-69">getIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-121">getIob</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>current insulin on board</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSize()">
 <h3>getBolusSize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-72">getBolusSize</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusActivatedHistoryLog.html#line-128">getBolusSize</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the size of the bolus which was activated</dd>
+</dl>
 </section>
 </li>
 </ul>
