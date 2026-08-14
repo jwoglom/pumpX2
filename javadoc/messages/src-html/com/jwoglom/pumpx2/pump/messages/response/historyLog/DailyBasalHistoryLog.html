@@ -69,7 +69,7 @@
 <span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lastBasalRate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;iob&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;finalEventForDay&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] == 1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;batteryChargeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;batteryChargeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;lipoMv&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 24)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">057</span><span id="line-57">     * &lt;/table&gt;</span>
 <span class="source-line-no">058</span><span id="line-58">     */</span>
@@ -81,7 +81,7 @@
 <span class="source-line-no">064</span><span id="line-64">        this.lastBasalRate = Bytes.readFloat(raw, 14);</span>
 <span class="source-line-no">065</span><span id="line-65">        this.iob = Bytes.readFloat(raw, 18);</span>
 <span class="source-line-no">066</span><span id="line-66">        this.finalEventForDay = raw[22] == 1;</span>
-<span class="source-line-no">067</span><span id="line-67">        this.batteryChargeRaw = raw[23];</span>
+<span class="source-line-no">067</span><span id="line-67">        this.batteryChargeRaw = raw[23] &amp; 0xFF;</span>
 <span class="source-line-no">068</span><span id="line-68">        this.lipoMv = Bytes.readShort(raw, 24);</span>
 <span class="source-line-no">069</span><span id="line-69">        </span>
 <span class="source-line-no">070</span><span id="line-70">    }</span>
@@ -121,31 +121,44 @@
 <span class="source-line-no">104</span><span id="line-104">    }</span>
 <span class="source-line-no">105</span><span id="line-105"></span>
 <span class="source-line-no">106</span><span id="line-106">    /**</span>
-<span class="source-line-no">107</span><span id="line-107">     * @return TODO(confirm): whether this is the final event of the day</span>
-<span class="source-line-no">108</span><span id="line-108">     */</span>
-<span class="source-line-no">109</span><span id="line-109">    public boolean getFinalEventForDay() {</span>
-<span class="source-line-no">110</span><span id="line-110">        return finalEventForDay;</span>
-<span class="source-line-no">111</span><span id="line-111">    }</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">    public int getBatteryChargeRaw() {</span>
-<span class="source-line-no">115</span><span id="line-115">        return batteryChargeRaw;</span>
-<span class="source-line-no">116</span><span id="line-116">    }</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">    /**</span>
-<span class="source-line-no">119</span><span id="line-119">     * @return the reported battery charge in percent</span>
-<span class="source-line-no">120</span><span id="line-120">     */</span>
-<span class="source-line-no">121</span><span id="line-121">    public double getBatteryChargePercent() {</span>
-<span class="source-line-no">122</span><span id="line-122">       return (100 * ((batteryChargeRaw+256.0) / 512.0));</span>
-<span class="source-line-no">123</span><span id="line-123">    }</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">    /**</span>
-<span class="source-line-no">126</span><span id="line-126">     * @return the reported LIPO battery amount in millivolts</span>
-<span class="source-line-no">127</span><span id="line-127">     */</span>
-<span class="source-line-no">128</span><span id="line-128">    public int getLipoMv() {</span>
-<span class="source-line-no">129</span><span id="line-129">        return lipoMv;</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
-<span class="source-line-no">131</span><span id="line-131">}</span>
+<span class="source-line-no">107</span><span id="line-107">     * A close-out marker on the last {@link DailyBasalHistoryLog} of a reporting period. Its usual</span>
+<span class="source-line-no">108</span><span id="line-108">     * trigger is the daily rollover just before midnight, after which {@link #getDailyTotalBasal()}</span>
+<span class="source-line-no">109</span><span id="line-109">     * resets to 0, but it has also been observed immediately before a</span>
+<span class="source-line-no">110</span><span id="line-110">     * {@link PumpingResumedHistoryLog} which ended an alarm-driven suspension, with no reset</span>
+<span class="source-line-no">111</span><span id="line-111">     * following. TODO(confirm): the exact set of triggers is unconfirmed, so this should not be</span>
+<span class="source-line-no">112</span><span id="line-112">     * relied upon as a day-boundary signal.</span>
+<span class="source-line-no">113</span><span id="line-113">     *</span>
+<span class="source-line-no">114</span><span id="line-114">     * @return whether this is the final event of the reporting period</span>
+<span class="source-line-no">115</span><span id="line-115">     */</span>
+<span class="source-line-no">116</span><span id="line-116">    public boolean getFinalEventForDay() {</span>
+<span class="source-line-no">117</span><span id="line-117">        return finalEventForDay;</span>
+<span class="source-line-no">118</span><span id="line-118">    }</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    /**</span>
+<span class="source-line-no">122</span><span id="line-122">     * @return the pump's reported battery state-of-charge, 0-100, unscaled</span>
+<span class="source-line-no">123</span><span id="line-123">     */</span>
+<span class="source-line-no">124</span><span id="line-124">    public int getBatteryChargeRaw() {</span>
+<span class="source-line-no">125</span><span id="line-125">        return batteryChargeRaw;</span>
+<span class="source-line-no">126</span><span id="line-126">    }</span>
+<span class="source-line-no">127</span><span id="line-127"></span>
+<span class="source-line-no">128</span><span id="line-128">    /**</span>
+<span class="source-line-no">129</span><span id="line-129">     * The pump reports its state of charge directly as a 0-100 percentage in this byte, so no</span>
+<span class="source-line-no">130</span><span id="line-130">     * scaling is applied.</span>
+<span class="source-line-no">131</span><span id="line-131">     *</span>
+<span class="source-line-no">132</span><span id="line-132">     * @return the reported battery charge in percent</span>
+<span class="source-line-no">133</span><span id="line-133">     */</span>
+<span class="source-line-no">134</span><span id="line-134">    public double getBatteryChargePercent() {</span>
+<span class="source-line-no">135</span><span id="line-135">       return batteryChargeRaw;</span>
+<span class="source-line-no">136</span><span id="line-136">    }</span>
+<span class="source-line-no">137</span><span id="line-137"></span>
+<span class="source-line-no">138</span><span id="line-138">    /**</span>
+<span class="source-line-no">139</span><span id="line-139">     * @return the reported LIPO battery amount in millivolts</span>
+<span class="source-line-no">140</span><span id="line-140">     */</span>
+<span class="source-line-no">141</span><span id="line-141">    public int getLipoMv() {</span>
+<span class="source-line-no">142</span><span id="line-142">        return lipoMv;</span>
+<span class="source-line-no">143</span><span id="line-143">    }</span>
+<span class="source-line-no">144</span><span id="line-144">}</span>
 
 
 

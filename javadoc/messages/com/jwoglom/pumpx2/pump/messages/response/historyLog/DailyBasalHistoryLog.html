@@ -151,7 +151,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBatteryChargePercent()" class="member-name-link">getBatteryChargePercent</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The pump reports its state of charge directly as a 0-100 percentage in this byte, so no
+ scaling is applied.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBatteryChargeRaw()" class="member-name-link">getBatteryChargeRaw</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -160,7 +163,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFinalEventForDay()" class="member-name-link">getFinalEventForDay</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">A close-out marker on the last <a href="DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a> of a reporting period.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIob()" class="member-name-link">getIob</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -179,7 +184,7 @@ loadScripts(document, 'script');</script>
  <code>lastBasalRate</code><code>Bytes.readFloat(raw, 14)</code>
  <code>iob</code><code>Bytes.readFloat(raw, 18)</code>
  <code>finalEventForDay</code><code>raw[22] == 1</code>
- <code>batteryChargeRaw</code><code>raw[23]</code>
+ <code>batteryChargeRaw</code><code>raw[23] &amp; 0xFF</code>
  <code>lipoMv</code><code>Bytes.readShort(raw, 24)</code>
  </div>
 </div>
@@ -264,7 +269,7 @@ loadScripts(document, 'script');</script>
  <tr><td><code>lastBasalRate</code></td><td><code>Bytes.readFloat(raw, 14)</code></td></tr>
  <tr><td><code>iob</code></td><td><code>Bytes.readFloat(raw, 18)</code></td></tr>
  <tr><td><code>finalEventForDay</code></td><td><code>raw[22] == 1</code></td></tr>
- <tr><td><code>batteryChargeRaw</code></td><td><code>raw[23]</code></td></tr>
+ <tr><td><code>batteryChargeRaw</code></td><td><code>raw[23] &amp; 0xFF</code></td></tr>
  <tr><td><code>lipoMv</code></td><td><code>Bytes.readShort(raw, 24)</code></td></tr>
  </table></div>
 <dl class="notes">
@@ -319,23 +324,35 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getFinalEventForDay()">
 <h3>getFinalEventForDay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-109">getFinalEventForDay</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-116">getFinalEventForDay</a></span>()</div>
+<div class="block">A close-out marker on the last <a href="DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a> of a reporting period. Its usual
+ trigger is the daily rollover just before midnight, after which <a href="#getDailyTotalBasal()"><code>getDailyTotalBasal()</code></a>
+ resets to 0, but it has also been observed immediately before a
+ <a href="PumpingResumedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>PumpingResumedHistoryLog</code></a> which ended an alarm-driven suspension, with no reset
+ following. TODO(confirm): the exact set of triggers is unconfirmed, so this should not be
+ relied upon as a day-boundary signal.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>TODO(confirm): whether this is the final event of the day</dd>
+<dd>whether this is the final event of the reporting period</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getBatteryChargeRaw()">
 <h3>getBatteryChargeRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-114">getBatteryChargeRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-124">getBatteryChargeRaw</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the pump's reported battery state-of-charge, 0-100, unscaled</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getBatteryChargePercent()">
 <h3>getBatteryChargePercent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-121">getBatteryChargePercent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-134">getBatteryChargePercent</a></span>()</div>
+<div class="block">The pump reports its state of charge directly as a 0-100 percentage in this byte, so no
+ scaling is applied.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the reported battery charge in percent</dd>
@@ -345,7 +362,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLipoMv()">
 <h3>getLipoMv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-128">getLipoMv</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-141">getLipoMv</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the reported LIPO battery amount in millivolts</dd>
