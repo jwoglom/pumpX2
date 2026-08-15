@@ -1,27 +1,40 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
-import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
-
-import com.jwoglom.pumpx2.pump.messages.MessageTester;
-import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
-import com.jwoglom.pumpx2.pump.messages.response.historyLog.ControlIQPcmChangeHistoryLog;
-
-import java.util.Arrays;
 import org.apache.commons.codec.DecoderException;
-import org.junit.Ignore;
 import org.junit.Test;
-@Ignore("needs historyLog sample")
+
 public class ControlIQPcmChangeHistoryLogTest {
     @Test
-    public void testControlIQPcmChangeHistoryLog() throws DecoderException {
+    public void testControlIQPcmChangeHistoryLog1() throws DecoderException {
         ControlIQPcmChangeHistoryLog expected = new ControlIQPcmChangeHistoryLog(
-            // int currentPcm, int previousPcm
+            // long pumpTimeSec, long sequenceNum, int currentPcm, int previousPcm
+            580773244L, 490889L, 0, 3
         );
+        // the constructor above only stores the raw currentPcmId/previousPcmId; re-parse expected's
+        // own cargo so its derived currentPcm/previousPcm enums are populated for verboseToString comparison
+        expected.parse(expected.getCargo());
 
         ControlIQPcmChangeHistoryLog parsedRes = (ControlIQPcmChangeHistoryLog) HistoryLogMessageTester.testSingle(
-                "xxxx",
+                "e6107ce59d22897d070000030101010101000000000000000000",
                 expected
         );
-        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+    }
+
+    @Test
+    public void testControlIQPcmChangeHistoryLog2() throws DecoderException {
+        ControlIQPcmChangeHistoryLog expected = new ControlIQPcmChangeHistoryLog(
+            // long pumpTimeSec, long sequenceNum, int currentPcm, int previousPcm
+            580720759L, 488634L, 3, 2
+        );
+        // the constructor above only stores the raw currentPcmId/previousPcmId; re-parse expected's
+        // own cargo so its derived currentPcm/previousPcm enums are populated for verboseToString comparison
+        expected.parse(expected.getCargo());
+
+        ControlIQPcmChangeHistoryLog parsedRes = (ControlIQPcmChangeHistoryLog) HistoryLogMessageTester.testSingle(
+                "e61077189d22ba74070003020001010101000000000000000000",
+                expected
+        );
+        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
     }
 }
