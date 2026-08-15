@@ -50,7 +50,8 @@ public class CgmDataSampleHistoryLog extends HistoryLog {
             new byte[]{-105, 0}, // (byte) 151
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(status), 
+            Bytes.firstTwoBytesLittleEndian(status),
+            new byte[7],
             Bytes.firstTwoBytesLittleEndian(value)));
     }
     public int getStatus() {
