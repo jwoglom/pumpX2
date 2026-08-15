@@ -56,10 +56,11 @@ public class ParamChangeRemSettingsHistoryLog extends HistoryLog {
             new byte[]{97, 0},
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            new byte[]{ (byte) modification }, 
-            new byte[]{ (byte) status }, 
-            Bytes.firstTwoBytesLittleEndian(lowBgThreshold), 
-            Bytes.firstTwoBytesLittleEndian(highBgThreshold), 
+            new byte[]{ (byte) modification },
+            new byte[]{ (byte) status },
+            new byte[]{0, 0},
+            Bytes.firstTwoBytesLittleEndian(lowBgThreshold),
+            Bytes.firstTwoBytesLittleEndian(highBgThreshold),
             new byte[]{ (byte) siteChangeDays }));
     }
     public int getModification() {
