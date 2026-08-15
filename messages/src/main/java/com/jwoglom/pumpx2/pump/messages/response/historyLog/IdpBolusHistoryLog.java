@@ -60,8 +60,9 @@ public class IdpBolusHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) idp }, 
             new byte[]{ (byte) modification }, 
-            new byte[]{ (byte) bolusStatus }, 
-            Bytes.firstTwoBytesLittleEndian(insulinDuration), 
+            new byte[]{ (byte) bolusStatus },
+            new byte[1],
+            Bytes.firstTwoBytesLittleEndian(insulinDuration),
             Bytes.firstTwoBytesLittleEndian(maxBolusSize), 
             new byte[]{ (byte) bolusEntryType }));
     }
