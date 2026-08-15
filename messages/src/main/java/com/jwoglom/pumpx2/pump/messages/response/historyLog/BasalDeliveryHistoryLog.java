@@ -57,8 +57,9 @@ public class BasalDeliveryHistoryLog extends HistoryLog {
             new byte[]{23, 0}, // (byte) 279
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(commandedRateSource), 
-            Bytes.firstTwoBytesLittleEndian(commandedRate), 
+            Bytes.firstTwoBytesLittleEndian(commandedRateSource),
+            new byte[2],
+            Bytes.firstTwoBytesLittleEndian(commandedRate),
             Bytes.firstTwoBytesLittleEndian(profileBasalRate), 
             Bytes.firstTwoBytesLittleEndian(algorithmRate), 
             Bytes.firstTwoBytesLittleEndian(tempRate)));
