@@ -56,7 +56,8 @@ public class IdpActionHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) idp }, 
             new byte[]{ (byte) status }, 
-            new byte[]{ (byte) sourceIdp }, 
+            new byte[]{ (byte) sourceIdp },
+            new byte[5],
             Bytes.writeString(name, 8)));
     }
     public int getIdp() {
