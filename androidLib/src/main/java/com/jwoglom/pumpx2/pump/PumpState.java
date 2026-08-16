@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import timber.log.Timber;
@@ -251,15 +252,69 @@ public class PumpState {
         }
     }
 
-    private static final Map<Pair<Characteristic, Byte>, PacketArrayList> savedPacketArrayList = new HashMap<>();
+    /**
+     * Key into {@link #savedPacketArrayList}. A plain value class rather than android.util.Pair:
+     * nothing here needs Android, and Pair is unavailable to JVM unit tests, which is why this
+     * map had no coverage.
+     */
+    private static final class PacketKey {
+        private final Characteristic characteristic;
+        private final byte txId;
+
+        PacketKey(Characteristic characteristic, byte txId) {
+            this.characteristic = characteristic;
+            this.txId = txId;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof PacketKey)) return false;
+            PacketKey other = (PacketKey) o;
+            return txId == other.txId && characteristic == other.characteristic;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(characteristic, txId);
+        }
+
+        @Override
+        public String toString() {
+            return "PacketKey(" + characteristic + ", " + txId + ")";
+        }
+    }
+
+    private static final Map<PacketKey, PacketArrayList> savedPacketArrayList = new HashMap<>();
+
+    /**
+     * Stores a partially-accumulated response so the next BLE packet with the same transaction id
+     * can continue it.
+     *
+     * <p>Overwrites any existing entry rather than asserting the key is absent. A response
+     * spanning three or more packets re-saves the same accumulator once per packet, and
+     * transaction ids wrap at 256, so the same key legitimately recurs.
+     */
     public static synchronized void savePacketArrayList(Characteristic c, byte txId, PacketArrayList l) {
-        Pair<Characteristic, Byte> key = Pair.create(c, txId);
-        Validate.isTrue(!savedPacketArrayList.containsKey(key));
-        savedPacketArrayList.put(key, l);
+        savedPacketArrayList.put(new PacketKey(c, txId), l);
+    }
+
+    /**
+     * Discards the accumulator for a transaction, once it has produced a message or been given up
+     * on. Without this the entry outlives the response, and the next transaction to reuse the id
+     * -- 256 transactions later -- resumes into a stale, already-complete accumulator.
+     */
+    public static synchronized void removeSavedPacketArrayList(Characteristic c, byte txId) {
+        savedPacketArrayList.remove(new PacketKey(c, txId));
     }
 
     public static synchronized Optional<PacketArrayList> checkForSavedPacketArrayList(Characteristic c, byte txId) {
-        return Optional.ofNullable(savedPacketArrayList.get(Pair.create(c, txId)));
+        return Optional.ofNullable(savedPacketArrayList.get(new PacketKey(c, txId)));
+    }
+
+    // Visible for testing.
+    static synchronized int savedPacketArrayListSize() {
+        return savedPacketArrayList.size();
     }
 
     private static boolean actionsAffectingInsulinDeliveryEnabled = false;
