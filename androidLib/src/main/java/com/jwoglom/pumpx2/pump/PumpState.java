@@ -227,7 +227,10 @@ public class PumpState {
         synchronized (requestMessages) {
             Pair<Characteristic, Byte> key = Pair.create(c, txId);
             Pair<Boolean, Message> pair = requestMessages.get(key);
-            Validate.notNull(pair != null, "could not find requestMessage for txId " + txId + " and char " + c);
+            // Validate.notNull takes an Object, so `pair != null` autoboxed to a Boolean that is
+            // never itself null: the guard never fired, and a missing request message surfaced as
+            // a bare NullPointerException on the next line instead of this message.
+            Validate.notNull(pair, "could not find requestMessage for txId " + txId + " and char " + c);
             if (pair.first) {
                 Timber.w("txId " + txId + " was already processed for char " + c + ": pair=" + pair + " requestMessages=" + requestMessages);
             }
