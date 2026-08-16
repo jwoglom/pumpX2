@@ -10,6 +10,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,16 +36,18 @@ public class Packetize {
     }
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId) {
+        Validate.notNull(message, "packetize requires a message");
         return packetize(message, authenticationKey, currentTxId, determineMaxChunkSize(message));
     }
 
     public static List<Packet> packetize(Message message, byte[] authenticationKey, byte currentTxId, int maxChunkSize) {
-        if (message == null) {
-            L.e(TAG, "packetize has null message");
-        } else if (message.getCargo() == null) {
-            L.e(TAG, "packetize has null messagecargo messageName="+message.messageName());
-            L.e(TAG, "packetize has null messagecargo message="+message+" authKey="+Hex.encodeHexString(authenticationKey));
-        }
+        // These were logged and then execution continued into the dereference a few lines below,
+        // so the only thing the log added was a line above the NullPointerException. Rejecting
+        // here names the message that failed, and does not log the authentication key to do it.
+        Validate.notNull(message, "packetize requires a message");
+        Validate.notNull(message.getCargo(),
+                "packetize requires cargo, messageName=" + message.messageName());
+
         int length = 3 + message.getCargo().length;
         if (message.signed()) {
             length += 24;
@@ -97,6 +100,11 @@ public class Packetize {
 
 
     public static List<List<Byte>> partitionList(byte[] packetWithCRC, int partitionSize) {
+        // A non-positive size never satisfies the size check below, so every byte accumulated
+        // into one partition and the whole packet went out as a single unchunked Packet rather
+        // than failing. Reject it instead.
+        Validate.isTrue(partitionSize > 0, "partitionSize must be positive, got %d", partitionSize);
+
         List<List<Byte>> partitions = new ArrayList<>();
         List<Byte> subList = new ArrayList<>();
 
