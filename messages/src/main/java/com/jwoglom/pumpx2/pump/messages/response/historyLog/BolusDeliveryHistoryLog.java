@@ -144,11 +144,29 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         return BolusType.fromBitmask(getBolusTypeBitmask());
     }
 
+    /**
+     * Bitmask decoded from {@code bolusTypeBitmask} (byte offset 13). The mapping below was
+     * validated by cross-correlating every opcode-280 record in a 48k-record real-pump capture
+     * against its bolus's opcode-64 ({@link BolusRequestedMsg1HistoryLog}) and opcode-66
+     * (BolusRequestedMsg3HistoryLog) records by bolus ID: {@code CARB} agreed with MSG1's
+     * carb amount being nonzero, {@code CORRECTION} agreed with MSG1's correction-included flag
+     * and MSG3's correction bolus size being nonzero, and {@code OVERRIDE} agreed with MSG2's
+     * user-override flag, across all 286 boluses observed. {@code NOW} was set on every record
+     * in the capture. The capture contained no extended or eating-soon-mode boluses, so
+     * {@code LATER} and {@code EATING_SOON_MODE} are ported from tconnectsync's semantics but
+     * remain unexercised against real pump data.
+     *
+     * <p>The previous {@code FOOD1(1)/CORRECTION(2)/EXTENDED(4)/FOOD2(8)} mapping could not
+     * explain the observed bit-16 (carb) values and its bit-2 value never appeared in the
+     * capture; see https://github.com/jwoglom/pumpx2/issues/78.
+     */
     public enum BolusType {
-        FOOD1(1), // used when there is carbs
-        CORRECTION(2), // used when there is a correction amount
-        EXTENDED(4),
-        FOOD2(8), // used when there is no carbs and just a distinct bolus amount
+        NOW(1),
+        LATER(2),
+        OVERRIDE(4),
+        CORRECTION(8),
+        CARB(16),
+        EATING_SOON_MODE(32),
         ;
         private int mask;
         BolusType(int mask) {
