@@ -32,7 +32,7 @@ public class WumpOcclusionDebugHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{27, 1}, // 283 = 256 + 27
+            HistoryLog.typeIdBytes(283, 0), // 283 = 256 + 27
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

@@ -46,7 +46,7 @@ public class TipsErrorHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int messageType, int requestCode, int errorCode, boolean isDataMasked) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(419 & 0xFF), (byte)(419 >> 8)}, // 419 = 0x01A3
+            HistoryLog.typeIdBytes(419, 0), // 419 = 0x01A3
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{(byte) messageType},

@@ -34,7 +34,7 @@ public class AATdiEstChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{76, 1}, // typeId=332 (256+76)
+            HistoryLog.typeIdBytes(332, 0), // typeId=332 (256+76)
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

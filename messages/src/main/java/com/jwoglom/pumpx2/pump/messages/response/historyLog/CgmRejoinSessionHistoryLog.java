@@ -31,7 +31,7 @@ public class CgmRejoinSessionHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(367 & 0xFF), (byte)(367 >> 8)},
+            HistoryLog.typeIdBytes(367, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

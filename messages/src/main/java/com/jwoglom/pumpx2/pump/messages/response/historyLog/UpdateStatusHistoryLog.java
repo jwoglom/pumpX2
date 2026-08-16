@@ -57,7 +57,7 @@ public class UpdateStatusHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int swUpdateStatus, int metadataAndVersionStatus, int fullDlAndCrcStatus, int fileDlAndSideloadStatus, int externalFlashStatus, int updateSuccessful, long swPartNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 203, 0},
+            HistoryLog.typeIdBytes(203, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(metadataAndVersionStatus),

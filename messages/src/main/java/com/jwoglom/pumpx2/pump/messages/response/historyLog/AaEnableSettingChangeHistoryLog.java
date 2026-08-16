@@ -45,7 +45,7 @@ public class AaEnableSettingChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int enabled) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(244 & 0xFF), (byte)(244 >> 8)}, // 244
+            HistoryLog.typeIdBytes(244, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) enabled }));

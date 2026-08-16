@@ -45,7 +45,7 @@ public class ControlIQUserModeChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-27, 0}, // (byte) 229
+            HistoryLog.typeIdBytes(229, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) currentUserMode }, 

@@ -33,7 +33,7 @@ public class AaSleepScheduleChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(235 & 0xFF), (byte)(235 >> 8)}, // 235
+            HistoryLog.typeIdBytes(235, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

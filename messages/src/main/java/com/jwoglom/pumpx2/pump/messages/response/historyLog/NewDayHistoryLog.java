@@ -48,7 +48,7 @@ public class NewDayHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float commandedBasalRate, long featuresBitmask, long featureBitmaskIndex) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{90, 0},
+            HistoryLog.typeIdBytes(90, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(commandedBasalRate),

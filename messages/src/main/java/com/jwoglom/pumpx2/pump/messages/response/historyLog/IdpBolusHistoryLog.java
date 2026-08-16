@@ -55,7 +55,7 @@ public class IdpBolusHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, int modification, int bolusStatus, int insulinDuration, int maxBolusSize, int bolusEntryType) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{70, 0},
+            HistoryLog.typeIdBytes(70, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) idp }, 

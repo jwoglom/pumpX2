@@ -34,7 +34,7 @@ public class AAExerciseChoiceChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{63, 1}, // typeId=319 (256+63)
+            HistoryLog.typeIdBytes(319, 0), // typeId=319 (256+63)
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

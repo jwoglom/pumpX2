@@ -70,7 +70,7 @@ public class ParamChangeGlobalSettingsHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{74, 0},
+            HistoryLog.typeIdBytes(74, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) modifiedData }, 
