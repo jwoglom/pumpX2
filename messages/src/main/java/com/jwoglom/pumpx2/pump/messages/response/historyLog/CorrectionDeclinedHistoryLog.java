@@ -53,7 +53,7 @@ public class CorrectionDeclinedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int bolusId, float iob, int targetBg, int isf) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{93, 0},
+            HistoryLog.typeIdBytes(93, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bg), 

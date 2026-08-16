@@ -34,7 +34,7 @@ public class TipscReqPrimeCannulaHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{35, 1}, // typeId=291 (256+35)
+            HistoryLog.typeIdBytes(291, 0), // typeId=291 (256+35)
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

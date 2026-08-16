@@ -48,7 +48,7 @@ public class BolexActivatedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolexSize) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{59, 0},
+            HistoryLog.typeIdBytes(59, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusId), 

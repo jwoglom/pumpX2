@@ -48,7 +48,7 @@ public class TimeChangedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long timePrior, long timeAfter, long rawRTC) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{13, 0},
+            HistoryLog.typeIdBytes(13, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(timePrior), 

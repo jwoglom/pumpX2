@@ -29,7 +29,7 @@ public class BasalIqSettingsChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-114, 0}, // (byte) 142
+            HistoryLog.typeIdBytes(142, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

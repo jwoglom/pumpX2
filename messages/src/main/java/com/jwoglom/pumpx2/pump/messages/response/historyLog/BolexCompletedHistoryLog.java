@@ -55,7 +55,7 @@ public class BolexCompletedHistoryLog extends HistoryLog {
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested) {
         return Bytes.combine(
-            new byte[]{21, 0},
+            HistoryLog.typeIdBytes(21, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(completionStatus),

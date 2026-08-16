@@ -53,7 +53,7 @@ public class ParamChangeRemSettingsHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modification, int status, int lowBgThreshold, int highBgThreshold, int siteChangeDays) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{97, 0},
+            HistoryLog.typeIdBytes(97, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) modification },

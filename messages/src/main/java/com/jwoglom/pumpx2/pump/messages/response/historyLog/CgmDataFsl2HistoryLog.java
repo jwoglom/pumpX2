@@ -64,7 +64,7 @@ public class CgmDataFsl2HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(372 & 0xFF), (byte)(372 >> 8)}, // 372 = 0x0174
+            HistoryLog.typeIdBytes(372, 0), // 372 = 0x0174
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(status),

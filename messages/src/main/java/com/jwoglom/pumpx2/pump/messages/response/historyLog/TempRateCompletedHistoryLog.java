@@ -45,7 +45,7 @@ public class TempRateCompletedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int tempRateId, long timeLeft) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{15, 0},
+            HistoryLog.typeIdBytes(15, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(tempRateId), 
