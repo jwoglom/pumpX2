@@ -1064,7 +1064,7 @@ public class MainActivity extends AppCompatActivity {
                         writePumpMessage(new InitiateBolusRequest(
                                 numUnits,
                                 bolusId,
-                                BolusDeliveryHistoryLog.BolusType.toBitmask(BolusDeliveryHistoryLog.BolusType.FOOD2),
+                                BolusDeliveryHistoryLog.BolusType.toBitmask(BolusDeliveryHistoryLog.BolusType.CORRECTION),
                                 0L,
                                 0L,
                                 0,
@@ -1756,7 +1756,7 @@ public class MainActivity extends AppCompatActivity {
                             writePumpMessage(new InitiateBolusRequest(
                                     bolusMilliunits,
                                     bolusId,
-                                    BolusDeliveryHistoryLog.BolusType.FOOD2.mask(),
+                                    BolusDeliveryHistoryLog.BolusType.CORRECTION.mask(),
                                     0,
                                     0,
                                     bolusParameters.carbsGrams,

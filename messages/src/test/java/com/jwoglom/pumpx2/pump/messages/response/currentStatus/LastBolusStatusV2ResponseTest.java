@@ -52,7 +52,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.NOW), parsedRes.getBolusType());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 
     @Test
@@ -122,7 +122,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 
     @Test
@@ -146,7 +146,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD2), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
     }
 
     @Test
@@ -171,7 +171,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.GUI, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.EXTENDED), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.OVERRIDE), parsedRes.getBolusType());
     }
 
     @Test
@@ -194,7 +194,7 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.QUICK_BOLUS, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.FOOD1), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.NOW), parsedRes.getBolusType());
     }
 
 
@@ -217,6 +217,6 @@ public class LastBolusStatusV2ResponseTest {
 
         assertEquals(LastBolusStatusV2Response.BolusStatus.COMPLETE, parsedRes.getBolusStatus());
         assertEquals(BolusDeliveryHistoryLog.BolusSource.CONTROL_IQ_AUTO_BOLUS, parsedRes.getBolusSource());
-        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.CORRECTION), parsedRes.getBolusType());
+        assertEquals(Set.of(BolusDeliveryHistoryLog.BolusType.LATER), parsedRes.getBolusType());
     }
 }
