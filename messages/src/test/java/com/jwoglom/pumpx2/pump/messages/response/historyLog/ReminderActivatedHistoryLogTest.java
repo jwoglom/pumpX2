@@ -17,7 +17,7 @@ public class ReminderActivatedHistoryLogTest {
                 "1910f6f49d22317e070002000000b0200000000000000080ac44",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 14-15 (0x20b0) and 23-25 (0x44ac80) carry unparsed data that buildCargo zero-fills
     }
 
     @Test
@@ -33,6 +33,6 @@ public class ReminderActivatedHistoryLogTest {
                 "1910f0228e226bd5060002000000b0200000000000000080ac44",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 14-15 (0x20b0) and 23-25 (0x44ac80) carry unparsed data that buildCargo zero-fills
     }
 }
