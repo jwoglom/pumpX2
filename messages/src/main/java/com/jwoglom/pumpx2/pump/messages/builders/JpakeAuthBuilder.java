@@ -3,7 +3,6 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 import static org.apache.commons.codec.digest.HmacUtils.hmacSha256;
 
 import com.jwoglom.pumpx2.pump.messages.Message;
-import com.jwoglom.pumpx2.pump.messages.builders.crypto.AllZeroSecureRandom;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.Hkdf;
 import com.jwoglom.pumpx2.pump.messages.builders.crypto.HmacSha256;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
