@@ -36,11 +36,12 @@ android {
         debug {
             buildConfigField("String", "PUMPX2_VERSION", "\"${rootProject.getVersion()}\"")
             buildConfigField("String", "PUMPX2_BUILD_TIME", "\"${gitCommitTime}\"")
-        }
-        buildTypes {
-            debug {
-                testCoverageEnabled true
-            }
+
+            // Only unit test coverage is enabled: enableAndroidTestCoverage would instrument the
+            // debug library itself, and so the sampleapp debug APK that CI publishes as an
+            // artifact. Only the release variant is published to Maven (see singleVariant below),
+            // so neither flag can reach consumers of the library.
+            enableUnitTestCoverage true
         }
     }
     compileOptions {
