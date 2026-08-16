@@ -119,10 +119,11 @@ public class CGMAlertStatusResponse extends NotificationMessage {
         DEFAULT_CGM_ALERT_42(42),
         DEFAULT_CGM_ALERT_43(43),
         DEFAULT_CGM_ALERT_44(44),
-        DEFAULT_CGM_ALERT_45(45),
-        DEFAULT_CGM_ALERT_46(46),
+        // Names derived from tconnectsync's cloud-export dictionaries (CGM_ALERTS_DICT).
+        TRANSMITTER_EXPIRING_CGM_ALERT(45), // CGM_ALERTS_DICT["45"] == "CGM Transmitter Expiring Soon"
+        TRANSMITTER_EXPIRING_CGM_ALERT2(46), // CGM_ALERTS_DICT["46"] == "CGM Transmitter Expiring 2"
         DEFAULT_CGM_ALERT_47(47),
-        DEFAULT_CGM_ALERT_48(48),
+        UNAVAILABLE_CGM_ALERT(48), // CGM_ALERTS_DICT["48"] == "CGM Unavailable"
         DEFAULT_CGM_ALERT_49(49),
         DEFAULT_CGM_ALERT_50(50),
         DEFAULT_CGM_ALERT_51(51),
