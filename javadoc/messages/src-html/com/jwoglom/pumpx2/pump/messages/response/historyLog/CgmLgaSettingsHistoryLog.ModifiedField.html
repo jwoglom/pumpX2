@@ -82,7 +82,7 @@
 <span class="source-line-no">065</span><span id="line-65"></span>
 <span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int alertLevel, int repeatDuration, boolean isEnabled, int modifiedField) {</span>
 <span class="source-line-no">067</span><span id="line-67">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">068</span><span id="line-68">            new byte[]{(byte) 166, 0},</span>
+<span class="source-line-no">068</span><span id="line-68">            HistoryLog.typeIdBytes(166, 0),</span>
 <span class="source-line-no">069</span><span id="line-69">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">071</span><span id="line-71">            Bytes.firstTwoBytesLittleEndian(alertLevel),</span>

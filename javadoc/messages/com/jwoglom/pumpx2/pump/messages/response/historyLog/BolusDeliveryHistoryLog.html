@@ -168,32 +168,30 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Byte layout for BolusDeliveryHistoryLog.buildCargo(...):
  OffsetDescription
- 0<code>new byte[]{24} [element 0]</code>
- 1<code>new byte[]{1} [element 1]</code>
- 2<code>toUint32(pumpTimeSec) [byte 0]</code>
- 3<code>toUint32(pumpTimeSec) [byte 1]</code>
- 4<code>toUint32(pumpTimeSec) [byte 2]</code>
- 5<code>toUint32(pumpTimeSec) [byte 3]</code>
- 6<code>toUint32(sequenceNum) [byte 0]</code>
- 7<code>toUint32(sequenceNum) [byte 1]</code>
- 8<code>toUint32(sequenceNum) [byte 2]</code>
- 9<code>toUint32(sequenceNum) [byte 3]</code>
- 10<code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code>
- 11<code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code>
- 12<code>(byte) bolusDeliveryStatus</code>
- 13<code>(byte) bolusType</code>
- 14<code>(byte) bolusSource</code>
- 15<code>(byte) reserved</code>
- 16<code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code>
- 17<code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code>
- 18<code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code>
- 19<code>firstTwoBytesLittleEndian(requestedLater) [byte 1]</code>
- 20<code>firstTwoBytesLittleEndian(correction) [byte 0]</code>
- 21<code>firstTwoBytesLittleEndian(correction) [byte 1]</code>
- 22<code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 0]</code>
- 23<code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 1]</code>
- 24<code>firstTwoBytesLittleEndian(deliveredTotal) [byte 0]</code>
- 25<code>firstTwoBytesLittleEndian(deliveredTotal) [byte 1]</code>
+ 0<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 1<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 4<code>toUint32(sequenceNum) [byte 0]</code>
+ 5<code>toUint32(sequenceNum) [byte 1]</code>
+ 6<code>toUint32(sequenceNum) [byte 2]</code>
+ 7<code>toUint32(sequenceNum) [byte 3]</code>
+ 8<code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code>
+ 9<code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code>
+ 10<code>(byte) bolusDeliveryStatus</code>
+ 11<code>(byte) bolusType</code>
+ 12<code>(byte) bolusSource</code>
+ 13<code>(byte) reserved</code>
+ 14<code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code>
+ 15<code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code>
+ 16<code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code>
+ 17<code>firstTwoBytesLittleEndian(requestedLater) [byte 1]</code>
+ 18<code>firstTwoBytesLittleEndian(correction) [byte 0]</code>
+ 19<code>firstTwoBytesLittleEndian(correction) [byte 1]</code>
+ 20<code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 0]</code>
+ 21<code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 1]</code>
+ 22<code>firstTwoBytesLittleEndian(deliveredTotal) [byte 0]</code>
+ 23<code>firstTwoBytesLittleEndian(deliveredTotal) [byte 1]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -339,7 +337,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-116">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-114">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusID,
  int&nbsp;bolusDeliveryStatus,
@@ -354,105 +352,103 @@ loadScripts(document, 'script');</script>
 <div class="block"><table border="1">
  <caption>Byte layout for BolusDeliveryHistoryLog.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>new byte[]{24} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{1} [element 1]</code></td></tr>
- <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
- <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
- <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
- <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
- <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
- <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
- <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
- <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
- <tr><td>10</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code></td></tr>
- <tr><td>11</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code></td></tr>
- <tr><td>12</td><td><code>(byte) bolusDeliveryStatus</code></td></tr>
- <tr><td>13</td><td><code>(byte) bolusType</code></td></tr>
- <tr><td>14</td><td><code>(byte) bolusSource</code></td></tr>
- <tr><td>15</td><td><code>(byte) reserved</code></td></tr>
- <tr><td>16</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code></td></tr>
- <tr><td>17</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code></td></tr>
- <tr><td>18</td><td><code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code></td></tr>
- <tr><td>19</td><td><code>firstTwoBytesLittleEndian(requestedLater) [byte 1]</code></td></tr>
- <tr><td>20</td><td><code>firstTwoBytesLittleEndian(correction) [byte 0]</code></td></tr>
- <tr><td>21</td><td><code>firstTwoBytesLittleEndian(correction) [byte 1]</code></td></tr>
- <tr><td>22</td><td><code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 0]</code></td></tr>
- <tr><td>23</td><td><code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 1]</code></td></tr>
- <tr><td>24</td><td><code>firstTwoBytesLittleEndian(deliveredTotal) [byte 0]</code></td></tr>
- <tr><td>25</td><td><code>firstTwoBytesLittleEndian(deliveredTotal) [byte 1]</code></td></tr>
+ <tr><td>0</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(bolusID) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>(byte) bolusDeliveryStatus</code></td></tr>
+ <tr><td>11</td><td><code>(byte) bolusType</code></td></tr>
+ <tr><td>12</td><td><code>(byte) bolusSource</code></td></tr>
+ <tr><td>13</td><td><code>(byte) reserved</code></td></tr>
+ <tr><td>14</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code></td></tr>
+ <tr><td>15</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code></td></tr>
+ <tr><td>16</td><td><code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>firstTwoBytesLittleEndian(requestedLater) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>firstTwoBytesLittleEndian(correction) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>firstTwoBytesLittleEndian(correction) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 0]</code></td></tr>
+ <tr><td>21</td><td><code>firstTwoBytesLittleEndian(extendedDurationRequested) [byte 1]</code></td></tr>
+ <tr><td>22</td><td><code>firstTwoBytesLittleEndian(deliveredTotal) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>firstTwoBytesLittleEndian(deliveredTotal) [byte 1]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusID()">
 <h3>getBolusID</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-133">getBolusID</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-131">getBolusID</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusDeliveryStatusId()">
 <h3>getBolusDeliveryStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-136">getBolusDeliveryStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-134">getBolusDeliveryStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusTypeBitmask()">
 <h3>getBolusTypeBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-139">getBolusTypeBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-137">getBolusTypeBitmask</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSourceId()">
 <h3>getBolusSourceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-142">getBolusSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-140">getBolusSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getReserved()">
 <h3>getReserved</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-145">getReserved</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-143">getReserved</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRequestedNow()">
 <h3>getRequestedNow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-148">getRequestedNow</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-146">getRequestedNow</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRequestedLater()">
 <h3>getRequestedLater</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-151">getRequestedLater</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-149">getRequestedLater</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCorrection()">
 <h3>getCorrection</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-154">getCorrection</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-152">getCorrection</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedDurationRequested()">
 <h3>getExtendedDurationRequested</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-157">getExtendedDurationRequested</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-155">getExtendedDurationRequested</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDeliveredTotal()">
 <h3>getDeliveredTotal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-160">getDeliveredTotal</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-158">getDeliveredTotal</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSource()">
 <h3>getBolusSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-164">getBolusSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-162">getBolusSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusTypes()">
 <h3>getBolusTypes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-190">getBolusTypes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-188">getBolusTypes</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -81,111 +81,109 @@
 <span class="source-line-no">064</span><span id="line-64">     * &lt;table border="1"&gt;</span>
 <span class="source-line-no">065</span><span id="line-65">     * &lt;caption&gt;Byte layout for BasalRateChangeHistoryLog.buildCargo(...):&lt;/caption&gt;</span>
 <span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{3} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;24&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) changeType} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;25&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;/table&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     */</span>
-<span class="source-line-no">095</span><span id="line-95">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType) {</span>
-<span class="source-line-no">096</span><span id="line-96">        return Bytes.combine(</span>
-<span class="source-line-no">097</span><span id="line-97">            new byte[]{3, 0},</span>
-<span class="source-line-no">098</span><span id="line-98">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">099</span><span id="line-99">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">100</span><span id="line-100">            Bytes.toFloat(commandBasalRate), </span>
-<span class="source-line-no">101</span><span id="line-101">            Bytes.toFloat(baseBasalRate), </span>
-<span class="source-line-no">102</span><span id="line-102">            Bytes.toFloat(maxBasalRate), </span>
-<span class="source-line-no">103</span><span id="line-103">            Bytes.firstTwoBytesLittleEndian(insulinDeliveryProfile), </span>
-<span class="source-line-no">104</span><span id="line-104">            new byte[]{ (byte) changeType, 0 });</span>
-<span class="source-line-no">105</span><span id="line-105">    }</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">    /**</span>
-<span class="source-line-no">108</span><span id="line-108">     * @return the basal rate which is being changed to</span>
-<span class="source-line-no">109</span><span id="line-109">     */</span>
-<span class="source-line-no">110</span><span id="line-110">    public float getCommandBasalRate() {</span>
-<span class="source-line-no">111</span><span id="line-111">        return commandBasalRate;</span>
-<span class="source-line-no">112</span><span id="line-112">    }</span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">    /**</span>
-<span class="source-line-no">115</span><span id="line-115">     * @return the basal rate which is default for the current profile segment</span>
-<span class="source-line-no">116</span><span id="line-116">     */</span>
-<span class="source-line-no">117</span><span id="line-117">    public float getBaseBasalRate() {</span>
-<span class="source-line-no">118</span><span id="line-118">        return baseBasalRate;</span>
-<span class="source-line-no">119</span><span id="line-119">    }</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">    /**</span>
-<span class="source-line-no">122</span><span id="line-122">     * @return the maximum allowed basal rate in the profile settings</span>
-<span class="source-line-no">123</span><span id="line-123">     */</span>
-<span class="source-line-no">124</span><span id="line-124">    public float getMaxBasalRate() {</span>
-<span class="source-line-no">125</span><span id="line-125">        return maxBasalRate;</span>
-<span class="source-line-no">126</span><span id="line-126">    }</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">    /**</span>
-<span class="source-line-no">129</span><span id="line-129">     * @return the ID of the Insulin Delivery Profile (IDP)</span>
-<span class="source-line-no">130</span><span id="line-130">     */</span>
-<span class="source-line-no">131</span><span id="line-131">    public int getInsulinDeliveryProfile() {</span>
-<span class="source-line-no">132</span><span id="line-132">        return insulinDeliveryProfile;</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    public int getChangeTypeId() {</span>
-<span class="source-line-no">136</span><span id="line-136">        return changeTypeId;</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    public enum ChangeType {</span>
-<span class="source-line-no">140</span><span id="line-140">        TIMED_SEGMENT(1),</span>
-<span class="source-line-no">141</span><span id="line-141">        NEW_PROFILE(2),</span>
-<span class="source-line-no">142</span><span id="line-142">        TEMP_RATE_START(4),</span>
-<span class="source-line-no">143</span><span id="line-143">        TEMP_RATE_END(8),</span>
-<span class="source-line-no">144</span><span id="line-144">        PUMP_SUSPENDED(16),</span>
-<span class="source-line-no">145</span><span id="line-145">        PUMP_RESUMED(32),</span>
-<span class="source-line-no">146</span><span id="line-146">        PUMP_SHUT_DOWN(64),</span>
-<span class="source-line-no">147</span><span id="line-147">        ;</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">        final int id;</span>
-<span class="source-line-no">150</span><span id="line-150">        ChangeType(int id) {</span>
-<span class="source-line-no">151</span><span id="line-151">            this.id = id;</span>
-<span class="source-line-no">152</span><span id="line-152">        }</span>
-<span class="source-line-no">153</span><span id="line-153"></span>
-<span class="source-line-no">154</span><span id="line-154">        public static ChangeType fromId(int id) {</span>
-<span class="source-line-no">155</span><span id="line-155">            for (ChangeType c : values()) {</span>
-<span class="source-line-no">156</span><span id="line-156">                if (c.id == id) {</span>
-<span class="source-line-no">157</span><span id="line-157">                    return c;</span>
-<span class="source-line-no">158</span><span id="line-158">                }</span>
-<span class="source-line-no">159</span><span id="line-159">            }</span>
-<span class="source-line-no">160</span><span id="line-160">            return null;</span>
-<span class="source-line-no">161</span><span id="line-161">        }</span>
-<span class="source-line-no">162</span><span id="line-162">    }</span>
-<span class="source-line-no">163</span><span id="line-163"></span>
-<span class="source-line-no">164</span><span id="line-164">    /**</span>
-<span class="source-line-no">165</span><span id="line-165">     * @return the reason that the basal rate was changed</span>
-<span class="source-line-no">166</span><span id="line-166">     */</span>
-<span class="source-line-no">167</span><span id="line-167">    public ChangeType getChangeType() {</span>
-<span class="source-line-no">168</span><span id="line-168">        return ChangeType.fromId(changeTypeId);</span>
-<span class="source-line-no">169</span><span id="line-169">    }</span>
-<span class="source-line-no">170</span><span id="line-170">    </span>
-<span class="source-line-no">171</span><span id="line-171">}</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(commandBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(baseBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;toFloat(maxBasalRate) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDeliveryProfile) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) changeType} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;/table&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     */</span>
+<span class="source-line-no">093</span><span id="line-93">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType) {</span>
+<span class="source-line-no">094</span><span id="line-94">        return Bytes.combine(</span>
+<span class="source-line-no">095</span><span id="line-95">            HistoryLog.typeIdBytes(3, 0),</span>
+<span class="source-line-no">096</span><span id="line-96">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">097</span><span id="line-97">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">098</span><span id="line-98">            Bytes.toFloat(commandBasalRate), </span>
+<span class="source-line-no">099</span><span id="line-99">            Bytes.toFloat(baseBasalRate), </span>
+<span class="source-line-no">100</span><span id="line-100">            Bytes.toFloat(maxBasalRate), </span>
+<span class="source-line-no">101</span><span id="line-101">            Bytes.firstTwoBytesLittleEndian(insulinDeliveryProfile), </span>
+<span class="source-line-no">102</span><span id="line-102">            new byte[]{ (byte) changeType, 0 });</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    /**</span>
+<span class="source-line-no">106</span><span id="line-106">     * @return the basal rate which is being changed to</span>
+<span class="source-line-no">107</span><span id="line-107">     */</span>
+<span class="source-line-no">108</span><span id="line-108">    public float getCommandBasalRate() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return commandBasalRate;</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    /**</span>
+<span class="source-line-no">113</span><span id="line-113">     * @return the basal rate which is default for the current profile segment</span>
+<span class="source-line-no">114</span><span id="line-114">     */</span>
+<span class="source-line-no">115</span><span id="line-115">    public float getBaseBasalRate() {</span>
+<span class="source-line-no">116</span><span id="line-116">        return baseBasalRate;</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    /**</span>
+<span class="source-line-no">120</span><span id="line-120">     * @return the maximum allowed basal rate in the profile settings</span>
+<span class="source-line-no">121</span><span id="line-121">     */</span>
+<span class="source-line-no">122</span><span id="line-122">    public float getMaxBasalRate() {</span>
+<span class="source-line-no">123</span><span id="line-123">        return maxBasalRate;</span>
+<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">125</span><span id="line-125"></span>
+<span class="source-line-no">126</span><span id="line-126">    /**</span>
+<span class="source-line-no">127</span><span id="line-127">     * @return the ID of the Insulin Delivery Profile (IDP)</span>
+<span class="source-line-no">128</span><span id="line-128">     */</span>
+<span class="source-line-no">129</span><span id="line-129">    public int getInsulinDeliveryProfile() {</span>
+<span class="source-line-no">130</span><span id="line-130">        return insulinDeliveryProfile;</span>
+<span class="source-line-no">131</span><span id="line-131">    }</span>
+<span class="source-line-no">132</span><span id="line-132"></span>
+<span class="source-line-no">133</span><span id="line-133">    public int getChangeTypeId() {</span>
+<span class="source-line-no">134</span><span id="line-134">        return changeTypeId;</span>
+<span class="source-line-no">135</span><span id="line-135">    }</span>
+<span class="source-line-no">136</span><span id="line-136"></span>
+<span class="source-line-no">137</span><span id="line-137">    public enum ChangeType {</span>
+<span class="source-line-no">138</span><span id="line-138">        TIMED_SEGMENT(1),</span>
+<span class="source-line-no">139</span><span id="line-139">        NEW_PROFILE(2),</span>
+<span class="source-line-no">140</span><span id="line-140">        TEMP_RATE_START(4),</span>
+<span class="source-line-no">141</span><span id="line-141">        TEMP_RATE_END(8),</span>
+<span class="source-line-no">142</span><span id="line-142">        PUMP_SUSPENDED(16),</span>
+<span class="source-line-no">143</span><span id="line-143">        PUMP_RESUMED(32),</span>
+<span class="source-line-no">144</span><span id="line-144">        PUMP_SHUT_DOWN(64),</span>
+<span class="source-line-no">145</span><span id="line-145">        ;</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">        final int id;</span>
+<span class="source-line-no">148</span><span id="line-148">        ChangeType(int id) {</span>
+<span class="source-line-no">149</span><span id="line-149">            this.id = id;</span>
+<span class="source-line-no">150</span><span id="line-150">        }</span>
+<span class="source-line-no">151</span><span id="line-151"></span>
+<span class="source-line-no">152</span><span id="line-152">        public static ChangeType fromId(int id) {</span>
+<span class="source-line-no">153</span><span id="line-153">            for (ChangeType c : values()) {</span>
+<span class="source-line-no">154</span><span id="line-154">                if (c.id == id) {</span>
+<span class="source-line-no">155</span><span id="line-155">                    return c;</span>
+<span class="source-line-no">156</span><span id="line-156">                }</span>
+<span class="source-line-no">157</span><span id="line-157">            }</span>
+<span class="source-line-no">158</span><span id="line-158">            return null;</span>
+<span class="source-line-no">159</span><span id="line-159">        }</span>
+<span class="source-line-no">160</span><span id="line-160">    }</span>
+<span class="source-line-no">161</span><span id="line-161"></span>
+<span class="source-line-no">162</span><span id="line-162">    /**</span>
+<span class="source-line-no">163</span><span id="line-163">     * @return the reason that the basal rate was changed</span>
+<span class="source-line-no">164</span><span id="line-164">     */</span>
+<span class="source-line-no">165</span><span id="line-165">    public ChangeType getChangeType() {</span>
+<span class="source-line-no">166</span><span id="line-166">        return ChangeType.fromId(changeTypeId);</span>
+<span class="source-line-no">167</span><span id="line-167">    }</span>
+<span class="source-line-no">168</span><span id="line-168">    </span>
+<span class="source-line-no">169</span><span id="line-169">}</span>
 
 
 

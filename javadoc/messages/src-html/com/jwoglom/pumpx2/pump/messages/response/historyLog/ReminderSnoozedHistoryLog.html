@@ -60,7 +60,7 @@
 <span class="source-line-no">043</span><span id="line-43"></span>
 <span class="source-line-no">044</span><span id="line-44">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long reminderId) {</span>
 <span class="source-line-no">045</span><span id="line-45">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">046</span><span id="line-46">            new byte[]{30, 0},</span>
+<span class="source-line-no">046</span><span id="line-46">            HistoryLog.typeIdBytes(30, 0),</span>
 <span class="source-line-no">047</span><span id="line-47">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">048</span><span id="line-48">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">049</span><span id="line-49">            Bytes.toUint32(reminderId)));</span>

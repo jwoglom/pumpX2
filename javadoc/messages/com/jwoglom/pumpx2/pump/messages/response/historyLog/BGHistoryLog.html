@@ -148,32 +148,30 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Byte layout for BGHistoryLog.buildCargo(...):
  OffsetDescription
- 0<code>new byte[]{16} [element 0]</code>
- 1<code>new byte[]{0} [element 1]</code>
- 2<code>toUint32(pumpTimeSec) [byte 0]</code>
- 3<code>toUint32(pumpTimeSec) [byte 1]</code>
- 4<code>toUint32(pumpTimeSec) [byte 2]</code>
- 5<code>toUint32(pumpTimeSec) [byte 3]</code>
- 6<code>toUint32(sequenceNum) [byte 0]</code>
- 7<code>toUint32(sequenceNum) [byte 1]</code>
- 8<code>toUint32(sequenceNum) [byte 2]</code>
- 9<code>toUint32(sequenceNum) [byte 3]</code>
- 10<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
- 11<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
- 12<code>(byte) cgmCalibration</code>
- 13<code>(byte) bgSource</code>
- 14<code>toFloat(iob) [byte 0]</code>
- 15<code>toFloat(iob) [byte 1]</code>
- 16<code>toFloat(iob) [byte 2]</code>
- 17<code>toFloat(iob) [byte 3]</code>
- 18<code>firstTwoBytesLittleEndian(targetBG) [byte 0]</code>
- 19<code>firstTwoBytesLittleEndian(targetBG) [byte 1]</code>
- 20<code>firstTwoBytesLittleEndian(isf) [byte 0]</code>
- 21<code>firstTwoBytesLittleEndian(isf) [byte 1]</code>
- 22<code>(byte) selectedIOB</code>
- 23<code>(byte) bgSourceType</code>
- 24<code>firstTwoBytesLittleEndian(spare) [byte 0]</code>
- 25<code>firstTwoBytesLittleEndian(spare) [byte 1]</code>
+ 0<code>toUint32(pumpTimeSec) [byte 0]</code>
+ 1<code>toUint32(pumpTimeSec) [byte 1]</code>
+ 2<code>toUint32(pumpTimeSec) [byte 2]</code>
+ 3<code>toUint32(pumpTimeSec) [byte 3]</code>
+ 4<code>toUint32(sequenceNum) [byte 0]</code>
+ 5<code>toUint32(sequenceNum) [byte 1]</code>
+ 6<code>toUint32(sequenceNum) [byte 2]</code>
+ 7<code>toUint32(sequenceNum) [byte 3]</code>
+ 8<code>firstTwoBytesLittleEndian(bg) [byte 0]</code>
+ 9<code>firstTwoBytesLittleEndian(bg) [byte 1]</code>
+ 10<code>(byte) cgmCalibration</code>
+ 11<code>(byte) bgSource</code>
+ 12<code>toFloat(iob) [byte 0]</code>
+ 13<code>toFloat(iob) [byte 1]</code>
+ 14<code>toFloat(iob) [byte 2]</code>
+ 15<code>toFloat(iob) [byte 3]</code>
+ 16<code>firstTwoBytesLittleEndian(targetBG) [byte 0]</code>
+ 17<code>firstTwoBytesLittleEndian(targetBG) [byte 1]</code>
+ 18<code>firstTwoBytesLittleEndian(isf) [byte 0]</code>
+ 19<code>firstTwoBytesLittleEndian(isf) [byte 1]</code>
+ 20<code>(byte) selectedIOB</code>
+ 21<code>(byte) bgSourceType</code>
+ 22<code>firstTwoBytesLittleEndian(spare) [byte 0]</code>
+ 23<code>firstTwoBytesLittleEndian(spare) [byte 1]</code>
  </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -310,7 +308,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,float,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-112">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-110">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bg,
  int&nbsp;cgmCalibration,
@@ -324,39 +322,37 @@ loadScripts(document, 'script');</script>
 <div class="block"><table border="1">
  <caption>Byte layout for BGHistoryLog.buildCargo(...):</caption>
  <tr><th>Offset</th><th>Description</th></tr>
- <tr><td>0</td><td><code>new byte[]{16} [element 0]</code></td></tr>
- <tr><td>1</td><td><code>new byte[]{0} [element 1]</code></td></tr>
- <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
- <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
- <tr><td>4</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
- <tr><td>5</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
- <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
- <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
- <tr><td>8</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
- <tr><td>9</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
- <tr><td>10</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
- <tr><td>11</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
- <tr><td>12</td><td><code>(byte) cgmCalibration</code></td></tr>
- <tr><td>13</td><td><code>(byte) bgSource</code></td></tr>
- <tr><td>14</td><td><code>toFloat(iob) [byte 0]</code></td></tr>
- <tr><td>15</td><td><code>toFloat(iob) [byte 1]</code></td></tr>
- <tr><td>16</td><td><code>toFloat(iob) [byte 2]</code></td></tr>
- <tr><td>17</td><td><code>toFloat(iob) [byte 3]</code></td></tr>
- <tr><td>18</td><td><code>firstTwoBytesLittleEndian(targetBG) [byte 0]</code></td></tr>
- <tr><td>19</td><td><code>firstTwoBytesLittleEndian(targetBG) [byte 1]</code></td></tr>
- <tr><td>20</td><td><code>firstTwoBytesLittleEndian(isf) [byte 0]</code></td></tr>
- <tr><td>21</td><td><code>firstTwoBytesLittleEndian(isf) [byte 1]</code></td></tr>
- <tr><td>22</td><td><code>(byte) selectedIOB</code></td></tr>
- <tr><td>23</td><td><code>(byte) bgSourceType</code></td></tr>
- <tr><td>24</td><td><code>firstTwoBytesLittleEndian(spare) [byte 0]</code></td></tr>
- <tr><td>25</td><td><code>firstTwoBytesLittleEndian(spare) [byte 1]</code></td></tr>
+ <tr><td>0</td><td><code>toUint32(pumpTimeSec) [byte 0]</code></td></tr>
+ <tr><td>1</td><td><code>toUint32(pumpTimeSec) [byte 1]</code></td></tr>
+ <tr><td>2</td><td><code>toUint32(pumpTimeSec) [byte 2]</code></td></tr>
+ <tr><td>3</td><td><code>toUint32(pumpTimeSec) [byte 3]</code></td></tr>
+ <tr><td>4</td><td><code>toUint32(sequenceNum) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>toUint32(sequenceNum) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>toUint32(sequenceNum) [byte 2]</code></td></tr>
+ <tr><td>7</td><td><code>toUint32(sequenceNum) [byte 3]</code></td></tr>
+ <tr><td>8</td><td><code>firstTwoBytesLittleEndian(bg) [byte 0]</code></td></tr>
+ <tr><td>9</td><td><code>firstTwoBytesLittleEndian(bg) [byte 1]</code></td></tr>
+ <tr><td>10</td><td><code>(byte) cgmCalibration</code></td></tr>
+ <tr><td>11</td><td><code>(byte) bgSource</code></td></tr>
+ <tr><td>12</td><td><code>toFloat(iob) [byte 0]</code></td></tr>
+ <tr><td>13</td><td><code>toFloat(iob) [byte 1]</code></td></tr>
+ <tr><td>14</td><td><code>toFloat(iob) [byte 2]</code></td></tr>
+ <tr><td>15</td><td><code>toFloat(iob) [byte 3]</code></td></tr>
+ <tr><td>16</td><td><code>firstTwoBytesLittleEndian(targetBG) [byte 0]</code></td></tr>
+ <tr><td>17</td><td><code>firstTwoBytesLittleEndian(targetBG) [byte 1]</code></td></tr>
+ <tr><td>18</td><td><code>firstTwoBytesLittleEndian(isf) [byte 0]</code></td></tr>
+ <tr><td>19</td><td><code>firstTwoBytesLittleEndian(isf) [byte 1]</code></td></tr>
+ <tr><td>20</td><td><code>(byte) selectedIOB</code></td></tr>
+ <tr><td>21</td><td><code>(byte) bgSourceType</code></td></tr>
+ <tr><td>22</td><td><code>firstTwoBytesLittleEndian(spare) [byte 0]</code></td></tr>
+ <tr><td>23</td><td><code>firstTwoBytesLittleEndian(spare) [byte 1]</code></td></tr>
  </table></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBg()">
 <h3>getBg</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-131">getBg</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-129">getBg</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the BG entry in mg/dL</dd>
@@ -366,7 +362,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCgmCalibration()">
 <h3>getCgmCalibration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-138">getCgmCalibration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-136">getCgmCalibration</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>TODO(unknown)</dd>
@@ -376,13 +372,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBgSourceId()">
 <h3>getBgSourceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-142">getBgSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-140">getBgSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgSource()">
 <h3>getBgSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/LastBGResponse.BgSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-149">getBgSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/LastBGResponse.BgSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-147">getBgSource</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the source of the BG entry (CGM or manual)</dd>
@@ -392,7 +388,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIob()">
 <h3>getIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-156">getIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-154">getIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the current insulin on board</dd>
@@ -402,7 +398,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTargetBG()">
 <h3>getTargetBG</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-163">getTargetBG</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-161">getTargetBG</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the target BG in the pump profile</dd>
@@ -412,7 +408,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIsf()">
 <h3>getIsf</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-170">getIsf</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-168">getIsf</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the insulin sensitivity factor in the pump profile</dd>
@@ -422,19 +418,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSelectedIOB()">
 <h3>getSelectedIOB</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-174">getSelectedIOB</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-172">getSelectedIOB</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgSourceType()">
 <h3>getBgSourceType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-178">getBgSourceType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-176">getBgSourceType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSpare()">
 <h3>getSpare</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-182">getSpare</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BGHistoryLog.html#line-180">getSpare</a></span>()</div>
 </section>
 </li>
 </ul>

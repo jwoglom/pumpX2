@@ -49,7 +49,7 @@
 <span class="source-line-no">032</span><span id="line-32"></span>
 <span class="source-line-no">033</span><span id="line-33">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
 <span class="source-line-no">034</span><span id="line-34">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">035</span><span id="line-35">            new byte[]{32, 1}, // 288 = 256 + 32</span>
+<span class="source-line-no">035</span><span id="line-35">            HistoryLog.typeIdBytes(288, 0), // 288 = 256 + 32</span>
 <span class="source-line-no">036</span><span id="line-36">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">037</span><span id="line-37">            Bytes.toUint32(sequenceNum)));</span>
 <span class="source-line-no">038</span><span id="line-38">    }</span>

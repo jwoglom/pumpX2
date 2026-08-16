@@ -72,7 +72,7 @@
 <span class="source-line-no">055</span><span id="line-55"></span>
 <span class="source-line-no">056</span><span id="line-56">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int messageType, int requestCode, int errorCode, boolean isDataMasked) {</span>
 <span class="source-line-no">057</span><span id="line-57">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">058</span><span id="line-58">            new byte[]{(byte)(419 &amp; 0xFF), (byte)(419 &gt;&gt; 8)}, // 419 = 0x01A3</span>
+<span class="source-line-no">058</span><span id="line-58">            HistoryLog.typeIdBytes(419, 0), // 419 = 0x01A3</span>
 <span class="source-line-no">059</span><span id="line-59">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">060</span><span id="line-60">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">061</span><span id="line-61">            new byte[]{(byte) messageType},</span>

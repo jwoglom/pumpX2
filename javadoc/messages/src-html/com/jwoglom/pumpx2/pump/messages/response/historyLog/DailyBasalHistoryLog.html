@@ -88,7 +88,7 @@
 <span class="source-line-no">071</span><span id="line-71"></span>
 <span class="source-line-no">072</span><span id="line-72">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv) {</span>
 <span class="source-line-no">073</span><span id="line-73">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">074</span><span id="line-74">            new byte[]{81, 0},</span>
+<span class="source-line-no">074</span><span id="line-74">            HistoryLog.typeIdBytes(81, 0),</span>
 <span class="source-line-no">075</span><span id="line-75">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">077</span><span id="line-77">            Bytes.toFloat(dailyTotalBasal), </span>

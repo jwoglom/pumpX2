@@ -101,7 +101,7 @@
 <span class="source-line-no">084</span><span id="line-84"></span>
 <span class="source-line-no">085</span><span id="line-85">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {</span>
 <span class="source-line-no">086</span><span id="line-86">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">087</span><span id="line-87">            new byte[]{ (byte) 399, 0x11 },</span>
+<span class="source-line-no">087</span><span id="line-87">            HistoryLog.typeIdBytes(399, 1), // nibble is capture-dependent (see getHeaderHighNibble javadoc); 1 preserved here since all known 399 fixtures carry it</span>
 <span class="source-line-no">088</span><span id="line-88">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">089</span><span id="line-89">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">090</span><span id="line-90">            Bytes.firstTwoBytesLittleEndian(glucoseValueStatusRaw), </span>

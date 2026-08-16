@@ -84,7 +84,7 @@
 <span class="source-line-no">067</span><span id="line-67"></span>
 <span class="source-line-no">068</span><span id="line-68">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData, long param1, float param2) {</span>
 <span class="source-line-no">069</span><span id="line-69">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">070</span><span id="line-70">            new byte[]{4, 0},</span>
+<span class="source-line-no">070</span><span id="line-70">            HistoryLog.typeIdBytes(4, 0),</span>
 <span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">072</span><span id="line-72">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">073</span><span id="line-73">            Bytes.toUint32(alertId),</span>

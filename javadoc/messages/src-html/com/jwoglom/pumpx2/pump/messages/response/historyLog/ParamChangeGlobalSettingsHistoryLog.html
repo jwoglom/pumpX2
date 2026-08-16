@@ -103,7 +103,7 @@
 <span class="source-line-no">086</span><span id="line-86"></span>
 <span class="source-line-no">087</span><span id="line-87">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
 <span class="source-line-no">088</span><span id="line-88">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">089</span><span id="line-89">            new byte[]{74, 0},</span>
+<span class="source-line-no">089</span><span id="line-89">            HistoryLog.typeIdBytes(74, 0),</span>
 <span class="source-line-no">090</span><span id="line-90">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">091</span><span id="line-91">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">092</span><span id="line-92">            new byte[]{ (byte) modifiedData }, </span>

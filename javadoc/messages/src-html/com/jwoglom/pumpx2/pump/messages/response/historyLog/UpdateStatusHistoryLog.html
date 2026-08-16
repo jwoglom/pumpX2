@@ -86,7 +86,7 @@
 <span class="source-line-no">069</span><span id="line-69"></span>
 <span class="source-line-no">070</span><span id="line-70">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int swUpdateStatus, int metadataAndVersionStatus, int fullDlAndCrcStatus, int fileDlAndSideloadStatus, int externalFlashStatus, int updateSuccessful, long swPartNum) {</span>
 <span class="source-line-no">071</span><span id="line-71">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">072</span><span id="line-72">            new byte[]{(byte) 203, 0},</span>
+<span class="source-line-no">072</span><span id="line-72">            HistoryLog.typeIdBytes(203, 0),</span>
 <span class="source-line-no">073</span><span id="line-73">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">074</span><span id="line-74">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">075</span><span id="line-75">            Bytes.firstTwoBytesLittleEndian(metadataAndVersionStatus),</span>

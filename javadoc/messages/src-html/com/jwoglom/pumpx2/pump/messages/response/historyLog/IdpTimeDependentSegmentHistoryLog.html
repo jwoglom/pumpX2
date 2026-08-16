@@ -97,7 +97,7 @@
 <span class="source-line-no">080</span><span id="line-80"></span>
 <span class="source-line-no">081</span><span id="line-81">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, int status, int segmentIndex, int modificationType, int startTime, int basalRate, int isf, long targetBg, int carbRatio) {</span>
 <span class="source-line-no">082</span><span id="line-82">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">083</span><span id="line-83">            new byte[]{68, 0},</span>
+<span class="source-line-no">083</span><span id="line-83">            HistoryLog.typeIdBytes(68, 0),</span>
 <span class="source-line-no">084</span><span id="line-84">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">085</span><span id="line-85">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">086</span><span id="line-86">            new byte[]{ (byte) idp }, </span>

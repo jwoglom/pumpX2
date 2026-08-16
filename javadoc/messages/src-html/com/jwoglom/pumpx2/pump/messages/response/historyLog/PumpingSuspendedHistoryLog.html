@@ -75,7 +75,7 @@
 <span class="source-line-no">058</span><span id="line-58"></span>
 <span class="source-line-no">059</span><span id="line-59">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout) {</span>
 <span class="source-line-no">060</span><span id="line-60">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">061</span><span id="line-61">            new byte[]{11, 0},</span>
+<span class="source-line-no">061</span><span id="line-61">            HistoryLog.typeIdBytes(11, 0),</span>
 <span class="source-line-no">062</span><span id="line-62">            Bytes.toUint32(pumpTimeSec),</span>
 <span class="source-line-no">063</span><span id="line-63">            Bytes.toUint32(sequenceNum),</span>
 <span class="source-line-no">064</span><span id="line-64">            Bytes.toUint32(preSuspendState),</span>
