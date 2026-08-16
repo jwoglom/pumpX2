@@ -30,7 +30,7 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           TOKEN: ${{ secrets.TOKEN }}
         run: |
-          ./gradlew :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest \
+          ./gradlew :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest :messages:test \
             publishAllPublicationsToGitHubPackagesRepository -PbuildRelease
 
       - name: Android Test Report
