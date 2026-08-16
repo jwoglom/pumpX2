@@ -32,7 +32,7 @@ public class CgmSessionTypeChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{11, 1}, // 267 = 256 + 11
+            HistoryLog.typeIdBytes(267, 0), // 267 = 256 + 11
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

@@ -33,7 +33,7 @@ public class AaDeliveryStatusChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(238 & 0xFF), (byte)(238 >> 8)}, // 238
+            HistoryLog.typeIdBytes(238, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

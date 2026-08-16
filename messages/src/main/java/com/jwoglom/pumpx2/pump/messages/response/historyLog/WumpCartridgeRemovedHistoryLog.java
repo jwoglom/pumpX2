@@ -34,7 +34,7 @@ public class WumpCartridgeRemovedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{46, 1}, // typeId=302 (256+46)
+            HistoryLog.typeIdBytes(302, 0), // typeId=302 (256+46)
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

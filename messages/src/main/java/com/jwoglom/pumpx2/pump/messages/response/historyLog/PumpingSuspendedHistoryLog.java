@@ -49,7 +49,7 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{11, 0},
+            HistoryLog.typeIdBytes(11, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(preSuspendState),

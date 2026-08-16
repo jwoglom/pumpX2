@@ -45,7 +45,7 @@ public class DataLogCorruptionHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long block, int reason) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{60, 0},
+            HistoryLog.typeIdBytes(60, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(block),

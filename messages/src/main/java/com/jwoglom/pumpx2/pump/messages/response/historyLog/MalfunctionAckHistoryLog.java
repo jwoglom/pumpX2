@@ -37,7 +37,7 @@ public class MalfunctionAckHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long malfId) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{7, 0},
+            HistoryLog.typeIdBytes(7, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(malfId)));

@@ -41,7 +41,7 @@ public class UsbConnectedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float negotiatedCurrentmA) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{36, 0},
+            HistoryLog.typeIdBytes(36, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(negotiatedCurrentmA)));

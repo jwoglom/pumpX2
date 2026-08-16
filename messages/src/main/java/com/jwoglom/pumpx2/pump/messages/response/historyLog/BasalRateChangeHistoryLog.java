@@ -52,7 +52,7 @@ public class BasalRateChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float commandBasalRate, float baseBasalRate, float maxBasalRate, int insulinDeliveryProfile, int changeType) {
         return Bytes.combine(
-            new byte[]{3, 0},
+            HistoryLog.typeIdBytes(3, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(commandBasalRate), 

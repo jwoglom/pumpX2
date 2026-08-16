@@ -37,7 +37,7 @@ public class CgmBleCalibrationEvtG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, boolean isCalibrationAccepted) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(439 & 0xFF), (byte)(439 >> 8)}, // 439 = 0x01B7
+            HistoryLog.typeIdBytes(439, 0), // 439 = 0x01B7
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{(byte)(isCalibrationAccepted ? 1 : 0)}));

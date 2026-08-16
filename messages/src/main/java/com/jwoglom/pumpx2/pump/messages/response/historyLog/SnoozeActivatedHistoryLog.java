@@ -32,7 +32,7 @@ public class SnoozeActivatedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{30, 1}, // 286 = 256 + 30
+            HistoryLog.typeIdBytes(286, 0), // 286 = 256 + 30
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

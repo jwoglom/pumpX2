@@ -55,7 +55,7 @@ public class CgmJoinSessionHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionJoinReasonRaw, int sessionDuration) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 213, 0},
+            HistoryLog.typeIdBytes(213, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTransmitterTime),

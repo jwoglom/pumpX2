@@ -45,7 +45,7 @@ public class PumpingResumedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long preResumeState, int insulinAmount) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{12, 0},
+            HistoryLog.typeIdBytes(12, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(preResumeState),

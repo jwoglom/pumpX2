@@ -61,7 +61,7 @@ public class ParamChangePumpSettingsHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modification, int status, int lowInsulinThreshold, int cannulaPrimeSize, int isFeatureLocked, int autoShutdownEnabled, int oledTimeout, int autoShutdownDuration) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{73, 0},
+            HistoryLog.typeIdBytes(73, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) modification }, 

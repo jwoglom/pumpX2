@@ -41,7 +41,7 @@ public class CarbEnteredHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float carbs) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{48, 0},
+            HistoryLog.typeIdBytes(48, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(carbs)));

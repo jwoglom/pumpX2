@@ -48,7 +48,7 @@ public class TubingFilledHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus, long position) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{63, 0},
+            HistoryLog.typeIdBytes(63, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(primeSize),

@@ -66,7 +66,7 @@ public class IdpTimeDependentSegmentHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, int status, int segmentIndex, int modificationType, int startTime, int basalRate, int isf, long targetBg, int carbRatio) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{68, 0},
+            HistoryLog.typeIdBytes(68, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) idp }, 

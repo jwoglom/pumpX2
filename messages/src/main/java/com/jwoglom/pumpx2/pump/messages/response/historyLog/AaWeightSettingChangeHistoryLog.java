@@ -33,7 +33,7 @@ public class AaWeightSettingChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(246 & 0xFF), (byte)(246 >> 8)}, // 246
+            HistoryLog.typeIdBytes(246, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

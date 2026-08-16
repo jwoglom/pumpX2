@@ -63,7 +63,7 @@ public class ParamChangeReminderHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modification, int reminderId, int status, int enable, long frequencyMinutes, int startTime, int endTime, int activeDays) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{96, 0},
+            HistoryLog.typeIdBytes(96, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) modification }, 
