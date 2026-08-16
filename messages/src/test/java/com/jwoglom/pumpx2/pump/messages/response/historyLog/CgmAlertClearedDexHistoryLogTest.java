@@ -11,7 +11,8 @@ public class CgmAlertClearedDexHistoryLogTest {
             580777763L, 491134L, 770L
         );
 
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: buildCargo hardcodes byte 1's low nibble to 0, but typeId 370
+        // needs 1 there (bits 8-11 of the 12-bit typeId), independent of the header high nibble
         HistoryLogMessageTester.testSingle(
                 "721123f79d227e7e070002030000000000000000000000000000",
                 expected
@@ -25,7 +26,8 @@ public class CgmAlertClearedDexHistoryLogTest {
             580720754L, 488623L, 782L
         );
 
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: buildCargo hardcodes byte 1's low nibble to 0, but typeId 370
+        // needs 1 there (bits 8-11 of the 12-bit typeId), independent of the header high nibble
         HistoryLogMessageTester.testSingle(
                 "721172189d22af7407000e030000000000000000000000000000",
                 expected

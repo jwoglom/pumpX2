@@ -19,7 +19,7 @@ public class BasalDeliveryHistoryLogTest {
                 "17119bf69d22407e0700000003000000e803ffffffff00000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 12-13 carry unparsed data (0x0003) that buildCargo zero-fills
     }
 
     @Test
@@ -34,6 +34,6 @@ public class BasalDeliveryHistoryLogTest {
                 "1711f4d69d22e47c070003000300e803e803e803ffff00000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 12-13 carry unparsed data (0x0003) that buildCargo zero-fills
     }
 }

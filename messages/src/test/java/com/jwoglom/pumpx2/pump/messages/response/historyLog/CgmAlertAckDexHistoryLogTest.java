@@ -11,7 +11,8 @@ public class CgmAlertAckDexHistoryLogTest {
             580750504L, 489859L, 770L
         );
 
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: buildCargo hardcodes byte 1's low nibble to 0, but typeId 371
+        // needs 1 there (bits 8-11 of the 12-bit typeId), independent of the header high nibble
         HistoryLogMessageTester.testSingle(
                 "7311a88c9d228379070002030000000000000000000000000000",
                 expected
@@ -25,7 +26,8 @@ public class CgmAlertAckDexHistoryLogTest {
             579789268L, 449784L, 800L
         );
 
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: buildCargo hardcodes byte 1's low nibble to 0, but typeId 371
+        // needs 1 there (bits 8-11 of the 12-bit typeId), independent of the header high nibble;
         // this sample also has a nonzero byte at payload offset 4 (raw byte 14 = 0x01) which
         // CgmAlertAckDexHistoryLog.parse() does not read; see report for details
         HistoryLogMessageTester.testSingle(
