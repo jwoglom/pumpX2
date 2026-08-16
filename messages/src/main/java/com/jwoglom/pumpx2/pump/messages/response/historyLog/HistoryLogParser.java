@@ -97,7 +97,13 @@ public class HistoryLogParser {
         AlertClearedHistoryLog.class,
         VersionInfoHistoryLog.class,
         UpdateStatusHistoryLog.class,
-        VersionsAHistoryLog.class
+        VersionsAHistoryLog.class,
+        AlarmAckHistoryLog.class,
+        AlertAckHistoryLog.class,
+        ReminderActivatedHistoryLog.class,
+        ReminderDismissedHistoryLog.class,
+        CgmPairingCodeG7HistoryLog.class,
+        TipsErrorHistoryLog.class
         // MESSAGES_END
     );
 
