@@ -15,6 +15,8 @@ public class TempRateCompletedHistoryLogTest {
                 "0f10eecf8e2246dc060003001500000000000000000000000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 10-11 carry unparsed data (0x0003 LE) that buildCargo does
+        // not reproduce; buildCargo also writes tempRateId at offset 10 rather than offset 12,
+        // where parse() actually reads it
     }
 }
