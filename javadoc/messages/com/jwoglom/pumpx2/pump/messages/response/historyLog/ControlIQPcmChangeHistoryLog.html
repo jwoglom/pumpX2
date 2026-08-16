@@ -121,13 +121,23 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ControlIQPcmChangeHistoryLog</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">ControlIQPcmChangeHistoryLog</a><wbr>(int&nbsp;currentPcmId,
- int&nbsp;previousPcmId)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,int,int,int)" class="member-name-link">ControlIQPcmChangeHistoryLog</a><wbr>(int&nbsp;currentPcmId,
+ int&nbsp;previousPcmId,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,int)" class="member-name-link">ControlIQPcmChangeHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,int,int,int,int,int)" class="member-name-link">ControlIQPcmChangeHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentPcmId,
- int&nbsp;previousPcmId)</code></div>
+ int&nbsp;previousPcmId,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -144,22 +154,57 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,int,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentPcm,
- int&nbsp;previousPcm)</code></div>
+ int&nbsp;previousPcm,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPcm()" class="member-name-link">getCurrentPcm</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCalculationAvailableRaw()" class="member-name-link">getCalculationAvailableRaw</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPcmId()" class="member-name-link">getCurrentPcmId</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmAvailableRaw()" class="member-name-link">getCgmAvailableRaw</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousPcm()" class="member-name-link">getPreviousPcm</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClosedLoopPreferredRaw()" class="member-name-link">getClosedLoopPreferredRaw</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPcm()" class="member-name-link">getCurrentPcm</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPcmId()" class="member-name-link">getCurrentPcmId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousPcm()" class="member-name-link">getPreviousPcm</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousPcmId()" class="member-name-link">getPreviousPcmId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreviousPcmId()" class="member-name-link">getPreviousPcmId</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPumpSuspendedRaw()" class="member-name-link">getPumpSuspendedRaw</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSufficientClosedLoopParamsRaw()" class="member-name-link">getSufficientClosedLoopParamsRaw</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCalculationAvailable()" class="member-name-link">isCalculationAvailable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCgmAvailable()" class="member-name-link">isCgmAvailable</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClosedLoopPreferred()" class="member-name-link">isClosedLoopPreferred</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPumpSuspended()" class="member-name-link">isPumpSuspended</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSufficientClosedLoopParams()" class="member-name-link">isSufficientClosedLoopParams</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
@@ -170,6 +215,11 @@ loadScripts(document, 'script');</script>
  <code>previousPcmId</code><code>raw[11]</code>
  <code>currentPcm</code><code>PCM.fromId(currentPcmId)</code>
  <code>previousPcm</code><code>PCM.fromId(previousPcmId)</code>
+ <code>pumpSuspendedRaw</code><code>raw[12]</code>
+ <code>calculationAvailableRaw</code><code>raw[13]</code>
+ <code>cgmAvailableRaw</code><code>raw[14]</code>
+ <code>closedLoopPreferredRaw</code><code>raw[15]</code>
+ <code>sufficientClosedLoopParamsRaw</code><code>raw[16]</code>
  </div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -198,23 +248,33 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlIQPcmChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-21">ControlIQPcmChangeHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-27">ControlIQPcmChangeHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(long,long,int,int)">
+<section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int)">
 <h3>ControlIQPcmChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-22">ControlIQPcmChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-28">ControlIQPcmChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentPcmId,
- int&nbsp;previousPcmId)</span></div>
+ int&nbsp;previousPcmId,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(int,int)">
+<section class="detail" id="&lt;init&gt;(int,int,int,int,int,int,int)">
 <h3>ControlIQPcmChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-30">ControlIQPcmChangeHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;currentPcmId,
- int&nbsp;previousPcmId)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-43">ControlIQPcmChangeHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;currentPcmId,
+ int&nbsp;previousPcmId,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</span></div>
 </section>
 </li>
 </ul>
@@ -228,7 +288,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-34">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-47">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -238,13 +298,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-47">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-65">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlIQPcmChangeHistoryLog:</caption>
  <tr><td><code>currentPcmId</code></td><td><code>raw[10]</code></td></tr>
  <tr><td><code>previousPcmId</code></td><td><code>raw[11]</code></td></tr>
  <tr><td><code>currentPcm</code></td><td><code>PCM.fromId(currentPcmId)</code></td></tr>
  <tr><td><code>previousPcm</code></td><td><code>PCM.fromId(previousPcmId)</code></td></tr>
+ <tr><td><code>pumpSuspendedRaw</code></td><td><code>raw[12]</code></td></tr>
+ <tr><td><code>calculationAvailableRaw</code></td><td><code>raw[13]</code></td></tr>
+ <tr><td><code>cgmAvailableRaw</code></td><td><code>raw[14]</code></td></tr>
+ <tr><td><code>closedLoopPreferredRaw</code></td><td><code>raw[15]</code></td></tr>
+ <tr><td><code>sufficientClosedLoopParamsRaw</code></td><td><code>raw[16]</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -253,36 +318,101 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="buildCargo(long,long,int,int)">
+<section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-58">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-81">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentPcm,
- int&nbsp;previousPcm)</span></div>
+ int&nbsp;previousPcm,
+ int&nbsp;pumpSuspended,
+ int&nbsp;calculationAvailable,
+ int&nbsp;cgmAvailable,
+ int&nbsp;closedLoopPreferred,
+ int&nbsp;sufficientClosedLoopParams)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentPcmId()">
 <h3>getCurrentPcmId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-66">getCurrentPcmId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-94">getCurrentPcmId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPreviousPcmId()">
 <h3>getPreviousPcmId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-69">getPreviousPcmId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-97">getPreviousPcmId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentPcm()">
 <h3>getCurrentPcm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-73">getCurrentPcm</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-101">getCurrentPcm</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPreviousPcm()">
 <h3>getPreviousPcm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-77">getPreviousPcm</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ControlIQPcmChangeHistoryLog.PCM.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQPcmChangeHistoryLog.PCM</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-105">getPreviousPcm</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPumpSuspendedRaw()">
+<h3>getPumpSuspendedRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-109">getPumpSuspendedRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPumpSuspended()">
+<h3>isPumpSuspended</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-113">isPumpSuspended</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCalculationAvailableRaw()">
+<h3>getCalculationAvailableRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-117">getCalculationAvailableRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isCalculationAvailable()">
+<h3>isCalculationAvailable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-121">isCalculationAvailable</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCgmAvailableRaw()">
+<h3>getCgmAvailableRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-125">getCgmAvailableRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isCgmAvailable()">
+<h3>isCgmAvailable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-129">isCgmAvailable</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getClosedLoopPreferredRaw()">
+<h3>getClosedLoopPreferredRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-133">getClosedLoopPreferredRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isClosedLoopPreferred()">
+<h3>isClosedLoopPreferred</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-137">isClosedLoopPreferred</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSufficientClosedLoopParamsRaw()">
+<h3>getSufficientClosedLoopParamsRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-141">getSufficientClosedLoopParamsRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isSufficientClosedLoopParams()">
+<h3>isSufficientClosedLoopParams</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQPcmChangeHistoryLog.html#line-145">isSufficientClosedLoopParams</a></span>()</div>
 </section>
 </li>
 </ul>
