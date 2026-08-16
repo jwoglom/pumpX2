@@ -142,27 +142,42 @@
 <span class="source-line-no">125</span><span id="line-125">        return this.cargo;</span>
 <span class="source-line-no">126</span><span id="line-126">    }</span>
 <span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">    public String toString() {</span>
-<span class="source-line-no">129</span><span id="line-129">        return JavaHelpers.autoToString(this, new HashSet&lt;&gt;());</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">    public String verboseToString() {</span>
-<span class="source-line-no">133</span><span id="line-133">        return JavaHelpers.autoToStringVerbose(this, Set.of("cargo"));</span>
-<span class="source-line-no">134</span><span id="line-134">    }</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">    public static byte[] fillCargo(byte[] cargo) {</span>
-<span class="source-line-no">137</span><span id="line-137">        if (cargo.length == 26) {</span>
-<span class="source-line-no">138</span><span id="line-138">            return cargo;</span>
-<span class="source-line-no">139</span><span id="line-139">        }</span>
-<span class="source-line-no">140</span><span id="line-140">        byte[] ret = new byte[26];</span>
-<span class="source-line-no">141</span><span id="line-141">        System.arraycopy(cargo, 0, ret, 0, cargo.length);</span>
-<span class="source-line-no">142</span><span id="line-142">        return ret;</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">    public HistoryLogProps props() {</span>
-<span class="source-line-no">146</span><span id="line-146">        return getClass().getAnnotation(HistoryLogProps.class);</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148">}</span>
+<span class="source-line-no">128</span><span id="line-128">    /**</span>
+<span class="source-line-no">129</span><span id="line-129">     * Rewrites the already-built cargo's header high nibble (see {@link #getHeaderHighNibble()})</span>
+<span class="source-line-no">130</span><span id="line-130">     * in place, so a constructor-built object can reproduce a captured record byte for byte</span>
+<span class="source-line-no">131</span><span id="line-131">     * when that record carries a nonzero value there.</span>
+<span class="source-line-no">132</span><span id="line-132">     *</span>
+<span class="source-line-no">133</span><span id="line-133">     * @param headerHighNibble the top 4 bits to write, 0-15</span>
+<span class="source-line-no">134</span><span id="line-134">     * @return this, for chaining onto a builder/constructor call</span>
+<span class="source-line-no">135</span><span id="line-135">     */</span>
+<span class="source-line-no">136</span><span id="line-136">    public HistoryLog withHeaderHighNibble(int headerHighNibble) {</span>
+<span class="source-line-no">137</span><span id="line-137">        Validate.isTrue(headerHighNibble &gt;= 0 &amp;&amp; headerHighNibble &lt;= 15, "headerHighNibble must be 0-15");</span>
+<span class="source-line-no">138</span><span id="line-138">        Validate.isTrue(cargo != null &amp;&amp; cargo.length &gt;= 2, "cargo must be built before withHeaderHighNibble is called");</span>
+<span class="source-line-no">139</span><span id="line-139">        cargo[1] = (byte) ((cargo[1] &amp; 0x0F) | ((headerHighNibble &amp; 0x0F) &lt;&lt; 4));</span>
+<span class="source-line-no">140</span><span id="line-140">        return this;</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    public String toString() {</span>
+<span class="source-line-no">144</span><span id="line-144">        return JavaHelpers.autoToString(this, new HashSet&lt;&gt;());</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">    public String verboseToString() {</span>
+<span class="source-line-no">148</span><span id="line-148">        return JavaHelpers.autoToStringVerbose(this, Set.of("cargo"));</span>
+<span class="source-line-no">149</span><span id="line-149">    }</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">    public static byte[] fillCargo(byte[] cargo) {</span>
+<span class="source-line-no">152</span><span id="line-152">        if (cargo.length == 26) {</span>
+<span class="source-line-no">153</span><span id="line-153">            return cargo;</span>
+<span class="source-line-no">154</span><span id="line-154">        }</span>
+<span class="source-line-no">155</span><span id="line-155">        byte[] ret = new byte[26];</span>
+<span class="source-line-no">156</span><span id="line-156">        System.arraycopy(cargo, 0, ret, 0, cargo.length);</span>
+<span class="source-line-no">157</span><span id="line-157">        return ret;</span>
+<span class="source-line-no">158</span><span id="line-158">    }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">    public HistoryLogProps props() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return getClass().getAnnotation(HistoryLogProps.class);</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163">}</span>
 
 
 
