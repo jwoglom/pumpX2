@@ -31,7 +31,7 @@ public class CgmSensorTypeChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(368 & 0xFF), (byte)(368 >> 8)},
+            HistoryLog.typeIdBytes(368, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

@@ -58,7 +58,7 @@ public class CgmStopSessionHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, long sessionStopTime, int sessionStopReasonRaw, int sessionDuration) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 214, 0},
+            HistoryLog.typeIdBytes(214, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTransmitterTime),

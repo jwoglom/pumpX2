@@ -68,7 +68,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
         return Bytes.combine(
-            new byte[]{24, 1}, // 280 across 2 bytes
+            HistoryLog.typeIdBytes(280, 0), // 280 across 2 bytes
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bolusID), 

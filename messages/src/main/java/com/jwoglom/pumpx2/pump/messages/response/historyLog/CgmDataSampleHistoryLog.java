@@ -47,7 +47,7 @@ public class CgmDataSampleHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int value) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-105, 0}, // (byte) 151
+            HistoryLog.typeIdBytes(151, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(status),

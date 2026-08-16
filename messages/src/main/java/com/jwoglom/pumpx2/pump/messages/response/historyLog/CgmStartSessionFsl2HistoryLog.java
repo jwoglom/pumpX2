@@ -31,7 +31,7 @@ public class CgmStartSessionFsl2HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 404, 0},
+            HistoryLog.typeIdBytes(404, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

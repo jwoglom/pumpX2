@@ -41,7 +41,7 @@ public class UsbEnumeratedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int negotiatedCurrentMilliAmps) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{67, 0},
+            HistoryLog.typeIdBytes(67, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) negotiatedCurrentMilliAmps }));

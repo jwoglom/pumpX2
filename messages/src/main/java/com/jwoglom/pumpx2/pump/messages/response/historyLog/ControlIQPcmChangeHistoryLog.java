@@ -48,7 +48,7 @@ public class ControlIQPcmChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentPcm, int previousPcm) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-26, 0}, // (byte) 230
+            HistoryLog.typeIdBytes(230, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) currentPcm }, 

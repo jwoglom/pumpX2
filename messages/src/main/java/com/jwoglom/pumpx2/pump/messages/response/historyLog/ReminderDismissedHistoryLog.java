@@ -37,7 +37,7 @@ public class ReminderDismissedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long reminderId) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{29, 0},
+            HistoryLog.typeIdBytes(29, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(reminderId)));

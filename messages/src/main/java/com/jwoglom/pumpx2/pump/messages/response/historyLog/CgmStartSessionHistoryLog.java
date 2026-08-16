@@ -52,7 +52,7 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionDuration) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 212, 0},
+            HistoryLog.typeIdBytes(212, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTransmitterTime),

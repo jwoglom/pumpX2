@@ -60,7 +60,7 @@ public class DailyBasalHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{81, 0},
+            HistoryLog.typeIdBytes(81, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(dailyTotalBasal), 

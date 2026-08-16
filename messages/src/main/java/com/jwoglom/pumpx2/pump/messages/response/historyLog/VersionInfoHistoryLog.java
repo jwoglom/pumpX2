@@ -48,7 +48,7 @@ public class VersionInfoHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long version, long configABits, long configBBits, int armCrc) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 191, 0},
+            HistoryLog.typeIdBytes(191, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(version),
