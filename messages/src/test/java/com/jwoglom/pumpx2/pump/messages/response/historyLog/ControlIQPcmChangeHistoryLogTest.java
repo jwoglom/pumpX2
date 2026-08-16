@@ -18,7 +18,8 @@ public class ControlIQPcmChangeHistoryLogTest {
                 "e6107ce59d22897d070000030101010101000000000000000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 12-16 carry unparsed data (0x01 each) that buildCargo
+        // zero-fills
     }
 
     @Test
@@ -35,6 +36,7 @@ public class ControlIQPcmChangeHistoryLogTest {
                 "e61077189d22ba74070003020001010101000000000000000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 13-16 carry unparsed data (0x01 each) that buildCargo
+        // zero-fills
     }
 }
