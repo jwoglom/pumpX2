@@ -114,89 +114,95 @@
 <span class="source-line-no">097</span><span id="line-97">        AlertClearedHistoryLog.class,</span>
 <span class="source-line-no">098</span><span id="line-98">        VersionInfoHistoryLog.class,</span>
 <span class="source-line-no">099</span><span id="line-99">        UpdateStatusHistoryLog.class,</span>
-<span class="source-line-no">100</span><span id="line-100">        VersionsAHistoryLog.class</span>
-<span class="source-line-no">101</span><span id="line-101">        // MESSAGES_END</span>
-<span class="source-line-no">102</span><span id="line-102">    );</span>
-<span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">    public static Map&lt;Integer, Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_IDS = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">105</span><span id="line-105">    public static Map&lt;Class&lt;? extends HistoryLog&gt;, Integer&gt; LOG_MESSAGE_CLASS_TO_ID = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">    static {</span>
-<span class="source-line-no">108</span><span id="line-108">        for (Class&lt;? extends HistoryLog&gt; clazz : LOG_MESSAGE_TYPES) {</span>
-<span class="source-line-no">109</span><span id="line-109">            try {</span>
-<span class="source-line-no">110</span><span id="line-110">                LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);</span>
-<span class="source-line-no">111</span><span id="line-111">                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());</span>
-<span class="source-line-no">112</span><span id="line-112">            } catch (IllegalAccessException|InstantiationException e) {</span>
-<span class="source-line-no">113</span><span id="line-113">                L.e(TAG, String.format("could not instantiate %s", clazz), e);</span>
-<span class="source-line-no">114</span><span id="line-114">                e.printStackTrace();</span>
-<span class="source-line-no">115</span><span id="line-115">            }</span>
-<span class="source-line-no">116</span><span id="line-116">        }</span>
-<span class="source-line-no">117</span><span id="line-117">    }</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">    /**</span>
-<span class="source-line-no">120</span><span id="line-120">     * Reads the typeId from the first two bytes of a raw history log.</span>
-<span class="source-line-no">121</span><span id="line-121">     *</span>
-<span class="source-line-no">122</span><span id="line-122">     * &lt;p&gt;Those bytes are a little-endian uint16 whose low 12 bits are the typeId. The top 4 bits</span>
-<span class="source-line-no">123</span><span id="line-123">     * are not part of the id and their meaning is unknown, see</span>
-<span class="source-line-no">124</span><span id="line-124">     * {@link HistoryLog#getHeaderHighNibble()}. This applies the same mask</span>
-<span class="source-line-no">125</span><span id="line-125">     * {@link HistoryLog#parseBase} already used, and matches Tandem's own Mobi Android app, which</span>
-<span class="source-line-no">126</span><span id="line-126">     * reads these two bytes little endian and masks with 4095 before resolving the log type.</span>
+<span class="source-line-no">100</span><span id="line-100">        VersionsAHistoryLog.class,</span>
+<span class="source-line-no">101</span><span id="line-101">        AlarmAckHistoryLog.class,</span>
+<span class="source-line-no">102</span><span id="line-102">        AlertAckHistoryLog.class,</span>
+<span class="source-line-no">103</span><span id="line-103">        ReminderActivatedHistoryLog.class,</span>
+<span class="source-line-no">104</span><span id="line-104">        ReminderDismissedHistoryLog.class,</span>
+<span class="source-line-no">105</span><span id="line-105">        CgmPairingCodeG7HistoryLog.class,</span>
+<span class="source-line-no">106</span><span id="line-106">        TipsErrorHistoryLog.class</span>
+<span class="source-line-no">107</span><span id="line-107">        // MESSAGES_END</span>
+<span class="source-line-no">108</span><span id="line-108">    );</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">    public static Map&lt;Integer, Class&lt;? extends HistoryLog&gt;&gt; LOG_MESSAGE_IDS = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">111</span><span id="line-111">    public static Map&lt;Class&lt;? extends HistoryLog&gt;, Integer&gt; LOG_MESSAGE_CLASS_TO_ID = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    static {</span>
+<span class="source-line-no">114</span><span id="line-114">        for (Class&lt;? extends HistoryLog&gt; clazz : LOG_MESSAGE_TYPES) {</span>
+<span class="source-line-no">115</span><span id="line-115">            try {</span>
+<span class="source-line-no">116</span><span id="line-116">                LOG_MESSAGE_IDS.put(clazz.newInstance().typeId(), clazz);</span>
+<span class="source-line-no">117</span><span id="line-117">                LOG_MESSAGE_CLASS_TO_ID.put(clazz, clazz.newInstance().typeId());</span>
+<span class="source-line-no">118</span><span id="line-118">            } catch (IllegalAccessException|InstantiationException e) {</span>
+<span class="source-line-no">119</span><span id="line-119">                L.e(TAG, String.format("could not instantiate %s", clazz), e);</span>
+<span class="source-line-no">120</span><span id="line-120">                e.printStackTrace();</span>
+<span class="source-line-no">121</span><span id="line-121">            }</span>
+<span class="source-line-no">122</span><span id="line-122">        }</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    /**</span>
+<span class="source-line-no">126</span><span id="line-126">     * Reads the typeId from the first two bytes of a raw history log.</span>
 <span class="source-line-no">127</span><span id="line-127">     *</span>
-<span class="source-line-no">128</span><span id="line-128">     * &lt;p&gt;Without the mask, a record carrying a nonzero high nibble produces an inflated typeId</span>
-<span class="source-line-no">129</span><span id="line-129">     * (opCode 55 with a nibble of 1 reads as 4151), misses {@link #LOG_MESSAGE_IDS}, and is only</span>
-<span class="source-line-no">130</span><span id="line-130">     * recovered by the retry ladder in {@link #parse}, which logs a warning for every such record.</span>
-<span class="source-line-no">131</span><span id="line-131">     * The masking also corrects dispatch for typeIds of 128-255, which the previous signed-byte</span>
-<span class="source-line-no">132</span><span id="line-132">     * arithmetic resolved to typeId+256.</span>
-<span class="source-line-no">133</span><span id="line-133">     */</span>
-<span class="source-line-no">134</span><span id="line-134">    public static int typeIdOf(byte[] rawStream) {</span>
-<span class="source-line-no">135</span><span id="line-135">        return Bytes.readShort(rawStream, 0) &amp; 4095;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">    public static HistoryLog parse(byte[] rawStream) {</span>
-<span class="source-line-no">139</span><span id="line-139">        int typeId = typeIdOf(rawStream);</span>
-<span class="source-line-no">140</span><span id="line-140">        HistoryLog ret = parseWithTypeId(rawStream, typeId);</span>
-<span class="source-line-no">141</span><span id="line-141">        if (ret instanceof UnknownHistoryLog) {</span>
-<span class="source-line-no">142</span><span id="line-142">            L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " =&gt; " + ((byte) typeId));</span>
-<span class="source-line-no">143</span><span id="line-143">            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);</span>
-<span class="source-line-no">144</span><span id="line-144">            if (!(two instanceof UnknownHistoryLog)) {</span>
-<span class="source-line-no">145</span><span id="line-145">                return two;</span>
-<span class="source-line-no">146</span><span id="line-146">            }</span>
-<span class="source-line-no">147</span><span id="line-147">            if ((byte) typeId &lt; 0) {</span>
-<span class="source-line-no">148</span><span id="line-148">                L.w(TAG, "retry2 HistoryLog parse on typeId " + ((byte) typeId) + " =&gt; " + (((byte) typeId) + 512));</span>
-<span class="source-line-no">149</span><span id="line-149">                HistoryLog three = parseWithTypeId(rawStream, (((byte) typeId) + 512));</span>
-<span class="source-line-no">150</span><span id="line-150">                if (!(three instanceof UnknownHistoryLog)) {</span>
-<span class="source-line-no">151</span><span id="line-151">                    return three;</span>
-<span class="source-line-no">152</span><span id="line-152">                }</span>
-<span class="source-line-no">153</span><span id="line-153">            }</span>
-<span class="source-line-no">154</span><span id="line-154">        }</span>
-<span class="source-line-no">155</span><span id="line-155">        return ret;</span>
-<span class="source-line-no">156</span><span id="line-156">    }</span>
-<span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {</span>
-<span class="source-line-no">159</span><span id="line-159">        HistoryLog historyLog = null;</span>
-<span class="source-line-no">160</span><span id="line-160">        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {</span>
-<span class="source-line-no">161</span><span id="line-161">            L.t(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
-<span class="source-line-no">162</span><span id="line-162">            historyLog = new UnknownHistoryLog();</span>
-<span class="source-line-no">163</span><span id="line-163">            historyLog.parse(rawStream);</span>
-<span class="source-line-no">164</span><span id="line-164">            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));</span>
-<span class="source-line-no">165</span><span id="line-165">            return historyLog;</span>
-<span class="source-line-no">166</span><span id="line-166">        }</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">        try {</span>
-<span class="source-line-no">169</span><span id="line-169">            historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();</span>
-<span class="source-line-no">170</span><span id="line-170">        } catch (IllegalAccessException|InstantiationException e) {</span>
-<span class="source-line-no">171</span><span id="line-171">            L.e(TAG, "could not instantiate "+typeId, e);</span>
-<span class="source-line-no">172</span><span id="line-172">            e.printStackTrace();</span>
-<span class="source-line-no">173</span><span id="line-173">            return null;</span>
-<span class="source-line-no">174</span><span id="line-174">        }</span>
-<span class="source-line-no">175</span><span id="line-175"></span>
-<span class="source-line-no">176</span><span id="line-176">        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());</span>
-<span class="source-line-no">177</span><span id="line-177">        L.t(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
-<span class="source-line-no">178</span><span id="line-178">        historyLog.parse(rawStream);</span>
-<span class="source-line-no">179</span><span id="line-179">        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));</span>
-<span class="source-line-no">180</span><span id="line-180">        return historyLog;</span>
-<span class="source-line-no">181</span><span id="line-181">    }</span>
-<span class="source-line-no">182</span><span id="line-182">}</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;p&gt;Those bytes are a little-endian uint16 whose low 12 bits are the typeId. The top 4 bits</span>
+<span class="source-line-no">129</span><span id="line-129">     * are not part of the id and their meaning is unknown, see</span>
+<span class="source-line-no">130</span><span id="line-130">     * {@link HistoryLog#getHeaderHighNibble()}. This applies the same mask</span>
+<span class="source-line-no">131</span><span id="line-131">     * {@link HistoryLog#parseBase} already used, and matches Tandem's own Mobi Android app, which</span>
+<span class="source-line-no">132</span><span id="line-132">     * reads these two bytes little endian and masks with 4095 before resolving the log type.</span>
+<span class="source-line-no">133</span><span id="line-133">     *</span>
+<span class="source-line-no">134</span><span id="line-134">     * &lt;p&gt;Without the mask, a record carrying a nonzero high nibble produces an inflated typeId</span>
+<span class="source-line-no">135</span><span id="line-135">     * (opCode 55 with a nibble of 1 reads as 4151), misses {@link #LOG_MESSAGE_IDS}, and is only</span>
+<span class="source-line-no">136</span><span id="line-136">     * recovered by the retry ladder in {@link #parse}, which logs a warning for every such record.</span>
+<span class="source-line-no">137</span><span id="line-137">     * The masking also corrects dispatch for typeIds of 128-255, which the previous signed-byte</span>
+<span class="source-line-no">138</span><span id="line-138">     * arithmetic resolved to typeId+256.</span>
+<span class="source-line-no">139</span><span id="line-139">     */</span>
+<span class="source-line-no">140</span><span id="line-140">    public static int typeIdOf(byte[] rawStream) {</span>
+<span class="source-line-no">141</span><span id="line-141">        return Bytes.readShort(rawStream, 0) &amp; 4095;</span>
+<span class="source-line-no">142</span><span id="line-142">    }</span>
+<span class="source-line-no">143</span><span id="line-143"></span>
+<span class="source-line-no">144</span><span id="line-144">    public static HistoryLog parse(byte[] rawStream) {</span>
+<span class="source-line-no">145</span><span id="line-145">        int typeId = typeIdOf(rawStream);</span>
+<span class="source-line-no">146</span><span id="line-146">        HistoryLog ret = parseWithTypeId(rawStream, typeId);</span>
+<span class="source-line-no">147</span><span id="line-147">        if (ret instanceof UnknownHistoryLog) {</span>
+<span class="source-line-no">148</span><span id="line-148">            L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " =&gt; " + ((byte) typeId));</span>
+<span class="source-line-no">149</span><span id="line-149">            HistoryLog two = parseWithTypeId(rawStream, (byte) typeId);</span>
+<span class="source-line-no">150</span><span id="line-150">            if (!(two instanceof UnknownHistoryLog)) {</span>
+<span class="source-line-no">151</span><span id="line-151">                return two;</span>
+<span class="source-line-no">152</span><span id="line-152">            }</span>
+<span class="source-line-no">153</span><span id="line-153">            if ((byte) typeId &lt; 0) {</span>
+<span class="source-line-no">154</span><span id="line-154">                L.w(TAG, "retry2 HistoryLog parse on typeId " + ((byte) typeId) + " =&gt; " + (((byte) typeId) + 512));</span>
+<span class="source-line-no">155</span><span id="line-155">                HistoryLog three = parseWithTypeId(rawStream, (((byte) typeId) + 512));</span>
+<span class="source-line-no">156</span><span id="line-156">                if (!(three instanceof UnknownHistoryLog)) {</span>
+<span class="source-line-no">157</span><span id="line-157">                    return three;</span>
+<span class="source-line-no">158</span><span id="line-158">                }</span>
+<span class="source-line-no">159</span><span id="line-159">            }</span>
+<span class="source-line-no">160</span><span id="line-160">        }</span>
+<span class="source-line-no">161</span><span id="line-161">        return ret;</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">    private static HistoryLog parseWithTypeId(byte[] rawStream, int typeId) {</span>
+<span class="source-line-no">165</span><span id="line-165">        HistoryLog historyLog = null;</span>
+<span class="source-line-no">166</span><span id="line-166">        if (!LOG_MESSAGE_IDS.containsKey(typeId)) {</span>
+<span class="source-line-no">167</span><span id="line-167">            L.t(TAG, "unknown HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
+<span class="source-line-no">168</span><span id="line-168">            historyLog = new UnknownHistoryLog();</span>
+<span class="source-line-no">169</span><span id="line-169">            historyLog.parse(rawStream);</span>
+<span class="source-line-no">170</span><span id="line-170">            L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, UNKNOWN): %s", typeId, Hex.encodeHexString(rawStream)));</span>
+<span class="source-line-no">171</span><span id="line-171">            return historyLog;</span>
+<span class="source-line-no">172</span><span id="line-172">        }</span>
+<span class="source-line-no">173</span><span id="line-173"></span>
+<span class="source-line-no">174</span><span id="line-174">        try {</span>
+<span class="source-line-no">175</span><span id="line-175">            historyLog = LOG_MESSAGE_IDS.get(typeId).newInstance();</span>
+<span class="source-line-no">176</span><span id="line-176">        } catch (IllegalAccessException|InstantiationException e) {</span>
+<span class="source-line-no">177</span><span id="line-177">            L.e(TAG, "could not instantiate "+typeId, e);</span>
+<span class="source-line-no">178</span><span id="line-178">            e.printStackTrace();</span>
+<span class="source-line-no">179</span><span id="line-179">            return null;</span>
+<span class="source-line-no">180</span><span id="line-180">        }</span>
+<span class="source-line-no">181</span><span id="line-181"></span>
+<span class="source-line-no">182</span><span id="line-182">        String name = MessageHelpers.lastTwoParts(historyLog.getClass().getName());</span>
+<span class="source-line-no">183</span><span id="line-183">        L.t(TAG, "found matching "+name+" HistoryLog typeId "+typeId+": "+ Hex.encodeHexString(rawStream));</span>
+<span class="source-line-no">184</span><span id="line-184">        historyLog.parse(rawStream);</span>
+<span class="source-line-no">185</span><span id="line-185">        L.i(TAG, String.format("PARSED-EMBEDDED-HISTORY-LOG(typeId=%-3d, %s): %s", typeId, name, historyLog.toString()));</span>
+<span class="source-line-no">186</span><span id="line-186">        return historyLog;</span>
+<span class="source-line-no">187</span><span id="line-187">    }</span>
+<span class="source-line-no">188</span><span id="line-188">}</span>
 
 
 
