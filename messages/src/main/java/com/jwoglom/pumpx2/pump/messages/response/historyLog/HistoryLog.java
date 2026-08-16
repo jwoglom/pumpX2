@@ -125,6 +125,21 @@ public abstract class HistoryLog {
         return this.cargo;
     }
 
+    /**
+     * Rewrites the already-built cargo's header high nibble (see {@link #getHeaderHighNibble()})
+     * in place, so a constructor-built object can reproduce a captured record byte for byte
+     * when that record carries a nonzero value there.
+     *
+     * @param headerHighNibble the top 4 bits to write, 0-15
+     * @return this, for chaining onto a builder/constructor call
+     */
+    public HistoryLog withHeaderHighNibble(int headerHighNibble) {
+        Validate.isTrue(headerHighNibble >= 0 && headerHighNibble <= 15, "headerHighNibble must be 0-15");
+        Validate.isTrue(cargo != null && cargo.length >= 2, "cargo must be built before withHeaderHighNibble is called");
+        cargo[1] = (byte) ((cargo[1] & 0x0F) | ((headerHighNibble & 0x0F) << 4));
+        return this;
+    }
+
     public String toString() {
         return JavaHelpers.autoToString(this, new HashSet<>());
     }

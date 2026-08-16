@@ -16,7 +16,8 @@ public class ControlIQUserModeChangeHistoryLogTest {
                 "e5105f65912205f9060001020400000100000000000000000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 12 (0x04) and 15 (0x01) carry unparsed data that buildCargo
+        // zero-fills
     }
 
     @Test
@@ -31,6 +32,7 @@ public class ControlIQUserModeChangeHistoryLogTest {
                 "e5104b659122f8f8060000010200010100000000000000000000",
                 expected
         );
-        // no cargo round-trip: capture carries header high nibble 1 which buildCargo does not reproduce
+        // no cargo round-trip: bytes 12 (0x02), 14 (0x01), and 15 (0x01) carry unparsed data
+        // that buildCargo zero-fills
     }
 }
