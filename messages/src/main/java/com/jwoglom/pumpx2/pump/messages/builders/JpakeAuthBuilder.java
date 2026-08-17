@@ -21,6 +21,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import com.jwoglom.pumpx2.shared.L;
 
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -182,7 +183,9 @@ public class JpakeAuthBuilder {
             step = JpakeStep.CONFIRM_4_SENT;
         } else if (step == JpakeStep.CONFIRM_4_RECEIVED) {
             byte[] hashDigest4 = HmacSha256.hmacSha256(serverNonce4, Hkdf.build(serverNonce3, derivedSecret));
-            if (Hex.encodeHexString(this.serverHashDigest4).equals(Hex.encodeHexString(hashDigest4))) {
+            // MessageDigest.isEqual is the constant-time comparison; the hex round trip it
+            // replaces short-circuited on the first differing nibble.
+            if (MessageDigest.isEqual(this.serverHashDigest4, hashDigest4)) {
                 L.i(TAG, "JpakeAuthBuilder HMAC SECRET VALIDATES");
                 step = JpakeStep.COMPLETE;
             } else {
