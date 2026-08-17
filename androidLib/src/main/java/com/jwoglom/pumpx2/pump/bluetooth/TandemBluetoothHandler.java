@@ -583,6 +583,10 @@ public class TandemBluetoothHandler {
                 Timber.d("Processed %s response (%d): %s (%s) (%d processed total, %d from us)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages, PumpState.processedResponseMessagesFromUs);
 
                 if (response.message().isPresent()) {
+                    // The accumulator has produced its message, so it must not be picked up by the
+                    // next transaction to reuse this txId. Only the error paths above keep theirs,
+                    // so a partial response can still continue.
+                    PumpState.removeSavedPacketArrayList(characteristic, txId);
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
                             !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                         if (response.message().get() instanceof ErrorResponse) {
@@ -605,6 +609,9 @@ public class TandemBluetoothHandler {
                         PumpState.savePacketArrayList(characteristic, txId, packetArrayList);
                     } else {
                         Timber.w("Dropping unprocessable complete response message for '%s' (txId=%d, characteristic=%s)", Hex.encodeHexString(parser.getValue()), txId, characteristic);
+                        // Complete but unusable: nothing further will arrive for this txId, so the
+                        // accumulator would otherwise be left behind for the id to wrap onto.
+                        PumpState.removeSavedPacketArrayList(characteristic, txId);
                     }
                     return;
                 }
