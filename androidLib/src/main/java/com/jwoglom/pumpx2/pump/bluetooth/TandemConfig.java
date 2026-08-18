@@ -12,6 +12,19 @@ public class TandemConfig {
     private Optional<PairingCodeType> pairingCodeType = Optional.empty();
     private Optional<Boolean> enablePeriodicTSR = Optional.empty();
     /**
+     * When enabled, periodically re-requests {@code ConnectionPriority.HIGH} while connected
+     * (see {@link #periodicConnectionPriorityReassertIntervalMs}). Some pumps (e.g. the Mobi)
+     * renegotiate down to a power-saving connection profile with a short supervision timeout
+     * shortly after connecting, which can cause frequent connection drops; periodically
+     * re-asserting HIGH priority widens the supervision window and reduces those drops.
+     */
+    private Optional<Boolean> enablePeriodicConnectionPriorityReassert = Optional.empty();
+    /**
+     * Interval (milliseconds) on which {@link #enablePeriodicConnectionPriorityReassert} re-requests
+     * {@code ConnectionPriority.HIGH}. Defaults to 10 seconds if unset.
+     */
+    private Optional<Long> periodicConnectionPriorityReassertIntervalMs = Optional.empty();
+    /**
      * Number of consecutive initial-connection hard-failure windows required before unbonding.
      * Null (default) means never unbond automatically.
      */
@@ -43,6 +56,16 @@ public class TandemConfig {
         return this;
     }
 
+    public TandemConfig withEnablePeriodicConnectionPriorityReassert(Boolean enablePeriodicConnectionPriorityReassert) {
+        this.enablePeriodicConnectionPriorityReassert = Optional.ofNullable(enablePeriodicConnectionPriorityReassert);
+        return this;
+    }
+
+    public TandemConfig withPeriodicConnectionPriorityReassertIntervalMs(Long periodicConnectionPriorityReassertIntervalMs) {
+        this.periodicConnectionPriorityReassertIntervalMs = Optional.ofNullable(periodicConnectionPriorityReassertIntervalMs);
+        return this;
+    }
+
     public TandemConfig withUnbondAfterInitialConnectionHardFailuresCount(Integer unbondAfterInitialConnectionHardFailuresCount) {
         this.unbondAfterInitialConnectionHardFailuresCount = Optional.ofNullable(unbondAfterInitialConnectionHardFailuresCount);
         return this;
@@ -67,6 +90,14 @@ public class TandemConfig {
     }
     public Optional<Boolean> getEnablePeriodicTSR() {
         return enablePeriodicTSR;
+    }
+
+    public Optional<Boolean> getEnablePeriodicConnectionPriorityReassert() {
+        return enablePeriodicConnectionPriorityReassert;
+    }
+
+    public Optional<Long> getPeriodicConnectionPriorityReassertIntervalMs() {
+        return periodicConnectionPriorityReassertIntervalMs;
     }
 
     public Optional<Integer> getUnbondAfterInitialConnectionHardFailuresCount() {

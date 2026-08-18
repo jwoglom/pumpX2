@@ -92,6 +92,7 @@ public class TandemBluetoothHandler {
     private TandemPump tandemPump;
     private final Handler handler;
     public Long periodicTimeSinceResetInterval = 120_000L;
+    public Long periodicConnectionPriorityReassertInterval = 10_000L;
 
     /**
      * Initializes PumpX2.
@@ -721,6 +722,11 @@ public class TandemBluetoothHandler {
             if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
                 this.setupPeriodicTimeSinceReset(peripheral);
             }
+            if (tandemPump.config.getEnablePeriodicConnectionPriorityReassert().orElse(false)) {
+                periodicConnectionPriorityReassertInterval = tandemPump.config.getPeriodicConnectionPriorityReassertIntervalMs()
+                        .orElse(periodicConnectionPriorityReassertInterval);
+                this.setupPeriodicConnectionPriorityReassert(peripheral);
+            }
         }
 
         private void clearQualifyingEvents(@NotNull BluetoothPeripheral peripheral) {
@@ -747,6 +753,18 @@ public class TandemBluetoothHandler {
                     });
                 }
             }, periodicTimeSinceResetInterval);
+        }
+
+        private void setupPeriodicConnectionPriorityReassert(BluetoothPeripheral peripheral) {
+            handler.postDelayed(() -> {
+                if (peripheral != null && peripheral.getState().equals(ConnectionState.CONNECTED)) {
+                    Timber.d("periodicConnectionPriorityReassert triggered");
+                    peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+                    handler.post(() -> {
+                        setupPeriodicConnectionPriorityReassert(peripheral);
+                    });
+                }
+            }, periodicConnectionPriorityReassertInterval);
         }
 
         @Override
