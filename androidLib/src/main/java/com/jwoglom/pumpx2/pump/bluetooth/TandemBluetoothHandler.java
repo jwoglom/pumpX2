@@ -22,6 +22,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.BTResponseParser;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.BluetoothConstants;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
+import com.jwoglom.pumpx2.pump.messages.bluetooth.PumpStateSupplier;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.ServiceUUID;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.TronMessageWrapper;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.models.PumpResponseMessage;
@@ -41,8 +42,10 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake3SessionKey
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake4KeyConfirmationResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse;
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
+import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
@@ -424,8 +427,10 @@ public class TandemBluetoothHandler {
                 } else {
                     Timber.i("RECEIVE-EVENTS: %s -> %s", rawEvents, events);
                 }
-                // Future history log coordination would hook in here, after normalization/ack
-                // and before dispatching the callback.
+                // Clear the in-progress bolus if the pump revoked bolus permission.
+                if (events.contains(QualifyingEvent.BOLUS_PERMISSION_REVOKED)) {
+                    PumpStateSupplier.inProgressBolusId = () -> null;
+                }
                 tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
                     characteristicUUID.equals(CharacteristicUUID.CURRENT_STATUS_CHARACTERISTICS) ||
@@ -708,6 +713,17 @@ public class TandemBluetoothHandler {
                     } else if (msg instanceof TimeSinceResetResponse) {
                         PumpState.setPumpTimeSinceReset(((TimeSinceResetResponse) msg).getCurrentTime());
                     }
+
+                    // Track the in-progress bolus ID so connection-parameter re-asserts can be
+                    // skipped while a bolus is being delivered (the pump rejects the update with
+                    // INSUFFICIENT_AUTHORIZATION mid-bolus).
+                    if (msg instanceof BolusPermissionResponse && ((BolusPermissionResponse) msg).getStatus() == 0) {
+                        PumpStateSupplier.inProgressBolusId = () -> ((BolusPermissionResponse) msg).getBolusId();
+                    } else if (msg instanceof CurrentBolusStatusResponse &&
+                            ((CurrentBolusStatusResponse) msg).getStatus() == CurrentBolusStatusResponse.CurrentBolusStatus.ALREADY_DELIVERED_OR_INVALID) {
+                        PumpStateSupplier.inProgressBolusId = () -> null;
+                    }
+
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
@@ -776,6 +792,18 @@ public class TandemBluetoothHandler {
 
                 remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CONNECTION_UPDATED);
                 checkIfInitialPumpConnectionEstablished(peripheral);
+
+                // The Mobi renegotiates down to its power-saving profile (interval=30ms, latency=29,
+                // timeout=2s) ~15s after connect. That 2s supervision timeout causes frequent
+                // CONNECTION_TIMEOUT drops. Re-assert HIGH to restore the 5s supervision window,
+                // but skip while a bolus is in flight (the pump rejects the connection-parameter
+                // update with INSUFFICIENT_AUTHORIZATION mid-bolus).
+                if (latency > 0
+                        && remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)
+                        && (PumpStateSupplier.inProgressBolusId == null || PumpStateSupplier.inProgressBolusId.get() == null)) {
+                    Timber.d("Re-asserting connection priority HIGH (latency=%d)", latency);
+                    peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+                }
             } else {
                 Timber.e("onConnectionUpdated %s", status);
                 TandemError error = TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status);
