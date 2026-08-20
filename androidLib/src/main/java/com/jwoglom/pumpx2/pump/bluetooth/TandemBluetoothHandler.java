@@ -203,17 +203,27 @@ public class TandemBluetoothHandler {
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MANUFACTURER_NAME_CHARACTERISTIC_UUID);
             peripheral.readCharacteristic(ServiceUUID.DIS_SERVICE_UUID, CharacteristicUUID.MODEL_NUMBER_CHARACTERISTIC_UUID);
 
-            // Try to turn on notifications for other characteristics
+            // Try to turn on notifications for other characteristics.
+            // Older pump firmwares (e.g. tslim X2 moonlight v7.4) do not expose every UUID we
+            // expect (CONTROL/CONTROL_STREAM are absent). blessed-android's setNotify(uuid,uuid,..)
+            // overload returns false silently when the characteristic is missing — no callback is
+            // fired, so the entry would never be removed from remainingCharacteristicNotificationsInit
+            // and the CHARACTERISTIC_NOTIFICATIONS gate would deadlock. Pre-flight here and skip
+            // absent ones so initialization can complete on those firmwares.
             CharacteristicUUID.ENABLED_NOTIFICATIONS.forEach(uuid -> {
                 UUID serviceUUID = ServiceUUID.PUMP_SERVICE_UUID;
                 if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
                     serviceUUID = ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
                 }
+
                 peripheral.setNotify(serviceUUID, uuid, true);
             });
 
             Timber.i("TandemBluetoothHandler: waiting for Bluetooth initialization callback");
             remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.SERVICES_DISCOVERED);
+            // The pre-flight loop above may have already cleared CHARACTERISTIC_NOTIFICATIONS if
+            // every required UUID was either absent or already setNotify'd; recheck now so we don't
+            // wait forever on a callback that will never come.
             checkIfInitialPumpConnectionEstablished(peripheral);
         }
 
@@ -569,6 +579,9 @@ public class TandemBluetoothHandler {
                 Timber.d("Processed %s response (%d): %s (%s) (%d processed total, %d from us)", characteristic, txId, response.message(), Hex.encodeHexString(parser.getValue()), PumpState.processedResponseMessages, PumpState.processedResponseMessagesFromUs);
 
                 if (response.message().isPresent()) {
+                    // The accumulator has produced its message, so it must not be picked up by the
+                    // next transaction to reuse this txId. Only the error paths above keep theirs,
+                    // so a partial response can still continue.
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
                             !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                         if (response.message().get() instanceof ErrorResponse) {
@@ -591,6 +604,8 @@ public class TandemBluetoothHandler {
                         PumpState.savePacketArrayList(characteristic, txId, packetArrayList);
                     } else {
                         Timber.w("Dropping unprocessable complete response message for '%s' (txId=%d, characteristic=%s)", Hex.encodeHexString(parser.getValue()), txId, characteristic);
+                        // Complete but unusable: nothing further will arrive for this txId, so the
+                        // accumulator would otherwise be left behind for the id to wrap onto.
                     }
                     return;
                 }
@@ -612,7 +627,7 @@ public class TandemBluetoothHandler {
                         Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=legacy response=%s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
-                // JPAKE
+                    // JPAKE
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
                     Timber.d("JpakeAuthResp1a: %s", resp);
@@ -772,7 +787,12 @@ public class TandemBluetoothHandler {
                 // CONNECTION_TIMEOUT drops. Re-assert HIGH to restore the 5s supervision window,
                 // but skip while a bolus is in flight (the pump rejects the connection-parameter
                 // update with INSUFFICIENT_AUTHORIZATION mid-bolus).
-                if (latency > 0 && (PumpStateSupplier.inProgressBolusId == null || PumpStateSupplier.inProgressBolusId.get() == null)) {
+
+                if (latency > 0
+                        && remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)
+                        && !PumpState.hasPendingAuthorizationRequest()
+                        && (PumpStateSupplier.inProgressBolusId == null || PumpStateSupplier.inProgressBolusId.get() == null)) {
+                    Timber.d("TandemBluetoothHandler: ALREADY_INITIALIZED: %s", remainingConnectionInitializationSteps);
                     Timber.d("Re-asserting connection priority HIGH (latency=%d)", latency);
                     peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
                 }
