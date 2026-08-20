@@ -800,7 +800,9 @@ public class TandemBluetoothHandler {
                 // update with INSUFFICIENT_AUTHORIZATION mid-bolus).
                 if (latency > 0
                         && remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)
+                        && !PumpState.hasPendingAuthorizationRequest()
                         && (PumpStateSupplier.inProgressBolusId == null || PumpStateSupplier.inProgressBolusId.get() == null)) {
+                    Timber.d("TandemBluetoothHandler: ALREADY_INITIALIZED: %s", remainingConnectionInitializationSteps);
                     Timber.d("Re-asserting connection priority HIGH (latency=%d)", latency);
                     peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
                 }
