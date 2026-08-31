@@ -44,8 +44,10 @@ import com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeRes
 import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
 import com.jwoglom.pumpx2.pump.messages.response.control.BolusPermissionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMessages;
+import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
@@ -96,6 +98,91 @@ public class TandemBluetoothHandler {
     private final Handler handler;
     public Long periodicTimeSinceResetInterval = 120_000L;
 
+    // Connection-priority maintenance: the Mobi renegotiates down to its power-saving profile
+    // (interval=30ms, latency=29, timeout=2s) ~15s after connect; the 2s supervision timeout
+    // causes frequent CONNECTION_TIMEOUT drops. Re-assert HIGH periodically (and event-driven
+    // in onConnectionUpdated) while connected, skipping while the pump is busy (bolus,
+    // fill cannula, fill tubing, change cartridge) since it rejects parameter updates then.
+    public Long periodicConnectionPriorityReassertInterval = 10_000L;
+
+    // True while a pump motor workflow (fill cannula, fill tubing, change cartridge) is active,
+    // signaled by FillCannulaStateStreamResponse and LoadStatusResponse.
+    private volatile boolean pumpBusyWorkflow = false;
+
+    // Last time a busy-workflow signal (fill stream / load status) was received; used to
+    // expire a stuck busy flag (see isPumpBusyWorkflow).
+    private volatile long pumpBusyLastSignalMs = 0L;
+
+    private Runnable periodicConnectionPriorityReassert;
+
+    /** True while a pump motor workflow (fill cannula / fill tubing / change cartridge) is active. */
+    private boolean isPumpBusyWorkflow() {
+        if (!pumpBusyWorkflow) return false;
+        // Workflows emit stream/poll traffic continuously while active; if the last busy signal
+        // is older than 10 minutes the workflow is over (or its final response was missed), so
+        // clear the flag rather than blocking re-asserts forever.
+        if (System.currentTimeMillis() - pumpBusyLastSignalMs > 10 * 60_000L) {
+            Timber.w("pumpBusy workflow signal stale (>10min), clearing");
+            pumpBusyWorkflow = false;
+            return false;
+        }
+        return true;
+    }
+
+    /** Skip reason when the pump is mid-operation, or null when connection-priority re-asserts are safe. */
+    private String busyWorkflowReason() {
+        if (PumpStateSupplier.inProgressBolusId != null && PumpStateSupplier.inProgressBolusId.get() != null) {
+            return "bolus in progress";
+        }
+        if (isPumpBusyWorkflow()) {
+            return "pump workflow (fill/load) in progress";
+        }
+        return null;
+    }
+
+    /**
+     * Periodically re-asserts CONNECTION_PRIORITY_HIGH while the pump is connected, so the
+     * Mobi's power-saving renegotiation (interval=30ms, latency=29, timeout=2s) never sticks:
+     * its 2s supervision timeout causes frequent CONNECTION_TIMEOUT drops. This timer is the
+     * safety net for degradations the event-driven hook in onConnectionUpdated may miss, and
+     * like that hook it never fires while the pump is busy (bolus / fill cannula / fill
+     * tubing / change cartridge), since the pump rejects parameter updates mid-operation.
+     * Started once authentication completes (onPumpConnected) and stopped on disconnect, so
+     * it never pokes the pump during the pairing/handshake phase.
+     */
+    private void startPeriodicConnectionPriorityReassert(BluetoothPeripheral peripheral) {
+        if (periodicConnectionPriorityReassert != null) {
+            handler.removeCallbacks(periodicConnectionPriorityReassert);
+        }
+        periodicConnectionPriorityReassert = new Runnable() {
+            @Override
+            public void run() {
+                if (peripheral.getState() != ConnectionState.CONNECTED) {
+                    Timber.d("PeriodicConnectionPriorityReassert: peripheral no longer connected, stopping");
+                    return;
+                }
+
+                String skipReason = busyWorkflowReason();
+
+                if (skipReason != null) {
+                    Timber.d("PeriodicConnectionPriorityReassert: skipping, %s", skipReason);
+                } else {
+                    Timber.d("PeriodicConnectionPriorityReassert: re-asserting connection priority HIGH");
+                    peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+                }
+                handler.postDelayed(this, periodicConnectionPriorityReassertInterval);
+            }
+        };
+        handler.postDelayed(periodicConnectionPriorityReassert, periodicConnectionPriorityReassertInterval);
+    }
+
+    private void stopPeriodicConnectionPriorityReassert() {
+        if (periodicConnectionPriorityReassert != null) {
+            handler.removeCallbacks(periodicConnectionPriorityReassert);
+            periodicConnectionPriorityReassert = null;
+        }
+    }
+
     /**
      * Initializes PumpX2.
      *
@@ -110,7 +197,15 @@ public class TandemBluetoothHandler {
         this.handler = new Handler(Looper.getMainLooper());
 
         if (timberTree != null) {
-            // Plant a tree
+            // resetInstance()/recreate cycles re-run this constructor; planting the same tree
+            // again would accumulate duplicate trees in Timber's global forest, multiplying
+            // every pumpX2 log line by the number of handler constructions. Uproot first so
+            // planting is idempotent - but tolerate the not-planted case (fresh process).
+            try {
+                Timber.uproot(timberTree);
+            } catch (IllegalArgumentException ignored) {
+                // tree was not planted - nothing to remove
+            }
             Timber.plant(timberTree);
             LConfigurator.enableTimber();
         } else {
@@ -248,6 +343,7 @@ public class TandemBluetoothHandler {
                                 if (sentOnPumpConnected.compareAndSet(false, true)) {
                                     Timber.i("AlreadyAuthenticated#%d: processed %d response messages, with set opcode, so triggering onPumpConnected", ii, PumpState.processedResponseMessages);
                                     tandemPump.onPumpConnected(peripheral);
+                                    startPeriodicConnectionPriorityReassert(peripheral);
                                 } else {
                                     Timber.d("AlreadyAuthenticated#%d: sentOnPumpConnected", ii);
                                 }
@@ -268,6 +364,7 @@ public class TandemBluetoothHandler {
                             if (sentOnPumpConnected.compareAndSet(false, true)) {
                                 Timber.i("AlreadyAuthenticated#final: no response messages, but pump still initialized, so triggering onPumpConnected");
                                 tandemPump.onPumpConnected(peripheral);
+                                startPeriodicConnectionPriorityReassert(peripheral);
                             } else {
                                 Timber.d("AlreadyAuthenticated#final: sentOnPumpConnected");
                             }
@@ -713,6 +810,21 @@ public class TandemBluetoothHandler {
                         PumpStateSupplier.inProgressBolusId = () -> null;
                     }
 
+                    // Track pump motor workflows (fill cannula, fill tubing, change cartridge):
+                    // the pump is actively pumping, so connection-parameter re-asserts must wait.
+                    // FillCannulaStateStreamResponse: real-time cannula fill stream; getState() is
+                    // null for unknown ids, which is treated as busy.
+                    // LoadStatusResponse: umbrella for the load workflows (change cartridge /
+                    // fill tubing / fill cannula / prime nudge) - same signal the pump UI uses.
+                    if (msg instanceof FillCannulaStateStreamResponse) {
+                        pumpBusyWorkflow = ((FillCannulaStateStreamResponse) msg).getState() != FillCannulaStateStreamResponse.FillCannulaState.CANNULA_FILLED;
+                        if (pumpBusyWorkflow) pumpBusyLastSignalMs = System.currentTimeMillis();
+                    } else if (msg instanceof LoadStatusResponse) {
+                        LoadStatusResponse loadStatus = (LoadStatusResponse) msg;
+                        pumpBusyWorkflow = loadStatus.getIsLoadingActive() || loadStatus.getIsInLoadingState();
+                        if (pumpBusyWorkflow) pumpBusyLastSignalMs = System.currentTimeMillis();
+                    }
+
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
@@ -723,6 +835,7 @@ public class TandemBluetoothHandler {
         private void internalOnPumpConnected(BluetoothPeripheral peripheral) {
             resetRecentInitialDisconnectFailures();
             tandemPump.onPumpConnected(peripheral);
+            startPeriodicConnectionPriorityReassert(peripheral);
             if (tandemPump.config.getEnablePeriodicTSR().orElse(false)) {
                 this.setupPeriodicTimeSinceReset(peripheral);
             }
@@ -784,20 +897,39 @@ public class TandemBluetoothHandler {
 
                 // The Mobi renegotiates down to its power-saving profile (interval=30ms, latency=29,
                 // timeout=2s) ~15s after connect. That 2s supervision timeout causes frequent
-                // CONNECTION_TIMEOUT drops. Re-assert HIGH to restore the 5s supervision window,
-                // but skip while a bolus is in flight (the pump rejects the connection-parameter
-                // update with INSUFFICIENT_AUTHORIZATION mid-bolus).
+                // CONNECTION_TIMEOUT drops. Re-assert HIGH whenever the link is not at the HIGH
+                // profile (checking all three values, not just latency), but never while the pump
+                // is busy (bolus / fill cannula / fill tubing / change cartridge): mid-operation
+                // the pump rejects the update with INSUFFICIENT_AUTHORIZATION. A periodic re-assert
+                // (startPeriodicConnectionPriorityReassert) covers anything this hook misses.
+                // blessed units: interval is in 1.25ms steps, timeout in 10ms steps.
+                // HIGH negotiates to interval=15ms (12), latency=0, timeout=5s (500).
+                boolean atHighProfile = interval <= 12 && latency == 0 && timeout >= 500;
+                if (!atHighProfile) {
+                    String skipReason = null;
+                    if (!remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)) {
+                        skipReason = "initial connection not fully established";
+                    } else {
+                        skipReason = busyWorkflowReason();
+                    }
 
-                if (latency > 0
-                        && remainingConnectionInitializationSteps.contains(ConnectionInitializationStep.ALREADY_INITIALIZED)
-                        && !PumpState.hasPendingAuthorizationRequest()
-                        && (PumpStateSupplier.inProgressBolusId == null || PumpStateSupplier.inProgressBolusId.get() == null)) {
-                    Timber.d("TandemBluetoothHandler: ALREADY_INITIALIZED: %s", remainingConnectionInitializationSteps);
-                    Timber.d("Re-asserting connection priority HIGH (latency=%d)", latency);
-                    peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+                    if (skipReason != null) {
+                        Timber.d("Skipping connection priority re-assert: %s (interval=%sms latency=%s timeout=%ss)", skipReason, interval * 1.25f, latency, timeout / 100.0f);
+                    } else {
+                        Timber.d("Re-asserting connection priority HIGH (interval=%sms latency=%s timeout=%ss)", interval * 1.25f, latency, timeout / 100.0f);
+                        peripheral.requestConnectionPriority(ConnectionPriority.HIGH);
+                    }
                 }
             } else {
                 Timber.e("onConnectionUpdated %s", status);
+                // A rejected/failing parameter update during intentional teardown (or on an
+                // already-dead link) is expected noise, not an emergency: raising a critical
+                // error here causes churn during host-initiated disconnects. Genuine mid-link
+                // failures still have state CONNECTED and are reported as before.
+                if (peripheral.getState() != ConnectionState.CONNECTED) {
+                    Timber.d("Ignoring onConnectionUpdated %s while not connected (state=%s)", status, peripheral.getState());
+                    return;
+                }
                 TandemError error = TandemError.CONNECTION_UPDATE_FAILED.withExtra("status: " + status);
                 if (status == GattStatus.VALUE_NOT_ALLOWED) {
                     error = TandemError.PAIRING_CANNOT_BEGIN.withCause(error);
@@ -849,6 +981,9 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectedPeripheral(@NotNull BluetoothPeripheral peripheral) {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
+            // If the address-filtered scan race lost to the background autoConnect, its
+            // low-latency scanner is still running - stop it (harmless if not scanning).
+            central.stopScan();
             PumpState.clearInitialConnectionHardAuthFailure();
             PumpState.resetInitialConnectionNoReplyFailures();
             this.reconnectDelay = 250;
@@ -857,6 +992,13 @@ public class TandemBluetoothHandler {
         @Override
         public void onConnectionFailed(@NotNull BluetoothPeripheral peripheral, final @NotNull HciStatus status) {
             Timber.e("TandemBluetoothHandler: connection '%s' failed with status %s", peripheral.getName(), status);
+
+            // blessed retries a failed connection exactly once internally; when that retry
+            // also fails (e.g. transient ERROR right after connect) nothing re-kicks the
+            // reconnect machinery and the queue is left without any pending connection.
+            // Schedule our own bounded-cadence retry.
+            Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in 5000 ms after connection failure");
+            handler.postDelayed(TandemBluetoothHandler.this::immediateConnectToPeripheral, 5000);
 
             tandemPump.onPumpCriticalError(peripheral,
                     TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
@@ -880,9 +1022,13 @@ public class TandemBluetoothHandler {
             }
 
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms reason=%s)", peripheral.getName(), status, reconnectDelay, disconnectReason);
+            // Stop any lingering scan from the previous connect cycle before the next one starts.
+            central.stopScan();
             PumpState.clearRequestMessages();
             Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
+            stopPeriodicConnectionPriorityReassert();
+            pumpBusyWorkflow = false;
             synchronized (pumpReadyStateByAddress) {
                 pumpReadyStateByAddress.remove(peripheral.getAddress());
             }
@@ -986,11 +1132,29 @@ public class TandemBluetoothHandler {
     public static synchronized TandemBluetoothHandler getInstance(Context context, TandemPump tandemPump, @Nullable Timber.Tree logTree) {
         if (instance == null) {
             instance = new TandemBluetoothHandler(context.getApplicationContext(), tandemPump, logTree);
+        } else {
+            // Rebind the host: the previous host instance may have been torn down with its
+            // communication manager, and callbacks must reach the live one.
+            instance.tandemPump = tandemPump;
         }
         return instance;
     }
 
     public static synchronized void resetInstance() {
+        if (instance == null) {
+            return;
+        }
+        // Fully tear down the outgoing handler before dropping the reference. Nulling the
+        // field alone leaves its pending background autoConnects registered at the Android
+        // BLE stack and its periodic work running - all of which later latch/execute
+        // alongside the freshly constructed handler, producing duplicate connections and
+        // multiplied log output (observed as 3 simultaneous "initial pump connection
+        // established" from three abandoned instances).
+        try {
+            instance.stop();
+        } catch (Exception e) {
+            Timber.e(e, "resetInstance: teardown of outgoing handler failed");
+        }
         instance = null;
     }
 
@@ -1001,7 +1165,16 @@ public class TandemBluetoothHandler {
             BluetoothPeripheral peripheral = alreadyBondedPump.get();
             Timber.i("TandemBluetoothHandler: Already bonded to Tandem peripheral: %s (%s)", peripheral.getName(), peripheral.getAddress());
             if (tandemPump.onPumpDiscovered(peripheral, null, PumpReadyState.UNKNOWN)) {
+                // Race two mechanisms:
+                //  - background autoConnect: guaranteed to eventually latch, but its long duty
+                //    cycle can take minutes (observed 122s-928s) when the pump starts
+                //    advertising outside its listen window;
+                //  - a low-latency address-filtered scan: discovers the advertising pump in
+                //    seconds, and onDiscoveredPeripheral then issues a direct connectPeripheral.
+                // blessed delivers whichever wins; a rare duplicate is dropped by the pump
+                // within seconds, whereas relying on autoConnect alone costs minutes.
                 central.autoConnectPeripheral(peripheral, peripheralCallback);
+                central.scanForPeripheralsWithAddresses(new String[]{ peripheral.getAddress() });
                 return;
             } else {
                 Timber.i("TandemBluetoothHandler: onPumpDiscovered callback said to skip bonded pump %s", peripheral);
@@ -1023,6 +1196,7 @@ public class TandemBluetoothHandler {
     }
 
     public void stop() {
+        stopPeriodicConnectionPriorityReassert();
         central.stopScan();
         central.close();
     }
