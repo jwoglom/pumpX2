@@ -113,6 +113,15 @@ public class TandemBluetoothHandler {
     // expire a stuck busy flag (see isPumpBusyWorkflow).
     private volatile long pumpBusyLastSignalMs = 0L;
 
+    // Last time the in-progress bolus flag was set (BolusPermissionResponse status=0); used to
+    // expire a stuck flag. The pump normally clears it via a terminal CurrentBolusStatusResponse
+    // (observed ~8 min after a small SMB), but when that response never arrives (e.g. disconnect
+    // mid-bolus) the flag suppressed connection-priority re-asserts for 45+ minutes (2026-08-27
+    // logs), pinning the link to the pump's power-saving profile (2s supervision timeout) and
+    // causing recurring CONNECTION_TIMEOUT drops.
+    private static final long IN_PROGRESS_BOLUS_MAX_MS = 10 * 60_000L;
+    private volatile long inProgressBolusSinceMs = 0L;
+
     private Runnable periodicConnectionPriorityReassert;
 
     /** True while a pump motor workflow (fill cannula / fill tubing / change cartridge) is active. */
@@ -132,7 +141,13 @@ public class TandemBluetoothHandler {
     /** Skip reason when the pump is mid-operation, or null when connection-priority re-asserts are safe. */
     private String busyWorkflowReason() {
         if (PumpStateSupplier.inProgressBolusId != null && PumpStateSupplier.inProgressBolusId.get() != null) {
-            return "bolus in progress";
+            if (System.currentTimeMillis() - inProgressBolusSinceMs > IN_PROGRESS_BOLUS_MAX_MS) {
+                Timber.w("in-progress bolus flag stale (>10min), clearing");
+                PumpStateSupplier.inProgressBolusId = () -> null;
+                inProgressBolusSinceMs = 0L;
+            } else {
+                return "bolus in progress";
+            }
         }
         if (isPumpBusyWorkflow()) {
             return "pump workflow (fill/load) in progress";
@@ -518,6 +533,7 @@ public class TandemBluetoothHandler {
                 // Clear the in-progress bolus if the pump revoked bolus permission.
                 if (events.contains(QualifyingEvent.BOLUS_PERMISSION_REVOKED)) {
                     PumpStateSupplier.inProgressBolusId = () -> null;
+                    inProgressBolusSinceMs = 0L;
                 }
                 tandemPump.onReceiveQualifyingEvent(peripheral, events);
             } else if (characteristicUUID.equals(CharacteristicUUID.AUTHORIZATION_CHARACTERISTICS) ||
@@ -802,12 +818,23 @@ public class TandemBluetoothHandler {
 
                     // Track the in-progress bolus ID so connection-parameter re-asserts can be
                     // skipped while a bolus is being delivered (the pump rejects the update with
-                    // INSUFFICIENT_AUTHORIZATION mid-bolus).
+                    // INSUFFICIENT_AUTHORIZATION mid-bolus). DELIVERING/REQUESTING samples refresh
+                    // the in-progress timestamp (positive evidence the bolus is still active);
+                    // the flag otherwise expires after IN_PROGRESS_BOLUS_MAX_MS so a missed
+                    // terminal response cannot pin the link to the power-saving profile forever.
                     if (msg instanceof BolusPermissionResponse && ((BolusPermissionResponse) msg).getStatus() == 0) {
                         PumpStateSupplier.inProgressBolusId = () -> ((BolusPermissionResponse) msg).getBolusId();
-                    } else if (msg instanceof CurrentBolusStatusResponse &&
-                            ((CurrentBolusStatusResponse) msg).getStatus() == CurrentBolusStatusResponse.CurrentBolusStatus.ALREADY_DELIVERED_OR_INVALID) {
-                        PumpStateSupplier.inProgressBolusId = () -> null;
+                        inProgressBolusSinceMs = System.currentTimeMillis();
+                    } else if (msg instanceof CurrentBolusStatusResponse) {
+                        CurrentBolusStatusResponse.CurrentBolusStatus bolusStatus =
+                            ((CurrentBolusStatusResponse) msg).getStatus();
+                        if (bolusStatus == CurrentBolusStatusResponse.CurrentBolusStatus.ALREADY_DELIVERED_OR_INVALID) {
+                            PumpStateSupplier.inProgressBolusId = () -> null;
+                            inProgressBolusSinceMs = 0L;
+                        } else if (bolusStatus == CurrentBolusStatusResponse.CurrentBolusStatus.DELIVERING
+                                || bolusStatus == CurrentBolusStatusResponse.CurrentBolusStatus.REQUESTING) {
+                            inProgressBolusSinceMs = System.currentTimeMillis();
+                        }
                     }
 
                     // Track pump motor workflows (fill cannula, fill tubing, change cartridge):
