@@ -35,37 +35,39 @@
 <span class="source-line-no">018</span><span id="line-18">    MOBI_API_V3_6(3, 6),</span>
 <span class="source-line-no">019</span><span id="line-19">    // Tandem Mobi Software v7.9.0.1 (Control-IQ Plus)</span>
 <span class="source-line-no">020</span><span id="line-20">    MOBI_API_V3_8(3, 8),</span>
-<span class="source-line-no">021</span><span id="line-21">    // Represents known messages from the app that we can't parse with known firmware</span>
-<span class="source-line-no">022</span><span id="line-22">    API_FUTURE(99, 99)</span>
-<span class="source-line-no">023</span><span id="line-23">    ;</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    private int major;</span>
-<span class="source-line-no">026</span><span id="line-26">    private int minor;</span>
-<span class="source-line-no">027</span><span id="line-27">    KnownApiVersion(int major, int minor) {</span>
-<span class="source-line-no">028</span><span id="line-28">        this.major = major;</span>
-<span class="source-line-no">029</span><span id="line-29">        this.minor = minor;</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public ApiVersion get() {</span>
-<span class="source-line-no">033</span><span id="line-33">        return new ApiVersion(major, minor);</span>
-<span class="source-line-no">034</span><span id="line-34">    }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    public int compareVersionTo(KnownApiVersion other) {</span>
-<span class="source-line-no">037</span><span id="line-37">        return get().compareTo(other.get());</span>
-<span class="source-line-no">038</span><span id="line-38">    }</span>
-<span class="source-line-no">039</span><span id="line-39"></span>
-<span class="source-line-no">040</span><span id="line-40">    public int compareVersionTo(ApiVersion other) {</span>
-<span class="source-line-no">041</span><span id="line-41">        return get().compareTo(other);</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    public boolean greaterThan(KnownApiVersion other) {</span>
-<span class="source-line-no">045</span><span id="line-45">        return compareVersionTo(other) &gt; 0;</span>
-<span class="source-line-no">046</span><span id="line-46">    }</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    public boolean greaterThan(ApiVersion other) {</span>
-<span class="source-line-no">049</span><span id="line-49">        return compareVersionTo(other) &gt; 0;</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51">}</span>
+<span class="source-line-no">021</span><span id="line-21">    // Tandem Mobi Software v7.9.2.0 (Control-IQ Plus)</span>
+<span class="source-line-no">022</span><span id="line-22">    MOBI_API_V3_11(3, 11),</span>
+<span class="source-line-no">023</span><span id="line-23">    // Represents known messages from the app that we can't parse with known firmware</span>
+<span class="source-line-no">024</span><span id="line-24">    API_FUTURE(99, 99)</span>
+<span class="source-line-no">025</span><span id="line-25">    ;</span>
+<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">027</span><span id="line-27">    private int major;</span>
+<span class="source-line-no">028</span><span id="line-28">    private int minor;</span>
+<span class="source-line-no">029</span><span id="line-29">    KnownApiVersion(int major, int minor) {</span>
+<span class="source-line-no">030</span><span id="line-30">        this.major = major;</span>
+<span class="source-line-no">031</span><span id="line-31">        this.minor = minor;</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public ApiVersion get() {</span>
+<span class="source-line-no">035</span><span id="line-35">        return new ApiVersion(major, minor);</span>
+<span class="source-line-no">036</span><span id="line-36">    }</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    public int compareVersionTo(KnownApiVersion other) {</span>
+<span class="source-line-no">039</span><span id="line-39">        return get().compareTo(other.get());</span>
+<span class="source-line-no">040</span><span id="line-40">    }</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42">    public int compareVersionTo(ApiVersion other) {</span>
+<span class="source-line-no">043</span><span id="line-43">        return get().compareTo(other);</span>
+<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">    public boolean greaterThan(KnownApiVersion other) {</span>
+<span class="source-line-no">047</span><span id="line-47">        return compareVersionTo(other) &gt; 0;</span>
+<span class="source-line-no">048</span><span id="line-48">    }</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">    public boolean greaterThan(ApiVersion other) {</span>
+<span class="source-line-no">051</span><span id="line-51">        return compareVersionTo(other) &gt; 0;</span>
+<span class="source-line-no">052</span><span id="line-52">    }</span>
+<span class="source-line-no">053</span><span id="line-53">}</span>
 
 
 
