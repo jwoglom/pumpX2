@@ -183,6 +183,12 @@ import com.jwoglom.pumpx2.pump.messages.request.control.UserInteractionRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.UserInteractionResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.ActivateShelfModeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.ActivateShelfModeResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.JoinFSL3Request;
+import com.jwoglom.pumpx2.pump.messages.response.control.JoinFSL3Response;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetConfigurableFeatureRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetConfigurableFeatureResponse;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetRuntimeConfigRequest;
+import com.jwoglom.pumpx2.pump.messages.response.control.SetRuntimeConfigResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetSensorTypeRequest;
 import com.jwoglom.pumpx2.pump.messages.response.control.SetSensorTypeResponse;
 import com.jwoglom.pumpx2.pump.messages.request.control.CgmHighLowAlertRequest;
@@ -427,6 +433,9 @@ public enum Messages {
     SET_MAX_BASAL_LIMIT(SetMaxBasalLimitRequest.class, SetMaxBasalLimitResponse.class),
     SET_PUMP_SOUNDS(SetPumpSoundsRequest.class, SetPumpSoundsResponse.class),
     SET_PUMP_ALERT_SNOOZE(SetPumpAlertSnoozeRequest.class, SetPumpAlertSnoozeResponse.class),
+    JOIN_FSL3(JoinFSL3Request.class, JoinFSL3Response.class),
+    SET_CONFIGURABLE_FEATURE(SetConfigurableFeatureRequest.class, SetConfigurableFeatureResponse.class),
+    SET_RUNTIME_CONFIG(SetRuntimeConfigRequest.class, SetRuntimeConfigResponse.class),
     // MESSAGES_END
     ;
 
