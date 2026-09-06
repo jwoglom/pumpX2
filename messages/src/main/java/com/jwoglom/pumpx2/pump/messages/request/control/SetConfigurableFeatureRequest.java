@@ -9,14 +9,22 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetConfigurableFeatureR
 import org.apache.commons.lang3.Validate;
 
 /**
- * Enables or disables a pump configurable feature, addressed by group and feature index.
+ * Turns a single pump feature on or off. Each feature is identified by a
+ * (group, feature) index pair, and this message sets that feature's enabled state.
+ *
+ * Known use: enabling CGM support on the pump while setting up an Abbott FreeStyle
+ * Libre 3 sensor. Only the t:slim X2 sends this; the Mobi pump does not use it.
+ *
+ * This is a one-way command. There is no companion message to read a feature's
+ * current state back from the pump.
  *
  * Cargo layout (3 bytes):
  *   [0] groupIndex   uint8
  *   [1] featureIndex uint8
  *   [2] featureState uint8  - 0 = disabled, 1 = enabled
  *
- * Derived from the decompiled t:connect Android app (SetConfigurableFeatureRequest, opcode 116).
+ * Note: this is a different message from {@link SetRuntimeConfigRequest}, even though the two
+ * names look similar.
  */
 @MessageProps(
     opCode=116,

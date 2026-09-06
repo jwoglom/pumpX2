@@ -9,15 +9,21 @@ import com.jwoglom.pumpx2.pump.messages.response.control.SetRuntimeConfigRespons
 import org.apache.commons.lang3.Validate;
 
 /**
- * Sets a pump runtime configuration value.
+ * Sets a pump runtime configuration value, sent as two raw config bytes.
+ *
+ * Known use: part of the Abbott FreeStyle Libre 3 sensor setup flow. Only the
+ * t:slim X2 sends this; the Mobi pump does not use it.
+ *
+ * The t:slim X2 app only ever sends {0, 0}. The meaning of the two bytes beyond
+ * that is not known, so they are left settable here for experimentation. This is a
+ * one-way command with no companion message to read the value back.
  *
  * Cargo layout (2 bytes):
  *   [0] config0 uint8
  *   [1] config1 uint8
  *
- * The t:connect Android app currently only ever sends {0, 0}; the two bytes are
- * exposed here so other values can be tried. Derived from the decompiled app
- * (SetRuntimeConfigRequest, opcode 122).
+ * Note: this is a different message from {@link SetConfigurableFeatureRequest}, even though the
+ * two names look similar.
  */
 @MessageProps(
     opCode=122,

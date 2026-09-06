@@ -9,12 +9,11 @@ import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetRuntimeConfigRequest;
 
 /**
- * Response to a {@link SetRuntimeConfigRequest}.
+ * The pump's reply to a {@link SetRuntimeConfigRequest}, reporting whether the value
+ * was accepted.
  *
- * Cargo layout (1 byte, after HMAC removal):
+ * Cargo layout (1 byte):
  *   raw[0]: status (uint8, 0 = success)
- *
- * Derived from the decompiled t:connect Android app (SetRuntimeConfigResponse, opcode 123).
  */
 @MessageProps(
     opCode=123,
