@@ -82,17 +82,23 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-51">SetRuntimeConfigRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-63">SetRuntimeConfigRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets a pump runtime configuration value.
+<div class="block">Sets a pump runtime configuration value, sent as two raw config bytes.
+
+ Known use: part of the Abbott FreeStyle Libre 3 sensor setup flow. Only the
+ t:slim X2 sends this; the Mobi pump does not use it.
+
+ The t:slim X2 app only ever sends {0, 0}. The meaning of the two bytes beyond
+ that is not known, so they are left settable here for experimentation. This is a
+ one-way command with no companion message to read the value back.
 
  Cargo layout (2 bytes):
    [0] config0 uint8
    [1] config1 uint8
 
- The t:connect Android app currently only ever sends {0, 0}; the two bytes are
- exposed here so other values can be tried. Derived from the decompiled app
- (SetRuntimeConfigRequest, opcode 122).
+ Note: this is a different message from <a href="SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetConfigurableFeatureRequest</code></a>, even though the
+ two names look similar.
 
 
 
@@ -193,13 +199,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetRuntimeConfigRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-63">SetRuntimeConfigRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-75">SetRuntimeConfigRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>SetRuntimeConfigRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-67">SetRuntimeConfigRequest</a></span><wbr><span class="parameters">(int&nbsp;config0,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-79">SetRuntimeConfigRequest</a></span><wbr><span class="parameters">(int&nbsp;config0,
  int&nbsp;config1)</span></div>
 </section>
 </li>
@@ -214,7 +220,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-80">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-92">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetRuntimeConfigRequest:</caption>
  <tr><td><code>config0</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -229,20 +235,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-88">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;config0,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-100">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;config0,
  int&nbsp;config1)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConfig0()">
 <h3>getConfig0</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-92">getConfig0</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-104">getConfig0</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConfig1()">
 <h3>getConfig1</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-96">getConfig1</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#line-108">getConfig1</a></span>()</div>
 </section>
 </li>
 </ul>

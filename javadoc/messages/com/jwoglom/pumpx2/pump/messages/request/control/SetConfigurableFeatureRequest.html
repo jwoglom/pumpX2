@@ -82,16 +82,24 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-49">SetConfigurableFeatureRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-65">SetConfigurableFeatureRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Enables or disables a pump configurable feature, addressed by group and feature index.
+<div class="block">Turns a single pump feature on or off. Each feature is identified by a
+ (group, feature) index pair, and this message sets that feature's enabled state.
+
+ Known use: enabling CGM support on the pump while setting up an Abbott FreeStyle
+ Libre 3 sensor. Only the t:slim X2 sends this; the Mobi pump does not use it.
+
+ This is a one-way command. There is no companion message to read a feature's
+ current state back from the pump.
 
  Cargo layout (3 bytes):
    [0] groupIndex   uint8
    [1] featureIndex uint8
    [2] featureState uint8  - 0 = disabled, 1 = enabled
 
- Derived from the decompiled t:connect Android app (SetConfigurableFeatureRequest, opcode 116).
+ Note: this is a different message from <a href="SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetRuntimeConfigRequest</code></a>, even though the two
+ names look similar.
 
 
 
@@ -198,13 +206,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetConfigurableFeatureRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-62">SetConfigurableFeatureRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-78">SetConfigurableFeatureRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,boolean)">
 <h3>SetConfigurableFeatureRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-64">SetConfigurableFeatureRequest</a></span><wbr><span class="parameters">(int&nbsp;groupIndex,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-80">SetConfigurableFeatureRequest</a></span><wbr><span class="parameters">(int&nbsp;groupIndex,
  int&nbsp;featureIndex,
  boolean&nbsp;featureState)</span></div>
 </section>
@@ -220,7 +228,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-79">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-95">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetConfigurableFeatureRequest:</caption>
  <tr><td><code>groupIndex</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -236,7 +244,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,boolean)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-88">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;groupIndex,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-104">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;groupIndex,
  int&nbsp;featureIndex,
  boolean&nbsp;featureState)</span></div>
 </section>
@@ -244,19 +252,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getGroupIndex()">
 <h3>getGroupIndex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-92">getGroupIndex</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-108">getGroupIndex</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeatureIndex()">
 <h3>getFeatureIndex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-96">getFeatureIndex</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-112">getFeatureIndex</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeatureState()">
 <h3>getFeatureState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-100">getFeatureState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#line-116">getFeatureState</a></span>()</div>
 </section>
 </li>
 </ul>

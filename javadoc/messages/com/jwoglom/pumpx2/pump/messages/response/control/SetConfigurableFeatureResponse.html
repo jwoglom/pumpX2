@@ -84,15 +84,14 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-47">SetConfigurableFeatureResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-45">SetConfigurableFeatureResponse</a></span>
 <span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
-<div class="block">Response to a <a href="../../request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetConfigurableFeatureRequest</code></a>.
+<div class="block">The pump's reply to a <a href="../../request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetConfigurableFeatureRequest</code></a>, reporting whether the
+ feature was changed successfully.
 
- Cargo layout (2 bytes, after HMAC removal):
+ Cargo layout (2 bytes):
    raw[0]: status (uint8, 0 = success)
-   raw[1]: reason (uint8)
-
- Derived from the decompiled t:connect Android app (SetConfigurableFeatureResponse, opcode 117).
+   raw[1]: reason (uint8, reason code when the change is rejected)
 
 
 
@@ -203,13 +202,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetConfigurableFeatureResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-60">SetConfigurableFeatureResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-58">SetConfigurableFeatureResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>SetConfigurableFeatureResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-62">SetConfigurableFeatureResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-60">SetConfigurableFeatureResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;reason)</span></div>
 </section>
 </li>
@@ -224,7 +223,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-75">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-73">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetConfigurableFeatureResponse:</caption>
  <tr><td><code>status</code></td><td><code>raw[0]</code></td></tr>
@@ -239,7 +238,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-91">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-89">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;reason)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for SetConfigurableFeatureResponse.buildCargo(...):</caption>
@@ -252,7 +251,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-99">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-97">getStatus</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
@@ -264,7 +263,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getReason()">
 <h3>getReason</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-104">getReason</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#line-102">getReason</a></span>()</div>
 </section>
 </li>
 </ul>
