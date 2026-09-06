@@ -157,6 +157,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LastBolusStatusV3R
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusV3Response;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CgmStatusV2Request;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
+import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMStatusCRequest;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMStatusCResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.BleSoftwareInfoRequest;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.BleSoftwareInfoResponse;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest;
@@ -361,6 +363,7 @@ public enum Messages {
     ACTIVE_AAM_BITS(ActiveAamBitsRequest.class, ActiveAamBitsResponse.class),
     LAST_BOLUS_STATUS_V3(LastBolusStatusV3Request.class, LastBolusStatusV3Response.class),
     CGM_STATUS_V2(CgmStatusV2Request.class, CgmStatusV2Response.class),
+    CGM_STATUS_C(CGMStatusCRequest.class, CGMStatusCResponse.class),
     BLE_SOFTWARE_INFO(BleSoftwareInfoRequest.class, BleSoftwareInfoResponse.class),
     CURRENT_ACTIVE_IDP_VALUES(CurrentActiveIdpValuesRequest.class, CurrentActiveIdpValuesResponse.class),
     EXTENDED_BOLUS_STATUS_V2(ExtendedBolusStatusV2Request.class, ExtendedBolusStatusV2Response.class),
