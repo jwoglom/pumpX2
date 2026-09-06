@@ -14,18 +14,30 @@ import java.math.BigInteger;
 )
 public class CgmCalibrationGxHistoryLog extends HistoryLog {
     
-    private int value;
-    
+    private long value;
+
     public CgmCalibrationGxHistoryLog() {}
-    public CgmCalibrationGxHistoryLog(long pumpTimeSec, long sequenceNum, int value) {
+    public CgmCalibrationGxHistoryLog(long pumpTimeSec, long sequenceNum, long value) {
         super(pumpTimeSec, sequenceNum);
         this.cargo = buildCargo(pumpTimeSec, sequenceNum, value);
         this.value = value;
-        
+
     }
 
-    public CgmCalibrationGxHistoryLog(int value) {
+    public CgmCalibrationGxHistoryLog(long value) {
         this(0, 0, value);
+    }
+
+    /** @deprecated value is a uint32; use the long overload. Kept for binary compatibility. */
+    @Deprecated
+    public CgmCalibrationGxHistoryLog(long pumpTimeSec, long sequenceNum, int value) {
+        this(pumpTimeSec, sequenceNum, value & 0xFFFFFFFFL);
+    }
+
+    /** @deprecated value is a uint32; use the long overload. Kept for binary compatibility. */
+    @Deprecated
+    public CgmCalibrationGxHistoryLog(int value) {
+        this(0, 0, value & 0xFFFFFFFFL);
     }
 
     public int typeId() {
@@ -36,18 +48,18 @@ public class CgmCalibrationGxHistoryLog extends HistoryLog {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.value = Bytes.readShort(raw, 10);
-        
+        this.value = Bytes.readUint32(raw, 10);
+
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int value) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long value) {
         return HistoryLog.fillCargo(Bytes.combine(
             HistoryLog.typeIdBytes(210, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(value)));
+            Bytes.toUint32(value)));
     }
-    public int getValue() {
+    public long getValue() {
         return value;
     }
     
