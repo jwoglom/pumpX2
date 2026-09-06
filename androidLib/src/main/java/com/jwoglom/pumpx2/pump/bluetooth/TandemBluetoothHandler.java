@@ -47,9 +47,11 @@ import com.jwoglom.pumpx2.pump.messages.response.controlStream.ControlStreamMess
 import com.jwoglom.pumpx2.pump.messages.response.controlStream.FillCannulaStateStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.ApiVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CurrentBolusStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.HistoryLogResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpVersionResponse;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.TimeSinceResetResponse;
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.HistoryLogStreamResponse;
 import com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent;
 import com.jwoglom.pumpx2.util.timber.LConfigurator;
 import com.welie.blessed.BluetoothBytesParser;
@@ -122,6 +124,28 @@ public class TandemBluetoothHandler {
     private static final long IN_PROGRESS_BOLUS_MAX_MS = 10 * 60_000L;
     private volatile long inProgressBolusSinceMs = 0L;
 
+    // True while a history-log stream is actively downloading (HistoryLogResponse accepted a
+    // chunk request, stream packets arriving). Mid-stream the pump rejects connection-parameter
+    // updates with INSUFFICIENT_AUTHORIZATION just like mid-bolus - observed 2026-09-01: a
+    // periodic re-assert fired mid-download, the pump rejected it, the link dropped and the
+    // half-finished stream wedged the host's history retriever for its full timeout.
+    private static final long HISTORY_STREAM_MAX_MS = 30_000L;
+    private volatile boolean pumpBusyHistory = false;
+    private volatile long pumpBusyHistoryLastSignalMs = 0L;
+
+    /** True while a history-log stream is actively downloading. */
+    private boolean isPumpBusyHistory() {
+        if (!pumpBusyHistory) return false;
+        // Stream packets arrive ~1/sec while active; if none arrived for HISTORY_STREAM_MAX_MS
+        // the stream is over (or dead) - clear the flag rather than blocking re-asserts forever.
+        if (System.currentTimeMillis() - pumpBusyHistoryLastSignalMs > HISTORY_STREAM_MAX_MS) {
+            Timber.w("pumpBusyHistory signal stale (>" + (HISTORY_STREAM_MAX_MS / 1000) + "s), clearing");
+            pumpBusyHistory = false;
+            return false;
+        }
+        return true;
+    }
+
     private Runnable periodicConnectionPriorityReassert;
 
     /** True while a pump motor workflow (fill cannula / fill tubing / change cartridge) is active. */
@@ -148,6 +172,9 @@ public class TandemBluetoothHandler {
             } else {
                 return "bolus in progress";
             }
+        }
+        if (isPumpBusyHistory()) {
+            return "history download stream in progress";
         }
         if (isPumpBusyWorkflow()) {
             return "pump workflow (fill/load) in progress";
@@ -852,6 +879,17 @@ public class TandemBluetoothHandler {
                         if (pumpBusyWorkflow) pumpBusyLastSignalMs = System.currentTimeMillis();
                     }
 
+                    // Track active history-log streams (see pumpBusyHistory above): a chunk
+                    // request ACK starts the stream, every stream packet refreshes it. Connection
+                    // parameter updates must not be requested while the pump is streaming.
+                    if (msg instanceof HistoryLogResponse && ((HistoryLogResponse) msg).getStatus() == 0) {
+                        pumpBusyHistory = true;
+                        pumpBusyHistoryLastSignalMs = System.currentTimeMillis();
+                    } else if (msg instanceof HistoryLogStreamResponse) {
+                        pumpBusyHistory = true;
+                        pumpBusyHistoryLastSignalMs = System.currentTimeMillis();
+                    }
+
                     tandemPump.onReceiveMessage(peripheral, msg);
                 }
             } else {
@@ -1056,6 +1094,7 @@ public class TandemBluetoothHandler {
             resetRemainingConnectionInitializationSteps();
             stopPeriodicConnectionPriorityReassert();
             pumpBusyWorkflow = false;
+            pumpBusyHistory = false;
             synchronized (pumpReadyStateByAddress) {
                 pumpReadyStateByAddress.remove(peripheral.getAddress());
             }
