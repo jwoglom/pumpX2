@@ -9,13 +9,12 @@ import com.jwoglom.pumpx2.pump.messages.models.StatusMessage;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetConfigurableFeatureRequest;
 
 /**
- * Response to a {@link SetConfigurableFeatureRequest}.
+ * The pump's reply to a {@link SetConfigurableFeatureRequest}, reporting whether the
+ * feature was changed successfully.
  *
- * Cargo layout (2 bytes, after HMAC removal):
+ * Cargo layout (2 bytes):
  *   raw[0]: status (uint8, 0 = success)
- *   raw[1]: reason (uint8)
- *
- * Derived from the decompiled t:connect Android app (SetConfigurableFeatureResponse, opcode 117).
+ *   raw[1]: reason (uint8, reason code when the change is rejected)
  */
 @MessageProps(
     opCode=117,
