@@ -393,7 +393,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/AlertStatusRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">AlertStatusRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CGMAlertStatusResponse</code></a>, opCode 68, size 0
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlertStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>AlertStatusResponse</code></a>, opCode 68, size 0
 
  <br>
 
@@ -403,7 +403,7 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>68</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
- &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CGMAlertStatusResponse</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/AlertStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>AlertStatusResponse</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/AlertStatusRequest.html#%3Cinit%3E()" class="member-name-link">AlertStatusRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/AlertStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">AlertStatusRequest</a></dt>
@@ -1428,6 +1428,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#buildCargo(boolean,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.LoadState,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeTubingStatus,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse.PrimeNudgeStatus)" class="member-name-link">buildCargo(boolean, LoadStatusResponse.LoadState, LoadStatusResponse.PrimeTubingStatus, LoadStatusResponse.PrimeNudgeStatus)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#buildCargo(byte%5B%5D,byte%5B%5D,byte%5B%5D,byte%5B%5D,int,byte%5B%5D,byte%5B%5D)" class="member-name-link">buildCargo(byte[], byte[], byte[], byte[], int, byte[], byte[])</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>
+<div class="block">
+ Byte layout for JoinFSL3Request.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) warmupTime</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CancelBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CancelBolusRequest</a></dt>
 <dd>
 <div class="block">
@@ -1698,6 +1706,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">
  Byte layout for SetPumpSoundsResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) status</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html#buildCargo(int)" class="member-name-link">buildCargo(int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetRuntimeConfigResponse.buildCargo(...):
  OffsetDescription
  0<code>(byte) status</code>
  </div>
@@ -2000,6 +2016,8 @@ loadScripts(document, 'script');</script>
  1<code>(byte) profileIndex</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetTempRateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetTempRateRequest</a></dt>
 <dd>
 <div class="block">
@@ -2040,6 +2058,15 @@ loadScripts(document, 'script');</script>
  1<code>new byte[]{(byte) deletedIdpId} [element 1]</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
+<dd>
+<div class="block">
+ Byte layout for JoinFSL3Response.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{(byte) status} [element 0]</code>
+ 1<code>new byte[]{(byte) statusType} [element 1]</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/PrimeTubingSuspendResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/PrimeTubingSuspendResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">PrimeTubingSuspendResponse</a></dt>
 <dd>
 <div class="block">
@@ -2057,6 +2084,15 @@ loadScripts(document, 'script');</script>
  OffsetDescription
  0<code>(byte) status</code>
  1<code>(byte) newIdpId</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetConfigurableFeatureResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>new byte[]{(byte) status} [element 0]</code>
+ 1<code>new byte[]{(byte) reason} [element 1]</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.html#buildCargo(int,int)" class="member-name-link">buildCargo(int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetSensorTypeResponse</a></dt>
@@ -2139,6 +2175,8 @@ loadScripts(document, 'script');</script>
  1<code>(byte) errorCodeId</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#buildCargo(int,int,boolean)" class="member-name-link">buildCargo(int, int, boolean)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#buildCargo(int,int,byte%5B%5D)" class="member-name-link">buildCargo(int, int, byte[])</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">StreamDataPreflightRequest</a></dt>
 <dd>
 <div class="block">
@@ -2769,6 +2807,37 @@ loadScripts(document, 'script');</script>
  17<code>toUint32(sessionTimeRemainingSeconds) [byte 3]</code>
  18<code>(byte) cgmSensorTypeId</code>
  19<code>(byte) (gracePeriod ? 1 : 0)</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#buildCargo(int,long,long,int,long,long,int,boolean,int,int)" class="member-name-link">buildCargo(int, long, long, int, long, long, int, boolean, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>
+<div class="block">
+ Byte layout for CGMStatusCResponse.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) sessionStateId</code>
+ 1<code>toUint32(lastCalibrationTimestamp) [byte 0]</code>
+ 2<code>toUint32(lastCalibrationTimestamp) [byte 1]</code>
+ 3<code>toUint32(lastCalibrationTimestamp) [byte 2]</code>
+ 4<code>toUint32(lastCalibrationTimestamp) [byte 3]</code>
+ 5<code>toUint32(sensorStartedTimestamp) [byte 0]</code>
+ 6<code>toUint32(sensorStartedTimestamp) [byte 1]</code>
+ 7<code>toUint32(sensorStartedTimestamp) [byte 2]</code>
+ 8<code>toUint32(sensorStartedTimestamp) [byte 3]</code>
+ 9<code>(byte) transmitterBatteryStatusId</code>
+ 10<code>toUint32(sessionDurationSeconds) [byte 0]</code>
+ 11<code>toUint32(sessionDurationSeconds) [byte 1]</code>
+ 12<code>toUint32(sessionDurationSeconds) [byte 2]</code>
+ 13<code>toUint32(sessionDurationSeconds) [byte 3]</code>
+ 14<code>toUint32(sessionTimeRemainingSeconds) [byte 0]</code>
+ 15<code>toUint32(sessionTimeRemainingSeconds) [byte 1]</code>
+ 16<code>toUint32(sessionTimeRemainingSeconds) [byte 2]</code>
+ 17<code>toUint32(sessionTimeRemainingSeconds) [byte 3]</code>
+ 18<code>(byte) cgmSensorTypeId</code>
+ 19<code>(byte) (gracePeriod ? 1 : 0)</code>
+ 20<code>firstTwoBytesLittleEndian(sensorWarmupDurationSeconds) [byte 0]</code>
+ 21<code>firstTwoBytesLittleEndian(sensorWarmupDurationSeconds) [byte 1]</code>
+ 22<code>firstTwoBytesLittleEndian(remainingWarmupDurationSeconds) [byte 0]</code>
+ 23<code>firstTwoBytesLittleEndian(remainingWarmupDurationSeconds) [byte 1]</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html#buildCargo(int,java.lang.String,int,int,int,boolean)" class="member-name-link">buildCargo(int, String, int, int, int, boolean)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSettingsResponse</a></dt>
@@ -4198,7 +4267,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">CentralChallengeResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/authentication/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.authentication</a></dt>
 <dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/authentication/AbstractCentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>AbstractCentralChallengeRequest</code></a>, opCode 17, size 30
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/authentication/CentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>CentralChallengeRequest</code></a>, opCode 17, size 30
 
  <br>
 
@@ -4209,7 +4278,7 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>30</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
  &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#AUTHORIZATION"><code>Characteristic.AUTHORIZATION</code></a></code>&nbsp;
- &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/authentication/AbstractCentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>AbstractCentralChallengeRequest</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/authentication/CentralChallengeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication"><code>CentralChallengeRequest</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html#%3Cinit%3E()" class="member-name-link">CentralChallengeResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.authentication.<a href="com/jwoglom/pumpx2/pump/messages/response/authentication/CentralChallengeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">CentralChallengeResponse</a></dt>
@@ -4257,6 +4326,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.StatusAcknowledgement.html#CGM_SESSION_ALREADY_ACTIVE" class="member-name-link">CGM_SESSION_ALREADY_ACTIVE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.StatusAcknowledgement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.control">SetSensorTypeResponse.StatusAcknowledgement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CGM_STATUS" class="member-name-link">CGM_STATUS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CGM_STATUS_C" class="member-name-link">CGM_STATUS_C</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#CGM_STATUS_V2" class="member-name-link">CGM_STATUS_V2</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
@@ -4868,6 +4939,47 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStartSessionReqGxHistoryLog.html#%3Cinit%3E(long,long)" class="member-name-link">CgmStartSessionReqGxHistoryLog(long, long)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStartSessionReqGxHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStartSessionReqGxHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusCRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMStatusCRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
+<dd>
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CGMStatusCResponse</code></a>, opCode -52, size 0
+
+ <br>
+
+ 
+ 
+ Message properties:
+ &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-52</code>&nbsp;
+ &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
+ &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
+ &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CURRENT_STATUS"><code>Characteristic.CURRENT_STATUS</code></a></code>&nbsp;
+ &nbsp;<code>minApi</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/models/KnownApiVersion.html#MOBI_API_V3_8"><code>KnownApiVersion.MOBI_API_V3_8</code></a></code>&nbsp;
+ &nbsp;<code>supportedDevices</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html#ALL"><code>SupportedDevices.ALL</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CGMStatusCResponse</code></a></code>&nbsp;
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusCRequest.html#%3Cinit%3E()" class="member-name-link">CGMStatusCRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusCRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMStatusCRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">Returns CGM (Continuous Glucose Monitor) status.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#%3Cinit%3E()" class="member-name-link">CGMStatusCResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#%3Cinit%3E(int,long,long,int,long,long,int,boolean,int,int)" class="member-name-link">CGMStatusCResponse(int, long, long, int, long, long, int, boolean, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">CGM sensor types matching the Tandem app's CGMSensorType enum ordinals.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">CGM session states matching the Tandem app's CGMStatusBState enum ordinals.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
+<dd>
+<div class="block">TransmitterBatteryStatus ordinals match the Tandem app's enum, which differs slightly
+ from the CGMStatusResponse variant (uses "OKAY" instead of "OK").</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMStatusRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>
 <div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CGMStatusResponse</code></a>, opCode 80, size 0
@@ -5468,7 +5580,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/ControlIQIOBRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">ControlIQIOBRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.currentStatus</a></dt>
 <dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>ControlIQIOBResponse</code></a>, opCode 108, size 0
+<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/NonControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>NonControlIQIOBResponse</code></a>, opCode 108, size 0
 
  <br>
 
@@ -5478,7 +5590,7 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>108</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>0</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
- &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>ControlIQIOBResponse</code></a></code>&nbsp;
+ &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/NonControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>NonControlIQIOBResponse</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/ControlIQIOBRequest.html#%3Cinit%3E()" class="member-name-link">ControlIQIOBRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/ControlIQIOBRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">ControlIQIOBRequest</a></dt>
@@ -6475,9 +6587,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.PumpFeatureType.html#DEXCOM_G5_SUPPORTED" class="member-name-link">DEXCOM_G5_SUPPORTED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.PumpFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#DEXCOM_G6" class="member-name-link">DEXCOM_G6</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html#DEXCOM_G6" class="member-name-link">DEXCOM_G6</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.PumpFeatureType.html#DEXCOM_G6_SUPPORTED" class="member-name-link">DEXCOM_G6_SUPPORTED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV1Response.PumpFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#DEXCOM_G7" class="member-name-link">DEXCOM_G7</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html#DEXCOM_G7" class="member-name-link">DEXCOM_G7</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
@@ -6810,6 +6926,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/MinsTime.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MinsTime.html" title="class in com.jwoglom.pumpx2.pump.messages.models">MinsTime</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#ERROR" class="member-name-link">ERROR</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#ERROR" class="member-name-link">ERROR</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html#ERROR" class="member-name-link">ERROR</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.TransmitterBatteryStatus</a></dt>
@@ -6927,6 +7045,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#expectedOpCode" class="member-name-link">expectedOpCode</a> - Variable in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#expectedTxId" class="member-name-link">expectedTxId</a> - Variable in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#EXPIRED" class="member-name-link">EXPIRED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#EXPIRED" class="member-name-link">EXPIRED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -7332,6 +7452,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMAlertStatusResponse.CGMAlert</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#fromId(int)" class="member-name-link">fromId(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
@@ -7450,6 +7576,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcUnits.html#fromUser(double)" class="member-name-link">fromUser(double)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcUnits.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalcUnits</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#FSL2" class="member-name-link">FSL2</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html#FSL2" class="member-name-link">FSL2</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html#fullCargo" class="member-name-link">fullCargo</a> - Variable in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/PacketArrayList.html" title="class in com.jwoglom.pumpx2.pump.messages">PacketArrayList</a></dt>
@@ -7497,6 +7625,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Identifies what acknowledged the alert (e.g.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getActivationTime()" class="member-name-link">getActivationTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html#getActive()" class="member-name-link">getActive()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">TempRateResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateStatusResponse.html#getActive()" class="member-name-link">getActive()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/TempRateStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">TempRateStatusResponse</a></dt>
@@ -7777,6 +7907,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionBitmaskStatusResponse.html#getBitmask()" class="member-name-link">getBitmask()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionBitmaskStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">MalfunctionBitmaskStatusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getBleAddress()" class="member-name-link">getBleAddress()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#getBlePartNumber()" class="member-name-link">getBlePartNumber()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">VersionsAHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html#getBleSwVersion()" class="member-name-link">getBleSwVersion()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionsAHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">VersionsAHistoryLog</a></dt>
@@ -8031,7 +8163,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#getCgmSensorType()" class="member-name-link">getCgmSensorType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetSensorTypeRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getCgmSensorType()" class="member-name-link">getCgmSensorType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getCgmSensorType()" class="member-name-link">getCgmSensorType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getCgmSensorTypeId()" class="member-name-link">getCgmSensorTypeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getCgmSensorTypeId()" class="member-name-link">getCgmSensorTypeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
 <dd>&nbsp;</dd>
@@ -8107,6 +8243,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/TubingFilledHistoryLog.html#getCompletionStatusRaw()" class="member-name-link">getCompletionStatusRaw()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/TubingFilledHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">TubingFilledHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getCompressedSerialNumber()" class="member-name-link">getCompressedSerialNumber()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcComponent.html#getConditions()" class="member-name-link">getConditions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcComponent.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalcComponent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcDecision.html#getConditions()" class="member-name-link">getConditions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcDecision.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalcDecision</a></dt>
@@ -8114,6 +8252,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculator.html#getConditions()" class="member-name-link">getConditions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculator.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#getConditions()" class="member-name-link">getConditions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#getConfig0()" class="member-name-link">getConfig0()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#getConfig1()" class="member-name-link">getConfig1()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#getConfigABits()" class="member-name-link">getConfigABits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpVersionResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -8415,9 +8557,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#getFeatureBitmaskIndex()" class="member-name-link">getFeatureBitmaskIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">NewDayHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#getFeatureIndex()" class="member-name-link">getFeatureIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#getFeatureLock()" class="member-name-link">getFeatureLock()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#getFeaturesBitmask()" class="member-name-link">getFeaturesBitmask()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">NewDayHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#getFeatureState()" class="member-name-link">getFeatureState()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#getFileDlAndSideloadStatus()" class="member-name-link">getFileDlAndSideloadStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog</a></dt>
 <dd>&nbsp;</dd>
@@ -8427,6 +8573,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A close-out marker on the last <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a> of a reporting period.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getFirmwareVersion()" class="member-name-link">getFirmwareVersion()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileBasalRate()" class="member-name-link">getFirstSegmentProfileBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html#getFirstSegmentProfileCarbRatio()" class="member-name-link">getFirstSegmentProfileCarbRatio()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/CreateIDPRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">CreateIDPRequest</a></dt>
@@ -8526,6 +8674,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#getGlucoseValueStatusRaw()" class="member-name-link">getGlucoseValueStatusRaw()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#getGlucoseValueStatusRaw()" class="member-name-link">getGlucoseValueStatusRaw()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#getGroupIndex()" class="member-name-link">getGroupIndex()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html#getHardwareInfoString()" class="member-name-link">getHardwareInfoString()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMHardwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -8821,9 +8971,13 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html#getLastByte()" class="member-name-link">getLastByte()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMHardwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMHardwareInfoResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getLastCalibrationTimestamp()" class="member-name-link">getLastCalibrationTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getLastCalibrationTimestamp()" class="member-name-link">getLastCalibrationTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getLastCalibrationTimestamp()" class="member-name-link">getLastCalibrationTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getLastCalibrationTimestampInstant()" class="member-name-link">getLastCalibrationTimestampInstant()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getLastCalibrationTimestampInstant()" class="member-name-link">getLastCalibrationTimestampInstant()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -9006,6 +9160,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UsbEnumeratedHistoryLog.html#getNegotiatedCurrentMilliAmps()" class="member-name-link">getNegotiatedCurrentMilliAmps()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/UsbEnumeratedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UsbEnumeratedHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html#getNewIdpId()" class="member-name-link">getNewIdpId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CreateIDPResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CreateIDPResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getNfcUid()" class="member-name-link">getNfcUid()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake4KeyConfirmationRequest.html#getNonce()" class="member-name-link">getNonce()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.authentication.<a href="com/jwoglom/pumpx2/pump/messages/request/authentication/Jpake4KeyConfirmationRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.authentication">Jpake4KeyConfirmationRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -9289,6 +9445,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html#getReason()" class="member-name-link">getReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/CancelBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">CancelBolusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#getReason()" class="member-name-link">getReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DataLogCorruptionHistoryLog.html#getReason()" class="member-name-link">getReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DataLogCorruptionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DataLogCorruptionHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/HypoMinimizerResumeHistoryLog.html#getReason()" class="member-name-link">getReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/HypoMinimizerResumeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HypoMinimizerResumeHistoryLog</a></dt>
@@ -9308,6 +9466,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/ErrorResponse.html#getRemainingBytes()" class="member-name-link">getRemainingBytes()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.<a href="com/jwoglom/pumpx2/pump/messages/response/ErrorResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response">ErrorResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html#getRemainingInsulinPlusIcon()" class="member-name-link">getRemainingInsulinPlusIcon()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getRemainingWarmupDurationSeconds()" class="member-name-link">getRemainingWarmupDurationSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.html#getReminderAnnun()" class="member-name-link">getReminderAnnun()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetPumpSoundsRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -9501,11 +9661,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#getSelectedIOBType()" class="member-name-link">getSelectedIOBType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getSensorCode()" class="member-name-link">getSensorCode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/StartDexcomG6SensorSessionRequest.html#getSensorCode()" class="member-name-link">getSensorCode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/StartDexcomG6SensorSessionRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">StartDexcomG6SensorSessionRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSensorStartedTimestamp()" class="member-name-link">getSensorStartedTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getSensorStartedTimestamp()" class="member-name-link">getSensorStartedTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getSensorStartedTimestamp()" class="member-name-link">getSensorStartedTimestamp()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSensorStartedTimestampInstant()" class="member-name-link">getSensorStartedTimestampInstant()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getSensorStartedTimestampInstant()" class="member-name-link">getSensorStartedTimestampInstant()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -9533,6 +9699,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyStatusHistoryLog.html#getSensorTypeEnum()" class="member-name-link">getSensorTypeEnum()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyStatusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DailyStatusHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSensorWarmupDurationSeconds()" class="member-name-link">getSensorWarmupDurationSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html#getSequenceNum()" class="member-name-link">getSequenceNum()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html#getSerialNum()" class="member-name-link">getSerialNum()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpVersionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpVersionResponse</a></dt>
@@ -9553,6 +9721,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html#getSessionDuration()" class="member-name-link">getSessionDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStopSessionHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSessionDurationSeconds()" class="member-name-link">getSessionDurationSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getSessionDurationSeconds()" class="member-name-link">getSessionDurationSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#getSessionJoinReason()" class="member-name-link">getSessionJoinReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmJoinSessionHistoryLog</a></dt>
@@ -9569,9 +9739,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html#getSessionStartTime()" class="member-name-link">getSessionStartTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStopSessionHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSessionState()" class="member-name-link">getSessionState()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getSessionState()" class="member-name-link">getSessionState()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getSessionState()" class="member-name-link">getSessionState()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSessionStateId()" class="member-name-link">getSessionStateId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getSessionStateId()" class="member-name-link">getSessionStateId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -9586,6 +9760,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionG7HistoryLog.html#getSessionStopTime()" class="member-name-link">getSessionStopTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionG7HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStopSessionG7HistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html#getSessionStopTime()" class="member-name-link">getSessionStopTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStopSessionHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getSessionTimeRemainingSeconds()" class="member-name-link">getSessionTimeRemainingSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getSessionTimeRemainingSeconds()" class="member-name-link">getSessionTimeRemainingSeconds()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
 <dd>&nbsp;</dd>
@@ -9755,6 +9931,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">InitiateBolusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/PlaySoundResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/PlaySoundResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">PlaySoundResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/PrimeTubingSuspendResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/PrimeTubingSuspendResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">PrimeTubingSuspendResponse</a></dt>
@@ -9774,6 +9952,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetAutoOffAlertResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetAutoOffAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetAutoOffAlertResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetBgReminderResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetBgReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetBgReminderResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetDexcomG7PairingCodeResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetDexcomG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetDexcomG7PairingCodeResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -9798,6 +9978,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetPumpSoundsResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetPumpSoundsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetPumpSoundsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetQuickBolusSettingsResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.html#getStatus()" class="member-name-link">getStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetSensorTypeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetSensorTypeResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -9878,6 +10060,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBolusStatusResponse.html#getStatusId()" class="member-name-link">getStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentBolusStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentBolusStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html#getStatusType()" class="member-name-link">getStatusType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/InitiateBolusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">InitiateBolusResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#getStatusType()" class="member-name-link">getStatusType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html#getStatusType()" class="member-name-link">getStatusType()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">StreamDataPreflightResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -10015,9 +10199,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html#getTotalVolume()" class="member-name-link">getTotalVolume()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">InitiateBolusRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getTransmitterBatteryStatus()" class="member-name-link">getTransmitterBatteryStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getTransmitterBatteryStatus()" class="member-name-link">getTransmitterBatteryStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#getTransmitterBatteryStatus()" class="member-name-link">getTransmitterBatteryStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#getTransmitterBatteryStatusId()" class="member-name-link">getTransmitterBatteryStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#getTransmitterBatteryStatusId()" class="member-name-link">getTransmitterBatteryStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -10118,6 +10306,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ArmInitHistoryLog.html#getVersion()" class="member-name-link">getVersion()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ArmInitHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ArmInitHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionInfoHistoryLog.html#getVersion()" class="member-name-link">getVersion()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/VersionInfoHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">VersionInfoHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#getWarmupTime()" class="member-name-link">getWarmupTime()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV1Response.html#getWeight()" class="member-name-link">getWeight()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV1Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQInfoV1Response</a></dt>
 <dd>&nbsp;</dd>
@@ -10339,7 +10529,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HistoryLogResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.currentStatus</a></dt>
 <dd>
-<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CreateHistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CreateHistoryLogRequest</code></a>, opCode 61, size 2
+<div class="block">Response message for <a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HistoryLogRequest</code></a>, opCode 61, size 2
 
  <br>
 
@@ -10349,7 +10539,7 @@ loadScripts(document, 'script');</script>
  &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>61</code>&nbsp;
  &nbsp;<code>size</code>&nbsp;&nbsp;<code>2</code>&nbsp;
  &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#RESPONSE"><code>MessageType.RESPONSE</code></a></code>&nbsp;
- &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CreateHistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CreateHistoryLogRequest</code></a></code>&nbsp;
+ &nbsp;<code>request</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/HistoryLogRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>HistoryLogRequest</code></a></code>&nbsp;
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogResponse.html#%3Cinit%3E()" class="member-name-link">HistoryLogResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HistoryLogResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HistoryLogResponse</a></dt>
@@ -10937,6 +11127,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#isExtendedBolusPresent()" class="member-name-link">isExtendedBolusPresent()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBolusStatusV3Response</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#isGracePeriod()" class="member-name-link">isGracePeriod()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#isGracePeriod()" class="member-name-link">isGracePeriod()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/IDPManager.html#isIDPManagerResponse(com.jwoglom.pumpx2.pump.messages.Message)" class="member-name-link">isIDPManagerResponse(Message)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/IDPManager.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">IDPManager</a></dt>
@@ -10990,6 +11182,24 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
 <dt><a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html#JANUARY_1_2008_UNIX_EPOCH" class="member-name-link">JANUARY_1_2008_UNIX_EPOCH</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Dates.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Dates</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#JOIN_FSL3" class="member-name-link">JOIN_FSL3</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Instructs the pump to join (pair with) a FreeStyle Libre 3 CGM sensor.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#%3Cinit%3E()" class="member-name-link">JoinFSL3Request()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#%3Cinit%3E(byte%5B%5D,byte%5B%5D,byte%5B%5D,byte%5B%5D,int,byte%5B%5D,byte%5B%5D)" class="member-name-link">JoinFSL3Request(byte[], byte[], byte[], byte[], int, byte[], byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response to a <a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>JoinFSL3Request</code></a>.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#%3Cinit%3E()" class="member-name-link">JoinFSL3Response()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#%3Cinit%3E(int,int)" class="member-name-link">JoinFSL3Response(int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#JPAKE_3_SESSION_KEY" class="member-name-link">JPAKE_3_SESSION_KEY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
@@ -11936,6 +12146,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.GlucoseValueStatus.html#NORMAL" class="member-name-link">NORMAL</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#NOT_APPLICABLE" class="member-name-link">NOT_APPLICABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html#NOT_APPLICABLE" class="member-name-link">NOT_APPLICABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html#NOT_COMPLETE" class="member-name-link">NOT_COMPLETE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.controlStream.<a href="com/jwoglom/pumpx2/pump/messages/response/controlStream/ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.controlStream">ExitFillTubingModeStateStreamResponse.ExitFillTubingModeState</a></dt>
@@ -12003,6 +12215,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#OK" class="member-name-link">OK</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#OKAY" class="member-name-link">OKAY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html#OKAY" class="member-name-link">OKAY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#onBolusCalcDataSnapshotResponse(com.jwoglom.pumpx2.pump.messages.response.currentStatus.BolusCalcDataSnapshotResponse)" class="member-name-link">onBolusCalcDataSnapshotResponse(BolusCalcDataSnapshotResponse)</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
@@ -12056,6 +12270,8 @@ loadScripts(document, 'script');</script>
 <div class="block">The channel is being opened.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/StreamDataReadinessResponse.StreamDataType.html#ordinalValue()" class="member-name-link">ordinalValue()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/StreamDataReadinessResponse.StreamDataType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">StreamDataReadinessResponse.StreamDataType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#OUT_OF_RANGE" class="member-name-link">OUT_OF_RANGE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#OUT_OF_RANGE" class="member-name-link">OUT_OF_RANGE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -12351,6 +12567,19 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">InitiateBolusRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">JoinFSL3Request</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for JoinFSL3Request:
+ <code>bleAddress</code><code>Arrays.copyOfRange(raw, 0, 6)</code>
+ <code>sensorCode</code><code>Arrays.copyOfRange(raw, 6, 10)</code>
+ <code>activationTime</code><code>Arrays.copyOfRange(raw, 10, 14)</code>
+ <code>firmwareVersion</code><code>Arrays.copyOfRange(raw, 14, 18)</code>
+ <code>warmupTime</code><code>raw[18] &amp; 0xFF</code>
+ <code>compressedSerialNumber</code><code>Arrays.copyOfRange(raw, 19, 28)</code>
+ <code>nfcUid</code><code>Arrays.copyOfRange(raw, 28, 36)</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/PlaySoundRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/PlaySoundRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">PlaySoundRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/PrimeTubingSuspendRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/PrimeTubingSuspendRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">PrimeTubingSuspendRequest</a></dt>
@@ -12426,6 +12655,15 @@ loadScripts(document, 'script');</script>
  <code>reminderThreshold</code><code>Bytes.readShort(raw, 2)</code>
  <code>reminderMinutes</code><code>Bytes.readUint32(raw, 4)</code>
  <code>bitmask</code><code>raw[8] &amp; 0xFF</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetConfigurableFeatureRequest:
+ <code>groupIndex</code><code>raw[0] &amp; 0xFF</code>
+ <code>featureIndex</code><code>raw[1] &amp; 0xFF</code>
+ <code>featureState</code><code>(raw[2] &amp; 0xFF) != 0</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetDexcomG7PairingCodeRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetDexcomG7PairingCodeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetDexcomG7PairingCodeRequest</a></dt>
@@ -12553,6 +12791,14 @@ loadScripts(document, 'script');</script>
  <code>increment</code><code>getIncrement()</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetRuntimeConfigRequest:
+ <code>config0</code><code>raw[0] &amp; 0xFF</code>
+ <code>config1</code><code>raw[1] &amp; 0xFF</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetSensorTypeRequest</a></dt>
 <dd>
 <div class="block">
@@ -12663,6 +12909,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMOORAlertSettingsRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMOORAlertSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMOORAlertSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMRateAlertSettingsRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMRateAlertSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMRateAlertSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusCRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusCRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMStatusCRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/request/currentStatus/CGMStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CGMStatusRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -12992,6 +13240,14 @@ loadScripts(document, 'script');</script>
  <code>statusTypeId</code><code>raw[5]</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">JoinFSL3Response</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for JoinFSL3Response:
+ <code>status</code><code>raw[0]</code>
+ <code>statusType</code><code>raw[1] &amp; 0xFF</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/PlaySoundResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/PlaySoundResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">PlaySoundResponse</a></dt>
 <dd>
 <div class="block">
@@ -13062,6 +13318,14 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for SetBgReminderResponse:
  <code>status</code><code>raw[0]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetConfigurableFeatureResponse:
+ <code>status</code><code>raw[0]</code>
+ <code>reason</code><code>raw[1] &amp; 0xFF</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetDexcomG7PairingCodeResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetDexcomG7PairingCodeResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetDexcomG7PairingCodeResponse</a></dt>
@@ -13146,6 +13410,13 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">
  Parsed fields for SetQuickBolusSettingsResponse:
+ <code>status</code><code>raw[0]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for SetRuntimeConfigResponse:
  <code>status</code><code>raw[0]</code>
  </div>
 </dd>
@@ -13391,6 +13662,25 @@ loadScripts(document, 'script');</script>
  <code>fallRateThreshold</code><code>raw[3]</code>
  <code>fallRateEnabled</code><code>raw[4]</code>
  <code>fallRateDefaultBitmask</code><code>raw[5]</code>
+ </div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for CGMStatusCResponse:
+ <code>sessionStateId</code><code>raw[0] &amp; 0xFF</code>
+ <code>sessionState</code><code>getSessionState()</code>
+ <code>lastCalibrationTimestamp</code><code>Bytes.readUint32(raw, 1)</code>
+ <code>sensorStartedTimestamp</code><code>Bytes.readUint32(raw, 5)</code>
+ <code>transmitterBatteryStatusId</code><code>raw[9] &amp; 0xFF</code>
+ <code>transmitterBatteryStatus</code><code>getTransmitterBatteryStatus()</code>
+ <code>sessionDurationSeconds</code><code>Bytes.readUint32(raw, 10)</code>
+ <code>sessionTimeRemainingSeconds</code><code>Bytes.readUint32(raw, 14)</code>
+ <code>cgmSensorTypeId</code><code>raw[18] &amp; 0xFF</code>
+ <code>cgmSensorType</code><code>getCgmSensorType()</code>
+ <code>gracePeriod</code><code>(raw[19] &amp; 0xFF) != 0</code>
+ <code>sensorWarmupDurationSeconds</code><code>Bytes.readShort(raw, 20)</code>
+ <code>remainingWarmupDurationSeconds</code><code>Bytes.readShort(raw, 22)</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse</a></dt>
@@ -16153,11 +16443,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/ServiceUUID.html#%3Cinit%3E()" class="member-name-link">ServiceUUID()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.bluetooth.<a href="com/jwoglom/pumpx2/pump/messages/bluetooth/ServiceUUID.html" title="class in com.jwoglom.pumpx2.pump.messages.bluetooth">ServiceUUID</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#SESSION_ACTIVE" class="member-name-link">SESSION_ACTIVE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html#SESSION_ACTIVE" class="member-name-link">SESSION_ACTIVE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html#SESSION_ACTIVE" class="member-name-link">SESSION_ACTIVE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.SessionState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html#SESSION_START_PENDING" class="member-name-link">SESSION_START_PENDING</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#SESSION_STOP_PENDING" class="member-name-link">SESSION_STOP_PENDING</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html#SESSION_STOP_PENDING" class="member-name-link">SESSION_STOP_PENDING</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.SessionState</a></dt>
 <dd>&nbsp;</dd>
@@ -16172,6 +16466,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_AUTO_OFF_ALERT" class="member-name-link">SET_AUTO_OFF_ALERT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_BG_REMINDER" class="member-name-link">SET_BG_REMINDER</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_CONFIGURABLE_FEATURE" class="member-name-link">SET_CONFIGURABLE_FEATURE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_DEXCOM_G7_PAIRING_CODE" class="member-name-link">SET_DEXCOM_G7_PAIRING_CODE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
@@ -16196,6 +16492,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_PUMP_SOUNDS" class="member-name-link">SET_PUMP_SOUNDS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_QUICK_BOLUS_SETTINGS" class="member-name-link">SET_QUICK_BOLUS_SETTINGS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_RUNTIME_CONFIG" class="member-name-link">SET_RUNTIME_CONFIG</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#SET_SENSOR_TYPE" class="member-name-link">SET_SENSOR_TYPE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
 <dd>&nbsp;</dd>
@@ -16309,6 +16607,22 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetBgReminderResponse.html#%3Cinit%3E(int)" class="member-name-link">SetBgReminderResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetBgReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetBgReminderResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html#setCarbsValueGrams(java.lang.Integer)" class="member-name-link">setCarbsValueGrams(Integer)</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalculatorBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalculatorBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Enables or disables a pump configurable feature, addressed by group and feature index.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#%3Cinit%3E()" class="member-name-link">SetConfigurableFeatureRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html#%3Cinit%3E(int,int,boolean)" class="member-name-link">SetConfigurableFeatureRequest(int, int, boolean)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetConfigurableFeatureRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response to a <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetConfigurableFeatureRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetConfigurableFeatureRequest</code></a>.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#%3Cinit%3E()" class="member-name-link">SetConfigurableFeatureResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html#%3Cinit%3E(int,int)" class="member-name-link">SetConfigurableFeatureResponse(int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetConfigurableFeatureResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetConfigurableFeatureResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetDexcomG7PairingCodeRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetDexcomG7PairingCodeRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
@@ -16801,6 +17115,22 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetQuickBolusSettingsResponse(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetQuickBolusSettingsResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
+<dd>
+<div class="block">Sets a pump runtime configuration value.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#%3Cinit%3E()" class="member-name-link">SetRuntimeConfigRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#%3Cinit%3E(int,int)" class="member-name-link">SetRuntimeConfigRequest(int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.control</a></dt>
+<dd>
+<div class="block">Response to a <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetRuntimeConfigRequest</code></a>.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html#%3Cinit%3E()" class="member-name-link">SetRuntimeConfigResponse()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html#%3Cinit%3E(int)" class="member-name-link">SetRuntimeConfigResponse(int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.control.<a href="com/jwoglom/pumpx2/pump/messages/response/control/SetRuntimeConfigResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control">SetRuntimeConfigResponse</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetSensorTypeRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetSensorTypeRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
 <div class="block">Sets the CGM sensor type on the pump (SetCGMSensorType).</div>
@@ -17099,7 +17429,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.ApControlStateIcon.html#STATE_GRAY_RED_BIQ_CIQ_BASAL_SUSPENDED" class="member-name-link">STATE_GRAY_RED_BIQ_CIQ_BASAL_SUSPENDED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/HomeScreenMirrorResponse.ApControlStateIcon.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">HomeScreenMirrorResponse.ApControlStateIcon</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#STATUS_START_PENDING" class="member-name-link">STATUS_START_PENDING</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html#STATUS_START_PENDING" class="member-name-link">STATUS_START_PENDING</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.SessionState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#STATUS_STOPPED" class="member-name-link">STATUS_STOPPED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html#STATUS_STOPPED" class="member-name-link">STATUS_STOPPED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.SessionState</a></dt>
 <dd>&nbsp;</dd>
@@ -18021,6 +18355,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.BasalIQStatusState.html#Unavailable" class="member-name-link">Unavailable</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.BasalIQStatusState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse.BasalIQStatusState</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#UNAVAILABLE" class="member-name-link">UNAVAILABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html#UNAVAILABLE" class="member-name-link">UNAVAILABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html#UNAVAILABLE" class="member-name-link">UNAVAILABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.TransmitterBatteryStatus</a></dt>
@@ -18074,6 +18410,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ActiveAamBitsResponse.AamType.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ActiveAamBitsResponse.AamType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ActiveAamBitsResponse.AamType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></dt>
 <dd>&nbsp;</dd>
@@ -18419,6 +18761,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMAlertStatusResponse.CGMAlert</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
@@ -18899,6 +19253,21 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMAlertStatusResponse.CGMAlert</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.CgmSensorType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.SessionState</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMStatusCResponse.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMStatusCResponse.TransmitterBatteryStatus</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
