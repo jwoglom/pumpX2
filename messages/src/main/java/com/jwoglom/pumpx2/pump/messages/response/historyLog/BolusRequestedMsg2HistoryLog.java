@@ -120,15 +120,23 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
     /**
      * How the bolus was requested.
      *
-     * <p><b>Value names ported from the tconnectsync Python implementation and not verified
-     * here.</b> No record committed to this repository exercises them. Confirm against a capture
-     * before relying on these labels.
+     * <p><b>Value names ported from the tconnectsync Python implementation.</b> Only
+     * {@link #BLE_STANDARD} (4) has been confirmed on the wire so far (see
+     * <a href="https://github.com/jwoglom/pumpX2/issues/51">issue 51</a>): in a capture of
+     * 156 boluses initiated over BLE by a remote app ({@code InitiateBolusRequest}; the paired
+     * {@link BolusDeliveryHistoryLog} reported {@code bolusSource = 8}), 156/156
+     * LID_BOLUS_REQUESTED_MSG2 records carried {@code options = 4} together with
+     * {@code standardPercent = 100}, {@code duration = 0}, {@code userOverride = true} and
+     * {@code isf = targetBG = 0}. The remaining values are still tconnectsync-sourced and
+     * unverified: no record committed to this repository exercises them, so confirm against a
+     * capture before relying on those labels.
      */
     public enum BolusOption {
         STANDARD(0),
         EXTENDED(1),
         QUICK(2),
         AUTOMATIC(3),
+        /** Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture. */
         BLE_STANDARD(4),
         BLE_EXTENDED(5),
         EATING_SOON_AUTOMATIC(6),
