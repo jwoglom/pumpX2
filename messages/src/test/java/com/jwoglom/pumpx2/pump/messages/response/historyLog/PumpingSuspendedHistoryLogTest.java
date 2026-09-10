@@ -92,6 +92,52 @@ public class PumpingSuspendedHistoryLogTest {
         assertHexEquals(expected.getCargo(), withoutSourceNibble(parsedRes.getCargo()));
     }
 
+    // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+    // InsulinStatusResponse.currentInsulinAmount polled within two seconds of each record returned
+    // the same insulinAmount (150 and 8), and the suspension that followed the first record ran
+    // past 15 minutes and raised RESUME_PUMP_ALARM / RESUME_PUMP_ALARM2 at 15 min 1 s.
+    @Test
+    public void testPumpingSuspendedHistoryLogMobiReservoir150() throws DecoderException {
+        PumpingSuspendedHistoryLog expected = (PumpingSuspendedHistoryLog) new PumpingSuspendedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout
+                589553316L, 641936L, 106, 150, 0, 15
+        ).withHeaderHighNibble(1);
+
+        PumpingSuspendedHistoryLog parsedRes = (PumpingSuspendedHistoryLog) HistoryLogMessageTester.testSingle(
+                "0b10a4de232390cb09006a0000009600000f0000000000000000",
+                expected
+        );
+        assertEquals(589553316L, parsedRes.getPumpTimeSec());
+        assertEquals(641936L, parsedRes.getSequenceNum());
+        assertEquals(106L, parsedRes.getPreSuspendState());
+        assertEquals(150, parsedRes.getInsulinAmount());
+        assertEquals(0, parsedRes.getReasonId());
+        assertEquals(PumpingSuspendedHistoryLog.SuspendReason.USER_ABORTED, parsedRes.getReason());
+        assertEquals(15, parsedRes.getRpaTimeout());
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    @Test
+    public void testPumpingSuspendedHistoryLogMobiReservoir8() throws DecoderException {
+        PumpingSuspendedHistoryLog expected = (PumpingSuspendedHistoryLog) new PumpingSuspendedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout
+                589745484L, 651659L, 106, 8, 0, 15
+        ).withHeaderHighNibble(1);
+
+        PumpingSuspendedHistoryLog parsedRes = (PumpingSuspendedHistoryLog) HistoryLogMessageTester.testSingle(
+                "0b104ccd26238bf109006a0000000800000f0000000000000000",
+                expected
+        );
+        assertEquals(589745484L, parsedRes.getPumpTimeSec());
+        assertEquals(651659L, parsedRes.getSequenceNum());
+        assertEquals(106L, parsedRes.getPreSuspendState());
+        assertEquals(8, parsedRes.getInsulinAmount());
+        assertEquals(0, parsedRes.getReasonId());
+        assertEquals(PumpingSuspendedHistoryLog.SuspendReason.USER_ABORTED, parsedRes.getReason());
+        assertEquals(15, parsedRes.getRpaTimeout());
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
     /**
      * The upper nibble of the second typeId byte identifies the source of the log entry and is
      * not part of the typeId itself (parseBase masks it off with & 4095). buildCargo() has no
