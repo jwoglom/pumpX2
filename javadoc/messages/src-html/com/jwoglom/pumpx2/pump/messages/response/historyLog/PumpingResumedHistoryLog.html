@@ -78,30 +78,36 @@
 <span class="source-line-no">061</span><span id="line-61"></span>
 <span class="source-line-no">062</span><span id="line-62">    /**</span>
 <span class="source-line-no">063</span><span id="line-63">     * @return the state of the pump immediately before pumping was resumed</span>
-<span class="source-line-no">064</span><span id="line-64">     * (Tandem's pump-logs JSON calls this property preResumeState)</span>
-<span class="source-line-no">065</span><span id="line-65">     */</span>
-<span class="source-line-no">066</span><span id="line-66">    public long getPreResumeState() {</span>
-<span class="source-line-no">067</span><span id="line-67">        return preResumeState;</span>
-<span class="source-line-no">068</span><span id="line-68">    }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">    /**</span>
-<span class="source-line-no">071</span><span id="line-71">     * @return an insulin reservoir quantity, in whole units, at the time pumping was resumed.</span>
-<span class="source-line-no">072</span><span id="line-72">     * This is NOT the IOB: the value is byte-identical in the paired suspended and resumed</span>
-<span class="source-line-no">073</span><span id="line-73">     * records which bracket a suspension, while the IOB the pump reports in LID_DAILY_BASAL</span>
-<span class="source-line-no">074</span><span id="line-74">     * over the same window decays.</span>
-<span class="source-line-no">075</span><span id="line-75">     *</span>
-<span class="source-line-no">076</span><span id="line-76">     * TODO: determine whether this is the insulin remaining in the reservoir or the current</span>
-<span class="source-line-no">077</span><span id="line-77">     * cartridge fill level. Observed captures support both readings and the question is</span>
-<span class="source-line-no">078</span><span id="line-78">     * unresolved: one suspend/resume pair drops 120 -&gt; 105 across a 15 minute suspension</span>
-<span class="source-line-no">079</span><span id="line-79">     * (consistent with remaining volume being consumed by a tubing prime), while another</span>
-<span class="source-line-no">080</span><span id="line-80">     * capture reads 180 at a suspend roughly ten hours after a 180 unit cartridge fill</span>
-<span class="source-line-no">081</span><span id="line-81">     * (which remaining volume should have decremented by then).</span>
-<span class="source-line-no">082</span><span id="line-82">     */</span>
-<span class="source-line-no">083</span><span id="line-83">    public int getInsulinAmount() {</span>
-<span class="source-line-no">084</span><span id="line-84">        return insulinAmount;</span>
-<span class="source-line-no">085</span><span id="line-85">    }</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">}</span>
+<span class="source-line-no">064</span><span id="line-64">     * (Tandem's pump-logs JSON calls this property preResumeState).</span>
+<span class="source-line-no">065</span><span id="line-65">     * Observed as 100 in every record captured so far, across both t:slim X2 and Mobi;</span>
+<span class="source-line-no">066</span><span id="line-66">     * no other value has been seen.</span>
+<span class="source-line-no">067</span><span id="line-67">     */</span>
+<span class="source-line-no">068</span><span id="line-68">    public long getPreResumeState() {</span>
+<span class="source-line-no">069</span><span id="line-69">        return preResumeState;</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">    /**</span>
+<span class="source-line-no">073</span><span id="line-73">     * @return the insulin remaining in the reservoir, in whole units, as the pump reports it at</span>
+<span class="source-line-no">074</span><span id="line-74">     * the instant pumping was resumed. This is the same figure as</span>
+<span class="source-line-no">075</span><span id="line-75">     * {@code InsulinStatusResponse.currentInsulinAmount}: in a Mobi capture the value was</span>
+<span class="source-line-no">076</span><span id="line-76">     * byte-identical to that response polled within two seconds in 4 of 4 resumes (and in 4 of 4</span>
+<span class="source-line-no">077</span><span id="line-77">     * suspends for the paired {@link PumpingSuspendedHistoryLog}).</span>
+<span class="source-line-no">078</span><span id="line-78">     *</span>
+<span class="source-line-no">079</span><span id="line-79">     * It is the remaining amount, not the cartridge fill level: after a tubing fill on the same</span>
+<span class="source-line-no">080</span><span id="line-80">     * cartridge the resume read 90 where the paired suspend had read 110 (the prime consumed</span>
+<span class="source-line-no">081</span><span id="line-81">     * insulin), and after a cartridge change the resume read 185 (equal to</span>
+<span class="source-line-no">082</span><span id="line-82">     * {@code CartridgeFilledHistoryLog.insulinDisplay} logged in the same second) where the</span>
+<span class="source-line-no">083</span><span id="line-83">     * paired suspend had read 8.</span>
+<span class="source-line-no">084</span><span id="line-84">     *</span>
+<span class="source-line-no">085</span><span id="line-85">     * It is also NOT the IOB: across a suspension with no fill the value is identical in the</span>
+<span class="source-line-no">086</span><span id="line-86">     * paired suspended and resumed records, while the IOB the pump reports in LID_DAILY_BASAL</span>
+<span class="source-line-no">087</span><span id="line-87">     * over the same window decays.</span>
+<span class="source-line-no">088</span><span id="line-88">     */</span>
+<span class="source-line-no">089</span><span id="line-89">    public int getInsulinAmount() {</span>
+<span class="source-line-no">090</span><span id="line-90">        return insulinAmount;</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">}</span>
 
 
 
