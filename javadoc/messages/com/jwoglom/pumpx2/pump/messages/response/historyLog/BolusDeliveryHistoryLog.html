@@ -132,7 +132,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;bolusDeliveryStatusId,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;&nbsp;bolusTypes,
  <a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a>&nbsp;bolusSource,
- int&nbsp;reserved,
+ int&nbsp;remoteId,
  int&nbsp;requestedNow,
  int&nbsp;requestedLater,
  int&nbsp;correction,
@@ -147,7 +147,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -160,7 +160,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;bolusDeliveryStatus,
  int&nbsp;bolusType,
  int&nbsp;bolusSource,
- int&nbsp;reserved,
+ int&nbsp;remoteId,
  int&nbsp;requestedNow,
  int&nbsp;requestedLater,
  int&nbsp;correction,
@@ -183,7 +183,7 @@ loadScripts(document, 'script');</script>
  10<code>(byte) bolusDeliveryStatus</code>
  11<code>(byte) bolusType</code>
  12<code>(byte) bolusSource</code>
- 13<code>(byte) reserved</code>
+ 13<code>(byte) remoteId</code>
  14<code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code>
  15<code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code>
  16<code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code>
@@ -224,24 +224,33 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExtendedDurationRequested()" class="member-name-link">getExtendedDurationRequested</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRequestedLater()" class="member-name-link">getRequestedLater</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRemoteId()" class="member-name-link">getRemoteId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Byte 15, named <code>remoteId</code> in Tandem's data export.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRequestedNow()" class="member-name-link">getRequestedNow</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRequestedLater()" class="member-name-link">getRequestedLater</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReserved()" class="member-name-link">getReserved</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRequestedNow()" class="member-name-link">getRequestedNow</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getReserved()" class="member-name-link">getReserved</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">byte 15 is not reserved; use <a href="#getRemoteId()"><code>getRemoteId()</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for BolusDeliveryHistoryLog:
  <code>bolusID</code><code>Bytes.readShort(raw, 10)</code>
  <code>bolusDeliveryStatusId</code><code>raw[12]</code>
  <code>bolusTypeBitmask</code><code>raw[13]</code>
  <code>bolusSource</code><code>raw[14]</code>
- <code>reserved</code><code>raw[15]</code>
+ <code>remoteId</code><code>raw[15] &amp; 0xFF</code>
  <code>requestedNow</code><code>Bytes.readShort(raw, 16)</code>
  <code>requestedLater</code><code>Bytes.readShort(raw, 18)</code>
  <code>correction</code><code>Bytes.readShort(raw, 20)</code>
@@ -249,9 +258,9 @@ loadScripts(document, 'script');</script>
  <code>deliveredTotal</code><code>Bytes.readShort(raw, 24)</code>
  </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -287,7 +296,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;bolusDeliveryStatusId,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;&nbsp;bolusTypes,
  <a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a>&nbsp;bolusSource,
- int&nbsp;reserved,
+ int&nbsp;remoteId,
  int&nbsp;requestedNow,
  int&nbsp;requestedLater,
  int&nbsp;correction,
@@ -323,7 +332,7 @@ loadScripts(document, 'script');</script>
  <tr><td><code>bolusDeliveryStatusId</code></td><td><code>raw[12]</code></td></tr>
  <tr><td><code>bolusTypeBitmask</code></td><td><code>raw[13]</code></td></tr>
  <tr><td><code>bolusSource</code></td><td><code>raw[14]</code></td></tr>
- <tr><td><code>reserved</code></td><td><code>raw[15]</code></td></tr>
+ <tr><td><code>remoteId</code></td><td><code>raw[15] &amp; 0xFF</code></td></tr>
  <tr><td><code>requestedNow</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
  <tr><td><code>requestedLater</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
  <tr><td><code>correction</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
@@ -345,7 +354,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;bolusDeliveryStatus,
  int&nbsp;bolusType,
  int&nbsp;bolusSource,
- int&nbsp;reserved,
+ int&nbsp;remoteId,
  int&nbsp;requestedNow,
  int&nbsp;requestedLater,
  int&nbsp;correction,
@@ -367,7 +376,7 @@ loadScripts(document, 'script');</script>
  <tr><td>10</td><td><code>(byte) bolusDeliveryStatus</code></td></tr>
  <tr><td>11</td><td><code>(byte) bolusType</code></td></tr>
  <tr><td>12</td><td><code>(byte) bolusSource</code></td></tr>
- <tr><td>13</td><td><code>(byte) reserved</code></td></tr>
+ <tr><td>13</td><td><code>(byte) remoteId</code></td></tr>
  <tr><td>14</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code></td></tr>
  <tr><td>15</td><td><code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code></td></tr>
  <tr><td>16</td><td><code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code></td></tr>
@@ -406,51 +415,65 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getRemoteId()">
+<h3>getRemoteId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-149">getRemoteId</a></span>()</div>
+<div class="block">Byte 15, named <code>remoteId</code> in Tandem's data export. In every record observed so far it
+ equals <code>bolusId &amp; 0xFF</code> (312/312 records in a Mobi capture and all earlier t:slim X2
+ fixtures), i.e. the low byte of the bolus ID echoed back. Previously exposed as
+ <a href="#getReserved()"><code>getReserved()</code></a>; see https://github.com/jwoglom/pumpx2/issues/78.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getReserved()">
 <h3>getReserved</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-143">getReserved</a></span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-155">getReserved</a></span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">byte 15 is not reserved; use <a href="#getRemoteId()"><code>getRemoteId()</code></a>.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRequestedNow()">
 <h3>getRequestedNow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-146">getRequestedNow</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-159">getRequestedNow</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRequestedLater()">
 <h3>getRequestedLater</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-149">getRequestedLater</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-162">getRequestedLater</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCorrection()">
 <h3>getCorrection</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-152">getCorrection</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-165">getCorrection</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedDurationRequested()">
 <h3>getExtendedDurationRequested</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-155">getExtendedDurationRequested</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-168">getExtendedDurationRequested</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDeliveredTotal()">
 <h3>getDeliveredTotal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-158">getDeliveredTotal</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-171">getDeliveredTotal</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusSource()">
 <h3>getBolusSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-162">getBolusSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-175">getBolusSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusTypes()">
 <h3>getBolusTypes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-188">getBolusTypes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#line-201">getBolusTypes</a></span>()</div>
 </section>
 </li>
 </ul>

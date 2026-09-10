@@ -3563,7 +3563,7 @@ loadScripts(document, 'script');</script>
  10<code>(byte) bolusDeliveryStatus</code>
  11<code>(byte) bolusType</code>
  12<code>(byte) bolusSource</code>
- 13<code>(byte) reserved</code>
+ 13<code>(byte) remoteId</code>
  14<code>firstTwoBytesLittleEndian(requestedNow) [byte 0]</code>
  15<code>firstTwoBytesLittleEndian(requestedNow) [byte 1]</code>
  16<code>firstTwoBytesLittleEndian(requestedLater) [byte 0]</code>
@@ -9525,6 +9525,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeGlobalSettingsHistoryLog.html#getReminderVolume()" class="member-name-link">getReminderVolume()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangeGlobalSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeGlobalSettingsHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#getRemoteId()" class="member-name-link">getRemoteId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog</a></dt>
+<dd>
+<div class="block">Byte 15, named <code>remoteId</code> in Tandem's data export.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#getRepeatDuration()" class="member-name-link">getRepeatDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmFraSettingsHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmHgaSettingsHistoryLog.html#getRepeatDuration()" class="member-name-link">getRepeatDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmHgaSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmHgaSettingsHistoryLog</a></dt>
@@ -9574,7 +9578,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake4KeyConfirmationResponse.html#getReserved()" class="member-name-link">getReserved()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.authentication.<a href="com/jwoglom/pumpx2/pump/messages/response/authentication/Jpake4KeyConfirmationResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.authentication">Jpake4KeyConfirmationResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#getReserved()" class="member-name-link">getReserved()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">byte 15 is not reserved; use <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.html#getRemoteId()"><code>BolusDeliveryHistoryLog.getRemoteId()</code></a>.</div>
+</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/SecretMenuResponse.html#getReservedValue()" class="member-name-link">getReservedValue()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/SecretMenuResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">SecretMenuResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Message.html#getResponseClass()" class="member-name-link">getResponseClass()</a> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></dt>
@@ -14441,7 +14449,7 @@ loadScripts(document, 'script');</script>
  <code>bolusDeliveryStatusId</code><code>raw[12]</code>
  <code>bolusTypeBitmask</code><code>raw[13]</code>
  <code>bolusSource</code><code>raw[14]</code>
- <code>reserved</code><code>raw[15]</code>
+ <code>remoteId</code><code>raw[15] &amp; 0xFF</code>
  <code>requestedNow</code><code>Bytes.readShort(raw, 16)</code>
  <code>requestedLater</code><code>Bytes.readShort(raw, 18)</code>
  <code>correction</code><code>Bytes.readShort(raw, 20)</code>
