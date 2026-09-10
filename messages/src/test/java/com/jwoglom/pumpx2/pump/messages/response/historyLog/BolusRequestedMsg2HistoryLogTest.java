@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -57,6 +60,38 @@ public class BolusRequestedMsg2HistoryLogTest {
                 expected
         );
 
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+    // Bolus initiated over BLE via InitiateBolusRequest (bolusSource = 8 in the paired
+    // BolusDeliveryHistoryLog). options = 4 (BLE_STANDARD) was seen in 156/156 such boluses, with
+    // standardPercent 100, duration 0, userOverride true and isf/targetBG 0 (no calculator inputs
+    // are sent over BLE). Header high nibble is 1 on this pump. See jwoglom/pumpX2#51.
+    @Test
+    public void testBolusRequestedMsg2HistoryLog_bleStandard() throws DecoderException {
+        BolusRequestedMsg2HistoryLog expected = new BolusRequestedMsg2HistoryLog(
+                // long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble
+                589526830L, 640747L, 2903, 4, 100, 0, 0, 0, 0, true, false, 0, 0, 1
+        );
+
+        BolusRequestedMsg2HistoryLog parsedRes = (BolusRequestedMsg2HistoryLog) HistoryLogMessageTester.testSingle(
+                "41102e772323ebc60900570b0464000000000000000001000000",
+                expected
+        );
+
+        assertEquals(1, parsedRes.getHeaderHighNibble());
+        assertEquals(2903, parsedRes.getBolusId());
+        assertEquals(4, parsedRes.getOptions());
+        assertEquals(BolusRequestedMsg2HistoryLog.BolusOption.BLE_STANDARD, parsedRes.getBolusOption());
+        assertEquals(100, parsedRes.getStandardPercent());
+        assertEquals(0, parsedRes.getDuration());
+        assertEquals(0, parsedRes.getIsf());
+        assertEquals(0, parsedRes.getTargetBG());
+        assertTrue(parsedRes.getUserOverride());
+        assertFalse(parsedRes.getDeclinedCorrection());
+        assertEquals(0, parsedRes.getSelectedIOB());
+        assertEquals(BolusRequestedMsg2HistoryLog.SelectedIOBType.MUDALIAR_IOB, parsedRes.getSelectedIOBType());
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
 }
