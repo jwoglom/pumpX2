@@ -41,4 +41,30 @@ public class BolusRequestedMsg3HistoryLogTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
+
+    // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+    // Remote (BLE) bolus id 2903 for 0.15 U: bolusId@10 matched the paired BolusActivated / BolusDelivery
+    // records in 156/156 boluses, spare@12 was 0 in 156/156, and foodBolusSize == totalBolusSize (correction 0).
+    // Header high nibble is 1 on this firmware. Floats are built from the exact bit pattern so the
+    // cargo round-trip is byte-exact.
+    @Test
+    public void testBolusRequestedMsg3HistoryLog_mobiRemoteBolus() throws DecoderException {
+        float bolusSize = Float.intBitsToFloat(0x3e19999a); // 0.15 U (bytes 9a99193e)
+        BolusRequestedMsg3HistoryLog expected = (BolusRequestedMsg3HistoryLog) new BolusRequestedMsg3HistoryLog(
+                // long pumpTimeSec, long sequenceNum, int bolusId, int spare, float foodBolusSize, float correctionBolusSize, float totalBolusSize
+                589526830L, 640748L, 2903, 0, bolusSize, 0.0F, bolusSize
+        ).withHeaderHighNibble(1);
+
+        BolusRequestedMsg3HistoryLog parsedRes = (BolusRequestedMsg3HistoryLog) HistoryLogMessageTester.testSingle(
+                "42102e772323ecc60900570b00009a99193e000000009a99193e",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(2903, parsedRes.getBolusId());
+        assertEquals(0, parsedRes.getSpare());
+        assertEquals(0x3e19999a, Float.floatToIntBits(parsedRes.getFoodBolusSize()));
+        assertEquals(0.0F, parsedRes.getCorrectionBolusSize(), 0.0F);
+        assertEquals(parsedRes.getFoodBolusSize(), parsedRes.getTotalBolusSize(), 0.0F);
+    }
 }
