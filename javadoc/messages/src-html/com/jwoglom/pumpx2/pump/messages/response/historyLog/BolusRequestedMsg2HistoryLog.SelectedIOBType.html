@@ -183,139 +183,147 @@
 <span class="source-line-no">166</span><span id="line-166">    /**</span>
 <span class="source-line-no">167</span><span id="line-167">     * How the bolus was requested.</span>
 <span class="source-line-no">168</span><span id="line-168">     *</span>
-<span class="source-line-no">169</span><span id="line-169">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation and not verified</span>
-<span class="source-line-no">170</span><span id="line-170">     * here.&lt;/b&gt; No record committed to this repository exercises them. Confirm against a capture</span>
-<span class="source-line-no">171</span><span id="line-171">     * before relying on these labels.</span>
-<span class="source-line-no">172</span><span id="line-172">     */</span>
-<span class="source-line-no">173</span><span id="line-173">    public enum BolusOption {</span>
-<span class="source-line-no">174</span><span id="line-174">        STANDARD(0),</span>
-<span class="source-line-no">175</span><span id="line-175">        EXTENDED(1),</span>
-<span class="source-line-no">176</span><span id="line-176">        QUICK(2),</span>
-<span class="source-line-no">177</span><span id="line-177">        AUTOMATIC(3),</span>
-<span class="source-line-no">178</span><span id="line-178">        BLE_STANDARD(4),</span>
-<span class="source-line-no">179</span><span id="line-179">        BLE_EXTENDED(5),</span>
-<span class="source-line-no">180</span><span id="line-180">        EATING_SOON_AUTOMATIC(6),</span>
-<span class="source-line-no">181</span><span id="line-181">        LATE_BOLUS(7),</span>
-<span class="source-line-no">182</span><span id="line-182">        ;</span>
-<span class="source-line-no">183</span><span id="line-183"></span>
-<span class="source-line-no">184</span><span id="line-184">        private final int id;</span>
-<span class="source-line-no">185</span><span id="line-185">        BolusOption(int id) {</span>
-<span class="source-line-no">186</span><span id="line-186">            this.id = id;</span>
-<span class="source-line-no">187</span><span id="line-187">        }</span>
-<span class="source-line-no">188</span><span id="line-188"></span>
-<span class="source-line-no">189</span><span id="line-189">        public int id() {</span>
-<span class="source-line-no">190</span><span id="line-190">            return id;</span>
-<span class="source-line-no">191</span><span id="line-191">        }</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">        public static BolusOption fromId(int id) {</span>
-<span class="source-line-no">194</span><span id="line-194">            for (BolusOption o : values()) {</span>
-<span class="source-line-no">195</span><span id="line-195">                if (o.id() == id) {</span>
-<span class="source-line-no">196</span><span id="line-196">                    return o;</span>
-<span class="source-line-no">197</span><span id="line-197">                }</span>
-<span class="source-line-no">198</span><span id="line-198">            }</span>
-<span class="source-line-no">199</span><span id="line-199">            return null;</span>
-<span class="source-line-no">200</span><span id="line-200">        }</span>
-<span class="source-line-no">201</span><span id="line-201">    }</span>
-<span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">    /**</span>
-<span class="source-line-no">204</span><span id="line-204">     * @return 100 if a standard bolus, otherwise the percent of the bolus which is performed up</span>
-<span class="source-line-no">205</span><span id="line-205">     * front in an extended bolus</span>
-<span class="source-line-no">206</span><span id="line-206">     */</span>
-<span class="source-line-no">207</span><span id="line-207">    public int getStandardPercent() {</span>
-<span class="source-line-no">208</span><span id="line-208">        return standardPercent;</span>
+<span class="source-line-no">169</span><span id="line-169">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation.&lt;/b&gt; Only</span>
+<span class="source-line-no">170</span><span id="line-170">     * {@link #BLE_STANDARD} (4) has been confirmed on the wire so far (see</span>
+<span class="source-line-no">171</span><span id="line-171">     * &lt;a href="https://github.com/jwoglom/pumpX2/issues/51"&gt;issue 51&lt;/a&gt;): in a capture of</span>
+<span class="source-line-no">172</span><span id="line-172">     * 156 boluses initiated over BLE by a remote app ({@code InitiateBolusRequest}; the paired</span>
+<span class="source-line-no">173</span><span id="line-173">     * {@link BolusDeliveryHistoryLog} reported {@code bolusSource = 8}), 156/156</span>
+<span class="source-line-no">174</span><span id="line-174">     * LID_BOLUS_REQUESTED_MSG2 records carried {@code options = 4} together with</span>
+<span class="source-line-no">175</span><span id="line-175">     * {@code standardPercent = 100}, {@code duration = 0}, {@code userOverride = true} and</span>
+<span class="source-line-no">176</span><span id="line-176">     * {@code isf = targetBG = 0}. The remaining values are still tconnectsync-sourced and</span>
+<span class="source-line-no">177</span><span id="line-177">     * unverified: no record committed to this repository exercises them, so confirm against a</span>
+<span class="source-line-no">178</span><span id="line-178">     * capture before relying on those labels.</span>
+<span class="source-line-no">179</span><span id="line-179">     */</span>
+<span class="source-line-no">180</span><span id="line-180">    public enum BolusOption {</span>
+<span class="source-line-no">181</span><span id="line-181">        STANDARD(0),</span>
+<span class="source-line-no">182</span><span id="line-182">        EXTENDED(1),</span>
+<span class="source-line-no">183</span><span id="line-183">        QUICK(2),</span>
+<span class="source-line-no">184</span><span id="line-184">        AUTOMATIC(3),</span>
+<span class="source-line-no">185</span><span id="line-185">        /** Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture. */</span>
+<span class="source-line-no">186</span><span id="line-186">        BLE_STANDARD(4),</span>
+<span class="source-line-no">187</span><span id="line-187">        BLE_EXTENDED(5),</span>
+<span class="source-line-no">188</span><span id="line-188">        EATING_SOON_AUTOMATIC(6),</span>
+<span class="source-line-no">189</span><span id="line-189">        LATE_BOLUS(7),</span>
+<span class="source-line-no">190</span><span id="line-190">        ;</span>
+<span class="source-line-no">191</span><span id="line-191"></span>
+<span class="source-line-no">192</span><span id="line-192">        private final int id;</span>
+<span class="source-line-no">193</span><span id="line-193">        BolusOption(int id) {</span>
+<span class="source-line-no">194</span><span id="line-194">            this.id = id;</span>
+<span class="source-line-no">195</span><span id="line-195">        }</span>
+<span class="source-line-no">196</span><span id="line-196"></span>
+<span class="source-line-no">197</span><span id="line-197">        public int id() {</span>
+<span class="source-line-no">198</span><span id="line-198">            return id;</span>
+<span class="source-line-no">199</span><span id="line-199">        }</span>
+<span class="source-line-no">200</span><span id="line-200"></span>
+<span class="source-line-no">201</span><span id="line-201">        public static BolusOption fromId(int id) {</span>
+<span class="source-line-no">202</span><span id="line-202">            for (BolusOption o : values()) {</span>
+<span class="source-line-no">203</span><span id="line-203">                if (o.id() == id) {</span>
+<span class="source-line-no">204</span><span id="line-204">                    return o;</span>
+<span class="source-line-no">205</span><span id="line-205">                }</span>
+<span class="source-line-no">206</span><span id="line-206">            }</span>
+<span class="source-line-no">207</span><span id="line-207">            return null;</span>
+<span class="source-line-no">208</span><span id="line-208">        }</span>
 <span class="source-line-no">209</span><span id="line-209">    }</span>
 <span class="source-line-no">210</span><span id="line-210"></span>
 <span class="source-line-no">211</span><span id="line-211">    /**</span>
-<span class="source-line-no">212</span><span id="line-212">     * @return 0 if a standard bolus, otherwise the duration between the standard and extended bolus</span>
-<span class="source-line-no">213</span><span id="line-213">     */</span>
-<span class="source-line-no">214</span><span id="line-214">    public int getDuration() {</span>
-<span class="source-line-no">215</span><span id="line-215">        return duration;</span>
-<span class="source-line-no">216</span><span id="line-216">    }</span>
-<span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">    public int getSpare1() {</span>
-<span class="source-line-no">219</span><span id="line-219">        return spare1;</span>
-<span class="source-line-no">220</span><span id="line-220">    }</span>
-<span class="source-line-no">221</span><span id="line-221"></span>
-<span class="source-line-no">222</span><span id="line-222">    /**</span>
-<span class="source-line-no">223</span><span id="line-223">     * @return insulin sensitivity factor in the insulin delivery profile</span>
-<span class="source-line-no">224</span><span id="line-224">     */</span>
-<span class="source-line-no">225</span><span id="line-225">    public int getIsf() {</span>
-<span class="source-line-no">226</span><span id="line-226">        return isf;</span>
-<span class="source-line-no">227</span><span id="line-227">    }</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">    /**</span>
-<span class="source-line-no">230</span><span id="line-230">     * @return target BG in mg/dL in the insulin delivery profile</span>
-<span class="source-line-no">231</span><span id="line-231">     */</span>
-<span class="source-line-no">232</span><span id="line-232">    public int getTargetBG() {</span>
-<span class="source-line-no">233</span><span id="line-233">        return targetBG;</span>
-<span class="source-line-no">234</span><span id="line-234">    }</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">    /**</span>
-<span class="source-line-no">237</span><span id="line-237">     * @return true if the user overrode the insulin delivery amount (i.e., not calculated just</span>
-<span class="source-line-no">238</span><span id="line-238">     * from the combination of carbs + BG correction)</span>
+<span class="source-line-no">212</span><span id="line-212">     * @return 100 if a standard bolus, otherwise the percent of the bolus which is performed up</span>
+<span class="source-line-no">213</span><span id="line-213">     * front in an extended bolus</span>
+<span class="source-line-no">214</span><span id="line-214">     */</span>
+<span class="source-line-no">215</span><span id="line-215">    public int getStandardPercent() {</span>
+<span class="source-line-no">216</span><span id="line-216">        return standardPercent;</span>
+<span class="source-line-no">217</span><span id="line-217">    }</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">    /**</span>
+<span class="source-line-no">220</span><span id="line-220">     * @return 0 if a standard bolus, otherwise the duration between the standard and extended bolus</span>
+<span class="source-line-no">221</span><span id="line-221">     */</span>
+<span class="source-line-no">222</span><span id="line-222">    public int getDuration() {</span>
+<span class="source-line-no">223</span><span id="line-223">        return duration;</span>
+<span class="source-line-no">224</span><span id="line-224">    }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">    public int getSpare1() {</span>
+<span class="source-line-no">227</span><span id="line-227">        return spare1;</span>
+<span class="source-line-no">228</span><span id="line-228">    }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">    /**</span>
+<span class="source-line-no">231</span><span id="line-231">     * @return insulin sensitivity factor in the insulin delivery profile</span>
+<span class="source-line-no">232</span><span id="line-232">     */</span>
+<span class="source-line-no">233</span><span id="line-233">    public int getIsf() {</span>
+<span class="source-line-no">234</span><span id="line-234">        return isf;</span>
+<span class="source-line-no">235</span><span id="line-235">    }</span>
+<span class="source-line-no">236</span><span id="line-236"></span>
+<span class="source-line-no">237</span><span id="line-237">    /**</span>
+<span class="source-line-no">238</span><span id="line-238">     * @return target BG in mg/dL in the insulin delivery profile</span>
 <span class="source-line-no">239</span><span id="line-239">     */</span>
-<span class="source-line-no">240</span><span id="line-240">    public boolean getUserOverride() {</span>
-<span class="source-line-no">241</span><span id="line-241">        return userOverride;</span>
+<span class="source-line-no">240</span><span id="line-240">    public int getTargetBG() {</span>
+<span class="source-line-no">241</span><span id="line-241">        return targetBG;</span>
 <span class="source-line-no">242</span><span id="line-242">    }</span>
 <span class="source-line-no">243</span><span id="line-243"></span>
 <span class="source-line-no">244</span><span id="line-244">    /**</span>
-<span class="source-line-no">245</span><span id="line-245">     * @return true if the correction amount due to the current BG+IOB was declined</span>
-<span class="source-line-no">246</span><span id="line-246">     */</span>
-<span class="source-line-no">247</span><span id="line-247">    public boolean getDeclinedCorrection() {</span>
-<span class="source-line-no">248</span><span id="line-248">        return declinedCorrection;</span>
-<span class="source-line-no">249</span><span id="line-249">    }</span>
-<span class="source-line-no">250</span><span id="line-250"></span>
-<span class="source-line-no">251</span><span id="line-251">    /**</span>
-<span class="source-line-no">252</span><span id="line-252">     * @return the raw value identifying which IOB algorithm the bolus calculator used,</span>
-<span class="source-line-no">253</span><span id="line-253">     * see {@link #getSelectedIOBType()}</span>
+<span class="source-line-no">245</span><span id="line-245">     * @return true if the user overrode the insulin delivery amount (i.e., not calculated just</span>
+<span class="source-line-no">246</span><span id="line-246">     * from the combination of carbs + BG correction)</span>
+<span class="source-line-no">247</span><span id="line-247">     */</span>
+<span class="source-line-no">248</span><span id="line-248">    public boolean getUserOverride() {</span>
+<span class="source-line-no">249</span><span id="line-249">        return userOverride;</span>
+<span class="source-line-no">250</span><span id="line-250">    }</span>
+<span class="source-line-no">251</span><span id="line-251"></span>
+<span class="source-line-no">252</span><span id="line-252">    /**</span>
+<span class="source-line-no">253</span><span id="line-253">     * @return true if the correction amount due to the current BG+IOB was declined</span>
 <span class="source-line-no">254</span><span id="line-254">     */</span>
-<span class="source-line-no">255</span><span id="line-255">    public int getSelectedIOB() {</span>
-<span class="source-line-no">256</span><span id="line-256">        return selectedIOB;</span>
+<span class="source-line-no">255</span><span id="line-255">    public boolean getDeclinedCorrection() {</span>
+<span class="source-line-no">256</span><span id="line-256">        return declinedCorrection;</span>
 <span class="source-line-no">257</span><span id="line-257">    }</span>
 <span class="source-line-no">258</span><span id="line-258"></span>
 <span class="source-line-no">259</span><span id="line-259">    /**</span>
-<span class="source-line-no">260</span><span id="line-260">     * @return the IOB algorithm the bolus calculator used, or null if the raw value is not</span>
-<span class="source-line-no">261</span><span id="line-261">     * recognized</span>
+<span class="source-line-no">260</span><span id="line-260">     * @return the raw value identifying which IOB algorithm the bolus calculator used,</span>
+<span class="source-line-no">261</span><span id="line-261">     * see {@link #getSelectedIOBType()}</span>
 <span class="source-line-no">262</span><span id="line-262">     */</span>
-<span class="source-line-no">263</span><span id="line-263">    public SelectedIOBType getSelectedIOBType() {</span>
-<span class="source-line-no">264</span><span id="line-264">        return SelectedIOBType.fromId(selectedIOB);</span>
+<span class="source-line-no">263</span><span id="line-263">    public int getSelectedIOB() {</span>
+<span class="source-line-no">264</span><span id="line-264">        return selectedIOB;</span>
 <span class="source-line-no">265</span><span id="line-265">    }</span>
 <span class="source-line-no">266</span><span id="line-266"></span>
 <span class="source-line-no">267</span><span id="line-267">    /**</span>
-<span class="source-line-no">268</span><span id="line-268">     * The IOB algorithm used when calculating the bolus.</span>
-<span class="source-line-no">269</span><span id="line-269">     *</span>
-<span class="source-line-no">270</span><span id="line-270">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation and not verified</span>
-<span class="source-line-no">271</span><span id="line-271">     * here.&lt;/b&gt; The field previously carried a {@code TODO(unknown)} javadoc; these names replace</span>
-<span class="source-line-no">272</span><span id="line-272">     * that with a secondhand attribution, not with a confirmed one.</span>
-<span class="source-line-no">273</span><span id="line-273">     */</span>
-<span class="source-line-no">274</span><span id="line-274">    public enum SelectedIOBType {</span>
-<span class="source-line-no">275</span><span id="line-275">        MUDALIAR_IOB(0),</span>
-<span class="source-line-no">276</span><span id="line-276">        SWAN_IOB_MEAL(1),</span>
-<span class="source-line-no">277</span><span id="line-277">        ;</span>
-<span class="source-line-no">278</span><span id="line-278"></span>
-<span class="source-line-no">279</span><span id="line-279">        private final int id;</span>
-<span class="source-line-no">280</span><span id="line-280">        SelectedIOBType(int id) {</span>
-<span class="source-line-no">281</span><span id="line-281">            this.id = id;</span>
-<span class="source-line-no">282</span><span id="line-282">        }</span>
-<span class="source-line-no">283</span><span id="line-283"></span>
-<span class="source-line-no">284</span><span id="line-284">        public int id() {</span>
-<span class="source-line-no">285</span><span id="line-285">            return id;</span>
-<span class="source-line-no">286</span><span id="line-286">        }</span>
-<span class="source-line-no">287</span><span id="line-287"></span>
-<span class="source-line-no">288</span><span id="line-288">        public static SelectedIOBType fromId(int id) {</span>
-<span class="source-line-no">289</span><span id="line-289">            for (SelectedIOBType s : values()) {</span>
-<span class="source-line-no">290</span><span id="line-290">                if (s.id() == id) {</span>
-<span class="source-line-no">291</span><span id="line-291">                    return s;</span>
-<span class="source-line-no">292</span><span id="line-292">                }</span>
-<span class="source-line-no">293</span><span id="line-293">            }</span>
-<span class="source-line-no">294</span><span id="line-294">            return null;</span>
-<span class="source-line-no">295</span><span id="line-295">        }</span>
-<span class="source-line-no">296</span><span id="line-296">    }</span>
-<span class="source-line-no">297</span><span id="line-297">    public int getSpare2() {</span>
-<span class="source-line-no">298</span><span id="line-298">        return spare2;</span>
-<span class="source-line-no">299</span><span id="line-299">    }</span>
-<span class="source-line-no">300</span><span id="line-300">    </span>
-<span class="source-line-no">301</span><span id="line-301">}</span>
+<span class="source-line-no">268</span><span id="line-268">     * @return the IOB algorithm the bolus calculator used, or null if the raw value is not</span>
+<span class="source-line-no">269</span><span id="line-269">     * recognized</span>
+<span class="source-line-no">270</span><span id="line-270">     */</span>
+<span class="source-line-no">271</span><span id="line-271">    public SelectedIOBType getSelectedIOBType() {</span>
+<span class="source-line-no">272</span><span id="line-272">        return SelectedIOBType.fromId(selectedIOB);</span>
+<span class="source-line-no">273</span><span id="line-273">    }</span>
+<span class="source-line-no">274</span><span id="line-274"></span>
+<span class="source-line-no">275</span><span id="line-275">    /**</span>
+<span class="source-line-no">276</span><span id="line-276">     * The IOB algorithm used when calculating the bolus.</span>
+<span class="source-line-no">277</span><span id="line-277">     *</span>
+<span class="source-line-no">278</span><span id="line-278">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation and not verified</span>
+<span class="source-line-no">279</span><span id="line-279">     * here.&lt;/b&gt; The field previously carried a {@code TODO(unknown)} javadoc; these names replace</span>
+<span class="source-line-no">280</span><span id="line-280">     * that with a secondhand attribution, not with a confirmed one.</span>
+<span class="source-line-no">281</span><span id="line-281">     */</span>
+<span class="source-line-no">282</span><span id="line-282">    public enum SelectedIOBType {</span>
+<span class="source-line-no">283</span><span id="line-283">        MUDALIAR_IOB(0),</span>
+<span class="source-line-no">284</span><span id="line-284">        SWAN_IOB_MEAL(1),</span>
+<span class="source-line-no">285</span><span id="line-285">        ;</span>
+<span class="source-line-no">286</span><span id="line-286"></span>
+<span class="source-line-no">287</span><span id="line-287">        private final int id;</span>
+<span class="source-line-no">288</span><span id="line-288">        SelectedIOBType(int id) {</span>
+<span class="source-line-no">289</span><span id="line-289">            this.id = id;</span>
+<span class="source-line-no">290</span><span id="line-290">        }</span>
+<span class="source-line-no">291</span><span id="line-291"></span>
+<span class="source-line-no">292</span><span id="line-292">        public int id() {</span>
+<span class="source-line-no">293</span><span id="line-293">            return id;</span>
+<span class="source-line-no">294</span><span id="line-294">        }</span>
+<span class="source-line-no">295</span><span id="line-295"></span>
+<span class="source-line-no">296</span><span id="line-296">        public static SelectedIOBType fromId(int id) {</span>
+<span class="source-line-no">297</span><span id="line-297">            for (SelectedIOBType s : values()) {</span>
+<span class="source-line-no">298</span><span id="line-298">                if (s.id() == id) {</span>
+<span class="source-line-no">299</span><span id="line-299">                    return s;</span>
+<span class="source-line-no">300</span><span id="line-300">                }</span>
+<span class="source-line-no">301</span><span id="line-301">            }</span>
+<span class="source-line-no">302</span><span id="line-302">            return null;</span>
+<span class="source-line-no">303</span><span id="line-303">        }</span>
+<span class="source-line-no">304</span><span id="line-304">    }</span>
+<span class="source-line-no">305</span><span id="line-305">    public int getSpare2() {</span>
+<span class="source-line-no">306</span><span id="line-306">        return spare2;</span>
+<span class="source-line-no">307</span><span id="line-307">    }</span>
+<span class="source-line-no">308</span><span id="line-308">    </span>
+<span class="source-line-no">309</span><span id="line-309">}</span>
 
 
 

@@ -90,13 +90,20 @@ loadScripts(document, 'script');</script>
 <dd><a href="BolusRequestedMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog</a></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#line-173">BolusRequestedMsg2HistoryLog.BolusOption</a></span>
+<div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.html#line-180">BolusRequestedMsg2HistoryLog.BolusOption</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a>&gt;</span></div>
 <div class="block">How the bolus was requested.
 
- <p><b>Value names ported from the tconnectsync Python implementation and not verified
- here.</b> No record committed to this repository exercises them. Confirm against a capture
- before relying on these labels.</div>
+ <p><b>Value names ported from the tconnectsync Python implementation.</b> Only
+ <a href="#BLE_STANDARD"><code>BLE_STANDARD</code></a> (4) has been confirmed on the wire so far (see
+ <a href="https://github.com/jwoglom/pumpX2/issues/51">issue 51</a>): in a capture of
+ 156 boluses initiated over BLE by a remote app (<code>InitiateBolusRequest</code>; the paired
+ <a href="BolusDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BolusDeliveryHistoryLog</code></a> reported <code>bolusSource = 8</code>), 156/156
+ LID_BOLUS_REQUESTED_MSG2 records carried <code>options = 4</code> together with
+ <code>standardPercent = 100</code>, <code>duration = 0</code>, <code>userOverride = true</code> and
+ <code>isf = targetBG = 0</code>. The remaining values are still tconnectsync-sourced and
+ unverified: no record committed to this repository exercises them, so confirm against a
+ capture before relying on those labels.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -122,7 +129,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="#BLE_EXTENDED" class="member-name-link">BLE_EXTENDED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#BLE_STANDARD" class="member-name-link">BLE_STANDARD</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#EATING_SOON_AUTOMATIC" class="member-name-link">EATING_SOON_AUTOMATIC</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="#EXTENDED" class="member-name-link">EXTENDED</a></code></div>
@@ -187,49 +196,50 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="STANDARD">
 <h3>STANDARD</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-174">STANDARD</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-181">STANDARD</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="EXTENDED">
 <h3>EXTENDED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-175">EXTENDED</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-182">EXTENDED</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="QUICK">
 <h3>QUICK</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-176">QUICK</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-183">QUICK</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="AUTOMATIC">
 <h3>AUTOMATIC</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-177">AUTOMATIC</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-184">AUTOMATIC</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="BLE_STANDARD">
 <h3>BLE_STANDARD</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-178">BLE_STANDARD</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-186">BLE_STANDARD</a></span></div>
+<div class="block">Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="BLE_EXTENDED">
 <h3>BLE_EXTENDED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-179">BLE_EXTENDED</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-187">BLE_EXTENDED</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="EATING_SOON_AUTOMATIC">
 <h3>EATING_SOON_AUTOMATIC</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-180">EATING_SOON_AUTOMATIC</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-188">EATING_SOON_AUTOMATIC</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="LATE_BOLUS">
 <h3>LATE_BOLUS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-181">LATE_BOLUS</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-189">LATE_BOLUS</a></span></div>
 </section>
 </li>
 </ul>
@@ -243,7 +253,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="values()">
 <h3>values</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-173">values</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-180">values</a></span>()</div>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 <dl class="notes">
@@ -255,7 +265,7 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="valueOf(java.lang.String)">
 <h3>valueOf</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-173">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-180">valueOf</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Returns the enum constant of this class with the specified name.
 The string must match <i>exactly</i> an identifier used to declare an
 enum constant in this class.  (Extraneous whitespace characters are 
@@ -274,13 +284,13 @@ not permitted.)</div>
 <li>
 <section class="detail" id="id()">
 <h3>id</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-189">id</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-197">id</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="fromId(int)">
 <h3>fromId</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-193">fromId</a></span><wbr><span class="parameters">(int&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.BolusOption.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.BolusOption</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusRequestedMsg2HistoryLog.BolusOption.html#line-201">fromId</a></span><wbr><span class="parameters">(int&nbsp;id)</span></div>
 </section>
 </li>
 </ul>
