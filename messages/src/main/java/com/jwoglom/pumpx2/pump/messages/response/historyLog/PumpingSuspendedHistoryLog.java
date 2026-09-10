@@ -59,24 +59,24 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
 
     /**
      * @return the state of the pump immediately before pumping was suspended
-     * (Tandem's pump-logs JSON calls this property preSuspendState)
+     * (Tandem's pump-logs JSON calls this property preSuspendState).
+     * 106 in every record observed so far across t:slim X2 and Mobi, for both user-initiated
+     * and alarm-triggered suspends; no other value has been seen.
      */
     public long getPreSuspendState() {
         return preSuspendState;
     }
 
     /**
-     * @return an insulin reservoir quantity, in whole units, at the time pumping was suspended.
-     * This is NOT the IOB: the value is byte-identical in the paired suspended and resumed
-     * records which bracket a suspension, while the IOB the pump reports in LID_DAILY_BASAL
-     * over the same window decays.
-     *
-     * TODO: determine whether this is the insulin remaining in the reservoir or the current
-     * cartridge fill level. Observed captures support both readings and the question is
-     * unresolved: one suspend/resume pair drops 120 -> 105 across a 15 minute suspension
-     * (consistent with remaining volume being consumed by a tubing prime), while another
-     * capture reads 180 at a suspend roughly ten hours after a 180 unit cartridge fill
-     * (which remaining volume should have decremented by then).
+     * @return the insulin remaining in the reservoir as the pump reports it at the instant
+     * pumping was suspended, in whole units. This is the same number
+     * {@code InsulinStatusResponse.currentInsulinAmount} returns: on a Mobi capture the two were
+     * byte-identical when the status was polled within two seconds of the record, in 4 of 4
+     * suspends and 4 of 4 resumes. It is not the cartridge fill level (it dropped 110 -> 90
+     * across a tubing fill on the same cartridge) and it is not the IOB (the IOB the pump reports
+     * in LID_DAILY_BASAL decays over a suspension while this value does not). The paired
+     * suspended and resumed records which bracket a suspension carry the same value when nothing
+     * was delivered in between.
      */
     public int getInsulinAmount() {
         return insulinAmount;
@@ -91,6 +91,9 @@ public class PumpingSuspendedHistoryLog extends HistoryLog {
     /**
      * @return the resume pump alert (RPA) timeout in minutes: how long the pump waits while
      * suspended before alerting that insulin delivery is still stopped. 0 when unset.
+     * The value 15 was observed on every suspend in a Mobi capture, and the suspensions that
+     * lasted longer than 15 minutes each raised RESUME_PUMP_ALARM (18) and RESUME_PUMP_ALARM2 (23)
+     * 15 min 1 s after the suspend, confirming the unit is minutes.
      * (Tandem's pump-logs JSON calls this property rpaTimeout)
      */
     public int getRpaTimeout() {
