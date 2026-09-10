@@ -19,7 +19,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     private int bolusDeliveryStatusId;
     private int bolusTypeBitmask;
     private int bolusSource;
-    private int reserved;
+    private int remoteId;
     private int requestedNow;
     private int requestedLater;
     private int correction;
@@ -28,15 +28,15 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     
     public BolusDeliveryHistoryLog() {}
     
-    public BolusDeliveryHistoryLog(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatusId, Set<BolusType> bolusTypes, BolusSource bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusID, bolusDeliveryStatusId, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), reserved, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
+    public BolusDeliveryHistoryLog(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatusId, Set<BolusType> bolusTypes, BolusSource bolusSource, int remoteId, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusID, bolusDeliveryStatusId, BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{})), bolusSource.id(), remoteId, requestedNow, requestedLater, correction, extendedDurationRequested, deliveredTotal);
         this.pumpTimeSec = pumpTimeSec;
         this.sequenceNum = sequenceNum;
         this.bolusID = bolusID;
         this.bolusDeliveryStatusId = bolusDeliveryStatusId;
         this.bolusTypeBitmask = BolusType.toBitmask(bolusTypes.toArray(new BolusType[]{}));
         this.bolusSource = bolusSource.id();
-        this.reserved = reserved;
+        this.remoteId = remoteId;
         this.requestedNow = requestedNow;
         this.requestedLater = requestedLater;
         this.correction = correction;
@@ -57,7 +57,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         this.bolusDeliveryStatusId = raw[12];
         this.bolusTypeBitmask = raw[13];
         this.bolusSource = raw[14];
-        this.reserved = raw[15];
+        this.remoteId = raw[15] & 0xFF;
         this.requestedNow = Bytes.readShort(raw, 16);
         this.requestedLater = Bytes.readShort(raw, 18);
         this.correction = Bytes.readShort(raw, 20);
@@ -66,7 +66,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     }
 
     
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int reserved, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatus, int bolusType, int bolusSource, int remoteId, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal) {
         return Bytes.combine(
             HistoryLog.typeIdBytes(280, 0), // 280 across 2 bytes
             Bytes.toUint32(pumpTimeSec),
@@ -75,7 +75,7 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
             new byte[]{ (byte) bolusDeliveryStatus }, 
             new byte[]{ (byte) bolusType }, 
             new byte[]{ (byte) bolusSource }, 
-            new byte[]{ (byte) reserved },
+            new byte[]{ (byte) remoteId },
             Bytes.firstTwoBytesLittleEndian(requestedNow),
             Bytes.firstTwoBytesLittleEndian(requestedLater), 
             Bytes.firstTwoBytesLittleEndian(correction), 
@@ -95,8 +95,21 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     public int getBolusSourceId() {
         return bolusSource;
     }
+    /**
+     * Byte 15, named {@code remoteId} in Tandem's data export. In every record observed so far it
+     * equals {@code bolusId & 0xFF} (312/312 records in a Mobi capture and all earlier t:slim X2
+     * fixtures), i.e. the low byte of the bolus ID echoed back. Previously exposed as
+     * {@link #getReserved()}; see https://github.com/jwoglom/pumpx2/issues/78.
+     */
+    public int getRemoteId() {
+        return remoteId;
+    }
+    /**
+     * @deprecated byte 15 is not reserved; use {@link #getRemoteId()}.
+     */
+    @Deprecated
     public int getReserved() {
-        return reserved;
+        return getRemoteId();
     }
     public int getRequestedNow() {
         return requestedNow;
