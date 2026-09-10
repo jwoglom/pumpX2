@@ -3,6 +3,9 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAbstractResponse;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -41,5 +44,37 @@ public class BolusCompletedHistoryLogTest {
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
         assertEquals(Instant.parse("2022-02-19T12:07:28Z"), parsedRes.getPumpTimeSecInstant());
+    }
+
+    @Test
+    public void testBolusCompletedHistoryLog_mobiRemoteBolus() throws DecoderException {
+        // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+        // Remote (BLE) bolus id 2903, 0.15u requested and delivered in full. Header high nibble is 1.
+        // In 156/156 records from this capture, completionStatus@10 was 3 (COMPLETE) and bolusId@12
+        // matched the BolusActivated/BolusDelivery records for the same bolus, confirming this layout.
+        BolusCompletedHistoryLog expected = new BolusCompletedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested, int headerHighNibble
+                589526849L, 640762L, 3, 2903,
+                Float.intBitsToFloat(0x3fb21f75), // ~1.3916
+                Float.intBitsToFloat(0x3e19999a), // 0.15
+                Float.intBitsToFloat(0x3e19999a), // 0.15
+                1
+        );
+
+        BolusCompletedHistoryLog parsedRes = (BolusCompletedHistoryLog) HistoryLogMessageTester.testSingle(
+                "141041772323fac609000300570b751fb23f9a99193e9a99193e",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2026-09-06T05:27:29Z"), parsedRes.getPumpTimeSecInstant());
+        assertEquals(3, parsedRes.getCompletionStatusId());
+        assertEquals(LastBolusStatusAbstractResponse.BolusStatus.COMPLETE, parsedRes.getCompletionStatus());
+        assertEquals(2903, parsedRes.getBolusId());
+        assertEquals(Float.intBitsToFloat(0x3fb21f75), parsedRes.getIob(), 0.0F);
+        assertEquals(Float.intBitsToFloat(0x3e19999a), parsedRes.getInsulinRequested(), 0.0F);
+        // delivered == requested bit-for-bit in all 156 observed records
+        assertEquals(parsedRes.getInsulinRequested(), parsedRes.getInsulinDelivered(), 0.0F);
+        assertTrue(Math.abs(parsedRes.getInsulinDelivered() - parsedRes.getInsulinRequested()) <= HistoryLog.INSULIN_FLOAT_EPSILON);
     }
 }
