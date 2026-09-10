@@ -1,6 +1,8 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
@@ -49,5 +51,37 @@ public class BolusRequestedMsg1HistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    /**
+     * Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+     *
+     * Remote (BLE) bolus id 2903, requested without any calculator inputs: bolusTypeId=3
+     * ({@link BolusRequestedMsg1HistoryLog.BolusType#REMOTE}), no correction bolus, carbAmount=0,
+     * bg=0, iob=0.0 and carbRatio=0. Across 156 BLE-initiated boluses in the capture the
+     * bolusTypeId at byte 12 was 3 in 156/156 and the bolusId at bytes 10-11 matched the paired
+     * BolusActivated/BolusDelivery records in 156/156. Header high nibble is 1 on this pump.
+     */
+    @Test
+    public void testBolusRequestedMsg1HistoryLog4_mobiRemoteBolus() throws DecoderException {
+        BolusRequestedMsg1HistoryLog expected = new BolusRequestedMsg1HistoryLog(
+                // long pumpTimeSec, long sequenceNum, int bolusId, int bolusType, boolean correctionBolusIncluded, int carbAmount, int bg, float iob, long carbRatio, int headerHighNibble
+                589526830L, 640746L, 2903, 3, false, 0, 0, 0.0F, 0, 1
+        );
+
+        BolusRequestedMsg1HistoryLog parsedRes = (BolusRequestedMsg1HistoryLog) HistoryLogMessageTester.testSingle(
+                "40102e772323eac60900570b0300000000000000000000000000",
+                expected
+        );
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+
+        assertEquals(2903, parsedRes.getBolusId());
+        assertEquals(3, parsedRes.getBolusTypeId());
+        assertEquals(BolusRequestedMsg1HistoryLog.BolusType.REMOTE, parsedRes.getBolusType());
+        assertFalse(parsedRes.getCorrectionBolusIncluded());
+        assertEquals(0, parsedRes.getCarbAmount());
+        assertEquals(0, parsedRes.getBg());
+        assertEquals(0.0F, parsedRes.getIob(), 0.0F);
+        assertEquals(0L, parsedRes.getCarbRatio());
     }
 }
