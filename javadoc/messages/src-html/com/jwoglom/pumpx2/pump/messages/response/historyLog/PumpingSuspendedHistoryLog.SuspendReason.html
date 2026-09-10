@@ -85,24 +85,24 @@
 <span class="source-line-no">068</span><span id="line-68"></span>
 <span class="source-line-no">069</span><span id="line-69">    /**</span>
 <span class="source-line-no">070</span><span id="line-70">     * @return the state of the pump immediately before pumping was suspended</span>
-<span class="source-line-no">071</span><span id="line-71">     * (Tandem's pump-logs JSON calls this property preSuspendState)</span>
-<span class="source-line-no">072</span><span id="line-72">     */</span>
-<span class="source-line-no">073</span><span id="line-73">    public long getPreSuspendState() {</span>
-<span class="source-line-no">074</span><span id="line-74">        return preSuspendState;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    /**</span>
-<span class="source-line-no">078</span><span id="line-78">     * @return an insulin reservoir quantity, in whole units, at the time pumping was suspended.</span>
-<span class="source-line-no">079</span><span id="line-79">     * This is NOT the IOB: the value is byte-identical in the paired suspended and resumed</span>
-<span class="source-line-no">080</span><span id="line-80">     * records which bracket a suspension, while the IOB the pump reports in LID_DAILY_BASAL</span>
-<span class="source-line-no">081</span><span id="line-81">     * over the same window decays.</span>
-<span class="source-line-no">082</span><span id="line-82">     *</span>
-<span class="source-line-no">083</span><span id="line-83">     * TODO: determine whether this is the insulin remaining in the reservoir or the current</span>
-<span class="source-line-no">084</span><span id="line-84">     * cartridge fill level. Observed captures support both readings and the question is</span>
-<span class="source-line-no">085</span><span id="line-85">     * unresolved: one suspend/resume pair drops 120 -&gt; 105 across a 15 minute suspension</span>
-<span class="source-line-no">086</span><span id="line-86">     * (consistent with remaining volume being consumed by a tubing prime), while another</span>
-<span class="source-line-no">087</span><span id="line-87">     * capture reads 180 at a suspend roughly ten hours after a 180 unit cartridge fill</span>
-<span class="source-line-no">088</span><span id="line-88">     * (which remaining volume should have decremented by then).</span>
+<span class="source-line-no">071</span><span id="line-71">     * (Tandem's pump-logs JSON calls this property preSuspendState).</span>
+<span class="source-line-no">072</span><span id="line-72">     * 106 in every record observed so far across t:slim X2 and Mobi, for both user-initiated</span>
+<span class="source-line-no">073</span><span id="line-73">     * and alarm-triggered suspends; no other value has been seen.</span>
+<span class="source-line-no">074</span><span id="line-74">     */</span>
+<span class="source-line-no">075</span><span id="line-75">    public long getPreSuspendState() {</span>
+<span class="source-line-no">076</span><span id="line-76">        return preSuspendState;</span>
+<span class="source-line-no">077</span><span id="line-77">    }</span>
+<span class="source-line-no">078</span><span id="line-78"></span>
+<span class="source-line-no">079</span><span id="line-79">    /**</span>
+<span class="source-line-no">080</span><span id="line-80">     * @return the insulin remaining in the reservoir as the pump reports it at the instant</span>
+<span class="source-line-no">081</span><span id="line-81">     * pumping was suspended, in whole units. This is the same number</span>
+<span class="source-line-no">082</span><span id="line-82">     * {@code InsulinStatusResponse.currentInsulinAmount} returns: on a Mobi capture the two were</span>
+<span class="source-line-no">083</span><span id="line-83">     * byte-identical when the status was polled within two seconds of the record, in 4 of 4</span>
+<span class="source-line-no">084</span><span id="line-84">     * suspends and 4 of 4 resumes. It is not the cartridge fill level (it dropped 110 -&gt; 90</span>
+<span class="source-line-no">085</span><span id="line-85">     * across a tubing fill on the same cartridge) and it is not the IOB (the IOB the pump reports</span>
+<span class="source-line-no">086</span><span id="line-86">     * in LID_DAILY_BASAL decays over a suspension while this value does not). The paired</span>
+<span class="source-line-no">087</span><span id="line-87">     * suspended and resumed records which bracket a suspension carry the same value when nothing</span>
+<span class="source-line-no">088</span><span id="line-88">     * was delivered in between.</span>
 <span class="source-line-no">089</span><span id="line-89">     */</span>
 <span class="source-line-no">090</span><span id="line-90">    public int getInsulinAmount() {</span>
 <span class="source-line-no">091</span><span id="line-91">        return insulinAmount;</span>
@@ -117,35 +117,38 @@
 <span class="source-line-no">100</span><span id="line-100">    /**</span>
 <span class="source-line-no">101</span><span id="line-101">     * @return the resume pump alert (RPA) timeout in minutes: how long the pump waits while</span>
 <span class="source-line-no">102</span><span id="line-102">     * suspended before alerting that insulin delivery is still stopped. 0 when unset.</span>
-<span class="source-line-no">103</span><span id="line-103">     * (Tandem's pump-logs JSON calls this property rpaTimeout)</span>
-<span class="source-line-no">104</span><span id="line-104">     */</span>
-<span class="source-line-no">105</span><span id="line-105">    public int getRpaTimeout() {</span>
-<span class="source-line-no">106</span><span id="line-106">        return rpaTimeout;</span>
-<span class="source-line-no">107</span><span id="line-107">    }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">    public enum SuspendReason {</span>
-<span class="source-line-no">110</span><span id="line-110">        USER_ABORTED(0),</span>
-<span class="source-line-no">111</span><span id="line-111">        ALARM(1),</span>
-<span class="source-line-no">112</span><span id="line-112">        MALFUNCTION(2),</span>
-<span class="source-line-no">113</span><span id="line-113">        AUTO_SUSPEND_PREDICTIVE_LOW_GLUCOSE(6),</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">        ;</span>
-<span class="source-line-no">116</span><span id="line-116">        private final int id;</span>
-<span class="source-line-no">117</span><span id="line-117">        SuspendReason(int id) {</span>
-<span class="source-line-no">118</span><span id="line-118">            this.id = id;</span>
-<span class="source-line-no">119</span><span id="line-119">        }</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">        static SuspendReason fromId(int id) {</span>
-<span class="source-line-no">122</span><span id="line-122">            for (SuspendReason r : values()) {</span>
-<span class="source-line-no">123</span><span id="line-123">                if (r.id == id) {</span>
-<span class="source-line-no">124</span><span id="line-124">                    return r;</span>
-<span class="source-line-no">125</span><span id="line-125">                }</span>
-<span class="source-line-no">126</span><span id="line-126">            }</span>
-<span class="source-line-no">127</span><span id="line-127">            return null;</span>
-<span class="source-line-no">128</span><span id="line-128">        }</span>
-<span class="source-line-no">129</span><span id="line-129">    }</span>
-<span class="source-line-no">130</span><span id="line-130"></span>
-<span class="source-line-no">131</span><span id="line-131">}</span>
+<span class="source-line-no">103</span><span id="line-103">     * The value 15 was observed on every suspend in a Mobi capture, and the suspensions that</span>
+<span class="source-line-no">104</span><span id="line-104">     * lasted longer than 15 minutes each raised RESUME_PUMP_ALARM (18) and RESUME_PUMP_ALARM2 (23)</span>
+<span class="source-line-no">105</span><span id="line-105">     * 15 min 1 s after the suspend, confirming the unit is minutes.</span>
+<span class="source-line-no">106</span><span id="line-106">     * (Tandem's pump-logs JSON calls this property rpaTimeout)</span>
+<span class="source-line-no">107</span><span id="line-107">     */</span>
+<span class="source-line-no">108</span><span id="line-108">    public int getRpaTimeout() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return rpaTimeout;</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    public enum SuspendReason {</span>
+<span class="source-line-no">113</span><span id="line-113">        USER_ABORTED(0),</span>
+<span class="source-line-no">114</span><span id="line-114">        ALARM(1),</span>
+<span class="source-line-no">115</span><span id="line-115">        MALFUNCTION(2),</span>
+<span class="source-line-no">116</span><span id="line-116">        AUTO_SUSPEND_PREDICTIVE_LOW_GLUCOSE(6),</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">        ;</span>
+<span class="source-line-no">119</span><span id="line-119">        private final int id;</span>
+<span class="source-line-no">120</span><span id="line-120">        SuspendReason(int id) {</span>
+<span class="source-line-no">121</span><span id="line-121">            this.id = id;</span>
+<span class="source-line-no">122</span><span id="line-122">        }</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">        static SuspendReason fromId(int id) {</span>
+<span class="source-line-no">125</span><span id="line-125">            for (SuspendReason r : values()) {</span>
+<span class="source-line-no">126</span><span id="line-126">                if (r.id == id) {</span>
+<span class="source-line-no">127</span><span id="line-127">                    return r;</span>
+<span class="source-line-no">128</span><span id="line-128">                }</span>
+<span class="source-line-no">129</span><span id="line-129">            }</span>
+<span class="source-line-no">130</span><span id="line-130">            return null;</span>
+<span class="source-line-no">131</span><span id="line-131">        }</span>
+<span class="source-line-no">132</span><span id="line-132">    }</span>
+<span class="source-line-no">133</span><span id="line-133"></span>
+<span class="source-line-no">134</span><span id="line-134">}</span>
 
 
 
