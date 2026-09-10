@@ -367,4 +367,95 @@ public class DailyBasalHistoryLogTest {
         );
         assertEquals(255, parsedRes.getBatteryChargeRaw());
     }
+
+    // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
+    // These three records have header high nibble 1. Float fields are built from their exact bit
+    // patterns so the cargo round trip is byte-exact.
+    //
+    // finalEventForDay was set on two Daily Basal records written on the same evening (23:58:05 and
+    // 23:58:48) ahead of a single NewDay at 00:00:00, so the flag marks every Daily Basal written in
+    // the last minutes before the rollover rather than one closing record. The battery byte ran
+    // 69-100 across the capture, tracking 2-4 points below the live CurrentBatteryV2Response value.
+
+    @Test
+    public void testDailyBasalHistoryLog_mobi_2358_05_finalEventForDay() throws DecoderException {
+        // 23:58:05, first of two finalEventForDay=1 records that evening
+        DailyBasalHistoryLog expected = (DailyBasalHistoryLog) new DailyBasalHistoryLog(
+                // long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv
+                589593485L, 644069L,
+                Float.intBitsToFloat(0x411c0e5b), // ~9.7535
+                Float.intBitsToFloat(0x40200000), // 2.5
+                Float.intBitsToFloat(0x40fa6e81), // ~7.826
+                true, 92, 4104
+        ).withHeaderHighNibble(1);
+
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                "51108d7b2423e5d309005b0e1c4100002040816efa40015c0810",
+                expected
+        );
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2026-09-06T23:58:05Z"), parsedRes.getPumpTimeSecInstant());
+        assertEquals(Float.intBitsToFloat(0x411c0e5b), parsedRes.getDailyTotalBasal(), 0.0F);
+        assertEquals(2.5F, parsedRes.getLastBasalRate(), 0.0F);
+        assertEquals(Float.intBitsToFloat(0x40fa6e81), parsedRes.getIob(), 0.0F);
+        assertEquals(true, parsedRes.getFinalEventForDay());
+        assertEquals(92, parsedRes.getBatteryChargeRaw());
+        assertEquals(92.0, parsedRes.getBatteryChargePercent(), 0.0);
+        assertEquals(4104, parsedRes.getLipoMv());
+    }
+
+    @Test
+    public void testDailyBasalHistoryLog_mobi_2358_48_finalEventForDay() throws DecoderException {
+        // 43 seconds later, same evening: finalEventForDay is still set and dailyTotalBasal is
+        // unchanged, so the flag is not unique to a single closing record.
+        DailyBasalHistoryLog expected = (DailyBasalHistoryLog) new DailyBasalHistoryLog(
+                // long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv
+                589593528L, 644076L,
+                Float.intBitsToFloat(0x411c0e5b), // ~9.7535
+                Float.intBitsToFloat(0x40200000), // 2.5
+                Float.intBitsToFloat(0x40f8a6ef), // ~7.770
+                true, 92, 4104
+        ).withHeaderHighNibble(1);
+
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                "5110b87b2423ecd309005b0e1c4100002040efa6f840015c0810",
+                expected
+        );
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2026-09-06T23:58:48Z"), parsedRes.getPumpTimeSecInstant());
+        assertEquals(Float.intBitsToFloat(0x411c0e5b), parsedRes.getDailyTotalBasal(), 0.0F);
+        assertEquals(2.5F, parsedRes.getLastBasalRate(), 0.0F);
+        assertEquals(Float.intBitsToFloat(0x40f8a6ef), parsedRes.getIob(), 0.0F);
+        assertEquals(true, parsedRes.getFinalEventForDay());
+        assertEquals(92, parsedRes.getBatteryChargeRaw());
+        assertEquals(92.0, parsedRes.getBatteryChargePercent(), 0.0);
+        assertEquals(4104, parsedRes.getLipoMv());
+    }
+
+    @Test
+    public void testDailyBasalHistoryLog_mobi_0527_notFinalEventForDay() throws DecoderException {
+        // 05:27:29, a mid-day record: finalEventForDay=0
+        DailyBasalHistoryLog expected = (DailyBasalHistoryLog) new DailyBasalHistoryLog(
+                // long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv
+                589526849L, 640759L,
+                Float.intBitsToFloat(0x40224b16), // ~2.5358
+                Float.intBitsToFloat(0x3f0ccccd), // 0.55
+                Float.intBitsToFloat(0x3fb21f75), // ~1.3916
+                false, 88, 4061
+        ).withHeaderHighNibble(1);
+
+        DailyBasalHistoryLog parsedRes = (DailyBasalHistoryLog) HistoryLogMessageTester.testSingle(
+                "511041772323f7c60900164b2240cdcc0c3f751fb23f0058dd0f",
+                expected
+        );
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(Instant.parse("2026-09-06T05:27:29Z"), parsedRes.getPumpTimeSecInstant());
+        assertEquals(Float.intBitsToFloat(0x40224b16), parsedRes.getDailyTotalBasal(), 0.0F);
+        assertEquals(0.55F, parsedRes.getLastBasalRate(), 0.0F);
+        assertEquals(Float.intBitsToFloat(0x3fb21f75), parsedRes.getIob(), 0.0F);
+        assertEquals(false, parsedRes.getFinalEventForDay());
+        assertEquals(88, parsedRes.getBatteryChargeRaw());
+        assertEquals(88.0, parsedRes.getBatteryChargePercent(), 0.0);
+        assertEquals(4061, parsedRes.getLipoMv());
+    }
 }
