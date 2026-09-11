@@ -42,7 +42,7 @@ public class HypoMinimizerResumeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long reason) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-57, 0}, // (byte) 199
+            HistoryLog.typeIdBytes(199, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(reason)));

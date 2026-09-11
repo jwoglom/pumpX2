@@ -66,7 +66,7 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{ (byte) 399, 0x11 },
+            HistoryLog.typeIdBytes(399, 1), // nibble is capture-dependent (see getHeaderHighNibble javadoc); 1 preserved here since all known 399 fixtures carry it
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(glucoseValueStatusRaw), 

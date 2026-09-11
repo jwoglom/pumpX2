@@ -29,7 +29,7 @@ public class CgmStopSessionReqG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(443 & 0xFF), (byte)(443 >> 8)}, // 443 = 0x01BB
+            HistoryLog.typeIdBytes(443, 0), // 443 = 0x01BB
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

@@ -53,14 +53,14 @@ public class DailyBasalHistoryLog extends HistoryLog {
         this.lastBasalRate = Bytes.readFloat(raw, 14);
         this.iob = Bytes.readFloat(raw, 18);
         this.finalEventForDay = raw[22] == 1;
-        this.batteryChargeRaw = raw[23];
+        this.batteryChargeRaw = raw[23] & 0xFF;
         this.lipoMv = Bytes.readShort(raw, 24);
         
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float dailyTotalBasal, float lastBasalRate, float iob, boolean finalEventForDay, int actualBatteryCharge, int lipoMv) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{81, 0},
+            HistoryLog.typeIdBytes(81, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(dailyTotalBasal), 
@@ -93,22 +93,35 @@ public class DailyBasalHistoryLog extends HistoryLog {
     }
 
     /**
-     * @return TODO(confirm): whether this is the final event of the day
+     * A close-out marker on the last {@link DailyBasalHistoryLog} of a reporting period. Its usual
+     * trigger is the daily rollover just before midnight, after which {@link #getDailyTotalBasal()}
+     * resets to 0, but it has also been observed immediately before a
+     * {@link PumpingResumedHistoryLog} which ended an alarm-driven suspension, with no reset
+     * following. TODO(confirm): the exact set of triggers is unconfirmed, so this should not be
+     * relied upon as a day-boundary signal.
+     *
+     * @return whether this is the final event of the reporting period
      */
     public boolean getFinalEventForDay() {
         return finalEventForDay;
     }
 
 
+    /**
+     * @return the pump's reported battery state-of-charge, 0-100, unscaled
+     */
     public int getBatteryChargeRaw() {
         return batteryChargeRaw;
     }
 
     /**
+     * The pump reports its state of charge directly as a 0-100 percentage in this byte, so no
+     * scaling is applied.
+     *
      * @return the reported battery charge in percent
      */
     public double getBatteryChargePercent() {
-       return (100 * ((batteryChargeRaw+256.0) / 512.0));
+       return batteryChargeRaw;
     }
 
     /**

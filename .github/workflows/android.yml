@@ -6,31 +6,45 @@ on:
   pull_request:
     branches: [ "main", "dev" ]
 
+# Cancel superseded runs on the same branch / PR so they don't race the Gradle
+# remote cache and waste runner minutes. Tag builds (release workflow) are not
+# affected by this workflow.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - uses: burrunan/gradle-cache-action@v1
-      name: Build with Gradle
-      with:
-        job-id: android
-        arguments: build
-    - name: List Files
-      run: find .
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
 
+    - name: Assemble & Test & Publish (single Gradle invocation)
+      # One daemon: assembleDebug + assembleRelease produce the APK artifacts,
+      # publishToMavenLocal produces the m2 artifacts, testDebugUnitTest runs
+      # tests reusing the already-compiled outputs. Drops `gradle build` which
+      # also runs lintAnalyzeDebug, lintVitalAnalyzeRelease, and
+      # testReleaseUnitTest — none of which CI ships.
+      #
+      # :messages:test is named explicitly because testDebugUnitTest only exists
+      # on the Android modules; messages is a plain Java library whose tests live
+      # on the `test` task, so without this its suite never runs. A bare `test`
+      # would work but also pulls in testReleaseUnitTest on the Android modules,
+      # which is exactly what the comment above says this invocation drops.
+      run: ./gradlew :sampleapp:assembleDebug :sampleapp:assembleRelease publishToMavenLocal testDebugUnitTest :messages:test
 
     - name: Upload debug APK
       uses: actions/upload-artifact@v4
@@ -43,15 +57,6 @@ jobs:
       with:
         name: sampleapp-release-unsigned.apk
         path: sampleapp/build/outputs/apk/release/sampleapp-release-unsigned.apk
-
-    - uses: burrunan/gradle-cache-action@v1
-      name: Publish local artifacts with Gradle
-      with:
-        job-id: android
-        arguments: publishToMavenLocal
-
-    - name: List Files in m2
-      run: find ~/.m2
 
     - name: Upload m2 androidLib AAR
       uses: actions/upload-artifact@v4
@@ -102,12 +107,6 @@ jobs:
         path: |
           ~/.m2/repository/
 
-
-    - uses: burrunan/gradle-cache-action@v1
-      name: Unit Test
-      with:
-        job-id: android
-        arguments: testDebugUnitTest
 
     - name: Android Test Report
       uses: asadmansr/android-test-report-action@v1.2.0

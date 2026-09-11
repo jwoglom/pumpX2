@@ -29,7 +29,7 @@ public class CgmInactiveG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(441 & 0xFF), (byte)(441 >> 8)}, // 441 = 0x01B9
+            HistoryLog.typeIdBytes(441, 0), // 441 = 0x01B9
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

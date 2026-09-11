@@ -31,7 +31,7 @@ public class CgmStartSensorReqG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(390 & 0xFF), (byte)(390 >> 8)},
+            HistoryLog.typeIdBytes(390, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

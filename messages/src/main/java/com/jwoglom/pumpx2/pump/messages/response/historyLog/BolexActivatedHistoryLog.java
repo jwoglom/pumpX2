@@ -47,12 +47,16 @@ public class BolexActivatedHistoryLog extends HistoryLog {
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, float iob, float bolexSize) {
+        // parse() reads iob/bolexSize at offsets 14/18, leaving a 2-byte gap after bolusId
+        // (offset 10-11); insert a 2-byte zero pad so serialization matches the parser's
+        // offsets. See https://github.com/jwoglom/pumpx2/issues/46.
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{59, 0},
+            HistoryLog.typeIdBytes(59, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(bolusId), 
-            Bytes.toFloat(iob), 
+            Bytes.firstTwoBytesLittleEndian(bolusId),
+            new byte[2],
+            Bytes.toFloat(iob),
             Bytes.toFloat(bolexSize)));
     }
     public int getBolusId() {

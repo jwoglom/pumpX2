@@ -54,11 +54,12 @@ public class BasalDeliveryHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int commandedRateSource, int commandedRate, int profileBasalRate, int algorithmRate, int tempRate) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{23, 0}, // (byte) 279
+            HistoryLog.typeIdBytes(279, 0), // 279 = 256 + 23 (byte1 must be 1, not 0)
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(commandedRateSource), 
-            Bytes.firstTwoBytesLittleEndian(commandedRate), 
+            Bytes.firstTwoBytesLittleEndian(commandedRateSource),
+            new byte[2],
+            Bytes.firstTwoBytesLittleEndian(commandedRate),
             Bytes.firstTwoBytesLittleEndian(profileBasalRate), 
             Bytes.firstTwoBytesLittleEndian(algorithmRate), 
             Bytes.firstTwoBytesLittleEndian(tempRate)));

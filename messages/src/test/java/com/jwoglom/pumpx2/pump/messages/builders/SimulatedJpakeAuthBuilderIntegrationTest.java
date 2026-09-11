@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.builders;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -201,5 +202,43 @@ public class SimulatedJpakeAuthBuilderIntegrationTest {
         assertNull(b.nextRequest());
         assertEquals(JpakeAuthBuilder.JpakeStep.COMPLETE, b.step);
         assertTrue(b.done());
+    }
+
+    /**
+     * The same handshake as {@link #testWithDerivedSecret()} up to key confirmation, but the
+     * server's hash digest is corrupted. Covers the rejecting branch of the digest comparison,
+     * which the two passing handshakes above never reach.
+     */
+    @Test
+    public void testKeyConfirmationRejectsWrongServerDigest() throws DecoderException {
+        for (int corruptIndex : new int[]{0, 15, 31}) {
+            SecureRandomMock rand = new SecureRandomMock(Hex.decodeHex(
+                    "e734344901549417" +
+                    "998c182c9d70a375" +
+                    "ad08275f109e41b0"));
+
+            byte[] derivedSecret = Hex.decodeHex("45d66d65aedfd39ce50be0eacca491ff183b7e1c22bf722b8dfb20408e0c78d4");
+            JpakeAuthBuilder b = new JpakeAuthBuilder("passw0rd", derivedSecret, rand);
+
+            b.nextRequest();
+            byte[] nonce = b.generateNonce();
+            b.processResponse(new Jpake3SessionKeyResponse(0, nonce, Jpake3SessionKeyResponse.RESERVED));
+            b.nextRequest();
+
+            byte[] serverNonce = b.generateNonce();
+            byte[] serverHashDigest = HmacSha256.hmacSha256(serverNonce, Hkdf.build(b.serverNonce3, b.derivedSecret));
+
+            // Flip one bit. A first-byte, middle-byte and last-byte corruption must all be
+            // rejected identically -- the comparison must not stop early on a mismatch.
+            byte[] corrupted = Arrays.copyOf(serverHashDigest, serverHashDigest.length);
+            corrupted[corruptIndex] ^= 0x01;
+
+            b.processResponse(new Jpake4KeyConfirmationResponse(
+                    0, serverNonce, Jpake4KeyConfirmationResponse.RESERVED, corrupted));
+
+            assertNull(b.nextRequest());
+            assertEquals("corruptIndex=" + corruptIndex, JpakeAuthBuilder.JpakeStep.INVALID, b.step);
+            assertFalse(b.done());
+        }
     }
 }

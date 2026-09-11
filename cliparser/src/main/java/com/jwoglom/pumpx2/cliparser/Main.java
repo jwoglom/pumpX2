@@ -178,6 +178,15 @@ public class Main {
             case "jpake-server":
                 System.out.println(jpakeAuthServer(args[1]));
                 break;
+            case "jpake-server-resume":
+                System.out.println(jpakeAuthServerResume(args[1], args[2]));
+                break;
+            case "hkdf":
+                System.out.println(Hex.encodeHexString(Hkdf.build(Hex.decodeHex(args[1]), Hex.decodeHex(args[2]))));
+                break;
+            case "hmac-sha256":
+                System.out.println(Hex.encodeHexString(HmacSha256.hmacSha256(Hex.decodeHex(args[1]), Hex.decodeHex(args[2]))));
+                break;
             default:
                 System.err.println("Nothing to do.");
                 break;
@@ -340,86 +349,114 @@ public class Main {
             // Derive the shared secret
             byte[] derivedSecret = serverJpake.deriveSecret();
 
-            // Round 3: Session key exchange
-            // Read client's session key request
-            if (!scanner.hasNextLine()) {
-                return errorJson("No client response for round 3");
-            }
-            String clientHex3 = scanner.nextLine().trim();
-            Message clientMsg3 = parse(clientHex3);
-            if (!(clientMsg3 instanceof Jpake3SessionKeyRequest)) {
-                return errorJson("Expected Jpake3SessionKeyRequest, got: " + (clientMsg3 != null ? clientMsg3.getClass().getName() : "null"));
-            }
-
-            // Generate server nonce for round 3
-            byte[] serverNonce3 = new byte[8];
-            new java.security.SecureRandom().nextBytes(serverNonce3);
-            byte[] reserved3 = new byte[8]; // All zeros - must be 8 bytes
-
-            JSONObject resp3 = new JSONObject();
-            resp3.put("appInstanceId", 0); // Default app instance ID
-            resp3.put("nonce", Hex.encodeHexString(serverNonce3)); // Match constructor parameter name
-            resp3.put("reserved", Hex.encodeHexString(reserved3)); // Match constructor parameter name
-            System.out.println("JPAKE_3: " + encode(String.valueOf((int)txId), "Jpake3SessionKeyResponse", resp3.toString()));
-            System.out.flush();
-            txId++;
-
-            // Round 4: Key confirmation
-            // Read client's key confirmation
-            if (!scanner.hasNextLine()) {
-                return errorJson("No client response for round 4");
-            }
-            String clientHex4 = scanner.nextLine().trim();
-            Message clientMsg4 = parse(clientHex4);
-            if (!(clientMsg4 instanceof Jpake4KeyConfirmationRequest)) {
-                return errorJson("Expected Jpake4KeyConfirmationRequest, got: " + (clientMsg4 != null ? clientMsg4.getClass().getName() : "null"));
-            }
-
-            Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) clientMsg4;
-            byte[] clientNonce4 = req4.getNonce();
-            byte[] clientHashDigest = req4.getHashDigest();
-
-            // Validate client's HMAC
-            byte[] expectedClientHash = HmacSha256.hmacSha256(
-                clientNonce4,
-                Hkdf.build(serverNonce3, derivedSecret)
-            );
-
-            if (!Arrays.equals(expectedClientHash, clientHashDigest)) {
-                return errorJson("Client HMAC validation failed");
-            }
-
-            // Generate server's response for round 4
-            byte[] serverNonce4 = new byte[8];
-            new java.security.SecureRandom().nextBytes(serverNonce4);
-            byte[] serverHashDigest = HmacSha256.hmacSha256(
-                serverNonce4,
-                Hkdf.build(serverNonce3, derivedSecret)
-            );
-
-            JSONObject resp4 = new JSONObject();
-            resp4.put("appInstanceId", 0); // Default app instance ID
-            resp4.put("nonce", Hex.encodeHexString(serverNonce4));
-            resp4.put("reserved", Hex.encodeHexString(new byte[8])); // 8 bytes of zeros
-            resp4.put("hashDigest", Hex.encodeHexString(serverHashDigest));
-            System.out.println("JPAKE_4: " + encode(String.valueOf((int)txId), "Jpake4KeyConfirmationResponse", resp4.toString()));
-            System.out.flush();
-            txId++;
-
-            // Success! Return the derived secret
-            JSONObject result = new JSONObject();
-            result.put("derivedSecret", Hex.encodeHexString(derivedSecret));
-            result.put("serverNonce", Hex.encodeHexString(serverNonce3));
-            result.put("messageName", "JpakeAuthResult");
-            result.put("txId", "" + txId);
-            return result.toString();
-
+            return jpakeSessionKeyAndConfirmationRounds(scanner, derivedSecret, txId);
         } catch (Exception e) {
             JSONObject result = new JSONObject();
             result.put("error", "Exception during server JPAKE authentication: " + e.getMessage());
             e.printStackTrace();
             return result.toString();
         }
+    }
+
+    /**
+     * Quick-pair resume: skips EcJpake's password-authenticated rounds 1a/1b/2 entirely,
+     * reusing a long-term secret from an earlier completed pairing as the derivedSecret
+     * and running only rounds 3/4 (session key exchange + key confirmation) against it.
+     */
+    private static String jpakeAuthServerResume(String pairingCode, String longTermSecretHex) {
+        try {
+            byte[] derivedSecret = Hex.decodeHex(longTermSecretHex);
+            Scanner scanner = new Scanner(System.in);
+            byte txId = 0;
+
+            return jpakeSessionKeyAndConfirmationRounds(scanner, derivedSecret, txId);
+        } catch (Exception e) {
+            JSONObject result = new JSONObject();
+            result.put("error", "Exception during resumed server JPAKE authentication: " + e.getMessage());
+            e.printStackTrace();
+            return result.toString();
+        }
+    }
+
+    /**
+     * Rounds 3 (session key exchange) and 4 (key confirmation) of the JPAKE server flow,
+     * shared between a from-scratch handshake (jpakeAuthServer) and a quick-pair resume
+     * (jpakeAuthServerResume) since both rely only on an already-derived shared secret.
+     */
+    private static String jpakeSessionKeyAndConfirmationRounds(Scanner scanner, byte[] derivedSecret, byte txId) throws DecoderException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        // Round 3: Session key exchange
+        // Read client's session key request
+        if (!scanner.hasNextLine()) {
+            return errorJson("No client response for round 3");
+        }
+        String clientHex3 = scanner.nextLine().trim();
+        Message clientMsg3 = parse(clientHex3);
+        if (!(clientMsg3 instanceof Jpake3SessionKeyRequest)) {
+            return errorJson("Expected Jpake3SessionKeyRequest, got: " + (clientMsg3 != null ? clientMsg3.getClass().getName() : "null"));
+        }
+
+        // Generate server nonce for round 3
+        byte[] serverNonce3 = new byte[8];
+        new java.security.SecureRandom().nextBytes(serverNonce3);
+        byte[] reserved3 = new byte[8]; // All zeros - must be 8 bytes
+
+        JSONObject resp3 = new JSONObject();
+        resp3.put("appInstanceId", 0); // Default app instance ID
+        resp3.put("nonce", Hex.encodeHexString(serverNonce3)); // Match constructor parameter name
+        resp3.put("reserved", Hex.encodeHexString(reserved3)); // Match constructor parameter name
+        System.out.println("JPAKE_3: " + encode(String.valueOf((int)txId), "Jpake3SessionKeyResponse", resp3.toString()));
+        System.out.flush();
+        txId++;
+
+        // Round 4: Key confirmation
+        // Read client's key confirmation
+        if (!scanner.hasNextLine()) {
+            return errorJson("No client response for round 4");
+        }
+        String clientHex4 = scanner.nextLine().trim();
+        Message clientMsg4 = parse(clientHex4);
+        if (!(clientMsg4 instanceof Jpake4KeyConfirmationRequest)) {
+            return errorJson("Expected Jpake4KeyConfirmationRequest, got: " + (clientMsg4 != null ? clientMsg4.getClass().getName() : "null"));
+        }
+
+        Jpake4KeyConfirmationRequest req4 = (Jpake4KeyConfirmationRequest) clientMsg4;
+        byte[] clientNonce4 = req4.getNonce();
+        byte[] clientHashDigest = req4.getHashDigest();
+
+        // Validate client's HMAC
+        byte[] expectedClientHash = HmacSha256.hmacSha256(
+            clientNonce4,
+            Hkdf.build(serverNonce3, derivedSecret)
+        );
+
+        if (!Arrays.equals(expectedClientHash, clientHashDigest)) {
+            return errorJson("Client HMAC validation failed");
+        }
+
+        // Generate server's response for round 4
+        byte[] serverNonce4 = new byte[8];
+        new java.security.SecureRandom().nextBytes(serverNonce4);
+        byte[] serverHashDigest = HmacSha256.hmacSha256(
+            serverNonce4,
+            Hkdf.build(serverNonce3, derivedSecret)
+        );
+
+        JSONObject resp4 = new JSONObject();
+        resp4.put("appInstanceId", 0); // Default app instance ID
+        resp4.put("nonce", Hex.encodeHexString(serverNonce4));
+        resp4.put("reserved", Hex.encodeHexString(new byte[8])); // 8 bytes of zeros
+        resp4.put("hashDigest", Hex.encodeHexString(serverHashDigest));
+        System.out.println("JPAKE_4: " + encode(String.valueOf((int)txId), "Jpake4KeyConfirmationResponse", resp4.toString()));
+        System.out.flush();
+        txId++;
+
+        // Success! Return the derived secret
+        JSONObject result = new JSONObject();
+        result.put("derivedSecret", Hex.encodeHexString(derivedSecret));
+        result.put("serverNonce", Hex.encodeHexString(serverNonce3));
+        result.put("messageName", "JpakeAuthResult");
+        result.put("txId", "" + txId);
+        return result.toString();
     }
 
     private static String errorJson(String message) {

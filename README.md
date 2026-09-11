@@ -13,6 +13,15 @@ API library with a reverse-engineered Bluetooth protocol for the Tandem t:slim X
 
 [For an application to connect to your pump, see ControlX2.](https://github.com/jwoglom/controlX2)
 
+
+> **Warning**\
+> **This library is for EXPERIMENTAL USE ONLY and can be used to MODIFY ACTIVE INSULIN DELIVERY ON YOUR INSULIN PUMP.**\
+> There is NO WARRANTY IMPLIED OR EXPRESSED DUE TO USE OF THIS SOFTWARE.\
+> YOU ASSUME ALL RISK FOR ANY MALFUNCTIONS, BUGS, OR INSULIN DELIVERY ACTIONS.\
+> \
+> It is NOT AFFILIATED WITH OR SUPPORTED by Tandem, Dexcom, or any other manufacturer.\
+> **It has not been officially approved for use and is provided as a RESEARCH TOOL ONLY.**
+
 ---
 
 PumpX2 is an Android library is exported which can be used by other projects to interface with the pump,
@@ -67,6 +76,7 @@ You may need to re-open the app, clear app data, and/or unpair and re-pair the d
 * `com.github.jwoglom.pumpX2:pumpx2-android`
 * `com.github.jwoglom.pumpX2:pumpx2-messages`
 * `com.github.jwoglom.pumpX2:pumpx2-shared`
+* `com.github.jwoglom.pumpX2:pumpx2-cliparser` (a runnable, executable jar with all dependencies bundled)
 
 For example, using Gradle, first add the JitPack repositories to your root project `settings.gradle`:
 ```

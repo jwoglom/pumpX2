@@ -43,7 +43,7 @@ public class AlertClearedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{26, 0},
+            HistoryLog.typeIdBytes(26, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(alertId),
