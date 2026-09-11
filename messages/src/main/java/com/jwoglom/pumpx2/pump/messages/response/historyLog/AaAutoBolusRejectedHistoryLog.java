@@ -32,7 +32,7 @@ public class AaAutoBolusRejectedHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{32, 1}, // 288 = 256 + 32
+            HistoryLog.typeIdBytes(288, 0), // 288 = 256 + 32
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

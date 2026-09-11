@@ -49,7 +49,7 @@ public class DateChangeHistoryLog extends HistoryLog {
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long datePrior, long dateAfter, long rawRTCTime) {
         return Bytes.combine(
-            new byte[]{14, 0},
+            HistoryLog.typeIdBytes(14, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(datePrior), 

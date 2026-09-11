@@ -13,6 +13,7 @@ import com.jwoglom.pumpx2.shared.Hex;
 import org.apache.commons.lang3.Validate;
 
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -114,7 +115,9 @@ public class PacketArrayList {
             byte[] bArr2 = this.messageData;
             byte[] expectedHmac = Bytes.dropFirstN(bArr2, bArr2.length - 20);
             byte[] hmacSha = Packetize.doHmacSha1(byteArray, authKey);
-            if (!Arrays.equals(expectedHmac, hmacSha)) {
+            // MessageDigest.isEqual is the constant-time comparison; Arrays.equals returns as
+            // soon as it hits a differing byte.
+            if (!MessageDigest.isEqual(expectedHmac, hmacSha)) {
                 L.e(TAG, "Pump response invalid signature: expectedHmac=" + Hex.encodeHexString(expectedHmac)+" hmacSha="+Hex.encodeHexString(hmacSha));
                 if (shouldIgnoreInvalidHmac(authKey)) {
                     return true;

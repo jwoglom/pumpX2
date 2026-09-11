@@ -97,7 +97,13 @@ public class HistoryLogParser {
         AlertClearedHistoryLog.class,
         VersionInfoHistoryLog.class,
         UpdateStatusHistoryLog.class,
-        VersionsAHistoryLog.class
+        VersionsAHistoryLog.class,
+        AlarmAckHistoryLog.class,
+        AlertAckHistoryLog.class,
+        ReminderActivatedHistoryLog.class,
+        ReminderDismissedHistoryLog.class,
+        CgmPairingCodeG7HistoryLog.class,
+        TipsErrorHistoryLog.class
         // MESSAGES_END
     );
 
@@ -116,19 +122,27 @@ public class HistoryLogParser {
         }
     }
 
+    /**
+     * Reads the typeId from the first two bytes of a raw history log.
+     *
+     * <p>Those bytes are a little-endian uint16 whose low 12 bits are the typeId. The top 4 bits
+     * are not part of the id and their meaning is unknown, see
+     * {@link HistoryLog#getHeaderHighNibble()}. This applies the same mask
+     * {@link HistoryLog#parseBase} already used, and matches Tandem's own Mobi Android app, which
+     * reads these two bytes little endian and masks with 4095 before resolving the log type.
+     *
+     * <p>Without the mask, a record carrying a nonzero high nibble produces an inflated typeId
+     * (opCode 55 with a nibble of 1 reads as 4151), misses {@link #LOG_MESSAGE_IDS}, and is only
+     * recovered by the retry ladder in {@link #parse}, which logs a warning for every such record.
+     * The masking also corrects dispatch for typeIds of 128-255, which the previous signed-byte
+     * arithmetic resolved to typeId+256.
+     */
+    public static int typeIdOf(byte[] rawStream) {
+        return Bytes.readShort(rawStream, 0) & 4095;
+    }
+
     public static HistoryLog parse(byte[] rawStream) {
-        // Little endian, unsigned
-        int typeId = rawStream[0];
-        if (typeId < 0) {
-            typeId += 512;
-        }
-        if (rawStream[1] > 0) {
-            typeId += 256 * rawStream[1];
-        }
-//        if (typeId % 256 != typeId) {
-//            L.w(TAG, "typeId "+typeId+" is being corrected to "+(typeId % 256));
-//            typeId = typeId % 256;
-//        }
+        int typeId = typeIdOf(rawStream);
         HistoryLog ret = parseWithTypeId(rawStream, typeId);
         if (ret instanceof UnknownHistoryLog) {
             L.w(TAG, "retry1 HistoryLog parse on typeId " + typeId + " => " + ((byte) typeId));

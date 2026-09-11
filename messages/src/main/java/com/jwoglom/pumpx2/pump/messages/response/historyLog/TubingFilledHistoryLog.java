@@ -13,19 +13,23 @@ import java.math.BigInteger;
     usedByTidepool = true
 )
 public class TubingFilledHistoryLog extends HistoryLog {
-    
+
     private float primeSize;
-    
+    private long completionStatus;
+    private long position;
+
     public TubingFilledHistoryLog() {}
-    public TubingFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize) {
+    public TubingFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus, long position) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize, completionStatus, position);
         this.primeSize = primeSize;
-        
+        this.completionStatus = completionStatus;
+        this.position = position;
+
     }
 
-    public TubingFilledHistoryLog(float primeSize) {
-        this(0, 0, primeSize);
+    public TubingFilledHistoryLog(float primeSize, long completionStatus, long position) {
+        this(0, 0, primeSize, completionStatus, position);
     }
 
     public int typeId() {
@@ -37,15 +41,19 @@ public class TubingFilledHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.primeSize = Bytes.readFloat(raw, 10);
-        
+        this.completionStatus = Bytes.readUint32(raw, 14);
+        this.position = Bytes.readUint32(raw, 18);
+
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus, long position) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{63, 0},
+            HistoryLog.typeIdBytes(63, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.toFloat(primeSize)));
+            Bytes.toFloat(primeSize),
+            Bytes.toUint32(completionStatus),
+            Bytes.toUint32(position)));
     }
 
     /**
@@ -54,5 +62,41 @@ public class TubingFilledHistoryLog extends HistoryLog {
     public float getPrimeSize() {
         return primeSize;
     }
-    
+
+    public long getCompletionStatusRaw() {
+        return completionStatus;
+    }
+    public CompletionStatus getCompletionStatus() {
+        return CompletionStatus.fromId((int) completionStatus);
+    }
+
+    /**
+     * @return the position (counts) at which tubing fill completed
+     */
+    public long getPosition() {
+        return position;
+    }
+
+    public enum CompletionStatus {
+        USER_ABORTED(0),
+        TERMINATED_BY_ALARM(1),
+        TERMINATED_BY_MALFUNCTION(2),
+        COMPLETED(3),
+
+        ;
+        private final int id;
+        CompletionStatus(int id) {
+            this.id = id;
+        }
+
+        static CompletionStatus fromId(int id) {
+            for (CompletionStatus r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
+    }
+
 }

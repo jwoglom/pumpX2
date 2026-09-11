@@ -45,7 +45,7 @@ public class CartridgeFilledHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long insulinDisplay, float insulinActual) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{33, 0},
+            HistoryLog.typeIdBytes(33, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(insulinDisplay), 

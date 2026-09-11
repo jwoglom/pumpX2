@@ -54,7 +54,7 @@ public class ShelfModeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long msecSinceReset, int lipoIbc, int lipoAbc, int lipoCurrent, long lipoRemCap, long lipoMv) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{53, 0},
+            HistoryLog.typeIdBytes(53, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(msecSinceReset),

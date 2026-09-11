@@ -39,7 +39,7 @@ public class CgmPairingCodeG7HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, String pairingCode) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(395 & 0xFF), (byte)(395 >> 8)},
+            HistoryLog.typeIdBytes(395, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.writeString(pairingCode, 16)));

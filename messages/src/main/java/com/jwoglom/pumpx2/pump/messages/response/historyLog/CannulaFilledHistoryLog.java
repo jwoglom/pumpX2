@@ -13,19 +13,21 @@ import java.math.BigInteger;
     usedByTidepool = true
 )
 public class CannulaFilledHistoryLog extends HistoryLog {
-    
+
     private float primeSize;
-    
+    private long completionStatus;
+
     public CannulaFilledHistoryLog() {}
-    public CannulaFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize) {
+    public CannulaFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize, completionStatus);
         this.primeSize = primeSize;
-        
+        this.completionStatus = completionStatus;
+
     }
 
-    public CannulaFilledHistoryLog(float primeSize) {
-        this(0, 0, primeSize);
+    public CannulaFilledHistoryLog(float primeSize, long completionStatus) {
+        this(0, 0, primeSize, completionStatus);
     }
 
     public int typeId() {
@@ -37,15 +39,17 @@ public class CannulaFilledHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.primeSize = Bytes.readFloat(raw, 10);
-        
+        this.completionStatus = Bytes.readUint32(raw, 14);
+
     }
 
-    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize) {
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{61, 0},
+            HistoryLog.typeIdBytes(61, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.toFloat(primeSize)));
+            Bytes.toFloat(primeSize),
+            Bytes.toUint32(completionStatus)));
     }
 
     /**
@@ -54,5 +58,34 @@ public class CannulaFilledHistoryLog extends HistoryLog {
     public float getPrimeSize() {
         return primeSize;
     }
-    
+
+    public long getCompletionStatusRaw() {
+        return completionStatus;
+    }
+    public CompletionStatus getCompletionStatus() {
+        return CompletionStatus.fromId((int) completionStatus);
+    }
+
+    public enum CompletionStatus {
+        USER_ABORTED(0),
+        TERMINATED_BY_ALARM(1),
+        TERMINATED_BY_MALFUNCTION(2),
+        COMPLETED(3),
+
+        ;
+        private final int id;
+        CompletionStatus(int id) {
+            this.id = id;
+        }
+
+        static CompletionStatus fromId(int id) {
+            for (CompletionStatus r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
+    }
+
 }

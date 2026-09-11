@@ -11,6 +11,12 @@ ext {
     javaMainClass = "com.jwoglom.pumpx2.cliparser.Main"
 }
 
+// The plain jar isn't runnable on its own (no bundled dependencies), so disable
+// it to avoid colliding with shadowJar's output, which uses the same classifier.
+tasks.jar {
+    enabled = false
+}
+
 shadowJar {
     archiveBaseName.set('cliparser')
     archiveClassifier.set('')
@@ -30,7 +36,7 @@ publishing {
             artifactId "pumpx2-cliparser"
             groupId rootProject.group
             version rootProject.version
-            from components.java
+            from components.shadow
             pom {
                 name = "PumpX2 CLIParser"
                 description = "A sample CLI tool which uses the PumpX2 Java library to parse and decode t:slim X2 insulin pump message byte streams."
@@ -57,12 +63,6 @@ publishing {
         }
     }
 }
-
-// ensure built JAR is executable
-tasks.jar {
-    manifest.attributes["Main-Class"] = javaMainClass
-}
-
 
 dependencies {
     implementation project(':shared')

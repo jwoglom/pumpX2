@@ -53,7 +53,7 @@ public class CgmCalibrationHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTime, long timestamp, long calTimestamp, int value, int currentDisplayValue) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-96, 0}, // (byte) 160
+            HistoryLog.typeIdBytes(160, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTime), 

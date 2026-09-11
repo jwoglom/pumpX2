@@ -65,7 +65,7 @@ public class BGHistoryLog extends HistoryLog {
     
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bg, int cgmCalibration, int bgSource, float iob, int targetBG, int isf, int selectedIOB, int bgSourceType, int spare) {
         return Bytes.combine(
-            new byte[]{ 16, 0 },
+            HistoryLog.typeIdBytes(16, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(bg),

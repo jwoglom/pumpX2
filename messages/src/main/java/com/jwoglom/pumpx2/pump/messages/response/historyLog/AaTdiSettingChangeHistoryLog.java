@@ -33,7 +33,7 @@ public class AaTdiSettingChangeHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte)(245 & 0xFF), (byte)(245 >> 8)}, // 245
+            HistoryLog.typeIdBytes(245, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum)));
     }

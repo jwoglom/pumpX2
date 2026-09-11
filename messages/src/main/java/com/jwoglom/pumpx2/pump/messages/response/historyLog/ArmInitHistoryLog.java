@@ -48,7 +48,7 @@ public class ArmInitHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long version, long configABits, long configBBits, long numLogEntries) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{99, 0},
+            HistoryLog.typeIdBytes(99, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(version),

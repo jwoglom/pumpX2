@@ -60,13 +60,14 @@ public class CgmDataGxHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{-45, 0}, // (byte) 211
+            HistoryLog.typeIdBytes(211, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(status), 
             new byte[]{ (byte) type }, 
-            new byte[]{ (byte) rate }, 
-            new byte[]{ (byte) rssi }, 
+            new byte[]{ (byte) rate },
+            new byte[]{0},
+            new byte[]{ (byte) rssi },
             Bytes.firstTwoBytesLittleEndian(value), 
             Bytes.toUint32(timestamp), 
             Bytes.toUint32(transmitterTimestamp)));

@@ -43,7 +43,7 @@ public class IdpActionMsg2HistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int idp, String name) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{57, 0},
+            HistoryLog.typeIdBytes(57, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             new byte[]{ (byte) idp }, 

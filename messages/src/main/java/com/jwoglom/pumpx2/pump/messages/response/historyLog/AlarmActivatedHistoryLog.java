@@ -14,15 +14,28 @@ import java.math.BigInteger;
     usedByTidepool = true
 )
 public class AlarmActivatedHistoryLog extends HistoryLog {
-    
+
     private long alarmId;
-    
+    private long faultLocatorData;
+    private long param1;
+    private float param2;
+
     public AlarmActivatedHistoryLog() {}
-    public AlarmActivatedHistoryLog(long pumpTimeSec, long sequenceNum, long alarmId) {
+    public AlarmActivatedHistoryLog(long pumpTimeSec, long sequenceNum, long alarmId, long faultLocatorData, long param1, float param2) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, alarmId);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, alarmId, faultLocatorData, param1, param2);
         this.alarmId = alarmId;
-        
+        this.faultLocatorData = faultLocatorData;
+        this.param1 = param1;
+        this.param2 = param2;
+    }
+
+    public AlarmActivatedHistoryLog(long alarmId, long faultLocatorData, long param1, float param2) {
+        this(0, 0, alarmId, faultLocatorData, param1, param2);
+    }
+
+    public AlarmActivatedHistoryLog(long pumpTimeSec, long sequenceNum, long alarmId) {
+        this(pumpTimeSec, sequenceNum, alarmId, 0, 0, 0f);
     }
 
     public AlarmActivatedHistoryLog(long alarmId) {
@@ -38,18 +51,40 @@ public class AlarmActivatedHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.alarmId = Bytes.readUint32(raw, 10);
-        
+        this.faultLocatorData = Bytes.readUint32(raw, 14);
+        this.param1 = Bytes.readUint32(raw, 18);
+        this.param2 = Bytes.readFloat(raw, 22);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alarmId, long faultLocatorData, long param1, float param2) {
+        return HistoryLog.fillCargo(Bytes.combine(
+            HistoryLog.typeIdBytes(5, 0),
+            Bytes.toUint32(pumpTimeSec),
+            Bytes.toUint32(sequenceNum),
+            Bytes.toUint32(alarmId),
+            Bytes.toUint32(faultLocatorData),
+            Bytes.toUint32(param1),
+            Bytes.toFloat(param2)));
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alarmId) {
-        return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{5, 0},
-            Bytes.toUint32(pumpTimeSec),
-            Bytes.toUint32(sequenceNum),
-            Bytes.toUint32(alarmId)));
+        return buildCargo(pumpTimeSec, sequenceNum, alarmId, 0, 0, 0f);
     }
+
     public long getAlarmId() {
         return alarmId;
+    }
+
+    public long getFaultLocatorData() {
+        return faultLocatorData;
+    }
+
+    public long getParam1() {
+        return param1;
+    }
+
+    public float getParam2() {
+        return param2;
     }
 
     /**

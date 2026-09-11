@@ -56,7 +56,7 @@ public class CgmOorSettingsHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int alertLevel, int repeatDuration, boolean isEnabled, int modifiedField) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{(byte) 169, 0},
+            HistoryLog.typeIdBytes(169, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.firstTwoBytesLittleEndian(alertLevel),

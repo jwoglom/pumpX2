@@ -60,11 +60,12 @@ public class IdpListHistoryLog extends HistoryLog {
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int numProfiles, int slot1, int slot2, int slot3, int slot4, int slot5, int slot6) {
         return HistoryLog.fillCargo(Bytes.combine(
-            new byte[]{71, 0},
+            HistoryLog.typeIdBytes(71, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            new byte[]{ (byte) numProfiles }, 
-            new byte[]{ (byte) slot1 }, 
+            new byte[]{ (byte) numProfiles },
+            new byte[3],
+            new byte[]{ (byte) slot1 },
             new byte[]{ (byte) slot2 }, 
             new byte[]{ (byte) slot3 }, 
             new byte[]{ (byte) slot4 }, 

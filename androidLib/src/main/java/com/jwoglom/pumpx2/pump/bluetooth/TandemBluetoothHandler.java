@@ -352,6 +352,16 @@ public class TandemBluetoothHandler {
                 if (CharacteristicUUID.SERVICE_CHANGED_CHARACTERISTICS.equals(uuid)) {
                     serviceUUID = ServiceUUID.GENERIC_ATTRIBUTE_SERVICE_UUID;
                 }
+                if (peripheral.getCharacteristic(serviceUUID, uuid) == null) {
+                    Timber.w("Skipping setNotify for missing characteristic %s on this pump (firmware does not expose it)", CharacteristicUUID.which(uuid));
+                    synchronized (remainingCharacteristicNotificationsInit) {
+                        remainingCharacteristicNotificationsInit.remove(uuid);
+                        if (remainingCharacteristicNotificationsInit.isEmpty()) {
+                            remainingConnectionInitializationSteps.remove(ConnectionInitializationStep.CHARACTERISTIC_NOTIFICATIONS);
+                        }
+                    }
+                    return;
+                }
 
                 peripheral.setNotify(serviceUUID, uuid, true);
             });
@@ -722,6 +732,8 @@ public class TandemBluetoothHandler {
                     // The accumulator has produced its message, so it must not be picked up by the
                     // next transaction to reuse this txId. Only the error paths above keep theirs,
                     // so a partial response can still continue.
+                    PumpState.removeSavedPacketArrayList(characteristic, txId);
+
                     if (!characteristicUUID.equals(CharacteristicUUID.HISTORY_LOG_CHARACTERISTICS) &&
                             !characteristicUUID.equals(CharacteristicUUID.CONTROL_STREAM_CHARACTERISTICS)) {
                         if (response.message().get() instanceof ErrorResponse) {
@@ -746,6 +758,7 @@ public class TandemBluetoothHandler {
                         Timber.w("Dropping unprocessable complete response message for '%s' (txId=%d, characteristic=%s)", Hex.encodeHexString(parser.getValue()), txId, characteristic);
                         // Complete but unusable: nothing further will arrive for this txId, so the
                         // accumulator would otherwise be left behind for the id to wrap onto.
+                        PumpState.removeSavedPacketArrayList(characteristic, txId);
                     }
                     return;
                 }
@@ -767,7 +780,7 @@ public class TandemBluetoothHandler {
                         Timber.w("AUTH_FAILURE event=pairing_code_rejected flow=legacy response=%s", resp);
                         tandemPump.onInvalidPairingCode(peripheral, resp);
                     }
-                    // JPAKE
+                // JPAKE
                 } else if (msg instanceof Jpake1aResponse) {
                     Jpake1aResponse resp = (Jpake1aResponse) response.message().get();
                     Timber.d("JpakeAuthResp1a: %s", resp);

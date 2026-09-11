@@ -17,8 +17,8 @@ public class AlarmActivatedHistoryLogTest {
     @Test
     public void testAlarmActivatedHistoryLog1() throws DecoderException {
         AlarmActivatedHistoryLog expected = new AlarmActivatedHistoryLog(
-            // long alarmId
-                18
+            // long alarmId, long faultLocatorData, long param1, float param2
+                18, 8311, 6544514, 0.0f
         );
 
         AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -31,8 +31,8 @@ public class AlarmActivatedHistoryLogTest {
     @Test
     public void testAlarmActivatedHistoryLog2() throws DecoderException {
         AlarmActivatedHistoryLog expected = new AlarmActivatedHistoryLog(
-                // long alarmId
-                23
+                // long alarmId, long faultLocatorData, long param1, float param2
+                23, 8311, 18, 0.0f
         );
 
         AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -45,8 +45,8 @@ public class AlarmActivatedHistoryLogTest {
     @Test
     public void testAlarmActivatedHistoryLog3() throws DecoderException {
         AlarmActivatedHistoryLog expected = new AlarmActivatedHistoryLog(
-                // long alarmId
-                23
+                // long alarmId, long faultLocatorData, long param1, float param2
+                23, 8311, 18, 0.0f
         );
 
         AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
@@ -59,8 +59,8 @@ public class AlarmActivatedHistoryLogTest {
     @Test
     public void testAlarmActivatedHistoryLog4() throws DecoderException {
         AlarmActivatedHistoryLog expected = new AlarmActivatedHistoryLog(
-                // long alarmId
-                18
+                // long alarmId, long faultLocatorData, long param1, float param2
+                18, 8311, 6633487, 0.0f
         );
 
         AlarmActivatedHistoryLog parsedRes = (AlarmActivatedHistoryLog) HistoryLogMessageTester.testSingleIgnoringBaseFields(
