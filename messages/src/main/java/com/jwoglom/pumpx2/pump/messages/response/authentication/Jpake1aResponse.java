@@ -27,7 +27,10 @@ public class Jpake1aResponse extends AbstractCentralChallengeResponse {
     public Jpake1aResponse(int appInstanceId, byte[] centralChallengeHash) {
         parse(buildCargo(appInstanceId, centralChallengeHash));
         Validate.isTrue(this.appInstanceId == appInstanceId);
-        Validate.isTrue(Arrays.equals(this.centralChallengeHash, centralChallengeHash));
+        // this.centralChallengeHash is zero-padded to the fixed cargo size by parse(), so a
+        // minimal-length (short) round from the peer is compared against its padded form.
+        Validate.isTrue(Arrays.equals(this.centralChallengeHash,
+                Arrays.copyOf(centralChallengeHash, this.centralChallengeHash.length)));
     }
 
     public Jpake1aResponse(byte[] raw) {
@@ -35,10 +38,16 @@ public class Jpake1aResponse extends AbstractCentralChallengeResponse {
     }
 
     public void parse(byte[] raw) {
-        Validate.isTrue(raw.length == props().size(), "size is "+raw.length+" not "+props().size());
-        this.cargo = raw;
-        appInstanceId = Bytes.readShort(raw, 0);
-        centralChallengeHash = Arrays.copyOfRange(raw, 2, 167); // 165 == Request.centralChallenge.length
+        // A peer's zero-knowledge-proof scalar is encoded with its minimal length, so a
+        // legitimate JPAKE round can be a byte or two shorter than the fixed-size cargo the pump
+        // frames it in (about 1 time in 256 per scalar). Accept a short cargo and zero-pad it back
+        // to the declared size instead of throwing: every field inside the round is
+        // length-prefixed, so EcJpake reads it correctly and ignores the padding. A cargo longer
+        // than the declared size is still rejected.
+        Validate.isTrue(raw.length <= props().size(), "size is "+raw.length+" not "+props().size());
+        this.cargo = Arrays.copyOf(raw, props().size());
+        appInstanceId = Bytes.readShort(this.cargo, 0);
+        centralChallengeHash = Arrays.copyOfRange(this.cargo, 2, 167); // 165 == Request.centralChallenge.length
     }
 
     public static byte[] buildCargo(int byte0short, byte[] bytes2to167) {
