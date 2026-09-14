@@ -247,7 +247,15 @@ public class EcJpake {
             }
             BigInteger xm2s = this.mulSecret(this.xm2, this.s, true /* negate */);
             ECPoint K = this.Xp.add(this.Xp2.multiply(xm2s)).multiply(this.xm2);
-            this.derivedSecret = this.hash.digest(BigIntegers.asUnsignedByteArray(K.normalize().getXCoord().toBigInteger()));
+            // PMS = SHA-256(K.X), where K.X is the x coordinate written out at the full field
+            // length. Using a minimal-length encoding here would hash 31 bytes instead of 32
+            // roughly 1 time in 256 (whenever the top byte of K.X is zero) and derive a secret
+            // which does not match the peer's. mbedtls_ecjpake_derive_secret writes
+            // x_bytes = (grp.pbits + 7) / 8 bytes via mbedtls_mpi_write_binary before hashing.
+            ECPoint K1 = K.normalize();
+            int fieldLen = (this.ec.getCurve().getFieldSize() + 7) / 8;
+            this.derivedSecret = this.hash.digest(
+                    BigIntegers.asUnsignedByteArray(fieldLen, K1.getXCoord().toBigInteger()));
         }
         return this.derivedSecret;
     }
