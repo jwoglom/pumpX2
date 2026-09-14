@@ -4,6 +4,9 @@ import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedOpCodeException;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1aResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake1bResponse;
+import com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response;
 import com.jwoglom.pumpx2.pump.messages.models.UnexpectedTransactionIdException;
 import com.jwoglom.pumpx2.shared.JavaHelpers;
 import com.jwoglom.pumpx2.shared.L;
@@ -30,6 +33,21 @@ public class PacketArrayList {
     protected boolean isSigned;
     protected byte[] fullCargo;
     protected byte[] messageData;
+
+    /**
+     * Messages whose framed cargo can legitimately be a little shorter than the size declared in
+     * their MessageProps. The JPAKE rounds embed a zero-knowledge-proof scalar which is encoded
+     * with its minimal length, so roughly 1 time in 256 per scalar the round is a byte shorter
+     * than its nominal length (see Jpake2Response.parse). Everything else has a genuinely fixed
+     * size and a mismatch there is an error.
+     */
+    private static final Set<Class<? extends Message>> SHORT_CARGO_TOLERANT_MESSAGES = Set.of(
+            Jpake1aResponse.class, Jpake1bResponse.class, Jpake2Response.class);
+
+    /** How many bytes shorter than the declared size such a cargo is allowed to be. */
+    private static final int MAX_SHORT_CARGO_BYTES = 4;
+
+    protected boolean tolerateShortCargo = false;
 
     protected byte firstByteMod15;
     protected byte opCode;
@@ -61,7 +79,9 @@ public class PacketArrayList {
             return new StreamPacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
         }
 
-        return new PacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
+        PacketArrayList packetArrayList = new PacketArrayList(expectedopCode, expectedCargoSize, expectedTxId, isSigned);
+        packetArrayList.tolerateShortCargo = SHORT_CARGO_TOLERANT_MESSAGES.contains(messageClass);
+        return packetArrayList;
     }
 
     public byte[] messageData() {
@@ -210,6 +230,17 @@ public class PacketArrayList {
                     L.t(TAG, "adding +24 expectedCargoSize for already signed request which contains an existing trailer");
                     expectedCargoSize += 24;
                     actualExpectedCargoSize += 24;
+                } else if (this.tolerateShortCargo
+                        && cargoSize < this.actualExpectedCargoSize
+                        && cargoSize >= this.actualExpectedCargoSize - MAX_SHORT_CARGO_BYTES) {
+                    // A JPAKE round whose minimal-length ZKP scalar made it shorter than nominal.
+                    // The CRC and any signature are computed over the declared size, so shrink the
+                    // expected size rather than rejecting the message.
+                    L.t(TAG, "accepting short cargo size " + cargoSize + " for opCode=" + opCode
+                            + ", expected " + this.actualExpectedCargoSize);
+                    this.expectedCargoSize = (byte) cargoSize;
+                    this.actualExpectedCargoSize = cargoSize;
+                    this.fullCargo = new byte[cargoSize + 2];
                 } else {
                     throw new IllegalArgumentException("Unexpected cargo size: " + ((int) cargoSize) + ", expecting " + ((int) this.actualExpectedCargoSize) + " for opCode="+opCode);
                 }

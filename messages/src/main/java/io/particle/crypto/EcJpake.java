@@ -247,7 +247,15 @@ public class EcJpake {
             }
             BigInteger xm2s = this.mulSecret(this.xm2, this.s, true /* negate */);
             ECPoint K = this.Xp.add(this.Xp2.multiply(xm2s)).multiply(this.xm2);
-            this.derivedSecret = this.hash.digest(BigIntegers.asUnsignedByteArray(K.normalize().getXCoord().toBigInteger()));
+            // PMS = SHA-256(K.X), where K.X is the x coordinate written out at the full field
+            // length. Using a minimal-length encoding here would hash 31 bytes instead of 32
+            // roughly 1 time in 256 (whenever the top byte of K.X is zero) and derive a secret
+            // which does not match the peer's. mbedtls_ecjpake_derive_secret writes
+            // x_bytes = (grp.pbits + 7) / 8 bytes via mbedtls_mpi_write_binary before hashing.
+            ECPoint K1 = K.normalize();
+            int fieldLen = (this.ec.getCurve().getFieldSize() + 7) / 8;
+            this.derivedSecret = this.hash.digest(
+                    BigIntegers.asUnsignedByteArray(fieldLen, K1.getXCoord().toBigInteger()));
         }
         return this.derivedSecret;
     }
@@ -321,8 +329,30 @@ public class EcJpake {
         return new BigInteger(1, encoded);
     }
 
+    /**
+     * Returns the length in bytes of a scalar modulo the curve order (32 for P-256).
+     */
+    private int scalarLen() {
+        return (this.ec.getN().bitLength() + 7) / 8;
+    }
+
     private void writeNum(OutputStream out, BigInteger val) {
-        byte[] encoded = BigIntegers.asUnsignedByteArray(val);
+        // The ZKP scalar r is uniform modulo the curve order, so roughly 1 time in 256 its most
+        // significant byte is zero. A minimal-length encoding (the literal mbedTLS behaviour,
+        // which writes mbedtls_mpi_size(&r) bytes) therefore makes the serialized round shorter
+        // than its nominal length, and the Tandem pairing protocol carries these rounds inside
+        // fixed-size message cargos (165/165 bytes for round 1, 165 or 168 for round 2). A short
+        // round gets zero-padded up to the fixed cargo size by the framing, which leaves a
+        // trailing junk byte that a strict peer (mbedTLS requires p == end after parsing a round)
+        // rejects -- so about 1 pairing in 256 failed.
+        //
+        // Writing the scalar zero-padded to the full curve length keeps our output deterministic
+        // and exactly the nominal size. It stays wire-compatible with a peer that expects the
+        // minimal-length encoding, because the field is length-prefixed and every reader turns
+        // those bytes into an integer: this class's readNum uses new BigInteger(1, encoded) and
+        // mbedTLS's ecjpake_zkp_read uses mbedtls_mpi_read_binary, both of which ignore leading
+        // zeroes and accept any length from 1 to 255.
+        byte[] encoded = BigIntegers.asUnsignedByteArray(this.scalarLen(), val);
         if (encoded.length > 255) {
             throw new RuntimeException("Encoded BigInteger is too long");
         }

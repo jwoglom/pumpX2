@@ -53,7 +53,10 @@ public class Jpake2Request extends Message {
 
     private static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {
         byte[] cargo = new byte[167];
-        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge), 0, cargo, 0, 167);
+        byte[] combined = Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge);
+        // A minimal-length ZKP scalar can make the JPAKE round a byte or two short; the remainder
+        // of the fixed-size cargo is left as zeroes, which the peer's length-prefixed parser skips.
+        System.arraycopy(combined, 0, cargo, 0, Math.min(combined.length, 167));
 
         return cargo;
     }
