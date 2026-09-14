@@ -260,7 +260,7 @@ public class Main {
             
         } catch (Exception e) {
             JSONObject result = new JSONObject();
-            result.put("error", "Exception during JPAKE authentication: " + e.getMessage());
+            result.put("error", "Exception during JPAKE authentication: " + e);
             System.out.println(result.toString());
             System.out.flush();
             return result.toString();
@@ -352,7 +352,7 @@ public class Main {
             return jpakeSessionKeyAndConfirmationRounds(scanner, derivedSecret, txId);
         } catch (Exception e) {
             JSONObject result = new JSONObject();
-            result.put("error", "Exception during server JPAKE authentication: " + e.getMessage());
+            result.put("error", "Exception during server JPAKE authentication: " + e);
             e.printStackTrace();
             return result.toString();
         }
@@ -372,7 +372,7 @@ public class Main {
             return jpakeSessionKeyAndConfirmationRounds(scanner, derivedSecret, txId);
         } catch (Exception e) {
             JSONObject result = new JSONObject();
-            result.put("error", "Exception during resumed server JPAKE authentication: " + e.getMessage());
+            result.put("error", "Exception during resumed server JPAKE authentication: " + e);
             e.printStackTrace();
             return result.toString();
         }
@@ -606,7 +606,11 @@ public class Main {
         for (Constructor<?> constructor : messageClass.getConstructors()) {
             if (constructor.getParameterCount() == paramCount) {
                 if (constructor.getParameterCount() == 0) {
-                    message = (Message) constructor.newInstance();
+                    try {
+                        message = (Message) constructor.newInstance();
+                    } catch (InvocationTargetException e) {
+                        throw unwrapConstructorFailure(messageName, e);
+                    }
                     message.fillWithEmptyCargo();
                     params = new Object[0];
                     break;
@@ -633,7 +637,11 @@ public class Main {
                     
                     params[i] = convertToParameterType(value, parameter.getType());
                 }
-                message = (Message) constructor.newInstance(params);
+                try {
+                    message = (Message) constructor.newInstance(params);
+                } catch (InvocationTargetException e) {
+                    throw unwrapConstructorFailure(messageName, e);
+                }
                 break;
             }
         }
@@ -643,6 +651,20 @@ public class Main {
         }
         byte currentTxId = (byte) Integer.valueOf(txId).byteValue();
         return encode(currentTxId, message, params);
+    }
+
+    /**
+     * Constructor.newInstance wraps whatever the message constructor threw inside an
+     * InvocationTargetException whose own getMessage() is null. Callers which report
+     * e.getMessage() -- the jpake-server flows in this class, and other programs which drive it
+     * as a library -- then surface an undiagnosable bare "null" instead of the real failure
+     * (for example a cargo size validation failure inside a JPAKE response). Rethrow with the
+     * cause's type and message in the text, keeping the original exception as the cause.
+     */
+    private static RuntimeException unwrapConstructorFailure(String messageName, InvocationTargetException e) {
+        Throwable cause = e.getCause() != null ? e.getCause() : e;
+        return new IllegalArgumentException("Unable to build message " + messageName + ": "
+                + cause.getClass().getName() + ": " + cause.getMessage(), cause);
     }
 
     private static String encode(byte currentTxId, Message message, @Nullable Object[] params) {
