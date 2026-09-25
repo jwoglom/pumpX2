@@ -105,6 +105,8 @@ public class HistoryLogParser {
         HistoryRequestCountersHistoryLog.class,
         HistoryRequestRangeHistoryLog.class,
         ControlRequestCountersHistoryLog.class,
+        ControlStreamCountersHistoryLog.class,
+        AuthorizationCountersHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
         TipsErrorHistoryLog.class
         // MESSAGES_END
