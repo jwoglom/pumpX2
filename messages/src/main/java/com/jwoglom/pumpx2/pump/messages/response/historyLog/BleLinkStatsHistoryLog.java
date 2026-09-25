@@ -6,7 +6,7 @@ import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 
 /**
  * Hourly Tandem Mobi record of six signed-byte statistics, probably of the BLE link's RSSI in dBm
- * (values -95 to -18; not cross-checked against phone-side RSSI). In all 376 records from five
+ * (values -95 to -18; not cross-checked against phone-side RSSI). In all 376 records from four
  * pumps, {@link #getMinimum()} is the lowest and {@link #getMaximum()} the highest of the six,
  * bytes 13-15 are non-decreasing multiples of 5 between them, and byte 12 lies between bytes 13
  * and 15. Written at a fixed minute that differs between pumps.
