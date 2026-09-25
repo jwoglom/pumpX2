@@ -102,6 +102,9 @@ public class HistoryLogParser {
         AlertAckHistoryLog.class,
         ReminderActivatedHistoryLog.class,
         ReminderDismissedHistoryLog.class,
+        HistoryRequestCountersHistoryLog.class,
+        HistoryRequestRangeHistoryLog.class,
+        ControlRequestCountersHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
         TipsErrorHistoryLog.class
         // MESSAGES_END
