@@ -47,8 +47,9 @@ public class CgmStopSessionHistoryLog extends HistoryLog {
         this.currentTransmitterTime = Bytes.readUint32(raw, 10);
         this.sessionStartTime = Bytes.readUint32(raw, 14);
         this.sessionStopTime = Bytes.readUint32(raw, 18);
-        this.sessionStopReasonRaw = raw[24] & 0xFF;
-        this.sessionDuration = raw[25] & 0xFF;
+        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.
+        this.sessionDuration = raw[22] & 0xFF;
+        this.sessionStopReasonRaw = raw[23] & 0xFF;
 
     }
 
@@ -64,9 +65,8 @@ public class CgmStopSessionHistoryLog extends HistoryLog {
             Bytes.toUint32(currentTransmitterTime),
             Bytes.toUint32(sessionStartTime),
             Bytes.toUint32(sessionStopTime),
-            new byte[]{0, 0},
-            new byte[]{(byte) sessionStopReasonRaw},
-            new byte[]{(byte) sessionDuration}));
+            new byte[]{(byte) sessionDuration},
+            new byte[]{(byte) sessionStopReasonRaw}));
     }
 
     /**
