@@ -87,10 +87,20 @@ public class BGHistoryLog extends HistoryLog {
     }
 
     /**
-     * @return TODO(unknown)
+     * @return 1 if this BG was used to calibrate the CGM, 0 if not (Tandem's cloud schema; Tandem's
+     * Mobi app reads it as a boolean). On the wire, each of 3 records with 1 was written in the same
+     * second as a CGM calibration history log carrying the same BG, and none of 199 records with 0
+     * was.
      */
     public int getCgmCalibration() {
         return cgmCalibration;
+    }
+
+    /**
+     * @return whether this BG was used to calibrate the CGM; see {@link #getCgmCalibration()}
+     */
+    public boolean isUsedForCgmCalibration() {
+        return cgmCalibration != 0;
     }
 
     public int getBgSourceId() {
@@ -98,7 +108,9 @@ public class BGHistoryLog extends HistoryLog {
     }
 
     /**
-     * @return the source of the BG entry (CGM or manual)
+     * @return the source of the BG entry (CGM or manual). Tandem's cloud schema names this byte
+     * {@code bgEntryType}: 0 = entered manually on the numpad, 1 = auto-populated from the
+     * Dexcom EGV, which agrees with {@link LastBGResponse.BgSource#MANUAL}/{@link LastBGResponse.BgSource#CGM}.
      */
     public LastBGResponse.BgSource getBgSource() {
         return LastBGResponse.BgSource.fromId(bgSourceId);
@@ -125,12 +137,64 @@ public class BGHistoryLog extends HistoryLog {
         return isf;
     }
 
+    /**
+     * @return the raw IOB-algorithm id; see {@link #getSelectedIOBType()}
+     */
     public int getSelectedIOB() {
         return selectedIOB;
     }
 
+    /**
+     * @return the IOB algorithm in use when the BG was taken, or null if the raw value is not
+     * recognized
+     */
+    public BolusRequestedMsg2HistoryLog.SelectedIOBType getSelectedIOBType() {
+        return BolusRequestedMsg2HistoryLog.SelectedIOBType.fromId(selectedIOB);
+    }
+
+    /**
+     * @return the raw BG source type id; see {@link #getBgSourceTypeEnum()}
+     */
     public int getBgSourceType() {
         return bgSourceType;
+    }
+
+    /**
+     * @return whether the BG was entered on the pump or remotely, or null if the raw value is
+     * not recognized
+     */
+    public BgSourceType getBgSourceTypeEnum() {
+        return BgSourceType.fromId(bgSourceType);
+    }
+
+    /**
+     * Where the BG entry was made. Value names come from Tandem's cloud schema (tconnectsync
+     * {@code bgSourceType}). In captures, BGs with {@link #REMOTE_ENTRY} preceded Bluetooth (app)
+     * boluses (97 of the 98 that were followed by a bolus) and BGs with {@link #LOCAL_PUMP_ENTRY}
+     * never did (0 of 81).
+     */
+    public enum BgSourceType {
+        LOCAL_PUMP_ENTRY(0),
+        REMOTE_ENTRY(1),
+        ;
+
+        private final int id;
+        BgSourceType(int id) {
+            this.id = id;
+        }
+
+        public int id() {
+            return id;
+        }
+
+        public static BgSourceType fromId(int id) {
+            for (BgSourceType b : values()) {
+                if (b.id() == id) {
+                    return b;
+                }
+            }
+            return null;
+        }
     }
 
     public int getSpare() {
