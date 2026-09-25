@@ -100,6 +100,8 @@ public class HistoryLogParser {
         VersionsAHistoryLog.class,
         AlarmAckHistoryLog.class,
         AlertAckHistoryLog.class,
+        DismissNotificationResponseHistoryLog.class,
+        AamAnnunciationHistoryLog.class,
         ReminderActivatedHistoryLog.class,
         ReminderDismissedHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
