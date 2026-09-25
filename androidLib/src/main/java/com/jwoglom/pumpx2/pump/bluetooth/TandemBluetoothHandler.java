@@ -222,8 +222,8 @@ public class TandemBluetoothHandler {
     }
 
     /**
-     * The connection-priority maintenance behavior (and the related connection lifecycle
-     * changes) is opt-in via {@link TandemPump#enablePeriodicConnectionPriorityReassert()}.
+     * The connection-priority maintenance behavior is opt-in via
+     * {@link TandemPump#enablePeriodicConnectionPriorityReassert()}.
      */
     private boolean isPeriodicConnectionPriorityReassertEnabled() {
         return tandemPump != null && tandemPump.isPeriodicConnectionPriorityReassertEnabled();
@@ -254,12 +254,10 @@ public class TandemBluetoothHandler {
             // again would accumulate duplicate trees in Timber's global forest, multiplying
             // every pumpX2 log line by the number of handler constructions. Uproot first so
             // planting is idempotent - but tolerate the not-planted case (fresh process).
-            if (isPeriodicConnectionPriorityReassertEnabled()) {
-                try {
-                    Timber.uproot(timberTree);
-                } catch (IllegalArgumentException ignored) {
-                    // tree was not planted - nothing to remove
-                }
+            try {
+                Timber.uproot(timberTree);
+            } catch (IllegalArgumentException ignored) {
+                // tree was not planted - nothing to remove
             }
             Timber.plant(timberTree);
             LConfigurator.enableTimber();
@@ -1019,7 +1017,7 @@ public class TandemBluetoothHandler {
                 // already-dead link) is expected noise, not an emergency: raising a critical
                 // error here causes churn during host-initiated disconnects. Genuine mid-link
                 // failures still have state CONNECTED and are reported as before.
-                if (isPeriodicConnectionPriorityReassertEnabled() && peripheral.getState() != ConnectionState.CONNECTED) {
+                if (peripheral.getState() != ConnectionState.CONNECTED) {
                     Timber.d("Ignoring onConnectionUpdated %s while not connected (state=%s)", status, peripheral.getState());
                     return;
                 }
@@ -1076,9 +1074,7 @@ public class TandemBluetoothHandler {
             Timber.i("TandemBluetoothHandler: connected to '%s'", peripheral.getName());
             // If the address-filtered scan race lost to the background autoConnect, its
             // low-latency scanner is still running - stop it (harmless if not scanning).
-            if (isPeriodicConnectionPriorityReassertEnabled()) {
-                central.stopScan();
-            }
+            central.stopScan();
             PumpState.clearInitialConnectionHardAuthFailure();
             PumpState.resetInitialConnectionNoReplyFailures();
             this.reconnectDelay = 250;
@@ -1092,10 +1088,8 @@ public class TandemBluetoothHandler {
             // also fails (e.g. transient ERROR right after connect) nothing re-kicks the
             // reconnect machinery and the queue is left without any pending connection.
             // Schedule our own bounded-cadence retry.
-            if (isPeriodicConnectionPriorityReassertEnabled()) {
-                Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in 5000 ms after connection failure");
-                handler.postDelayed(TandemBluetoothHandler.this::immediateConnectToPeripheral, 5000);
-            }
+            Timber.d("TandemBluetoothHandler: scheduling immediateConnectToPeripheral in 5000 ms after connection failure");
+            handler.postDelayed(TandemBluetoothHandler.this::immediateConnectToPeripheral, 5000);
 
             tandemPump.onPumpCriticalError(peripheral,
                     TandemError.BT_CONNECTION_FAILED.withExtra("status: " + status));
@@ -1120,9 +1114,7 @@ public class TandemBluetoothHandler {
 
             Timber.i("TandemBluetoothHandler: disconnected '%s' with status %s (reconnectDelay: %d ms reason=%s)", peripheral.getName(), status, reconnectDelay, disconnectReason);
             // Stop any lingering scan from the previous connect cycle before the next one starts.
-            if (isPeriodicConnectionPriorityReassertEnabled()) {
-                central.stopScan();
-            }
+            central.stopScan();
             PumpState.clearRequestMessages();
             Packetize.txId.reset();
             resetRemainingConnectionInitializationSteps();
@@ -1232,7 +1224,7 @@ public class TandemBluetoothHandler {
     public static synchronized TandemBluetoothHandler getInstance(Context context, TandemPump tandemPump, @Nullable Timber.Tree logTree) {
         if (instance == null) {
             instance = new TandemBluetoothHandler(context.getApplicationContext(), tandemPump, logTree);
-        } else if (tandemPump != null && tandemPump.isPeriodicConnectionPriorityReassertEnabled()) {
+        } else {
             // Rebind the host: the previous host instance may have been torn down with its
             // communication manager, and callbacks must reach the live one.
             instance.tandemPump = tandemPump;
@@ -1250,12 +1242,10 @@ public class TandemBluetoothHandler {
         // alongside the freshly constructed handler, producing duplicate connections and
         // multiplied log output (observed as 3 simultaneous "initial pump connection
         // established" from three abandoned instances).
-        if (instance.isPeriodicConnectionPriorityReassertEnabled()) {
-            try {
-                instance.stop();
-            } catch (Exception e) {
-                Timber.e(e, "resetInstance: teardown of outgoing handler failed");
-            }
+        try {
+            instance.stop();
+        } catch (Exception e) {
+            Timber.e(e, "resetInstance: teardown of outgoing handler failed");
         }
         instance = null;
     }
@@ -1276,9 +1266,7 @@ public class TandemBluetoothHandler {
                 // blessed delivers whichever wins; a rare duplicate is dropped by the pump
                 // within seconds, whereas relying on autoConnect alone costs minutes.
                 central.autoConnectPeripheral(peripheral, peripheralCallback);
-                if (isPeriodicConnectionPriorityReassertEnabled()) {
-                    central.scanForPeripheralsWithAddresses(new String[]{ peripheral.getAddress() });
-                }
+                central.scanForPeripheralsWithAddresses(new String[]{ peripheral.getAddress() });
                 return;
             } else {
                 Timber.i("TandemBluetoothHandler: onPumpDiscovered callback said to skip bonded pump %s", peripheral);
