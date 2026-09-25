@@ -37,49 +37,58 @@
 <span class="source-line-no">020</span><span id="line-20">    public abstract Instant getTimestampInstant();</span>
 <span class="source-line-no">021</span><span id="line-21">    public abstract long getDeliveredVolume();</span>
 <span class="source-line-no">022</span><span id="line-22">    public abstract int getBolusStatusId();</span>
-<span class="source-line-no">023</span><span id="line-23">    public enum BolusStatus {</span>
-<span class="source-line-no">024</span><span id="line-24">        // TODO: this is guesswork and is incomplete</span>
-<span class="source-line-no">025</span><span id="line-25">        STOPPED_USER_TERMINATED(0),</span>
-<span class="source-line-no">026</span><span id="line-26">        STOPPED_ALARM(1),</span>
-<span class="source-line-no">027</span><span id="line-27">        STOPPED_MALFUNCTION(2),</span>
-<span class="source-line-no">028</span><span id="line-28">        COMPLETE(3),</span>
-<span class="source-line-no">029</span><span id="line-29">        STOPPED_WIRELESS(4),</span>
-<span class="source-line-no">030</span><span id="line-30">        REJECTED_WIRELESS(5),</span>
-<span class="source-line-no">031</span><span id="line-31">        TERMINATED_PLGS(6),</span>
-<span class="source-line-no">032</span><span id="line-32">        ;</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">        private final int id;</span>
-<span class="source-line-no">035</span><span id="line-35">        BolusStatus(int id) {</span>
-<span class="source-line-no">036</span><span id="line-36">            this.id = id;</span>
-<span class="source-line-no">037</span><span id="line-37">        }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">        public int id() {</span>
-<span class="source-line-no">040</span><span id="line-40">            return id;</span>
-<span class="source-line-no">041</span><span id="line-41">        }</span>
+<span class="source-line-no">023</span><span id="line-23">    /**</span>
+<span class="source-line-no">024</span><span id="line-24">     * Bolus completion status. Ids 0-6 and their meanings match Tandem's own names for the</span>
+<span class="source-line-no">025</span><span id="line-25">     * completionStatus field of history logs 20 (BolusCompleted) and 21 (BolexCompleted):</span>
+<span class="source-line-no">026</span><span id="line-26">     * USER_ABORTED, TERMINATED_BY_ALARM, TERMINATED_BY_MALFUNCTION, COMPLETED,</span>
+<span class="source-line-no">027</span><span id="line-27">     * ABORTED_VIA_WIRELESS_LINK, REJECTED_REQUEST_VIA_WIRELESS_LINK, ABORTED_BY_PLGS.</span>
+<span class="source-line-no">028</span><span id="line-28">     *</span>
+<span class="source-line-no">029</span><span id="line-29">     * &lt;p&gt;Seen in history logs so far: {@link #COMPLETE}, {@link #STOPPED_USER_TERMINATED} (also</span>
+<span class="source-line-no">030</span><span id="line-30">     * written when the bolus is cancelled over Bluetooth with CancelBolusRequest) and</span>
+<span class="source-line-no">031</span><span id="line-31">     * {@link #STOPPED_ALARM}. 2, 4, 5 and 6 have not been observed.</span>
+<span class="source-line-no">032</span><span id="line-32">     */</span>
+<span class="source-line-no">033</span><span id="line-33">    public enum BolusStatus {</span>
+<span class="source-line-no">034</span><span id="line-34">        STOPPED_USER_TERMINATED(0),</span>
+<span class="source-line-no">035</span><span id="line-35">        STOPPED_ALARM(1),</span>
+<span class="source-line-no">036</span><span id="line-36">        STOPPED_MALFUNCTION(2),</span>
+<span class="source-line-no">037</span><span id="line-37">        COMPLETE(3),</span>
+<span class="source-line-no">038</span><span id="line-38">        STOPPED_WIRELESS(4),</span>
+<span class="source-line-no">039</span><span id="line-39">        REJECTED_WIRELESS(5),</span>
+<span class="source-line-no">040</span><span id="line-40">        TERMINATED_PLGS(6),</span>
+<span class="source-line-no">041</span><span id="line-41">        ;</span>
 <span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">        public static BolusStatus fromId(int id) {</span>
-<span class="source-line-no">044</span><span id="line-44">            for (BolusStatus s : values()) {</span>
-<span class="source-line-no">045</span><span id="line-45">                if (s.id() == id) {</span>
-<span class="source-line-no">046</span><span id="line-46">                    return s;</span>
-<span class="source-line-no">047</span><span id="line-47">                }</span>
-<span class="source-line-no">048</span><span id="line-48">            }</span>
-<span class="source-line-no">049</span><span id="line-49">            return null;</span>
+<span class="source-line-no">043</span><span id="line-43">        private final int id;</span>
+<span class="source-line-no">044</span><span id="line-44">        BolusStatus(int id) {</span>
+<span class="source-line-no">045</span><span id="line-45">            this.id = id;</span>
+<span class="source-line-no">046</span><span id="line-46">        }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">        public int id() {</span>
+<span class="source-line-no">049</span><span id="line-49">            return id;</span>
 <span class="source-line-no">050</span><span id="line-50">        }</span>
-<span class="source-line-no">051</span><span id="line-51">    }</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">    public BolusStatus getBolusStatus() {</span>
-<span class="source-line-no">054</span><span id="line-54">        return BolusStatus.fromId(getBolusStatusId());</span>
-<span class="source-line-no">055</span><span id="line-55">    }</span>
-<span class="source-line-no">056</span><span id="line-56">    public abstract int getBolusSourceId();</span>
-<span class="source-line-no">057</span><span id="line-57">    public BolusDeliveryHistoryLog.BolusSource getBolusSource() {</span>
-<span class="source-line-no">058</span><span id="line-58">        return BolusDeliveryHistoryLog.BolusSource.fromId(getBolusSourceId());</span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60">    public abstract int getBolusTypeBitmask();</span>
-<span class="source-line-no">061</span><span id="line-61">    public Set&lt;BolusDeliveryHistoryLog.BolusType&gt; getBolusType() {</span>
-<span class="source-line-no">062</span><span id="line-62">        return BolusDeliveryHistoryLog.BolusType.fromBitmask(getBolusTypeBitmask());</span>
-<span class="source-line-no">063</span><span id="line-63">    }</span>
-<span class="source-line-no">064</span><span id="line-64">    public abstract long getExtendedBolusDuration();</span>
-<span class="source-line-no">065</span><span id="line-65">}</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">        public static BolusStatus fromId(int id) {</span>
+<span class="source-line-no">053</span><span id="line-53">            for (BolusStatus s : values()) {</span>
+<span class="source-line-no">054</span><span id="line-54">                if (s.id() == id) {</span>
+<span class="source-line-no">055</span><span id="line-55">                    return s;</span>
+<span class="source-line-no">056</span><span id="line-56">                }</span>
+<span class="source-line-no">057</span><span id="line-57">            }</span>
+<span class="source-line-no">058</span><span id="line-58">            return null;</span>
+<span class="source-line-no">059</span><span id="line-59">        }</span>
+<span class="source-line-no">060</span><span id="line-60">    }</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    public BolusStatus getBolusStatus() {</span>
+<span class="source-line-no">063</span><span id="line-63">        return BolusStatus.fromId(getBolusStatusId());</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65">    public abstract int getBolusSourceId();</span>
+<span class="source-line-no">066</span><span id="line-66">    public BolusDeliveryHistoryLog.BolusSource getBolusSource() {</span>
+<span class="source-line-no">067</span><span id="line-67">        return BolusDeliveryHistoryLog.BolusSource.fromId(getBolusSourceId());</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69">    public abstract int getBolusTypeBitmask();</span>
+<span class="source-line-no">070</span><span id="line-70">    public Set&lt;BolusDeliveryHistoryLog.BolusType&gt; getBolusType() {</span>
+<span class="source-line-no">071</span><span id="line-71">        return BolusDeliveryHistoryLog.BolusType.fromBitmask(getBolusTypeBitmask());</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73">    public abstract long getExtendedBolusDuration();</span>
+<span class="source-line-no">074</span><span id="line-74">}</span>
 
 
 
