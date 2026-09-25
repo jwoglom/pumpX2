@@ -148,127 +148,170 @@
 <span class="source-line-no">131</span><span id="line-131">    public int getBolusID() {</span>
 <span class="source-line-no">132</span><span id="line-132">        return bolusID;</span>
 <span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134">    public int getBolusDeliveryStatusId() {</span>
-<span class="source-line-no">135</span><span id="line-135">        return bolusDeliveryStatusId;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137">    public int getBolusTypeBitmask() {</span>
-<span class="source-line-no">138</span><span id="line-138">        return bolusTypeBitmask;</span>
+<span class="source-line-no">134</span><span id="line-134">    /**</span>
+<span class="source-line-no">135</span><span id="line-135">     * @return the raw delivery status id; see {@link #getBolusDeliveryStatus()}</span>
+<span class="source-line-no">136</span><span id="line-136">     */</span>
+<span class="source-line-no">137</span><span id="line-137">    public int getBolusDeliveryStatusId() {</span>
+<span class="source-line-no">138</span><span id="line-138">        return bolusDeliveryStatusId;</span>
 <span class="source-line-no">139</span><span id="line-139">    }</span>
-<span class="source-line-no">140</span><span id="line-140">    public int getBolusSourceId() {</span>
-<span class="source-line-no">141</span><span id="line-141">        return bolusSource;</span>
-<span class="source-line-no">142</span><span id="line-142">    }</span>
-<span class="source-line-no">143</span><span id="line-143">    /**</span>
-<span class="source-line-no">144</span><span id="line-144">     * Byte 15, named {@code remoteId} in Tandem's data export. In every record observed so far it</span>
-<span class="source-line-no">145</span><span id="line-145">     * equals {@code bolusId &amp; 0xFF} (312/312 records in a Mobi capture and all earlier t:slim X2</span>
-<span class="source-line-no">146</span><span id="line-146">     * fixtures), i.e. the low byte of the bolus ID echoed back. Previously exposed as</span>
-<span class="source-line-no">147</span><span id="line-147">     * {@link #getReserved()}; see https://github.com/jwoglom/pumpx2/issues/78.</span>
-<span class="source-line-no">148</span><span id="line-148">     */</span>
-<span class="source-line-no">149</span><span id="line-149">    public int getRemoteId() {</span>
-<span class="source-line-no">150</span><span id="line-150">        return remoteId;</span>
-<span class="source-line-no">151</span><span id="line-151">    }</span>
-<span class="source-line-no">152</span><span id="line-152">    /**</span>
-<span class="source-line-no">153</span><span id="line-153">     * @deprecated byte 15 is not reserved; use {@link #getRemoteId()}.</span>
-<span class="source-line-no">154</span><span id="line-154">     */</span>
-<span class="source-line-no">155</span><span id="line-155">    @Deprecated</span>
-<span class="source-line-no">156</span><span id="line-156">    public int getReserved() {</span>
-<span class="source-line-no">157</span><span id="line-157">        return getRemoteId();</span>
-<span class="source-line-no">158</span><span id="line-158">    }</span>
-<span class="source-line-no">159</span><span id="line-159">    public int getRequestedNow() {</span>
-<span class="source-line-no">160</span><span id="line-160">        return requestedNow;</span>
-<span class="source-line-no">161</span><span id="line-161">    }</span>
-<span class="source-line-no">162</span><span id="line-162">    public int getRequestedLater() {</span>
-<span class="source-line-no">163</span><span id="line-163">        return requestedLater;</span>
-<span class="source-line-no">164</span><span id="line-164">    }</span>
-<span class="source-line-no">165</span><span id="line-165">    public int getCorrection() {</span>
-<span class="source-line-no">166</span><span id="line-166">        return correction;</span>
-<span class="source-line-no">167</span><span id="line-167">    }</span>
-<span class="source-line-no">168</span><span id="line-168">    public int getExtendedDurationRequested() {</span>
-<span class="source-line-no">169</span><span id="line-169">        return extendedDurationRequested;</span>
-<span class="source-line-no">170</span><span id="line-170">    }</span>
-<span class="source-line-no">171</span><span id="line-171">    public int getDeliveredTotal() {</span>
-<span class="source-line-no">172</span><span id="line-172">        return deliveredTotal;</span>
-<span class="source-line-no">173</span><span id="line-173">    }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">    public BolusSource getBolusSource() {</span>
-<span class="source-line-no">176</span><span id="line-176">        return BolusSource.fromId(bolusSource);</span>
-<span class="source-line-no">177</span><span id="line-177">    }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">    public enum BolusSource {</span>
-<span class="source-line-no">180</span><span id="line-180">        QUICK_BOLUS(0),</span>
-<span class="source-line-no">181</span><span id="line-181">        GUI(1),</span>
-<span class="source-line-no">182</span><span id="line-182">        CONTROL_IQ_AUTO_BOLUS(7),</span>
-<span class="source-line-no">183</span><span id="line-183">        BLUETOOTH_REMOTE_BOLUS(8),</span>
-<span class="source-line-no">184</span><span id="line-184"></span>
-<span class="source-line-no">185</span><span id="line-185">        ;</span>
-<span class="source-line-no">186</span><span id="line-186">        private int id;</span>
-<span class="source-line-no">187</span><span id="line-187">        BolusSource(int id) {</span>
-<span class="source-line-no">188</span><span id="line-188">            this.id = id;</span>
-<span class="source-line-no">189</span><span id="line-189">        }</span>
-<span class="source-line-no">190</span><span id="line-190">        public int id() {</span>
-<span class="source-line-no">191</span><span id="line-191">            return id;</span>
-<span class="source-line-no">192</span><span id="line-192">        }</span>
-<span class="source-line-no">193</span><span id="line-193">        public static BolusSource fromId(int id) {</span>
-<span class="source-line-no">194</span><span id="line-194">            for (BolusSource b : values()) {</span>
-<span class="source-line-no">195</span><span id="line-195">                if (b.id == id) return b;</span>
-<span class="source-line-no">196</span><span id="line-196">            }</span>
-<span class="source-line-no">197</span><span id="line-197">            return null;</span>
-<span class="source-line-no">198</span><span id="line-198">        }</span>
-<span class="source-line-no">199</span><span id="line-199">    }</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">    public Set&lt;BolusType&gt; getBolusTypes() {</span>
-<span class="source-line-no">202</span><span id="line-202">        return BolusType.fromBitmask(getBolusTypeBitmask());</span>
-<span class="source-line-no">203</span><span id="line-203">    }</span>
-<span class="source-line-no">204</span><span id="line-204"></span>
-<span class="source-line-no">205</span><span id="line-205">    /**</span>
-<span class="source-line-no">206</span><span id="line-206">     * Bitmask decoded from {@code bolusTypeBitmask} (byte offset 13). The mapping below was</span>
-<span class="source-line-no">207</span><span id="line-207">     * validated by cross-correlating every opcode-280 record in a 48k-record real-pump capture</span>
-<span class="source-line-no">208</span><span id="line-208">     * against its bolus's opcode-64 ({@link BolusRequestedMsg1HistoryLog}) and opcode-66</span>
-<span class="source-line-no">209</span><span id="line-209">     * (BolusRequestedMsg3HistoryLog) records by bolus ID: {@code CARB} agreed with MSG1's</span>
-<span class="source-line-no">210</span><span id="line-210">     * carb amount being nonzero, {@code CORRECTION} agreed with MSG1's correction-included flag</span>
-<span class="source-line-no">211</span><span id="line-211">     * and MSG3's correction bolus size being nonzero, and {@code OVERRIDE} agreed with MSG2's</span>
-<span class="source-line-no">212</span><span id="line-212">     * user-override flag, across all 286 boluses observed. {@code NOW} was set on every record</span>
-<span class="source-line-no">213</span><span id="line-213">     * in the capture. The capture contained no extended or eating-soon-mode boluses, so</span>
-<span class="source-line-no">214</span><span id="line-214">     * {@code LATER} and {@code EATING_SOON_MODE} are ported from tconnectsync's semantics but</span>
-<span class="source-line-no">215</span><span id="line-215">     * remain unexercised against real pump data.</span>
-<span class="source-line-no">216</span><span id="line-216">     *</span>
-<span class="source-line-no">217</span><span id="line-217">     * &lt;p&gt;The previous {@code FOOD1(1)/CORRECTION(2)/EXTENDED(4)/FOOD2(8)} mapping could not</span>
-<span class="source-line-no">218</span><span id="line-218">     * explain the observed bit-16 (carb) values and its bit-2 value never appeared in the</span>
-<span class="source-line-no">219</span><span id="line-219">     * capture; see https://github.com/jwoglom/pumpx2/issues/78.</span>
-<span class="source-line-no">220</span><span id="line-220">     */</span>
-<span class="source-line-no">221</span><span id="line-221">    public enum BolusType {</span>
-<span class="source-line-no">222</span><span id="line-222">        NOW(1),</span>
-<span class="source-line-no">223</span><span id="line-223">        LATER(2),</span>
-<span class="source-line-no">224</span><span id="line-224">        OVERRIDE(4),</span>
-<span class="source-line-no">225</span><span id="line-225">        CORRECTION(8),</span>
-<span class="source-line-no">226</span><span id="line-226">        CARB(16),</span>
-<span class="source-line-no">227</span><span id="line-227">        EATING_SOON_MODE(32),</span>
-<span class="source-line-no">228</span><span id="line-228">        ;</span>
-<span class="source-line-no">229</span><span id="line-229">        private int mask;</span>
-<span class="source-line-no">230</span><span id="line-230">        BolusType(int mask) {</span>
-<span class="source-line-no">231</span><span id="line-231">            this.mask = mask;</span>
-<span class="source-line-no">232</span><span id="line-232">        }</span>
-<span class="source-line-no">233</span><span id="line-233">        public int mask() {</span>
-<span class="source-line-no">234</span><span id="line-234">            return mask;</span>
-<span class="source-line-no">235</span><span id="line-235">        }</span>
-<span class="source-line-no">236</span><span id="line-236">        public static Set&lt;BolusType&gt; fromBitmask(int bitmask) {</span>
-<span class="source-line-no">237</span><span id="line-237">            Set&lt;BolusType&gt; ret = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">238</span><span id="line-238">            for (BolusType b : values()) {</span>
-<span class="source-line-no">239</span><span id="line-239">                if ((bitmask &amp; b.mask()) != 0) {</span>
-<span class="source-line-no">240</span><span id="line-240">                    ret.add(b);</span>
-<span class="source-line-no">241</span><span id="line-241">                }</span>
-<span class="source-line-no">242</span><span id="line-242">            }</span>
-<span class="source-line-no">243</span><span id="line-243">            return ret;</span>
-<span class="source-line-no">244</span><span id="line-244">        }</span>
-<span class="source-line-no">245</span><span id="line-245">        public static int toBitmask(BolusType ...types) {</span>
-<span class="source-line-no">246</span><span id="line-246">            int bitmask = 0;</span>
-<span class="source-line-no">247</span><span id="line-247">            for (BolusType b : types) {</span>
-<span class="source-line-no">248</span><span id="line-248">                bitmask |= b.mask();</span>
-<span class="source-line-no">249</span><span id="line-249">            }</span>
-<span class="source-line-no">250</span><span id="line-250">            return bitmask;</span>
-<span class="source-line-no">251</span><span id="line-251">        }</span>
-<span class="source-line-no">252</span><span id="line-252">    }</span>
-<span class="source-line-no">253</span><span id="line-253">    </span>
-<span class="source-line-no">254</span><span id="line-254">}</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">    /**</span>
+<span class="source-line-no">142</span><span id="line-142">     * @return whether this record marks the start or the completion of the bolus, or null if the</span>
+<span class="source-line-no">143</span><span id="line-143">     * raw value is not recognized</span>
+<span class="source-line-no">144</span><span id="line-144">     */</span>
+<span class="source-line-no">145</span><span id="line-145">    public BolusDeliveryStatus getBolusDeliveryStatus() {</span>
+<span class="source-line-no">146</span><span id="line-146">        return BolusDeliveryStatus.fromId(bolusDeliveryStatusId);</span>
+<span class="source-line-no">147</span><span id="line-147">    }</span>
+<span class="source-line-no">148</span><span id="line-148">    public int getBolusTypeBitmask() {</span>
+<span class="source-line-no">149</span><span id="line-149">        return bolusTypeBitmask;</span>
+<span class="source-line-no">150</span><span id="line-150">    }</span>
+<span class="source-line-no">151</span><span id="line-151">    public int getBolusSourceId() {</span>
+<span class="source-line-no">152</span><span id="line-152">        return bolusSource;</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
+<span class="source-line-no">154</span><span id="line-154">    /**</span>
+<span class="source-line-no">155</span><span id="line-155">     * Byte 15, named {@code remoteId} in Tandem's data export. In every record observed so far it</span>
+<span class="source-line-no">156</span><span id="line-156">     * equals {@code bolusId &amp; 0xFF} (312/312 records in a Mobi capture and all earlier t:slim X2</span>
+<span class="source-line-no">157</span><span id="line-157">     * fixtures), i.e. the low byte of the bolus ID echoed back. Previously exposed as</span>
+<span class="source-line-no">158</span><span id="line-158">     * {@link #getReserved()}; see https://github.com/jwoglom/pumpx2/issues/78.</span>
+<span class="source-line-no">159</span><span id="line-159">     */</span>
+<span class="source-line-no">160</span><span id="line-160">    public int getRemoteId() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return remoteId;</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163">    /**</span>
+<span class="source-line-no">164</span><span id="line-164">     * @deprecated byte 15 is not reserved; use {@link #getRemoteId()}.</span>
+<span class="source-line-no">165</span><span id="line-165">     */</span>
+<span class="source-line-no">166</span><span id="line-166">    @Deprecated</span>
+<span class="source-line-no">167</span><span id="line-167">    public int getReserved() {</span>
+<span class="source-line-no">168</span><span id="line-168">        return getRemoteId();</span>
+<span class="source-line-no">169</span><span id="line-169">    }</span>
+<span class="source-line-no">170</span><span id="line-170">    public int getRequestedNow() {</span>
+<span class="source-line-no">171</span><span id="line-171">        return requestedNow;</span>
+<span class="source-line-no">172</span><span id="line-172">    }</span>
+<span class="source-line-no">173</span><span id="line-173">    public int getRequestedLater() {</span>
+<span class="source-line-no">174</span><span id="line-174">        return requestedLater;</span>
+<span class="source-line-no">175</span><span id="line-175">    }</span>
+<span class="source-line-no">176</span><span id="line-176">    public int getCorrection() {</span>
+<span class="source-line-no">177</span><span id="line-177">        return correction;</span>
+<span class="source-line-no">178</span><span id="line-178">    }</span>
+<span class="source-line-no">179</span><span id="line-179">    public int getExtendedDurationRequested() {</span>
+<span class="source-line-no">180</span><span id="line-180">        return extendedDurationRequested;</span>
+<span class="source-line-no">181</span><span id="line-181">    }</span>
+<span class="source-line-no">182</span><span id="line-182">    public int getDeliveredTotal() {</span>
+<span class="source-line-no">183</span><span id="line-183">        return deliveredTotal;</span>
+<span class="source-line-no">184</span><span id="line-184">    }</span>
+<span class="source-line-no">185</span><span id="line-185"></span>
+<span class="source-line-no">186</span><span id="line-186">    public BolusSource getBolusSource() {</span>
+<span class="source-line-no">187</span><span id="line-187">        return BolusSource.fromId(bolusSource);</span>
+<span class="source-line-no">188</span><span id="line-188">    }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">    /**</span>
+<span class="source-line-no">191</span><span id="line-191">     * Byte 12. Names from Tandem's data export (0 = Bolus Completed, 1 = Bolus Started).</span>
+<span class="source-line-no">192</span><span id="line-192">     *</span>
+<span class="source-line-no">193</span><span id="line-193">     * &lt;p&gt;For a standard bolus the pump writes one STARTED record at the BolusActivated time with</span>
+<span class="source-line-no">194</span><span id="line-194">     * deliveredTotal 0, then one COMPLETED record at the BolusCompleted time carrying the</span>
+<span class="source-line-no">195</span><span id="line-195">     * delivered amount (1297/1298 boluses on 10 t:slim X2 and Mobi pumps). An extended bolus also</span>
+<span class="source-line-no">196</span><span id="line-196">     * writes further STARTED records while the extended part runs (about every 5 minutes, each</span>
+<span class="source-line-no">197</span><span id="line-197">     * with the running deliveredTotal) and a single COMPLETED record when it ends, alongside</span>
+<span class="source-line-no">198</span><span id="line-198">     * {@link BolexCompletedHistoryLog}. So STARTED means "started or still in progress", and a</span>
+<span class="source-line-no">199</span><span id="line-199">     * bolus can have many of them. See https://github.com/jwoglom/pumpx2/issues/78.</span>
+<span class="source-line-no">200</span><span id="line-200">     */</span>
+<span class="source-line-no">201</span><span id="line-201">    public enum BolusDeliveryStatus {</span>
+<span class="source-line-no">202</span><span id="line-202">        COMPLETED(0),</span>
+<span class="source-line-no">203</span><span id="line-203">        STARTED(1),</span>
+<span class="source-line-no">204</span><span id="line-204">        ;</span>
+<span class="source-line-no">205</span><span id="line-205">        private final int id;</span>
+<span class="source-line-no">206</span><span id="line-206">        BolusDeliveryStatus(int id) {</span>
+<span class="source-line-no">207</span><span id="line-207">            this.id = id;</span>
+<span class="source-line-no">208</span><span id="line-208">        }</span>
+<span class="source-line-no">209</span><span id="line-209">        public int id() {</span>
+<span class="source-line-no">210</span><span id="line-210">            return id;</span>
+<span class="source-line-no">211</span><span id="line-211">        }</span>
+<span class="source-line-no">212</span><span id="line-212">        public static BolusDeliveryStatus fromId(int id) {</span>
+<span class="source-line-no">213</span><span id="line-213">            for (BolusDeliveryStatus s : values()) {</span>
+<span class="source-line-no">214</span><span id="line-214">                if (s.id == id) return s;</span>
+<span class="source-line-no">215</span><span id="line-215">            }</span>
+<span class="source-line-no">216</span><span id="line-216">            return null;</span>
+<span class="source-line-no">217</span><span id="line-217">        }</span>
+<span class="source-line-no">218</span><span id="line-218">    }</span>
+<span class="source-line-no">219</span><span id="line-219"></span>
+<span class="source-line-no">220</span><span id="line-220">    public enum BolusSource {</span>
+<span class="source-line-no">221</span><span id="line-221">        QUICK_BOLUS(0),</span>
+<span class="source-line-no">222</span><span id="line-222">        GUI(1),</span>
+<span class="source-line-no">223</span><span id="line-223">        CONTROL_IQ_AUTO_BOLUS(7),</span>
+<span class="source-line-no">224</span><span id="line-224">        BLUETOOTH_REMOTE_BOLUS(8),</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">        ;</span>
+<span class="source-line-no">227</span><span id="line-227">        private int id;</span>
+<span class="source-line-no">228</span><span id="line-228">        BolusSource(int id) {</span>
+<span class="source-line-no">229</span><span id="line-229">            this.id = id;</span>
+<span class="source-line-no">230</span><span id="line-230">        }</span>
+<span class="source-line-no">231</span><span id="line-231">        public int id() {</span>
+<span class="source-line-no">232</span><span id="line-232">            return id;</span>
+<span class="source-line-no">233</span><span id="line-233">        }</span>
+<span class="source-line-no">234</span><span id="line-234">        public static BolusSource fromId(int id) {</span>
+<span class="source-line-no">235</span><span id="line-235">            for (BolusSource b : values()) {</span>
+<span class="source-line-no">236</span><span id="line-236">                if (b.id == id) return b;</span>
+<span class="source-line-no">237</span><span id="line-237">            }</span>
+<span class="source-line-no">238</span><span id="line-238">            return null;</span>
+<span class="source-line-no">239</span><span id="line-239">        }</span>
+<span class="source-line-no">240</span><span id="line-240">    }</span>
+<span class="source-line-no">241</span><span id="line-241"></span>
+<span class="source-line-no">242</span><span id="line-242">    public Set&lt;BolusType&gt; getBolusTypes() {</span>
+<span class="source-line-no">243</span><span id="line-243">        return BolusType.fromBitmask(getBolusTypeBitmask());</span>
+<span class="source-line-no">244</span><span id="line-244">    }</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">    /**</span>
+<span class="source-line-no">247</span><span id="line-247">     * Bitmask decoded from {@code bolusTypeBitmask} (byte offset 13). The mapping below was</span>
+<span class="source-line-no">248</span><span id="line-248">     * validated by cross-correlating every opcode-280 record in a 48k-record real-pump capture</span>
+<span class="source-line-no">249</span><span id="line-249">     * against its bolus's opcode-64 ({@link BolusRequestedMsg1HistoryLog}) and opcode-66</span>
+<span class="source-line-no">250</span><span id="line-250">     * (BolusRequestedMsg3HistoryLog) records by bolus ID: {@code CARB} agreed with MSG1's</span>
+<span class="source-line-no">251</span><span id="line-251">     * carb amount being nonzero, {@code CORRECTION} agreed with MSG1's correction-included flag</span>
+<span class="source-line-no">252</span><span id="line-252">     * and MSG3's correction bolus size being nonzero, and {@code OVERRIDE} agreed with MSG2's</span>
+<span class="source-line-no">253</span><span id="line-253">     * user-override flag, across all 286 boluses observed. {@code NOW} was set on every record</span>
+<span class="source-line-no">254</span><span id="line-254">     * in the capture. The capture contained no extended or eating-soon-mode boluses. Later</span>
+<span class="source-line-no">255</span><span id="line-255">     * captures show {@code LATER} set on every record of an extended bolus (BolusRequestedMsg2</span>
+<span class="source-line-no">256</span><span id="line-256">     * options 1 or 5, with requestedLater and extendedDurationRequested nonzero; 128/128 records)</span>
+<span class="source-line-no">257</span><span id="line-257">     * and on none of 2595 standard-bolus records. {@code EATING_SOON_MODE} is ported from</span>
+<span class="source-line-no">258</span><span id="line-258">     * tconnectsync's semantics and remains unexercised against real pump data.</span>
+<span class="source-line-no">259</span><span id="line-259">     *</span>
+<span class="source-line-no">260</span><span id="line-260">     * &lt;p&gt;The previous {@code FOOD1(1)/CORRECTION(2)/EXTENDED(4)/FOOD2(8)} mapping could not</span>
+<span class="source-line-no">261</span><span id="line-261">     * explain the observed bit-16 (carb) values and its bit-2 value never appeared in the</span>
+<span class="source-line-no">262</span><span id="line-262">     * capture; see https://github.com/jwoglom/pumpx2/issues/78.</span>
+<span class="source-line-no">263</span><span id="line-263">     */</span>
+<span class="source-line-no">264</span><span id="line-264">    public enum BolusType {</span>
+<span class="source-line-no">265</span><span id="line-265">        NOW(1),</span>
+<span class="source-line-no">266</span><span id="line-266">        LATER(2),</span>
+<span class="source-line-no">267</span><span id="line-267">        OVERRIDE(4),</span>
+<span class="source-line-no">268</span><span id="line-268">        CORRECTION(8),</span>
+<span class="source-line-no">269</span><span id="line-269">        CARB(16),</span>
+<span class="source-line-no">270</span><span id="line-270">        EATING_SOON_MODE(32),</span>
+<span class="source-line-no">271</span><span id="line-271">        ;</span>
+<span class="source-line-no">272</span><span id="line-272">        private int mask;</span>
+<span class="source-line-no">273</span><span id="line-273">        BolusType(int mask) {</span>
+<span class="source-line-no">274</span><span id="line-274">            this.mask = mask;</span>
+<span class="source-line-no">275</span><span id="line-275">        }</span>
+<span class="source-line-no">276</span><span id="line-276">        public int mask() {</span>
+<span class="source-line-no">277</span><span id="line-277">            return mask;</span>
+<span class="source-line-no">278</span><span id="line-278">        }</span>
+<span class="source-line-no">279</span><span id="line-279">        public static Set&lt;BolusType&gt; fromBitmask(int bitmask) {</span>
+<span class="source-line-no">280</span><span id="line-280">            Set&lt;BolusType&gt; ret = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">281</span><span id="line-281">            for (BolusType b : values()) {</span>
+<span class="source-line-no">282</span><span id="line-282">                if ((bitmask &amp; b.mask()) != 0) {</span>
+<span class="source-line-no">283</span><span id="line-283">                    ret.add(b);</span>
+<span class="source-line-no">284</span><span id="line-284">                }</span>
+<span class="source-line-no">285</span><span id="line-285">            }</span>
+<span class="source-line-no">286</span><span id="line-286">            return ret;</span>
+<span class="source-line-no">287</span><span id="line-287">        }</span>
+<span class="source-line-no">288</span><span id="line-288">        public static int toBitmask(BolusType ...types) {</span>
+<span class="source-line-no">289</span><span id="line-289">            int bitmask = 0;</span>
+<span class="source-line-no">290</span><span id="line-290">            for (BolusType b : types) {</span>
+<span class="source-line-no">291</span><span id="line-291">                bitmask |= b.mask();</span>
+<span class="source-line-no">292</span><span id="line-292">            }</span>
+<span class="source-line-no">293</span><span id="line-293">            return bitmask;</span>
+<span class="source-line-no">294</span><span id="line-294">        }</span>
+<span class="source-line-no">295</span><span id="line-295">    }</span>
+<span class="source-line-no">296</span><span id="line-296">    </span>
+<span class="source-line-no">297</span><span id="line-297">}</span>
 
 
 
