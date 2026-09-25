@@ -97,12 +97,15 @@ public class HistoryLogParser {
         AlertClearedHistoryLog.class,
         VersionInfoHistoryLog.class,
         UpdateStatusHistoryLog.class,
+        MaxBasalLimitSetHistoryLog.class,
         VersionsAHistoryLog.class,
+        MaxBolusLimitSetHistoryLog.class,
         AlarmAckHistoryLog.class,
         AlertAckHistoryLog.class,
         ReminderActivatedHistoryLog.class,
         ReminderDismissedHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
+        BleLinkStatsHistoryLog.class,
         TipsErrorHistoryLog.class
         // MESSAGES_END
     );
