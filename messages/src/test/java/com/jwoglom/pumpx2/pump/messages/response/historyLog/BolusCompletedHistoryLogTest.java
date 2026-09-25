@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBolusStatusAbstractResponse;
 
 import org.apache.commons.codec.DecoderException;
+import com.jwoglom.pumpx2.shared.Hex;
 import org.junit.Test;
 
 import java.time.Instant;
@@ -76,5 +77,65 @@ public class BolusCompletedHistoryLogTest {
         // delivered == requested bit-for-bit in all 156 observed records
         assertEquals(parsedRes.getInsulinRequested(), parsedRes.getInsulinDelivered(), 0.0F);
         assertTrue(Math.abs(parsedRes.getInsulinDelivered() - parsedRes.getInsulinRequested()) <= HistoryLog.INSULIN_FLOAT_EPSILON);
+    }
+
+    @Test
+    public void testBolusCompletedHistoryLog_iobIsUnits() throws DecoderException {
+        // Bolus 2903 from the same Mobi capture: BolusActivated logged iob ~1.2416u and a 0.15u
+        // bolus; BolusCompleted 4 s later logs ~1.3916u, i.e. the IOB in units including the bolus.
+        BolusActivatedHistoryLog activated = (BolusActivatedHistoryLog) HistoryLogParser.parse(
+                Hex.decodeHex("37103d772323f2c60900570b000042ec9e3f9a99193e00000000"));
+        BolusCompletedHistoryLog completed = (BolusCompletedHistoryLog) HistoryLogParser.parse(
+                Hex.decodeHex("141041772323fac609000300570b751fb23f9a99193e9a99193e"));
+
+        assertEquals(activated.getBolusId(), completed.getBolusId());
+        assertEquals(1.3916F, completed.getIob(), 0.0001F);
+        assertEquals(activated.getIob() + activated.getBolusSize(), completed.getIob(), 0.0001F);
+    }
+
+    @Test
+    public void testBolusCompletedHistoryLog_cancelledOverBluetooth() throws DecoderException {
+        // t:slim X2, official Tandem app, Aug 2022 BLE capture. The app sent CancelBolusRequest for
+        // bolus 10678 (response: success) partway through a 0.76u bolus. The pump logged
+        // completionStatus 0 (user aborted), not 4, with 0.36375u delivered.
+        BolusCompletedHistoryLog expected = new BolusCompletedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested
+                461710238L, 28178L, 0, 10678,
+                Float.intBitsToFloat(0x3eba3d71), Float.intBitsToFloat(0x3eba3d71), Float.intBitsToFloat(0x3f428f5c)
+        );
+
+        BolusCompletedHistoryLog parsedRes = (BolusCompletedHistoryLog) HistoryLogMessageTester.testSingle(
+                "14009e23851b126e00000000b629713dba3e713dba3e5c8f423f",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(LastBolusStatusAbstractResponse.BolusStatus.STOPPED_USER_TERMINATED, parsedRes.getCompletionStatus());
+        assertEquals(10678, parsedRes.getBolusId());
+        assertEquals(0.36375F, parsedRes.getInsulinDelivered(), 0.00001F);
+        assertEquals(0.76F, parsedRes.getInsulinRequested(), 0.00001F);
+    }
+
+    @Test
+    public void testBolusCompletedHistoryLog_terminatedByAlarm() throws DecoderException {
+        // Tandem Mobi, March 2025 BLE capture. The pump suspended with reason ALARM in the same
+        // second and an occlusion alarm was acknowledged 22 s later; 1.89u of a 3u bolus had been
+        // delivered. Header high nibble is 1.
+        BolusCompletedHistoryLog expected = new BolusCompletedHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int completionStatus, int bolusId, float iob, float insulinDelivered, float insulinRequested, int headerHighNibble
+                542918085L, 236019L, 1, 980,
+                Float.intBitsToFloat(0x40fcb858), Float.intBitsToFloat(0x3ff264ca), 3.0F,
+                1
+        );
+
+        BolusCompletedHistoryLog parsedRes = (BolusCompletedHistoryLog) HistoryLogMessageTester.testSingle(
+                "1410c5455c20f39903000100d40358b8fc40ca64f23f00004040",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(LastBolusStatusAbstractResponse.BolusStatus.STOPPED_ALARM, parsedRes.getCompletionStatus());
+        assertEquals(980, parsedRes.getBolusId());
+        assertTrue(parsedRes.getInsulinDelivered() < parsedRes.getInsulinRequested());
     }
 }

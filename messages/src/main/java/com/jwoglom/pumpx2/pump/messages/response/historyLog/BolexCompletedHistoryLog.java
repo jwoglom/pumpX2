@@ -74,6 +74,10 @@ public class BolexCompletedHistoryLog extends HistoryLog {
     public int getBolusId() {
         return bolusId;
     }
+    /**
+     * @return the insulin on board recorded with this log, in units; same field as
+     * {@link BolusCompletedHistoryLog#getIob()}
+     */
     public float getIob() {
         return iob;
     }
