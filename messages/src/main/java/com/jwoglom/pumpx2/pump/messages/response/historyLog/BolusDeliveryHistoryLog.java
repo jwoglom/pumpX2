@@ -86,8 +86,19 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     public int getBolusID() {
         return bolusID;
     }
+    /**
+     * @return the raw delivery status id; see {@link #getBolusDeliveryStatus()}
+     */
     public int getBolusDeliveryStatusId() {
         return bolusDeliveryStatusId;
+    }
+
+    /**
+     * @return whether this record marks the start or the completion of the bolus, or null if the
+     * raw value is not recognized
+     */
+    public BolusDeliveryStatus getBolusDeliveryStatus() {
+        return BolusDeliveryStatus.fromId(bolusDeliveryStatusId);
     }
     public int getBolusTypeBitmask() {
         return bolusTypeBitmask;
@@ -131,6 +142,36 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         return BolusSource.fromId(bolusSource);
     }
 
+    /**
+     * Byte 12. Names from Tandem's data export (0 = Bolus Completed, 1 = Bolus Started).
+     *
+     * <p>For a standard bolus the pump writes one STARTED record at the BolusActivated time with
+     * deliveredTotal 0, then one COMPLETED record at the BolusCompleted time carrying the
+     * delivered amount (1297/1298 boluses on 10 t:slim X2 and Mobi pumps). An extended bolus also
+     * writes further STARTED records while the extended part runs (about every 5 minutes, each
+     * with the running deliveredTotal) and a single COMPLETED record when it ends, alongside
+     * {@link BolexCompletedHistoryLog}. So STARTED means "started or still in progress", and a
+     * bolus can have many of them. See https://github.com/jwoglom/pumpx2/issues/78.
+     */
+    public enum BolusDeliveryStatus {
+        COMPLETED(0),
+        STARTED(1),
+        ;
+        private final int id;
+        BolusDeliveryStatus(int id) {
+            this.id = id;
+        }
+        public int id() {
+            return id;
+        }
+        public static BolusDeliveryStatus fromId(int id) {
+            for (BolusDeliveryStatus s : values()) {
+                if (s.id == id) return s;
+            }
+            return null;
+        }
+    }
+
     public enum BolusSource {
         QUICK_BOLUS(0),
         GUI(1),
@@ -165,9 +206,11 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
      * carb amount being nonzero, {@code CORRECTION} agreed with MSG1's correction-included flag
      * and MSG3's correction bolus size being nonzero, and {@code OVERRIDE} agreed with MSG2's
      * user-override flag, across all 286 boluses observed. {@code NOW} was set on every record
-     * in the capture. The capture contained no extended or eating-soon-mode boluses, so
-     * {@code LATER} and {@code EATING_SOON_MODE} are ported from tconnectsync's semantics but
-     * remain unexercised against real pump data.
+     * in the capture. The capture contained no extended or eating-soon-mode boluses. Later
+     * captures show {@code LATER} set on every record of an extended bolus (BolusRequestedMsg2
+     * options 1 or 5, with requestedLater and extendedDurationRequested nonzero; 128/128 records)
+     * and on none of 2595 standard-bolus records. {@code EATING_SOON_MODE} is ported from
+     * tconnectsync's semantics and remains unexercised against real pump data.
      *
      * <p>The previous {@code FOOD1(1)/CORRECTION(2)/EXTENDED(4)/FOOD2(8)} mapping could not
      * explain the observed bit-16 (carb) values and its bit-2 value never appeared in the
