@@ -58,6 +58,7 @@ public abstract class TandemPump {
     private int appInstanceId = 1;
     private KnownDeviceModel deviceModel;
     TandemConfig config;
+    private boolean periodicConnectionPriorityReassertEnabled = false;
 
     private static final long INITIAL_AUTH_WRITE_RETRY_DELAY_MS = 1000L;
     private static final int INITIAL_AUTH_WRITE_MAX_RETRIES = 5;
@@ -349,6 +350,25 @@ public abstract class TandemPump {
      */
     public final void enableActionsAffectingInsulinDelivery() {
         PumpState.enableActionsAffectingInsulinDelivery();
+    }
+
+    /**
+     * When enabled, PumpX2 will actively maintain CONNECTION_PRIORITY_HIGH while connected: it
+     * re-asserts HIGH periodically and whenever the pump renegotiates to a lower-priority
+     * connection profile (skipping while a bolus, fill/load workflow, or history log stream is
+     * in progress), and enables the associated reconnection and handler lifecycle behavior in
+     * {@link TandemBluetoothHandler}. If requested, this should be called immediately after
+     * initialization, before the {@link TandemBluetoothHandler} is created.
+     */
+    public final void enablePeriodicConnectionPriorityReassert() {
+        this.periodicConnectionPriorityReassertEnabled = true;
+    }
+
+    /**
+     * @return whether {@link #enablePeriodicConnectionPriorityReassert()} was called
+     */
+    public final boolean isPeriodicConnectionPriorityReassertEnabled() {
+        return periodicConnectionPriorityReassertEnabled;
     }
 
     /**
