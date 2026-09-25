@@ -116,7 +116,9 @@ public class DailyBasalHistoryLog extends HistoryLog {
 
     /**
      * The pump reports its state of charge directly as a 0-100 percentage in this byte, so no
-     * scaling is applied.
+     * scaling is applied. On Mobi this tracks {@code CurrentBatteryV2Response.currentBatteryAbc},
+     * not the displayed percent from {@code getBatteryPercent()} ({@code currentBatteryIbc}). The two
+     * usually differ by a few points and sometimes by more than 10 (#56, #149).
      *
      * @return the reported battery charge in percent
      */
