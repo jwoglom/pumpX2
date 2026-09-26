@@ -112,6 +112,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AAExerciseTimeChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">AAExerciseTimeChangeHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AamAnnunciationHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">AamAnnunciationHistoryLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Written when the pump annunciates an active alert, alarm or CGM alert: in the same second as
+ the activation for most ids, then again at multiples of about 5 minutes for as long as the
+ notification stays unacknowledged.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="AamAnnunciationHistoryLog.AamCategory.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">AamAnnunciationHistoryLog.AamCategory</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="block">Values of byte 10, confirmed by matching every record's id against the activation record
+ of that category it followed.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AaSleepScheduleChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">AaSleepScheduleChangeHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AATdiEstChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">AATdiEstChangeHistoryLog</a></div>
@@ -348,6 +359,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="ControlIQUserModeChangeHistoryLog.UserMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQUserModeChangeHistoryLog.UserMode</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ControlRequestHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlRequestHistoryLog</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Written once for each signed request the pump receives on the CONTROL characteristic.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ControlResponseHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlResponseHistoryLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">The response the pump sent to a signed CONTROL request, written immediately after the
+ <a href="ControlRequestHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>ControlRequestHistoryLog</code></a> for that request (its <code>requestOpCode</code> is this record's
+ <code>responseOpCode</code> minus one in 3692/3692 records across both capture sets).</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CorrectionDeclinedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CorrectionDeclinedHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DailyBasalHistoryLog</a></div>
@@ -382,64 +403,76 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab3"><a href="DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FactoryResetHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">FactoryResetHistoryLog</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FillEstimateFinalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">FillEstimateFinalHistoryLog</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HistoryLogParser.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLogParser</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HistoryLogStreamResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLogStreamResponse</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DismissNotificationResponseHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DismissNotificationResponseHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">The response the pump sent to a DismissNotificationRequest (an alert, alarm or reminder
+ acknowledgement sent over Bluetooth), written immediately after the request's history log
+ (opcode 290, requestOpCode 184) in 591/591 records across the Trio/TandemKit logs and the
+ official-app captures.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FactoryResetHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">FactoryResetHistoryLog</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FillEstimateFinalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">FillEstimateFinalHistoryLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HistoryLogParser.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLogParser</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HistoryLogStreamResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLogStreamResponse</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Multiple HistoryLogStreamResponse's can be received after initiating a HistoryLogRequest.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HypoMinimizerResumeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HypoMinimizerResumeHistoryLog</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HypoMinimizerSuspendHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HypoMinimizerSuspendHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HypoMinimizerResumeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HypoMinimizerResumeHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IdpActionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpActionHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HypoMinimizerSuspendHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HypoMinimizerSuspendHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IdpActionMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpActionMsg2HistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IdpActionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpActionHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IdpBolusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpBolusHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IdpActionMsg2HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpActionMsg2HistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IdpListHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpListHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IdpBolusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpBolusHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IdpTimeDependentSegmentHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpTimeDependentSegmentHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IdpListHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpListHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LogErasedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">LogErasedHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IdpTimeDependentSegmentHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">IdpTimeDependentSegmentHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MalfunctionAckHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">MalfunctionAckHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LogErasedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">LogErasedHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MalfunctionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">MalfunctionHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MalfunctionAckHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">MalfunctionAckHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">NewDayHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MalfunctionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">MalfunctionHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParamChangeGlobalSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeGlobalSettingsHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">NewDayHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParamChangePumpSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangePumpSettingsHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParamChangeGlobalSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeGlobalSettingsHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParamChangeReminderHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeReminderHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParamChangePumpSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangePumpSettingsHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParamChangeRemSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeRemSettingsHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParamChangeReminderHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeReminderHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PlgsPeriodicHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParamChangeRemSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangeRemSettingsHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PrimeInprocessHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PrimeInprocessHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PlgsPeriodicHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PumpingResumedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingResumedHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PrimeInprocessHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PrimeInprocessHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PumpingSuspendedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PumpingResumedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingResumedHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ReminderActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderActivatedHistoryLog</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ReminderDismissedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderDismissedHistoryLog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PumpingSuspendedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ReminderSnoozedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderSnoozedHistoryLog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="PumpingSuspendedHistoryLog.SuspendReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PumpingSuspendedHistoryLog.SuspendReason</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ReminderActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderActivatedHistoryLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ReminderDismissedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderDismissedHistoryLog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ReminderSnoozedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReminderSnoozedHistoryLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SetTempRateResponseHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">SetTempRateResponseHistoryLog</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">The pump's response to a SetTempRateRequest, written immediately after the
+ <a href="ControlRequestHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>ControlRequestHistoryLog</code></a> for that request (request opcode 164).</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ShelfModeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ShelfModeHistoryLog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="SnoozeActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">SnoozeActivatedHistoryLog</a></div>
