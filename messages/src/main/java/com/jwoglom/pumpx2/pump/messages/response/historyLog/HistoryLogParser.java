@@ -122,6 +122,7 @@ public class HistoryLogParser {
         MaxBasalLimitSetHistoryLog.class,
         VersionsAHistoryLog.class,
         MaxBolusLimitSetHistoryLog.class,
+        ControlIQGlucoseModelHistoryLog.class,
         MalfunctionAckHistoryLog.class,
         ReminderSnoozedHistoryLog.class,
         CartridgeRemovedHistoryLog.class,
