@@ -148,6 +148,7 @@ public class HistoryLogParser {
         CgmStateChangeGxHistoryLog.class,
         CgmTransmitterVersionGxHistoryLog.class,
         AaSleepScheduleChangeHistoryLog.class,
+        ControlIQAutomatedInsulinHistoryLog.class,
         AaDeliveryStatusChangeHistoryLog.class,
         AaEnableSettingChangeHistoryLog.class,
         AaTdiSettingChangeHistoryLog.class,
