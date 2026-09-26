@@ -144,6 +144,7 @@ public class HistoryLogParser {
         CgmTransmitterIdGxHistoryLog.class,
         CgmStartSessionReqGxHistoryLog.class,
         CgmStopSessionReqGxHistoryLog.class,
+        CgmStateChangeGxHistoryLog.class,
         CgmTransmitterVersionGxHistoryLog.class,
         AaSleepScheduleChangeHistoryLog.class,
         AaDeliveryStatusChangeHistoryLog.class,
