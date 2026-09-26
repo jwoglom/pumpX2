@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-9">DexcomG7CGMHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-10">DexcomG7CGMHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
 </section>
 <section class="summary">
@@ -145,7 +145,22 @@ loadScripts(document, 'script');</script>
  int&nbsp;egvTimestamp,
  int&nbsp;egvInfoBitmask,
  int&nbsp;interval)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Builds a record with <code>egvCount</code> = 0, as in the Mobi G7 fixtures.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long,int,int,int,int,int,int,int,int,int,int)" class="member-name-link">DexcomG7CGMHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;glucoseValueStatusRaw,
+ int&nbsp;cgmDataTypeRaw,
+ int&nbsp;rate,
+ int&nbsp;algorithmStateRaw,
+ int&nbsp;rssi,
+ int&nbsp;currentGlucoseDisplayValue,
+ int&nbsp;egvTimestamp,
+ int&nbsp;egvInfoBitmask,
+ int&nbsp;interval,
+ int&nbsp;egvCount)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -172,49 +187,80 @@ loadScripts(document, 'script');</script>
  int&nbsp;egvTimestamp,
  int&nbsp;egvInfoBitmask,
  int&nbsp;interval)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DexcomG7CGMHistoryLog.AlgorithmState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.AlgorithmState</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAlgorithmState()" class="member-name-link">getAlgorithmState</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAlgorithmStateRaw()" class="member-name-link">getAlgorithmStateRaw</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.CgmDataType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.CgmDataType</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmDataType()" class="member-name-link">getCgmDataType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmDataTypeRaw()" class="member-name-link">getCgmDataTypeRaw</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Builds a record with <code>egvCount</code> = 0, as in the Mobi G7 fixtures.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,int,int,int,int,int,int,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;glucoseValueStatusRaw,
+ int&nbsp;cgmDataTypeRaw,
+ int&nbsp;rate,
+ int&nbsp;algorithmStateRaw,
+ int&nbsp;rssi,
+ int&nbsp;currentGlucoseDisplayValue,
+ int&nbsp;egvTimestamp,
+ int&nbsp;egvInfoBitmask,
+ int&nbsp;interval,
+ int&nbsp;egvCount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DexcomG7CGMHistoryLog.AlgorithmState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.AlgorithmState</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAlgorithmState()" class="member-name-link">getAlgorithmState</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentGlucoseDisplayValue()" class="member-name-link">getCurrentGlucoseDisplayValue</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAlgorithmStateRaw()" class="member-name-link">getAlgorithmStateRaw</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.CgmDataType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.CgmDataType</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmDataType()" class="member-name-link">getCgmDataType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCgmDataTypeRaw()" class="member-name-link">getCgmDataTypeRaw</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentGlucoseDisplayValue()" class="member-name-link">getCurrentGlucoseDisplayValue</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvCount()" class="member-name-link">getEgvCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Byte 25: 0 in backfill records, otherwise the number of five-minute readings the record
+ covers.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.EgvInfo.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.EgvInfo</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvInfo()" class="member-name-link">getEgvInfo</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvInfoBitmaskRaw()" class="member-name-link">getEgvInfoBitmaskRaw</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvTimestamp()" class="member-name-link">getEgvTimestamp</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseValueStatus()" class="member-name-link">getGlucoseValueStatus</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseValueStatusRaw()" class="member-name-link">getGlucoseValueStatusRaw</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInterval()" class="member-name-link">getInterval</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRate()" class="member-name-link">getRate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRssi()" class="member-name-link">getRssi</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvSensorType()" class="member-name-link">getEgvSensorType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Bits 11-13 of <code>egvInfoBitmask</code>: the CGM sensor type (3, G7, in every captured record).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEgvTimestamp()" class="member-name-link">getEgvTimestamp</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseValueStatus()" class="member-name-link">getGlucoseValueStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGlucoseValueStatusRaw()" class="member-name-link">getGlucoseValueStatusRaw</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInterval()" class="member-name-link">getInterval</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRate()" class="member-name-link">getRate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Signed rate of change, in 0.1 mg/dL per minute.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRssi()" class="member-name-link">getRssi</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Signed RSSI, in dBm.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for DexcomG7CGMHistoryLog:
  <code>glucoseValueStatusRaw</code><code>Bytes.readShort(raw, 10)</code>
@@ -230,11 +276,12 @@ loadScripts(document, 'script');</script>
  <code>egvInfoBitmaskRaw</code><code>Bytes.readShort(raw, 22)</code>
  <code>egvInfo</code><code>getEgvInfo()</code>
  <code>interval</code><code>raw[24]</code>
+ <code>egvCount</code><code>raw[25] &amp; 0xFF</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -258,13 +305,30 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DexcomG7CGMHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-31">DexcomG7CGMHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-33">DexcomG7CGMHistoryLog</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int,int,int)">
+<h3>DexcomG7CGMHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-34">DexcomG7CGMHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;glucoseValueStatusRaw,
+ int&nbsp;cgmDataTypeRaw,
+ int&nbsp;rate,
+ int&nbsp;algorithmStateRaw,
+ int&nbsp;rssi,
+ int&nbsp;currentGlucoseDisplayValue,
+ int&nbsp;egvTimestamp,
+ int&nbsp;egvInfoBitmask,
+ int&nbsp;interval,
+ int&nbsp;egvCount)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int,int)">
 <h3>DexcomG7CGMHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-32">DexcomG7CGMHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-44">DexcomG7CGMHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;glucoseValueStatusRaw,
  int&nbsp;cgmDataTypeRaw,
@@ -275,12 +339,13 @@ loadScripts(document, 'script');</script>
  int&nbsp;egvTimestamp,
  int&nbsp;egvInfoBitmask,
  int&nbsp;interval)</span></div>
+<div class="block">Builds a record with <code>egvCount</code> = 0, as in the Mobi G7 fixtures.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,int,int,int,int,int)">
 <h3>DexcomG7CGMHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-39">DexcomG7CGMHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;glucoseValueStatusRaw,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-48">DexcomG7CGMHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;glucoseValueStatusRaw,
  int&nbsp;cgmDataTypeRaw,
  int&nbsp;rate,
  int&nbsp;algorithmStateRaw,
@@ -302,7 +367,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-43">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-52">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -312,7 +377,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-65">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-75">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for DexcomG7CGMHistoryLog:</caption>
  <tr><td><code>glucoseValueStatusRaw</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -328,6 +393,7 @@ loadScripts(document, 'script');</script>
  <tr><td><code>egvInfoBitmaskRaw</code></td><td><code>Bytes.readShort(raw, 22)</code></td></tr>
  <tr><td><code>egvInfo</code></td><td><code>getEgvInfo()</code></td></tr>
  <tr><td><code>interval</code></td><td><code>raw[24]</code></td></tr>
+ <tr><td><code>egvCount</code></td><td><code>raw[25] &amp; 0xFF</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -338,7 +404,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-85">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-99">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;glucoseValueStatusRaw,
  int&nbsp;cgmDataTypeRaw,
@@ -349,84 +415,121 @@ loadScripts(document, 'script');</script>
  int&nbsp;egvTimestamp,
  int&nbsp;egvInfoBitmask,
  int&nbsp;interval)</span></div>
+<div class="block">Builds a record with <code>egvCount</code> = 0, as in the Mobi G7 fixtures.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-103">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ int&nbsp;glucoseValueStatusRaw,
+ int&nbsp;cgmDataTypeRaw,
+ int&nbsp;rate,
+ int&nbsp;algorithmStateRaw,
+ int&nbsp;rssi,
+ int&nbsp;currentGlucoseDisplayValue,
+ int&nbsp;egvTimestamp,
+ int&nbsp;egvInfoBitmask,
+ int&nbsp;interval,
+ int&nbsp;egvCount)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getGlucoseValueStatusRaw()">
 <h3>getGlucoseValueStatusRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-100">getGlucoseValueStatusRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-119">getGlucoseValueStatusRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCgmDataTypeRaw()">
 <h3>getCgmDataTypeRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-103">getCgmDataTypeRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-122">getCgmDataTypeRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCgmDataType()">
 <h3>getCgmDataType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.CgmDataType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.CgmDataType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-106">getCgmDataType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.CgmDataType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.CgmDataType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-125">getCgmDataType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRate()">
 <h3>getRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-109">getRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-131">getRate</a></span>()</div>
+<div class="block">Signed rate of change, in 0.1 mg/dL per minute.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAlgorithmStateRaw()">
 <h3>getAlgorithmStateRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-112">getAlgorithmStateRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-134">getAlgorithmStateRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAlgorithmState()">
 <h3>getAlgorithmState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DexcomG7CGMHistoryLog.AlgorithmState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.AlgorithmState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-150">getAlgorithmState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DexcomG7CGMHistoryLog.AlgorithmState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.AlgorithmState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-172">getAlgorithmState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getGlucoseValueStatus()">
 <h3>getGlucoseValueStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-181">getGlucoseValueStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DexcomG7CGMHistoryLog.GlucoseValueStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG7CGMHistoryLog.GlucoseValueStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-203">getGlucoseValueStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRssi()">
 <h3>getRssi</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-185">getRssi</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-210">getRssi</a></span>()</div>
+<div class="block">Signed RSSI, in dBm.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCurrentGlucoseDisplayValue()">
 <h3>getCurrentGlucoseDisplayValue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-188">getCurrentGlucoseDisplayValue</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-213">getCurrentGlucoseDisplayValue</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvTimestamp()">
 <h3>getEgvTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-191">getEgvTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-216">getEgvTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvInfoBitmaskRaw()">
 <h3>getEgvInfoBitmaskRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-194">getEgvInfoBitmaskRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-219">getEgvInfoBitmaskRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvInfo()">
 <h3>getEgvInfo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.EgvInfo.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.EgvInfo</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-197">getEgvInfo</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.EgvInfo.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.EgvInfo</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-222">getEgvInfo</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getEgvSensorType()">
+<h3>getEgvSensorType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-230">getEgvSensorType</a></span>()</div>
+<div class="block">Bits 11-13 of <code>egvInfoBitmask</code>: the CGM sensor type (3, G7, in every captured record).
+ See <a href="DexcomG6CGMHistoryLog.html#getEgvSensorType()"><code>DexcomG6CGMHistoryLog.getEgvSensorType()</code></a>.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getInterval()">
 <h3>getInterval</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-200">getInterval</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-234">getInterval</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getEgvCount()">
+<h3>getEgvCount</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG7CGMHistoryLog.html#line-243">getEgvCount</a></span>()</div>
+<div class="block">Byte 25: 0 in backfill records, otherwise the number of five-minute readings the record
+ covers. See <a href="DexcomG6CGMHistoryLog.html#getEgvCount()"><code>DexcomG6CGMHistoryLog.getEgvCount()</code></a>. The t:slim X2 fills it for G7
+ readings; the Mobi G7 fixtures (Control-IQ+ firmware) have 0.</div>
 </section>
 </li>
 </ul>

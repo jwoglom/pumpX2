@@ -144,21 +144,23 @@
 <span class="source-line-no">127</span><span id="line-127"></span>
 <span class="source-line-no">128</span><span id="line-128">    /**</span>
 <span class="source-line-no">129</span><span id="line-129">     * The pump reports its state of charge directly as a 0-100 percentage in this byte, so no</span>
-<span class="source-line-no">130</span><span id="line-130">     * scaling is applied.</span>
-<span class="source-line-no">131</span><span id="line-131">     *</span>
-<span class="source-line-no">132</span><span id="line-132">     * @return the reported battery charge in percent</span>
-<span class="source-line-no">133</span><span id="line-133">     */</span>
-<span class="source-line-no">134</span><span id="line-134">    public double getBatteryChargePercent() {</span>
-<span class="source-line-no">135</span><span id="line-135">       return batteryChargeRaw;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">    /**</span>
-<span class="source-line-no">139</span><span id="line-139">     * @return the reported LIPO battery amount in millivolts</span>
-<span class="source-line-no">140</span><span id="line-140">     */</span>
-<span class="source-line-no">141</span><span id="line-141">    public int getLipoMv() {</span>
-<span class="source-line-no">142</span><span id="line-142">        return lipoMv;</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144">}</span>
+<span class="source-line-no">130</span><span id="line-130">     * scaling is applied. On Mobi this tracks {@code CurrentBatteryV2Response.currentBatteryAbc},</span>
+<span class="source-line-no">131</span><span id="line-131">     * not the displayed percent from {@code getBatteryPercent()} ({@code currentBatteryIbc}). The two</span>
+<span class="source-line-no">132</span><span id="line-132">     * usually differ by a few points and sometimes by more than 10 (#56, #149).</span>
+<span class="source-line-no">133</span><span id="line-133">     *</span>
+<span class="source-line-no">134</span><span id="line-134">     * @return the reported battery charge in percent</span>
+<span class="source-line-no">135</span><span id="line-135">     */</span>
+<span class="source-line-no">136</span><span id="line-136">    public double getBatteryChargePercent() {</span>
+<span class="source-line-no">137</span><span id="line-137">       return batteryChargeRaw;</span>
+<span class="source-line-no">138</span><span id="line-138">    }</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">    /**</span>
+<span class="source-line-no">141</span><span id="line-141">     * @return the reported LIPO battery amount in millivolts</span>
+<span class="source-line-no">142</span><span id="line-142">     */</span>
+<span class="source-line-no">143</span><span id="line-143">    public int getLipoMv() {</span>
+<span class="source-line-no">144</span><span id="line-144">        return lipoMv;</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146">}</span>
 
 
 
