@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
+
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -18,12 +21,13 @@ public class CgmAlertAckDexHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G7, parsedRes.getSensorTypeEnum());
+        assertEquals(CgmAlertAckDexHistoryLog.AckSource.USER, parsedRes.getAckSourceEnum());
     }
 
     @Test
     public void testCgmAlertAckDexHistoryLog2() throws DecoderException {
-        // this sample's ackSource=1 (raw byte 14 = 0x01) reflects the alert being acknowledged
-        // from a source other than the default
+        // ackSource=1 (byte 14): acknowledged by software rather than by the user
         CgmAlertAckDexHistoryLog expected = (CgmAlertAckDexHistoryLog) new CgmAlertAckDexHistoryLog(
             // long pumpTimeSec, long sequenceNum, int alertId, int sensorType, long ackSource
             579789268L, 449784L, 32, 3, 1L
@@ -34,5 +38,16 @@ public class CgmAlertAckDexHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G7, parsedRes.getSensorTypeEnum());
+        assertEquals(CgmAlertAckDexHistoryLog.AckSource.SOFTWARE, parsedRes.getAckSourceEnum());
+    }
+
+    @Test
+    public void testCgmAlertAckDexHistoryLog_enumMapping() {
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G6, new CgmAlertAckDexHistoryLog(2, 1, 0L).getSensorTypeEnum());
+        assertEquals(CgmStatusV2Response.CgmSensorType.NOT_APPLICABLE, new CgmAlertAckDexHistoryLog(2, 0, 0L).getSensorTypeEnum());
+        assertEquals(CgmAlertAckDexHistoryLog.AckSource.USER, CgmAlertAckDexHistoryLog.AckSource.fromId(0));
+        assertEquals(CgmAlertAckDexHistoryLog.AckSource.SOFTWARE, CgmAlertAckDexHistoryLog.AckSource.fromId(1));
+        assertEquals(null, CgmAlertAckDexHistoryLog.AckSource.fromId(2));
     }
 }

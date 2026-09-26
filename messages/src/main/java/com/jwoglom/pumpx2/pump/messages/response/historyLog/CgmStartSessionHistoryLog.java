@@ -42,7 +42,8 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
         parseBase(raw);
         this.currentTransmitterTime = Bytes.readUint32(raw, 10);
         this.sessionStartTime = Bytes.readUint32(raw, 14);
-        this.sessionDuration = raw[25] & 0xFF;
+        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.
+        this.sessionDuration = raw[22] & 0xFF;
 
     }
 
@@ -57,7 +58,7 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTransmitterTime),
             Bytes.toUint32(sessionStartTime),
-            new byte[]{0, 0, 0, 0, 0, 0, 0},
+            new byte[]{0, 0, 0, 0},
             new byte[]{(byte) sessionDuration}));
     }
 

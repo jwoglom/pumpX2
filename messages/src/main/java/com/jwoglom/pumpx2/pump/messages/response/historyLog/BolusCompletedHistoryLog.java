@@ -90,7 +90,10 @@ public class BolusCompletedHistoryLog extends HistoryLog {
     }
 
     /**
-     * @return the current insulin on board in milliunits
+     * @return the insulin on board recorded with this log, in units (a float, not milliunits).
+     * It includes this bolus: it equalled the paired {@link BolusActivatedHistoryLog#getIob()}
+     * plus {@link #getInsulinDelivered()} to within 0.1u in 1270/1305 boluses on 10 pumps
+     * (t:slim X2 and Mobi).
      */
     public float getIob() {
         return iob;

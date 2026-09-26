@@ -4,6 +4,7 @@ import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 @HistoryLogProps(
     opCode = 371,
@@ -77,19 +78,51 @@ public class CgmAlertAckDexHistoryLog extends HistoryLog {
     }
 
     /**
-     * The type of glucose sensor which raised the alert. Constant (3) in every captured record;
-     * the meaning of other values is unconfirmed.
+     * The type of glucose sensor which raised the alert, as a CGMSensorType ordinal (see
+     * {@link #getSensorTypeEnum()}). Tandem's export schema lists 0 = Invalid, 1 = Dexcom G6 and
+     * 3 = Dexcom G7 for this opcode. Every captured record has 3, all from Dexcom G7 sessions.
      */
     public int getSensorType() {
         return sensorType;
     }
 
+    public CgmStatusV2Response.CgmSensorType getSensorTypeEnum() {
+        return CgmStatusV2Response.CgmSensorType.fromId(sensorType);
+    }
+
     /**
-     * Identifies what acknowledged the alert (e.g. pump GUI vs. a paired device). Field name is
-     * taken from tconnectsync's cloud-export schema; only value 0 (unacknowledged/default) and 1
-     * are present in the capture used to validate this field.
+     * What acknowledged the alert, per Tandem's export schema: 0 = acknowledged by the user,
+     * 1 = acknowledged by software (see {@link AckSource}). Both values occur in captured records.
      */
     public long getAckSource() {
         return ackSource;
+    }
+
+    public AckSource getAckSourceEnum() {
+        return AckSource.fromId(ackSource);
+    }
+
+    public enum AckSource {
+        USER(0),
+        SOFTWARE(1),
+
+        ;
+        private final long id;
+        AckSource(long id) {
+            this.id = id;
+        }
+
+        public static AckSource fromId(long id) {
+            for (AckSource a : values()) {
+                if (a.id == id) {
+                    return a;
+                }
+            }
+            return null;
+        }
+
+        public long getId() {
+            return id;
+        }
     }
 }

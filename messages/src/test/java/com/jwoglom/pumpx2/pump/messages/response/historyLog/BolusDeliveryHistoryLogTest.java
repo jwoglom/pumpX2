@@ -7,6 +7,7 @@ import java.util.Set;
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 
+import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusDeliveryStatus;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusSource;
 import com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType;
 
@@ -62,6 +63,7 @@ public class BolusDeliveryHistoryLogTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(BolusDeliveryStatus.COMPLETED, parsedRes.getBolusDeliveryStatus());
     }
 
     @Test
@@ -87,6 +89,8 @@ public class BolusDeliveryHistoryLogTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(BolusDeliveryStatus.STARTED, parsedRes.getBolusDeliveryStatus());
+        assertEquals(0, parsedRes.getDeliveredTotal());
     }
 
     // Observed on a Tandem Mobi driven by Trio (Control-IQ off, no CGM paired), Sept 2026 BLE capture.
@@ -118,6 +122,7 @@ public class BolusDeliveryHistoryLogTest {
 
         assertEquals(2903, parsedRes.getBolusID());
         assertEquals(1, parsedRes.getBolusDeliveryStatusId());
+        assertEquals(BolusDeliveryStatus.STARTED, parsedRes.getBolusDeliveryStatus());
         assertEquals(Set.of(BolusType.NOW, BolusType.OVERRIDE), parsedRes.getBolusTypes());
         assertEquals(BolusSource.BLUETOOTH_REMOTE_BOLUS, parsedRes.getBolusSource());
         assertEquals(0x57, parsedRes.getRemoteId());
@@ -152,11 +157,51 @@ public class BolusDeliveryHistoryLogTest {
 
         assertEquals(2903, parsedRes.getBolusID());
         assertEquals(0, parsedRes.getBolusDeliveryStatusId());
+        assertEquals(BolusDeliveryStatus.COMPLETED, parsedRes.getBolusDeliveryStatus());
         assertEquals(Set.of(BolusType.NOW, BolusType.OVERRIDE), parsedRes.getBolusTypes());
         assertEquals(BolusSource.BLUETOOTH_REMOTE_BOLUS, parsedRes.getBolusSource());
         assertEquals(parsedRes.getBolusID() & 0xFF, parsedRes.getRemoteId());
         assertEquals(150, parsedRes.getRequestedNow());
         assertEquals(150, parsedRes.getDeliveredTotal());
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    // Tandem Mobi, official Tandem app, March 2025 BLE capture. The STARTED record of extended bolus
+    // 248: 2u, all of it extended over 480 minutes (types LATER|OVERRIDE), nothing delivered yet.
+    @Test
+    public void testBolusDeliveryHistoryLog_mobiExtendedBolusStarted() throws DecoderException {
+        BolusDeliveryHistoryLog expected = (BolusDeliveryHistoryLog) new BolusDeliveryHistoryLog(
+                // long pumpTimeSec, long sequenceNum, int bolusID, int bolusDeliveryStatusId, Set<BolusType> bolusTypes, BolusSource bolusSource, int remoteId, int requestedNow, int requestedLater, int correction, int extendedDurationRequested, int deliveredTotal
+                543715895L, 68928L,
+                248,
+                1,
+                Set.of(BolusType.LATER, BolusType.OVERRIDE),
+                BolusSource.BLUETOOTH_REMOTE_BOLUS,
+                248,
+                0,
+                2000,
+                0,
+                480,
+                0
+        ).withHeaderHighNibble(1);
+
+        BolusDeliveryHistoryLog parsedRes = (BolusDeliveryHistoryLog) HistoryLogMessageTester.testSingle(
+                "181137726820400d0100f800010608f80000d0070000e0010000",
+                expected
+        );
+
+        assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(BolusDeliveryStatus.STARTED, parsedRes.getBolusDeliveryStatus());
+        assertEquals(Set.of(BolusType.LATER, BolusType.OVERRIDE), parsedRes.getBolusTypes());
+        assertEquals(2000, parsedRes.getRequestedLater());
+        assertEquals(480, parsedRes.getExtendedDurationRequested());
+        assertEquals(0, parsedRes.getDeliveredTotal());
+    }
+
+    @Test
+    public void testBolusDeliveryStatusFromId() {
+        assertEquals(BolusDeliveryStatus.COMPLETED, BolusDeliveryStatus.fromId(0));
+        assertEquals(BolusDeliveryStatus.STARTED, BolusDeliveryStatus.fromId(1));
+        assertEquals(null, BolusDeliveryStatus.fromId(2));
     }
 }

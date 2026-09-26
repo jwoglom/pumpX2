@@ -20,8 +20,17 @@ public abstract class LastBolusStatusAbstractResponse extends Message {
     public abstract Instant getTimestampInstant();
     public abstract long getDeliveredVolume();
     public abstract int getBolusStatusId();
+    /**
+     * Bolus completion status. Ids 0-6 and their meanings match Tandem's own names for the
+     * completionStatus field of history logs 20 (BolusCompleted) and 21 (BolexCompleted):
+     * USER_ABORTED, TERMINATED_BY_ALARM, TERMINATED_BY_MALFUNCTION, COMPLETED,
+     * ABORTED_VIA_WIRELESS_LINK, REJECTED_REQUEST_VIA_WIRELESS_LINK, ABORTED_BY_PLGS.
+     *
+     * <p>Seen in history logs so far: {@link #COMPLETE}, {@link #STOPPED_USER_TERMINATED} (also
+     * written when the bolus is cancelled over Bluetooth with CancelBolusRequest) and
+     * {@link #STOPPED_ALARM}. 2, 4, 5 and 6 have not been observed.
+     */
     public enum BolusStatus {
-        // TODO: this is guesswork and is incomplete
         STOPPED_USER_TERMINATED(0),
         STOPPED_ALARM(1),
         STOPPED_MALFUNCTION(2),

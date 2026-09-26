@@ -46,9 +46,10 @@ public class CgmStopSessionG7HistoryLog extends HistoryLog {
         this.currentTransmitterTime = Bytes.readUint32(raw, 10);
         this.sessionStartTime = Bytes.readUint32(raw, 14);
         this.sessionStopTime = Bytes.readUint32(raw, 18);
-        this.stopSessionCode = raw[23];
-        this.sessionStopReason = raw[24];
-        this.sessionDuration = raw[25];
+        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.
+        this.sessionDuration = raw[22] & 0xFF;
+        this.sessionStopReason = raw[23] & 0xFF;
+        this.stopSessionCode = raw[24] & 0xFF;
 
     }
 
@@ -60,10 +61,9 @@ public class CgmStopSessionG7HistoryLog extends HistoryLog {
             Bytes.toUint32(currentTransmitterTime),
             Bytes.toUint32(sessionStartTime),
             Bytes.toUint32(sessionStopTime),
-            new byte[]{0}, // unused padding byte at offset 22
-            new byte[]{ (byte) stopSessionCode },
+            new byte[]{ (byte) sessionDuration },
             new byte[]{ (byte) sessionStopReason },
-            new byte[]{ (byte) sessionDuration }));
+            new byte[]{ (byte) stopSessionCode }));
     }
 
     public long getCurrentTransmitterTime() {
