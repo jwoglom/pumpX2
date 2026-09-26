@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-9">NewDayHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-13">NewDayHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
 </section>
 <section class="summary">
@@ -142,9 +142,23 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFeatureBitmaskIndex()" class="member-name-link">getFeatureBitmaskIndex</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Despite the name, a bitmask of the <a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response.SupportedFeatureIndex</code></a> values
+ the pump supports: bit <code>n</code> is set when <code>PumpFeaturesV2Request</code> for index <code>n</code>
+ gets a status-0 reply.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFeaturesBitmask()" class="member-name-link">getFeaturesBitmask</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The pump's main feature bitmask: the <code>pumpFeaturesBitmask</code> that
+ <a href="../currentStatus/PumpFeaturesV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response</code></a> returns for <a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html#MAIN_FEATURES"><code>PumpFeaturesV2Response.SupportedFeatureIndex.MAIN_FEATURES</code></a>
+ (index 0), which is also the <a href="../currentStatus/PumpFeaturesV1Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV1Response</code></a> bitmask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV1Response.PumpFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPrimaryFeatures()" class="member-name-link">getPrimaryFeatures</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV2Response.SupportedFeatureIndex</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedFeatureIndices()" class="member-name-link">getSupportedFeatureIndices</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
@@ -182,13 +196,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-21">NewDayHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-25">NewDayHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,float,long,long)">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-22">NewDayHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-26">NewDayHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;commandedBasalRate,
  long&nbsp;featuresBitmask,
@@ -198,7 +212,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(float,long,long)">
 <h3>NewDayHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-31">NewDayHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;commandedBasalRate,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-35">NewDayHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;commandedBasalRate,
  long&nbsp;featuresBitmask,
  long&nbsp;featureBitmaskIndex)</span></div>
 </section>
@@ -214,7 +228,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-35">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-39">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -224,7 +238,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-47">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-51">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for NewDayHistoryLog:</caption>
  <tr><td><code>commandedBasalRate</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
@@ -240,7 +254,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,float,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-57">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-61">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;commandedBasalRate,
  long&nbsp;featuresBitmask,
@@ -250,19 +264,41 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCommandedBasalRate()">
 <h3>getCommandedBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-66">getCommandedBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-70">getCommandedBasalRate</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeaturesBitmask()">
 <h3>getFeaturesBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-70">getFeaturesBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-81">getFeaturesBitmask</a></span>()</div>
+<div class="block">The pump's main feature bitmask: the <code>pumpFeaturesBitmask</code> that
+ <a href="../currentStatus/PumpFeaturesV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response</code></a> returns for <a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html#MAIN_FEATURES"><code>PumpFeaturesV2Response.SupportedFeatureIndex.MAIN_FEATURES</code></a>
+ (index 0), which is also the <a href="../currentStatus/PumpFeaturesV1Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV1Response</code></a> bitmask. Decoded by
+ <a href="#getPrimaryFeatures()"><code>getPrimaryFeatures()</code></a>. Matched the live response on four of the maintainer's pumps
+ (t:slim X2 and Mobi).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPrimaryFeatures()">
+<h3>getPrimaryFeatures</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV1Response.PumpFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV1Response.PumpFeatureType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-85">getPrimaryFeatures</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeatureBitmaskIndex()">
 <h3>getFeatureBitmaskIndex</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-74">getFeatureBitmaskIndex</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-96">getFeatureBitmaskIndex</a></span>()</div>
+<div class="block">Despite the name, a bitmask of the <a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response.SupportedFeatureIndex</code></a> values
+ the pump supports: bit <code>n</code> is set when <code>PumpFeaturesV2Request</code> for index <code>n</code>
+ gets a status-0 reply. Observed: 21 (indices 0, 2, 4) on older t:slim X2 firmware, 125 (0, 2-6)
+ on newer X2 firmware, 93 (0, 2, 3, 4, 6) on the Mobi. Decoded by
+ <a href="#getSupportedFeatureIndices()"><code>getSupportedFeatureIndices()</code></a>.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSupportedFeatureIndices()">
+<h3>getSupportedFeatureIndices</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV2Response.SupportedFeatureIndex</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/NewDayHistoryLog.html#line-100">getSupportedFeatureIndices</a></span>()</div>
 </section>
 </li>
 </ul>
