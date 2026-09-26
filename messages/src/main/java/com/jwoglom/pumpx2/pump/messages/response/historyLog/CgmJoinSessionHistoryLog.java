@@ -44,8 +44,9 @@ public class CgmJoinSessionHistoryLog extends HistoryLog {
         parseBase(raw);
         this.currentTransmitterTime = Bytes.readUint32(raw, 10);
         this.sessionStartTime = Bytes.readUint32(raw, 14);
-        this.sessionJoinReasonRaw = raw[24] & 0xFF;
-        this.sessionDuration = raw[25] & 0xFF;
+        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.
+        this.sessionDuration = raw[22] & 0xFF;
+        this.sessionJoinReasonRaw = raw[23] & 0xFF;
 
     }
 
@@ -60,9 +61,9 @@ public class CgmJoinSessionHistoryLog extends HistoryLog {
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(currentTransmitterTime),
             Bytes.toUint32(sessionStartTime),
-            new byte[]{0, 0, 0, 0, 0, 0},
-            new byte[]{(byte) sessionJoinReasonRaw},
-            new byte[]{(byte) sessionDuration}));
+            new byte[]{0, 0, 0, 0},
+            new byte[]{(byte) sessionDuration},
+            new byte[]{(byte) sessionJoinReasonRaw}));
     }
 
     /**
