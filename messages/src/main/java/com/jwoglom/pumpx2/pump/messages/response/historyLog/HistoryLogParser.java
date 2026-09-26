@@ -164,6 +164,7 @@ public class HistoryLogParser {
         AAExerciseTimeChangeHistoryLog.class,
         AAExerciseChoiceChangeHistoryLog.class,
         AATdiEstChangeHistoryLog.class,
+        ControlIQFeaturesHistoryLog.class,
         PrimeInprocessHistoryLog.class,
         CgmRejoinSessionHistoryLog.class,
         CgmSensorTypeChangeHistoryLog.class,
