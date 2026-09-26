@@ -8,6 +8,14 @@ on:
     types: [created]
   workflow_dispatch:
 
+# Every run pushes to gh-pages, so runs must not overlap: two merges to dev in
+# quick succession otherwise race and the later push is rejected. The group is
+# shared across refs (dev pushes and releases) and in-progress runs are not
+# cancelled; GitHub keeps only the newest pending run, so bursts collapse.
+concurrency:
+  group: javadoc-gh-pages
+  cancel-in-progress: false
+
 jobs:
   docs:
     runs-on: ubuntu-latest
