@@ -111,6 +111,7 @@ public class HistoryLogParser {
         DailyStatusHistoryLog.class,
         ControlIQPcmChangeHistoryLog.class,
         ControlIQUserModeChangeHistoryLog.class,
+        ControlIQCycleHistoryLog.class,
         DexcomG7CGMHistoryLog.class,
         MalfunctionHistoryLog.class,
         PlgsPeriodicHistoryLog.class,
