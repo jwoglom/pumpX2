@@ -1,9 +1,11 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
+
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 import org.apache.commons.codec.DecoderException;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class DexcomG6CGMHistoryLogTest {
@@ -20,6 +22,9 @@ public class DexcomG6CGMHistoryLogTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(1, parsedRes.getEgvCount());
+        // 2022 firmware leaves egvInfoBitmask bits 11-13 at 0
+        assertEquals(CgmStatusV2Response.CgmSensorType.NOT_APPLICABLE, parsedRes.getEgvSensorType());
     }
 
     @Test
@@ -68,11 +73,11 @@ public class DexcomG6CGMHistoryLogTest {
     }
 
     @Test
-    @Ignore("last field in cargo has something else in it")
     public void testCGMHistoryLog_NoArrow() throws DecoderException {
+        // a backfill record (cgmDataType 2): egvCount is 0
         DexcomG6CGMHistoryLog expected = new DexcomG6CGMHistoryLog(
-                // long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval
-                470616768L, 957589L, 0, 2, 0, 6, -66, 167, 470616468L, 2530, 1
+                // long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval, int egvCount
+                470616768L, 957589L, 0, 2, 0, 6, -66, 167, 470616468L, 2530, 1, 0
         );
 
         DexcomG6CGMHistoryLog parsedRes = (DexcomG6CGMHistoryLog) HistoryLogMessageTester.testSingle(
@@ -81,5 +86,24 @@ public class DexcomG6CGMHistoryLogTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(0, parsedRes.getEgvCount());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G6, parsedRes.getEgvSensorType());
+    }
+
+    @Test
+    public void testCGMHistoryLog_EgvCountRoundTrip() {
+        // synthetic five-minute reading covering one missed reading (egvCount 2), sensor type G6
+        DexcomG6CGMHistoryLog built = new DexcomG6CGMHistoryLog(
+                470616768L, 957590L, 0, 1, -3, 6, -70, 120, 470616768L, 0x09E1, 0, 2
+        );
+        assertEquals(26, built.getCargo().length);
+        assertEquals(2, built.getCargo()[25]);
+
+        DexcomG6CGMHistoryLog parsed = (DexcomG6CGMHistoryLog) HistoryLogParser.parse(built.getCargo());
+        assertHexEquals(built.getCargo(), parsed.getCargo());
+        assertEquals(2, parsed.getEgvCount());
+        assertEquals(-3, parsed.getRate());
+        assertEquals(-70, parsed.getRssi());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G6, parsed.getEgvSensorType());
     }
 }
