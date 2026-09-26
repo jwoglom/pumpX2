@@ -172,9 +172,9 @@ loadScripts(document, 'script');</script>
  <code>currentTransmitterTime</code><code>Bytes.readUint32(raw, 10)</code>
  <code>sessionStartTime</code><code>Bytes.readUint32(raw, 14)</code>
  <code>sessionStopTime</code><code>Bytes.readUint32(raw, 18)</code>
- <code>stopSessionCode</code><code>raw[23]</code>
- <code>sessionStopReason</code><code>raw[24]</code>
- <code>sessionDuration</code><code>raw[25]</code>
+ <code>sessionDuration</code><code>raw[22] &amp; 0xFF</code>
+ <code>sessionStopReason</code><code>raw[23] &amp; 0xFF</code>
+ <code>stopSessionCode</code><code>raw[24] &amp; 0xFF</code>
  </div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -257,9 +257,9 @@ loadScripts(document, 'script');</script>
  <tr><td><code>currentTransmitterTime</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
  <tr><td><code>sessionStartTime</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
  <tr><td><code>sessionStopTime</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
- <tr><td><code>stopSessionCode</code></td><td><code>raw[23]</code></td></tr>
- <tr><td><code>sessionStopReason</code></td><td><code>raw[24]</code></td></tr>
- <tr><td><code>sessionDuration</code></td><td><code>raw[25]</code></td></tr>
+ <tr><td><code>sessionDuration</code></td><td><code>raw[22] &amp; 0xFF</code></td></tr>
+ <tr><td><code>sessionStopReason</code></td><td><code>raw[23] &amp; 0xFF</code></td></tr>
+ <tr><td><code>stopSessionCode</code></td><td><code>raw[24] &amp; 0xFF</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -270,7 +270,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,long,long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionG7HistoryLog.html#line-66">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStopSessionG7HistoryLog.html#line-67">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;currentTransmitterTime,
  long&nbsp;sessionStartTime,

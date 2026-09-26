@@ -63,8 +63,8 @@
 <span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentTransmitterTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionStartTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionStopTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionStopReasonRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[25] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionStopReasonRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">051</span><span id="line-51">     * &lt;/table&gt;</span>
 <span class="source-line-no">052</span><span id="line-52">     */</span>
 <span class="source-line-no">053</span><span id="line-53">    public void parse(byte[] raw) {</span>
@@ -74,26 +74,26 @@
 <span class="source-line-no">057</span><span id="line-57">        this.currentTransmitterTime = Bytes.readUint32(raw, 10);</span>
 <span class="source-line-no">058</span><span id="line-58">        this.sessionStartTime = Bytes.readUint32(raw, 14);</span>
 <span class="source-line-no">059</span><span id="line-59">        this.sessionStopTime = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">060</span><span id="line-60">        this.sessionStopReasonRaw = raw[24] &amp; 0xFF;</span>
-<span class="source-line-no">061</span><span id="line-61">        this.sessionDuration = raw[25] &amp; 0xFF;</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">066</span><span id="line-66">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0);</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, long sessionStopTime, int sessionStopReasonRaw, int sessionDuration) {</span>
-<span class="source-line-no">070</span><span id="line-70">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">071</span><span id="line-71">            HistoryLog.typeIdBytes(214, 0),</span>
-<span class="source-line-no">072</span><span id="line-72">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">073</span><span id="line-73">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">074</span><span id="line-74">            Bytes.toUint32(currentTransmitterTime),</span>
-<span class="source-line-no">075</span><span id="line-75">            Bytes.toUint32(sessionStartTime),</span>
-<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(sessionStopTime),</span>
-<span class="source-line-no">077</span><span id="line-77">            new byte[]{0, 0},</span>
-<span class="source-line-no">078</span><span id="line-78">            new byte[]{(byte) sessionStopReasonRaw},</span>
-<span class="source-line-no">079</span><span id="line-79">            new byte[]{(byte) sessionDuration}));</span>
+<span class="source-line-no">060</span><span id="line-60">        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.</span>
+<span class="source-line-no">061</span><span id="line-61">        this.sessionDuration = raw[22] &amp; 0xFF;</span>
+<span class="source-line-no">062</span><span id="line-62">        this.sessionStopReasonRaw = raw[23] &amp; 0xFF;</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">067</span><span id="line-67">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, long sessionStopTime, int sessionStopReasonRaw, int sessionDuration) {</span>
+<span class="source-line-no">071</span><span id="line-71">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">072</span><span id="line-72">            HistoryLog.typeIdBytes(214, 0),</span>
+<span class="source-line-no">073</span><span id="line-73">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">074</span><span id="line-74">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">075</span><span id="line-75">            Bytes.toUint32(currentTransmitterTime),</span>
+<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(sessionStartTime),</span>
+<span class="source-line-no">077</span><span id="line-77">            Bytes.toUint32(sessionStopTime),</span>
+<span class="source-line-no">078</span><span id="line-78">            new byte[]{(byte) sessionDuration},</span>
+<span class="source-line-no">079</span><span id="line-79">            new byte[]{(byte) sessionStopReasonRaw}));</span>
 <span class="source-line-no">080</span><span id="line-80">    }</span>
 <span class="source-line-no">081</span><span id="line-81"></span>
 <span class="source-line-no">082</span><span id="line-82">    /**</span>

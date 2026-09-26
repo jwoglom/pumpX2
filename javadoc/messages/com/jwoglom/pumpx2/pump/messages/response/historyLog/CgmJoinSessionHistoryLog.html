@@ -184,8 +184,8 @@ loadScripts(document, 'script');</script>
  Parsed fields for CgmJoinSessionHistoryLog:
  <code>currentTransmitterTime</code><code>Bytes.readUint32(raw, 10)</code>
  <code>sessionStartTime</code><code>Bytes.readUint32(raw, 14)</code>
- <code>sessionJoinReasonRaw</code><code>raw[24] &amp; 0xFF</code>
- <code>sessionDuration</code><code>raw[25] &amp; 0xFF</code>
+ <code>sessionDuration</code><code>raw[22] &amp; 0xFF</code>
+ <code>sessionJoinReasonRaw</code><code>raw[23] &amp; 0xFF</code>
  </div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
@@ -270,8 +270,8 @@ loadScripts(document, 'script');</script>
  <caption>Parsed fields for CgmJoinSessionHistoryLog:</caption>
  <tr><td><code>currentTransmitterTime</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
  <tr><td><code>sessionStartTime</code></td><td><code>Bytes.readUint32(raw, 14)</code></td></tr>
- <tr><td><code>sessionJoinReasonRaw</code></td><td><code>raw[24] &amp; 0xFF</code></td></tr>
- <tr><td><code>sessionDuration</code></td><td><code>raw[25] &amp; 0xFF</code></td></tr>
+ <tr><td><code>sessionDuration</code></td><td><code>raw[22] &amp; 0xFF</code></td></tr>
+ <tr><td><code>sessionJoinReasonRaw</code></td><td><code>raw[23] &amp; 0xFF</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -282,14 +282,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-61">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-62">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="buildCargo(long,long,long,long,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-65">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-66">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;currentTransmitterTime,
  long&nbsp;sessionStartTime,
@@ -300,7 +300,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentTransmitterTime()">
 <h3>getCurrentTransmitterTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-80">getCurrentTransmitterTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-81">getCurrentTransmitterTime</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the current transmitter time, in seconds</dd>
@@ -310,7 +310,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSessionStartTime()">
 <h3>getSessionStartTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-87">getSessionStartTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-88">getSessionStartTime</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the session start time, in seconds</dd>
@@ -320,19 +320,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSessionJoinReasonRaw()">
 <h3>getSessionJoinReasonRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-91">getSessionJoinReasonRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-92">getSessionJoinReasonRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSessionJoinReason()">
 <h3>getSessionJoinReason</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmJoinSessionHistoryLog.SessionJoinReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmJoinSessionHistoryLog.SessionJoinReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-129">getSessionJoinReason</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmJoinSessionHistoryLog.SessionJoinReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmJoinSessionHistoryLog.SessionJoinReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-130">getSessionJoinReason</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSessionDuration()">
 <h3>getSessionDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-136">getSessionDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmJoinSessionHistoryLog.html#line-137">getSessionDuration</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the session duration, in days</dd>

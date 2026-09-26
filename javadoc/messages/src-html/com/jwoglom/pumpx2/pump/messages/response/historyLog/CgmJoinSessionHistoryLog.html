@@ -60,8 +60,8 @@
 <span class="source-line-no">043</span><span id="line-43">     * &lt;caption&gt;Parsed fields for CgmJoinSessionHistoryLog:&lt;/caption&gt;</span>
 <span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentTransmitterTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">045</span><span id="line-45">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionStartTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionJoinReasonRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[25] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sessionJoinReasonRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">048</span><span id="line-48">     * &lt;/table&gt;</span>
 <span class="source-line-no">049</span><span id="line-49">     */</span>
 <span class="source-line-no">050</span><span id="line-50">    public void parse(byte[] raw) {</span>
@@ -70,90 +70,91 @@
 <span class="source-line-no">053</span><span id="line-53">        parseBase(raw);</span>
 <span class="source-line-no">054</span><span id="line-54">        this.currentTransmitterTime = Bytes.readUint32(raw, 10);</span>
 <span class="source-line-no">055</span><span id="line-55">        this.sessionStartTime = Bytes.readUint32(raw, 14);</span>
-<span class="source-line-no">056</span><span id="line-56">        this.sessionJoinReasonRaw = raw[24] &amp; 0xFF;</span>
-<span class="source-line-no">057</span><span id="line-57">        this.sessionDuration = raw[25] &amp; 0xFF;</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">062</span><span id="line-62">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0);</span>
-<span class="source-line-no">063</span><span id="line-63">    }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionJoinReasonRaw, int sessionDuration) {</span>
-<span class="source-line-no">066</span><span id="line-66">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">067</span><span id="line-67">            HistoryLog.typeIdBytes(213, 0),</span>
-<span class="source-line-no">068</span><span id="line-68">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">069</span><span id="line-69">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(currentTransmitterTime),</span>
-<span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(sessionStartTime),</span>
-<span class="source-line-no">072</span><span id="line-72">            new byte[]{0, 0, 0, 0, 0, 0},</span>
-<span class="source-line-no">073</span><span id="line-73">            new byte[]{(byte) sessionJoinReasonRaw},</span>
-<span class="source-line-no">074</span><span id="line-74">            new byte[]{(byte) sessionDuration}));</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    /**</span>
-<span class="source-line-no">078</span><span id="line-78">     * @return the current transmitter time, in seconds</span>
-<span class="source-line-no">079</span><span id="line-79">     */</span>
-<span class="source-line-no">080</span><span id="line-80">    public long getCurrentTransmitterTime() {</span>
-<span class="source-line-no">081</span><span id="line-81">        return currentTransmitterTime;</span>
-<span class="source-line-no">082</span><span id="line-82">    }</span>
-<span class="source-line-no">083</span><span id="line-83"></span>
-<span class="source-line-no">084</span><span id="line-84">    /**</span>
-<span class="source-line-no">085</span><span id="line-85">     * @return the session start time, in seconds</span>
-<span class="source-line-no">086</span><span id="line-86">     */</span>
-<span class="source-line-no">087</span><span id="line-87">    public long getSessionStartTime() {</span>
-<span class="source-line-no">088</span><span id="line-88">        return sessionStartTime;</span>
-<span class="source-line-no">089</span><span id="line-89">    }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">    public int getSessionJoinReasonRaw() {</span>
-<span class="source-line-no">092</span><span id="line-92">        return sessionJoinReasonRaw;</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    public enum SessionJoinReason {</span>
-<span class="source-line-no">096</span><span id="line-96">        DEXBLES_REASON_USER(0),</span>
-<span class="source-line-no">097</span><span id="line-97">        DEXBLES_REASON_UNKNOWN(1),</span>
-<span class="source-line-no">098</span><span id="line-98">        DEXBLES_REASON_TX_END_OF_LIFE(3),</span>
-<span class="source-line-no">099</span><span id="line-99">        DEXBLES_REASON_TRANSMITTER_ERROR(4),</span>
-<span class="source-line-no">100</span><span id="line-100">        DEXBLES_REASON_SESSION_STOP_SUCCESS(5),</span>
-<span class="source-line-no">101</span><span id="line-101">        DEXBLES_REASON_TRANSMITTER_NOT_IN_SESSION(6),</span>
-<span class="source-line-no">102</span><span id="line-102">        DEXBLES_REASON_NEW_SESSION_STARTED_SUCCESS(8),</span>
-<span class="source-line-no">103</span><span id="line-103">        DEXBLES_REASON_SESSION_STARTED_IN_PROGRESS(9),</span>
-<span class="source-line-no">104</span><span id="line-104">        DEXBLES_REASON_TRANSMITTER_IN_SESSION(10),</span>
-<span class="source-line-no">105</span><span id="line-105">        DEXBLES_REASON_BLESTACK_INVALID(11),</span>
-<span class="source-line-no">106</span><span id="line-106">        DEXBLES_REASON_NEW_AUTOCAL_SESSION_STARTED_SUCCESS(12),</span>
-<span class="source-line-no">107</span><span id="line-107">        DEXBLES_REASON_NO_AUTOCAL_SESSION_IN_PROGRESS(13),</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">        ;</span>
-<span class="source-line-no">110</span><span id="line-110">        private int id;</span>
-<span class="source-line-no">111</span><span id="line-111">        SessionJoinReason(int id) {</span>
-<span class="source-line-no">112</span><span id="line-112">            this.id = id;</span>
-<span class="source-line-no">113</span><span id="line-113">        }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">        public static SessionJoinReason fromId(int id) {</span>
-<span class="source-line-no">116</span><span id="line-116">            for (SessionJoinReason r : values()) {</span>
-<span class="source-line-no">117</span><span id="line-117">                if (r.id == id) {</span>
-<span class="source-line-no">118</span><span id="line-118">                    return r;</span>
-<span class="source-line-no">119</span><span id="line-119">                }</span>
-<span class="source-line-no">120</span><span id="line-120">            }</span>
-<span class="source-line-no">121</span><span id="line-121">            return null;</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">        public int getId() {</span>
-<span class="source-line-no">125</span><span id="line-125">            return id;</span>
-<span class="source-line-no">126</span><span id="line-126">        }</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    public SessionJoinReason getSessionJoinReason() {</span>
-<span class="source-line-no">130</span><span id="line-130">        return SessionJoinReason.fromId(sessionJoinReasonRaw);</span>
-<span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">    /**</span>
-<span class="source-line-no">134</span><span id="line-134">     * @return the session duration, in days</span>
-<span class="source-line-no">135</span><span id="line-135">     */</span>
-<span class="source-line-no">136</span><span id="line-136">    public int getSessionDuration() {</span>
-<span class="source-line-no">137</span><span id="line-137">        return sessionDuration;</span>
-<span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139">}</span>
+<span class="source-line-no">056</span><span id="line-56">        // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.</span>
+<span class="source-line-no">057</span><span id="line-57">        this.sessionDuration = raw[22] &amp; 0xFF;</span>
+<span class="source-line-no">058</span><span id="line-58">        this.sessionJoinReasonRaw = raw[23] &amp; 0xFF;</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    }</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">063</span><span id="line-63">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0);</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionJoinReasonRaw, int sessionDuration) {</span>
+<span class="source-line-no">067</span><span id="line-67">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">068</span><span id="line-68">            HistoryLog.typeIdBytes(213, 0),</span>
+<span class="source-line-no">069</span><span id="line-69">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(currentTransmitterTime),</span>
+<span class="source-line-no">072</span><span id="line-72">            Bytes.toUint32(sessionStartTime),</span>
+<span class="source-line-no">073</span><span id="line-73">            new byte[]{0, 0, 0, 0},</span>
+<span class="source-line-no">074</span><span id="line-74">            new byte[]{(byte) sessionDuration},</span>
+<span class="source-line-no">075</span><span id="line-75">            new byte[]{(byte) sessionJoinReasonRaw}));</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    /**</span>
+<span class="source-line-no">079</span><span id="line-79">     * @return the current transmitter time, in seconds</span>
+<span class="source-line-no">080</span><span id="line-80">     */</span>
+<span class="source-line-no">081</span><span id="line-81">    public long getCurrentTransmitterTime() {</span>
+<span class="source-line-no">082</span><span id="line-82">        return currentTransmitterTime;</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">    /**</span>
+<span class="source-line-no">086</span><span id="line-86">     * @return the session start time, in seconds</span>
+<span class="source-line-no">087</span><span id="line-87">     */</span>
+<span class="source-line-no">088</span><span id="line-88">    public long getSessionStartTime() {</span>
+<span class="source-line-no">089</span><span id="line-89">        return sessionStartTime;</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">    public int getSessionJoinReasonRaw() {</span>
+<span class="source-line-no">093</span><span id="line-93">        return sessionJoinReasonRaw;</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    public enum SessionJoinReason {</span>
+<span class="source-line-no">097</span><span id="line-97">        DEXBLES_REASON_USER(0),</span>
+<span class="source-line-no">098</span><span id="line-98">        DEXBLES_REASON_UNKNOWN(1),</span>
+<span class="source-line-no">099</span><span id="line-99">        DEXBLES_REASON_TX_END_OF_LIFE(3),</span>
+<span class="source-line-no">100</span><span id="line-100">        DEXBLES_REASON_TRANSMITTER_ERROR(4),</span>
+<span class="source-line-no">101</span><span id="line-101">        DEXBLES_REASON_SESSION_STOP_SUCCESS(5),</span>
+<span class="source-line-no">102</span><span id="line-102">        DEXBLES_REASON_TRANSMITTER_NOT_IN_SESSION(6),</span>
+<span class="source-line-no">103</span><span id="line-103">        DEXBLES_REASON_NEW_SESSION_STARTED_SUCCESS(8),</span>
+<span class="source-line-no">104</span><span id="line-104">        DEXBLES_REASON_SESSION_STARTED_IN_PROGRESS(9),</span>
+<span class="source-line-no">105</span><span id="line-105">        DEXBLES_REASON_TRANSMITTER_IN_SESSION(10),</span>
+<span class="source-line-no">106</span><span id="line-106">        DEXBLES_REASON_BLESTACK_INVALID(11),</span>
+<span class="source-line-no">107</span><span id="line-107">        DEXBLES_REASON_NEW_AUTOCAL_SESSION_STARTED_SUCCESS(12),</span>
+<span class="source-line-no">108</span><span id="line-108">        DEXBLES_REASON_NO_AUTOCAL_SESSION_IN_PROGRESS(13),</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">        ;</span>
+<span class="source-line-no">111</span><span id="line-111">        private int id;</span>
+<span class="source-line-no">112</span><span id="line-112">        SessionJoinReason(int id) {</span>
+<span class="source-line-no">113</span><span id="line-113">            this.id = id;</span>
+<span class="source-line-no">114</span><span id="line-114">        }</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">        public static SessionJoinReason fromId(int id) {</span>
+<span class="source-line-no">117</span><span id="line-117">            for (SessionJoinReason r : values()) {</span>
+<span class="source-line-no">118</span><span id="line-118">                if (r.id == id) {</span>
+<span class="source-line-no">119</span><span id="line-119">                    return r;</span>
+<span class="source-line-no">120</span><span id="line-120">                }</span>
+<span class="source-line-no">121</span><span id="line-121">            }</span>
+<span class="source-line-no">122</span><span id="line-122">            return null;</span>
+<span class="source-line-no">123</span><span id="line-123">        }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">        public int getId() {</span>
+<span class="source-line-no">126</span><span id="line-126">            return id;</span>
+<span class="source-line-no">127</span><span id="line-127">        }</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">    public SessionJoinReason getSessionJoinReason() {</span>
+<span class="source-line-no">131</span><span id="line-131">        return SessionJoinReason.fromId(sessionJoinReasonRaw);</span>
+<span class="source-line-no">132</span><span id="line-132">    }</span>
+<span class="source-line-no">133</span><span id="line-133"></span>
+<span class="source-line-no">134</span><span id="line-134">    /**</span>
+<span class="source-line-no">135</span><span id="line-135">     * @return the session duration, in days</span>
+<span class="source-line-no">136</span><span id="line-136">     */</span>
+<span class="source-line-no">137</span><span id="line-137">    public int getSessionDuration() {</span>
+<span class="source-line-no">138</span><span id="line-138">        return sessionDuration;</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
+<span class="source-line-no">140</span><span id="line-140">}</span>
 
 
 
