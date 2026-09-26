@@ -82,9 +82,27 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-37">CommonSoftwareInfoResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-73">CommonSoftwareInfoResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">TODO: size may always be 51 and not 60, collect more samples
+<div class="block">Software version string and part numbers of the application and bootloader images of one MCU, in
+ reply to <a href="../../request/currentStatus/CommonSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CommonSoftwareInfoRequest</code></a>. The pump uses one of two layouts:
+
+ <ul>
+   <li><b>51 bytes (Tandem Mobi).</b> Byte 0 echoes the requested MCU type. Then the app version (a
+   NUL-terminated string in bytes 1-17), its part number (uint32 at 18) and part revision number
+   (uint32 at 22), then the bootloader version (bytes 26-42), part number (43) and part revision
+   number (47). This is the layout Tandem's Mobi app reads, and every Mobi response captured so far
+   (50 of them, from Control-IQ 7.6 to Control-IQ+ 7.9 firmware, for MCU types 0 and 1) is 51 bytes.
+   In all of them the two version strings are equal: the 16-hex-digit software ID that history log
+   449 (<code>SoftwareIdHistoryLog</code>) also records.</li>
+   <li><b>60 bytes (t:slim X2).</b> No MCU byte. The app version (bytes 0-17), part number, dash
+   number and revision number (uint32 at 18, 22 and 26), then the bootloader version (bytes 30-46),
+   part number, dash number and revision number (47, 51 and 55). This is the layout the t:slim X2
+   t:connect app reads; no X2 response has been captured to confirm it.</li>
+ </ul>
+
+ The 51-byte layout has no dash numbers: <a href="#getAppSoftwarePartDashNumber()"><code>getAppSoftwarePartDashNumber()</code></a> is 0 and
+ <a href="#getBootloaderPartDashNumber()"><code>getBootloaderPartDashNumber()</code></a> is null for it.
 
 
 
@@ -129,14 +147,29 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String,long,long,java.lang.String,long,long)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(int&nbsp;mcuTypeId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+ long&nbsp;appSoftwarePartNumber,
+ long&nbsp;appSoftwarePartRevisionNumber,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
+ long&nbsp;bootloaderPartNumber,
+ long&nbsp;bootloaderPartRevisionNumber)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Builds the 51-byte Tandem Mobi layout.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
  long&nbsp;appSoftwarePartNumber,
  long&nbsp;appSoftwarePartDashNumber,
  long&nbsp;appSoftwarePartRevisionNumber,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
  long&nbsp;bootloaderPartNumber)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long,long,long)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">builds the t:slim X2 field order cut off after the bootloader part number, a 51-byte
+ cargo no pump sends, which <a href="#parse(byte%5B%5D)"><code>parse(byte[])</code></a> reads as the Mobi layout.</div>
+</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,long,long,long,java.lang.String,long,long,long)" class="member-name-link">CommonSoftwareInfoResponse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
  long&nbsp;appSoftwarePartNumber,
  long&nbsp;appSoftwarePartDashNumber,
  long&nbsp;appSoftwarePartRevisionNumber,
@@ -144,7 +177,7 @@ loadScripts(document, 'script');</script>
  long&nbsp;bootloaderPartNumber,
  long&nbsp;bootloaderPartDashNumber,
  long&nbsp;bootloaderPartRevisionNumber)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -225,43 +258,61 @@ loadScripts(document, 'script');</script>
  50<code>toUint32(bootloaderPartNumber) [byte 3]</code>
  </div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildMobiCargo(int,java.lang.String,long,long,java.lang.String,long,long)" class="member-name-link">buildMobiCargo</a><wbr>(int&nbsp;mcuTypeId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+ long&nbsp;appSoftwarePartNumber,
+ long&nbsp;appSoftwarePartRevisionNumber,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
+ long&nbsp;bootloaderPartNumber,
+ long&nbsp;bootloaderPartRevisionNumber)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartDashNumber()" class="member-name-link">getAppSoftwarePartDashNumber</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartDashNumber()" class="member-name-link">getAppSoftwarePartDashNumber</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartNumber()" class="member-name-link">getAppSoftwarePartNumber</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartNumber()" class="member-name-link">getAppSoftwarePartNumber</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartRevisionNumber()" class="member-name-link">getAppSoftwarePartRevisionNumber</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwareVersion()" class="member-name-link">getAppSoftwareVersion</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartDashNumber()" class="member-name-link">getBootloaderPartDashNumber</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwarePartRevisionNumber()" class="member-name-link">getAppSoftwarePartRevisionNumber</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartNumber()" class="member-name-link">getBootloaderPartNumber</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAppSoftwareVersion()" class="member-name-link">getAppSoftwareVersion</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartRevisionNumber()" class="member-name-link">getBootloaderPartRevisionNumber</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartDashNumber()" class="member-name-link">getBootloaderPartDashNumber</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderVersion()" class="member-name-link">getBootloaderVersion</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartNumber()" class="member-name-link">getBootloaderPartNumber</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../request/currentStatus/CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMcuType()" class="member-name-link">getMcuType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderPartRevisionNumber()" class="member-name-link">getBootloaderPartRevisionNumber</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBootloaderVersion()" class="member-name-link">getBootloaderVersion</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMcuTypeId()" class="member-name-link">getMcuTypeId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The MCU type echoed from the request (51-byte Mobi layout only), else null.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for CommonSoftwareInfoResponse:
- <code>appSoftwareVersion</code><code>Bytes.readString(raw, 0, 18)</code>
+ <code>mcuTypeId</code><code>raw[0] &amp; 0xFF</code>
+ <code>appSoftwareVersion</code><code>Bytes.readString(raw, 1, 17)</code>
  <code>appSoftwarePartNumber</code><code>Bytes.readUint32(raw, 18)</code>
- <code>appSoftwarePartDashNumber</code><code>Bytes.readUint32(raw, 22)</code>
- <code>appSoftwarePartRevisionNumber</code><code>Bytes.readUint32(raw, 26)</code>
- <code>bootloaderVersion</code><code>Bytes.readString(raw, 30, 17)</code>
- <code>bootloaderPartNumber</code><code>Bytes.readUint32(raw, 47)</code>
- <code>bootloaderPartDashNumber</code><code>Bytes.readUint32(raw, 51)</code>
- <code>bootloaderPartRevisionNumber</code><code>Bytes.readUint32(raw, 55)</code>
+ <code>appSoftwarePartDashNumber</code><code>0</code>
+ <code>appSoftwarePartRevisionNumber</code><code>Bytes.readUint32(raw, 22)</code>
+ <code>bootloaderVersion</code><code>Bytes.readString(raw, 26, 17)</code>
+ <code>bootloaderPartNumber</code><code>Bytes.readUint32(raw, 43)</code>
+ <code>bootloaderPartDashNumber</code><code>null</code>
+ <code>bootloaderPartRevisionNumber</code><code>Bytes.readUint32(raw, 47)</code>
  </div>
 </div>
 </div>
@@ -287,19 +338,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CommonSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-57">CommonSoftwareInfoResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-95">CommonSoftwareInfoResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>CommonSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-59">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-97">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,long,long,long,java.lang.String,long,long,long)">
 <h3>CommonSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-64">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-102">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
  long&nbsp;appSoftwarePartNumber,
  long&nbsp;appSoftwarePartDashNumber,
  long&nbsp;appSoftwarePartRevisionNumber,
@@ -310,14 +361,34 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="&lt;init&gt;(int,java.lang.String,long,long,java.lang.String,long,long)">
+<h3>CommonSoftwareInfoResponse</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-118">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(int&nbsp;mcuTypeId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+ long&nbsp;appSoftwarePartNumber,
+ long&nbsp;appSoftwarePartRevisionNumber,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
+ long&nbsp;bootloaderPartNumber,
+ long&nbsp;bootloaderPartRevisionNumber)</span></div>
+<div class="block">Builds the 51-byte Tandem Mobi layout.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,long,long,long,java.lang.String,long)">
 <h3>CommonSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-77">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-129">CommonSoftwareInfoResponse</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
  long&nbsp;appSoftwarePartNumber,
  long&nbsp;appSoftwarePartDashNumber,
  long&nbsp;appSoftwarePartRevisionNumber,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
  long&nbsp;bootloaderPartNumber)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">builds the t:slim X2 field order cut off after the bootloader part number, a 51-byte
+ cargo no pump sends, which <a href="#parse(byte%5B%5D)"><code>parse(byte[])</code></a> reads as the Mobi layout. Use
+ <a href="#%3Cinit%3E(int,java.lang.String,long,long,java.lang.String,long,long)"><code>CommonSoftwareInfoResponse(int, String, long, long, String, long, long)</code></a> for the Mobi
+ layout or the eight-argument constructor for the t:slim X2 layout.</div>
+</div>
 </section>
 </li>
 </ul>
@@ -331,17 +402,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-103">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-157">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CommonSoftwareInfoResponse:</caption>
- <tr><td><code>appSoftwareVersion</code></td><td><code>Bytes.readString(raw, 0, 18)</code></td></tr>
+ <tr><td><code>mcuTypeId</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
+ <tr><td><code>appSoftwareVersion</code></td><td><code>Bytes.readString(raw, 1, 17)</code></td></tr>
  <tr><td><code>appSoftwarePartNumber</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
- <tr><td><code>appSoftwarePartDashNumber</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
- <tr><td><code>appSoftwarePartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 26)</code></td></tr>
- <tr><td><code>bootloaderVersion</code></td><td><code>Bytes.readString(raw, 30, 17)</code></td></tr>
- <tr><td><code>bootloaderPartNumber</code></td><td><code>Bytes.readUint32(raw, 47)</code></td></tr>
- <tr><td><code>bootloaderPartDashNumber</code></td><td><code>Bytes.readUint32(raw, 51)</code></td></tr>
- <tr><td><code>bootloaderPartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 55)</code></td></tr>
+ <tr><td><code>appSoftwarePartDashNumber</code></td><td><code>0</code></td></tr>
+ <tr><td><code>appSoftwarePartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ <tr><td><code>bootloaderVersion</code></td><td><code>Bytes.readString(raw, 26, 17)</code></td></tr>
+ <tr><td><code>bootloaderPartNumber</code></td><td><code>Bytes.readUint32(raw, 43)</code></td></tr>
+ <tr><td><code>bootloaderPartDashNumber</code></td><td><code>null</code></td></tr>
+ <tr><td><code>bootloaderPartRevisionNumber</code></td><td><code>Bytes.readUint32(raw, 47)</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -350,9 +422,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="buildMobiCargo(int,java.lang.String,long,long,java.lang.String,long,long)">
+<h3>buildMobiCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-187">buildMobiCargo</a></span><wbr><span class="parameters">(int&nbsp;mcuTypeId,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+ long&nbsp;appSoftwarePartNumber,
+ long&nbsp;appSoftwarePartRevisionNumber,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bootloaderVersion,
+ long&nbsp;bootloaderPartNumber,
+ long&nbsp;bootloaderPartRevisionNumber)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="buildCargo(java.lang.String,long,long,long,java.lang.String,long,java.lang.Long,java.lang.Long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-177">buildCargo</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-255">buildCargo</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;appSoftwareVersion,
  long&nbsp;appSoftwarePartNumber,
  long&nbsp;appSoftwareDashNumber,
  long&nbsp;appSoftwarePartRevisionNumber,
@@ -418,51 +502,64 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getMcuTypeId()">
+<h3>getMcuTypeId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-272">getMcuTypeId</a></span>()</div>
+<div class="block">The MCU type echoed from the request (51-byte Mobi layout only), else null.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMcuType()">
+<h3>getMcuType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../request/currentStatus/CommonSoftwareInfoRequest.MCUType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.currentStatus">CommonSoftwareInfoRequest.MCUType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-276">getMcuType</a></span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getAppSoftwareVersion()">
 <h3>getAppSoftwareVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-191">getAppSoftwareVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-280">getAppSoftwareVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAppSoftwarePartNumber()">
 <h3>getAppSoftwarePartNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-194">getAppSoftwarePartNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-283">getAppSoftwarePartNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAppSoftwarePartDashNumber()">
 <h3>getAppSoftwarePartDashNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-197">getAppSoftwarePartDashNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-286">getAppSoftwarePartDashNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAppSoftwarePartRevisionNumber()">
 <h3>getAppSoftwarePartRevisionNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-200">getAppSoftwarePartRevisionNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-289">getAppSoftwarePartRevisionNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBootloaderVersion()">
 <h3>getBootloaderVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-203">getBootloaderVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-292">getBootloaderVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBootloaderPartNumber()">
 <h3>getBootloaderPartNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-206">getBootloaderPartNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-295">getBootloaderPartNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBootloaderPartDashNumber()">
 <h3>getBootloaderPartDashNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-209">getBootloaderPartDashNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-298">getBootloaderPartDashNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBootloaderPartRevisionNumber()">
 <h3>getBootloaderPartRevisionNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-212">getBootloaderPartRevisionNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CommonSoftwareInfoResponse.html#line-301">getBootloaderPartRevisionNumber</a></span>()</div>
 </section>
 </li>
 </ul>
