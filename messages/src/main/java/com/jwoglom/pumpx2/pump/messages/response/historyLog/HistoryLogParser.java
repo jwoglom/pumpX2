@@ -188,6 +188,7 @@ public class HistoryLogParser {
         AuthorizationCountersHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
         BleLinkStatsHistoryLog.class,
+        BleDailyConnectionsHistoryLog.class,
         TipsErrorHistoryLog.class
         // MESSAGES_END
     );
