@@ -174,6 +174,7 @@ public class HistoryLogParser {
         CgmBleCalibrationEvtG7HistoryLog.class,
         CgmInactiveG7HistoryLog.class,
         CgmStopSessionReqG7HistoryLog.class,
+        BleSoftDeviceVersionHistoryLog.class,
         AlarmAckHistoryLog.class,
         AlertAckHistoryLog.class,
         DismissNotificationResponseHistoryLog.class,
