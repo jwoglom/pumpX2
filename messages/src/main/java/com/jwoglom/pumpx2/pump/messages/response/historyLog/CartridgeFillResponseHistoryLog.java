@@ -74,7 +74,7 @@ public class CartridgeFillResponseHistoryLog extends HistoryLog {
 
     /**
      * The unsigned opcode of the CONTROL-characteristic response the pump sent (pumpX2's signed
-     * {@code opCode} & 0xFF): 145, 147, 149, 151 or 153 in every observed record.
+     * {@code opCode & 0xFF}): 145, 147, 149, 151 or 153 in every observed record.
      */
     public int getResponseOpCode() {
         return responseOpCode;
