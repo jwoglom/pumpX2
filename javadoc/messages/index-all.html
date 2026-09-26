@@ -3413,6 +3413,8 @@ loadScripts(document, 'script');</script>
  23<code>new byte[]{0} [element 1]</code>
  </div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#buildCargo(long,long,float,float,float,long)" class="member-name-link">buildCargo(long, long, float, float, float, long)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/TempRateActivatedHistoryLog.html#buildCargo(long,long,float,float,int)" class="member-name-link">buildCargo(long, long, float, float, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/TempRateActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">TempRateActivatedHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#buildCargo(long,long,float,float,int,long)" class="member-name-link">buildCargo(long, long, float, float, int, long)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ReservoirEstimateHistoryLog</a></dt>
@@ -5795,6 +5797,16 @@ loadScripts(document, 'script');</script>
 <div class="block">7B83FFFD-9F77-4E5C-8064-AAE2C24838B9</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html#CONTROL_STREAM_CHARACTERISTICS" class="member-name-link">CONTROL_STREAM_CHARACTERISTICS</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.bluetooth.<a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html" title="class in com.jwoglom.pumpx2.pump.messages.bluetooth">CharacteristicUUID</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.historyLog</a></dt>
+<dd>
+<div class="block">Control-IQ's rolling two-hour total of the insulin it commanded itself, written every 15 minutes
+ (a 900-second timer from pump start-up, in the same second of the minute as
+ <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a>).</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#%3Cinit%3E()" class="member-name-link">ControlIQAutomatedInsulinHistoryLog()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#%3Cinit%3E(long,long,float,float,float,long)" class="member-name-link">ControlIQAutomatedInsulinHistoryLog(long, long, float, float, float, long)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQCycleHistoryLog</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/package-summary.html">com.jwoglom.pumpx2.pump.messages.response.historyLog</a></dt>
 <dd>
@@ -8228,6 +8240,11 @@ loadScripts(document, 'script');</script>
  the window in 160 of 161 windows (1 off in the other): with TandemKit's JPAKE
  reconnects, two per connection.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#getAutoBolusInsulin()" class="member-name-link">getAutoBolusInsulin()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">Automatic correction boluses in the window, counted at the Control-IQ cycle that decided them
+ (47-141 s before the BolusDelivery STARTED record) and dropped two hours later.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#getAutoOffDuration()" class="member-name-link">getAutoOffDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetAutoOffAlertRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html#getAutoShutdownDuration()" class="member-name-link">getAutoShutdownDuration()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpSettingsResponse</a></dt>
@@ -8238,6 +8255,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#getAutoShutdownEnabled()" class="member-name-link">getAutoShutdownEnabled()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangePumpSettingsHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#getBasalAboveProfileInsulin()" class="member-name-link">getBasalAboveProfileInsulin()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">For each cycle in the window, max(0, commanded rate - profile rate) times 5 minutes: the
+ insulin Control-IQ added by raising basal above the profile.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html#getBasalDeliveryFlags()" class="member-name-link">getBasalDeliveryFlags()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BasalDeliveryHistoryLog</a></dt>
 <dd>
 <div class="block">Raw value of bytes 12-13.</div>
@@ -8247,6 +8269,8 @@ loadScripts(document, 'script');</script>
 <div class="block">floor(max(0, algorithmRate - profileBasalRate) / 12) for the next
  <a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BasalDeliveryHistoryLog</code></a>.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#getBasalInsulin()" class="member-name-link">getBasalInsulin()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#getBasalIQStatusState()" class="member-name-link">getBasalIQStatusState()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html#getBasalIQStatusStateId()" class="member-name-link">getBasalIQStatusStateId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/BasalIQStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BasalIQStatusResponse</a></dt>
@@ -10986,6 +11010,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeControlIQSettingsRequest.html#getTotalDailyInsulinUnits()" class="member-name-link">getTotalDailyInsulinUnits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeControlIQSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeControlIQSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#getTotalInsulin()" class="member-name-link">getTotalInsulin()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">Basal Control-IQ commanded over the last two hours plus its automatic correction boluses.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/NonControlIQIOBResponse.html#getTotalIOB()" class="member-name-link">getTotalIOB()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/NonControlIQIOBResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">NonControlIQIOBResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html#getTotalVolume()" class="member-name-link">getTotalVolume()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/InitiateBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">InitiateBolusRequest</a></dt>
@@ -11247,6 +11275,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">0 on the t:slim X2 and on Mobi firmware 7.9.0.2.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#getUnknown22()" class="member-name-link">getUnknown22()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">0 in all 4,668 records seen.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#getUnknown22()" class="member-name-link">getUnknown22()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlRequestCountersHistoryLog</a></dt>
 <dd>
 <div class="block">Equal to the number of DismissNotification, SetMaxBasalLimit and SetMaxBolusLimit
@@ -11474,6 +11506,8 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:H">H</h2>
 <dl class="index">
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ActiveAamBitsResponse.html#hasActiveBit(int)" class="member-name-link">hasActiveBit(int)</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ActiveAamBitsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ActiveAamBitsResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#hasAutomatedInsulin()" class="member-name-link">hasAutomatedInsulin()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcCondition.BolusCalcPrompt.html#hashCode()" class="member-name-link">hashCode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.calculator.<a href="com/jwoglom/pumpx2/pump/messages/calculator/BolusCalcCondition.BolusCalcPrompt.html" title="class in com.jwoglom.pumpx2.pump.messages.calculator">BolusCalcCondition.BolusCalcPrompt</a></dt>
 <dd>&nbsp;</dd>
@@ -16176,6 +16210,16 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ConfirmCartridgeFilledHistoryLog.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ConfirmCartridgeFilledHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ConfirmCartridgeFilledHistoryLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">
+ Parsed fields for ControlIQAutomatedInsulinHistoryLog:
+ <code>totalInsulin</code><code>Bytes.readFloat(raw, 10)</code>
+ <code>basalAboveProfileInsulin</code><code>Bytes.readFloat(raw, 14)</code>
+ <code>autoBolusInsulin</code><code>Bytes.readFloat(raw, 18)</code>
+ <code>unknown22</code><code>Bytes.readUint32(raw, 22)</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQCycleHistoryLog</a></dt>
 <dd>
 <div class="block">
@@ -17841,6 +17885,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html#reset()" class="member-name-link">reset()</a> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html" title="class in com.jwoglom.pumpx2.pump.messages">TransactionId</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#RESIDUE_THRESHOLD_UNITS" class="member-name-link">RESIDUE_THRESHOLD_UNITS</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
+<dd>
+<div class="block">Larger than the float residue the sums settle at, smaller than one 5-minute basal slot.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#response()" class="member-name-link">response()</a> - Element in annotation interface com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/Messages.html#response()" class="member-name-link">response()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/Messages.html" title="enum class in com.jwoglom.pumpx2.pump.messages">Messages</a></dt>
@@ -19928,6 +19976,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ChargingStoppedHistoryLog.html#typeId()" class="member-name-link">typeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ChargingStoppedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ChargingStoppedHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ConfirmCartridgeFilledHistoryLog.html#typeId()" class="member-name-link">typeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ConfirmCartridgeFilledHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ConfirmCartridgeFilledHistoryLog</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#typeId()" class="member-name-link">typeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQAutomatedInsulinHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#typeId()" class="member-name-link">typeId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ControlIQCycleHistoryLog</a></dt>
 <dd>&nbsp;</dd>
