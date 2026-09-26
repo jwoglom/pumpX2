@@ -108,6 +108,7 @@ public class HistoryLogParser {
         CgmStopSessionFsl2HistoryLog.class,
         CgmStopSessionFsl3HistoryLog.class,
         CgmStopSessionG7HistoryLog.class,
+        SoftwareIdHistoryLog.class,
         DailyStatusHistoryLog.class,
         ControlIQPcmChangeHistoryLog.class,
         ControlIQUserModeChangeHistoryLog.class,
