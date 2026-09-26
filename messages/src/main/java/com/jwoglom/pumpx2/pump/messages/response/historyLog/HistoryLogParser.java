@@ -174,6 +174,11 @@ public class HistoryLogParser {
         AamAnnunciationHistoryLog.class,
         ReminderActivatedHistoryLog.class,
         ReminderDismissedHistoryLog.class,
+        HistoryRequestCountersHistoryLog.class,
+        HistoryRequestRangeHistoryLog.class,
+        ControlRequestCountersHistoryLog.class,
+        ControlStreamCountersHistoryLog.class,
+        AuthorizationCountersHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
         BleLinkStatsHistoryLog.class,
         TipsErrorHistoryLog.class
