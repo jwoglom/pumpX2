@@ -149,6 +149,8 @@ public class HistoryLogParser {
         CgmStopSessionReqG7HistoryLog.class,
         AlarmAckHistoryLog.class,
         AlertAckHistoryLog.class,
+        DismissNotificationResponseHistoryLog.class,
+        AamAnnunciationHistoryLog.class,
         ReminderActivatedHistoryLog.class,
         ReminderDismissedHistoryLog.class,
         CgmPairingCodeG7HistoryLog.class,
