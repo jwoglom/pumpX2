@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 import java.util.Set;
 
@@ -27,13 +28,21 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
     private int egvInfoBitmaskRaw;
     private Set<DexcomG6CGMHistoryLog.EgvInfo> egvInfo;
     private int interval;
+    private int egvCount;
     
     public DexcomG7CGMHistoryLog() {}
-    public DexcomG7CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
+    public DexcomG7CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval, int egvCount) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmask, interval);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmask, interval, egvCount);
         parse(cargo);
         
+    }
+
+    /**
+     * Builds a record with {@code egvCount} = 0, as in the Mobi G7 fixtures.
+     */
+    public DexcomG7CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
+        this(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmask, interval, 0);
     }
 
     public DexcomG7CGMHistoryLog(int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
@@ -61,10 +70,18 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
         this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);
         this.egvInfo = getEgvInfo();
         this.interval = raw[24];
+        this.egvCount = raw[25] & 0xFF;
         
     }
 
+    /**
+     * Builds a record with {@code egvCount} = 0, as in the Mobi G7 fixtures.
+     */
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval) {
+        return buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmask, interval, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, int egvTimestamp, int egvInfoBitmask, int interval, int egvCount) {
         return HistoryLog.fillCargo(Bytes.combine(
             HistoryLog.typeIdBytes(399, 1), // nibble is capture-dependent (see getHeaderHighNibble javadoc); 1 preserved here since all known 399 fixtures carry it
             Bytes.toUint32(pumpTimeSec),
@@ -77,7 +94,8 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
             Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue), 
             Bytes.toUint32(egvTimestamp), 
             Bytes.firstTwoBytesLittleEndian(egvInfoBitmask), 
-            new byte[]{ (byte) interval }));
+            new byte[]{ (byte) interval },
+            new byte[]{ (byte) egvCount }));
     }
     public int getGlucoseValueStatusRaw() {
         return glucoseValueStatusRaw;
@@ -88,6 +106,9 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
     public Set<DexcomG6CGMHistoryLog.CgmDataType> getCgmDataType() {
         return DexcomG6CGMHistoryLog.CgmDataType.fromId(cgmDataTypeRaw);
     }
+    /**
+     * Signed rate of change, in 0.1 mg/dL per minute.
+     */
     public int getRate() {
         return rate;
     }
@@ -164,6 +185,9 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
         return GlucoseValueStatus.fromId(glucoseValueStatusRaw);
     }
 
+    /**
+     * Signed RSSI, in dBm.
+     */
     public int getRssi() {
         return rssi;
     }
@@ -179,8 +203,26 @@ public class DexcomG7CGMHistoryLog extends HistoryLog {
     public Set<DexcomG6CGMHistoryLog.EgvInfo> getEgvInfo() {
         return DexcomG6CGMHistoryLog.EgvInfo.fromId(egvInfoBitmaskRaw);
     }
+
+    /**
+     * Bits 11-13 of {@code egvInfoBitmask}: the CGM sensor type (3, G7, in every captured record).
+     * See {@link DexcomG6CGMHistoryLog#getEgvSensorType()}.
+     */
+    public CgmStatusV2Response.CgmSensorType getEgvSensorType() {
+        return DexcomG6CGMHistoryLog.getEgvSensorType(egvInfoBitmaskRaw);
+    }
+
     public int getInterval() {
         return interval;
+    }
+
+    /**
+     * Byte 25: 0 in backfill records, otherwise the number of five-minute readings the record
+     * covers. See {@link DexcomG6CGMHistoryLog#getEgvCount()}. The t:slim X2 fills it for G7
+     * readings; the Mobi G7 fixtures (Control-IQ+ firmware) have 0.
+     */
+    public int getEgvCount() {
+        return egvCount;
     }
     
 }

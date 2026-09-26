@@ -1,6 +1,9 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
+
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -23,6 +26,8 @@ public class DexcomG7CGMHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(0, parsedRes.getEgvCount());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G7, parsedRes.getEgvSensorType());
     }
 
     @Test
@@ -65,5 +70,21 @@ public class DexcomG7CGMHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+    }
+
+    @Test
+    public void testDexcomG7CGMHistoryLog_EgvCountRoundTrip() {
+        // synthetic five-minute reading covering two missed readings (egvCount 3), sensor type G7
+        DexcomG7CGMHistoryLog built = new DexcomG7CGMHistoryLog(
+                566516808L, 506707L, 0, 1, -5, 32, -61, 140, 566516805, 0x19E1, 0, 3
+        );
+        assertEquals(26, built.getCargo().length);
+        assertEquals(3, built.getCargo()[25]);
+
+        DexcomG7CGMHistoryLog parsed = (DexcomG7CGMHistoryLog) HistoryLogParser.parse(built.getCargo());
+        assertHexEquals(built.getCargo(), parsed.getCargo());
+        assertEquals(3, parsed.getEgvCount());
+        assertEquals(-5, parsed.getRate());
+        assertEquals(CgmStatusV2Response.CgmSensorType.DEXCOM_G7, parsed.getEgvSensorType());
     }
 }

@@ -3,6 +3,7 @@ package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 import org.apache.commons.lang3.Validate;
 import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CgmStatusV2Response;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -29,22 +30,28 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
     private int egvInfoBitmaskRaw;
     private Set<EgvInfo> egvInfo;
     private int interval;
+    private int egvCount;
     
     public DexcomG6CGMHistoryLog() {}
     
-    public DexcomG6CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval);
+    public DexcomG6CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval, int egvCount) {
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval, egvCount);
         parse(cargo);
         
+    }
+
+    /**
+     * Builds a record with {@code egvCount} = 1, the value a five-minute reading with no missed
+     * readings carries.
+     */
+    public DexcomG6CGMHistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+        this(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval, 1);
     }
 
     public int typeId() {
         return 256;
     }
 
-    /**
-     * TODO: this needs to be checked against the tconnectsync eventparser code since they seem to differ
-     */
     public void parse(byte[] raw) {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
@@ -61,11 +68,19 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
         this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);
         this.egvInfo = getEgvInfo();
         this.interval = raw[24];
+        this.egvCount = raw[25] & 0xFF;
         
     }
 
-    
+    /**
+     * Builds a record with {@code egvCount} = 1, the value a five-minute reading with no missed
+     * readings carries.
+     */
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval) {
+        return buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatus, cgmDataType, rate, algorithmState, rssi, currentGlucoseDisplayValue, timeStampSeconds, egvInfoBitmask, interval, 1);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatus, int cgmDataType, int rate, int algorithmState, int rssi, int currentGlucoseDisplayValue, long timeStampSeconds, int egvInfoBitmask, int interval, int egvCount) {
         return Bytes.combine(
             HistoryLog.typeIdBytes(256, 0),
             Bytes.toUint32(pumpTimeSec),
@@ -79,7 +94,7 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
             Bytes.toUint32(timeStampSeconds), 
             Bytes.firstTwoBytesLittleEndian(egvInfoBitmask), 
             new byte[]{ (byte) interval },
-            new byte[]{ 1 }); // missing param?
+            new byte[]{ (byte) egvCount });
     }
     
     public int getGlucoseValueStatusRaw() {
@@ -153,12 +168,18 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
         return CgmDataType.fromId(cgmDataTypeRaw);
     }
 
+    /**
+     * Signed rate of change, in 0.1 mg/dL per minute.
+     */
     public int getRate() {
         return rate;
     }
     public int getAlgorithmState() {
         return algorithmState;
     }
+    /**
+     * Signed RSSI, in dBm.
+     */
     public int getRssi() {
         return rssi;
     }
@@ -208,8 +229,33 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
     public Set<EgvInfo> getEgvInfo() {
         return EgvInfo.fromId(egvInfoBitmaskRaw);
     }
+
+    /**
+     * Bits 11-13 of {@code egvInfoBitmask}: the CGM sensor type. Tandem's FSL3 schema (opcode 480)
+     * names these bits "Sensor Type"; in captures they are 1 (G6) in 256 records from 2023 on, 3
+     * (G7) in 399 records, and 0 on 2022 firmware.
+     */
+    public CgmStatusV2Response.CgmSensorType getEgvSensorType() {
+        return getEgvSensorType(egvInfoBitmaskRaw);
+    }
+
+    static CgmStatusV2Response.CgmSensorType getEgvSensorType(int egvInfoBitmask) {
+        return CgmStatusV2Response.CgmSensorType.fromId((egvInfoBitmask >> 11) & 0x7);
+    }
+
     public int getInterval() {
         return interval;
+    }
+
+    /**
+     * Byte 25, which Tandem's schema leaves unnamed. It is 0 in backfill records. In a five-minute
+     * reading it is the number of readings the record covers: 1 normally, or N after N-1 missed
+     * readings, whose backfill records the pump logs right after it. The meaning is inferred from
+     * captures (see pumpX2#76); newer Mobi firmware has been seen writing 0 here for five-minute
+     * readings too.
+     */
+    public int getEgvCount() {
+        return egvCount;
     }
     
 }
