@@ -38,7 +38,7 @@ public class CharacteristicGuesser {
 
 
     public static Set<Characteristic> filterKnownPossibilities(String rawHex, int opCode, Set<Characteristic> possibilities) {
-        String pumpx2Characteristic = System.getenv("PUMPX2_CHARACTERISTIC");
+        String pumpx2Characteristic = Env.get("PUMPX2_CHARACTERISTIC");
         if (pumpx2Characteristic != null && !pumpx2Characteristic.isBlank()) {
             Characteristic c = Characteristic.valueOf(pumpx2Characteristic);
             if (c == null) c = Characteristic.of(UUID.fromString(pumpx2Characteristic));
