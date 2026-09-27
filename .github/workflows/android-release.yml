@@ -68,6 +68,7 @@ jobs:
           curl -sS "$version_url" || /bin/true
           echo
 
+          appear_deadline=$(( $(date +%s) + 3 * 60 ))
           deadline=$(( $(date +%s) + 45 * 60 ))
           while true; do
             status=$(curl -sS "$builds_url" | jq -r --arg v "$RELEASE_VERSION" '.["com.github.jwoglom"].pumpX2[$v] // "missing"' || echo "unreachable")
@@ -78,6 +79,10 @@ jobs:
                 echo "::error::jitpack build of $RELEASE_VERSION failed: https://jitpack.io/com/github/jwoglom/pumpX2/$RELEASE_VERSION/build.log"
                 exit 1 ;;
             esac
+            if [ "$status" = "missing" ] && [ "$(date +%s)" -ge "$appear_deadline" ]; then
+              echo "::error::jitpack has not listed a build of $RELEASE_VERSION after 3 minutes"
+              exit 1
+            fi
             if [ "$(date +%s)" -ge "$deadline" ]; then
               echo "::error::jitpack build of $RELEASE_VERSION still '$status' after 45 minutes"
               exit 1
