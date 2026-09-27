@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
+import com.jwoglom.pumpx2.cliparser.util.Env;
 import com.jwoglom.pumpx2.cliparser.util.JsonMessageParser;
 import com.jwoglom.pumpx2.cliparser.util.NoMessageMatch;
 import com.jwoglom.pumpx2.pump.messages.Message;
@@ -31,7 +32,12 @@ import org.json.JSONObject;
 
 import com.jwoglom.pumpx2.shared.Hex;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -64,14 +70,40 @@ public class Main {
     static {
         L.getPrintln = System.err::println;
     }
+    // serve runs these in-process; the rest read stdin or files, or would nest a server.
+    private static final Set<String> SERVABLE_COMMANDS = new HashSet<>(Arrays.asList(
+            "opcode", "listallcommands", "parse", "guesscargo", "read", "write", "historylog",
+            "encode", "hkdf", "hmac-sha256"));
+
     public static void main(String[] args) throws DecoderException, IOException {
         if (args.length == 0) {
             System.out.println("Specify a command.");
             return;
         }
+        if (args[0].equalsIgnoreCase("serve")) {
+            serve();
+            return;
+        }
 
-        String pumpAuthenticationKey = System.getenv("PUMP_AUTHENTICATION_KEY");
-        String pumpPairingCode = System.getenv("PUMP_PAIRING_CODE");
+        configurePumpState();
+        try {
+            run(args);
+        } catch (EncodeException e) {
+            System.err.println(e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /** An encode request that names no message, or no constructor with its parameter count. */
+    static class EncodeException extends RuntimeException {
+        EncodeException(String message) {
+            super(message);
+        }
+    }
+
+    private static void configurePumpState() {
+        String pumpAuthenticationKey = Env.get("PUMP_AUTHENTICATION_KEY");
+        String pumpPairingCode = Env.get("PUMP_PAIRING_CODE");
         if (!StringUtils.isBlank(pumpPairingCode)) {
             PumpStateSupplier.pumpPairingCode = () -> pumpPairingCode;
         } else if (!StringUtils.isBlank(pumpAuthenticationKey)) {
@@ -81,14 +113,16 @@ public class Main {
             System.err.println("Using null pumpPairingCode - signature validation disabled");
         }
 
-        String pumpTimeSinceReset = System.getenv("PUMP_TIME_SINCE_RESET");
+        String pumpTimeSinceReset = Env.get("PUMP_TIME_SINCE_RESET");
         if (!StringUtils.isBlank(pumpTimeSinceReset)){
             PumpStateSupplier.pumpTimeSinceReset = () -> Long.valueOf(pumpTimeSinceReset);
         } else {
             PumpStateSupplier.pumpTimeSinceReset = () -> 0L;
         }
         PumpStateSupplier.actionsAffectingInsulinDeliveryEnabled = () -> true;
+    }
 
+    private static void run(String[] args) throws DecoderException, IOException {
         // PacketArrayList.ignoreInvalidTxId = true;
 
         String filename;
@@ -191,6 +225,68 @@ public class Main {
                 System.err.println("Nothing to do.");
                 break;
 
+        }
+    }
+
+    /**
+     * Answers one command per line of stdin, so a caller pays for JVM startup once instead of per
+     * message. Each request is a JSON object {"id": any, "args": ["parse", "..."], "env": {...}}:
+     * args are the command line and env the variables the one-shot command would read
+     * (PUMP_AUTHENTICATION_KEY, PUMP_PAIRING_CODE, PUMP_TIME_SINCE_RESET, PUMPX2_CHARACTERISTIC,
+     * PUMPX2_MAX_CHUNK_SIZE); none are inherited from the server's environment. Each reply is one line,
+     * {"id", "ok", "stdout", "stderr", "error"}, where stdout is exactly what the one-shot command
+     * would have printed. Requests run one at a time.
+     */
+    private static void serve() throws IOException {
+        PrintStream out = System.out;
+        PrintStream err = System.err;
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        String line;
+        while ((line = in.readLine()) != null) {
+            if (line.isBlank()) {
+                continue;
+            }
+            JSONObject reply = new JSONObject();
+            ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+            ByteArrayOutputStream stderr = new ByteArrayOutputStream();
+            try {
+                JSONObject request = new JSONObject(line);
+                if (request.has("id")) {
+                    reply.put("id", request.get("id"));
+                }
+                JSONArray argsJson = request.getJSONArray("args");
+                String[] args = new String[argsJson.length()];
+                for (int i = 0; i < args.length; i++) {
+                    args[i] = argsJson.getString(i);
+                }
+                if (args.length == 0 || !SERVABLE_COMMANDS.contains(args[0].toLowerCase(Locale.ROOT))) {
+                    throw new IllegalArgumentException("not available in serve mode: " + (args.length == 0 ? "(none)" : args[0]));
+                }
+                Map<String, String> vars = new HashMap<>();
+                JSONObject envJson = request.optJSONObject("env");
+                if (envJson != null) {
+                    for (String key : envJson.keySet()) {
+                        vars.put(key, envJson.get(key).toString());
+                    }
+                }
+                Env.use(vars::get);
+                System.setOut(new PrintStream(stdout, true, StandardCharsets.UTF_8));
+                System.setErr(new PrintStream(stderr, true, StandardCharsets.UTF_8));
+                configurePumpState();
+                run(args);
+                reply.put("ok", true);
+            } catch (Exception e) {
+                reply.put("ok", false);
+                reply.put("error", e.toString());
+            } finally {
+                System.setOut(out);
+                System.setErr(err);
+                Env.useProcessEnvironment();
+            }
+            reply.put("stdout", stdout.toString(StandardCharsets.UTF_8));
+            reply.put("stderr", stderr.toString(StandardCharsets.UTF_8));
+            out.println(reply);
+            out.flush();
         }
     }
 
@@ -598,8 +694,7 @@ public class Main {
             }
         }
         if (messageClass == null) {
-            System.err.println("Unknown message name: " + messageName);
-            System.exit(1);
+            throw new EncodeException("Unknown message name: " + messageName);
         }
         Message message = null;
         Object[] params = null;
@@ -638,8 +733,7 @@ public class Main {
             }
         }
         if (message == null) {
-            System.err.println("Unable to build message " + messageName + " with params " + (isArray ? paramsArray : paramsObject) + ": no constructor was found with " + paramCount + " parameters");
-            System.exit(1);
+            throw new EncodeException("Unable to build message " + messageName + " with params " + (isArray ? paramsArray : paramsObject) + ": no constructor was found with " + paramCount + " parameters");
         }
         byte currentTxId = (byte) Integer.valueOf(txId).byteValue();
         return encode(currentTxId, message, params);
@@ -647,7 +741,7 @@ public class Main {
 
     private static String encode(byte currentTxId, Message message, @Nullable Object[] params) {
         TronMessageWrapper wrapper;
-        String maxChunkSize = System.getenv("PUMPX2_MAX_CHUNK_SIZE");
+        String maxChunkSize = Env.get("PUMPX2_MAX_CHUNK_SIZE");
         if (maxChunkSize == null || maxChunkSize.isEmpty()) {
             wrapper = new TronMessageWrapper(message, currentTxId);
         } else {
