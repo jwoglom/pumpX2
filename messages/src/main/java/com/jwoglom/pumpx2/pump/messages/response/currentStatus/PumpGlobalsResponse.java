@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
 import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.PumpGlobalsRequest;
 
@@ -103,6 +104,9 @@ public class PumpGlobalsResponse extends Message {
     }
     public int getQuickBolusStatus() {
         return quickBolusStatus;
+    }
+    public QuickBolusIncrement getQuickBolusIncrement() {
+        return QuickBolusIncrement.forSettings(isQuickBolusEnabled(), quickBolusEntryType, quickBolusIncrementUnits, quickBolusIncrementCarbs);
     }
     public QuickBolusMode getQuickBolusMode() {
         return QuickBolusMode.forRaw(quickBolusEntryType);

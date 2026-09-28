@@ -49,6 +49,26 @@ public class SetQuickBolusSettingsRequest extends Message {
     }
 
     /**
+     * Sends the increment's captured cargo verbatim, which applies only the fields that capture
+     * flagged: to reach the increment from an arbitrary pump state use {@link #forChange}.
+     */
+    public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {
+        if (enabled) {
+            Validate.isTrue(!increment.equals(QuickBolusIncrement.DISABLED), "cannot specify QuickBolusIncrement.DISABLED when enabled");
+        } else {
+            Validate.isTrue(increment.equals(QuickBolusIncrement.DISABLED), "must specify QuickBolusIncrement.DISABLED when disabled");
+        }
+        this.cargo = buildCargo(enabled, mode.getRaw(), increment.magic);
+        parse(cargo);
+    }
+
+    /** See {@link #SetQuickBolusSettingsRequest(boolean, QuickBolusMode, QuickBolusIncrement)}. */
+    public SetQuickBolusSettingsRequest(QuickBolusIncrement increment) {
+        this.cargo = buildCargo(increment.isEnabled(), increment.getMode().getRaw(), increment.magic);
+        parse(cargo);
+    }
+
+    /**
      * @param incrementUnits milliunits
      * @param incrementCarbs milligrams
      * @param changedFieldsRaw bitmask of {@link ChangedField}
@@ -67,6 +87,15 @@ public class SetQuickBolusSettingsRequest extends Message {
         this.incrementUnits = Bytes.readShort(raw, 2);
         this.incrementCarbs = Bytes.readShort(raw, 4);
         this.changedFieldsRaw = raw[6] & 0xFF;
+    }
+
+    public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {
+        Validate.isTrue(magic.length == 5);
+        return Bytes.combine(
+                new byte[]{(byte) (enabled ? 1 : 0)},
+                new byte[]{(byte) modeRaw},
+                magic
+        );
     }
 
     public static byte[] buildCargo(boolean enabled, int modeRaw, int incrementUnits, int incrementCarbs, int changedFieldsRaw) {
@@ -118,8 +147,23 @@ public class SetQuickBolusSettingsRequest extends Message {
         return new SetQuickBolusSettingsRequest(enabled, modeRaw, units, carbs, ChangedField.toBitmask(changed));
     }
 
+    public static SetQuickBolusSettingsRequest forChange(PumpGlobalsResponse current, QuickBolusIncrement increment) {
+        return forChange(current, increment.isEnabled(), increment.getMode(), increment.getIncrement());
+    }
+
     public boolean isEnabled() {
         return enabled;
+    }
+
+    /** The increment the pump is left at if it applies this request, or null if not a supported one. */
+    public QuickBolusIncrement getIncrement() {
+        return QuickBolusIncrement.forSettings(enabled, modeRaw, incrementUnits, incrementCarbs);
+    }
+
+    /** @deprecated not an opaque value: use {@link #getIncrementUnits}, {@link #getIncrementCarbs} and {@link #getChangedFields}. */
+    @Deprecated
+    public byte[] getMagic() {
+        return Bytes.dropFirstN(cargo, 2);
     }
 
     public int getModeRaw() {
@@ -146,6 +190,83 @@ public class SetQuickBolusSettingsRequest extends Message {
 
     public Set<ChangedField> getChangedFields() {
         return ChangedField.fromBitmask(changedFieldsRaw);
+    }
+
+    public enum QuickBolusIncrement {
+        DISABLED(false, QuickBolusMode.UNITS, 0, new byte[]{-12,1,-48,7,1}),
+
+        UNITS_0_5(true, QuickBolusMode.UNITS, 500, new byte[]{-12,1,-48,7,1}),
+        UNITS_1_0(true, QuickBolusMode.UNITS, 1000, new byte[]{-24,3,-48,7,4}),
+        UNITS_2_0(true, QuickBolusMode.UNITS, 2000, new byte[]{-48,7,-48,7,4}),
+        UNITS_5_0(true, QuickBolusMode.UNITS, 5000, new byte[]{-120,19,-48,7,4}),
+
+        CARBS_2G(true, QuickBolusMode.CARBS, 2000, new byte[]{-120,19,-48,7,8}),
+        CARBS_5G(true, QuickBolusMode.CARBS, 5000, new byte[]{-120,19,-120,19,8}),
+        CARBS_10G(true, QuickBolusMode.CARBS, 10000, new byte[]{-120,19,16,39,8}),
+        CARBS_15G(true, QuickBolusMode.CARBS, 15000, new byte[]{-120,19,-104,58,8}),
+        ;
+
+        private final boolean enabled;
+        private final QuickBolusMode mode;
+        private final int increment;
+        // One captured Tandem app write per increment, not a derivation of it.
+        private final byte[] magic;
+        QuickBolusIncrement(boolean enabled, QuickBolusMode mode, int increment, byte[] magic) {
+            this.enabled = enabled;
+            this.mode = mode;
+            this.increment = increment;
+            this.magic = magic;
+        }
+
+        public QuickBolusMode getMode() {
+            return mode;
+        }
+
+        /** Milliunits in UNITS mode, milligrams in CARBS mode; 0 for DISABLED. */
+        public int getIncrement() {
+            return increment;
+        }
+
+        /** @deprecated a captured cargo tail, not an encoding of this increment. */
+        @Deprecated
+        public byte[] getMagic() {
+            return magic;
+        }
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public boolean getEnabled() {
+            return enabled;
+        }
+
+        public boolean isEqual(QuickBolusIncrement o) {
+            return this.enabled == o.enabled && this.mode == o.mode && Arrays.equals(this.magic, o.magic);
+        }
+
+        public static QuickBolusIncrement forMagic(byte[] magic) {
+            for (QuickBolusIncrement i : values()) {
+                if (i.enabled && Arrays.equals(i.magic, magic)) return i;
+            }
+            return null;
+        }
+
+        /** @return null when enabled at an increment or mode the pump does not support */
+        public static QuickBolusIncrement forSettings(boolean enabled, int modeRaw, int incrementUnits, int incrementCarbs) {
+            if (!enabled) {
+                return DISABLED;
+            }
+            QuickBolusMode mode = QuickBolusMode.forRaw(modeRaw);
+            if (mode == null) {
+                return null;
+            }
+            int increment = mode == QuickBolusMode.UNITS ? incrementUnits : incrementCarbs;
+            for (QuickBolusIncrement i : values()) {
+                if (i.enabled && i.mode == mode && i.increment == increment) return i;
+            }
+            return null;
+        }
     }
 
     public enum ChangedField {
