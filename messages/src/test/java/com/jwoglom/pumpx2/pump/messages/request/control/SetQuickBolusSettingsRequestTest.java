@@ -4,23 +4,56 @@ import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest;
-import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement;
+import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.ChangedField;
 import com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode;
+import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;
+import com.jwoglom.pumpx2.shared.Hex;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
+import java.util.EnumSet;
+import java.util.Set;
+
+/**
+ * Expected cargos are the Tandem Mobi app's own writes. Each carries the pump's current value in
+ * every field not named in changedFields.
+ */
 public class SetQuickBolusSettingsRequestTest {
 
+    private static void assertFields(SetQuickBolusSettingsRequest req, boolean enabled, QuickBolusMode mode, int incrementUnits, int incrementCarbs, Set<ChangedField> changedFields) {
+        assertEquals("enabled", enabled, req.isEnabled());
+        assertEquals("mode", mode, req.getMode());
+        assertEquals("incrementUnits", incrementUnits, req.getIncrementUnits());
+        assertEquals("incrementCarbs", incrementCarbs, req.getIncrementCarbs());
+        assertEquals("changedFields", changedFields, req.getChangedFields());
+    }
+
+    private static void assertCargo(String hex, boolean enabled, QuickBolusMode mode, int incrementUnits, int incrementCarbs, Set<ChangedField> changedFields) throws DecoderException {
+        SetQuickBolusSettingsRequest parsed = new SetQuickBolusSettingsRequest(Hex.decodeHex(hex));
+        assertFields(parsed, enabled, mode, incrementUnits, incrementCarbs, changedFields);
+
+        SetQuickBolusSettingsRequest built = new SetQuickBolusSettingsRequest(enabled, mode.getRaw(), incrementUnits, incrementCarbs, ChangedField.toBitmask(changedFields));
+        assertEquals("built cargo", hex, Hex.encodeHexString(built.getCargo()));
+    }
+
+    private static PumpGlobalsResponse globals(boolean enabled, QuickBolusMode mode, int incrementUnits, int incrementCarbs) {
+        return new PumpGlobalsResponse(enabled ? 1 : 0, incrementUnits, incrementCarbs, mode.getRaw(), 1, 0, 0, 0, 0, 0, 0, 0);
+    }
+
+    private static void assertChange(String hex, PumpGlobalsResponse current, boolean enabled, QuickBolusMode mode, int increment) {
+        assertEquals(hex, Hex.encodeHexString(SetQuickBolusSettingsRequest.forChange(current, enabled, mode, increment).getCargo()));
+    }
+
+
     @Test
-    public void testSetQuickBolusSettingsRequest_off() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_disableCarryingHalfUnit() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -37,12 +70,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertFalse(parsedReq.isEnabled());
-        assertEquals(QuickBolusIncrement.DISABLED, parsedReq.getIncrement());
+        assertFields(parsedReq, false, QuickBolusMode.UNITS, 500, 2000, EnumSet.of(ChangedField.ENABLED));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_05u() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_enableCarryingHalfUnit() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -59,13 +91,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.UNITS_0_5, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.UNITS, 500, 2000, EnumSet.of(ChangedField.ENABLED));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_1u() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementOneUnit() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -82,13 +112,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.UNITS_1_0, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.UNITS, 1000, 2000, EnumSet.of(ChangedField.INCREMENT_UNITS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_2u() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementTwoUnits() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -105,13 +133,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.UNITS_2_0, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.UNITS, 2000, 2000, EnumSet.of(ChangedField.INCREMENT_UNITS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_5u() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementFiveUnits() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -128,13 +154,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.UNITS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.UNITS_5_0, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.UNITS, 5000, 2000, EnumSet.of(ChangedField.INCREMENT_UNITS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_carbs_2g() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementTwoGrams() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -151,13 +175,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.CARBS_2G, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.CARBS, 5000, 2000, EnumSet.of(ChangedField.INCREMENT_CARBS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_carbs_5g() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementFiveGrams() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -174,13 +196,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.CARBS_5G, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.CARBS, 5000, 5000, EnumSet.of(ChangedField.INCREMENT_CARBS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_carbs_10g() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementTenGrams() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -197,13 +217,11 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.CARBS_10G, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.CARBS, 5000, 10000, EnumSet.of(ChangedField.INCREMENT_CARBS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_on_carbs_15g() throws DecoderException {
+    public void testSetQuickBolusSettingsRequest_incrementFifteenGrams() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 1L);
 
         SetQuickBolusSettingsRequest expected = new SetQuickBolusSettingsRequest(
@@ -220,58 +238,92 @@ public class SetQuickBolusSettingsRequestTest {
         );
 
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
-        assertTrue(parsedReq.isEnabled());
-        assertEquals(QuickBolusMode.CARBS, parsedReq.getMode());
-        assertEquals(QuickBolusIncrement.CARBS_15G, parsedReq.getIncrement());
+        assertFields(parsedReq, true, QuickBolusMode.CARBS, 5000, 15000, EnumSet.of(ChangedField.INCREMENT_CARBS));
     }
 
     @Test
-    public void testSetQuickBolusSettingsRequest_singleArgConstructor() throws DecoderException {
-        SetQuickBolusSettingsRequest[][] testCases = new SetQuickBolusSettingsRequest[][]{
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.DISABLED),
-                new SetQuickBolusSettingsRequest(new byte[]{0,0,-12,1,-48,7,1})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_0_5),
-                new SetQuickBolusSettingsRequest(new byte[]{1,0,-12,1,-48,7,1})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_1_0),
-                new SetQuickBolusSettingsRequest(new byte[]{1,0,-24,3,-48,7,4})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_2_0),
-                new SetQuickBolusSettingsRequest(new byte[]{1,0,-48,7,-48,7,4})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.UNITS_5_0),
-                new SetQuickBolusSettingsRequest(new byte[]{1,0,-120,19,-48,7,4})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_2G),
-                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-48,7,8})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_5G),
-                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-120,19,8})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_10G),
-                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,16,39,8})
-            },
-            {
-                new SetQuickBolusSettingsRequest(QuickBolusIncrement.CARBS_15G),
-                new SetQuickBolusSettingsRequest(new byte[]{1,1,-120,19,-104,58,8})
-            },
-        };
-
-        int n = 0;
-        for (SetQuickBolusSettingsRequest[] testCase : testCases) {
-            System.out.println("TestCase#" + n + "[" + testCase[0] + " --- " + testCase[1] + "]");
-            assertEquals("TestCase#" + n, testCase[0], testCase[1]);
-            n++;
-        }
+    public void testCargo_disableCarryingOneUnit() throws DecoderException {
+        assertCargo("0000e803d00701", false, QuickBolusMode.UNITS, 1000, 2000, EnumSet.of(ChangedField.ENABLED));
     }
 
+    @Test
+    public void testCargo_disableCarryingFiveUnits() throws DecoderException {
+        assertCargo("00008813d00701", false, QuickBolusMode.UNITS, 5000, 2000, EnumSet.of(ChangedField.ENABLED));
+    }
+
+    @Test
+    public void testCargo_enableCarryingOneUnit() throws DecoderException {
+        assertCargo("0100e803d00701", true, QuickBolusMode.UNITS, 1000, 2000, EnumSet.of(ChangedField.ENABLED));
+    }
+
+    @Test
+    public void testCargo_enableAtOneUnit() throws DecoderException {
+        assertCargo("0100e803d00705", true, QuickBolusMode.UNITS, 1000, 2000, EnumSet.of(ChangedField.ENABLED, ChangedField.INCREMENT_UNITS));
+    }
+
+    @Test
+    public void testCargo_incrementHalfUnit() throws DecoderException {
+        assertCargo("0100f401d00704", true, QuickBolusMode.UNITS, 500, 2000, EnumSet.of(ChangedField.INCREMENT_UNITS));
+    }
+
+    @Test
+    public void testCargo_switchToCarbs() throws DecoderException {
+        assertCargo("01018813d00702", true, QuickBolusMode.CARBS, 5000, 2000, EnumSet.of(ChangedField.MODE));
+    }
+
+    @Test
+    public void testForChange_enablingAtTheCurrentHalfUnit() {
+        assertChange("0100f401d00701", globals(false, QuickBolusMode.UNITS, 500, 2000), true, QuickBolusMode.UNITS, 500);
+    }
+
+    @Test
+    public void testForChange_enablingAtANewIncrementSendsBothFields() {
+        assertChange("0100e803d00705", globals(false, QuickBolusMode.UNITS, 500, 2000), true, QuickBolusMode.UNITS, 1000);
+    }
+
+    @Test
+    public void testForChange_changingToHalfUnit() {
+        assertChange("0100f401d00704", globals(true, QuickBolusMode.UNITS, 1000, 2000), true, QuickBolusMode.UNITS, 500);
+    }
+
+    @Test
+    public void testForChange_changingToFiveUnits() {
+        assertChange("01008813d00704", globals(true, QuickBolusMode.UNITS, 2000, 2000), true, QuickBolusMode.UNITS, 5000);
+    }
+
+    @Test
+    public void testForChange_disablingIgnoresModeAndIncrement() {
+        assertChange("00008813d00701", globals(true, QuickBolusMode.UNITS, 5000, 2000), false, QuickBolusMode.CARBS, 0);
+    }
+
+    @Test
+    public void testForChange_disablingInCarbsModeCarriesCarbsMode() {
+        assertChange("00018813102701", globals(true, QuickBolusMode.CARBS, 5000, 10000), false, QuickBolusMode.UNITS, 0);
+    }
+
+    @Test
+    public void testForChange_switchingToCarbsAtTheCurrentIncrement() {
+        assertChange("01018813d00702", globals(true, QuickBolusMode.UNITS, 5000, 2000), true, QuickBolusMode.CARBS, 2000);
+    }
+
+    @Test
+    public void testForChange_changingToFiveGrams() {
+        assertChange("01018813881308", globals(true, QuickBolusMode.CARBS, 5000, 2000), true, QuickBolusMode.CARBS, 5000);
+    }
+
+    @Test
+    public void testForChange_switchingBackToUnits() {
+        assertChange("01008813102702", globals(true, QuickBolusMode.CARBS, 5000, 10000), true, QuickBolusMode.UNITS, 5000);
+    }
+
+    @Test
+    public void testForChange_nothingChangesWhenThePumpAlreadyMatches() {
+        assertEquals(0, SetQuickBolusSettingsRequest.forChange(globals(true, QuickBolusMode.UNITS, 2000, 2000), true, QuickBolusMode.UNITS, 2000).getChangedFieldsRaw());
+    }
+
+    @Test
+    public void testForChange_unsupportedIncrementIsRefused() {
+        assertThrows(IllegalArgumentException.class, () -> SetQuickBolusSettingsRequest.forChange(globals(true, QuickBolusMode.UNITS, 500, 2000), true, QuickBolusMode.UNITS, 750));
+        assertThrows(IllegalArgumentException.class, () -> SetQuickBolusSettingsRequest.forChange(globals(true, QuickBolusMode.CARBS, 500, 2000), true, QuickBolusMode.CARBS, 500));
+    }
 }
