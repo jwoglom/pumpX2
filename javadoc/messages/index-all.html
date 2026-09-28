@@ -1474,6 +1474,20 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html#buildCargo(boolean,int,int)" class="member-name-link">buildCargo(boolean, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/LoadStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LoadStatusResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#buildCargo(boolean,int,int,int,int)" class="member-name-link">buildCargo(boolean, int, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">
+ Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) (enabled ? 1 : 0)</code>
+ 1<code>(byte) modeRaw</code>
+ 2<code>firstTwoBytesLittleEndian(incrementUnits) [byte 0]</code>
+ 3<code>firstTwoBytesLittleEndian(incrementUnits) [byte 1]</code>
+ 4<code>firstTwoBytesLittleEndian(incrementCarbs) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(incrementCarbs) [byte 1]</code>
+ 6<code>(byte) changedFieldsRaw</code>
+ </div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV1Response.html#buildCargo(boolean,int,int,int,int,int,int,int,int)" class="member-name-link">buildCargo(boolean, int, int, int, int, int, int, int, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ControlIQInfoV1Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ControlIQInfoV1Response</a></dt>
 <dd>
 <div class="block">
@@ -7239,6 +7253,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmRraSettingsHistoryLog.ModifiedField.html#ENABLE" class="member-name-link">ENABLE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmRraSettingsHistoryLog.ModifiedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmRraSettingsHistoryLog.ModifiedField</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#ENABLED" class="member-name-link">ENABLED</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html#ENABLED_NOTIFICATIONS" class="member-name-link">ENABLED_NOTIFICATIONS</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.bluetooth.<a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html" title="class in com.jwoglom.pumpx2.pump.messages.bluetooth">CharacteristicUUID</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/MinsTime.html#encode()" class="member-name-link">encode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MinsTime.html" title="class in com.jwoglom.pumpx2.pump.messages.models">MinsTime</a></dt>
@@ -7787,9 +7803,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html#FIXED_LOW_CGM_ALERT" class="member-name-link">FIXED_LOW_CGM_ALERT</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/CGMAlertStatusResponse.CGMAlert.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CGMAlertStatusResponse.CGMAlert</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)" class="member-name-link">forChange(PumpGlobalsResponse, boolean, SetQuickBolusSettingsRequest.QuickBolusMode, int)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">The request that moves the pump from <code>current</code> to the given settings, or one with no
+ changed fields when the pump already matches (which need not be sent).</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">forChange(PumpGlobalsResponse, SetQuickBolusSettingsRequest.QuickBolusIncrement)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#forMagic(byte%5B%5D)" class="member-name-link">forMagic(byte[])</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusMode.html#forRaw(int)" class="member-name-link">forRaw(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#forSettings(boolean,int,int,int)" class="member-name-link">forSettings(boolean, int, int, int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/UnexpectedOpCodeException.html#foundOpcode" class="member-name-link">foundOpcode</a> - Variable in exception com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/UnexpectedOpCodeException.html" title="class in com.jwoglom.pumpx2.pump.messages.models">UnexpectedOpCodeException</a></dt>
 <dd>&nbsp;</dd>
@@ -7814,6 +7839,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html#fromBitmask(int)" class="member-name-link">fromBitmask(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">MultiDay</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.ChangeBitmask.html#fromBitmask(int)" class="member-name-link">fromBitmask(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.ChangeBitmask.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetPumpSoundsRequest.ChangeBitmask</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#fromBitmask(int)" class="member-name-link">fromBitmask(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.IDPSegmentStatus.html#fromBitmask(int)" class="member-name-link">fromBitmask(int)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.IDPSegmentStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse.IDPSegmentStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -8712,6 +8739,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.html#getChangeBitmaskRaw()" class="member-name-link">getChangeBitmaskRaw()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetPumpSoundsRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getChangedFields()" class="member-name-link">getChangedFields()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getChangedFieldsRaw()" class="member-name-link">getChangedFieldsRaw()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#getChangeReason()" class="member-name-link">getChangeReason()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusPermissionChangeHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#getChangeReasonId()" class="member-name-link">getChangeReasonId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusPermissionChangeHistoryLog</a></dt>
@@ -9517,7 +9548,21 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html#getIdpStatusId()" class="member-name-link">getIdpStatusId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">IDPSegmentResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrement()" class="member-name-link">getIncrement()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The increment the pump is left at if it applies this request, or null if not a supported one.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#getIncrement()" class="member-name-link">getIncrement()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
+<dd>
+<div class="block">Milliunits in UNITS mode, milligrams in CARBS mode; 0 for DISABLED.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrementCarbs()" class="member-name-link">getIncrementCarbs()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">Milligrams.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrementUnits()" class="member-name-link">getIncrementUnits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">Milliunits.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html#getInstance()" class="member-name-link">getInstance()</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">JpakeAuthBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html#getInstant()" class="member-name-link">getInstant()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/ChangeTimeDateRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">ChangeTimeDateRequest</a></dt>
@@ -9748,9 +9793,17 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html#getLowInsulinThreshold()" class="member-name-link">getLowInsulinThreshold()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/ParamChangePumpSettingsHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">ParamChangePumpSettingsHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getMagic()" class="member-name-link">getMagic()</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">not an opaque value: use <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrementUnits()"><code>SetQuickBolusSettingsRequest.getIncrementUnits()</code></a>, <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getIncrementCarbs()"><code>SetQuickBolusSettingsRequest.getIncrementCarbs()</code></a> and <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#getChangedFields()"><code>SetQuickBolusSettingsRequest.getChangedFields()</code></a>.</div>
+</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#getMagic()" class="member-name-link">getMagic()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">a captured cargo tail, not an encoding of this increment.</div>
+</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/ApiVersion.html#getMajor()" class="member-name-link">getMajor()</a> - Method in class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/ApiVersion.html" title="class in com.jwoglom.pumpx2.pump.messages.models">ApiVersion</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ApiVersionResponse.html#getMajorVersion()" class="member-name-link">getMajorVersion()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/ApiVersionResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">ApiVersionResponse</a></dt>
@@ -9760,6 +9813,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/MalfunctionHistoryLog.html#getMalfId()" class="member-name-link">getMalfId()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/MalfunctionHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">MalfunctionHistoryLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionBitmaskStatusResponse.html#getMalfunctions()" class="member-name-link">getMalfunctions()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/MalfunctionBitmaskStatusResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">MalfunctionBitmaskStatusResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#getMask()" class="member-name-link">getMask()</a> - Method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html#getMaxBasalRate()" class="member-name-link">getMaxBasalRate()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BasalRateChangeHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BasalRateChangeHistoryLog</a></dt>
 <dd>&nbsp;</dd>
@@ -10206,6 +10261,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#getQuickBolusIncrementCarbs()" class="member-name-link">getQuickBolusIncrementCarbs()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#getQuickBolusIncrementUnits()" class="member-name-link">getQuickBolusIncrementUnits()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#getQuickBolusMode()" class="member-name-link">getQuickBolusMode()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html#getQuickBolusStatus()" class="member-name-link">getQuickBolusStatus()</a> - Method in class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a></dt>
 <dd>&nbsp;</dd>
@@ -12212,6 +12269,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html#increment()" class="member-name-link">increment()</a> - Method in class com.jwoglom.pumpx2.pump.messages.<a href="com/jwoglom/pumpx2/pump/messages/TransactionId.html" title="class in com.jwoglom.pumpx2.pump.messages">TransactionId</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#INCREMENT_CARBS" class="member-name-link">INCREMENT_CARBS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#INCREMENT_UNITS" class="member-name-link">INCREMENT_UNITS</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html#initializeWithDerivedSecret(java.lang.String,byte%5B%5D)" class="member-name-link">initializeWithDerivedSecret(String, byte[])</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">JpakeAuthBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html#initializeWithPairingCode(java.lang.String)" class="member-name-link">initializeWithPairingCode(String)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.builders.<a href="com/jwoglom/pumpx2/pump/messages/builders/JpakeAuthBuilder.html" title="class in com.jwoglom.pumpx2.pump.messages.builders">JpakeAuthBuilder</a></dt>
@@ -13380,6 +13441,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV2Response.ControlFeatureType.html#MOBI_RESEARCH_PUMP" class="member-name-link">MOBI_RESEARCH_PUMP</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.response.currentStatus.<a href="com/jwoglom/pumpx2/pump/messages/response/currentStatus/PumpFeaturesV2Response.ControlFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV2Response.ControlFeatureType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#MODE" class="member-name-link">MODE</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html#MODEL_NUMBER_CHARACTERISTIC_UUID" class="member-name-link">MODEL_NUMBER_CHARACTERISTIC_UUID</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.bluetooth.<a href="com/jwoglom/pumpx2/pump/messages/bluetooth/CharacteristicUUID.html" title="class in com.jwoglom.pumpx2.pump.messages.bluetooth">CharacteristicUUID</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#modifiesInsulinDelivery()" class="member-name-link">modifiesInsulinDelivery()</a> - Element in annotation interface com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
@@ -14237,9 +14300,9 @@ loadScripts(document, 'script');</script>
  Parsed fields for SetQuickBolusSettingsRequest:
  <code>enabled</code><code>raw[0] == 1</code>
  <code>modeRaw</code><code>raw[1]</code>
- <code>mode</code><code>getMode()</code>
- <code>magic</code><code>Bytes.dropFirstN(raw, 2)</code>
- <code>increment</code><code>getIncrement()</code>
+ <code>incrementUnits</code><code>Bytes.readShort(raw, 2)</code>
+ <code>incrementCarbs</code><code>Bytes.readShort(raw, 4)</code>
+ <code>changedFieldsRaw</code><code>raw[6] &amp; 0xFF</code>
  </div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html#parse(byte%5B%5D)" class="member-name-link">parse(byte[])</a> - Method in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetRuntimeConfigRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetRuntimeConfigRequest</a></dt>
@@ -19014,28 +19077,24 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" class="type-name-link" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a> - Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>
-<div class="block">Request message for <a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetQuickBolusSettingsResponse</code></a>, opCode -46, size 7
-
- <br>
-
- 
- 
- Message properties:
- &nbsp;<code>opCode</code>&nbsp;&nbsp;<code>-46</code>&nbsp;
- &nbsp;<code>size</code>&nbsp;&nbsp;<code>7</code>&nbsp;
- &nbsp;<code>type</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/MessageType.html#REQUEST"><code>MessageType.REQUEST</code></a></code>&nbsp;
- &nbsp;<code>characteristic</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/bluetooth/Characteristic.html#CONTROL"><code>Characteristic.CONTROL</code></a></code>&nbsp;
- &nbsp;<code>signed</code>&nbsp;&nbsp;<code>true</code>&nbsp;
- &nbsp;<code>response</code>&nbsp;&nbsp;<code><a href="com/jwoglom/pumpx2/pump/messages/response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetQuickBolusSettingsResponse</code></a></code>&nbsp;
- </div>
+<div class="block">The pump applies only the fields named in changedFields.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E()" class="member-name-link">SetQuickBolusSettingsRequest()</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest(boolean, SetQuickBolusSettingsRequest.QuickBolusMode, SetQuickBolusSettingsRequest.QuickBolusIncrement)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(boolean,int,int,int,int)" class="member-name-link">SetQuickBolusSettingsRequest(boolean, int, int, int, int)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest(boolean, SetQuickBolusSettingsRequest.QuickBolusMode, SetQuickBolusSettingsRequest.QuickBolusIncrement)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">Sends the increment's captured cargo verbatim, which applies only the fields that capture
+ flagged: to reach the increment from an arbitrary pump state use <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)"><code>SetQuickBolusSettingsRequest.forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse, boolean, com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode, int)</code></a>.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetQuickBolusSettingsRequest(byte[])</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest(SetQuickBolusSettingsRequest.QuickBolusIncrement)</a> - Constructor for class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">See <a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)"><code>SetQuickBolusSettingsRequest(boolean, QuickBolusMode, QuickBolusIncrement)</code></a>.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/request/control/package-summary.html">com.jwoglom.pumpx2.pump.messages.request.control</a></dt>
 <dd>&nbsp;</dd>
@@ -19621,6 +19680,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html#SUNDAY" class="member-name-link">SUNDAY</a> - Enum constant in enum class com.jwoglom.pumpx2.pump.messages.models.<a href="com/jwoglom/pumpx2/pump/messages/models/MultiDay.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">MultiDay</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#SUPPORTED_INCREMENT_CARBS" class="member-name-link">SUPPORTED_INCREMENT_CARBS</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">Milligrams.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#SUPPORTED_INCREMENT_UNITS" class="member-name-link">SUPPORTED_INCREMENT_UNITS</a> - Static variable in class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></dt>
+<dd>
+<div class="block">Milliunits.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html#supportedDevices()" class="member-name-link">supportedDevices()</a> - Element in annotation interface com.jwoglom.pumpx2.pump.messages.annotations.<a href="com/jwoglom/pumpx2/pump/messages/annotations/MessageProps.html" title="annotation interface in com.jwoglom.pumpx2.pump.messages.annotations">MessageProps</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/models/SupportedDevices.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.models">SupportedDevices</a> - Enum Class in <a href="com/jwoglom/pumpx2/pump/messages/models/package-summary.html">com.jwoglom.pumpx2.pump.messages.models</a></dt>
@@ -19925,6 +19992,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.BolusType.html#toBitmask(com.jwoglom.pumpx2.pump.messages.response.historyLog.BolusDeliveryHistoryLog.BolusType...)" class="member-name-link">toBitmask(BolusDeliveryHistoryLog.BolusType...)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.historyLog.<a href="com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html#toBitmask(com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.QualifyingEvent...)" class="member-name-link">toBitmask(QualifyingEvent...)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent.<a href="com/jwoglom/pumpx2/pump/messages/response/qualifyingEvent/QualifyingEvent.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.qualifyingEvent">QualifyingEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#toBitmask(java.util.Set)" class="member-name-link">toBitmask(Set&lt;SetQuickBolusSettingsRequest.ChangedField&gt;)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/helpers/Bytes.html#toFloat(float)" class="member-name-link">toFloat(float)</a> - Static method in class com.jwoglom.pumpx2.pump.messages.helpers.<a href="com/jwoglom/pumpx2/pump/messages/helpers/Bytes.html" title="class in com.jwoglom.pumpx2.pump.messages.helpers">Bytes</a></dt>
 <dd>&nbsp;</dd>
@@ -20746,6 +20815,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -21239,6 +21312,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.ChangeBitmask.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetPumpSoundsRequest.ChangeBitmask.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetPumpSoundsRequest.ChangeBitmask</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html#values()" class="member-name-link">values()</a> - Static method in enum class com.jwoglom.pumpx2.pump.messages.request.control.<a href="com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

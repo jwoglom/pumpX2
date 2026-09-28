@@ -55,7 +55,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -82,9 +82,16 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-30">SetQuickBolusSettingsRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-44">SetQuickBolusSettingsRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Request message for <a href="../../response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetQuickBolusSettingsResponse</code></a>, opCode -46, size 7
+<div class="block">The pump applies only the fields named in changedFields. Every other field must still carry the
+ pump's current value, as the Tandem app does: build a change with <a href="#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)"><code>forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse, boolean, com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode, int)</code></a>.
+
+
+
+ <br>
+
+ Request message for <a href="../../response/control/SetQuickBolusSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetQuickBolusSettingsResponse</code></a>, opCode -46, size 7
 
  <br>
 
@@ -111,11 +118,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></code></div>
+<div class="col-second even-row-color"><code><a href="SetQuickBolusSettingsRequest.ChangedField.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></code></div>
+<div class="col-second odd-row-color"><code><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -123,6 +133,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#SUPPORTED_INCREMENT_CARBS" class="member-name-link">SUPPORTED_INCREMENT_CARBS</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Milligrams.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#SUPPORTED_INCREMENT_UNITS" class="member-name-link">SUPPORTED_INCREMENT_UNITS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Milliunits.</div>
+</div>
+</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.jwoglom.pumpx2.pump.messages.Message">Fields inherited from class&nbsp;com.jwoglom.pumpx2.pump.messages.<a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></h3>
 <code><a href="../../Message.html#cargo">cargo</a>, <a href="../../Message.html#EMPTY">EMPTY</a></code></div>
@@ -138,14 +164,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">SetQuickBolusSettingsRequest</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(boolean&nbsp;enabled,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean,int,int,int,int)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(boolean&nbsp;enabled,
+ int&nbsp;modeRaw,
+ int&nbsp;incrementUnits,
+ int&nbsp;incrementCarbs,
+ int&nbsp;changedFieldsRaw)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(boolean&nbsp;enabled,
  <a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a>&nbsp;mode,
  <a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sends the increment's captured cargo verbatim, which applies only the fields that capture
+ flagged: to reach the increment from an arbitrary pump state use <a href="#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)"><code>forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse, boolean, com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode, int)</code></a>.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(byte[]&nbsp;raw)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(<a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">SetQuickBolusSettingsRequest</a><wbr>(<a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</code></div>
+<div class="col-last even-row-color">
+<div class="block">See <a href="#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)"><code>SetQuickBolusSettingsRequest(boolean, QuickBolusMode, QuickBolusIncrement)</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
@@ -154,7 +191,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -172,31 +209,85 @@ loadScripts(document, 'script');</script>
  1<code>(byte) modeRaw</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIncrement()" class="member-name-link">getIncrement</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMagic()" class="member-name-link">getMagic</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(boolean,int,int,int,int)" class="member-name-link">buildCargo</a><wbr>(boolean&nbsp;enabled,
+ int&nbsp;modeRaw,
+ int&nbsp;incrementUnits,
+ int&nbsp;incrementCarbs,
+ int&nbsp;changedFieldsRaw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">
+ Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):
+ OffsetDescription
+ 0<code>(byte) (enabled ? 1 : 0)</code>
+ 1<code>(byte) modeRaw</code>
+ 2<code>firstTwoBytesLittleEndian(incrementUnits) [byte 0]</code>
+ 3<code>firstTwoBytesLittleEndian(incrementUnits) [byte 1]</code>
+ 4<code>firstTwoBytesLittleEndian(incrementCarbs) [byte 0]</code>
+ 5<code>firstTwoBytesLittleEndian(incrementCarbs) [byte 1]</code>
+ 6<code>(byte) changedFieldsRaw</code>
+ </div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)" class="member-name-link">forChange</a><wbr>(<a href="../../response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a>&nbsp;current,
+ boolean&nbsp;enabled,
+ <a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a>&nbsp;mode,
+ int&nbsp;increment)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">The request that moves the pump from <code>current</code> to the given settings, or one with no
+ changed fields when the pump already matches (which need not be sent).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)" class="member-name-link">forChange</a><wbr>(<a href="../../response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a>&nbsp;current,
+ <a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChangedFields()" class="member-name-link">getChangedFields</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMode()" class="member-name-link">getMode</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChangedFieldsRaw()" class="member-name-link">getChangedFieldsRaw</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModeRaw()" class="member-name-link">getModeRaw</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIncrement()" class="member-name-link">getIncrement</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The increment the pump is left at if it applies this request, or null if not a supported one.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIncrementCarbs()" class="member-name-link">getIncrementCarbs</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Milligrams.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIncrementUnits()" class="member-name-link">getIncrementUnits</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Milliunits.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getMagic()" class="member-name-link">getMagic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">not an opaque value: use <a href="#getIncrementUnits()"><code>getIncrementUnits()</code></a>, <a href="#getIncrementCarbs()"><code>getIncrementCarbs()</code></a> and <a href="#getChangedFields()"><code>getChangedFields()</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMode()" class="member-name-link">getMode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getModeRaw()" class="member-name-link">getModeRaw</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEnabled()" class="member-name-link">isEnabled</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for SetQuickBolusSettingsRequest:
  <code>enabled</code><code>raw[0] == 1</code>
  <code>modeRaw</code><code>raw[1]</code>
- <code>mode</code><code>getMode()</code>
- <code>magic</code><code>Bytes.dropFirstN(raw, 2)</code>
- <code>increment</code><code>getIncrement()</code>
+ <code>incrementUnits</code><code>Bytes.readShort(raw, 2)</code>
+ <code>incrementCarbs</code><code>Bytes.readShort(raw, 4)</code>
+ <code>changedFieldsRaw</code><code>raw[6] &amp; 0xFF</code>
  </div>
 </div>
 </div>
@@ -214,6 +305,28 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="SUPPORTED_INCREMENT_UNITS">
+<h3>SUPPORTED_INCREMENT_UNITS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-55">SUPPORTED_INCREMENT_UNITS</a></span></div>
+<div class="block">Milliunits.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SUPPORTED_INCREMENT_CARBS">
+<h3>SUPPORTED_INCREMENT_CARBS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-57">SUPPORTED_INCREMENT_CARBS</a></span></div>
+<div class="block">Milligrams.</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -222,27 +335,46 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetQuickBolusSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-46">SetQuickBolusSettingsRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-65">SetQuickBolusSettingsRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>SetQuickBolusSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-50">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-69">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)">
 <h3>SetQuickBolusSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-54">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-77">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
  <a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a>&nbsp;mode,
  <a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</span></div>
+<div class="block">Sends the increment's captured cargo verbatim, which applies only the fields that capture
+ flagged: to reach the increment from an arbitrary pump state use <a href="#forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)"><code>forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse, boolean, com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode, int)</code></a>.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)">
 <h3>SetQuickBolusSettingsRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-65">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(<a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-88">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(<a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</span></div>
+<div class="block">See <a href="#%3Cinit%3E(boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)"><code>SetQuickBolusSettingsRequest(boolean, QuickBolusMode, QuickBolusIncrement)</code></a>.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean,int,int,int,int)">
+<h3>SetQuickBolusSettingsRequest</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-98">SetQuickBolusSettingsRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
+ int&nbsp;modeRaw,
+ int&nbsp;incrementUnits,
+ int&nbsp;incrementCarbs,
+ int&nbsp;changedFieldsRaw)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>incrementUnits</code> - milliunits</dd>
+<dd><code>incrementCarbs</code> - milligrams</dd>
+<dd><code>changedFieldsRaw</code> - bitmask of <a href="SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control"><code>SetQuickBolusSettingsRequest.ChangedField</code></a></dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -256,14 +388,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-80">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-113">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetQuickBolusSettingsRequest:</caption>
  <tr><td><code>enabled</code></td><td><code>raw[0] == 1</code></td></tr>
  <tr><td><code>modeRaw</code></td><td><code>raw[1]</code></td></tr>
- <tr><td><code>mode</code></td><td><code>getMode()</code></td></tr>
- <tr><td><code>magic</code></td><td><code>Bytes.dropFirstN(raw, 2)</code></td></tr>
- <tr><td><code>increment</code></td><td><code>getIncrement()</code></td></tr>
+ <tr><td><code>incrementUnits</code></td><td><code>Bytes.readShort(raw, 2)</code></td></tr>
+ <tr><td><code>incrementCarbs</code></td><td><code>Bytes.readShort(raw, 4)</code></td></tr>
+ <tr><td><code>changedFieldsRaw</code></td><td><code>raw[6] &amp; 0xFF</code></td></tr>
  </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -274,7 +406,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(boolean,int,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-100">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-132">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
  int&nbsp;modeRaw,
  byte[]&nbsp;magic)</span></div>
 <div class="block"><table border="1">
@@ -286,33 +418,108 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="isEnabled()">
-<h3>isEnabled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-110">isEnabled</a></span>()</div>
+<section class="detail" id="buildCargo(boolean,int,int,int,int)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-154">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enabled,
+ int&nbsp;modeRaw,
+ int&nbsp;incrementUnits,
+ int&nbsp;incrementCarbs,
+ int&nbsp;changedFieldsRaw)</span></div>
+<div class="block"><table border="1">
+ <caption>Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):</caption>
+ <tr><th>Offset</th><th>Description</th></tr>
+ <tr><td>0</td><td><code>(byte) (enabled ? 1 : 0)</code></td></tr>
+ <tr><td>1</td><td><code>(byte) modeRaw</code></td></tr>
+ <tr><td>2</td><td><code>firstTwoBytesLittleEndian(incrementUnits) [byte 0]</code></td></tr>
+ <tr><td>3</td><td><code>firstTwoBytesLittleEndian(incrementUnits) [byte 1]</code></td></tr>
+ <tr><td>4</td><td><code>firstTwoBytesLittleEndian(incrementCarbs) [byte 0]</code></td></tr>
+ <tr><td>5</td><td><code>firstTwoBytesLittleEndian(incrementCarbs) [byte 1]</code></td></tr>
+ <tr><td>6</td><td><code>(byte) changedFieldsRaw</code></td></tr>
+ </table></div>
 </section>
 </li>
 <li>
-<section class="detail" id="getMagic()">
-<h3>getMagic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-114">getMagic</a></span>()</div>
+<section class="detail" id="forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,boolean,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusMode,int)">
+<h3>forChange</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-171">forChange</a></span><wbr><span class="parameters">(<a href="../../response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a>&nbsp;current,
+ boolean&nbsp;enabled,
+ <a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a>&nbsp;mode,
+ int&nbsp;increment)</span></div>
+<div class="block">The request that moves the pump from <code>current</code> to the given settings, or one with no
+ changed fields when the pump already matches (which need not be sent).</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>mode</code> - ignored when disabling</dd>
+<dd><code>increment</code> - milliunits in UNITS mode, milligrams in CARBS mode; ignored when disabling</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="forChange(com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse,com.jwoglom.pumpx2.pump.messages.request.control.SetQuickBolusSettingsRequest.QuickBolusIncrement)">
+<h3>forChange</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-203">forChange</a></span><wbr><span class="parameters">(<a href="../../response/currentStatus/PumpGlobalsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpGlobalsResponse</a>&nbsp;current,
+ <a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a>&nbsp;increment)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isEnabled()">
+<h3>isEnabled</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-207">isEnabled</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIncrement()">
 <h3>getIncrement</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-169">getIncrement</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.QuickBolusIncrement.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusIncrement</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-212">getIncrement</a></span>()</div>
+<div class="block">The increment the pump is left at if it applies this request, or null if not a supported one.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMagic()">
+<h3>getMagic</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-217">getMagic</a></span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">not an opaque value: use <a href="#getIncrementUnits()"><code>getIncrementUnits()</code></a>, <a href="#getIncrementCarbs()"><code>getIncrementCarbs()</code></a> and <a href="#getChangedFields()"><code>getChangedFields()</code></a>.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getModeRaw()">
 <h3>getModeRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-178">getModeRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-222">getModeRaw</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMode()">
 <h3>getMode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-205">getMode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetQuickBolusSettingsRequest.QuickBolusMode.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.QuickBolusMode</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-226">getMode</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIncrementUnits()">
+<h3>getIncrementUnits</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-231">getIncrementUnits</a></span>()</div>
+<div class="block">Milliunits.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIncrementCarbs()">
+<h3>getIncrementCarbs</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-236">getIncrementCarbs</a></span>()</div>
+<div class="block">Milligrams.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getChangedFieldsRaw()">
+<h3>getChangedFieldsRaw</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-240">getChangedFieldsRaw</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getChangedFields()">
+<h3>getChangedFields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="SetQuickBolusSettingsRequest.ChangedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.request.control">SetQuickBolusSettingsRequest.ChangedField</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetQuickBolusSettingsRequest.html#line-244">getChangedFields</a></span>()</div>
 </section>
 </li>
 </ul>

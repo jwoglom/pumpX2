@@ -24,213 +24,377 @@
 <span class="source-line-no">007</span><span id="line-7">import com.jwoglom.pumpx2.pump.messages.MessageType;</span>
 <span class="source-line-no">008</span><span id="line-8">import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;</span>
 <span class="source-line-no">009</span><span id="line-9">import com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse;</span>
-<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.shared.Hex;</span>
+<span class="source-line-no">010</span><span id="line-10">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.PumpGlobalsResponse;</span>
 <span class="source-line-no">011</span><span id="line-11"></span>
 <span class="source-line-no">012</span><span id="line-12">import java.util.Arrays;</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse}, opCode -46, size 7</span>
-<span class="source-line-no">016</span><span id="line-16"> *</span>
-<span class="source-line-no">017</span><span id="line-17"> * &lt;br&gt;</span>
-<span class="source-line-no">018</span><span id="line-18"> *</span>
-<span class="source-line-no">019</span><span id="line-19"> * </span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">022</span><span id="line-22"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-46&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;7&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;/table&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> */</span>
-<span class="source-line-no">030</span><span id="line-30">@MessageProps(</span>
-<span class="source-line-no">031</span><span id="line-31">    opCode=-46,</span>
-<span class="source-line-no">032</span><span id="line-32">    size=7,</span>
-<span class="source-line-no">033</span><span id="line-33">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">034</span><span id="line-34">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">035</span><span id="line-35">    signed=true,</span>
-<span class="source-line-no">036</span><span id="line-36">    response=SetQuickBolusSettingsResponse.class</span>
-<span class="source-line-no">037</span><span id="line-37">)</span>
-<span class="source-line-no">038</span><span id="line-38">public class SetQuickBolusSettingsRequest extends Message {</span>
-<span class="source-line-no">039</span><span id="line-39"></span>
-<span class="source-line-no">040</span><span id="line-40">    private boolean enabled;</span>
-<span class="source-line-no">041</span><span id="line-41">    private int modeRaw;</span>
-<span class="source-line-no">042</span><span id="line-42">    private QuickBolusMode mode;</span>
-<span class="source-line-no">043</span><span id="line-43">    private byte[] magic;</span>
-<span class="source-line-no">044</span><span id="line-44">    private QuickBolusIncrement increment;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public SetQuickBolusSettingsRequest() {</span>
-<span class="source-line-no">047</span><span id="line-47">        this.cargo = EMPTY;</span>
-<span class="source-line-no">048</span><span id="line-48">    }</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">    public SetQuickBolusSettingsRequest(byte[] raw) {</span>
-<span class="source-line-no">051</span><span id="line-51">        parse(raw);</span>
-<span class="source-line-no">052</span><span id="line-52">    }</span>
+<span class="source-line-no">013</span><span id="line-13">import java.util.Collections;</span>
+<span class="source-line-no">014</span><span id="line-14">import java.util.EnumSet;</span>
+<span class="source-line-no">015</span><span id="line-15">import java.util.List;</span>
+<span class="source-line-no">016</span><span id="line-16">import java.util.Set;</span>
+<span class="source-line-no">017</span><span id="line-17"></span>
+<span class="source-line-no">018</span><span id="line-18">/**</span>
+<span class="source-line-no">019</span><span id="line-19"> * The pump applies only the fields named in changedFields. Every other field must still carry the</span>
+<span class="source-line-no">020</span><span id="line-20"> * pump's current value, as the Tandem app does: build a change with {@link #forChange}.</span>
+<span class="source-line-no">021</span><span id="line-21"> */</span>
+<span class="source-line-no">022</span><span id="line-22">/**</span>
+<span class="source-line-no">023</span><span id="line-23"> * The pump applies only the fields named in changedFields. Every other field must still carry the</span>
+<span class="source-line-no">024</span><span id="line-24"> * pump's current value, as the Tandem app does: build a change with {@link #forChange}.</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">027</span><span id="line-27"> *</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;br&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> *</span>
+<span class="source-line-no">030</span><span id="line-30"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse}, opCode -46, size 7</span>
+<span class="source-line-no">031</span><span id="line-31"> *</span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;br&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> *</span>
+<span class="source-line-no">034</span><span id="line-34"> * </span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-46&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;7&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetQuickBolusSettingsResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;/table&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> */@MessageProps(</span>
+<span class="source-line-no">045</span><span id="line-45">    opCode=-46,</span>
+<span class="source-line-no">046</span><span id="line-46">    size=7,</span>
+<span class="source-line-no">047</span><span id="line-47">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">048</span><span id="line-48">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">049</span><span id="line-49">    signed=true,</span>
+<span class="source-line-no">050</span><span id="line-50">    response=SetQuickBolusSettingsResponse.class</span>
+<span class="source-line-no">051</span><span id="line-51">)</span>
+<span class="source-line-no">052</span><span id="line-52">public class SetQuickBolusSettingsRequest extends Message {</span>
 <span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {</span>
-<span class="source-line-no">055</span><span id="line-55">        if (enabled) {</span>
-<span class="source-line-no">056</span><span id="line-56">            Validate.isTrue(increment.equals(QuickBolusIncrement.DISABLED), "must specify QuickBolusIncrement.DISABLED when disabled: " + this);</span>
-<span class="source-line-no">057</span><span id="line-57">        } else {</span>
-<span class="source-line-no">058</span><span id="line-58">            Validate.isTrue(!increment.equals(QuickBolusIncrement.DISABLED), "cannot specify QuickBolusIncrement.DISABLED when enabled: " + this);</span>
-<span class="source-line-no">059</span><span id="line-59">        }</span>
-<span class="source-line-no">060</span><span id="line-60">        this.cargo = buildCargo(enabled, mode.getRaw(), increment.getMagic());</span>
-<span class="source-line-no">061</span><span id="line-61">        parse(cargo);</span>
-<span class="source-line-no">062</span><span id="line-62">    }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">054</span><span id="line-54">    /** Milliunits. */</span>
+<span class="source-line-no">055</span><span id="line-55">    public static final List&lt;Integer&gt; SUPPORTED_INCREMENT_UNITS = Collections.unmodifiableList(Arrays.asList(500, 1000, 2000, 5000));</span>
+<span class="source-line-no">056</span><span id="line-56">    /** Milligrams. */</span>
+<span class="source-line-no">057</span><span id="line-57">    public static final List&lt;Integer&gt; SUPPORTED_INCREMENT_CARBS = Collections.unmodifiableList(Arrays.asList(2000, 5000, 10000, 15000));</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    private boolean enabled;</span>
+<span class="source-line-no">060</span><span id="line-60">    private int modeRaw;</span>
+<span class="source-line-no">061</span><span id="line-61">    private int incrementUnits;</span>
+<span class="source-line-no">062</span><span id="line-62">    private int incrementCarbs;</span>
+<span class="source-line-no">063</span><span id="line-63">    private int changedFieldsRaw;</span>
 <span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    public SetQuickBolusSettingsRequest(QuickBolusIncrement increment) {</span>
-<span class="source-line-no">066</span><span id="line-66">        this.cargo = buildCargo(increment.isEnabled(), increment.getMode().getRaw(), increment.getMagic());</span>
-<span class="source-line-no">067</span><span id="line-67">        parse(cargo);</span>
-<span class="source-line-no">068</span><span id="line-68">    }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">    /**</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;caption&gt;Parsed fields for SetQuickBolusSettingsRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] == 1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;mode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getMode()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;magic&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.dropFirstN(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;increment&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getIncrement()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;/table&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     */</span>
-<span class="source-line-no">080</span><span id="line-80">    public void parse(byte[] raw) { </span>
-<span class="source-line-no">081</span><span id="line-81">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">082</span><span id="line-82">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">083</span><span id="line-83">        this.cargo = raw;</span>
-<span class="source-line-no">084</span><span id="line-84">        this.enabled = raw[0] == 1;</span>
-<span class="source-line-no">085</span><span id="line-85">        this.modeRaw = raw[1];</span>
-<span class="source-line-no">086</span><span id="line-86">        this.mode = getMode();</span>
-<span class="source-line-no">087</span><span id="line-87">        this.magic = Bytes.dropFirstN(raw, 2);</span>
-<span class="source-line-no">088</span><span id="line-88">        this.increment = getIncrement();</span>
-<span class="source-line-no">089</span><span id="line-89">        checkValidIncrement();</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    /**</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;caption&gt;Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) modeRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;/table&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     */</span>
-<span class="source-line-no">100</span><span id="line-100">    public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {</span>
-<span class="source-line-no">101</span><span id="line-101">        Validate.isTrue(magic.length == 5);</span>
-<span class="source-line-no">102</span><span id="line-102">        return Bytes.combine(</span>
-<span class="source-line-no">103</span><span id="line-103">                new byte[]{(byte) (enabled ? 1 : 0)},</span>
-<span class="source-line-no">104</span><span id="line-104">                new byte[]{(byte) modeRaw},</span>
-<span class="source-line-no">105</span><span id="line-105">                magic</span>
-<span class="source-line-no">106</span><span id="line-106">        );</span>
-<span class="source-line-no">107</span><span id="line-107">    }</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109"></span>
-<span class="source-line-no">110</span><span id="line-110">    public boolean isEnabled() {</span>
-<span class="source-line-no">111</span><span id="line-111">        return enabled;</span>
-<span class="source-line-no">112</span><span id="line-112">    }</span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">    public byte[] getMagic() {</span>
-<span class="source-line-no">115</span><span id="line-115">        return magic;</span>
-<span class="source-line-no">116</span><span id="line-116">    }</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">    public enum QuickBolusIncrement {</span>
-<span class="source-line-no">119</span><span id="line-119">        DISABLED(false, QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),</span>
-<span class="source-line-no">120</span><span id="line-120"></span>
-<span class="source-line-no">121</span><span id="line-121">        UNITS_0_5(true, QuickBolusMode.UNITS, new byte[]{-12,1,-48,7,1}),</span>
-<span class="source-line-no">122</span><span id="line-122">        UNITS_1_0(true, QuickBolusMode.UNITS, new byte[]{-24,3,-48,7,4}),</span>
-<span class="source-line-no">123</span><span id="line-123">        UNITS_2_0(true, QuickBolusMode.UNITS, new byte[]{-48,7,-48,7,4}),</span>
-<span class="source-line-no">124</span><span id="line-124">        UNITS_5_0(true, QuickBolusMode.UNITS, new byte[]{-120,19,-48,7,4}),</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">        CARBS_2G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-48,7,8}),</span>
-<span class="source-line-no">127</span><span id="line-127">        CARBS_5G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-120,19,8}),</span>
-<span class="source-line-no">128</span><span id="line-128">        CARBS_10G(true, QuickBolusMode.CARBS, new byte[]{-120,19,16,39,8}),</span>
-<span class="source-line-no">129</span><span id="line-129">        CARBS_15G(true, QuickBolusMode.CARBS, new byte[]{-120,19,-104,58,8}),</span>
-<span class="source-line-no">130</span><span id="line-130">        ;</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">        private final boolean enabled;</span>
-<span class="source-line-no">133</span><span id="line-133">        private final QuickBolusMode mode;</span>
-<span class="source-line-no">134</span><span id="line-134">        private final byte[] magic;</span>
-<span class="source-line-no">135</span><span id="line-135">        QuickBolusIncrement(boolean enabled, QuickBolusMode mode, byte[] magic) {</span>
-<span class="source-line-no">136</span><span id="line-136">            this.enabled = enabled;</span>
-<span class="source-line-no">137</span><span id="line-137">            this.mode = mode;</span>
-<span class="source-line-no">138</span><span id="line-138">            this.magic = magic;</span>
-<span class="source-line-no">139</span><span id="line-139">        }</span>
+<span class="source-line-no">065</span><span id="line-65">    public SetQuickBolusSettingsRequest() {</span>
+<span class="source-line-no">066</span><span id="line-66">        this.cargo = EMPTY;</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    public SetQuickBolusSettingsRequest(byte[] raw) {</span>
+<span class="source-line-no">070</span><span id="line-70">        parse(raw);</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    /**</span>
+<span class="source-line-no">074</span><span id="line-74">     * Sends the increment's captured cargo verbatim, which applies only the fields that capture</span>
+<span class="source-line-no">075</span><span id="line-75">     * flagged: to reach the increment from an arbitrary pump state use {@link #forChange}.</span>
+<span class="source-line-no">076</span><span id="line-76">     */</span>
+<span class="source-line-no">077</span><span id="line-77">    public SetQuickBolusSettingsRequest(boolean enabled, QuickBolusMode mode, QuickBolusIncrement increment) {</span>
+<span class="source-line-no">078</span><span id="line-78">        if (enabled) {</span>
+<span class="source-line-no">079</span><span id="line-79">            Validate.isTrue(!increment.equals(QuickBolusIncrement.DISABLED), "cannot specify QuickBolusIncrement.DISABLED when enabled");</span>
+<span class="source-line-no">080</span><span id="line-80">        } else {</span>
+<span class="source-line-no">081</span><span id="line-81">            Validate.isTrue(increment.equals(QuickBolusIncrement.DISABLED), "must specify QuickBolusIncrement.DISABLED when disabled");</span>
+<span class="source-line-no">082</span><span id="line-82">        }</span>
+<span class="source-line-no">083</span><span id="line-83">        this.cargo = buildCargo(enabled, mode.getRaw(), increment.magic);</span>
+<span class="source-line-no">084</span><span id="line-84">        parse(cargo);</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">    /** See {@link #SetQuickBolusSettingsRequest(boolean, QuickBolusMode, QuickBolusIncrement)}. */</span>
+<span class="source-line-no">088</span><span id="line-88">    public SetQuickBolusSettingsRequest(QuickBolusIncrement increment) {</span>
+<span class="source-line-no">089</span><span id="line-89">        this.cargo = buildCargo(increment.isEnabled(), increment.getMode().getRaw(), increment.magic);</span>
+<span class="source-line-no">090</span><span id="line-90">        parse(cargo);</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    /**</span>
+<span class="source-line-no">094</span><span id="line-94">     * @param incrementUnits milliunits</span>
+<span class="source-line-no">095</span><span id="line-95">     * @param incrementCarbs milligrams</span>
+<span class="source-line-no">096</span><span id="line-96">     * @param changedFieldsRaw bitmask of {@link ChangedField}</span>
+<span class="source-line-no">097</span><span id="line-97">     */</span>
+<span class="source-line-no">098</span><span id="line-98">    public SetQuickBolusSettingsRequest(boolean enabled, int modeRaw, int incrementUnits, int incrementCarbs, int changedFieldsRaw) {</span>
+<span class="source-line-no">099</span><span id="line-99">        this.cargo = buildCargo(enabled, modeRaw, incrementUnits, incrementCarbs, changedFieldsRaw);</span>
+<span class="source-line-no">100</span><span id="line-100">        parse(cargo);</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    /**</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;caption&gt;Parsed fields for SetQuickBolusSettingsRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;enabled&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0] == 1&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;incrementUnits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 2)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;incrementCarbs&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 4)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changedFieldsRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[6] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">111</span><span id="line-111">     * &lt;/table&gt;</span>
+<span class="source-line-no">112</span><span id="line-112">     */</span>
+<span class="source-line-no">113</span><span id="line-113">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">114</span><span id="line-114">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">115</span><span id="line-115">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">116</span><span id="line-116">        this.cargo = raw;</span>
+<span class="source-line-no">117</span><span id="line-117">        this.enabled = raw[0] == 1;</span>
+<span class="source-line-no">118</span><span id="line-118">        this.modeRaw = raw[1];</span>
+<span class="source-line-no">119</span><span id="line-119">        this.incrementUnits = Bytes.readShort(raw, 2);</span>
+<span class="source-line-no">120</span><span id="line-120">        this.incrementCarbs = Bytes.readShort(raw, 4);</span>
+<span class="source-line-no">121</span><span id="line-121">        this.changedFieldsRaw = raw[6] &amp; 0xFF;</span>
+<span class="source-line-no">122</span><span id="line-122">    }</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">    /**</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;caption&gt;Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">129</span><span id="line-129">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) modeRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">130</span><span id="line-130">     * &lt;/table&gt;</span>
+<span class="source-line-no">131</span><span id="line-131">     */</span>
+<span class="source-line-no">132</span><span id="line-132">    public static byte[] buildCargo(boolean enabled, int modeRaw, byte[] magic) {</span>
+<span class="source-line-no">133</span><span id="line-133">        Validate.isTrue(magic.length == 5);</span>
+<span class="source-line-no">134</span><span id="line-134">        return Bytes.combine(</span>
+<span class="source-line-no">135</span><span id="line-135">                new byte[]{(byte) (enabled ? 1 : 0)},</span>
+<span class="source-line-no">136</span><span id="line-136">                new byte[]{(byte) modeRaw},</span>
+<span class="source-line-no">137</span><span id="line-137">                magic</span>
+<span class="source-line-no">138</span><span id="line-138">        );</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
 <span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">        public QuickBolusMode getMode() {</span>
-<span class="source-line-no">142</span><span id="line-142">            return mode;</span>
-<span class="source-line-no">143</span><span id="line-143">        }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">        public byte[] getMagic() {</span>
-<span class="source-line-no">146</span><span id="line-146">            return magic;</span>
-<span class="source-line-no">147</span><span id="line-147">        }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">        public boolean isEnabled() {</span>
-<span class="source-line-no">150</span><span id="line-150">            return enabled;</span>
-<span class="source-line-no">151</span><span id="line-151">        }</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">        public boolean getEnabled() {</span>
-<span class="source-line-no">154</span><span id="line-154">            return enabled;</span>
-<span class="source-line-no">155</span><span id="line-155">        }</span>
-<span class="source-line-no">156</span><span id="line-156"></span>
-<span class="source-line-no">157</span><span id="line-157">        public boolean isEqual(QuickBolusIncrement o) {</span>
-<span class="source-line-no">158</span><span id="line-158">            return this.enabled == o.enabled &amp;&amp; this.mode == o.mode &amp;&amp; Hex.encodeHexString(this.magic).equals(Hex.encodeHexString(o.magic));</span>
-<span class="source-line-no">159</span><span id="line-159">        }</span>
-<span class="source-line-no">160</span><span id="line-160"></span>
-<span class="source-line-no">161</span><span id="line-161">        public static QuickBolusIncrement forMagic(byte[] magic) {</span>
-<span class="source-line-no">162</span><span id="line-162">            for (QuickBolusIncrement i : values()) {</span>
-<span class="source-line-no">163</span><span id="line-163">                if (i.enabled &amp;&amp; Arrays.equals(i.magic, magic)) return i;</span>
-<span class="source-line-no">164</span><span id="line-164">            }</span>
-<span class="source-line-no">165</span><span id="line-165">            return null;</span>
-<span class="source-line-no">166</span><span id="line-166">        }</span>
-<span class="source-line-no">167</span><span id="line-167">    }</span>
-<span class="source-line-no">168</span><span id="line-168"></span>
-<span class="source-line-no">169</span><span id="line-169">    public QuickBolusIncrement getIncrement() {</span>
-<span class="source-line-no">170</span><span id="line-170">        checkValidIncrement();</span>
-<span class="source-line-no">171</span><span id="line-171">        if (this.enabled) {</span>
-<span class="source-line-no">172</span><span id="line-172">            return QuickBolusIncrement.forMagic(this.magic);</span>
-<span class="source-line-no">173</span><span id="line-173">        } else {</span>
-<span class="source-line-no">174</span><span id="line-174">            return QuickBolusIncrement.DISABLED;</span>
-<span class="source-line-no">175</span><span id="line-175">        }</span>
-<span class="source-line-no">176</span><span id="line-176">    }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">    public int getModeRaw() {</span>
-<span class="source-line-no">179</span><span id="line-179">        return modeRaw;</span>
-<span class="source-line-no">180</span><span id="line-180">    }</span>
-<span class="source-line-no">181</span><span id="line-181"></span>
-<span class="source-line-no">182</span><span id="line-182">    public enum QuickBolusMode {</span>
-<span class="source-line-no">183</span><span id="line-183">        UNITS(0),</span>
-<span class="source-line-no">184</span><span id="line-184">        CARBS(1),</span>
-<span class="source-line-no">185</span><span id="line-185"></span>
-<span class="source-line-no">186</span><span id="line-186">        ;</span>
-<span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">        private final int raw;</span>
-<span class="source-line-no">189</span><span id="line-189">        QuickBolusMode(int raw) {</span>
-<span class="source-line-no">190</span><span id="line-190">            this.raw = raw;</span>
-<span class="source-line-no">191</span><span id="line-191">        }</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">        public int getRaw() {</span>
-<span class="source-line-no">194</span><span id="line-194">            return raw;</span>
-<span class="source-line-no">195</span><span id="line-195">        }</span>
-<span class="source-line-no">196</span><span id="line-196"></span>
-<span class="source-line-no">197</span><span id="line-197">        public static QuickBolusMode forRaw(int raw) {</span>
-<span class="source-line-no">198</span><span id="line-198">            for (QuickBolusMode m : values()) {</span>
-<span class="source-line-no">199</span><span id="line-199">                if (m.raw == raw) return m;</span>
-<span class="source-line-no">200</span><span id="line-200">            }</span>
-<span class="source-line-no">201</span><span id="line-201">            return null;</span>
-<span class="source-line-no">202</span><span id="line-202">        }</span>
-<span class="source-line-no">203</span><span id="line-203">    }</span>
-<span class="source-line-no">204</span><span id="line-204"></span>
-<span class="source-line-no">205</span><span id="line-205">    public QuickBolusMode getMode() {</span>
-<span class="source-line-no">206</span><span id="line-206">        return QuickBolusMode.forRaw(this.modeRaw);</span>
-<span class="source-line-no">207</span><span id="line-207">    }</span>
-<span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">    private void checkValidIncrement() {</span>
-<span class="source-line-no">210</span><span id="line-210">        QuickBolusIncrement increment = QuickBolusIncrement.forMagic(this.magic);</span>
-<span class="source-line-no">211</span><span id="line-211">        if (increment != null) {</span>
-<span class="source-line-no">212</span><span id="line-212">            Validate.isTrue(increment.getMode().getRaw() == getModeRaw(),</span>
-<span class="source-line-no">213</span><span id="line-213">                    "invalid mode selection: increment=" + increment + " mode=" + getMode());</span>
-<span class="source-line-no">214</span><span id="line-214">        }</span>
-<span class="source-line-no">215</span><span id="line-215">    }</span>
-<span class="source-line-no">216</span><span id="line-216">}</span>
+<span class="source-line-no">141</span><span id="line-141">    /**</span>
+<span class="source-line-no">142</span><span id="line-142">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">143</span><span id="line-143">     * &lt;caption&gt;Byte layout for SetQuickBolusSettingsRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">144</span><span id="line-144">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">145</span><span id="line-145">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (enabled ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">146</span><span id="line-146">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) modeRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">147</span><span id="line-147">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(incrementUnits) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">148</span><span id="line-148">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(incrementUnits) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">149</span><span id="line-149">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(incrementCarbs) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">150</span><span id="line-150">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(incrementCarbs) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">151</span><span id="line-151">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) changedFieldsRaw&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">152</span><span id="line-152">     * &lt;/table&gt;</span>
+<span class="source-line-no">153</span><span id="line-153">     */</span>
+<span class="source-line-no">154</span><span id="line-154">    public static byte[] buildCargo(boolean enabled, int modeRaw, int incrementUnits, int incrementCarbs, int changedFieldsRaw) {</span>
+<span class="source-line-no">155</span><span id="line-155">        return Bytes.combine(</span>
+<span class="source-line-no">156</span><span id="line-156">                new byte[]{(byte) (enabled ? 1 : 0)},</span>
+<span class="source-line-no">157</span><span id="line-157">                new byte[]{(byte) modeRaw},</span>
+<span class="source-line-no">158</span><span id="line-158">                Bytes.firstTwoBytesLittleEndian(incrementUnits),</span>
+<span class="source-line-no">159</span><span id="line-159">                Bytes.firstTwoBytesLittleEndian(incrementCarbs),</span>
+<span class="source-line-no">160</span><span id="line-160">                new byte[]{(byte) changedFieldsRaw}</span>
+<span class="source-line-no">161</span><span id="line-161">        );</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">    /**</span>
+<span class="source-line-no">165</span><span id="line-165">     * The request that moves the pump from {@code current} to the given settings, or one with no</span>
+<span class="source-line-no">166</span><span id="line-166">     * changed fields when the pump already matches (which need not be sent).</span>
+<span class="source-line-no">167</span><span id="line-167">     *</span>
+<span class="source-line-no">168</span><span id="line-168">     * @param mode ignored when disabling</span>
+<span class="source-line-no">169</span><span id="line-169">     * @param increment milliunits in UNITS mode, milligrams in CARBS mode; ignored when disabling</span>
+<span class="source-line-no">170</span><span id="line-170">     */</span>
+<span class="source-line-no">171</span><span id="line-171">    public static SetQuickBolusSettingsRequest forChange(PumpGlobalsResponse current, boolean enabled, QuickBolusMode mode, int increment) {</span>
+<span class="source-line-no">172</span><span id="line-172">        int units = current.getQuickBolusIncrementUnits();</span>
+<span class="source-line-no">173</span><span id="line-173">        int carbs = current.getQuickBolusIncrementCarbs();</span>
+<span class="source-line-no">174</span><span id="line-174">        int modeRaw = current.getQuickBolusEntryType();</span>
+<span class="source-line-no">175</span><span id="line-175">        Set&lt;ChangedField&gt; changed = EnumSet.noneOf(ChangedField.class);</span>
+<span class="source-line-no">176</span><span id="line-176"></span>
+<span class="source-line-no">177</span><span id="line-177">        if (current.isQuickBolusEnabled() != enabled) {</span>
+<span class="source-line-no">178</span><span id="line-178">            changed.add(ChangedField.ENABLED);</span>
+<span class="source-line-no">179</span><span id="line-179">        }</span>
+<span class="source-line-no">180</span><span id="line-180">        if (enabled) {</span>
+<span class="source-line-no">181</span><span id="line-181">            if (modeRaw != mode.getRaw()) {</span>
+<span class="source-line-no">182</span><span id="line-182">                changed.add(ChangedField.MODE);</span>
+<span class="source-line-no">183</span><span id="line-183">                modeRaw = mode.getRaw();</span>
+<span class="source-line-no">184</span><span id="line-184">            }</span>
+<span class="source-line-no">185</span><span id="line-185">            if (mode == QuickBolusMode.UNITS) {</span>
+<span class="source-line-no">186</span><span id="line-186">                Validate.isTrue(SUPPORTED_INCREMENT_UNITS.contains(increment), "unsupported quick bolus units increment: %d", increment);</span>
+<span class="source-line-no">187</span><span id="line-187">                if (units != increment) {</span>
+<span class="source-line-no">188</span><span id="line-188">                    changed.add(ChangedField.INCREMENT_UNITS);</span>
+<span class="source-line-no">189</span><span id="line-189">                    units = increment;</span>
+<span class="source-line-no">190</span><span id="line-190">                }</span>
+<span class="source-line-no">191</span><span id="line-191">            } else {</span>
+<span class="source-line-no">192</span><span id="line-192">                Validate.isTrue(SUPPORTED_INCREMENT_CARBS.contains(increment), "unsupported quick bolus carbs increment: %d", increment);</span>
+<span class="source-line-no">193</span><span id="line-193">                if (carbs != increment) {</span>
+<span class="source-line-no">194</span><span id="line-194">                    changed.add(ChangedField.INCREMENT_CARBS);</span>
+<span class="source-line-no">195</span><span id="line-195">                    carbs = increment;</span>
+<span class="source-line-no">196</span><span id="line-196">                }</span>
+<span class="source-line-no">197</span><span id="line-197">            }</span>
+<span class="source-line-no">198</span><span id="line-198">        }</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">        return new SetQuickBolusSettingsRequest(enabled, modeRaw, units, carbs, ChangedField.toBitmask(changed));</span>
+<span class="source-line-no">201</span><span id="line-201">    }</span>
+<span class="source-line-no">202</span><span id="line-202"></span>
+<span class="source-line-no">203</span><span id="line-203">    public static SetQuickBolusSettingsRequest forChange(PumpGlobalsResponse current, QuickBolusIncrement increment) {</span>
+<span class="source-line-no">204</span><span id="line-204">        return forChange(current, increment.isEnabled(), increment.getMode(), increment.getIncrement());</span>
+<span class="source-line-no">205</span><span id="line-205">    }</span>
+<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">207</span><span id="line-207">    public boolean isEnabled() {</span>
+<span class="source-line-no">208</span><span id="line-208">        return enabled;</span>
+<span class="source-line-no">209</span><span id="line-209">    }</span>
+<span class="source-line-no">210</span><span id="line-210"></span>
+<span class="source-line-no">211</span><span id="line-211">    /** The increment the pump is left at if it applies this request, or null if not a supported one. */</span>
+<span class="source-line-no">212</span><span id="line-212">    public QuickBolusIncrement getIncrement() {</span>
+<span class="source-line-no">213</span><span id="line-213">        return QuickBolusIncrement.forSettings(enabled, modeRaw, incrementUnits, incrementCarbs);</span>
+<span class="source-line-no">214</span><span id="line-214">    }</span>
+<span class="source-line-no">215</span><span id="line-215"></span>
+<span class="source-line-no">216</span><span id="line-216">    /** @deprecated not an opaque value: use {@link #getIncrementUnits}, {@link #getIncrementCarbs} and {@link #getChangedFields}. */</span>
+<span class="source-line-no">217</span><span id="line-217">    @Deprecated</span>
+<span class="source-line-no">218</span><span id="line-218">    public byte[] getMagic() {</span>
+<span class="source-line-no">219</span><span id="line-219">        return Bytes.dropFirstN(cargo, 2);</span>
+<span class="source-line-no">220</span><span id="line-220">    }</span>
+<span class="source-line-no">221</span><span id="line-221"></span>
+<span class="source-line-no">222</span><span id="line-222">    public int getModeRaw() {</span>
+<span class="source-line-no">223</span><span id="line-223">        return modeRaw;</span>
+<span class="source-line-no">224</span><span id="line-224">    }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">    public QuickBolusMode getMode() {</span>
+<span class="source-line-no">227</span><span id="line-227">        return QuickBolusMode.forRaw(this.modeRaw);</span>
+<span class="source-line-no">228</span><span id="line-228">    }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">    /** Milliunits. */</span>
+<span class="source-line-no">231</span><span id="line-231">    public int getIncrementUnits() {</span>
+<span class="source-line-no">232</span><span id="line-232">        return incrementUnits;</span>
+<span class="source-line-no">233</span><span id="line-233">    }</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">    /** Milligrams. */</span>
+<span class="source-line-no">236</span><span id="line-236">    public int getIncrementCarbs() {</span>
+<span class="source-line-no">237</span><span id="line-237">        return incrementCarbs;</span>
+<span class="source-line-no">238</span><span id="line-238">    }</span>
+<span class="source-line-no">239</span><span id="line-239"></span>
+<span class="source-line-no">240</span><span id="line-240">    public int getChangedFieldsRaw() {</span>
+<span class="source-line-no">241</span><span id="line-241">        return changedFieldsRaw;</span>
+<span class="source-line-no">242</span><span id="line-242">    }</span>
+<span class="source-line-no">243</span><span id="line-243"></span>
+<span class="source-line-no">244</span><span id="line-244">    public Set&lt;ChangedField&gt; getChangedFields() {</span>
+<span class="source-line-no">245</span><span id="line-245">        return ChangedField.fromBitmask(changedFieldsRaw);</span>
+<span class="source-line-no">246</span><span id="line-246">    }</span>
+<span class="source-line-no">247</span><span id="line-247"></span>
+<span class="source-line-no">248</span><span id="line-248">    public enum QuickBolusIncrement {</span>
+<span class="source-line-no">249</span><span id="line-249">        DISABLED(false, QuickBolusMode.UNITS, 0, new byte[]{-12,1,-48,7,1}),</span>
+<span class="source-line-no">250</span><span id="line-250"></span>
+<span class="source-line-no">251</span><span id="line-251">        UNITS_0_5(true, QuickBolusMode.UNITS, 500, new byte[]{-12,1,-48,7,1}),</span>
+<span class="source-line-no">252</span><span id="line-252">        UNITS_1_0(true, QuickBolusMode.UNITS, 1000, new byte[]{-24,3,-48,7,4}),</span>
+<span class="source-line-no">253</span><span id="line-253">        UNITS_2_0(true, QuickBolusMode.UNITS, 2000, new byte[]{-48,7,-48,7,4}),</span>
+<span class="source-line-no">254</span><span id="line-254">        UNITS_5_0(true, QuickBolusMode.UNITS, 5000, new byte[]{-120,19,-48,7,4}),</span>
+<span class="source-line-no">255</span><span id="line-255"></span>
+<span class="source-line-no">256</span><span id="line-256">        CARBS_2G(true, QuickBolusMode.CARBS, 2000, new byte[]{-120,19,-48,7,8}),</span>
+<span class="source-line-no">257</span><span id="line-257">        CARBS_5G(true, QuickBolusMode.CARBS, 5000, new byte[]{-120,19,-120,19,8}),</span>
+<span class="source-line-no">258</span><span id="line-258">        CARBS_10G(true, QuickBolusMode.CARBS, 10000, new byte[]{-120,19,16,39,8}),</span>
+<span class="source-line-no">259</span><span id="line-259">        CARBS_15G(true, QuickBolusMode.CARBS, 15000, new byte[]{-120,19,-104,58,8}),</span>
+<span class="source-line-no">260</span><span id="line-260">        ;</span>
+<span class="source-line-no">261</span><span id="line-261"></span>
+<span class="source-line-no">262</span><span id="line-262">        private final boolean enabled;</span>
+<span class="source-line-no">263</span><span id="line-263">        private final QuickBolusMode mode;</span>
+<span class="source-line-no">264</span><span id="line-264">        private final int increment;</span>
+<span class="source-line-no">265</span><span id="line-265">        // One captured Tandem app write per increment, not a derivation of it.</span>
+<span class="source-line-no">266</span><span id="line-266">        private final byte[] magic;</span>
+<span class="source-line-no">267</span><span id="line-267">        QuickBolusIncrement(boolean enabled, QuickBolusMode mode, int increment, byte[] magic) {</span>
+<span class="source-line-no">268</span><span id="line-268">            this.enabled = enabled;</span>
+<span class="source-line-no">269</span><span id="line-269">            this.mode = mode;</span>
+<span class="source-line-no">270</span><span id="line-270">            this.increment = increment;</span>
+<span class="source-line-no">271</span><span id="line-271">            this.magic = magic;</span>
+<span class="source-line-no">272</span><span id="line-272">        }</span>
+<span class="source-line-no">273</span><span id="line-273"></span>
+<span class="source-line-no">274</span><span id="line-274">        public QuickBolusMode getMode() {</span>
+<span class="source-line-no">275</span><span id="line-275">            return mode;</span>
+<span class="source-line-no">276</span><span id="line-276">        }</span>
+<span class="source-line-no">277</span><span id="line-277"></span>
+<span class="source-line-no">278</span><span id="line-278">        /** Milliunits in UNITS mode, milligrams in CARBS mode; 0 for DISABLED. */</span>
+<span class="source-line-no">279</span><span id="line-279">        public int getIncrement() {</span>
+<span class="source-line-no">280</span><span id="line-280">            return increment;</span>
+<span class="source-line-no">281</span><span id="line-281">        }</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">        /** @deprecated a captured cargo tail, not an encoding of this increment. */</span>
+<span class="source-line-no">284</span><span id="line-284">        @Deprecated</span>
+<span class="source-line-no">285</span><span id="line-285">        public byte[] getMagic() {</span>
+<span class="source-line-no">286</span><span id="line-286">            return magic;</span>
+<span class="source-line-no">287</span><span id="line-287">        }</span>
+<span class="source-line-no">288</span><span id="line-288"></span>
+<span class="source-line-no">289</span><span id="line-289">        public boolean isEnabled() {</span>
+<span class="source-line-no">290</span><span id="line-290">            return enabled;</span>
+<span class="source-line-no">291</span><span id="line-291">        }</span>
+<span class="source-line-no">292</span><span id="line-292"></span>
+<span class="source-line-no">293</span><span id="line-293">        public boolean getEnabled() {</span>
+<span class="source-line-no">294</span><span id="line-294">            return enabled;</span>
+<span class="source-line-no">295</span><span id="line-295">        }</span>
+<span class="source-line-no">296</span><span id="line-296"></span>
+<span class="source-line-no">297</span><span id="line-297">        public boolean isEqual(QuickBolusIncrement o) {</span>
+<span class="source-line-no">298</span><span id="line-298">            return this.enabled == o.enabled &amp;&amp; this.mode == o.mode &amp;&amp; Arrays.equals(this.magic, o.magic);</span>
+<span class="source-line-no">299</span><span id="line-299">        }</span>
+<span class="source-line-no">300</span><span id="line-300"></span>
+<span class="source-line-no">301</span><span id="line-301">        public static QuickBolusIncrement forMagic(byte[] magic) {</span>
+<span class="source-line-no">302</span><span id="line-302">            for (QuickBolusIncrement i : values()) {</span>
+<span class="source-line-no">303</span><span id="line-303">                if (i.enabled &amp;&amp; Arrays.equals(i.magic, magic)) return i;</span>
+<span class="source-line-no">304</span><span id="line-304">            }</span>
+<span class="source-line-no">305</span><span id="line-305">            return null;</span>
+<span class="source-line-no">306</span><span id="line-306">        }</span>
+<span class="source-line-no">307</span><span id="line-307"></span>
+<span class="source-line-no">308</span><span id="line-308">        /** @return null when enabled at an increment or mode the pump does not support */</span>
+<span class="source-line-no">309</span><span id="line-309">        public static QuickBolusIncrement forSettings(boolean enabled, int modeRaw, int incrementUnits, int incrementCarbs) {</span>
+<span class="source-line-no">310</span><span id="line-310">            if (!enabled) {</span>
+<span class="source-line-no">311</span><span id="line-311">                return DISABLED;</span>
+<span class="source-line-no">312</span><span id="line-312">            }</span>
+<span class="source-line-no">313</span><span id="line-313">            QuickBolusMode mode = QuickBolusMode.forRaw(modeRaw);</span>
+<span class="source-line-no">314</span><span id="line-314">            if (mode == null) {</span>
+<span class="source-line-no">315</span><span id="line-315">                return null;</span>
+<span class="source-line-no">316</span><span id="line-316">            }</span>
+<span class="source-line-no">317</span><span id="line-317">            int increment = mode == QuickBolusMode.UNITS ? incrementUnits : incrementCarbs;</span>
+<span class="source-line-no">318</span><span id="line-318">            for (QuickBolusIncrement i : values()) {</span>
+<span class="source-line-no">319</span><span id="line-319">                if (i.enabled &amp;&amp; i.mode == mode &amp;&amp; i.increment == increment) return i;</span>
+<span class="source-line-no">320</span><span id="line-320">            }</span>
+<span class="source-line-no">321</span><span id="line-321">            return null;</span>
+<span class="source-line-no">322</span><span id="line-322">        }</span>
+<span class="source-line-no">323</span><span id="line-323">    }</span>
+<span class="source-line-no">324</span><span id="line-324"></span>
+<span class="source-line-no">325</span><span id="line-325">    public enum ChangedField {</span>
+<span class="source-line-no">326</span><span id="line-326">        ENABLED(0x01),</span>
+<span class="source-line-no">327</span><span id="line-327">        MODE(0x02),</span>
+<span class="source-line-no">328</span><span id="line-328">        INCREMENT_UNITS(0x04),</span>
+<span class="source-line-no">329</span><span id="line-329">        INCREMENT_CARBS(0x08),</span>
+<span class="source-line-no">330</span><span id="line-330">        ;</span>
+<span class="source-line-no">331</span><span id="line-331"></span>
+<span class="source-line-no">332</span><span id="line-332">        private final int mask;</span>
+<span class="source-line-no">333</span><span id="line-333">        ChangedField(int mask) {</span>
+<span class="source-line-no">334</span><span id="line-334">            this.mask = mask;</span>
+<span class="source-line-no">335</span><span id="line-335">        }</span>
+<span class="source-line-no">336</span><span id="line-336"></span>
+<span class="source-line-no">337</span><span id="line-337">        public int getMask() {</span>
+<span class="source-line-no">338</span><span id="line-338">            return mask;</span>
+<span class="source-line-no">339</span><span id="line-339">        }</span>
+<span class="source-line-no">340</span><span id="line-340"></span>
+<span class="source-line-no">341</span><span id="line-341">        public static Set&lt;ChangedField&gt; fromBitmask(int bitmask) {</span>
+<span class="source-line-no">342</span><span id="line-342">            Set&lt;ChangedField&gt; ret = EnumSet.noneOf(ChangedField.class);</span>
+<span class="source-line-no">343</span><span id="line-343">            for (ChangedField f : values()) {</span>
+<span class="source-line-no">344</span><span id="line-344">                if ((bitmask &amp; f.mask) != 0) ret.add(f);</span>
+<span class="source-line-no">345</span><span id="line-345">            }</span>
+<span class="source-line-no">346</span><span id="line-346">            return ret;</span>
+<span class="source-line-no">347</span><span id="line-347">        }</span>
+<span class="source-line-no">348</span><span id="line-348"></span>
+<span class="source-line-no">349</span><span id="line-349">        public static int toBitmask(Set&lt;ChangedField&gt; fields) {</span>
+<span class="source-line-no">350</span><span id="line-350">            int ret = 0;</span>
+<span class="source-line-no">351</span><span id="line-351">            for (ChangedField f : fields) {</span>
+<span class="source-line-no">352</span><span id="line-352">                ret |= f.mask;</span>
+<span class="source-line-no">353</span><span id="line-353">            }</span>
+<span class="source-line-no">354</span><span id="line-354">            return ret;</span>
+<span class="source-line-no">355</span><span id="line-355">        }</span>
+<span class="source-line-no">356</span><span id="line-356">    }</span>
+<span class="source-line-no">357</span><span id="line-357"></span>
+<span class="source-line-no">358</span><span id="line-358">    public enum QuickBolusMode {</span>
+<span class="source-line-no">359</span><span id="line-359">        UNITS(0),</span>
+<span class="source-line-no">360</span><span id="line-360">        CARBS(1),</span>
+<span class="source-line-no">361</span><span id="line-361"></span>
+<span class="source-line-no">362</span><span id="line-362">        ;</span>
+<span class="source-line-no">363</span><span id="line-363"></span>
+<span class="source-line-no">364</span><span id="line-364">        private final int raw;</span>
+<span class="source-line-no">365</span><span id="line-365">        QuickBolusMode(int raw) {</span>
+<span class="source-line-no">366</span><span id="line-366">            this.raw = raw;</span>
+<span class="source-line-no">367</span><span id="line-367">        }</span>
+<span class="source-line-no">368</span><span id="line-368"></span>
+<span class="source-line-no">369</span><span id="line-369">        public int getRaw() {</span>
+<span class="source-line-no">370</span><span id="line-370">            return raw;</span>
+<span class="source-line-no">371</span><span id="line-371">        }</span>
+<span class="source-line-no">372</span><span id="line-372"></span>
+<span class="source-line-no">373</span><span id="line-373">        public static QuickBolusMode forRaw(int raw) {</span>
+<span class="source-line-no">374</span><span id="line-374">            for (QuickBolusMode m : values()) {</span>
+<span class="source-line-no">375</span><span id="line-375">                if (m.raw == raw) return m;</span>
+<span class="source-line-no">376</span><span id="line-376">            }</span>
+<span class="source-line-no">377</span><span id="line-377">            return null;</span>
+<span class="source-line-no">378</span><span id="line-378">        }</span>
+<span class="source-line-no">379</span><span id="line-379">    }</span>
+<span class="source-line-no">380</span><span id="line-380">}</span>
 
 
 
