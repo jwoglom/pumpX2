@@ -16,14 +16,17 @@ public class CannulaFilledHistoryLog extends HistoryLog {
 
     private float primeSize;
     private long completionStatus;
+    private int infusionSetType;
 
     public CannulaFilledHistoryLog() {}
     public CannulaFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus) {
-        super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize, completionStatus);
-        this.primeSize = primeSize;
-        this.completionStatus = completionStatus;
+        this(pumpTimeSec, sequenceNum, primeSize, completionStatus, 0);
+    }
 
+    public CannulaFilledHistoryLog(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus, int infusionSetType) {
+        super(pumpTimeSec, sequenceNum);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, primeSize, completionStatus, infusionSetType);
+        parse(cargo);
     }
 
     public CannulaFilledHistoryLog(float primeSize, long completionStatus) {
@@ -40,16 +43,22 @@ public class CannulaFilledHistoryLog extends HistoryLog {
         parseBase(raw);
         this.primeSize = Bytes.readFloat(raw, 10);
         this.completionStatus = Bytes.readUint32(raw, 14);
+        this.infusionSetType = raw[18] & 0xFF;
 
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus) {
+        return buildCargo(pumpTimeSec, sequenceNum, primeSize, completionStatus, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, float primeSize, long completionStatus, int infusionSetType) {
         return HistoryLog.fillCargo(Bytes.combine(
             HistoryLog.typeIdBytes(61, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toFloat(primeSize),
-            Bytes.toUint32(completionStatus)));
+            Bytes.toUint32(completionStatus),
+            new byte[]{(byte) infusionSetType}));
     }
 
     /**
@@ -64,6 +73,37 @@ public class CannulaFilledHistoryLog extends HistoryLog {
     }
     public CompletionStatus getCompletionStatus() {
         return CompletionStatus.fromId((int) completionStatus);
+    }
+
+    /**
+     * @return raw infusion set type, see {@link InfusionSetType}
+     */
+    public int getInfusionSetTypeRaw() {
+        return infusionSetType;
+    }
+    public InfusionSetType getInfusionSetType() {
+        return InfusionSetType.fromId(infusionSetType);
+    }
+
+    public enum InfusionSetType {
+        DEFAULT_TUBED(0),
+        TUBED(1),
+        TUBELESS(2),
+
+        ;
+        private final int id;
+        InfusionSetType(int id) {
+            this.id = id;
+        }
+
+        static InfusionSetType fromId(int id) {
+            for (InfusionSetType r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
     }
 
     public enum CompletionStatus {

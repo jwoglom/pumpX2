@@ -25,6 +25,7 @@ public class CgmStartSessionHistoryLogTest {
         assertEquals(2118683L, parsedRes.getCurrentTransmitterTime());
         assertEquals(2118683L, parsedRes.getSessionStartTime());
         assertEquals(10, parsedRes.getSessionDuration());
+        assertEquals(0, parsedRes.getSessionStartReason());
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
     }
 }

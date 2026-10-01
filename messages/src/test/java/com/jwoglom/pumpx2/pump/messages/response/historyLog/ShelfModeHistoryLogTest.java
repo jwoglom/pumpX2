@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -10,7 +11,7 @@ public class ShelfModeHistoryLogTest {
     public void testShelfModeHistoryLog1() throws DecoderException {
         ShelfModeHistoryLog expected = (ShelfModeHistoryLog) new ShelfModeHistoryLog(
             // long pumpTimeSec, long sequenceNum, long msecSinceReset, int lipoIbc, int lipoAbc, int lipoCurrent, long lipoRemCap, long lipoMv
-            580777764L, 491136L, 1078644679L, 0, 0, 23130, 130L, 4176L
+            580777764L, 491136L, 1078644679L, 90, 90, 0, 130L, 4176L
         ).withHeaderHighNibble(1);
 
         ShelfModeHistoryLog parsedRes = (ShelfModeHistoryLog) HistoryLogMessageTester.testSingle(
@@ -18,5 +19,8 @@ public class ShelfModeHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(0, parsedRes.getLipoCurrent());
+        assertEquals(90, parsedRes.getLipoAbc());
+        assertEquals(90, parsedRes.getLipoIbc());
     }
 }

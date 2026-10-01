@@ -45,12 +45,12 @@ public class UpdateStatusHistoryLog extends HistoryLog {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.metadataAndVersionStatus = Bytes.readShort(raw, 10);
-        this.swUpdateStatus = Bytes.readShort(raw, 12);
-        this.fileDlAndSideloadStatus = Bytes.readShort(raw, 14);
-        this.fullDlAndCrcStatus = Bytes.readShort(raw, 16);
-        this.updateSuccessful = raw[19];
-        this.externalFlashStatus = Bytes.readShort(raw, 20);
+        this.swUpdateStatus = Bytes.readShort(raw, 10);
+        this.metadataAndVersionStatus = Bytes.readShort(raw, 12);
+        this.fullDlAndCrcStatus = Bytes.readShort(raw, 14);
+        this.fileDlAndSideloadStatus = Bytes.readShort(raw, 16);
+        this.externalFlashStatus = Bytes.readShort(raw, 18);
+        this.updateSuccessful = raw[20] & 0xFF;
         this.swPartNum = Bytes.readUint32(raw, 22);
 
     }
@@ -60,12 +60,12 @@ public class UpdateStatusHistoryLog extends HistoryLog {
             HistoryLog.typeIdBytes(203, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            Bytes.firstTwoBytesLittleEndian(metadataAndVersionStatus),
             Bytes.firstTwoBytesLittleEndian(swUpdateStatus),
-            Bytes.firstTwoBytesLittleEndian(fileDlAndSideloadStatus),
+            Bytes.firstTwoBytesLittleEndian(metadataAndVersionStatus),
             Bytes.firstTwoBytesLittleEndian(fullDlAndCrcStatus),
-            new byte[]{0, (byte) updateSuccessful},
+            Bytes.firstTwoBytesLittleEndian(fileDlAndSideloadStatus),
             Bytes.firstTwoBytesLittleEndian(externalFlashStatus),
+            new byte[]{(byte) updateSuccessful, 0},
             Bytes.toUint32(swPartNum)));
     }
 

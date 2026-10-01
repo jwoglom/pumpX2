@@ -14,15 +14,19 @@ public class DailyStatusHistoryLog extends HistoryLog {
     private int sensorType;
     private int userMode;
     private int pumpControlState;
+    private int weightUnit;
+    private int weight;
+    private int currentTdiPop;
 
     public DailyStatusHistoryLog() {}
     public DailyStatusHistoryLog(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {
-        super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState);
-        this.sensorType = sensorType;
-        this.userMode = userMode;
-        this.pumpControlState = pumpControlState;
+        this(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, 0, 0, 0);
+    }
 
+    public DailyStatusHistoryLog(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState, int weightUnit, int weight, int currentTdiPop) {
+        super(pumpTimeSec, sequenceNum);
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, weightUnit, weight, currentTdiPop);
+        parse(cargo);
     }
 
     public DailyStatusHistoryLog(int sensorType, int userMode, int pumpControlState) {
@@ -37,18 +41,29 @@ public class DailyStatusHistoryLog extends HistoryLog {
         Validate.isTrue(raw.length == 26);
         this.cargo = raw;
         parseBase(raw);
-        this.sensorType = raw[11];
-        this.userMode = raw[12];
-        this.pumpControlState = raw[13];
+        // Layout per the Tandem Source event schema: PumpControlState @10, usermode @11, SensorType @12,
+        // WeightUnit @13, Weight u16 @14, currentTDIpop @16.
+        this.pumpControlState = raw[10] & 0xFF;
+        this.userMode = raw[11] & 0xFF;
+        this.sensorType = raw[12] & 0xFF;
+        this.weightUnit = raw[13] & 0xFF;
+        this.weight = Bytes.readShort(raw, 14);
+        this.currentTdiPop = raw[16] & 0xFF;
 
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {
+        return buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, 0, 0, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState, int weightUnit, int weight, int currentTdiPop) {
         return HistoryLog.fillCargo(Bytes.combine(
             HistoryLog.typeIdBytes(313, 0),
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
-            new byte[]{0, (byte) sensorType, (byte) userMode, (byte) pumpControlState}));
+            new byte[]{(byte) pumpControlState, (byte) userMode, (byte) sensorType, (byte) weightUnit},
+            Bytes.firstTwoBytesLittleEndian(weight),
+            new byte[]{(byte) currentTdiPop}));
     }
 
     public int getSensorType() {
@@ -61,6 +76,31 @@ public class DailyStatusHistoryLog extends HistoryLog {
 
     public int getPumpControlState() {
         return pumpControlState;
+    }
+
+    /**
+     * @return raw weight unit, see {@link WeightUnit}
+     */
+    public int getWeightUnit() {
+        return weightUnit;
+    }
+
+    public WeightUnit getWeightUnitEnum() {
+        return WeightUnit.fromId(weightUnit);
+    }
+
+    /**
+     * @return the configured weight, in the unit given by {@link #getWeightUnit()}
+     */
+    public int getWeight() {
+        return weight;
+    }
+
+    /**
+     * @return the current total daily insulin (population) estimate, in units
+     */
+    public int getCurrentTdiPop() {
+        return currentTdiPop;
     }
 
     public SensorType getSensorTypeEnum() {
@@ -112,6 +152,28 @@ public class DailyStatusHistoryLog extends HistoryLog {
             for (UserMode m : values()) {
                 if (m.id == id) {
                     return m;
+                }
+            }
+            return null;
+        }
+    }
+
+    public enum WeightUnit {
+        NOT_SET(0),
+        POUNDS(1),
+        KILOGRAMS(2),
+        ;
+
+        private final int id;
+
+        WeightUnit(int id) {
+            this.id = id;
+        }
+
+        static WeightUnit fromId(int id) {
+            for (WeightUnit u : values()) {
+                if (u.id == id) {
+                    return u;
                 }
             }
             return null;

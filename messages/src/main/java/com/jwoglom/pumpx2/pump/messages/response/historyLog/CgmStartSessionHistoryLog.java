@@ -14,6 +14,7 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
     private long currentTransmitterTime;
     private long sessionStartTime;
     private int sessionDuration;
+    private int sessionStartReason;
 
     public CgmStartSessionHistoryLog() {}
     public CgmStartSessionHistoryLog(long pumpTimeSec, long sequenceNum) {
@@ -21,11 +22,13 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
     }
 
     public CgmStartSessionHistoryLog(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionDuration) {
+        this(pumpTimeSec, sequenceNum, currentTransmitterTime, sessionStartTime, sessionDuration, 0);
+    }
+
+    public CgmStartSessionHistoryLog(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionDuration, int sessionStartReason) {
         super(pumpTimeSec, sequenceNum);
-        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentTransmitterTime, sessionStartTime, sessionDuration);
-        this.currentTransmitterTime = currentTransmitterTime;
-        this.sessionStartTime = sessionStartTime;
-        this.sessionDuration = sessionDuration;
+        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentTransmitterTime, sessionStartTime, sessionDuration, sessionStartReason);
+        parse(cargo);
     }
 
     public CgmStartSessionHistoryLog(long currentTransmitterTime, long sessionStartTime, int sessionDuration) {
@@ -44,6 +47,7 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
         this.sessionStartTime = Bytes.readUint32(raw, 14);
         // Tandem's cloud export stores bytes 22-25 as one byte-reversed word, so its offsets 15/14/13 are BLE bytes 22/23/24.
         this.sessionDuration = raw[22] & 0xFF;
+        this.sessionStartReason = raw[23] & 0xFF;
 
     }
 
@@ -52,6 +56,10 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
     }
 
     public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionDuration) {
+        return buildCargo(pumpTimeSec, sequenceNum, currentTransmitterTime, sessionStartTime, sessionDuration, 0);
+    }
+
+    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long currentTransmitterTime, long sessionStartTime, int sessionDuration, int sessionStartReason) {
         return HistoryLog.fillCargo(Bytes.combine(
             HistoryLog.typeIdBytes(212, 0),
             Bytes.toUint32(pumpTimeSec),
@@ -59,7 +67,8 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
             Bytes.toUint32(currentTransmitterTime),
             Bytes.toUint32(sessionStartTime),
             new byte[]{0, 0, 0, 0},
-            new byte[]{(byte) sessionDuration}));
+            new byte[]{(byte) sessionDuration},
+            new byte[]{(byte) sessionStartReason}));
     }
 
     /**
@@ -79,7 +88,17 @@ public class CgmStartSessionHistoryLog extends HistoryLog {
     /**
      * @return the session duration in days
      */
+    /**
+     * @return session duration, in days
+     */
     public int getSessionDuration() {
         return sessionDuration;
+    }
+
+    /**
+     * @return raw session start reason; uses the same DEXBLES_REASON_* values as {@link CgmJoinSessionHistoryLog.SessionJoinReason}
+     */
+    public int getSessionStartReason() {
+        return sessionStartReason;
     }
 }
