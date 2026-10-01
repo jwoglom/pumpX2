@@ -192,6 +192,13 @@ public class DexcomG6CGMHistoryLog extends HistoryLog {
     public int getEgvInfoBitmaskRaw() {
         return egvInfoBitmaskRaw;
     }
+    /**
+     * @return the sensor type encoded in bits 11-13 of the EGV info bitmask per the Tandem schema
+     * (1 = Dexcom G6, 2 = Libre 2, 3 = Dexcom G7, 4 = Libre 3); see {@link DailyStatusHistoryLog.SensorType}
+     */
+    public int getSensorType() {
+        return (egvInfoBitmaskRaw >> 11) & 0x7;
+    }
 
     public enum EgvInfo {
         FIVE_MINUTE_READING(1),

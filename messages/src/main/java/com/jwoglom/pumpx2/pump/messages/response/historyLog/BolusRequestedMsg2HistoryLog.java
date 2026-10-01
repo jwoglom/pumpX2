@@ -141,6 +141,8 @@ public class BolusRequestedMsg2HistoryLog extends HistoryLog {
         BLE_EXTENDED(5),
         EATING_SOON_AUTOMATIC(6),
         LATE_BOLUS(7),
+        /** Tandem schema bit 8: BLE with AID Recommendation Bolus */
+        BLE_WITH_AID_RECOMMENDATION(8),
         ;
 
         private final int id;

@@ -175,8 +175,14 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
     public enum BolusSource {
         QUICK_BOLUS(0),
         GUI(1),
+        /** Tandem schema: Remote */
+        REMOTE(5),
         CONTROL_IQ_AUTO_BOLUS(7),
         BLUETOOTH_REMOTE_BOLUS(8),
+        /** Tandem schema: Eating Soon Bolus */
+        EATING_SOON_BOLUS(9),
+        /** Tandem schema: BLE with AID Recommendation */
+        BLE_WITH_AID_RECOMMENDATION(11),
 
         ;
         private int id;
@@ -223,6 +229,8 @@ public class BolusDeliveryHistoryLog extends HistoryLog {
         CORRECTION(8),
         CARB(16),
         EATING_SOON_MODE(32),
+        /** Tandem schema bit 6: Queued */
+        QUEUED(64),
         ;
         private int mask;
         BolusType(int mask) {
