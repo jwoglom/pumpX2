@@ -60,4 +60,38 @@ public class DataLogCorruptionHistoryLog extends HistoryLog {
         return reason;
     }
 
+    public Reason getReasonEnum() {
+        return Reason.fromId(reason);
+    }
+
+    public enum Reason {
+        INVALID_HEADER_ID(0),
+        BAD_INTEGRITY(1),
+        INVALID_BLOCK(2),
+        SPARE_DEACTIVATION_FAILED(3),
+        INVALID_SEQUENCE_NUMBER(4),
+        PATTERN_MISMATCH(5),
+        BAD_FIRST_BLOCK(6),
+        DISCOVERY_BAD_SEQUENCE_NUMBER_INCREMENT(7),
+        ;
+
+        private final int id;
+        Reason(int id) {
+            this.id = id;
+        }
+
+        public static Reason fromId(int id) {
+            for (Reason r : values()) {
+                if (r.id == id) {
+                    return r;
+                }
+            }
+            return null;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
+
 }

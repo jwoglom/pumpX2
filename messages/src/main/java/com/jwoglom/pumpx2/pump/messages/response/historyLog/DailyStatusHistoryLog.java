@@ -80,6 +80,7 @@ public class DailyStatusHistoryLog extends HistoryLog {
         CGM_TYPE_DEXCOM_G6(1),
         CGM_TYPE_LIBRE2(2),
         CGM_TYPE_DEXCOM_G7(3),
+        CGM_TYPE_LIBRE3(4),
 
         ;
         private final int id;
