@@ -58,7 +58,7 @@
 <span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;version&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;configABits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;configBBits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;armCrc&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 24)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;armCrc&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">045</span><span id="line-45">     * &lt;/table&gt;</span>
 <span class="source-line-no">046</span><span id="line-46">     */</span>
 <span class="source-line-no">047</span><span id="line-47">    public void parse(byte[] raw) {</span>
@@ -68,7 +68,7 @@
 <span class="source-line-no">051</span><span id="line-51">        this.version = Bytes.readUint32(raw, 10);</span>
 <span class="source-line-no">052</span><span id="line-52">        this.configABits = Bytes.readUint32(raw, 14);</span>
 <span class="source-line-no">053</span><span id="line-53">        this.configBBits = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">054</span><span id="line-54">        this.armCrc = Bytes.readShort(raw, 24);</span>
+<span class="source-line-no">054</span><span id="line-54">        this.armCrc = Bytes.readShort(raw, 22);</span>
 <span class="source-line-no">055</span><span id="line-55"></span>
 <span class="source-line-no">056</span><span id="line-56">    }</span>
 <span class="source-line-no">057</span><span id="line-57"></span>
@@ -80,8 +80,8 @@
 <span class="source-line-no">063</span><span id="line-63">            Bytes.toUint32(version),</span>
 <span class="source-line-no">064</span><span id="line-64">            Bytes.toUint32(configABits),</span>
 <span class="source-line-no">065</span><span id="line-65">            Bytes.toUint32(configBBits),</span>
-<span class="source-line-no">066</span><span id="line-66">            new byte[]{0, 0},</span>
-<span class="source-line-no">067</span><span id="line-67">            Bytes.firstTwoBytesLittleEndian(armCrc)));</span>
+<span class="source-line-no">066</span><span id="line-66">            Bytes.firstTwoBytesLittleEndian(armCrc),</span>
+<span class="source-line-no">067</span><span id="line-67">            new byte[]{0, 0}));</span>
 <span class="source-line-no">068</span><span id="line-68">    }</span>
 <span class="source-line-no">069</span><span id="line-69"></span>
 <span class="source-line-no">070</span><span id="line-70">    public long getVersion() {</span>

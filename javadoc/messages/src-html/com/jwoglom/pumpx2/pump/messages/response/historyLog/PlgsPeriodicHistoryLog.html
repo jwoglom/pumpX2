@@ -20,39 +20,269 @@
 <span class="source-line-no">003</span><span id="line-3">import org.apache.commons.lang3.Validate;</span>
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
-<span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 140,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "PLGS Periodic",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_PLGS_PERIODIC"</span>
-<span class="source-line-no">011</span><span id="line-11">)</span>
-<span class="source-line-no">012</span><span id="line-12">public class PlgsPeriodicHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">    public PlgsPeriodicHistoryLog() {}</span>
-<span class="source-line-no">015</span><span id="line-15">    public PlgsPeriodicHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">016</span><span id="line-16">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">017</span><span id="line-17">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">006</span><span id="line-6">import java.util.Set;</span>
+<span class="source-line-no">007</span><span id="line-7">import java.util.TreeSet;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">/**</span>
+<span class="source-line-no">010</span><span id="line-10"> * Basal-IQ (predictive low glucose suspend) periodic record.</span>
+<span class="source-line-no">011</span><span id="line-11"> */</span>
+<span class="source-line-no">012</span><span id="line-12">@HistoryLogProps(</span>
+<span class="source-line-no">013</span><span id="line-13">    opCode = 140,</span>
+<span class="source-line-no">014</span><span id="line-14">    displayName = "PLGS Periodic",</span>
+<span class="source-line-no">015</span><span id="line-15">    internalName = "LID_PLGS_PERIODIC"</span>
+<span class="source-line-no">016</span><span id="line-16">)</span>
+<span class="source-line-no">017</span><span id="line-17">public class PlgsPeriodicHistoryLog extends HistoryLog {</span>
 <span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19">    }</span>
-<span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">    public int typeId() {</span>
-<span class="source-line-no">022</span><span id="line-22">        return 140;</span>
-<span class="source-line-no">023</span><span id="line-23">    }</span>
-<span class="source-line-no">024</span><span id="line-24"></span>
-<span class="source-line-no">025</span><span id="line-25">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">026</span><span id="line-26">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">027</span><span id="line-27">        this.cargo = raw;</span>
-<span class="source-line-no">028</span><span id="line-28">        parseBase(raw);</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">033</span><span id="line-33">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">034</span><span id="line-34">            HistoryLog.typeIdBytes(140, 0),</span>
-<span class="source-line-no">035</span><span id="line-35">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">036</span><span id="line-36">            Bytes.toUint32(sequenceNum)));</span>
+<span class="source-line-no">019</span><span id="line-19">    private long timestamp;</span>
+<span class="source-line-no">020</span><span id="line-20">    private int fmr;</span>
+<span class="source-line-no">021</span><span id="line-21">    private int pgv;</span>
+<span class="source-line-no">022</span><span id="line-22">    private int fmrStatus;</span>
+<span class="source-line-no">023</span><span id="line-23">    private boolean pgvValid;</span>
+<span class="source-line-no">024</span><span id="line-24">    private int ruleState;</span>
+<span class="source-line-no">025</span><span id="line-25">    private int hoMinState;</span>
+<span class="source-line-no">026</span><span id="line-26">    private long status;</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">    public PlgsPeriodicHistoryLog() {}</span>
+<span class="source-line-no">029</span><span id="line-29">    public PlgsPeriodicHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">030</span><span id="line-30">        this(pumpTimeSec, sequenceNum, 0, 0, 0, 0, false, 0, 0, 0);</span>
+<span class="source-line-no">031</span><span id="line-31">    }</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    public PlgsPeriodicHistoryLog(long pumpTimeSec, long sequenceNum, long timestamp, int fmr, int pgv, int fmrStatus, boolean pgvValid, int ruleState, int hoMinState, long status) {</span>
+<span class="source-line-no">034</span><span id="line-34">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">035</span><span id="line-35">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, timestamp, fmr, pgv, fmrStatus, pgvValid, ruleState, hoMinState, status);</span>
+<span class="source-line-no">036</span><span id="line-36">        parse(cargo);</span>
 <span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38">}</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    public PlgsPeriodicHistoryLog(long timestamp, int fmr, int pgv, int fmrStatus, boolean pgvValid, int ruleState, int hoMinState, long status) {</span>
+<span class="source-line-no">040</span><span id="line-40">        this(0, 0, timestamp, fmr, pgv, fmrStatus, pgvValid, ruleState, hoMinState, status);</span>
+<span class="source-line-no">041</span><span id="line-41">    }</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    public int typeId() {</span>
+<span class="source-line-no">044</span><span id="line-44">        return 140;</span>
+<span class="source-line-no">045</span><span id="line-45">    }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">    /**</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;caption&gt;Parsed fields for PlgsPeriodicHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;fmr&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pgv&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;fmrStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pgvValid&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;ruleState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[20] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;hoMinState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[21] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;/table&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     */</span>
+<span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">062</span><span id="line-62">        this.cargo = raw;</span>
+<span class="source-line-no">063</span><span id="line-63">        parseBase(raw);</span>
+<span class="source-line-no">064</span><span id="line-64">        this.timestamp = Bytes.readUint32(raw, 10);</span>
+<span class="source-line-no">065</span><span id="line-65">        this.fmr = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.pgv = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">067</span><span id="line-67">        this.fmrStatus = raw[18] &amp; 0xFF;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.pgvValid = raw[19] != 0;</span>
+<span class="source-line-no">069</span><span id="line-69">        this.ruleState = raw[20] &amp; 0xFF;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.hoMinState = raw[21] &amp; 0xFF;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.status = Bytes.readUint32(raw, 22);</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">075</span><span id="line-75">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, false, 0, 0, 0);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long timestamp, int fmr, int pgv, int fmrStatus, boolean pgvValid, int ruleState, int hoMinState, long status) {</span>
+<span class="source-line-no">079</span><span id="line-79">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">080</span><span id="line-80">            HistoryLog.typeIdBytes(140, 0),</span>
+<span class="source-line-no">081</span><span id="line-81">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">082</span><span id="line-82">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">083</span><span id="line-83">            Bytes.toUint32(timestamp),</span>
+<span class="source-line-no">084</span><span id="line-84">            Bytes.firstTwoBytesLittleEndian(fmr),</span>
+<span class="source-line-no">085</span><span id="line-85">            Bytes.firstTwoBytesLittleEndian(pgv),</span>
+<span class="source-line-no">086</span><span id="line-86">            new byte[]{(byte) fmrStatus},</span>
+<span class="source-line-no">087</span><span id="line-87">            new byte[]{(byte) (pgvValid ? 1 : 0)},</span>
+<span class="source-line-no">088</span><span id="line-88">            new byte[]{(byte) ruleState},</span>
+<span class="source-line-no">089</span><span id="line-89">            new byte[]{(byte) hoMinState},</span>
+<span class="source-line-no">090</span><span id="line-90">            Bytes.toUint32(status)));</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    /**</span>
+<span class="source-line-no">094</span><span id="line-94">     * @return timestamp, in seconds</span>
+<span class="source-line-no">095</span><span id="line-95">     */</span>
+<span class="source-line-no">096</span><span id="line-96">    public long getTimestamp() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return timestamp;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99">    /**</span>
+<span class="source-line-no">100</span><span id="line-100">     * @return five minute reading, in mg/dL</span>
+<span class="source-line-no">101</span><span id="line-101">     */</span>
+<span class="source-line-no">102</span><span id="line-102">    public int getFmr() {</span>
+<span class="source-line-no">103</span><span id="line-103">        return fmr;</span>
+<span class="source-line-no">104</span><span id="line-104">    }</span>
+<span class="source-line-no">105</span><span id="line-105">    /**</span>
+<span class="source-line-no">106</span><span id="line-106">     * @return predicted glucose value, in mg/dL</span>
+<span class="source-line-no">107</span><span id="line-107">     */</span>
+<span class="source-line-no">108</span><span id="line-108">    public int getPgv() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return pgv;</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111">    /**</span>
+<span class="source-line-no">112</span><span id="line-112">     * @return raw FMR status, see {@link FmrStatus}</span>
+<span class="source-line-no">113</span><span id="line-113">     */</span>
+<span class="source-line-no">114</span><span id="line-114">    public int getFmrStatus() {</span>
+<span class="source-line-no">115</span><span id="line-115">        return fmrStatus;</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117">    public FmrStatus getFmrStatusEnum() {</span>
+<span class="source-line-no">118</span><span id="line-118">        return FmrStatus.fromId(fmrStatus);</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120">    /**</span>
+<span class="source-line-no">121</span><span id="line-121">     * @return whether the predicted glucose value is valid</span>
+<span class="source-line-no">122</span><span id="line-122">     */</span>
+<span class="source-line-no">123</span><span id="line-123">    public boolean isPgvValid() {</span>
+<span class="source-line-no">124</span><span id="line-124">        return pgvValid;</span>
+<span class="source-line-no">125</span><span id="line-125">    }</span>
+<span class="source-line-no">126</span><span id="line-126">    /**</span>
+<span class="source-line-no">127</span><span id="line-127">     * @return raw rule state bitmask, see {@link RuleState}</span>
+<span class="source-line-no">128</span><span id="line-128">     */</span>
+<span class="source-line-no">129</span><span id="line-129">    public int getRuleState() {</span>
+<span class="source-line-no">130</span><span id="line-130">        return ruleState;</span>
+<span class="source-line-no">131</span><span id="line-131">    }</span>
+<span class="source-line-no">132</span><span id="line-132">    public Set&lt;RuleState&gt; getRuleStateSet() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return RuleState.fromId(ruleState);</span>
+<span class="source-line-no">134</span><span id="line-134">    }</span>
+<span class="source-line-no">135</span><span id="line-135">    /**</span>
+<span class="source-line-no">136</span><span id="line-136">     * @return raw hypo minimizer state, see {@link HoMinState}</span>
+<span class="source-line-no">137</span><span id="line-137">     */</span>
+<span class="source-line-no">138</span><span id="line-138">    public int getHoMinState() {</span>
+<span class="source-line-no">139</span><span id="line-139">        return hoMinState;</span>
+<span class="source-line-no">140</span><span id="line-140">    }</span>
+<span class="source-line-no">141</span><span id="line-141">    public HoMinState getHoMinStateEnum() {</span>
+<span class="source-line-no">142</span><span id="line-142">        return HoMinState.fromId(hoMinState);</span>
+<span class="source-line-no">143</span><span id="line-143">    }</span>
+<span class="source-line-no">144</span><span id="line-144">    /**</span>
+<span class="source-line-no">145</span><span id="line-145">     * @return raw status bitmask, see {@link Status}</span>
+<span class="source-line-no">146</span><span id="line-146">     */</span>
+<span class="source-line-no">147</span><span id="line-147">    public long getStatus() {</span>
+<span class="source-line-no">148</span><span id="line-148">        return status;</span>
+<span class="source-line-no">149</span><span id="line-149">    }</span>
+<span class="source-line-no">150</span><span id="line-150">    public Set&lt;Status&gt; getStatusSet() {</span>
+<span class="source-line-no">151</span><span id="line-151">        return Status.fromId(status);</span>
+<span class="source-line-no">152</span><span id="line-152">    }</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">    public enum FmrStatus {</span>
+<span class="source-line-no">155</span><span id="line-155">        NO_FMR(0),</span>
+<span class="source-line-no">156</span><span id="line-156">        PERIODIC_GLUCOSE_READING(1),</span>
+<span class="source-line-no">157</span><span id="line-157">        CALIBRATION_RESPONSE_GLUCOSE_READING(2),</span>
+<span class="source-line-no">158</span><span id="line-158">        SENSOR_SESSION_STOPPED(3),</span>
+<span class="source-line-no">159</span><span id="line-159">        SENSOR_SESSION_STARTED(4),</span>
+<span class="source-line-no">160</span><span id="line-160">        CALIBRATION_ENTERED(5),</span>
+<span class="source-line-no">161</span><span id="line-161">        PUMPING_EVENT(6)</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">        ;</span>
+<span class="source-line-no">164</span><span id="line-164">        private final int id;</span>
+<span class="source-line-no">165</span><span id="line-165">        FmrStatus(int id) {</span>
+<span class="source-line-no">166</span><span id="line-166">            this.id = id;</span>
+<span class="source-line-no">167</span><span id="line-167">        }</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">        public static FmrStatus fromId(int id) {</span>
+<span class="source-line-no">170</span><span id="line-170">            for (FmrStatus r : values()) {</span>
+<span class="source-line-no">171</span><span id="line-171">                if (r.id == id) {</span>
+<span class="source-line-no">172</span><span id="line-172">                    return r;</span>
+<span class="source-line-no">173</span><span id="line-173">                }</span>
+<span class="source-line-no">174</span><span id="line-174">            }</span>
+<span class="source-line-no">175</span><span id="line-175">            return null;</span>
+<span class="source-line-no">176</span><span id="line-176">        }</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">        public int getId() {</span>
+<span class="source-line-no">179</span><span id="line-179">            return id;</span>
+<span class="source-line-no">180</span><span id="line-180">        }</span>
+<span class="source-line-no">181</span><span id="line-181">    }</span>
+<span class="source-line-no">182</span><span id="line-182"></span>
+<span class="source-line-no">183</span><span id="line-183">    public enum RuleState {</span>
+<span class="source-line-no">184</span><span id="line-184">        HO_SUSPEND_RULE(1),</span>
+<span class="source-line-no">185</span><span id="line-185">        HO_RECOVERY_RULE(2),</span>
+<span class="source-line-no">186</span><span id="line-186">        HO_UNAVAILABLE_RULE(4)</span>
+<span class="source-line-no">187</span><span id="line-187"></span>
+<span class="source-line-no">188</span><span id="line-188">        ;</span>
+<span class="source-line-no">189</span><span id="line-189">        private final int id;</span>
+<span class="source-line-no">190</span><span id="line-190">        RuleState(int id) {</span>
+<span class="source-line-no">191</span><span id="line-191">            this.id = id;</span>
+<span class="source-line-no">192</span><span id="line-192">        }</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">        public static Set&lt;RuleState&gt; fromId(int mask) {</span>
+<span class="source-line-no">195</span><span id="line-195">            Set&lt;RuleState&gt; items = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">196</span><span id="line-196">            for (RuleState i : values()) {</span>
+<span class="source-line-no">197</span><span id="line-197">                if ((mask &amp; i.getId()) != 0) {</span>
+<span class="source-line-no">198</span><span id="line-198">                    items.add(i);</span>
+<span class="source-line-no">199</span><span id="line-199">                }</span>
+<span class="source-line-no">200</span><span id="line-200">            }</span>
+<span class="source-line-no">201</span><span id="line-201">            return items;</span>
+<span class="source-line-no">202</span><span id="line-202">        }</span>
+<span class="source-line-no">203</span><span id="line-203"></span>
+<span class="source-line-no">204</span><span id="line-204">        public int getId() {</span>
+<span class="source-line-no">205</span><span id="line-205">            return id;</span>
+<span class="source-line-no">206</span><span id="line-206">        }</span>
+<span class="source-line-no">207</span><span id="line-207">    }</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">    public enum HoMinState {</span>
+<span class="source-line-no">210</span><span id="line-210">        ON_AND_AVAILABLE(0),</span>
+<span class="source-line-no">211</span><span id="line-211">        ON_AND_SUSPENDED(1),</span>
+<span class="source-line-no">212</span><span id="line-212">        OFF(2),</span>
+<span class="source-line-no">213</span><span id="line-213">        ON_AND_NOT_AVAILABLE(3)</span>
+<span class="source-line-no">214</span><span id="line-214"></span>
+<span class="source-line-no">215</span><span id="line-215">        ;</span>
+<span class="source-line-no">216</span><span id="line-216">        private final int id;</span>
+<span class="source-line-no">217</span><span id="line-217">        HoMinState(int id) {</span>
+<span class="source-line-no">218</span><span id="line-218">            this.id = id;</span>
+<span class="source-line-no">219</span><span id="line-219">        }</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">        public static HoMinState fromId(int id) {</span>
+<span class="source-line-no">222</span><span id="line-222">            for (HoMinState r : values()) {</span>
+<span class="source-line-no">223</span><span id="line-223">                if (r.id == id) {</span>
+<span class="source-line-no">224</span><span id="line-224">                    return r;</span>
+<span class="source-line-no">225</span><span id="line-225">                }</span>
+<span class="source-line-no">226</span><span id="line-226">            }</span>
+<span class="source-line-no">227</span><span id="line-227">            return null;</span>
+<span class="source-line-no">228</span><span id="line-228">        }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        public int getId() {</span>
+<span class="source-line-no">231</span><span id="line-231">            return id;</span>
+<span class="source-line-no">232</span><span id="line-232">        }</span>
+<span class="source-line-no">233</span><span id="line-233">    }</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">    public enum Status {</span>
+<span class="source-line-no">236</span><span id="line-236">        SUSPEND_PREDICTED(1),</span>
+<span class="source-line-no">237</span><span id="line-237">        SUSPEND_CURRENT(2),</span>
+<span class="source-line-no">238</span><span id="line-238">        RESUME_EGV_RISE(16),</span>
+<span class="source-line-no">239</span><span id="line-239">        RESUME_NADIR_LOCK(64),</span>
+<span class="source-line-no">240</span><span id="line-240">        UNAVAILABLE_TIME_SMALL(128),</span>
+<span class="source-line-no">241</span><span id="line-241">        UNAVAILABLE_SUSPEND_OVERRIDE(256),</span>
+<span class="source-line-no">242</span><span id="line-242">        UNAVAILABLE_CGM_OFF(512),</span>
+<span class="source-line-no">243</span><span id="line-243">        UNAVAILABLE_HIGH_EGV(1024),</span>
+<span class="source-line-no">244</span><span id="line-244">        UNAVAILABLE_NOT_THERAPY(2048),</span>
+<span class="source-line-no">245</span><span id="line-245">        UNAVAILABLE_BOLUS_ACTIVE(4096),</span>
+<span class="source-line-no">246</span><span id="line-246">        UNAVAILABLE_NO_CURRENT(8192)</span>
+<span class="source-line-no">247</span><span id="line-247"></span>
+<span class="source-line-no">248</span><span id="line-248">        ;</span>
+<span class="source-line-no">249</span><span id="line-249">        private final int id;</span>
+<span class="source-line-no">250</span><span id="line-250">        Status(int id) {</span>
+<span class="source-line-no">251</span><span id="line-251">            this.id = id;</span>
+<span class="source-line-no">252</span><span id="line-252">        }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">        public static Set&lt;Status&gt; fromId(long mask) {</span>
+<span class="source-line-no">255</span><span id="line-255">            Set&lt;Status&gt; items = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">256</span><span id="line-256">            for (Status i : values()) {</span>
+<span class="source-line-no">257</span><span id="line-257">                if ((mask &amp; i.getId()) != 0) {</span>
+<span class="source-line-no">258</span><span id="line-258">                    items.add(i);</span>
+<span class="source-line-no">259</span><span id="line-259">                }</span>
+<span class="source-line-no">260</span><span id="line-260">            }</span>
+<span class="source-line-no">261</span><span id="line-261">            return items;</span>
+<span class="source-line-no">262</span><span id="line-262">        }</span>
+<span class="source-line-no">263</span><span id="line-263"></span>
+<span class="source-line-no">264</span><span id="line-264">        public int getId() {</span>
+<span class="source-line-no">265</span><span id="line-265">            return id;</span>
+<span class="source-line-no">266</span><span id="line-266">        }</span>
+<span class="source-line-no">267</span><span id="line-267">    }</span>
+<span class="source-line-no">268</span><span id="line-268">}</span>
 
 
 

@@ -193,12 +193,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for UpdateStatusHistoryLog:
- <code>metadataAndVersionStatus</code><code>Bytes.readShort(raw, 10)</code>
- <code>swUpdateStatus</code><code>Bytes.readShort(raw, 12)</code>
- <code>fileDlAndSideloadStatus</code><code>Bytes.readShort(raw, 14)</code>
- <code>fullDlAndCrcStatus</code><code>Bytes.readShort(raw, 16)</code>
- <code>updateSuccessful</code><code>raw[19]</code>
- <code>externalFlashStatus</code><code>Bytes.readShort(raw, 20)</code>
+ <code>swUpdateStatus</code><code>Bytes.readShort(raw, 10)</code>
+ <code>metadataAndVersionStatus</code><code>Bytes.readShort(raw, 12)</code>
+ <code>fullDlAndCrcStatus</code><code>Bytes.readShort(raw, 14)</code>
+ <code>fileDlAndSideloadStatus</code><code>Bytes.readShort(raw, 16)</code>
+ <code>externalFlashStatus</code><code>Bytes.readShort(raw, 18)</code>
+ <code>updateSuccessful</code><code>raw[20] &amp; 0xFF</code>
  <code>swPartNum</code><code>Bytes.readUint32(raw, 22)</code>
  </div>
 </div>
@@ -281,12 +281,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-56">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for UpdateStatusHistoryLog:</caption>
- <tr><td><code>metadataAndVersionStatus</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
- <tr><td><code>swUpdateStatus</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
- <tr><td><code>fileDlAndSideloadStatus</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
- <tr><td><code>fullDlAndCrcStatus</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
- <tr><td><code>updateSuccessful</code></td><td><code>raw[19]</code></td></tr>
- <tr><td><code>externalFlashStatus</code></td><td><code>Bytes.readShort(raw, 20)</code></td></tr>
+ <tr><td><code>swUpdateStatus</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
+ <tr><td><code>metadataAndVersionStatus</code></td><td><code>Bytes.readShort(raw, 12)</code></td></tr>
+ <tr><td><code>fullDlAndCrcStatus</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>fileDlAndSideloadStatus</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>externalFlashStatus</code></td><td><code>Bytes.readShort(raw, 18)</code></td></tr>
+ <tr><td><code>updateSuccessful</code></td><td><code>raw[20] &amp; 0xFF</code></td></tr>
  <tr><td><code>swPartNum</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
  </table></div>
 <dl class="notes">

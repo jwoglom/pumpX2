@@ -48,7 +48,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -82,11 +82,36 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-7">PlgsPeriodicHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-12">PlgsPeriodicHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
+<div class="block">Basal-IQ (predictive low glucose suspend) periodic record.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PlgsPeriodicHistoryLog.FmrStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.FmrStatus</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="PlgsPeriodicHistoryLog.HoMinState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.HoMinState</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PlgsPeriodicHistoryLog.RuleState.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.RuleState</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="PlgsPeriodicHistoryLog.Status.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.Status</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -106,8 +131,28 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">PlgsPeriodicHistoryLog</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long)" class="member-name-link">PlgsPeriodicHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,int,int,int,boolean,int,int,long)" class="member-name-link">PlgsPeriodicHistoryLog</a><wbr>(long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long)" class="member-name-link">PlgsPeriodicHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(long,long,long,int,int,int,boolean,int,int,long)" class="member-name-link">PlgsPeriodicHistoryLog</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -127,12 +172,72 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildCargo(long,long,long,int,int,int,boolean,int,int,long)" class="member-name-link">buildCargo</a><wbr>(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFmr()" class="member-name-link">getFmr</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFmrStatus()" class="member-name-link">getFmrStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlgsPeriodicHistoryLog.FmrStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.FmrStatus</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFmrStatusEnum()" class="member-name-link">getFmrStatusEnum</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHoMinState()" class="member-name-link">getHoMinState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlgsPeriodicHistoryLog.HoMinState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.HoMinState</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHoMinStateEnum()" class="member-name-link">getHoMinStateEnum</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPgv()" class="member-name-link">getPgv</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRuleState()" class="member-name-link">getRuleState</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlgsPeriodicHistoryLog.RuleState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.RuleState</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRuleStateSet()" class="member-name-link">getRuleStateSet</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatus()" class="member-name-link">getStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlgsPeriodicHistoryLog.Status.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.Status</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStatusSet()" class="member-name-link">getStatusSet</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimestamp()" class="member-name-link">getTimestamp</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPgvValid()" class="member-name-link">isPgvValid</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">
+ Parsed fields for PlgsPeriodicHistoryLog:
+ <code>timestamp</code><code>Bytes.readUint32(raw, 10)</code>
+ <code>fmr</code><code>Bytes.readShort(raw, 14)</code>
+ <code>pgv</code><code>Bytes.readShort(raw, 16)</code>
+ <code>fmrStatus</code><code>raw[18] &amp; 0xFF</code>
+ <code>pgvValid</code><code>raw[19] != 0</code>
+ <code>ruleState</code><code>raw[20] &amp; 0xFF</code>
+ <code>hoMinState</code><code>raw[21] &amp; 0xFF</code>
+ <code>status</code><code>Bytes.readUint32(raw, 22)</code>
+ </div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -156,14 +261,42 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PlgsPeriodicHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-14">PlgsPeriodicHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-28">PlgsPeriodicHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long)">
 <h3>PlgsPeriodicHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-15">PlgsPeriodicHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-29">PlgsPeriodicHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,long,long,int,int,int,boolean,int,int,long)">
+<h3>PlgsPeriodicHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-33">PlgsPeriodicHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(long,int,int,int,boolean,int,int,long)">
+<h3>PlgsPeriodicHistoryLog</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-39">PlgsPeriodicHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</span></div>
 </section>
 </li>
 </ul>
@@ -177,7 +310,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-21">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-43">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -187,7 +320,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-25">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-60">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="block"><table border="1">
+ <caption>Parsed fields for PlgsPeriodicHistoryLog:</caption>
+ <tr><td><code>timestamp</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
+ <tr><td><code>fmr</code></td><td><code>Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>pgv</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>fmrStatus</code></td><td><code>raw[18] &amp; 0xFF</code></td></tr>
+ <tr><td><code>pgvValid</code></td><td><code>raw[19] != 0</code></td></tr>
+ <tr><td><code>ruleState</code></td><td><code>raw[20] &amp; 0xFF</code></td></tr>
+ <tr><td><code>hoMinState</code></td><td><code>raw[21] &amp; 0xFF</code></td></tr>
+ <tr><td><code>status</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
+ </table></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -197,8 +341,127 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-32">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="buildCargo(long,long,long,int,int,int,boolean,int,int,long)">
+<h3>buildCargo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-78">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+ long&nbsp;sequenceNum,
+ long&nbsp;timestamp,
+ int&nbsp;fmr,
+ int&nbsp;pgv,
+ int&nbsp;fmrStatus,
+ boolean&nbsp;pgvValid,
+ int&nbsp;ruleState,
+ int&nbsp;hoMinState,
+ long&nbsp;status)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTimestamp()">
+<h3>getTimestamp</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-96">getTimestamp</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>timestamp, in seconds</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFmr()">
+<h3>getFmr</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-102">getFmr</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>five minute reading, in mg/dL</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPgv()">
+<h3>getPgv</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-108">getPgv</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>predicted glucose value, in mg/dL</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFmrStatus()">
+<h3>getFmrStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-114">getFmrStatus</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>raw FMR status, see <a href="PlgsPeriodicHistoryLog.FmrStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>PlgsPeriodicHistoryLog.FmrStatus</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFmrStatusEnum()">
+<h3>getFmrStatusEnum</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlgsPeriodicHistoryLog.FmrStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.FmrStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-117">getFmrStatusEnum</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPgvValid()">
+<h3>isPgvValid</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-123">isPgvValid</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>whether the predicted glucose value is valid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRuleState()">
+<h3>getRuleState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-129">getRuleState</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>raw rule state bitmask, see <a href="PlgsPeriodicHistoryLog.RuleState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>PlgsPeriodicHistoryLog.RuleState</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRuleStateSet()">
+<h3>getRuleStateSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlgsPeriodicHistoryLog.RuleState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.RuleState</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-132">getRuleStateSet</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getHoMinState()">
+<h3>getHoMinState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-138">getHoMinState</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>raw hypo minimizer state, see <a href="PlgsPeriodicHistoryLog.HoMinState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>PlgsPeriodicHistoryLog.HoMinState</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getHoMinStateEnum()">
+<h3>getHoMinStateEnum</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlgsPeriodicHistoryLog.HoMinState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.HoMinState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-141">getHoMinStateEnum</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatus()">
+<h3>getStatus</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-147">getStatus</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>raw status bitmask, see <a href="PlgsPeriodicHistoryLog.Status.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>PlgsPeriodicHistoryLog.Status</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getStatusSet()">
+<h3>getStatusSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlgsPeriodicHistoryLog.Status.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">PlgsPeriodicHistoryLog.Status</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PlgsPeriodicHistoryLog.html#line-150">getStatusSet</a></span>()</div>
 </section>
 </li>
 </ul>

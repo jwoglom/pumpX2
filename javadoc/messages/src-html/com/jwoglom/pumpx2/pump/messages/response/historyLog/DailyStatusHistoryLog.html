@@ -31,141 +31,206 @@
 <span class="source-line-no">014</span><span id="line-14">    private int sensorType;</span>
 <span class="source-line-no">015</span><span id="line-15">    private int userMode;</span>
 <span class="source-line-no">016</span><span id="line-16">    private int pumpControlState;</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">    public DailyStatusHistoryLog() {}</span>
-<span class="source-line-no">019</span><span id="line-19">    public DailyStatusHistoryLog(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {</span>
-<span class="source-line-no">020</span><span id="line-20">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">021</span><span id="line-21">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState);</span>
-<span class="source-line-no">022</span><span id="line-22">        this.sensorType = sensorType;</span>
-<span class="source-line-no">023</span><span id="line-23">        this.userMode = userMode;</span>
-<span class="source-line-no">024</span><span id="line-24">        this.pumpControlState = pumpControlState;</span>
+<span class="source-line-no">017</span><span id="line-17">    private int weightUnit;</span>
+<span class="source-line-no">018</span><span id="line-18">    private int weight;</span>
+<span class="source-line-no">019</span><span id="line-19">    private int currentTdiPop;</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">    public DailyStatusHistoryLog() {}</span>
+<span class="source-line-no">022</span><span id="line-22">    public DailyStatusHistoryLog(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {</span>
+<span class="source-line-no">023</span><span id="line-23">        this(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, 0, 0, 0);</span>
+<span class="source-line-no">024</span><span id="line-24">    }</span>
 <span class="source-line-no">025</span><span id="line-25"></span>
-<span class="source-line-no">026</span><span id="line-26">    }</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    public DailyStatusHistoryLog(int sensorType, int userMode, int pumpControlState) {</span>
-<span class="source-line-no">029</span><span id="line-29">        this(0, 0, sensorType, userMode, pumpControlState);</span>
+<span class="source-line-no">026</span><span id="line-26">    public DailyStatusHistoryLog(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState, int weightUnit, int weight, int currentTdiPop) {</span>
+<span class="source-line-no">027</span><span id="line-27">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">028</span><span id="line-28">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, weightUnit, weight, currentTdiPop);</span>
+<span class="source-line-no">029</span><span id="line-29">        parse(cargo);</span>
 <span class="source-line-no">030</span><span id="line-30">    }</span>
 <span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public int typeId() {</span>
-<span class="source-line-no">033</span><span id="line-33">        return 313;</span>
+<span class="source-line-no">032</span><span id="line-32">    public DailyStatusHistoryLog(int sensorType, int userMode, int pumpControlState) {</span>
+<span class="source-line-no">033</span><span id="line-33">        this(0, 0, sensorType, userMode, pumpControlState);</span>
 <span class="source-line-no">034</span><span id="line-34">    }</span>
 <span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    /**</span>
-<span class="source-line-no">037</span><span id="line-37">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">038</span><span id="line-38">     * &lt;caption&gt;Parsed fields for DailyStatusHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">039</span><span id="line-39">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sensorType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">040</span><span id="line-40">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;userMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">041</span><span id="line-41">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpControlState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42">     * &lt;/table&gt;</span>
-<span class="source-line-no">043</span><span id="line-43">     */</span>
-<span class="source-line-no">044</span><span id="line-44">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">045</span><span id="line-45">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">046</span><span id="line-46">        this.cargo = raw;</span>
-<span class="source-line-no">047</span><span id="line-47">        parseBase(raw);</span>
-<span class="source-line-no">048</span><span id="line-48">        this.sensorType = raw[11];</span>
-<span class="source-line-no">049</span><span id="line-49">        this.userMode = raw[12];</span>
-<span class="source-line-no">050</span><span id="line-50">        this.pumpControlState = raw[13];</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    }</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {</span>
-<span class="source-line-no">055</span><span id="line-55">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">056</span><span id="line-56">            HistoryLog.typeIdBytes(313, 0),</span>
-<span class="source-line-no">057</span><span id="line-57">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">058</span><span id="line-58">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">059</span><span id="line-59">            new byte[]{0, (byte) sensorType, (byte) userMode, (byte) pumpControlState}));</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    public int getSensorType() {</span>
-<span class="source-line-no">063</span><span id="line-63">        return sensorType;</span>
+<span class="source-line-no">036</span><span id="line-36">    public int typeId() {</span>
+<span class="source-line-no">037</span><span id="line-37">        return 313;</span>
+<span class="source-line-no">038</span><span id="line-38">    }</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40">    /**</span>
+<span class="source-line-no">041</span><span id="line-41">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">042</span><span id="line-42">     * &lt;caption&gt;Parsed fields for DailyStatusHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpControlState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;userMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sensorType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">046</span><span id="line-46">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weightUnit&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">047</span><span id="line-47">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;weight&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">048</span><span id="line-48">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentTdiPop&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[16] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;/table&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     */</span>
+<span class="source-line-no">051</span><span id="line-51">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">052</span><span id="line-52">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">053</span><span id="line-53">        this.cargo = raw;</span>
+<span class="source-line-no">054</span><span id="line-54">        parseBase(raw);</span>
+<span class="source-line-no">055</span><span id="line-55">        // Layout per the Tandem Source event schema: PumpControlState @10, usermode @11, SensorType @12,</span>
+<span class="source-line-no">056</span><span id="line-56">        // WeightUnit @13, Weight u16 @14, currentTDIpop @16.</span>
+<span class="source-line-no">057</span><span id="line-57">        this.pumpControlState = raw[10] &amp; 0xFF;</span>
+<span class="source-line-no">058</span><span id="line-58">        this.userMode = raw[11] &amp; 0xFF;</span>
+<span class="source-line-no">059</span><span id="line-59">        this.sensorType = raw[12] &amp; 0xFF;</span>
+<span class="source-line-no">060</span><span id="line-60">        this.weightUnit = raw[13] &amp; 0xFF;</span>
+<span class="source-line-no">061</span><span id="line-61">        this.weight = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">062</span><span id="line-62">        this.currentTdiPop = raw[16] &amp; 0xFF;</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
 <span class="source-line-no">064</span><span id="line-64">    }</span>
 <span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    public int getUserMode() {</span>
-<span class="source-line-no">067</span><span id="line-67">        return userMode;</span>
+<span class="source-line-no">066</span><span id="line-66">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState) {</span>
+<span class="source-line-no">067</span><span id="line-67">        return buildCargo(pumpTimeSec, sequenceNum, sensorType, userMode, pumpControlState, 0, 0, 0);</span>
 <span class="source-line-no">068</span><span id="line-68">    }</span>
 <span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">    public int getPumpControlState() {</span>
-<span class="source-line-no">071</span><span id="line-71">        return pumpControlState;</span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    public SensorType getSensorTypeEnum() {</span>
-<span class="source-line-no">075</span><span id="line-75">        return SensorType.fromId(sensorType);</span>
-<span class="source-line-no">076</span><span id="line-76">    }</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    public UserMode getUserModeEnum() {</span>
-<span class="source-line-no">079</span><span id="line-79">        return UserMode.fromId(userMode);</span>
-<span class="source-line-no">080</span><span id="line-80">    }</span>
-<span class="source-line-no">081</span><span id="line-81"></span>
-<span class="source-line-no">082</span><span id="line-82">    public PumpControlState getPumpControlStateEnum() {</span>
-<span class="source-line-no">083</span><span id="line-83">        return PumpControlState.fromId(pumpControlState);</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    public enum SensorType {</span>
-<span class="source-line-no">087</span><span id="line-87">        CGM_TYPE_NONE(0),</span>
-<span class="source-line-no">088</span><span id="line-88">        CGM_TYPE_DEXCOM_G6(1),</span>
-<span class="source-line-no">089</span><span id="line-89">        CGM_TYPE_LIBRE2(2),</span>
-<span class="source-line-no">090</span><span id="line-90">        CGM_TYPE_DEXCOM_G7(3),</span>
+<span class="source-line-no">070</span><span id="line-70">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int sensorType, int userMode, int pumpControlState, int weightUnit, int weight, int currentTdiPop) {</span>
+<span class="source-line-no">071</span><span id="line-71">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">072</span><span id="line-72">            HistoryLog.typeIdBytes(313, 0),</span>
+<span class="source-line-no">073</span><span id="line-73">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">074</span><span id="line-74">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">075</span><span id="line-75">            new byte[]{(byte) pumpControlState, (byte) userMode, (byte) sensorType, (byte) weightUnit},</span>
+<span class="source-line-no">076</span><span id="line-76">            Bytes.firstTwoBytesLittleEndian(weight),</span>
+<span class="source-line-no">077</span><span id="line-77">            new byte[]{(byte) currentTdiPop}));</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    public int getSensorType() {</span>
+<span class="source-line-no">081</span><span id="line-81">        return sensorType;</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    public int getUserMode() {</span>
+<span class="source-line-no">085</span><span id="line-85">        return userMode;</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    public int getPumpControlState() {</span>
+<span class="source-line-no">089</span><span id="line-89">        return pumpControlState;</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
 <span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">        ;</span>
-<span class="source-line-no">093</span><span id="line-93">        private final int id;</span>
-<span class="source-line-no">094</span><span id="line-94">        SensorType(int id) {</span>
-<span class="source-line-no">095</span><span id="line-95">            this.id = id;</span>
-<span class="source-line-no">096</span><span id="line-96">        }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">        static SensorType fromId(int id) {</span>
-<span class="source-line-no">099</span><span id="line-99">            for (SensorType t : values()) {</span>
-<span class="source-line-no">100</span><span id="line-100">                if (t.id == id) {</span>
-<span class="source-line-no">101</span><span id="line-101">                    return t;</span>
-<span class="source-line-no">102</span><span id="line-102">                }</span>
-<span class="source-line-no">103</span><span id="line-103">            }</span>
-<span class="source-line-no">104</span><span id="line-104">            return null;</span>
-<span class="source-line-no">105</span><span id="line-105">        }</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">    public enum UserMode {</span>
-<span class="source-line-no">109</span><span id="line-109">        NORMAL(0),</span>
-<span class="source-line-no">110</span><span id="line-110">        SLEEPING(1),</span>
-<span class="source-line-no">111</span><span id="line-111">        EXERCISING(2),</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">        ;</span>
-<span class="source-line-no">114</span><span id="line-114">        private final int id;</span>
-<span class="source-line-no">115</span><span id="line-115">        UserMode(int id) {</span>
-<span class="source-line-no">116</span><span id="line-116">            this.id = id;</span>
-<span class="source-line-no">117</span><span id="line-117">        }</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">        static UserMode fromId(int id) {</span>
-<span class="source-line-no">120</span><span id="line-120">            for (UserMode m : values()) {</span>
-<span class="source-line-no">121</span><span id="line-121">                if (m.id == id) {</span>
-<span class="source-line-no">122</span><span id="line-122">                    return m;</span>
-<span class="source-line-no">123</span><span id="line-123">                }</span>
-<span class="source-line-no">124</span><span id="line-124">            }</span>
-<span class="source-line-no">125</span><span id="line-125">            return null;</span>
-<span class="source-line-no">126</span><span id="line-126">        }</span>
+<span class="source-line-no">092</span><span id="line-92">    /**</span>
+<span class="source-line-no">093</span><span id="line-93">     * @return raw weight unit, see {@link WeightUnit}</span>
+<span class="source-line-no">094</span><span id="line-94">     */</span>
+<span class="source-line-no">095</span><span id="line-95">    public int getWeightUnit() {</span>
+<span class="source-line-no">096</span><span id="line-96">        return weightUnit;</span>
+<span class="source-line-no">097</span><span id="line-97">    }</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">    public WeightUnit getWeightUnitEnum() {</span>
+<span class="source-line-no">100</span><span id="line-100">        return WeightUnit.fromId(weightUnit);</span>
+<span class="source-line-no">101</span><span id="line-101">    }</span>
+<span class="source-line-no">102</span><span id="line-102"></span>
+<span class="source-line-no">103</span><span id="line-103">    /**</span>
+<span class="source-line-no">104</span><span id="line-104">     * @return the configured weight, in the unit given by {@link #getWeightUnit()}</span>
+<span class="source-line-no">105</span><span id="line-105">     */</span>
+<span class="source-line-no">106</span><span id="line-106">    public int getWeight() {</span>
+<span class="source-line-no">107</span><span id="line-107">        return weight;</span>
+<span class="source-line-no">108</span><span id="line-108">    }</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">    /**</span>
+<span class="source-line-no">111</span><span id="line-111">     * @return the current total daily insulin (population) estimate, in units</span>
+<span class="source-line-no">112</span><span id="line-112">     */</span>
+<span class="source-line-no">113</span><span id="line-113">    public int getCurrentTdiPop() {</span>
+<span class="source-line-no">114</span><span id="line-114">        return currentTdiPop;</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">    public SensorType getSensorTypeEnum() {</span>
+<span class="source-line-no">118</span><span id="line-118">        return SensorType.fromId(sensorType);</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    public UserMode getUserModeEnum() {</span>
+<span class="source-line-no">122</span><span id="line-122">        return UserMode.fromId(userMode);</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    public PumpControlState getPumpControlStateEnum() {</span>
+<span class="source-line-no">126</span><span id="line-126">        return PumpControlState.fromId(pumpControlState);</span>
 <span class="source-line-no">127</span><span id="line-127">    }</span>
 <span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    public enum PumpControlState {</span>
-<span class="source-line-no">130</span><span id="line-130">        PCM_NO_CONTROL(0),  // No cartridge installed</span>
-<span class="source-line-no">131</span><span id="line-131">        PCM_OPEN_LOOP(1),</span>
-<span class="source-line-no">132</span><span id="line-132">        PCM_PINING(2),</span>
-<span class="source-line-no">133</span><span id="line-133">        PCM_CLOSED_LOOP(3),</span>
+<span class="source-line-no">129</span><span id="line-129">    public enum SensorType {</span>
+<span class="source-line-no">130</span><span id="line-130">        CGM_TYPE_NONE(0),</span>
+<span class="source-line-no">131</span><span id="line-131">        CGM_TYPE_DEXCOM_G6(1),</span>
+<span class="source-line-no">132</span><span id="line-132">        CGM_TYPE_LIBRE2(2),</span>
+<span class="source-line-no">133</span><span id="line-133">        CGM_TYPE_DEXCOM_G7(3),</span>
 <span class="source-line-no">134</span><span id="line-134"></span>
 <span class="source-line-no">135</span><span id="line-135">        ;</span>
 <span class="source-line-no">136</span><span id="line-136">        private final int id;</span>
-<span class="source-line-no">137</span><span id="line-137">        PumpControlState(int id) {</span>
+<span class="source-line-no">137</span><span id="line-137">        SensorType(int id) {</span>
 <span class="source-line-no">138</span><span id="line-138">            this.id = id;</span>
 <span class="source-line-no">139</span><span id="line-139">        }</span>
 <span class="source-line-no">140</span><span id="line-140"></span>
-<span class="source-line-no">141</span><span id="line-141">        static PumpControlState fromId(int id) {</span>
-<span class="source-line-no">142</span><span id="line-142">            for (PumpControlState s : values()) {</span>
-<span class="source-line-no">143</span><span id="line-143">                if (s.id == id) {</span>
-<span class="source-line-no">144</span><span id="line-144">                    return s;</span>
+<span class="source-line-no">141</span><span id="line-141">        static SensorType fromId(int id) {</span>
+<span class="source-line-no">142</span><span id="line-142">            for (SensorType t : values()) {</span>
+<span class="source-line-no">143</span><span id="line-143">                if (t.id == id) {</span>
+<span class="source-line-no">144</span><span id="line-144">                    return t;</span>
 <span class="source-line-no">145</span><span id="line-145">                }</span>
 <span class="source-line-no">146</span><span id="line-146">            }</span>
 <span class="source-line-no">147</span><span id="line-147">            return null;</span>
 <span class="source-line-no">148</span><span id="line-148">        }</span>
 <span class="source-line-no">149</span><span id="line-149">    }</span>
 <span class="source-line-no">150</span><span id="line-150"></span>
-<span class="source-line-no">151</span><span id="line-151">}</span>
+<span class="source-line-no">151</span><span id="line-151">    public enum UserMode {</span>
+<span class="source-line-no">152</span><span id="line-152">        NORMAL(0),</span>
+<span class="source-line-no">153</span><span id="line-153">        SLEEPING(1),</span>
+<span class="source-line-no">154</span><span id="line-154">        EXERCISING(2),</span>
+<span class="source-line-no">155</span><span id="line-155"></span>
+<span class="source-line-no">156</span><span id="line-156">        ;</span>
+<span class="source-line-no">157</span><span id="line-157">        private final int id;</span>
+<span class="source-line-no">158</span><span id="line-158">        UserMode(int id) {</span>
+<span class="source-line-no">159</span><span id="line-159">            this.id = id;</span>
+<span class="source-line-no">160</span><span id="line-160">        }</span>
+<span class="source-line-no">161</span><span id="line-161"></span>
+<span class="source-line-no">162</span><span id="line-162">        static UserMode fromId(int id) {</span>
+<span class="source-line-no">163</span><span id="line-163">            for (UserMode m : values()) {</span>
+<span class="source-line-no">164</span><span id="line-164">                if (m.id == id) {</span>
+<span class="source-line-no">165</span><span id="line-165">                    return m;</span>
+<span class="source-line-no">166</span><span id="line-166">                }</span>
+<span class="source-line-no">167</span><span id="line-167">            }</span>
+<span class="source-line-no">168</span><span id="line-168">            return null;</span>
+<span class="source-line-no">169</span><span id="line-169">        }</span>
+<span class="source-line-no">170</span><span id="line-170">    }</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172">    public enum WeightUnit {</span>
+<span class="source-line-no">173</span><span id="line-173">        NOT_SET(0),</span>
+<span class="source-line-no">174</span><span id="line-174">        POUNDS(1),</span>
+<span class="source-line-no">175</span><span id="line-175">        KILOGRAMS(2),</span>
+<span class="source-line-no">176</span><span id="line-176">        ;</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">        private final int id;</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">        WeightUnit(int id) {</span>
+<span class="source-line-no">181</span><span id="line-181">            this.id = id;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183"></span>
+<span class="source-line-no">184</span><span id="line-184">        static WeightUnit fromId(int id) {</span>
+<span class="source-line-no">185</span><span id="line-185">            for (WeightUnit u : values()) {</span>
+<span class="source-line-no">186</span><span id="line-186">                if (u.id == id) {</span>
+<span class="source-line-no">187</span><span id="line-187">                    return u;</span>
+<span class="source-line-no">188</span><span id="line-188">                }</span>
+<span class="source-line-no">189</span><span id="line-189">            }</span>
+<span class="source-line-no">190</span><span id="line-190">            return null;</span>
+<span class="source-line-no">191</span><span id="line-191">        }</span>
+<span class="source-line-no">192</span><span id="line-192">    }</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">    public enum PumpControlState {</span>
+<span class="source-line-no">195</span><span id="line-195">        PCM_NO_CONTROL(0),  // No cartridge installed</span>
+<span class="source-line-no">196</span><span id="line-196">        PCM_OPEN_LOOP(1),</span>
+<span class="source-line-no">197</span><span id="line-197">        PCM_PINING(2),</span>
+<span class="source-line-no">198</span><span id="line-198">        PCM_CLOSED_LOOP(3),</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">        ;</span>
+<span class="source-line-no">201</span><span id="line-201">        private final int id;</span>
+<span class="source-line-no">202</span><span id="line-202">        PumpControlState(int id) {</span>
+<span class="source-line-no">203</span><span id="line-203">            this.id = id;</span>
+<span class="source-line-no">204</span><span id="line-204">        }</span>
+<span class="source-line-no">205</span><span id="line-205"></span>
+<span class="source-line-no">206</span><span id="line-206">        static PumpControlState fromId(int id) {</span>
+<span class="source-line-no">207</span><span id="line-207">            for (PumpControlState s : values()) {</span>
+<span class="source-line-no">208</span><span id="line-208">                if (s.id == id) {</span>
+<span class="source-line-no">209</span><span id="line-209">                    return s;</span>
+<span class="source-line-no">210</span><span id="line-210">                }</span>
+<span class="source-line-no">211</span><span id="line-211">            }</span>
+<span class="source-line-no">212</span><span id="line-212">            return null;</span>
+<span class="source-line-no">213</span><span id="line-213">        }</span>
+<span class="source-line-no">214</span><span id="line-214">    }</span>
+<span class="source-line-no">215</span><span id="line-215"></span>
+<span class="source-line-no">216</span><span id="line-216">}</span>
 
 
 

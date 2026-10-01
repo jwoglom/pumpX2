@@ -170,9 +170,9 @@ loadScripts(document, 'script');</script>
 <div class="block">
  Parsed fields for ShelfModeHistoryLog:
  <code>msecSinceReset</code><code>Bytes.readUint32(raw, 10)</code>
- <code>lipoIbc</code><code>raw[14]</code>
- <code>lipoAbc</code><code>raw[15]</code>
- <code>lipoCurrent</code><code>Bytes.readShort(raw, 16)</code>
+ <code>lipoCurrent</code><code>(short) Bytes.readShort(raw, 14)</code>
+ <code>lipoAbc</code><code>raw[16] &amp; 0xFF</code>
+ <code>lipoIbc</code><code>raw[17] &amp; 0xFF</code>
  <code>lipoRemCap</code><code>Bytes.readUint32(raw, 18)</code>
  <code>lipoMv</code><code>Bytes.readUint32(raw, 22)</code>
  </div>
@@ -255,9 +255,9 @@ loadScripts(document, 'script');</script>
 <div class="block"><table border="1">
  <caption>Parsed fields for ShelfModeHistoryLog:</caption>
  <tr><td><code>msecSinceReset</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
- <tr><td><code>lipoIbc</code></td><td><code>raw[14]</code></td></tr>
- <tr><td><code>lipoAbc</code></td><td><code>raw[15]</code></td></tr>
- <tr><td><code>lipoCurrent</code></td><td><code>Bytes.readShort(raw, 16)</code></td></tr>
+ <tr><td><code>lipoCurrent</code></td><td><code>(short) Bytes.readShort(raw, 14)</code></td></tr>
+ <tr><td><code>lipoAbc</code></td><td><code>raw[16] &amp; 0xFF</code></td></tr>
+ <tr><td><code>lipoIbc</code></td><td><code>raw[17] &amp; 0xFF</code></td></tr>
  <tr><td><code>lipoRemCap</code></td><td><code>Bytes.readUint32(raw, 18)</code></td></tr>
  <tr><td><code>lipoMv</code></td><td><code>Bytes.readUint32(raw, 22)</code></td></tr>
  </table></div>
@@ -270,7 +270,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,int,int,int,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-66">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-67">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;msecSinceReset,
  int&nbsp;lipoIbc,
@@ -283,37 +283,49 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMsecSinceReset()">
 <h3>getMsecSinceReset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-79">getMsecSinceReset</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-80">getMsecSinceReset</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLipoIbc()">
 <h3>getLipoIbc</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-83">getLipoIbc</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-87">getLipoIbc</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>battery internal capacity, in percent</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLipoAbc()">
 <h3>getLipoAbc</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-87">getLipoAbc</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-94">getLipoAbc</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>battery available capacity, in percent</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLipoCurrent()">
 <h3>getLipoCurrent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-91">getLipoCurrent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-101">getLipoCurrent</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>signed battery current, in mA</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLipoRemCap()">
 <h3>getLipoRemCap</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-95">getLipoRemCap</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-105">getLipoRemCap</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLipoMv()">
 <h3>getLipoMv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-99">getLipoMv</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ShelfModeHistoryLog.html#line-109">getLipoMv</a></span>()</div>
 </section>
 </li>
 </ul>
