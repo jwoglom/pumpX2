@@ -43,8 +43,8 @@ public class CgmDataFsl3HistoryLogTest {
         );
 
         CgmDataFsl3HistoryLog parsedRes = (CgmDataFsl3HistoryLog) HistoryLogMessageTester.testSingle(
-                // header: 0x01E0 | pumpTime | seqNum || 02 02 | 0700 | 64 | ba | 3c00 | 185cc421 | e220 | 01 | 00
-                "e0011b5bc42148bb07000202070064ba3c00185cc421e2200100",
+                // header: 0x01E0 | pumpTime | seqNum || 02 02 | 0700 | 64 | ba | 3c00 | 185bc421 | e220 | 01 | 00
+                "e0011b5bc42148bb07000202070064ba3c00185bc421e2200100",
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
