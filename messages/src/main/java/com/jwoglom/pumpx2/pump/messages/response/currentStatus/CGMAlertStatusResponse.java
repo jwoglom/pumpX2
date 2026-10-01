@@ -74,39 +74,73 @@ public class CGMAlertStatusResponse extends NotificationMessage {
     }
 
     public enum CGMAlert implements NotificationEnum {
+        /** Tandem firmware name: Alert_CGM_DEPRECATED_3 */
         DEFAULT_CGM_ALERT_0(0),
+        /** Tandem firmware name: Alert_CGM_FIXED_LOW */
         FIXED_LOW_CGM_ALERT(1),
+        /** Tandem firmware name: Alert_CGM_USER_HIGH_EGV */
         HIGH_CGM_ALERT(2),
+        /** Tandem firmware name: Alert_CGM_USER_LOW_EGV */
         LOW_CGM_ALERT(3),
+        /** Tandem firmware name: Alert_CGM_CALIBRATION_REQUEST */
         CALIBRATION_REQUEST_CGM_ALERT(4),
+        /** Tandem firmware name: Alert_CGM_RISE */
         RISE_CGM_ALERT(5),
+        /** Tandem firmware name: Alert_CGM_RAPID_RISE */
         RAPID_RISE_CGM_ALERT(6),
+        /** Tandem firmware name: Alert_CGM_FALL */
         FALL_CGM_ALERT(7),
+        /** Tandem firmware name: Alert_CGM_RAPID_FALL */
         RAPID_FALL_CGM_ALERT(8),
+        /** Tandem firmware name: Alert_CGM_CALIB_ERROR */
         LOW_CALIBRATION_ERROR_CGM_ALERT(9),
+        /** Tandem firmware name: Alert_CGM_CALIB_HIGH_WEDGE */
         HIGH_CALIBRATION_ERROR_CGM_ALERT(10),
+        /** Tandem firmware name: Alert_CGM_SENSOR_FAILED */
         SENSOR_FAILED_CGM_ALERT(11),
+        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRING */
         SENSOR_EXPIRING_CGM_ALERT(12),
+        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRED */
         SENSOR_EXPIRED_CGM_ALERT(13),
+        /** Tandem firmware name: Alert_CGM_OUT_OF_RANGE */
         OUT_OF_RANGE_CGM_ALERT(14),
+        /** Tandem firmware name: Alert_CGM_DEPRECATED */
         DEFAULT_CGM_ALERT_15(15),
+        /** Tandem firmware name: Alert_CGM_CALIB_START_FIRST */
         FIRST_START_CALIBRATION_CGM_ALERT(16),
+        /** Tandem firmware name: Alert_CGM_CALIB_START_SECOND */
         SECOND_START_CALIBRATION_CGM_ALERT(17),
+        /** Tandem firmware name: Alert_CGM_CALIB_REQUIRED */
         CALIBRATION_REQUIRED_CGM_ALERT(18),
+        /** Tandem firmware name: Alert_CGM_LOW_TX_BATTERY */
         LOW_TRANSMITTER_CGM_ALERT(19),
+        /** Tandem firmware name: Alert_CGM_TRANSMITTER_ERROR */
         TRANSMITTER_CGM_ALERT(20),
+        /** Tandem firmware name: Alert_CGM_DEPRECATED_2 */
         DEFAULT_CGM_ALERT_21(21),
+        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRING_SOON */
         SENSOR_EXPIRING_CGM_ALERT2(22),
+        /** Tandem firmware name: Alert_CGM_DEPRECATED_4 */
         DEFAULT_CGM_ALERT_23(23),
-        DEFAULT_CGM_ALERT_24(24),
+        /** Tandem firmware name: Alert_CGM_URGENT_LOW_SOON */
+        URGENT_LOW_SOON_CGM_ALERT(24),
+        /** Tandem firmware name: Alert_CGM_SENSOR_REUSE */
         SENSOR_REUSE(25),
+        /** Tandem firmware name: Alert_CGM_SENSOR_TEMP */
         TEMPERATURE_CGM_ALERT(26),
+        /** Tandem firmware name: Alert_CGM_CONNECTION_ERROR */
         FAILED_CONNECTION_CGM_ALERT(27),
-        DEFAULT_CGM_ALERT_28(28),
-        DEFAULT_CGM_ALERT_29(29),
+        /** Tandem firmware name: Alert_CGM_CHECK_SENSOR */
+        CHECK_SENSOR_CGM_ALERT(28),
+        /** Tandem firmware name: Alert_CGM_EGV_UNUSABLE */
+        EGV_UNUSABLE_CGM_ALERT(29),
+        /** Tandem firmware name: Alert_CGM_UNUSED1 */
         DEFAULT_CGM_ALERT_30(30),
-        DEFAULT_CGM_ALERT_31(31),
-        DEFAULT_CGM_ALERT_32(32),
+        /** Tandem firmware name: Alert_CGM_GRACE_PERIOD_START */
+        GRACE_PERIOD_START_CGM_ALERT(31),
+        /** Tandem firmware name: Alert_CGM_GRACE_PERIOD_EXPIRING_SOON */
+        GRACE_PERIOD_EXPIRING_SOON_CGM_ALERT(32),
+        /** Tandem firmware name: NUM_CGM_ALERTS */
         DEFAULT_CGM_ALERT_33(33),
         DEFAULT_CGM_ALERT_34(34),
         DEFAULT_CGM_ALERT_35(35),

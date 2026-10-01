@@ -59,44 +59,83 @@ public class AlarmStatusResponse extends NotificationMessage {
     }
 
     public enum AlarmResponseType implements NotificationEnum {
+        /** Tandem firmware name: Alarm_DELIVERY_NOT_STOPPED */
         CARTRIDGE_ALARM(0, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_SPOOL_MOVE */
         CARTRIDGE_ALARM2(1, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_OCCLUSION */
         OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
+        /** Tandem firmware name: Alarm_NO_STARTUP_ACK */
         PUMP_RESET_ALARM(3, "The pump was reset. IOB has been reset to 0 and CGM may need to be re-activated."),
-        DEFAULT_ALARM_4(4),
+        /** Tandem firmware name: Alarm_OBE */
+        OBE_ALARM(4),
+        /** Tandem firmware name: Alarm_P2 */
         CARTRIDGE_ALARM3(5, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_VENT_NOT_WORKING */
         CARTRIDGE_ALARM4(6, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_AUTO_OFF_TRIGGERED */
         AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),
+        /** Tandem firmware name: Alarm_LIQ_OUT */
         EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),
+        /** Tandem firmware name: Alarm_LIQ_EX */
         CARTRIDGE_ALARM5(9, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_TEMPERATURE_OOR */
         TEMPERATURE_ALARM(10, "Pump temperature is out of range and insulin cannot be safely delivered."),
+        /** Tandem firmware name: Alarm_TEMPERATURE_XDCR */
         TEMPERATURE_ALARM2(11, "Pump temperature is out of range and insulin cannot be safely delivered."),
+        /** Tandem firmware name: Alarm_LIPO_VERY_LOW */
         BATTERY_SHUTDOWN_ALARM(12, "Pump battery level is critically low and the device will shut down. Please charge pump immediately."),
+        /** Tandem firmware name: Alarm_FLUID_CHANGE_obsolete */
         DEFAULT_ALARM_13(13),
+        /** Tandem firmware name: Alarm_USER_DATE_INVALID */
         INVALID_DATE_ALARM(14, "The pump's configured date is invalid."),
+        /** Tandem firmware name: Alarm_LIPO_TEMPERATURE */
         TEMPERATURE_ALARM3(15, "Pump temperature is out of range and insulin cannot be safely delivered."),
+        /** Tandem firmware name: Alarm_DELIVERY_REQUEST_FAIL */
         CARTRIDGE_ALARM6(16, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_CANT_HOME_obsolete */
         DEFAULT_ALARM_17(17),
+        /** Tandem firmware name: Alarm_STATE_SUSPEND */
         RESUME_PUMP_ALARM(18, "Insulin delivery is currently off. Please restart insulin delivery soon."),
+        /** Tandem firmware name: Alarm_UNICORN_DO_NOT_USE */
         DEFAULT_ALARM_19(19),
+        /** Tandem firmware name: Alarm_MOTOR_PICASSO */
         CARTRIDGE_ALARM7(20, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_PRESSURE_DISAGREE */
         ALTITUDE_ALARM(21, "Pump altitude is out of range and insulin cannot be safely delivered."),
+        /** Tandem firmware name: Alarm_STUCK_BUTTON */
         STUCK_BUTTON_ALARM(22, "The pump button may be stuck or has been pressed for too long a period of time."),
+        /** Tandem firmware name: Alarm_GENERIC */
         RESUME_PUMP_ALARM2(23, "Insulin delivery is currently off. Please restart insulin delivery soon."),
+        /** Tandem firmware name: Alarm_PATM */
         ATMOSPHERIC_PRESSURE_OUT_OF_RANGE_ALARM(24, "Pump atmospheric pressure is out of range and insulin cannot be safely delivered."),
+        /** Tandem firmware name: Alarm_CART_REMOVED */
         CARTRIDGE_REMOVED_ALARM(25, "The cartridge was removed from the pump. Please fill a new cartridge."),
+        /** Tandem firmware name: Alarm_OCCLUSION_THE_YOUNGER */
         OCCLUSION_ALARM2(26, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),
+        /** Tandem firmware name: Alarm_UNUSED_1 */
         DEFAULT_ALARM_27(27),
+        /** Tandem firmware name: Alarm_UNUSED_2 */
         DEFAULT_ALARM_28(28),
+        /** Tandem firmware name: Alarm_MOTOR_CART_RANGE_LOW */
         CARTRIDGE_ALARM10(29, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_MOTOR_STALL */
         CARTRIDGE_ALARM11(30, "There is an issue with the cartridge and it needs to be replaced."),
+        /** Tandem firmware name: Alarm_MOTOR_VENT_STALL */
         CARTRIDGE_ALARM12(31, "There is an issue with the cartridge and it needs to be replaced."),
-        DEFAULT_ALARM_32(32),
-        DEFAULT_ALARM_33(33),
+        /** Tandem firmware name: Alarm_NO_CARTRIDGE_DETECTED */
+        NO_CARTRIDGE_DETECTED_ALARM(32),
+        /** Tandem firmware name: Alarm_LIPO_INSUFF_POWER */
+        LIPO_INSUFF_POWER_ALARM(33),
+        /** Tandem firmware name: Alarm_MOTOR_HALL_EFFECT_FAIL */
         CARTRIDGE_ALARM_34(34, "There is an issue with the cartridge and it needs to be replaced."),
-        DEFAULT_ALARM_35(35),
-        DEFAULT_ALARM_36(36),
-        DEFAULT_ALARM_37(37),
+        /** Tandem firmware name: Alarm_MOTOR_FAILURE_MODE */
+        MOTOR_FAILURE_MODE_ALARM(35),
+        /** Tandem firmware name: Alarm_MOTOR_PRIME_STALL_OBE */
+        MOTOR_PRIME_STALL_OBE_ALARM(36),
+        /** Tandem firmware name: Alarm_AUXCPU_SYSTEM_RESET */
+        AUXCPU_SYSTEM_RESET_ALARM(37),
+        /** Tandem firmware name: NUM_ALARMS */
         DEFAULT_ALARM_38(38),
         DEFAULT_ALARM_39(39),
         DEFAULT_ALARM_40(40),
