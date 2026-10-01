@@ -93,144 +93,207 @@
 <span class="source-line-no">076</span><span id="line-76">    }</span>
 <span class="source-line-no">077</span><span id="line-77"></span>
 <span class="source-line-no">078</span><span id="line-78">    public enum AlertResponseType implements NotificationEnum {</span>
-<span class="source-line-no">079</span><span id="line-79">        LOW_INSULIN_ALERT(0, "Low amount of insulin remaining in the cartridge."),</span>
-<span class="source-line-no">080</span><span id="line-80">        USB_CONNECTION_ALERT(1, "Pump is not charging over USB."),</span>
-<span class="source-line-no">081</span><span id="line-81">        LOW_POWER_ALERT(2, "Power level is low and the pump needs to be charged."),</span>
-<span class="source-line-no">082</span><span id="line-82">        LOW_POWER_ALERT2(3, "Power level is low and the pump needs to be charged."),</span>
-<span class="source-line-no">083</span><span id="line-83">        DATA_ERROR_ALERT(4),</span>
-<span class="source-line-no">084</span><span id="line-84">        AUTO_OFF_ALERT(5, "The pump is about to turn off due to the configured auto-off interval."),</span>
-<span class="source-line-no">085</span><span id="line-85">        MAX_BASAL_RATE_ALERT(6, "The pump is delivering at the maximum allowed basal rate."),</span>
-<span class="source-line-no">086</span><span id="line-86">        POWER_SOURCE_ALERT(7, "The power source provided is not able to charge the pump."),</span>
-<span class="source-line-no">087</span><span id="line-87">        MIN_BASAL_ALERT(8, "The pump is delivering at the minimum allowed basal rate."),</span>
-<span class="source-line-no">088</span><span id="line-88">        CONNECTION_ERROR_ALERT(9),</span>
-<span class="source-line-no">089</span><span id="line-89">        CONNECTION_ERROR_ALERT2(10),</span>
-<span class="source-line-no">090</span><span id="line-90">        INCOMPLETE_BOLUS_ALERT(11, "The bolus window was opened but a bolus was not started."),</span>
-<span class="source-line-no">091</span><span id="line-91">        INCOMPLETE_TEMP_RATE_ALERT(12, "The temp rate window was opened but the temp rate was not started."),</span>
-<span class="source-line-no">092</span><span id="line-92">        INCOMPLETE_CARTRIDGE_CHANGE_ALERT(13, "The cartridge change was started but not completed."),</span>
-<span class="source-line-no">093</span><span id="line-93">        INCOMPLETE_FILL_TUBING_ALERT(14, "Fill tubing was started but not completed."),</span>
-<span class="source-line-no">094</span><span id="line-94">        INCOMPLETE_FILL_CANNULA_ALERT(15, "Fill cannula was started but not completed."),</span>
-<span class="source-line-no">095</span><span id="line-95">        INCOMPLETE_SETTING_ALERT(16),</span>
-<span class="source-line-no">096</span><span id="line-96">        LOW_INSULIN_ALERT2(17, "Low amount of insulin remaining in the cartridge."),</span>
-<span class="source-line-no">097</span><span id="line-97">        MAX_BASAL_ALERT(18, "The maxmium basal was reached."),</span>
-<span class="source-line-no">098</span><span id="line-98">        LOW_TRANSMITTER_ALERT(19, "The CGM transmitter battery is low."),</span>
-<span class="source-line-no">099</span><span id="line-99">        TRANSMITTER_ALERT(20, "There is an alert from the CGM transmitter."),</span>
-<span class="source-line-no">100</span><span id="line-100">        DEFAULT_ALERT_21(21),</span>
-<span class="source-line-no">101</span><span id="line-101">        SENSOR_EXPIRING_ALERT(22, "The CGM sensor is expiring soon."),</span>
-<span class="source-line-no">102</span><span id="line-102">        PUMP_REBOOTING_ALERT(23, "The pump is rebooting."),</span>
-<span class="source-line-no">103</span><span id="line-103">        DEVICE_CONNECTION_ERROR(24),</span>
-<span class="source-line-no">104</span><span id="line-104">        CGM_GRAPH_REMOVED(25,</span>
-<span class="source-line-no">105</span><span id="line-105">                "It has been 24 hours since your last sensor session ended, so your " +</span>
-<span class="source-line-no">106</span><span id="line-106">                          "current glucose reading now displays the last glucose value entered in the bolus calculator."),</span>
-<span class="source-line-no">107</span><span id="line-107">        MIN_BASAL_ALERT2(26, "The pump is delivering at the minimum allowed basal rate."),</span>
-<span class="source-line-no">108</span><span id="line-108">        INCOMPLETE_CALIBRATION(27, "The CGM calibration was incomplete."),</span>
-<span class="source-line-no">109</span><span id="line-109">        CALIBRATION_TIMEOUT(28, "The timeout was reached for CGM calibration."),</span>
-<span class="source-line-no">110</span><span id="line-110">        INVALID_TRANSMITTER_ID(29,</span>
-<span class="source-line-no">111</span><span id="line-111">                "The Dexcom G6 or G7 transmitter ID is invalid."),</span>
-<span class="source-line-no">112</span><span id="line-112">        DEFAULT_ALERT_30(30),</span>
-<span class="source-line-no">113</span><span id="line-113">        DEFAULT_ALERT_32(32),</span>
-<span class="source-line-no">114</span><span id="line-114">        BUTTON_ALERT(33, "The pump button was held down for too long and is temporarily disabled to avoid accidental delivery of insulin."),</span>
-<span class="source-line-no">115</span><span id="line-115">        QUICK_BOLUS_ALERT(34, "Quick bolus mode was entered but no bolus was started."),</span>
-<span class="source-line-no">116</span><span id="line-116">        BASAL_IQ_ALERT(35, "BasalIQ has reduced basal insulin to avoid a low."),</span>
-<span class="source-line-no">117</span><span id="line-117">        DEFAULT_ALERT_36(36),</span>
-<span class="source-line-no">118</span><span id="line-118">        DEFAULT_ALERT_37(37),</span>
-<span class="source-line-no">119</span><span id="line-119">        DEFAULT_ALERT_38(38),</span>
-<span class="source-line-no">120</span><span id="line-120">        TRANSMITTER_END_OF_LIFE(39, "The CGM transmitter is reaching its end of life and cannot be used."),</span>
-<span class="source-line-no">121</span><span id="line-121">        CGM_ERROR(40, "CGM error reported"),</span>
-<span class="source-line-no">122</span><span id="line-122">        CGM_ERROR2(41, "CGM error reported"),</span>
-<span class="source-line-no">123</span><span id="line-123">        CGM_ERROR3(42, "CGM error reported"),</span>
-<span class="source-line-no">124</span><span id="line-124">        DEFAULT_ALERT_43(43),</span>
-<span class="source-line-no">125</span><span id="line-125">        TRANSMITTER_EXPIRING_ALERT(44, "The CGM transmitter is expiring soon."),</span>
-<span class="source-line-no">126</span><span id="line-126">        TRANSMITTER_EXPIRING_ALERT2(45, "The CGM transmitter is expiring soon."),</span>
-<span class="source-line-no">127</span><span id="line-127">        TRANSMITTER_EXPIRING_ALERT3(46, "The CGM transmitter is expiring soon."),</span>
-<span class="source-line-no">128</span><span id="line-128">        DEFAULT_ALERT_47(47),</span>
-<span class="source-line-no">129</span><span id="line-129">        CGM_UNAVAILABLE(48, "The CGM is unavailable due to a problem with the sensor."),</span>
-<span class="source-line-no">130</span><span id="line-130">        FILL_TUBING_STILL_IN_PROGRESS(49, "The fill tubing process is still in progress and was not completed."),</span>
-<span class="source-line-no">131</span><span id="line-131">        DEFAULT_ALERT_50(50),</span>
-<span class="source-line-no">132</span><span id="line-132">        CONTROL_IQ_LOW(51, "Control-IQ has reduced basal insulin delivery due to a low or predicted low glucose value."),</span>
-<span class="source-line-no">133</span><span id="line-133">        DEFAULT_ALERT_52(52),</span>
-<span class="source-line-no">134</span><span id="line-134">        DEFAULT_ALERT_53(53),</span>
-<span class="source-line-no">135</span><span id="line-135">        DEVICE_PAIRED(54, "The pump was paired successfully to a Bluetooth device."),</span>
-<span class="source-line-no">136</span><span id="line-136">        DEFAULT_ALERT_55(55),</span>
-<span class="source-line-no">137</span><span id="line-137">        DEFAULT_ALERT_56(56),</span>
-<span class="source-line-no">138</span><span id="line-138">        DEFAULT_ALERT_57(57),</span>
-<span class="source-line-no">139</span><span id="line-139">        DEFAULT_ALERT_58(58),</span>
-<span class="source-line-no">140</span><span id="line-140">        DEFAULT_ALERT_59(59),</span>
-<span class="source-line-no">141</span><span id="line-141">        DEFAULT_ALERT_60(60),</span>
-<span class="source-line-no">142</span><span id="line-142">        DEFAULT_ALERT_61(61),</span>
-<span class="source-line-no">143</span><span id="line-143">        DEFAULT_ALERT_62(62),</span>
-<span class="source-line-no">144</span><span id="line-144">        DEFAULT_ALERT_63(63)</span>
-<span class="source-line-no">145</span><span id="line-145">        ;</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">        private final int bitmask;</span>
-<span class="source-line-no">148</span><span id="line-148">        private final String description;</span>
-<span class="source-line-no">149</span><span id="line-149">        AlertResponseType(int bitmask) {</span>
-<span class="source-line-no">150</span><span id="line-150">            this.bitmask = bitmask;</span>
-<span class="source-line-no">151</span><span id="line-151">            this.description = null;</span>
-<span class="source-line-no">152</span><span id="line-152">        }</span>
-<span class="source-line-no">153</span><span id="line-153"></span>
-<span class="source-line-no">154</span><span id="line-154">        AlertResponseType(int bitmask, String description) {</span>
-<span class="source-line-no">155</span><span id="line-155">            this.bitmask = bitmask;</span>
-<span class="source-line-no">156</span><span id="line-156">            this.description = description;</span>
-<span class="source-line-no">157</span><span id="line-157">        }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159">        public int bitmask() {</span>
-<span class="source-line-no">160</span><span id="line-160">            return bitmask;</span>
-<span class="source-line-no">161</span><span id="line-161">        }</span>
-<span class="source-line-no">162</span><span id="line-162"></span>
-<span class="source-line-no">163</span><span id="line-163">        public int getId() {</span>
-<span class="source-line-no">164</span><span id="line-164">            return bitmask;</span>
-<span class="source-line-no">165</span><span id="line-165">        }</span>
-<span class="source-line-no">166</span><span id="line-166"></span>
-<span class="source-line-no">167</span><span id="line-167">        public String getDescription() {</span>
-<span class="source-line-no">168</span><span id="line-168">            return description;</span>
-<span class="source-line-no">169</span><span id="line-169">        }</span>
-<span class="source-line-no">170</span><span id="line-170"></span>
-<span class="source-line-no">171</span><span id="line-171">        public boolean isKnown() {</span>
-<span class="source-line-no">172</span><span id="line-172">            return description != null &amp;&amp; !description.isBlank();</span>
-<span class="source-line-no">173</span><span id="line-173">        }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">        public String toString() {</span>
-<span class="source-line-no">176</span><span id="line-176">            return name();</span>
-<span class="source-line-no">177</span><span id="line-177">        }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">        public BigInteger withBit() {</span>
-<span class="source-line-no">180</span><span id="line-180">            return BigInteger.ZERO.setBit(bitmask);</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">        public static AlertResponseType fromSingularId(long id) {</span>
-<span class="source-line-no">184</span><span id="line-184">            for (AlertResponseType type : values()) {</span>
-<span class="source-line-no">185</span><span id="line-185">                if (type.bitmask == id) {</span>
-<span class="source-line-no">186</span><span id="line-186">                    return type;</span>
-<span class="source-line-no">187</span><span id="line-187">                }</span>
-<span class="source-line-no">188</span><span id="line-188">            }</span>
-<span class="source-line-no">189</span><span id="line-189">            return null;</span>
-<span class="source-line-no">190</span><span id="line-190">        }</span>
-<span class="source-line-no">191</span><span id="line-191">    }</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">    public Set&lt;AlertResponseType&gt; getAlerts() {</span>
-<span class="source-line-no">194</span><span id="line-194">        Set&lt;AlertResponseType&gt; current = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">195</span><span id="line-195">        for (AlertResponseType type : AlertResponseType.values()) {</span>
-<span class="source-line-no">196</span><span id="line-196">            if (intMap.testBit(type.bitmask())) {</span>
-<span class="source-line-no">197</span><span id="line-197">                current.add(type);</span>
-<span class="source-line-no">198</span><span id="line-198">            }</span>
-<span class="source-line-no">199</span><span id="line-199">        }</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">        return current;</span>
-<span class="source-line-no">202</span><span id="line-202">    }</span>
-<span class="source-line-no">203</span><span id="line-203"></span>
-<span class="source-line-no">204</span><span id="line-204">    @Override</span>
-<span class="source-line-no">205</span><span id="line-205">    public Set&lt;Integer&gt; notificationIds() {</span>
-<span class="source-line-no">206</span><span id="line-206">        Set&lt;Integer&gt; ids = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">207</span><span id="line-207"></span>
-<span class="source-line-no">208</span><span id="line-208">        for (AlertResponseType alert : getAlerts()) {</span>
-<span class="source-line-no">209</span><span id="line-209">            if (alert.isKnown()) {</span>
-<span class="source-line-no">210</span><span id="line-210">                ids.add(alert.getId());</span>
-<span class="source-line-no">211</span><span id="line-211">            }</span>
-<span class="source-line-no">212</span><span id="line-212">        }</span>
-<span class="source-line-no">213</span><span id="line-213"></span>
-<span class="source-line-no">214</span><span id="line-214">        return ids;</span>
-<span class="source-line-no">215</span><span id="line-215">    }</span>
-<span class="source-line-no">216</span><span id="line-216">}</span>
+<span class="source-line-no">079</span><span id="line-79">        /** Tandem firmware name: oaAlert_LIQ_LOW */</span>
+<span class="source-line-no">080</span><span id="line-80">        LOW_INSULIN_ALERT(0, "Low amount of insulin remaining in the cartridge."),</span>
+<span class="source-line-no">081</span><span id="line-81">        /** Tandem firmware name: oaAlert_USB_INSUFF_CURRENT */</span>
+<span class="source-line-no">082</span><span id="line-82">        USB_CONNECTION_ALERT(1, "Pump is not charging over USB."),</span>
+<span class="source-line-no">083</span><span id="line-83">        /** Tandem firmware name: aaAlert_LIPO_LOW */</span>
+<span class="source-line-no">084</span><span id="line-84">        LOW_POWER_ALERT(2, "Power level is low and the pump needs to be charged."),</span>
+<span class="source-line-no">085</span><span id="line-85">        /** Tandem firmware name: aaAlert_LIPO_VERY_LOW */</span>
+<span class="source-line-no">086</span><span id="line-86">        LOW_POWER_ALERT2(3, "Power level is low and the pump needs to be charged."),</span>
+<span class="source-line-no">087</span><span id="line-87">        /** Tandem firmware name: oaAlert_NVM */</span>
+<span class="source-line-no">088</span><span id="line-88">        DATA_ERROR_ALERT(4),</span>
+<span class="source-line-no">089</span><span id="line-89">        /** Tandem firmware name: oaAlert_AUTO_OFF */</span>
+<span class="source-line-no">090</span><span id="line-90">        AUTO_OFF_ALERT(5, "The pump is about to turn off due to the configured auto-off interval."),</span>
+<span class="source-line-no">091</span><span id="line-91">        /** Tandem firmware name: oaAlert_BASAL_RATE_LIMIT */</span>
+<span class="source-line-no">092</span><span id="line-92">        MAX_BASAL_RATE_ALERT(6, "The pump is delivering at the maximum allowed basal rate."),</span>
+<span class="source-line-no">093</span><span id="line-93">        /** Tandem firmware name: oaAlert_LIPO_CANT_CHARGE */</span>
+<span class="source-line-no">094</span><span id="line-94">        POWER_SOURCE_ALERT(7, "The power source provided is not able to charge the pump."),</span>
+<span class="source-line-no">095</span><span id="line-95">        /** Tandem firmware name: oaAlert_BASAL_RATE_TOO_LOW */</span>
+<span class="source-line-no">096</span><span id="line-96">        MIN_BASAL_ALERT(8, "The pump is delivering at the minimum allowed basal rate."),</span>
+<span class="source-line-no">097</span><span id="line-97">        /** Tandem firmware name: aaAlert_USB_NOT_RECOGNIZED */</span>
+<span class="source-line-no">098</span><span id="line-98">        CONNECTION_ERROR_ALERT(9),</span>
+<span class="source-line-no">099</span><span id="line-99">        /** Tandem firmware name: aaAlert_BAD_PC_COM */</span>
+<span class="source-line-no">100</span><span id="line-100">        CONNECTION_ERROR_ALERT2(10),</span>
+<span class="source-line-no">101</span><span id="line-101">        /** Tandem firmware name: oaAlert_INCOMPLETE_BOLUS */</span>
+<span class="source-line-no">102</span><span id="line-102">        INCOMPLETE_BOLUS_ALERT(11, "The bolus window was opened but a bolus was not started."),</span>
+<span class="source-line-no">103</span><span id="line-103">        /** Tandem firmware name: oaAlert_INCOMPLETE_TEMP_RATE */</span>
+<span class="source-line-no">104</span><span id="line-104">        INCOMPLETE_TEMP_RATE_ALERT(12, "The temp rate window was opened but the temp rate was not started."),</span>
+<span class="source-line-no">105</span><span id="line-105">        /** Tandem firmware name: oaAlert_INCOMPLETE_CARTRIDGE */</span>
+<span class="source-line-no">106</span><span id="line-106">        INCOMPLETE_CARTRIDGE_CHANGE_ALERT(13, "The cartridge change was started but not completed."),</span>
+<span class="source-line-no">107</span><span id="line-107">        /** Tandem firmware name: oaAlert_INCOMPLETE_TUBING */</span>
+<span class="source-line-no">108</span><span id="line-108">        INCOMPLETE_FILL_TUBING_ALERT(14, "Fill tubing was started but not completed."),</span>
+<span class="source-line-no">109</span><span id="line-109">        /** Tandem firmware name: oaAlert_INCOMPLETE_CANNULA */</span>
+<span class="source-line-no">110</span><span id="line-110">        INCOMPLETE_FILL_CANNULA_ALERT(15, "Fill cannula was started but not completed."),</span>
+<span class="source-line-no">111</span><span id="line-111">        /** Tandem firmware name: oaAlert_INCOMPLETE_SETTING */</span>
+<span class="source-line-no">112</span><span id="line-112">        INCOMPLETE_SETTING_ALERT(16),</span>
+<span class="source-line-no">113</span><span id="line-113">        /** Tandem firmware name: oaAlert_LIQ_VERY_LOW */</span>
+<span class="source-line-no">114</span><span id="line-114">        LOW_INSULIN_ALERT2(17, "Low amount of insulin remaining in the cartridge."),</span>
+<span class="source-line-no">115</span><span id="line-115">        /** Tandem firmware name: oaAlert_ABS_MAX_BASAL_LIMIT */</span>
+<span class="source-line-no">116</span><span id="line-116">        MAX_BASAL_ALERT(18, "The maxmium basal was reached."),</span>
+<span class="source-line-no">117</span><span id="line-117">        /** Tandem firmware name: aaAlert_STUCK_BUTTON */</span>
+<span class="source-line-no">118</span><span id="line-118">        LOW_TRANSMITTER_ALERT(19, "The CGM transmitter battery is low."),</span>
+<span class="source-line-no">119</span><span id="line-119">        /** Tandem firmware name: aaAlert_CGM_SUPPORT_PACKAGE_ERROR */</span>
+<span class="source-line-no">120</span><span id="line-120">        TRANSMITTER_ALERT(20, "There is an alert from the CGM transmitter."),</span>
+<span class="source-line-no">121</span><span id="line-121">        /** Tandem firmware name: aaAlert_FSL2_SUPPORT_PACKAGE_ERROR */</span>
+<span class="source-line-no">122</span><span id="line-122">        FSL2_SUPPORT_PACKAGE_ERROR_ALERT(21),</span>
+<span class="source-line-no">123</span><span id="line-123">        /** Tandem firmware name: aaAlert_STK_CSP_REQ */</span>
+<span class="source-line-no">124</span><span id="line-124">        SENSOR_EXPIRING_ALERT(22, "The CGM sensor is expiring soon."),</span>
+<span class="source-line-no">125</span><span id="line-125">        /** Tandem firmware name: oaAlert_USB_SHUTDOWN */</span>
+<span class="source-line-no">126</span><span id="line-126">        PUMP_REBOOTING_ALERT(23, "The pump is rebooting."),</span>
+<span class="source-line-no">127</span><span id="line-127">        /** Tandem firmware name: aaAlert_CGM_MANY_SENSORS */</span>
+<span class="source-line-no">128</span><span id="line-128">        DEVICE_CONNECTION_ERROR(24),</span>
+<span class="source-line-no">129</span><span id="line-129">        /** Tandem firmware name: aaAlert_CGM_GRAPH_REMOVAL */</span>
+<span class="source-line-no">130</span><span id="line-130">        CGM_GRAPH_REMOVED(25,</span>
+<span class="source-line-no">131</span><span id="line-131">                "It has been 24 hours since your last sensor session ended, so your " +</span>
+<span class="source-line-no">132</span><span id="line-132">                          "current glucose reading now displays the last glucose value entered in the bolus calculator."),</span>
+<span class="source-line-no">133</span><span id="line-133">        /** Tandem firmware name: oaAlert_BASAL_RATE_LOW */</span>
+<span class="source-line-no">134</span><span id="line-134">        MIN_BASAL_ALERT2(26, "The pump is delivering at the minimum allowed basal rate."),</span>
+<span class="source-line-no">135</span><span id="line-135">        /** Tandem firmware name: aaAlert_CGM_INCOMPLETE_CAL */</span>
+<span class="source-line-no">136</span><span id="line-136">        INCOMPLETE_CALIBRATION(27, "The CGM calibration was incomplete."),</span>
+<span class="source-line-no">137</span><span id="line-137">        /** Tandem firmware name: aaAlert_CGM_CAL_TIMEOUT */</span>
+<span class="source-line-no">138</span><span id="line-138">        CALIBRATION_TIMEOUT(28, "The timeout was reached for CGM calibration."),</span>
+<span class="source-line-no">139</span><span id="line-139">        /** Tandem firmware name: aaAlert_CGM_INVALID_TX_ID */</span>
+<span class="source-line-no">140</span><span id="line-140">        INVALID_TRANSMITTER_ID(29,</span>
+<span class="source-line-no">141</span><span id="line-141">                "The Dexcom G6 or G7 transmitter ID is invalid."),</span>
+<span class="source-line-no">142</span><span id="line-142">        /** Tandem firmware name: aaAlert_DEBUG_INFO_DECLARED */</span>
+<span class="source-line-no">143</span><span id="line-143">        DEBUG_INFO_DECLARED_ALERT(30),</span>
+<span class="source-line-no">144</span><span id="line-144">        /** Tandem firmware name: oaAlert_OPEN_SESAME */</span>
+<span class="source-line-no">145</span><span id="line-145">        OPEN_SESAME_ALERT(32),</span>
+<span class="source-line-no">146</span><span id="line-146">        /** Tandem firmware name: aaAlert_QUICK_BOLUS_ABORT */</span>
+<span class="source-line-no">147</span><span id="line-147">        BUTTON_ALERT(33, "The pump button was held down for too long and is temporarily disabled to avoid accidental delivery of insulin."),</span>
+<span class="source-line-no">148</span><span id="line-148">        /** Tandem firmware name: aaAlert_MANY_FAILED_QUICK_BOLUS */</span>
+<span class="source-line-no">149</span><span id="line-149">        QUICK_BOLUS_ALERT(34, "Quick bolus mode was entered but no bolus was started."),</span>
+<span class="source-line-no">150</span><span id="line-150">        /** Tandem firmware name: Alert_AP_ALERT */</span>
+<span class="source-line-no">151</span><span id="line-151">        BASAL_IQ_ALERT(35, "BasalIQ has reduced basal insulin to avoid a low."),</span>
+<span class="source-line-no">152</span><span id="line-152">        /** Tandem firmware name: aaAlert_STK_EXCHANGE_REQ */</span>
+<span class="source-line-no">153</span><span id="line-153">        STK_EXCHANGE_REQ_ALERT(36),</span>
+<span class="source-line-no">154</span><span id="line-154">        /** Tandem firmware name: aaAlert_STK_ODYSSEY_REQ */</span>
+<span class="source-line-no">155</span><span id="line-155">        STK_ODYSSEY_REQ_ALERT(37),</span>
+<span class="source-line-no">156</span><span id="line-156">        /** Tandem firmware name: aaAlert_STK_INVALID */</span>
+<span class="source-line-no">157</span><span id="line-157">        STK_INVALID_ALERT(38),</span>
+<span class="source-line-no">158</span><span id="line-158">        /** Tandem firmware name: aaAlert_CGM_TX_EOL */</span>
+<span class="source-line-no">159</span><span id="line-159">        TRANSMITTER_END_OF_LIFE(39, "The CGM transmitter is reaching its end of life and cannot be used."),</span>
+<span class="source-line-no">160</span><span id="line-160">        /** Tandem firmware name: aaAlert_CGM_BLE_SD */</span>
+<span class="source-line-no">161</span><span id="line-161">        CGM_ERROR(40, "CGM error reported"),</span>
+<span class="source-line-no">162</span><span id="line-162">        /** Tandem firmware name: aaAlert_CGM_BLE_HW_WATCHDOG */</span>
+<span class="source-line-no">163</span><span id="line-163">        CGM_ERROR2(41, "CGM error reported"),</span>
+<span class="source-line-no">164</span><span id="line-164">        /** Tandem firmware name: aaAlert_CGM_BLE_HW_TIMEOUT */</span>
+<span class="source-line-no">165</span><span id="line-165">        CGM_ERROR3(42, "CGM error reported"),</span>
+<span class="source-line-no">166</span><span id="line-166">        /** Tandem firmware name: aaAlert_CGM_INCOMPATIBLE */</span>
+<span class="source-line-no">167</span><span id="line-167">        CGM_INCOMPATIBLE_ALERT(43),</span>
+<span class="source-line-no">168</span><span id="line-168">        /** Tandem firmware name: aaAlert_CGM_TX_EXPIRING_SOON_1 */</span>
+<span class="source-line-no">169</span><span id="line-169">        TRANSMITTER_EXPIRING_ALERT(44, "The CGM transmitter is expiring soon."),</span>
+<span class="source-line-no">170</span><span id="line-170">        /** Tandem firmware name: aaAlert_CGM_TX_EXPIRING_SOON_2 */</span>
+<span class="source-line-no">171</span><span id="line-171">        TRANSMITTER_EXPIRING_ALERT2(45, "The CGM transmitter is expiring soon."),</span>
+<span class="source-line-no">172</span><span id="line-172">        /** Tandem firmware name: aaAlert_CGM_TX_EXPIRING_STARTUP */</span>
+<span class="source-line-no">173</span><span id="line-173">        TRANSMITTER_EXPIRING_ALERT3(46, "The CGM transmitter is expiring soon."),</span>
+<span class="source-line-no">174</span><span id="line-174">        /** Tandem firmware name: oaAlert_TZ_INCOMPLETE_SETTING */</span>
+<span class="source-line-no">175</span><span id="line-175">        TZ_INCOMPLETE_SETTING_ALERT(47),</span>
+<span class="source-line-no">176</span><span id="line-176">        /** Tandem firmware name: aaAlert_CGM_NO_READINGS */</span>
+<span class="source-line-no">177</span><span id="line-177">        CGM_UNAVAILABLE(48, "The CGM is unavailable due to a problem with the sensor."),</span>
+<span class="source-line-no">178</span><span id="line-178">        /** Tandem firmware name: aaAlert_PRIME_LIMIT */</span>
+<span class="source-line-no">179</span><span id="line-179">        FILL_TUBING_STILL_IN_PROGRESS(49, "The fill tubing process is still in progress and was not completed."),</span>
+<span class="source-line-no">180</span><span id="line-180">        /** Tandem firmware name: aaAlert_TZ_HYPER_LIGHT */</span>
+<span class="source-line-no">181</span><span id="line-181">        TZ_HYPER_LIGHT_ALERT(50),</span>
+<span class="source-line-no">182</span><span id="line-182">        /** Tandem firmware name: aaAlert_TZ_HYPO_LIGHT */</span>
+<span class="source-line-no">183</span><span id="line-183">        CONTROL_IQ_LOW(51, "Control-IQ has reduced basal insulin delivery due to a low or predicted low glucose value."),</span>
+<span class="source-line-no">184</span><span id="line-184">        /** Tandem firmware name: aaAlert_TZ_IIDM */</span>
+<span class="source-line-no">185</span><span id="line-185">        TZ_IIDM_ALERT(52),</span>
+<span class="source-line-no">186</span><span id="line-186">        /** Tandem firmware name: aaAlert_BLE_CRASH_DUMP */</span>
+<span class="source-line-no">187</span><span id="line-187">        BLE_CRASH_DUMP_ALERT(53),</span>
+<span class="source-line-no">188</span><span id="line-188">        /** Tandem firmware name: aaAlert_MH_PAIRED */</span>
+<span class="source-line-no">189</span><span id="line-189">        DEVICE_PAIRED(54, "The pump was paired successfully to a Bluetooth device."),</span>
+<span class="source-line-no">190</span><span id="line-190">        /** Tandem firmware name: aaAlert_BLE_HW_ERROR */</span>
+<span class="source-line-no">191</span><span id="line-191">        BLE_HW_ERROR_ALERT(55),</span>
+<span class="source-line-no">192</span><span id="line-192">        /** Tandem firmware name: aaAlert_USER_SET_MAX_BASAL */</span>
+<span class="source-line-no">193</span><span id="line-193">        USER_SET_MAX_BASAL_ALERT(56),</span>
+<span class="source-line-no">194</span><span id="line-194">        /** Tandem firmware name: aaAlert_SENSOR */</span>
+<span class="source-line-no">195</span><span id="line-195">        SENSOR_ALERT(57),</span>
+<span class="source-line-no">196</span><span id="line-196">        /** Tandem firmware name: aaAlert_COM_LOG_ERROR_LOGGED */</span>
+<span class="source-line-no">197</span><span id="line-197">        COM_LOG_ERROR_LOGGED_ALERT(58),</span>
+<span class="source-line-no">198</span><span id="line-198">        /** Tandem firmware name: alert_FCL_AUTOMATION_OFF */</span>
+<span class="source-line-no">199</span><span id="line-199">        FCL_AUTOMATION_OFF_ALERT(59),</span>
+<span class="source-line-no">200</span><span id="line-200">        /** Tandem firmware name: oaAlert_CONTROLLER_CONNECTION_LOST */</span>
+<span class="source-line-no">201</span><span id="line-201">        CONTROLLER_CONNECTION_LOST_ALERT(60),</span>
+<span class="source-line-no">202</span><span id="line-202">        /** Tandem firmware name: aaAlert_LIPO_SUPER_LOW */</span>
+<span class="source-line-no">203</span><span id="line-203">        LIPO_SUPER_LOW_ALERT(61),</span>
+<span class="source-line-no">204</span><span id="line-204">        /** Tandem firmware name: aaAlert_LIPO_INSUFF_POWER */</span>
+<span class="source-line-no">205</span><span id="line-205">        LIPO_INSUFF_POWER_ALERT(62),</span>
+<span class="source-line-no">206</span><span id="line-206">        /** Tandem firmware name: oaAlert_BTLE_PAIRING_TIMEOUT */</span>
+<span class="source-line-no">207</span><span id="line-207">        BTLE_PAIRING_TIMEOUT_ALERT(63)</span>
+<span class="source-line-no">208</span><span id="line-208">        ;</span>
+<span class="source-line-no">209</span><span id="line-209"></span>
+<span class="source-line-no">210</span><span id="line-210">        private final int bitmask;</span>
+<span class="source-line-no">211</span><span id="line-211">        private final String description;</span>
+<span class="source-line-no">212</span><span id="line-212">        AlertResponseType(int bitmask) {</span>
+<span class="source-line-no">213</span><span id="line-213">            this.bitmask = bitmask;</span>
+<span class="source-line-no">214</span><span id="line-214">            this.description = null;</span>
+<span class="source-line-no">215</span><span id="line-215">        }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">        AlertResponseType(int bitmask, String description) {</span>
+<span class="source-line-no">218</span><span id="line-218">            this.bitmask = bitmask;</span>
+<span class="source-line-no">219</span><span id="line-219">            this.description = description;</span>
+<span class="source-line-no">220</span><span id="line-220">        }</span>
+<span class="source-line-no">221</span><span id="line-221"></span>
+<span class="source-line-no">222</span><span id="line-222">        public int bitmask() {</span>
+<span class="source-line-no">223</span><span id="line-223">            return bitmask;</span>
+<span class="source-line-no">224</span><span id="line-224">        }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">        public int getId() {</span>
+<span class="source-line-no">227</span><span id="line-227">            return bitmask;</span>
+<span class="source-line-no">228</span><span id="line-228">        }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        public String getDescription() {</span>
+<span class="source-line-no">231</span><span id="line-231">            return description;</span>
+<span class="source-line-no">232</span><span id="line-232">        }</span>
+<span class="source-line-no">233</span><span id="line-233"></span>
+<span class="source-line-no">234</span><span id="line-234">        public boolean isKnown() {</span>
+<span class="source-line-no">235</span><span id="line-235">            return description != null &amp;&amp; !description.isBlank();</span>
+<span class="source-line-no">236</span><span id="line-236">        }</span>
+<span class="source-line-no">237</span><span id="line-237"></span>
+<span class="source-line-no">238</span><span id="line-238">        public String toString() {</span>
+<span class="source-line-no">239</span><span id="line-239">            return name();</span>
+<span class="source-line-no">240</span><span id="line-240">        }</span>
+<span class="source-line-no">241</span><span id="line-241"></span>
+<span class="source-line-no">242</span><span id="line-242">        public BigInteger withBit() {</span>
+<span class="source-line-no">243</span><span id="line-243">            return BigInteger.ZERO.setBit(bitmask);</span>
+<span class="source-line-no">244</span><span id="line-244">        }</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">        public static AlertResponseType fromSingularId(long id) {</span>
+<span class="source-line-no">247</span><span id="line-247">            for (AlertResponseType type : values()) {</span>
+<span class="source-line-no">248</span><span id="line-248">                if (type.bitmask == id) {</span>
+<span class="source-line-no">249</span><span id="line-249">                    return type;</span>
+<span class="source-line-no">250</span><span id="line-250">                }</span>
+<span class="source-line-no">251</span><span id="line-251">            }</span>
+<span class="source-line-no">252</span><span id="line-252">            return null;</span>
+<span class="source-line-no">253</span><span id="line-253">        }</span>
+<span class="source-line-no">254</span><span id="line-254">    }</span>
+<span class="source-line-no">255</span><span id="line-255"></span>
+<span class="source-line-no">256</span><span id="line-256">    public Set&lt;AlertResponseType&gt; getAlerts() {</span>
+<span class="source-line-no">257</span><span id="line-257">        Set&lt;AlertResponseType&gt; current = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">258</span><span id="line-258">        for (AlertResponseType type : AlertResponseType.values()) {</span>
+<span class="source-line-no">259</span><span id="line-259">            if (intMap.testBit(type.bitmask())) {</span>
+<span class="source-line-no">260</span><span id="line-260">                current.add(type);</span>
+<span class="source-line-no">261</span><span id="line-261">            }</span>
+<span class="source-line-no">262</span><span id="line-262">        }</span>
+<span class="source-line-no">263</span><span id="line-263"></span>
+<span class="source-line-no">264</span><span id="line-264">        return current;</span>
+<span class="source-line-no">265</span><span id="line-265">    }</span>
+<span class="source-line-no">266</span><span id="line-266"></span>
+<span class="source-line-no">267</span><span id="line-267">    @Override</span>
+<span class="source-line-no">268</span><span id="line-268">    public Set&lt;Integer&gt; notificationIds() {</span>
+<span class="source-line-no">269</span><span id="line-269">        Set&lt;Integer&gt; ids = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">270</span><span id="line-270"></span>
+<span class="source-line-no">271</span><span id="line-271">        for (AlertResponseType alert : getAlerts()) {</span>
+<span class="source-line-no">272</span><span id="line-272">            if (alert.isKnown()) {</span>
+<span class="source-line-no">273</span><span id="line-273">                ids.add(alert.getId());</span>
+<span class="source-line-no">274</span><span id="line-274">            }</span>
+<span class="source-line-no">275</span><span id="line-275">        }</span>
+<span class="source-line-no">276</span><span id="line-276"></span>
+<span class="source-line-no">277</span><span id="line-277">        return ids;</span>
+<span class="source-line-no">278</span><span id="line-278">    }</span>
+<span class="source-line-no">279</span><span id="line-279">}</span>
 
 
 

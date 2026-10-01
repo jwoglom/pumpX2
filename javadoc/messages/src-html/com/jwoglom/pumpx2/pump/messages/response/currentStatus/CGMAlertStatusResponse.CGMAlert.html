@@ -125,131 +125,165 @@
 <span class="source-line-no">108</span><span id="line-108">    }</span>
 <span class="source-line-no">109</span><span id="line-109"></span>
 <span class="source-line-no">110</span><span id="line-110">    public enum CGMAlert implements NotificationEnum {</span>
-<span class="source-line-no">111</span><span id="line-111">        DEFAULT_CGM_ALERT_0(0),</span>
-<span class="source-line-no">112</span><span id="line-112">        FIXED_LOW_CGM_ALERT(1),</span>
-<span class="source-line-no">113</span><span id="line-113">        HIGH_CGM_ALERT(2),</span>
-<span class="source-line-no">114</span><span id="line-114">        LOW_CGM_ALERT(3),</span>
-<span class="source-line-no">115</span><span id="line-115">        CALIBRATION_REQUEST_CGM_ALERT(4),</span>
-<span class="source-line-no">116</span><span id="line-116">        RISE_CGM_ALERT(5),</span>
-<span class="source-line-no">117</span><span id="line-117">        RAPID_RISE_CGM_ALERT(6),</span>
-<span class="source-line-no">118</span><span id="line-118">        FALL_CGM_ALERT(7),</span>
-<span class="source-line-no">119</span><span id="line-119">        RAPID_FALL_CGM_ALERT(8),</span>
-<span class="source-line-no">120</span><span id="line-120">        LOW_CALIBRATION_ERROR_CGM_ALERT(9),</span>
-<span class="source-line-no">121</span><span id="line-121">        HIGH_CALIBRATION_ERROR_CGM_ALERT(10),</span>
-<span class="source-line-no">122</span><span id="line-122">        SENSOR_FAILED_CGM_ALERT(11),</span>
-<span class="source-line-no">123</span><span id="line-123">        SENSOR_EXPIRING_CGM_ALERT(12),</span>
-<span class="source-line-no">124</span><span id="line-124">        SENSOR_EXPIRED_CGM_ALERT(13),</span>
-<span class="source-line-no">125</span><span id="line-125">        OUT_OF_RANGE_CGM_ALERT(14),</span>
-<span class="source-line-no">126</span><span id="line-126">        DEFAULT_CGM_ALERT_15(15),</span>
-<span class="source-line-no">127</span><span id="line-127">        FIRST_START_CALIBRATION_CGM_ALERT(16),</span>
-<span class="source-line-no">128</span><span id="line-128">        SECOND_START_CALIBRATION_CGM_ALERT(17),</span>
-<span class="source-line-no">129</span><span id="line-129">        CALIBRATION_REQUIRED_CGM_ALERT(18),</span>
-<span class="source-line-no">130</span><span id="line-130">        LOW_TRANSMITTER_CGM_ALERT(19),</span>
-<span class="source-line-no">131</span><span id="line-131">        TRANSMITTER_CGM_ALERT(20),</span>
-<span class="source-line-no">132</span><span id="line-132">        DEFAULT_CGM_ALERT_21(21),</span>
-<span class="source-line-no">133</span><span id="line-133">        SENSOR_EXPIRING_CGM_ALERT2(22),</span>
-<span class="source-line-no">134</span><span id="line-134">        DEFAULT_CGM_ALERT_23(23),</span>
-<span class="source-line-no">135</span><span id="line-135">        DEFAULT_CGM_ALERT_24(24),</span>
-<span class="source-line-no">136</span><span id="line-136">        SENSOR_REUSE(25),</span>
-<span class="source-line-no">137</span><span id="line-137">        TEMPERATURE_CGM_ALERT(26),</span>
-<span class="source-line-no">138</span><span id="line-138">        FAILED_CONNECTION_CGM_ALERT(27),</span>
-<span class="source-line-no">139</span><span id="line-139">        DEFAULT_CGM_ALERT_28(28),</span>
-<span class="source-line-no">140</span><span id="line-140">        DEFAULT_CGM_ALERT_29(29),</span>
-<span class="source-line-no">141</span><span id="line-141">        DEFAULT_CGM_ALERT_30(30),</span>
-<span class="source-line-no">142</span><span id="line-142">        DEFAULT_CGM_ALERT_31(31),</span>
-<span class="source-line-no">143</span><span id="line-143">        DEFAULT_CGM_ALERT_32(32),</span>
-<span class="source-line-no">144</span><span id="line-144">        DEFAULT_CGM_ALERT_33(33),</span>
-<span class="source-line-no">145</span><span id="line-145">        DEFAULT_CGM_ALERT_34(34),</span>
-<span class="source-line-no">146</span><span id="line-146">        DEFAULT_CGM_ALERT_35(35),</span>
-<span class="source-line-no">147</span><span id="line-147">        DEFAULT_CGM_ALERT_36(36),</span>
-<span class="source-line-no">148</span><span id="line-148">        DEFAULT_CGM_ALERT_37(37),</span>
-<span class="source-line-no">149</span><span id="line-149">        DEFAULT_CGM_ALERT_38(38),</span>
-<span class="source-line-no">150</span><span id="line-150">        TRANSMITTER_EXPIRED_CGM_ALERT(39),</span>
-<span class="source-line-no">151</span><span id="line-151">        PUMP_BLUETOOTH_ERROR_CGM_ALERT(40),</span>
-<span class="source-line-no">152</span><span id="line-152">        DEFAULT_CGM_ALERT_41(41),</span>
-<span class="source-line-no">153</span><span id="line-153">        DEFAULT_CGM_ALERT_42(42),</span>
-<span class="source-line-no">154</span><span id="line-154">        DEFAULT_CGM_ALERT_43(43),</span>
-<span class="source-line-no">155</span><span id="line-155">        DEFAULT_CGM_ALERT_44(44),</span>
-<span class="source-line-no">156</span><span id="line-156">        // Names derived from tconnectsync's cloud-export dictionaries (CGM_ALERTS_DICT).</span>
-<span class="source-line-no">157</span><span id="line-157">        TRANSMITTER_EXPIRING_CGM_ALERT(45), // CGM_ALERTS_DICT["45"] == "CGM Transmitter Expiring Soon"</span>
-<span class="source-line-no">158</span><span id="line-158">        TRANSMITTER_EXPIRING_CGM_ALERT2(46), // CGM_ALERTS_DICT["46"] == "CGM Transmitter Expiring 2"</span>
-<span class="source-line-no">159</span><span id="line-159">        DEFAULT_CGM_ALERT_47(47),</span>
-<span class="source-line-no">160</span><span id="line-160">        UNAVAILABLE_CGM_ALERT(48), // CGM_ALERTS_DICT["48"] == "CGM Unavailable"</span>
-<span class="source-line-no">161</span><span id="line-161">        DEFAULT_CGM_ALERT_49(49),</span>
-<span class="source-line-no">162</span><span id="line-162">        DEFAULT_CGM_ALERT_50(50),</span>
-<span class="source-line-no">163</span><span id="line-163">        DEFAULT_CGM_ALERT_51(51),</span>
-<span class="source-line-no">164</span><span id="line-164">        DEFAULT_CGM_ALERT_52(52),</span>
-<span class="source-line-no">165</span><span id="line-165">        DEFAULT_CGM_ALERT_53(53),</span>
-<span class="source-line-no">166</span><span id="line-166">        DEFAULT_CGM_ALERT_55(55),</span>
-<span class="source-line-no">167</span><span id="line-167">        DEFAULT_CGM_ALERT_56(56),</span>
-<span class="source-line-no">168</span><span id="line-168">        DEFAULT_CGM_ALERT_57(57),</span>
-<span class="source-line-no">169</span><span id="line-169">        DEFAULT_CGM_ALERT_58(58),</span>
-<span class="source-line-no">170</span><span id="line-170">        DEFAULT_CGM_ALERT_59(59),</span>
-<span class="source-line-no">171</span><span id="line-171">        DEFAULT_CGM_ALERT_60(60),</span>
-<span class="source-line-no">172</span><span id="line-172">        DEFAULT_CGM_ALERT_61(61),</span>
-<span class="source-line-no">173</span><span id="line-173">        DEFAULT_CGM_ALERT_62(62),</span>
-<span class="source-line-no">174</span><span id="line-174">        DEFAULT_CGM_ALERT_63(63),</span>
-<span class="source-line-no">175</span><span id="line-175"></span>
-<span class="source-line-no">176</span><span id="line-176">        ;</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">        private final int id;</span>
-<span class="source-line-no">179</span><span id="line-179">        CGMAlert(int id) {</span>
-<span class="source-line-no">180</span><span id="line-180">            this.id = id;</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">        public int id() {</span>
-<span class="source-line-no">184</span><span id="line-184">            return id;</span>
-<span class="source-line-no">185</span><span id="line-185">        }</span>
-<span class="source-line-no">186</span><span id="line-186"></span>
-<span class="source-line-no">187</span><span id="line-187">        @Override</span>
-<span class="source-line-no">188</span><span id="line-188">        public int getId() {</span>
-<span class="source-line-no">189</span><span id="line-189">            return id;</span>
-<span class="source-line-no">190</span><span id="line-190">        }</span>
-<span class="source-line-no">191</span><span id="line-191"></span>
-<span class="source-line-no">192</span><span id="line-192">        public String toString() {</span>
-<span class="source-line-no">193</span><span id="line-193">            return name();</span>
-<span class="source-line-no">194</span><span id="line-194">        }</span>
-<span class="source-line-no">195</span><span id="line-195"></span>
-<span class="source-line-no">196</span><span id="line-196">        public boolean isKnown() {</span>
-<span class="source-line-no">197</span><span id="line-197">            return !name().startsWith("DEFAULT_CGM_ALERT");</span>
-<span class="source-line-no">198</span><span id="line-198">        }</span>
-<span class="source-line-no">199</span><span id="line-199"></span>
-<span class="source-line-no">200</span><span id="line-200">        @Nullable</span>
-<span class="source-line-no">201</span><span id="line-201">        @Override</span>
-<span class="source-line-no">202</span><span id="line-202">        public String getDescription() {</span>
-<span class="source-line-no">203</span><span id="line-203">            if (!isKnown()) return null;</span>
-<span class="source-line-no">204</span><span id="line-204">            return name();</span>
-<span class="source-line-no">205</span><span id="line-205">        }</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">        public static CGMAlert fromId(int id) {</span>
-<span class="source-line-no">208</span><span id="line-208">            for (CGMAlert alert : values()) {</span>
-<span class="source-line-no">209</span><span id="line-209">                if (alert.id() == id) {</span>
-<span class="source-line-no">210</span><span id="line-210">                    return alert;</span>
-<span class="source-line-no">211</span><span id="line-211">                }</span>
-<span class="source-line-no">212</span><span id="line-212">            }</span>
-<span class="source-line-no">213</span><span id="line-213">            return null;</span>
-<span class="source-line-no">214</span><span id="line-214">        }</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
-<span class="source-line-no">217</span><span id="line-217">            Set&lt;CGMAlert&gt; set = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">218</span><span id="line-218">            for (CGMAlert a : values()) {</span>
-<span class="source-line-no">219</span><span id="line-219">                if (bitmask.testBit(a.id())) {</span>
-<span class="source-line-no">220</span><span id="line-220">                    set.add(a);</span>
-<span class="source-line-no">221</span><span id="line-221">                }</span>
-<span class="source-line-no">222</span><span id="line-222">            }</span>
-<span class="source-line-no">223</span><span id="line-223">            return set;</span>
+<span class="source-line-no">111</span><span id="line-111">        /** Tandem firmware name: Alert_CGM_DEPRECATED_3 */</span>
+<span class="source-line-no">112</span><span id="line-112">        DEFAULT_CGM_ALERT_0(0),</span>
+<span class="source-line-no">113</span><span id="line-113">        /** Tandem firmware name: Alert_CGM_FIXED_LOW */</span>
+<span class="source-line-no">114</span><span id="line-114">        FIXED_LOW_CGM_ALERT(1),</span>
+<span class="source-line-no">115</span><span id="line-115">        /** Tandem firmware name: Alert_CGM_USER_HIGH_EGV */</span>
+<span class="source-line-no">116</span><span id="line-116">        HIGH_CGM_ALERT(2),</span>
+<span class="source-line-no">117</span><span id="line-117">        /** Tandem firmware name: Alert_CGM_USER_LOW_EGV */</span>
+<span class="source-line-no">118</span><span id="line-118">        LOW_CGM_ALERT(3),</span>
+<span class="source-line-no">119</span><span id="line-119">        /** Tandem firmware name: Alert_CGM_CALIBRATION_REQUEST */</span>
+<span class="source-line-no">120</span><span id="line-120">        CALIBRATION_REQUEST_CGM_ALERT(4),</span>
+<span class="source-line-no">121</span><span id="line-121">        /** Tandem firmware name: Alert_CGM_RISE */</span>
+<span class="source-line-no">122</span><span id="line-122">        RISE_CGM_ALERT(5),</span>
+<span class="source-line-no">123</span><span id="line-123">        /** Tandem firmware name: Alert_CGM_RAPID_RISE */</span>
+<span class="source-line-no">124</span><span id="line-124">        RAPID_RISE_CGM_ALERT(6),</span>
+<span class="source-line-no">125</span><span id="line-125">        /** Tandem firmware name: Alert_CGM_FALL */</span>
+<span class="source-line-no">126</span><span id="line-126">        FALL_CGM_ALERT(7),</span>
+<span class="source-line-no">127</span><span id="line-127">        /** Tandem firmware name: Alert_CGM_RAPID_FALL */</span>
+<span class="source-line-no">128</span><span id="line-128">        RAPID_FALL_CGM_ALERT(8),</span>
+<span class="source-line-no">129</span><span id="line-129">        /** Tandem firmware name: Alert_CGM_CALIB_ERROR */</span>
+<span class="source-line-no">130</span><span id="line-130">        LOW_CALIBRATION_ERROR_CGM_ALERT(9),</span>
+<span class="source-line-no">131</span><span id="line-131">        /** Tandem firmware name: Alert_CGM_CALIB_HIGH_WEDGE */</span>
+<span class="source-line-no">132</span><span id="line-132">        HIGH_CALIBRATION_ERROR_CGM_ALERT(10),</span>
+<span class="source-line-no">133</span><span id="line-133">        /** Tandem firmware name: Alert_CGM_SENSOR_FAILED */</span>
+<span class="source-line-no">134</span><span id="line-134">        SENSOR_FAILED_CGM_ALERT(11),</span>
+<span class="source-line-no">135</span><span id="line-135">        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRING */</span>
+<span class="source-line-no">136</span><span id="line-136">        SENSOR_EXPIRING_CGM_ALERT(12),</span>
+<span class="source-line-no">137</span><span id="line-137">        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRED */</span>
+<span class="source-line-no">138</span><span id="line-138">        SENSOR_EXPIRED_CGM_ALERT(13),</span>
+<span class="source-line-no">139</span><span id="line-139">        /** Tandem firmware name: Alert_CGM_OUT_OF_RANGE */</span>
+<span class="source-line-no">140</span><span id="line-140">        OUT_OF_RANGE_CGM_ALERT(14),</span>
+<span class="source-line-no">141</span><span id="line-141">        /** Tandem firmware name: Alert_CGM_DEPRECATED */</span>
+<span class="source-line-no">142</span><span id="line-142">        DEFAULT_CGM_ALERT_15(15),</span>
+<span class="source-line-no">143</span><span id="line-143">        /** Tandem firmware name: Alert_CGM_CALIB_START_FIRST */</span>
+<span class="source-line-no">144</span><span id="line-144">        FIRST_START_CALIBRATION_CGM_ALERT(16),</span>
+<span class="source-line-no">145</span><span id="line-145">        /** Tandem firmware name: Alert_CGM_CALIB_START_SECOND */</span>
+<span class="source-line-no">146</span><span id="line-146">        SECOND_START_CALIBRATION_CGM_ALERT(17),</span>
+<span class="source-line-no">147</span><span id="line-147">        /** Tandem firmware name: Alert_CGM_CALIB_REQUIRED */</span>
+<span class="source-line-no">148</span><span id="line-148">        CALIBRATION_REQUIRED_CGM_ALERT(18),</span>
+<span class="source-line-no">149</span><span id="line-149">        /** Tandem firmware name: Alert_CGM_LOW_TX_BATTERY */</span>
+<span class="source-line-no">150</span><span id="line-150">        LOW_TRANSMITTER_CGM_ALERT(19),</span>
+<span class="source-line-no">151</span><span id="line-151">        /** Tandem firmware name: Alert_CGM_TRANSMITTER_ERROR */</span>
+<span class="source-line-no">152</span><span id="line-152">        TRANSMITTER_CGM_ALERT(20),</span>
+<span class="source-line-no">153</span><span id="line-153">        /** Tandem firmware name: Alert_CGM_DEPRECATED_2 */</span>
+<span class="source-line-no">154</span><span id="line-154">        DEFAULT_CGM_ALERT_21(21),</span>
+<span class="source-line-no">155</span><span id="line-155">        /** Tandem firmware name: Alert_CGM_SENSOR_EXPIRING_SOON */</span>
+<span class="source-line-no">156</span><span id="line-156">        SENSOR_EXPIRING_CGM_ALERT2(22),</span>
+<span class="source-line-no">157</span><span id="line-157">        /** Tandem firmware name: Alert_CGM_DEPRECATED_4 */</span>
+<span class="source-line-no">158</span><span id="line-158">        DEFAULT_CGM_ALERT_23(23),</span>
+<span class="source-line-no">159</span><span id="line-159">        /** Tandem firmware name: Alert_CGM_URGENT_LOW_SOON */</span>
+<span class="source-line-no">160</span><span id="line-160">        URGENT_LOW_SOON_CGM_ALERT(24),</span>
+<span class="source-line-no">161</span><span id="line-161">        /** Tandem firmware name: Alert_CGM_SENSOR_REUSE */</span>
+<span class="source-line-no">162</span><span id="line-162">        SENSOR_REUSE(25),</span>
+<span class="source-line-no">163</span><span id="line-163">        /** Tandem firmware name: Alert_CGM_SENSOR_TEMP */</span>
+<span class="source-line-no">164</span><span id="line-164">        TEMPERATURE_CGM_ALERT(26),</span>
+<span class="source-line-no">165</span><span id="line-165">        /** Tandem firmware name: Alert_CGM_CONNECTION_ERROR */</span>
+<span class="source-line-no">166</span><span id="line-166">        FAILED_CONNECTION_CGM_ALERT(27),</span>
+<span class="source-line-no">167</span><span id="line-167">        /** Tandem firmware name: Alert_CGM_CHECK_SENSOR */</span>
+<span class="source-line-no">168</span><span id="line-168">        CHECK_SENSOR_CGM_ALERT(28),</span>
+<span class="source-line-no">169</span><span id="line-169">        /** Tandem firmware name: Alert_CGM_EGV_UNUSABLE */</span>
+<span class="source-line-no">170</span><span id="line-170">        EGV_UNUSABLE_CGM_ALERT(29),</span>
+<span class="source-line-no">171</span><span id="line-171">        /** Tandem firmware name: Alert_CGM_UNUSED1 */</span>
+<span class="source-line-no">172</span><span id="line-172">        DEFAULT_CGM_ALERT_30(30),</span>
+<span class="source-line-no">173</span><span id="line-173">        /** Tandem firmware name: Alert_CGM_GRACE_PERIOD_START */</span>
+<span class="source-line-no">174</span><span id="line-174">        GRACE_PERIOD_START_CGM_ALERT(31),</span>
+<span class="source-line-no">175</span><span id="line-175">        /** Tandem firmware name: Alert_CGM_GRACE_PERIOD_EXPIRING_SOON */</span>
+<span class="source-line-no">176</span><span id="line-176">        GRACE_PERIOD_EXPIRING_SOON_CGM_ALERT(32),</span>
+<span class="source-line-no">177</span><span id="line-177">        /** Tandem firmware name: NUM_CGM_ALERTS */</span>
+<span class="source-line-no">178</span><span id="line-178">        DEFAULT_CGM_ALERT_33(33),</span>
+<span class="source-line-no">179</span><span id="line-179">        DEFAULT_CGM_ALERT_34(34),</span>
+<span class="source-line-no">180</span><span id="line-180">        DEFAULT_CGM_ALERT_35(35),</span>
+<span class="source-line-no">181</span><span id="line-181">        DEFAULT_CGM_ALERT_36(36),</span>
+<span class="source-line-no">182</span><span id="line-182">        DEFAULT_CGM_ALERT_37(37),</span>
+<span class="source-line-no">183</span><span id="line-183">        DEFAULT_CGM_ALERT_38(38),</span>
+<span class="source-line-no">184</span><span id="line-184">        TRANSMITTER_EXPIRED_CGM_ALERT(39),</span>
+<span class="source-line-no">185</span><span id="line-185">        PUMP_BLUETOOTH_ERROR_CGM_ALERT(40),</span>
+<span class="source-line-no">186</span><span id="line-186">        DEFAULT_CGM_ALERT_41(41),</span>
+<span class="source-line-no">187</span><span id="line-187">        DEFAULT_CGM_ALERT_42(42),</span>
+<span class="source-line-no">188</span><span id="line-188">        DEFAULT_CGM_ALERT_43(43),</span>
+<span class="source-line-no">189</span><span id="line-189">        DEFAULT_CGM_ALERT_44(44),</span>
+<span class="source-line-no">190</span><span id="line-190">        // Names derived from tconnectsync's cloud-export dictionaries (CGM_ALERTS_DICT).</span>
+<span class="source-line-no">191</span><span id="line-191">        TRANSMITTER_EXPIRING_CGM_ALERT(45), // CGM_ALERTS_DICT["45"] == "CGM Transmitter Expiring Soon"</span>
+<span class="source-line-no">192</span><span id="line-192">        TRANSMITTER_EXPIRING_CGM_ALERT2(46), // CGM_ALERTS_DICT["46"] == "CGM Transmitter Expiring 2"</span>
+<span class="source-line-no">193</span><span id="line-193">        DEFAULT_CGM_ALERT_47(47),</span>
+<span class="source-line-no">194</span><span id="line-194">        UNAVAILABLE_CGM_ALERT(48), // CGM_ALERTS_DICT["48"] == "CGM Unavailable"</span>
+<span class="source-line-no">195</span><span id="line-195">        DEFAULT_CGM_ALERT_49(49),</span>
+<span class="source-line-no">196</span><span id="line-196">        DEFAULT_CGM_ALERT_50(50),</span>
+<span class="source-line-no">197</span><span id="line-197">        DEFAULT_CGM_ALERT_51(51),</span>
+<span class="source-line-no">198</span><span id="line-198">        DEFAULT_CGM_ALERT_52(52),</span>
+<span class="source-line-no">199</span><span id="line-199">        DEFAULT_CGM_ALERT_53(53),</span>
+<span class="source-line-no">200</span><span id="line-200">        DEFAULT_CGM_ALERT_55(55),</span>
+<span class="source-line-no">201</span><span id="line-201">        DEFAULT_CGM_ALERT_56(56),</span>
+<span class="source-line-no">202</span><span id="line-202">        DEFAULT_CGM_ALERT_57(57),</span>
+<span class="source-line-no">203</span><span id="line-203">        DEFAULT_CGM_ALERT_58(58),</span>
+<span class="source-line-no">204</span><span id="line-204">        DEFAULT_CGM_ALERT_59(59),</span>
+<span class="source-line-no">205</span><span id="line-205">        DEFAULT_CGM_ALERT_60(60),</span>
+<span class="source-line-no">206</span><span id="line-206">        DEFAULT_CGM_ALERT_61(61),</span>
+<span class="source-line-no">207</span><span id="line-207">        DEFAULT_CGM_ALERT_62(62),</span>
+<span class="source-line-no">208</span><span id="line-208">        DEFAULT_CGM_ALERT_63(63),</span>
+<span class="source-line-no">209</span><span id="line-209"></span>
+<span class="source-line-no">210</span><span id="line-210">        ;</span>
+<span class="source-line-no">211</span><span id="line-211"></span>
+<span class="source-line-no">212</span><span id="line-212">        private final int id;</span>
+<span class="source-line-no">213</span><span id="line-213">        CGMAlert(int id) {</span>
+<span class="source-line-no">214</span><span id="line-214">            this.id = id;</span>
+<span class="source-line-no">215</span><span id="line-215">        }</span>
+<span class="source-line-no">216</span><span id="line-216"></span>
+<span class="source-line-no">217</span><span id="line-217">        public int id() {</span>
+<span class="source-line-no">218</span><span id="line-218">            return id;</span>
+<span class="source-line-no">219</span><span id="line-219">        }</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">        @Override</span>
+<span class="source-line-no">222</span><span id="line-222">        public int getId() {</span>
+<span class="source-line-no">223</span><span id="line-223">            return id;</span>
 <span class="source-line-no">224</span><span id="line-224">        }</span>
 <span class="source-line-no">225</span><span id="line-225"></span>
-<span class="source-line-no">226</span><span id="line-226">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
-<span class="source-line-no">227</span><span id="line-227">            BigInteger i = BigInteger.ZERO;</span>
-<span class="source-line-no">228</span><span id="line-228">            for (CGMAlert a : alerts) {</span>
-<span class="source-line-no">229</span><span id="line-229">                i.setBit(a.id());</span>
-<span class="source-line-no">230</span><span id="line-230">            }</span>
-<span class="source-line-no">231</span><span id="line-231">            return i;</span>
+<span class="source-line-no">226</span><span id="line-226">        public String toString() {</span>
+<span class="source-line-no">227</span><span id="line-227">            return name();</span>
+<span class="source-line-no">228</span><span id="line-228">        }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        public boolean isKnown() {</span>
+<span class="source-line-no">231</span><span id="line-231">            return !name().startsWith("DEFAULT_CGM_ALERT");</span>
 <span class="source-line-no">232</span><span id="line-232">        }</span>
-<span class="source-line-no">233</span><span id="line-233">    }</span>
-<span class="source-line-no">234</span><span id="line-234">    </span>
-<span class="source-line-no">235</span><span id="line-235">}</span>
+<span class="source-line-no">233</span><span id="line-233"></span>
+<span class="source-line-no">234</span><span id="line-234">        @Nullable</span>
+<span class="source-line-no">235</span><span id="line-235">        @Override</span>
+<span class="source-line-no">236</span><span id="line-236">        public String getDescription() {</span>
+<span class="source-line-no">237</span><span id="line-237">            if (!isKnown()) return null;</span>
+<span class="source-line-no">238</span><span id="line-238">            return name();</span>
+<span class="source-line-no">239</span><span id="line-239">        }</span>
+<span class="source-line-no">240</span><span id="line-240"></span>
+<span class="source-line-no">241</span><span id="line-241">        public static CGMAlert fromId(int id) {</span>
+<span class="source-line-no">242</span><span id="line-242">            for (CGMAlert alert : values()) {</span>
+<span class="source-line-no">243</span><span id="line-243">                if (alert.id() == id) {</span>
+<span class="source-line-no">244</span><span id="line-244">                    return alert;</span>
+<span class="source-line-no">245</span><span id="line-245">                }</span>
+<span class="source-line-no">246</span><span id="line-246">            }</span>
+<span class="source-line-no">247</span><span id="line-247">            return null;</span>
+<span class="source-line-no">248</span><span id="line-248">        }</span>
+<span class="source-line-no">249</span><span id="line-249"></span>
+<span class="source-line-no">250</span><span id="line-250">        public static Set&lt;CGMAlert&gt; fromBitmask(BigInteger bitmask) {</span>
+<span class="source-line-no">251</span><span id="line-251">            Set&lt;CGMAlert&gt; set = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">252</span><span id="line-252">            for (CGMAlert a : values()) {</span>
+<span class="source-line-no">253</span><span id="line-253">                if (bitmask.testBit(a.id())) {</span>
+<span class="source-line-no">254</span><span id="line-254">                    set.add(a);</span>
+<span class="source-line-no">255</span><span id="line-255">                }</span>
+<span class="source-line-no">256</span><span id="line-256">            }</span>
+<span class="source-line-no">257</span><span id="line-257">            return set;</span>
+<span class="source-line-no">258</span><span id="line-258">        }</span>
+<span class="source-line-no">259</span><span id="line-259"></span>
+<span class="source-line-no">260</span><span id="line-260">        public static BigInteger toBitmask(CGMAlert ...alerts) {</span>
+<span class="source-line-no">261</span><span id="line-261">            BigInteger i = BigInteger.ZERO;</span>
+<span class="source-line-no">262</span><span id="line-262">            for (CGMAlert a : alerts) {</span>
+<span class="source-line-no">263</span><span id="line-263">                i.setBit(a.id());</span>
+<span class="source-line-no">264</span><span id="line-264">            }</span>
+<span class="source-line-no">265</span><span id="line-265">            return i;</span>
+<span class="source-line-no">266</span><span id="line-266">        }</span>
+<span class="source-line-no">267</span><span id="line-267">    }</span>
+<span class="source-line-no">268</span><span id="line-268">    </span>
+<span class="source-line-no">269</span><span id="line-269">}</span>
 
 
 
