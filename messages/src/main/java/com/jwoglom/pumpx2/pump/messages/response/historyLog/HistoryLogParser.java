@@ -189,7 +189,14 @@ public class HistoryLogParser {
         CgmPairingCodeG7HistoryLog.class,
         BleLinkStatsHistoryLog.class,
         BleDailyConnectionsHistoryLog.class,
-        TipsErrorHistoryLog.class
+        TipsErrorHistoryLog.class,
+        SyncDoseStartHistoryLog.class,
+        SyncDoseCompleteHistoryLog.class,
+        AntDailyStatus1HistoryLog.class,
+        AntDailyStatus2HistoryLog.class,
+        TempAdjustmentCompletedHistoryLog.class,
+        TempAdjustmentActivatedHistoryLog.class,
+        AntSleepEatSchedSettingChangeHistoryLog.class
         // MESSAGES_END
     );
 

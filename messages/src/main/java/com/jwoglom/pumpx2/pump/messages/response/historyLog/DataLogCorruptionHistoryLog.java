@@ -39,7 +39,7 @@ public class DataLogCorruptionHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.block = Bytes.readUint32(raw, 10);
-        this.reason = raw[17] & 0xFF;
+        this.reason = raw[14] & 0xFF;
 
     }
 
@@ -49,8 +49,8 @@ public class DataLogCorruptionHistoryLog extends HistoryLog {
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(block),
-            new byte[]{0,0,0},
-            new byte[]{(byte) reason}));
+            new byte[]{(byte) reason},
+            new byte[]{0,0,0}));
     }
 
     public long getBlock() {

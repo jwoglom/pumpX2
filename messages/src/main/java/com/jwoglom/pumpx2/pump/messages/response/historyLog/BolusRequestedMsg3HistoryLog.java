@@ -15,6 +15,7 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     
     private int bolusId;
     private int spare;
+    private boolean queued;
     private float foodBolusSize;
     private float correctionBolusSize;
     private float totalBolusSize;
@@ -50,6 +51,7 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
         parseBase(raw);
         this.bolusId = Bytes.readShort(raw, 10);
         this.spare = Bytes.readShort(raw, 12);
+        this.queued = raw[12] != 0;
         this.foodBolusSize = Bytes.readFloat(raw, 14);
         this.correctionBolusSize = Bytes.readFloat(raw, 18);
         this.totalBolusSize = Bytes.readFloat(raw, 22);
@@ -79,8 +81,18 @@ public class BolusRequestedMsg3HistoryLog extends HistoryLog {
     public int getBolusId() {
         return bolusId;
     }
+    /**
+     * @return the raw 16-bit word at offset 2. The low byte is the queued flag, see {@link #isQueued()}.
+     */
     public int getSpare() {
         return spare;
+    }
+
+    /**
+     * @return true if the bolus was queued (Tandem Source schema field "Queued", byte 2)
+     */
+    public boolean isQueued() {
+        return queued;
     }
 
     /**

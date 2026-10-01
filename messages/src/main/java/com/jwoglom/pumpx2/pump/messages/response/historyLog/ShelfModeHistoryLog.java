@@ -44,9 +44,10 @@ public class ShelfModeHistoryLog extends HistoryLog {
         this.cargo = raw;
         parseBase(raw);
         this.msecSinceReset = Bytes.readUint32(raw, 10);
-        this.lipoIbc = raw[14];
-        this.lipoAbc = raw[15];
-        this.lipoCurrent = Bytes.readShort(raw, 16);
+        // Layout per the Tandem Source event schema: LiPoCurrent int16 @14, LiPo_ABC u8 @16, LiPo_IBC u8 @17.
+        this.lipoCurrent = (short) Bytes.readShort(raw, 14);
+        this.lipoAbc = raw[16] & 0xFF;
+        this.lipoIbc = raw[17] & 0xFF;
         this.lipoRemCap = Bytes.readUint32(raw, 18);
         this.lipoMv = Bytes.readUint32(raw, 22);
 
@@ -58,9 +59,9 @@ public class ShelfModeHistoryLog extends HistoryLog {
             Bytes.toUint32(pumpTimeSec),
             Bytes.toUint32(sequenceNum),
             Bytes.toUint32(msecSinceReset),
-            new byte[]{(byte) lipoIbc},
+            Bytes.firstTwoBytesLittleEndian(lipoCurrent & 0xFFFF),
             new byte[]{(byte) lipoAbc},
-            Bytes.firstTwoBytesLittleEndian(lipoCurrent),
+            new byte[]{(byte) lipoIbc},
             Bytes.toUint32(lipoRemCap),
             Bytes.toUint32(lipoMv)));
     }
@@ -69,14 +70,23 @@ public class ShelfModeHistoryLog extends HistoryLog {
         return msecSinceReset;
     }
 
+    /**
+     * @return battery internal capacity, in percent
+     */
     public int getLipoIbc() {
         return lipoIbc;
     }
 
+    /**
+     * @return battery available capacity, in percent
+     */
     public int getLipoAbc() {
         return lipoAbc;
     }
 
+    /**
+     * @return signed battery current, in mA
+     */
     public int getLipoCurrent() {
         return lipoCurrent;
     }

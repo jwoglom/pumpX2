@@ -42,7 +42,7 @@ public class VersionInfoHistoryLog extends HistoryLog {
         this.version = Bytes.readUint32(raw, 10);
         this.configABits = Bytes.readUint32(raw, 14);
         this.configBBits = Bytes.readUint32(raw, 18);
-        this.armCrc = Bytes.readShort(raw, 24);
+        this.armCrc = Bytes.readShort(raw, 22);
 
     }
 
@@ -54,8 +54,8 @@ public class VersionInfoHistoryLog extends HistoryLog {
             Bytes.toUint32(version),
             Bytes.toUint32(configABits),
             Bytes.toUint32(configBBits),
-            new byte[]{0, 0},
-            Bytes.firstTwoBytesLittleEndian(armCrc)));
+            Bytes.firstTwoBytesLittleEndian(armCrc),
+            new byte[]{0, 0}));
     }
 
     public long getVersion() {

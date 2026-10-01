@@ -1,6 +1,7 @@
 package com.jwoglom.pumpx2.pump.messages.response.historyLog;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
@@ -18,6 +19,7 @@ public class CannulaFilledHistoryLogTest {
                 expected
         );
         assertHexEquals(expected.getCargo(), parsedRes.getCargo());
+        assertEquals(CannulaFilledHistoryLog.InfusionSetType.DEFAULT_TUBED, parsedRes.getInfusionSetType());
     }
 
     @Test
