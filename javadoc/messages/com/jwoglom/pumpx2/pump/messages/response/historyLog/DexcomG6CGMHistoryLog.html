@@ -275,12 +275,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Signed RSSI, in dBm.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeStampSeconds()" class="member-name-link">getTimeStampSeconds</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSensorType()" class="member-name-link">getSensorType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeStampSeconds()" class="member-name-link">getTimeStampSeconds</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#parse(byte%5B%5D)" class="member-name-link">parse</a><wbr>(byte[]&nbsp;raw)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">
  Parsed fields for DexcomG6CGMHistoryLog:
  <code>glucoseValueStatusRaw</code><code>Bytes.readShort(raw, 10)</code>
@@ -298,9 +301,9 @@ loadScripts(document, 'script');</script>
  <code>egvCount</code><code>raw[25] &amp; 0xFF</code>
  </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeId()" class="member-name-link">typeId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -532,15 +535,26 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getSensorType()">
+<h3>getSensorType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-247">getSensorType</a></span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the sensor type encoded in bits 11-13 of the EGV info bitmask per the Tandem schema
+ (1 = Dexcom G6, 2 = Libre 2, 3 = Dexcom G7, 4 = Libre 3); see <a href="DailyStatusHistoryLog.SensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyStatusHistoryLog.SensorType</code></a></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getEgvInfo()">
 <h3>getEgvInfo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.EgvInfo.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.EgvInfo</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-277">getEgvInfo</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="DexcomG6CGMHistoryLog.EgvInfo.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">DexcomG6CGMHistoryLog.EgvInfo</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-284">getEgvInfo</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvSensorType()">
 <h3>getEgvSensorType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-286">getEgvSensorType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-293">getEgvSensorType</a></span>()</div>
 <div class="block">Bits 11-13 of <code>egvInfoBitmask</code>: the CGM sensor type. Tandem's FSL3 schema (opcode 480)
  names these bits "Sensor Type"; in captures they are 1 (G6) in 256 records from 2023 on, 3
  (G7) in 399 records, and 0 on 2022 firmware.</div>
@@ -549,13 +563,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInterval()">
 <h3>getInterval</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-294">getInterval</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-301">getInterval</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvCount()">
 <h3>getEgvCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-305">getEgvCount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DexcomG6CGMHistoryLog.html#line-312">getEgvCount</a></span>()</div>
 <div class="block">Byte 25, which Tandem's schema leaves unnamed. It is 0 in backfill records. In a five-minute
  reading it is the number of readings the record covers: 1 normally, or N after N-1 missed
  readings, whose backfill records the pump logs right after it. The meaning is inferred from

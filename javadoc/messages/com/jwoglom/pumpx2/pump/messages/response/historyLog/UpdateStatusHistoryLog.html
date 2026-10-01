@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-7">UpdateStatusHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-10">UpdateStatusHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
 </section>
 <section class="summary">
@@ -96,6 +96,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="UpdateStatusHistoryLog.FileDlAndSideloadStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FileDlAndSideloadStatus</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Bits 0-7: component file downloaded; bits 8-15: component sideload started (Tandem schema FileDlAndSideloadStatus).</div>
+</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="UpdateStatusHistoryLog.FullDlAndCrcStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FullDlAndCrcStatus</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Bits 0-7: component full download failed; bits 8-15: component CRC failed (Tandem schema FullDlAndCrcStatus).</div>
+</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="UpdateStatusHistoryLog.MetadataAndVersionStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.MetadataAndVersionStatus</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Bits 0-7: component metadata CRC failed; bits 8-15: component version check failed (Tandem schema MetadataAndVersionStatus).</div>
+</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="UpdateStatusHistoryLog.SwUpdateStatus.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.SwUpdateStatus</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Bits 0-7: component update succeeded; bits 8-15: component update failed (Tandem schema SwUpdateStatus).</div>
+</div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="UpdateStatusHistoryLog.UpdateSuccessful.html" class="type-name-link" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.UpdateSuccessful</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -170,17 +190,29 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileDlAndSideloadStatus()" class="member-name-link">getFileDlAndSideloadStatus</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullDlAndCrcStatus()" class="member-name-link">getFullDlAndCrcStatus</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.FileDlAndSideloadStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FileDlAndSideloadStatus</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileDlAndSideloadStatusSet()" class="member-name-link">getFileDlAndSideloadStatusSet</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullDlAndCrcStatus()" class="member-name-link">getFullDlAndCrcStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.FullDlAndCrcStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FullDlAndCrcStatus</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullDlAndCrcStatusSet()" class="member-name-link">getFullDlAndCrcStatusSet</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadataAndVersionStatus()" class="member-name-link">getMetadataAndVersionStatus</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSwPartNum()" class="member-name-link">getSwPartNum</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.MetadataAndVersionStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.MetadataAndVersionStatus</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadataAndVersionStatusSet()" class="member-name-link">getMetadataAndVersionStatusSet</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSwUpdateStatus()" class="member-name-link">getSwUpdateStatus</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSwPartNum()" class="member-name-link">getSwPartNum</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSwUpdateStatus()" class="member-name-link">getSwUpdateStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.SwUpdateStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.SwUpdateStatus</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSwUpdateStatusSet()" class="member-name-link">getSwUpdateStatusSet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpdateSuccessful()" class="member-name-link">getUpdateSuccessful</a>()</code></div>
@@ -228,13 +260,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>UpdateStatusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-22">UpdateStatusHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-25">UpdateStatusHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,long)">
 <h3>UpdateStatusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-23">UpdateStatusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-26">UpdateStatusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;swUpdateStatus,
  int&nbsp;metadataAndVersionStatus,
@@ -248,7 +280,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,int,int,long)">
 <h3>UpdateStatusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-36">UpdateStatusHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;swUpdateStatus,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-39">UpdateStatusHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;swUpdateStatus,
  int&nbsp;metadataAndVersionStatus,
  int&nbsp;fullDlAndCrcStatus,
  int&nbsp;fileDlAndSideloadStatus,
@@ -268,7 +300,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-40">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-43">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -278,7 +310,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-56">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-59">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for UpdateStatusHistoryLog:</caption>
  <tr><td><code>swUpdateStatus</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -298,7 +330,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-70">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-73">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;swUpdateStatus,
  int&nbsp;metadataAndVersionStatus,
@@ -312,37 +344,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSwUpdateStatus()">
 <h3>getSwUpdateStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-84">getSwUpdateStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-87">getSwUpdateStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMetadataAndVersionStatus()">
 <h3>getMetadataAndVersionStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-88">getMetadataAndVersionStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-91">getMetadataAndVersionStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFullDlAndCrcStatus()">
 <h3>getFullDlAndCrcStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-92">getFullDlAndCrcStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-95">getFullDlAndCrcStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFileDlAndSideloadStatus()">
 <h3>getFileDlAndSideloadStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-96">getFileDlAndSideloadStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-99">getFileDlAndSideloadStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExternalFlashStatus()">
 <h3>getExternalFlashStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-100">getExternalFlashStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-103">getExternalFlashStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUpdateSuccessful()">
 <h3>getUpdateSuccessful</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-107">getUpdateSuccessful</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-110">getUpdateSuccessful</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>raw updateSuccessful status; see <a href="UpdateStatusHistoryLog.UpdateSuccessful.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>UpdateStatusHistoryLog.UpdateSuccessful</code></a> for known values</dd>
@@ -352,13 +384,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUpdateSuccessfulEnum()">
 <h3>getUpdateSuccessfulEnum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UpdateStatusHistoryLog.UpdateSuccessful.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.UpdateSuccessful</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-111">getUpdateSuccessfulEnum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="UpdateStatusHistoryLog.UpdateSuccessful.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.UpdateSuccessful</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-114">getUpdateSuccessfulEnum</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSwPartNum()">
 <h3>getSwPartNum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-115">getSwPartNum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-118">getSwPartNum</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSwUpdateStatusSet()">
+<h3>getSwUpdateStatusSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.SwUpdateStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.SwUpdateStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-122">getSwUpdateStatusSet</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMetadataAndVersionStatusSet()">
+<h3>getMetadataAndVersionStatusSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.MetadataAndVersionStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.MetadataAndVersionStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-125">getMetadataAndVersionStatusSet</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFullDlAndCrcStatusSet()">
+<h3>getFullDlAndCrcStatusSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.FullDlAndCrcStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FullDlAndCrcStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-128">getFullDlAndCrcStatusSet</a></span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFileDlAndSideloadStatusSet()">
+<h3>getFileDlAndSideloadStatusSet</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="UpdateStatusHistoryLog.FileDlAndSideloadStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">UpdateStatusHistoryLog.FileDlAndSideloadStatus</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/UpdateStatusHistoryLog.html#line-131">getFileDlAndSideloadStatusSet</a></span>()</div>
 </section>
 </li>
 </ul>
