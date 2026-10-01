@@ -111,7 +111,9 @@ public class MalfunctionBitmaskStatusResponse extends NotificationMessage {
         ARM_BLE_COM(22),
         OVERTRAVEL_STALL(23),
         UNDERTRAVEL_STALL(24),
-        PUSHOFF_STALL(25)
+        PUSHOFF_STALL(25),
+        /** Tandem firmware name: Malf_HW_CRYPTO_FAIL */
+        HW_CRYPTO_FAIL(26)
         ;
 
         private final int bit;
