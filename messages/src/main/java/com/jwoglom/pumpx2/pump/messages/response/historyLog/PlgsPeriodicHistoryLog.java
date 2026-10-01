@@ -218,4 +218,38 @@ public class PlgsPeriodicHistoryLog extends HistoryLog {
             return id;
         }
     }
+
+    public enum Status {
+        SUSPEND_PREDICTED(1),
+        SUSPEND_CURRENT(2),
+        RESUME_EGV_RISE(16),
+        RESUME_NADIR_LOCK(64),
+        UNAVAILABLE_TIME_SMALL(128),
+        UNAVAILABLE_SUSPEND_OVERRIDE(256),
+        UNAVAILABLE_CGM_OFF(512),
+        UNAVAILABLE_HIGH_EGV(1024),
+        UNAVAILABLE_NOT_THERAPY(2048),
+        UNAVAILABLE_BOLUS_ACTIVE(4096),
+        UNAVAILABLE_NO_CURRENT(8192)
+
+        ;
+        private final int id;
+        Status(int id) {
+            this.id = id;
+        }
+
+        public static Set<Status> fromId(long mask) {
+            Set<Status> items = new TreeSet<>();
+            for (Status i : values()) {
+                if ((mask & i.getId()) != 0) {
+                    items.add(i);
+                }
+            }
+            return items;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
 }
