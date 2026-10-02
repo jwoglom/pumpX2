@@ -91,9 +91,9 @@
 <span class="source-line-no">074</span><span id="line-74"></span>
 <span class="source-line-no">075</span><span id="line-75">    public enum AlarmResponseType implements NotificationEnum {</span>
 <span class="source-line-no">076</span><span id="line-76">        /** Tandem firmware name: Alarm_DELIVERY_NOT_STOPPED */</span>
-<span class="source-line-no">077</span><span id="line-77">        CARTRIDGE_ALARM(0, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">077</span><span id="line-77">        CARTRIDGE_ALARM_DELIVERY_NOT_STOPPED(0, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">078</span><span id="line-78">        /** Tandem firmware name: Alarm_SPOOL_MOVE */</span>
-<span class="source-line-no">079</span><span id="line-79">        CARTRIDGE_ALARM2(1, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">079</span><span id="line-79">        CARTRIDGE_ALARM_SPOOL_MOVE(1, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">080</span><span id="line-80">        /** Tandem firmware name: Alarm_OCCLUSION */</span>
 <span class="source-line-no">081</span><span id="line-81">        OCCLUSION_ALARM(2, "An occlusion has occurred. Please check your pump site and tubing and restart insulin delivery."),</span>
 <span class="source-line-no">082</span><span id="line-82">        /** Tandem firmware name: Alarm_NO_STARTUP_ACK */</span>
@@ -101,15 +101,15 @@
 <span class="source-line-no">084</span><span id="line-84">        /** Tandem firmware name: Alarm_OBE */</span>
 <span class="source-line-no">085</span><span id="line-85">        OBE_ALARM(4),</span>
 <span class="source-line-no">086</span><span id="line-86">        /** Tandem firmware name: Alarm_P2 */</span>
-<span class="source-line-no">087</span><span id="line-87">        CARTRIDGE_ALARM3(5, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">087</span><span id="line-87">        CARTRIDGE_ALARM_P2(5, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">088</span><span id="line-88">        /** Tandem firmware name: Alarm_VENT_NOT_WORKING */</span>
-<span class="source-line-no">089</span><span id="line-89">        CARTRIDGE_ALARM4(6, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">089</span><span id="line-89">        CARTRIDGE_ALARM_VENT_NOT_WORKING(6, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">090</span><span id="line-90">        /** Tandem firmware name: Alarm_AUTO_OFF_TRIGGERED */</span>
 <span class="source-line-no">091</span><span id="line-91">        AUTO_OFF_ALARM(7, "Pump will stop delivering insulin automatically soon because no user activity has occurred and the auto-off setting is enabled."),</span>
 <span class="source-line-no">092</span><span id="line-92">        /** Tandem firmware name: Alarm_LIQ_OUT */</span>
 <span class="source-line-no">093</span><span id="line-93">        EMPTY_CARTRIDGE_ALARM(8, "Cartridge is out of insulin and insulin delivery cannot occur. Please fill a new cartridge."),</span>
 <span class="source-line-no">094</span><span id="line-94">        /** Tandem firmware name: Alarm_LIQ_EX */</span>
-<span class="source-line-no">095</span><span id="line-95">        CARTRIDGE_ALARM5(9, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">095</span><span id="line-95">        CARTRIDGE_ALARM_LIQ_EX(9, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">096</span><span id="line-96">        /** Tandem firmware name: Alarm_TEMPERATURE_OOR */</span>
 <span class="source-line-no">097</span><span id="line-97">        TEMPERATURE_ALARM(10, "Pump temperature is out of range and insulin cannot be safely delivered."),</span>
 <span class="source-line-no">098</span><span id="line-98">        /** Tandem firmware name: Alarm_TEMPERATURE_XDCR */</span>
@@ -123,7 +123,7 @@
 <span class="source-line-no">106</span><span id="line-106">        /** Tandem firmware name: Alarm_LIPO_TEMPERATURE */</span>
 <span class="source-line-no">107</span><span id="line-107">        TEMPERATURE_ALARM3(15, "Pump temperature is out of range and insulin cannot be safely delivered."),</span>
 <span class="source-line-no">108</span><span id="line-108">        /** Tandem firmware name: Alarm_DELIVERY_REQUEST_FAIL */</span>
-<span class="source-line-no">109</span><span id="line-109">        CARTRIDGE_ALARM6(16, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">109</span><span id="line-109">        CARTRIDGE_ALARM_DELIVERY_REQUEST_FAIL(16, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">110</span><span id="line-110">        /** Tandem firmware name: Alarm_CANT_HOME_obsolete */</span>
 <span class="source-line-no">111</span><span id="line-111">        DEFAULT_ALARM_17(17),</span>
 <span class="source-line-no">112</span><span id="line-112">        /** Tandem firmware name: Alarm_STATE_SUSPEND */</span>
@@ -131,7 +131,7 @@
 <span class="source-line-no">114</span><span id="line-114">        /** Tandem firmware name: Alarm_UNICORN_DO_NOT_USE */</span>
 <span class="source-line-no">115</span><span id="line-115">        DEFAULT_ALARM_19(19),</span>
 <span class="source-line-no">116</span><span id="line-116">        /** Tandem firmware name: Alarm_MOTOR_PICASSO */</span>
-<span class="source-line-no">117</span><span id="line-117">        CARTRIDGE_ALARM7(20, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">117</span><span id="line-117">        CARTRIDGE_ALARM_MOTOR_PICASSO(20, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">118</span><span id="line-118">        /** Tandem firmware name: Alarm_PRESSURE_DISAGREE */</span>
 <span class="source-line-no">119</span><span id="line-119">        ALTITUDE_ALARM(21, "Pump altitude is out of range and insulin cannot be safely delivered."),</span>
 <span class="source-line-no">120</span><span id="line-120">        /** Tandem firmware name: Alarm_STUCK_BUTTON */</span>
@@ -149,17 +149,17 @@
 <span class="source-line-no">132</span><span id="line-132">        /** Tandem firmware name: Alarm_UNUSED_2 */</span>
 <span class="source-line-no">133</span><span id="line-133">        DEFAULT_ALARM_28(28),</span>
 <span class="source-line-no">134</span><span id="line-134">        /** Tandem firmware name: Alarm_MOTOR_CART_RANGE_LOW */</span>
-<span class="source-line-no">135</span><span id="line-135">        CARTRIDGE_ALARM10(29, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">135</span><span id="line-135">        CARTRIDGE_ALARM_MOTOR_CART_RANGE_LOW(29, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">136</span><span id="line-136">        /** Tandem firmware name: Alarm_MOTOR_STALL */</span>
-<span class="source-line-no">137</span><span id="line-137">        CARTRIDGE_ALARM11(30, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">137</span><span id="line-137">        CARTRIDGE_ALARM_MOTOR_STALL(30, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">138</span><span id="line-138">        /** Tandem firmware name: Alarm_MOTOR_VENT_STALL */</span>
-<span class="source-line-no">139</span><span id="line-139">        CARTRIDGE_ALARM12(31, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">139</span><span id="line-139">        CARTRIDGE_ALARM_MOTOR_VENT_STALL(31, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">140</span><span id="line-140">        /** Tandem firmware name: Alarm_NO_CARTRIDGE_DETECTED */</span>
 <span class="source-line-no">141</span><span id="line-141">        NO_CARTRIDGE_DETECTED_ALARM(32),</span>
 <span class="source-line-no">142</span><span id="line-142">        /** Tandem firmware name: Alarm_LIPO_INSUFF_POWER */</span>
 <span class="source-line-no">143</span><span id="line-143">        LIPO_INSUFF_POWER_ALARM(33),</span>
 <span class="source-line-no">144</span><span id="line-144">        /** Tandem firmware name: Alarm_MOTOR_HALL_EFFECT_FAIL */</span>
-<span class="source-line-no">145</span><span id="line-145">        CARTRIDGE_ALARM_34(34, "There is an issue with the cartridge and it needs to be replaced."),</span>
+<span class="source-line-no">145</span><span id="line-145">        CARTRIDGE_ALARM_MOTOR_HALL_EFFECT_FAIL(34, "There is an issue with the cartridge and it needs to be replaced."),</span>
 <span class="source-line-no">146</span><span id="line-146">        /** Tandem firmware name: Alarm_MOTOR_FAILURE_MODE */</span>
 <span class="source-line-no">147</span><span id="line-147">        MOTOR_FAILURE_MODE_ALARM(35),</span>
 <span class="source-line-no">148</span><span id="line-148">        /** Tandem firmware name: Alarm_MOTOR_PRIME_STALL_OBE */</span>
