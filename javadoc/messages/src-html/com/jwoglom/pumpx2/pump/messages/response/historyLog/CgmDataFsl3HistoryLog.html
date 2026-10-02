@@ -21,116 +21,173 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 480,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "CGM Data (FSL3)",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_CGM_DATA_FSL3"</span>
-<span class="source-line-no">011</span><span id="line-11">)</span>
-<span class="source-line-no">012</span><span id="line-12">public class CgmDataFsl3HistoryLog extends HistoryLog {</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">    private int status;</span>
-<span class="source-line-no">015</span><span id="line-15">    private int type;</span>
-<span class="source-line-no">016</span><span id="line-16">    private int rate;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int rssi;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int value;</span>
-<span class="source-line-no">019</span><span id="line-19">    private long timestamp;</span>
-<span class="source-line-no">020</span><span id="line-20">    private long transmitterTimestamp;</span>
-<span class="source-line-no">021</span><span id="line-21"></span>
-<span class="source-line-no">022</span><span id="line-22">    public CgmDataFsl3HistoryLog() {}</span>
-<span class="source-line-no">023</span><span id="line-23">    public CgmDataFsl3HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">024</span><span id="line-24">        this(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0);</span>
-<span class="source-line-no">025</span><span id="line-25">    }</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    public CgmDataFsl3HistoryLog(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">028</span><span id="line-28">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">029</span><span id="line-29">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
-<span class="source-line-no">030</span><span id="line-30">        this.status = status;</span>
-<span class="source-line-no">031</span><span id="line-31">        this.type = type;</span>
-<span class="source-line-no">032</span><span id="line-32">        this.rate = rate;</span>
-<span class="source-line-no">033</span><span id="line-33">        this.rssi = rssi;</span>
-<span class="source-line-no">034</span><span id="line-34">        this.value = value;</span>
-<span class="source-line-no">035</span><span id="line-35">        this.timestamp = timestamp;</span>
-<span class="source-line-no">036</span><span id="line-36">        this.transmitterTimestamp = transmitterTimestamp;</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">    public CgmDataFsl3HistoryLog(int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">040</span><span id="line-40">        this(0, 0, status, type, rate, rssi, value, timestamp, transmitterTimestamp);</span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public int typeId() {</span>
-<span class="source-line-no">044</span><span id="line-44">        return 480;</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    /**</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;caption&gt;Parsed fields for CgmDataFsl3HistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;type&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;value&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;timestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;transmitterTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;/table&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     */</span>
-<span class="source-line-no">059</span><span id="line-59">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">060</span><span id="line-60">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">061</span><span id="line-61">        this.cargo = raw;</span>
-<span class="source-line-no">062</span><span id="line-62">        parseBase(raw);</span>
-<span class="source-line-no">063</span><span id="line-63">        this.status = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">064</span><span id="line-64">        this.type = raw[12];</span>
-<span class="source-line-no">065</span><span id="line-65">        this.rate = raw[13];</span>
-<span class="source-line-no">066</span><span id="line-66">        this.rssi = raw[15];</span>
-<span class="source-line-no">067</span><span id="line-67">        this.value = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">068</span><span id="line-68">        this.timestamp = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">069</span><span id="line-69">        this.transmitterTimestamp = Bytes.readUint32(raw, 22);</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">074</span><span id="line-74">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">007</span><span id="line-7">import java.util.Set;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">/**</span>
+<span class="source-line-no">010</span><span id="line-10"> * FreeStyle Libre 3 CGM data sample. Same layout as {@link CgmDataFsl2HistoryLog}.</span>
+<span class="source-line-no">011</span><span id="line-11"> */</span>
+<span class="source-line-no">012</span><span id="line-12">@HistoryLogProps(</span>
+<span class="source-line-no">013</span><span id="line-13">    opCode = 480,</span>
+<span class="source-line-no">014</span><span id="line-14">    displayName = "CGM Data (FSL3)",</span>
+<span class="source-line-no">015</span><span id="line-15">    internalName = "LID_CGM_DATA_FSL3"</span>
+<span class="source-line-no">016</span><span id="line-16">)</span>
+<span class="source-line-no">017</span><span id="line-17">public class CgmDataFsl3HistoryLog extends HistoryLog {</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">    private int glucoseValueStatusRaw;</span>
+<span class="source-line-no">020</span><span id="line-20">    private int cgmDataTypeRaw;</span>
+<span class="source-line-no">021</span><span id="line-21">    private int rate;</span>
+<span class="source-line-no">022</span><span id="line-22">    private int algorithmStateRaw;</span>
+<span class="source-line-no">023</span><span id="line-23">    private int rssi;</span>
+<span class="source-line-no">024</span><span id="line-24">    private int currentGlucoseDisplayValue;</span>
+<span class="source-line-no">025</span><span id="line-25">    private long egvTimestamp;</span>
+<span class="source-line-no">026</span><span id="line-26">    private int egvInfoBitmaskRaw;</span>
+<span class="source-line-no">027</span><span id="line-27">    private int interval;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    public CgmDataFsl3HistoryLog() {}</span>
+<span class="source-line-no">030</span><span id="line-30">    public CgmDataFsl3HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">031</span><span id="line-31">        this(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">032</span><span id="line-32">    }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public CgmDataFsl3HistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">035</span><span id="line-35">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">036</span><span id="line-36">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
+<span class="source-line-no">037</span><span id="line-37">        parse(cargo);</span>
+<span class="source-line-no">038</span><span id="line-38">    }</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40">    public CgmDataFsl3HistoryLog(int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">041</span><span id="line-41">        this(0, 0, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
+<span class="source-line-no">042</span><span id="line-42">    }</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public int typeId() {</span>
+<span class="source-line-no">045</span><span id="line-45">        return 480;</span>
+<span class="source-line-no">046</span><span id="line-46">    }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">    /**</span>
+<span class="source-line-no">049</span><span id="line-49">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">050</span><span id="line-50">     * &lt;caption&gt;Parsed fields for CgmDataFsl3HistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseValueStatusRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmDataTypeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(short) Bytes.readShort(raw, 12)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;algorithmStateRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentGlucoseDisplayValue&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvInfoBitmaskRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;interval&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;/table&gt;</span>
+<span class="source-line-no">061</span><span id="line-61">     */</span>
+<span class="source-line-no">062</span><span id="line-62">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">063</span><span id="line-63">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">064</span><span id="line-64">        this.cargo = raw;</span>
+<span class="source-line-no">065</span><span id="line-65">        parseBase(raw);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.glucoseValueStatusRaw = raw[10] &amp; 0xFF;</span>
+<span class="source-line-no">067</span><span id="line-67">        this.cgmDataTypeRaw = raw[11] &amp; 0xFF;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.rate = (short) Bytes.readShort(raw, 12);</span>
+<span class="source-line-no">069</span><span id="line-69">        this.algorithmStateRaw = raw[14] &amp; 0xFF;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.rssi = raw[15];</span>
+<span class="source-line-no">071</span><span id="line-71">        this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">072</span><span id="line-72">        this.egvTimestamp = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">073</span><span id="line-73">        this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);</span>
+<span class="source-line-no">074</span><span id="line-74">        this.interval = raw[24] &amp; 0xFF;</span>
 <span class="source-line-no">075</span><span id="line-75">    }</span>
 <span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int status, int type, int rate, int rssi, int value, long timestamp, long transmitterTimestamp) {</span>
-<span class="source-line-no">078</span><span id="line-78">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">079</span><span id="line-79">            HistoryLog.typeIdBytes(480, 0), // 480 = 0x01E0</span>
-<span class="source-line-no">080</span><span id="line-80">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">081</span><span id="line-81">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">082</span><span id="line-82">            Bytes.firstTwoBytesLittleEndian(status),</span>
-<span class="source-line-no">083</span><span id="line-83">            new byte[]{(byte) type},</span>
-<span class="source-line-no">084</span><span id="line-84">            new byte[]{(byte) rate},</span>
-<span class="source-line-no">085</span><span id="line-85">            new byte[]{0},</span>
-<span class="source-line-no">086</span><span id="line-86">            new byte[]{(byte) rssi},</span>
-<span class="source-line-no">087</span><span id="line-87">            Bytes.firstTwoBytesLittleEndian(value),</span>
-<span class="source-line-no">088</span><span id="line-88">            Bytes.toUint32(timestamp),</span>
-<span class="source-line-no">089</span><span id="line-89">            Bytes.toUint32(transmitterTimestamp)));</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    public int getStatus() {</span>
-<span class="source-line-no">093</span><span id="line-93">        return status;</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95">    public int getType() {</span>
-<span class="source-line-no">096</span><span id="line-96">        return type;</span>
-<span class="source-line-no">097</span><span id="line-97">    }</span>
-<span class="source-line-no">098</span><span id="line-98">    public int getRate() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return rate;</span>
+<span class="source-line-no">077</span><span id="line-77">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">078</span><span id="line-78">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">082</span><span id="line-82">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">083</span><span id="line-83">            HistoryLog.typeIdBytes(480, 0), // 480 = 0x01E0</span>
+<span class="source-line-no">084</span><span id="line-84">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">085</span><span id="line-85">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">086</span><span id="line-86">            new byte[]{(byte) glucoseValueStatusRaw},</span>
+<span class="source-line-no">087</span><span id="line-87">            new byte[]{(byte) cgmDataTypeRaw},</span>
+<span class="source-line-no">088</span><span id="line-88">            Bytes.firstTwoBytesLittleEndian(rate &amp; 0xFFFF),</span>
+<span class="source-line-no">089</span><span id="line-89">            new byte[]{(byte) algorithmStateRaw},</span>
+<span class="source-line-no">090</span><span id="line-90">            new byte[]{(byte) rssi},</span>
+<span class="source-line-no">091</span><span id="line-91">            Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue),</span>
+<span class="source-line-no">092</span><span id="line-92">            Bytes.toUint32(egvTimestamp),</span>
+<span class="source-line-no">093</span><span id="line-93">            Bytes.firstTwoBytesLittleEndian(egvInfoBitmaskRaw),</span>
+<span class="source-line-no">094</span><span id="line-94">            new byte[]{(byte) interval},</span>
+<span class="source-line-no">095</span><span id="line-95">            new byte[]{0}));</span>
+<span class="source-line-no">096</span><span id="line-96">    }</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">    public int getGlucoseValueStatusRaw() {</span>
+<span class="source-line-no">099</span><span id="line-99">        return glucoseValueStatusRaw;</span>
 <span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101">    public int getRssi() {</span>
-<span class="source-line-no">102</span><span id="line-102">        return rssi;</span>
+<span class="source-line-no">101</span><span id="line-101">    public CgmDataFsl2HistoryLog.GlucoseValueStatus getGlucoseValueStatus() {</span>
+<span class="source-line-no">102</span><span id="line-102">        return CgmDataFsl2HistoryLog.GlucoseValueStatus.fromId(glucoseValueStatusRaw);</span>
 <span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104">    /**</span>
-<span class="source-line-no">105</span><span id="line-105">     * @return the glucose value in mg/dL</span>
-<span class="source-line-no">106</span><span id="line-106">     */</span>
-<span class="source-line-no">107</span><span id="line-107">    public int getValue() {</span>
-<span class="source-line-no">108</span><span id="line-108">        return value;</span>
+<span class="source-line-no">104</span><span id="line-104">    public int getCgmDataTypeRaw() {</span>
+<span class="source-line-no">105</span><span id="line-105">        return cgmDataTypeRaw;</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107">    public Set&lt;CgmDataFsl2HistoryLog.CgmDataType&gt; getCgmDataType() {</span>
+<span class="source-line-no">108</span><span id="line-108">        return CgmDataFsl2HistoryLog.CgmDataType.fromId(cgmDataTypeRaw);</span>
 <span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110">    public long getTimestamp() {</span>
-<span class="source-line-no">111</span><span id="line-111">        return timestamp;</span>
-<span class="source-line-no">112</span><span id="line-112">    }</span>
-<span class="source-line-no">113</span><span id="line-113">    public long getTransmitterTimestamp() {</span>
-<span class="source-line-no">114</span><span id="line-114">        return transmitterTimestamp;</span>
+<span class="source-line-no">110</span><span id="line-110">    /**</span>
+<span class="source-line-no">111</span><span id="line-111">     * Signed rate of change, in mg/dL per minute.</span>
+<span class="source-line-no">112</span><span id="line-112">     */</span>
+<span class="source-line-no">113</span><span id="line-113">    public int getRate() {</span>
+<span class="source-line-no">114</span><span id="line-114">        return rate;</span>
 <span class="source-line-no">115</span><span id="line-115">    }</span>
-<span class="source-line-no">116</span><span id="line-116">}</span>
+<span class="source-line-no">116</span><span id="line-116">    public int getAlgorithmStateRaw() {</span>
+<span class="source-line-no">117</span><span id="line-117">        return algorithmStateRaw;</span>
+<span class="source-line-no">118</span><span id="line-118">    }</span>
+<span class="source-line-no">119</span><span id="line-119">    public CgmDataFsl2HistoryLog.AlgorithmState getAlgorithmState() {</span>
+<span class="source-line-no">120</span><span id="line-120">        return CgmDataFsl2HistoryLog.AlgorithmState.fromId(algorithmStateRaw);</span>
+<span class="source-line-no">121</span><span id="line-121">    }</span>
+<span class="source-line-no">122</span><span id="line-122">    /**</span>
+<span class="source-line-no">123</span><span id="line-123">     * Signed RSSI, in dBm.</span>
+<span class="source-line-no">124</span><span id="line-124">     */</span>
+<span class="source-line-no">125</span><span id="line-125">    public int getRssi() {</span>
+<span class="source-line-no">126</span><span id="line-126">        return rssi;</span>
+<span class="source-line-no">127</span><span id="line-127">    }</span>
+<span class="source-line-no">128</span><span id="line-128">    /**</span>
+<span class="source-line-no">129</span><span id="line-129">     * @return the glucose value in mg/dL</span>
+<span class="source-line-no">130</span><span id="line-130">     */</span>
+<span class="source-line-no">131</span><span id="line-131">    public int getCurrentGlucoseDisplayValue() {</span>
+<span class="source-line-no">132</span><span id="line-132">        return currentGlucoseDisplayValue;</span>
+<span class="source-line-no">133</span><span id="line-133">    }</span>
+<span class="source-line-no">134</span><span id="line-134">    public long getEgvTimestamp() {</span>
+<span class="source-line-no">135</span><span id="line-135">        return egvTimestamp;</span>
+<span class="source-line-no">136</span><span id="line-136">    }</span>
+<span class="source-line-no">137</span><span id="line-137">    public int getEgvInfoBitmaskRaw() {</span>
+<span class="source-line-no">138</span><span id="line-138">        return egvInfoBitmaskRaw;</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
+<span class="source-line-no">140</span><span id="line-140">    public Set&lt;CgmDataFsl2HistoryLog.EgvInfo&gt; getEgvInfo() {</span>
+<span class="source-line-no">141</span><span id="line-141">        return CgmDataFsl2HistoryLog.EgvInfo.fromId(egvInfoBitmaskRaw);</span>
+<span class="source-line-no">142</span><span id="line-142">    }</span>
+<span class="source-line-no">143</span><span id="line-143">    /**</span>
+<span class="source-line-no">144</span><span id="line-144">     * @return the sensor type encoded in bits 11-13 of the EGV info bitmask (2 = Libre 2, 4 = Libre 3)</span>
+<span class="source-line-no">145</span><span id="line-145">     */</span>
+<span class="source-line-no">146</span><span id="line-146">    public int getSensorType() {</span>
+<span class="source-line-no">147</span><span id="line-147">        return (egvInfoBitmaskRaw &gt;&gt; 11) &amp; 0x7;</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">149</span><span id="line-149">    public int getInterval() {</span>
+<span class="source-line-no">150</span><span id="line-150">        return interval;</span>
+<span class="source-line-no">151</span><span id="line-151">    }</span>
+<span class="source-line-no">152</span><span id="line-152"></span>
+<span class="source-line-no">153</span><span id="line-153">    /** @deprecated use {@link #getGlucoseValueStatusRaw()} */</span>
+<span class="source-line-no">154</span><span id="line-154">    @Deprecated</span>
+<span class="source-line-no">155</span><span id="line-155">    public int getStatus() {</span>
+<span class="source-line-no">156</span><span id="line-156">        return glucoseValueStatusRaw;</span>
+<span class="source-line-no">157</span><span id="line-157">    }</span>
+<span class="source-line-no">158</span><span id="line-158">    /** @deprecated use {@link #getCgmDataTypeRaw()} */</span>
+<span class="source-line-no">159</span><span id="line-159">    @Deprecated</span>
+<span class="source-line-no">160</span><span id="line-160">    public int getType() {</span>
+<span class="source-line-no">161</span><span id="line-161">        return cgmDataTypeRaw;</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
+<span class="source-line-no">163</span><span id="line-163">    /** @deprecated use {@link #getCurrentGlucoseDisplayValue()} */</span>
+<span class="source-line-no">164</span><span id="line-164">    @Deprecated</span>
+<span class="source-line-no">165</span><span id="line-165">    public int getValue() {</span>
+<span class="source-line-no">166</span><span id="line-166">        return currentGlucoseDisplayValue;</span>
+<span class="source-line-no">167</span><span id="line-167">    }</span>
+<span class="source-line-no">168</span><span id="line-168">    /** @deprecated use {@link #getEgvTimestamp()} */</span>
+<span class="source-line-no">169</span><span id="line-169">    @Deprecated</span>
+<span class="source-line-no">170</span><span id="line-170">    public long getTimestamp() {</span>
+<span class="source-line-no">171</span><span id="line-171">        return egvTimestamp;</span>
+<span class="source-line-no">172</span><span id="line-172">    }</span>
+<span class="source-line-no">173</span><span id="line-173">}</span>
 
 
 
