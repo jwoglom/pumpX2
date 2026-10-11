@@ -95,29 +95,32 @@
 <span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(tempRateId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(tempRateId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;/table&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     */</span>
-<span class="source-line-no">083</span><span id="line-83">    public static byte[] buildCargo(int status, int tempRateId) {</span>
-<span class="source-line-no">084</span><span id="line-84">        return Bytes.combine(</span>
-<span class="source-line-no">085</span><span id="line-85">            new byte[]{ (byte) status },</span>
-<span class="source-line-no">086</span><span id="line-86">            Bytes.firstTwoBytesLittleEndian(tempRateId));</span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89"></span>
-<span class="source-line-no">090</span><span id="line-90">    /**</span>
-<span class="source-line-no">091</span><span id="line-91">     * @return 0 if successful</span>
-<span class="source-line-no">092</span><span id="line-92">     */</span>
-<span class="source-line-no">093</span><span id="line-93">    public int getStatus() {</span>
-<span class="source-line-no">094</span><span id="line-94">        return status;</span>
-<span class="source-line-no">095</span><span id="line-95">    }</span>
-<span class="source-line-no">096</span><span id="line-96"></span>
-<span class="source-line-no">097</span><span id="line-97">    /**</span>
-<span class="source-line-no">098</span><span id="line-98">     * @return ID of temp rate which exists in history log (see TempRateActivatedHistoryLog)</span>
-<span class="source-line-no">099</span><span id="line-99">     */</span>
-<span class="source-line-no">100</span><span id="line-100">    public int getTempRateId() {</span>
-<span class="source-line-no">101</span><span id="line-101">        return tempRateId;</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103">}</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;/table&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     */</span>
+<span class="source-line-no">084</span><span id="line-84">    public static byte[] buildCargo(int status, int tempRateId) {</span>
+<span class="source-line-no">085</span><span id="line-85">        return Bytes.combine(</span>
+<span class="source-line-no">086</span><span id="line-86">            new byte[]{ (byte) status },</span>
+<span class="source-line-no">087</span><span id="line-87">            Bytes.firstTwoBytesLittleEndian(tempRateId),</span>
+<span class="source-line-no">088</span><span id="line-88">            // raw[3] is not decoded; 0 in the captured successful response</span>
+<span class="source-line-no">089</span><span id="line-89">            new byte[]{ 0 });</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    /**</span>
+<span class="source-line-no">094</span><span id="line-94">     * @return 0 if successful</span>
+<span class="source-line-no">095</span><span id="line-95">     */</span>
+<span class="source-line-no">096</span><span id="line-96">    public int getStatus() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return status;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">    /**</span>
+<span class="source-line-no">101</span><span id="line-101">     * @return ID of temp rate which exists in history log (see TempRateActivatedHistoryLog)</span>
+<span class="source-line-no">102</span><span id="line-102">     */</span>
+<span class="source-line-no">103</span><span id="line-103">    public int getTempRateId() {</span>
+<span class="source-line-no">104</span><span id="line-104">        return tempRateId;</span>
+<span class="source-line-no">105</span><span id="line-105">    }</span>
+<span class="source-line-no">106</span><span id="line-106">}</span>
 
 
 
