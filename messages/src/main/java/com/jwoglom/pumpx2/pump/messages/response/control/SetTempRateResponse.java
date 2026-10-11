@@ -49,7 +49,9 @@ public class SetTempRateResponse extends StatusMessage {
     public static byte[] buildCargo(int status, int tempRateId) {
         return Bytes.combine(
             new byte[]{ (byte) status },
-            Bytes.firstTwoBytesLittleEndian(tempRateId));
+            Bytes.firstTwoBytesLittleEndian(tempRateId),
+            // raw[3] is not decoded; 0 in the captured successful response
+            new byte[]{ 0 });
     }
 
 
