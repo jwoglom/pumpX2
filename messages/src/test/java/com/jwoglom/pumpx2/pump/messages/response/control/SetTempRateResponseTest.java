@@ -72,6 +72,24 @@ public class SetTempRateResponseTest {
 
 
     @Test
+    public void testSetTempRateResponse_builder() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        SetTempRateResponse expected = new SetTempRateResponse(0, 15);
+        assertHexEquals(new byte[]{0, 15, 0, 0}, expected.getCargo());
+
+        SetTempRateResponse parsedReq = (SetTempRateResponse) MessageTester.test(
+                "0048a5481c000f0000c3a3ee1fae161cb447c0235205f7a59796d2457a779c39c91b1a",
+                72,
+                1,
+                CharacteristicUUID.CONTROL_CHARACTERISTICS,
+                expected
+        );
+        assertEquals(0, parsedReq.getStatus());
+        assertEquals(15, parsedReq.getTempRateId());
+    }
+
+    @Test
     public void testSetTempRateResponse_failed() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
