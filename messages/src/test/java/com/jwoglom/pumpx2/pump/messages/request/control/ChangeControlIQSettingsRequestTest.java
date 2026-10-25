@@ -12,6 +12,8 @@ import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
 import com.jwoglom.pumpx2.pump.messages.bluetooth.CharacteristicUUID;
 import com.jwoglom.pumpx2.pump.messages.request.control.ChangeControlIQSettingsRequest;
 
+import java.util.EnumSet;
+
 import org.apache.commons.codec.DecoderException;
 import org.junit.Test;
 
@@ -65,5 +67,37 @@ public class ChangeControlIQSettingsRequestTest {
         assertEquals(150, parsedReq.getWeightLbs());
         assertEquals(75, parsedReq.getTotalDailyInsulinUnits());
 
+    }
+
+    @Test
+    public void testChangeControlIQSettingsRequest_defaultsToEnabledBitmask() {
+        ChangeControlIQSettingsRequest req = new ChangeControlIQSettingsRequest(true, 150, 75);
+
+        assertEquals(1, req.getChangeBitmaskRaw());
+        assertEquals(EnumSet.of(ChangeControlIQSettingsRequest.ChangeBitmask.ENABLED), req.getChangeBitmask());
+    }
+
+    @Test
+    public void testChangeControlIQSettingsRequest_changeBitmaskIsLastByte() {
+        ChangeControlIQSettingsRequest req = new ChangeControlIQSettingsRequest(
+                false, 171, 35,
+                EnumSet.of(
+                        ChangeControlIQSettingsRequest.ChangeBitmask.WEIGHT,
+                        ChangeControlIQSettingsRequest.ChangeBitmask.TOTAL_DAILY_INSULIN
+                )
+        );
+
+        assertEquals("00ab00012306", com.jwoglom.pumpx2.shared.Hex.encodeHexString(req.getCargo()));
+        assertEquals(6, req.getChangeBitmaskRaw());
+
+        ChangeControlIQSettingsRequest parsed = new ChangeControlIQSettingsRequest(req.getCargo());
+        assertEquals(req.getChangeBitmask(), parsed.getChangeBitmask());
+        assertEquals(
+                EnumSet.of(
+                        ChangeControlIQSettingsRequest.ChangeBitmask.WEIGHT,
+                        ChangeControlIQSettingsRequest.ChangeBitmask.TOTAL_DAILY_INSULIN
+                ),
+                parsed.getChangeBitmask()
+        );
     }
 }
