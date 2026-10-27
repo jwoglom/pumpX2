@@ -28,10 +28,11 @@ def parseJsonLines(path):
 
 packets = []
 
-currentRead = []
-currentWrite = []
-
-lastSeqNum = {'READ': None, 'WRITE': None}
+# Packets are grouped per (type, characteristic), since multi-packet messages on
+# different characteristics interleave. Each group keeps the btChar and ts of its
+# own first packet.
+groups = {}
+lastSeqNum = {}
 
 for rline in reader:
     btId = ''
@@ -68,49 +69,35 @@ for rline in reader:
         print('btVal less than 4, skipping', value, file=sys.stderr)
         continue
 
-    remainingPackets = int(value[0:2], 16)
     seqNum = int(value[2:4], 16)
-    #if seqNum == 0:
-    #    # SKIP stream messages
-    #    continue
+    key = (type, btChar)
 
-    if len(value) == 8:
-        isCombined = False
+    isCombined = key in groups and lastSeqNum[key] == seqNum
 
     # split combined historylog packets
-    isCombined = False
-
-
-    if lastSeqNum[type] is None or lastSeqNum[type] == seqNum:
-        isCombined = True
-
     if value[:6] == '000081':
         isCombined = False
 
-    if isCombined:
-        if type == 'READ':
-            currentRead.append(value)
-        elif type == 'WRITE':
-            currentWrite.append(value)
-    else:
-        if type == 'READ':
-            packets.append(['READ', currentRead, btChar, parse_ts(ts)])
-            currentRead = [value]
-        elif type == 'WRITE':
-            packets.append(['WRITE', currentWrite, btChar, parse_ts(ts)])
-            currentWrite = [value]
-    lastSeqNum[type] = seqNum
+    # qualifying events are bare 4-byte bitmasks, not packetized messages
+    if btChar.lower().replace('-', '').startswith('7b83fff7'):
+        isCombined = False
 
-if currentRead:
-    packets.append(['READ', currentRead, btChar, parse_ts(ts)])
-if currentWrite:
-    packets.append(['WRITE', currentWrite, btChar, parse_ts(ts)])
+    if isCombined:
+        groups[key][1].append(value)
+    else:
+        if key in groups:
+            packets.append(groups[key])
+        groups[key] = [type, [value], btChar, parse_ts(ts), int(btId) if btId.isdigit() else 0]
+    lastSeqNum[key] = seqNum
+
+packets.extend(groups.values())
+packets.sort(key=lambda p: p[4])
 
 
 
 f = tempfile.NamedTemporaryFile(delete=False)
 for packet in packets:
-    type, group, btChar, ts = packet
+    type, group, btChar, ts, _frame = packet
     prettyMap = {'READ':'ReadResp', 'WRITE':'WriteReq'}
     f.write((json.dumps({
         "type": prettyMap.get(type, type),
