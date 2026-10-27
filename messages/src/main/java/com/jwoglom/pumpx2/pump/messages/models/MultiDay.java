@@ -30,7 +30,7 @@ public enum MultiDay {
     public static Set<MultiDay> fromBitmask(int bitmask) {
         Set<MultiDay> set = new TreeSet<>();
         for (MultiDay day : values()) {
-            if (bitmask % day.id() == 0) {
+            if ((bitmask & day.id()) != 0) {
                 set.add(day);
             }
         }
@@ -41,7 +41,7 @@ public enum MultiDay {
     public static int toBitmask(MultiDay... days) {
         int mask = 0;
         for (MultiDay day : days) {
-            mask += day.id();
+            mask |= day.id();
         }
 
         return mask;
