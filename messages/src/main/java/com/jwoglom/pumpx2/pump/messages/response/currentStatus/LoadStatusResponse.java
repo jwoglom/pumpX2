@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LoadStatusRequest;
 
 @MessageProps(
@@ -12,7 +13,8 @@ import com.jwoglom.pumpx2.pump.messages.request.currentStatus.LoadStatusRequest;
     size=3,
     type=MessageType.RESPONSE,
     characteristic=Characteristic.CURRENT_STATUS,
-    request=LoadStatusRequest.class
+    request=LoadStatusRequest.class,
+    supportedDevices=SupportedDevices.MOBI_ONLY
 )
 // NOT a StatusMessage: byte 0 is "isLoadingActive", not a command status/NACK byte.
 public class LoadStatusResponse extends Message {

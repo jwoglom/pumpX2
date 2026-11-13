@@ -5,6 +5,7 @@ import com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic;
 import com.jwoglom.pumpx2.pump.messages.Message;
 import com.jwoglom.pumpx2.pump.messages.MessageType;
 import com.jwoglom.pumpx2.pump.messages.annotations.MessageProps;
+import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusResponse;
 
 @MessageProps(
@@ -12,6 +13,8 @@ import com.jwoglom.pumpx2.pump.messages.response.currentStatus.LoadStatusRespons
     size=0,
     type=MessageType.REQUEST,
     characteristic=Characteristic.CURRENT_STATUS,
+    // Mobi-only: a t:slim X2 answers 0x14 with an ErrorResponse and terminates the link.
+    supportedDevices=SupportedDevices.MOBI_ONLY,
     response=LoadStatusResponse.class
 )
 public class LoadStatusRequest extends Message {

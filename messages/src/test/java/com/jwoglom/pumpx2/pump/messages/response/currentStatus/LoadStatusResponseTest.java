@@ -6,10 +6,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.jwoglom.pumpx2.pump.messages.models.KnownDeviceModel;
+import com.jwoglom.pumpx2.pump.messages.models.SupportedDevices;
 import org.junit.Test;
 
 @SuppressWarnings("deprecation")
 public class LoadStatusResponseTest {
+    @Test
+    public void testLoadStatusResponseIsMobiOnly() {
+        SupportedDevices devices = new LoadStatusResponse().props().supportedDevices();
+        assertEquals(SupportedDevices.MOBI_ONLY, devices);
+        assertTrue(devices.supports(KnownDeviceModel.MOBI));
+        assertFalse(devices.supports(KnownDeviceModel.TSLIM_X2));
+    }
+
     @Test
     public void testLoadStatusResponsePrimeTubingSchema() {
         LoadStatusResponse response = new LoadStatusResponse(new byte[]{1, 2, 3});
