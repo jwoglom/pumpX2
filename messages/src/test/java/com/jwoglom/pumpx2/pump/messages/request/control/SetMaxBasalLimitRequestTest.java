@@ -2,6 +2,7 @@ package com.jwoglom.pumpx2.pump.messages.request.control;
 
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.assertHexEquals;
 import static com.jwoglom.pumpx2.pump.messages.MessageTester.initPumpState;
+import static org.junit.Assert.assertEquals;
 
 import com.jwoglom.pumpx2.pump.messages.MessageTester;
 import com.jwoglom.pumpx2.pump.messages.PacketArrayList;
@@ -30,11 +31,20 @@ public class SetMaxBasalLimitRequestTest {
         assertHexEquals(expected.getCargo(), parsedReq.getCargo());
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void testSetMaxBasalLimitRequest_lt1u_invalid() throws DecoderException {
+    @Test
+    public void testSetMaxBasalLimitRequest_02u_valid() throws DecoderException {
         initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
 
-        new SetMaxBasalLimitRequest(100);
+        SetMaxBasalLimitRequest request = new SetMaxBasalLimitRequest(200);
+
+        assertEquals(200, request.getMaxHourlyBasalMilliunits());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testSetMaxBasalLimitRequest_lt02u_invalid() throws DecoderException {
+        initPumpState(PacketArrayList.IGNORE_INVALID_HMAC, 0L);
+
+        new SetMaxBasalLimitRequest(199);
     }
 
     @Test(expected=IllegalArgumentException.class)
