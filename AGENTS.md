@@ -9,7 +9,7 @@
 - `./gradlew build` builds every module, producing AAR/JAR artifacts for distribution.【F:README.md†L63-L88】
 - `./gradlew test` (or module-specific variants) runs the Java unit tests located in `messages/src/test` (JUnit 4).【F:messages/build.gradle†L20-L43】【83f740†L1-L10】
 - `./gradlew publishToMavenLocal` publishes artifacts locally; publishing destinations are configured in `build.gradle`.
-- `./gradlew cliparser:run --args '<command ...>'` executes the CLI parser for offline message parsing/encoding.【F:cliparser/src/main/java/com/jwoglom/pumpx2/cliparser/Main.java†L1-L208】
+- `./gradlew cliparser --args '<command ...>'` (or the `scripts/cliparser.sh <command ...>` wrapper, which runs it quietly) executes the CLI parser for offline message parsing/encoding.【F:cliparser/build.gradle†L78-L82】【F:cliparser/src/main/java/com/jwoglom/pumpx2/cliparser/Main.java†L1-L208】
 - `./gradlew :sampleapp:installDebug` builds and installs the example Android client (requires Android SDK setup).
 
 ## Module breakdown

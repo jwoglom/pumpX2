@@ -2,8 +2,13 @@ package com.jwoglom.pumpx2.cliparser;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.ToIntFunction;
 import java.util.Set;
 import com.jwoglom.pumpx2.cliparser.util.CharacteristicGuesser;
 import com.jwoglom.pumpx2.cliparser.util.Env;
@@ -53,6 +58,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 import com.jwoglom.pumpx2.pump.messages.builders.JpakeAuthBuilder;
@@ -72,7 +78,7 @@ public class Main {
     }
     // serve runs these in-process; the rest read stdin or files, or would nest a server.
     private static final Set<String> SERVABLE_COMMANDS = new HashSet<>(Arrays.asList(
-            "opcode", "listallcommands", "parse", "guesscargo", "read", "write", "historylog",
+            "opcode", "listallcommands", "listcontrolstream", "listhistorylogs", "parse", "guesscargo", "read", "write", "historylog",
             "encode", "hkdf", "hmac-sha256"));
 
     public static void main(String[] args) throws DecoderException, IOException {
@@ -140,6 +146,12 @@ public class Main {
                 break;
             case "listallcommands":
                 listAllCommands();
+                break;
+            case "listcontrolstream":
+                listControlStream();
+                break;
+            case "listhistorylogs":
+                listHistoryLogs();
                 break;
             case "parse":
                 System.out.println(parseFull(args[1], extra));
@@ -986,29 +998,82 @@ public class Main {
         return typeId+"\t"+type+"\t"+rawHex+"\t"+message;
     }
 
+    /**
+     * Characteristics whose messages are pushed by the pump, with opcode-0 Nonexistent*Request
+     * placeholders as their requests. Left out of listallcommands; see listcontrolstream and
+     * listhistorylogs.
+     */
+    private static final Set<Characteristic> PUMP_PUSHED_CHARACTERISTICS =
+        EnumSet.of(Characteristic.HISTORY_LOG, Characteristic.CONTROL_STREAM);
+
+    /**
+     * Prints every request opcode, grouped by characteristic and sorted by unsigned opcode,
+     * skipping PUMP_PUSHED_CHARACTERISTICS.
+     */
     public static void listAllCommands() {
-        Map<Integer, String> currentStatus = new HashMap<>();
-        Map<Integer, String> control = new HashMap<>();
+        Map<Characteristic, List<Messages>> byCharacteristic = new EnumMap<>(Characteristic.class);
         for (Messages m : Messages.values()) {
-            if (m.requestProps().characteristic().equals(Characteristic.CURRENT_STATUS)) {
-                currentStatus.put(sanitizedOpcode(m.requestOpCode()), m.requestClass().getSimpleName());
-            } else if (m.requestProps().characteristic().equals(Characteristic.CONTROL)) {
-                control.put(sanitizedOpcode(m.requestOpCode()), m.requestClass().getSimpleName());
+            Characteristic c = m.requestProps().characteristic();
+            if (!PUMP_PUSHED_CHARACTERISTICS.contains(c)) {
+                byCharacteristic.computeIfAbsent(c, k -> new ArrayList<>()).add(m);
             }
         }
 
-        System.out.println("CurrentStatus:");
-        for (Integer opCode : currentStatus.keySet().stream().sorted().collect(Collectors.toList())) {
-            System.out.println(opCode+"\t"+currentStatus.get(opCode));
-        }
-        System.out.println("\n");
-        System.out.println("Control:");
-        for (Integer opCode : control.keySet().stream().sorted().collect(Collectors.toList())) {
-            System.out.println(opCode+"\t"+control.get(opCode));
+        boolean first = true;
+        for (Map.Entry<Characteristic, List<Messages>> entry : byCharacteristic.entrySet()) {
+            if (!first) {
+                System.out.println("\n");
+            }
+            first = false;
+            System.out.println(characteristicLabel(entry.getKey()) + ":");
+            printSorted(entry.getValue().stream(),
+                m -> unsignedOpcode(m.requestOpCode()),
+                m -> m.requestClass().getSimpleName());
         }
     }
 
-    public static Integer sanitizedOpcode(int opCode) {
-        return (int) ((byte) opCode);
+    /**
+     * Prints the response opcode of every message on the CONTROL_STREAM characteristic.
+     */
+    public static void listControlStream() {
+        printSorted(
+            Arrays.stream(Messages.values())
+                .filter(m -> m.responseProps().characteristic() == Characteristic.CONTROL_STREAM),
+            m -> unsignedOpcode(m.responseOpCode()),
+            m -> m.responseClass().getSimpleName());
+    }
+
+    /**
+     * Prints the typeId of every history log type registered in HistoryLogParser.
+     */
+    public static void listHistoryLogs() {
+        printSorted(
+            HistoryLogParser.LOG_MESSAGE_CLASS_TO_ID.entrySet().stream(),
+            Map.Entry::getValue,
+            e -> e.getKey().getSimpleName());
+    }
+
+    /**
+     * Prints "id\tname" per item, sorted by id then name. Items sharing an id each get a line.
+     */
+    private static <T> void printSorted(Stream<T> items, ToIntFunction<T> id, Function<T, String> name) {
+        items.sorted(Comparator.comparingInt(id).thenComparing(name))
+            .forEach(t -> System.out.println(id.applyAsInt(t) + "\t" + name.apply(t)));
+    }
+
+    /**
+     * Opcodes are declared as signed bytes in {@code @MessageProps}; convert to 0-255.
+     */
+    public static int unsignedOpcode(int opCode) {
+        return opCode & 0xFF;
+    }
+
+    /**
+     * CURRENT_STATUS -> CurrentStatus
+     */
+    private static String characteristicLabel(Characteristic c) {
+        return Arrays.stream(c.name().split("_"))
+            .map(w -> w.charAt(0) + w.substring(1).toLowerCase(Locale.ROOT))
+            .collect(Collectors.joining());
     }
 }
