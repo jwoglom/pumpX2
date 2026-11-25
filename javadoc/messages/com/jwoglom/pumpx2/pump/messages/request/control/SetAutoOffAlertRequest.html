@@ -82,22 +82,18 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-46">SetAutoOffAlertRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-43">SetAutoOffAlertRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets the Auto-Off alert configuration.
+<div class="block">Request message for <a href="../../response/control/SetAutoOffAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetAutoOffAlertResponse</code></a>, opCode -32, size 4.
+
+ <br>
+
+ Sets the Auto-Off alert configuration.
 
  Cargo layout (4 bytes, little-endian):
    [0]   enableAutoOff    uint8   - 0=disabled, 1=enabled
    [1-2] autoOffDuration  uint16  - duration in minutes before auto-off
    [3]   bitmask          uint8   - change bitmask (bits: 0=enableAutoOff, 1=autoOffDuration)
-
-
-
- <br>
-
- Request message for <a href="../../response/control/SetAutoOffAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetAutoOffAlertResponse</code></a>, opCode -32, size 4
-
- <br>
 
  
  <table border='1'>
@@ -205,13 +201,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetAutoOffAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-59">SetAutoOffAlertRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-56">SetAutoOffAlertRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(boolean,int,int)">
 <h3>SetAutoOffAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-61">SetAutoOffAlertRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enableAutoOff,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-58">SetAutoOffAlertRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enableAutoOff,
  int&nbsp;autoOffDuration,
  int&nbsp;bitmask)</span></div>
 </section>
@@ -227,7 +223,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(boolean,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-78">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enableAutoOff,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-75">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enableAutoOff,
  int&nbsp;autoOffDuration,
  int&nbsp;bitmask)</span></div>
 <div class="block"><table border="1">
@@ -243,7 +239,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-94">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-91">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetAutoOffAlertRequest:</caption>
  <tr><td><code>enableAutoOff</code></td><td><code>(raw[0] &amp; 0xFF) != 0</code></td></tr>
@@ -259,19 +255,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isEnableAutoOff()">
 <h3>isEnableAutoOff</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-103">isEnableAutoOff</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-100">isEnableAutoOff</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAutoOffDuration()">
 <h3>getAutoOffDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-107">getAutoOffDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-104">getAutoOffDuration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBitmask()">
 <h3>getBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-111">getBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetAutoOffAlertRequest.html#line-108">getBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

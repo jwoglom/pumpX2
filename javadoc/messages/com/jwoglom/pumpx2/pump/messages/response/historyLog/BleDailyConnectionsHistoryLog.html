@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-22">BleDailyConnectionsHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-46">BleDailyConnectionsHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Once-a-day Tandem Mobi summary of the BLE connections made to the pump. The pump writes it every
+<div class="block">History log record BLE Daily Connections, opCode 474, size 26.
+
+ <br>
+
+ Once-a-day Tandem Mobi summary of the BLE connections made to the pump. The pump writes it every
  24 hours counted from its last restart, not at midnight, so its time of day differs between pumps
  and each record covers the 24 hours since the previous one. The header timestamp is the end of
  that period.
@@ -94,7 +98,14 @@ loadScripts(document, 'script');</script>
  <a href="#getConnections()"><code>getConnections()</code></a> minus <a href="#getUnauthenticatedConnections()"><code>getUnauthenticatedConnections()</code></a> equalled the number of
  authenticated sessions in all 12 windows. The class name is provisional: opcode 474 is not in
  Tandem's cloud event schema or the Mobi app's history log list. Fields not named here have not
- been identified and are exposed raw. See https://github.com/jwoglom/pumpx2/issues/152.</div>
+ been identified and are exposed raw. See https://github.com/jwoglom/pumpx2/issues/152.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>474</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"BLE Daily Connections"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -226,13 +237,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BleDailyConnectionsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-34">BleDailyConnectionsHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-58">BleDailyConnectionsHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,byte[])">
 <h3>BleDailyConnectionsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-35">BleDailyConnectionsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-59">BleDailyConnectionsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;connectedPercent,
  int&nbsp;unknown11,
@@ -244,7 +255,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int)">
 <h3>BleDailyConnectionsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-45">BleDailyConnectionsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-69">BleDailyConnectionsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;connectedPercent,
  int&nbsp;unknown11,
@@ -263,7 +274,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-49">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-73">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -273,7 +284,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-63">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-87">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BleDailyConnectionsHistoryLog:</caption>
  <tr><td><code>connectedPercent</code></td><td><code>raw[10] &amp; 0xFF</code></td></tr>
@@ -291,7 +302,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;connectedPercent,
  int&nbsp;unknown11,
@@ -303,7 +314,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getConnectedPercent()">
 <h3>getConnectedPercent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-96">getConnectedPercent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-120">getConnectedPercent</a></span>()</div>
 <div class="block">The share of the 24 hours during which the pump had a BLE connection, apparently rounded to
  the nearest percent. Values of 97-100 were observed. It matched the phone-side connected time
  in 11 of 12 windows; the twelfth was 0.02 points below the rounding threshold. It read 100
@@ -318,7 +329,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-106">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-130">getUnknown11</a></span>()</div>
 <div class="block">Constant per pump: 6 on both of the maintainer's Mobis, 4 on a tester's. Its meaning is
  unknown, and it is not a firmware or model code.</div>
 <dl class="notes">
@@ -330,7 +341,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getConnections()">
 <h3>getConnections</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-119">getConnections</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-143">getConnections</a></span>()</div>
 <div class="block">BLE connections the pump accepted during the period, including ones that failed encryption
  or never authenticated. Values of 0-66 were observed. This equalled the connections the phone
  logged (connects plus encryption failures) in 8 of 12 windows. In the other 4 it was exactly
@@ -345,7 +356,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnauthenticatedConnections()">
 <h3>getUnauthenticatedConnections</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-131">getUnauthenticatedConnections</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-155">getUnauthenticatedConnections</a></span>()</div>
 <div class="block">Connections during the period that never completed JPAKE authentication (key confirmation),
  including failed encryption and links dropped during setup. Values of 0-11 were observed. The
  value was 0 exactly on the days the phone logged no failed, cancelled or timed-out
@@ -359,7 +370,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAuthenticatedConnections()">
 <h3>getAuthenticatedConnections</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-140">getAuthenticatedConnections</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-164">getAuthenticatedConnections</a></span>()</div>
 <div class="block">Equal to the authenticated sessions TandemKit logged in 12 of 12 windows on two pumps.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -370,7 +381,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownTail()">
 <h3>getUnknownTail</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-150">getUnknownTail</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleDailyConnectionsHistoryLog.html#line-174">getUnknownTail</a></span>()</div>
 <div class="block">Bytes 16-25. Zero in every record examined. No new pairing happened in any window
  examined, so a pairing counter here would also have read 0.</div>
 <dl class="notes">

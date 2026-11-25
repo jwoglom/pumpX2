@@ -32,103 +32,124 @@
 <span class="source-line-no">015</span><span id="line-15"> * first record's byte 12, the change reason nonzero). This holds for BLE, pump-UI and Control-IQ</span>
 <span class="source-line-no">016</span><span id="line-16"> * boluses alike; see https://github.com/jwoglom/pumpX2/issues/142.</span>
 <span class="source-line-no">017</span><span id="line-17"> */</span>
-<span class="source-line-no">018</span><span id="line-18">@HistoryLogProps(</span>
-<span class="source-line-no">019</span><span id="line-19">    opCode = 295,</span>
-<span class="source-line-no">020</span><span id="line-20">    displayName = "Bolus Permission Change"</span>
-<span class="source-line-no">021</span><span id="line-21">)</span>
-<span class="source-line-no">022</span><span id="line-22">public class BolusPermissionChangeHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    private int bolusId;</span>
-<span class="source-line-no">025</span><span id="line-25">    private int unknownU8At12;</span>
-<span class="source-line-no">026</span><span id="line-26">    private int unknownU8At13;</span>
-<span class="source-line-no">027</span><span id="line-27">    private int changeReasonId;</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">    public BolusPermissionChangeHistoryLog() {}</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    public BolusPermissionChangeHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId) {</span>
-<span class="source-line-no">032</span><span id="line-32">        this(pumpTimeSec, sequenceNum, bolusId, unknownU8At12, unknownU8At13, changeReasonId, 0);</span>
-<span class="source-line-no">033</span><span id="line-33">    }</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">    public BolusPermissionChangeHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId, int headerHighNibble) {</span>
-<span class="source-line-no">036</span><span id="line-36">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">037</span><span id="line-37">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, unknownU8At12, unknownU8At13, changeReasonId, headerHighNibble);</span>
-<span class="source-line-no">038</span><span id="line-38">        this.bolusId = bolusId;</span>
-<span class="source-line-no">039</span><span id="line-39">        this.unknownU8At12 = unknownU8At12;</span>
-<span class="source-line-no">040</span><span id="line-40">        this.unknownU8At13 = unknownU8At13;</span>
-<span class="source-line-no">041</span><span id="line-41">        this.changeReasonId = changeReasonId;</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    public int typeId() {</span>
-<span class="source-line-no">045</span><span id="line-45">        return 295;</span>
-<span class="source-line-no">046</span><span id="line-46">    }</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    /**</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;caption&gt;Parsed fields for BolusPermissionChangeHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At12&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At13&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeReasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;/table&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     */</span>
-<span class="source-line-no">057</span><span id="line-57">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">058</span><span id="line-58">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">059</span><span id="line-59">        this.cargo = raw;</span>
-<span class="source-line-no">060</span><span id="line-60">        parseBase(raw);</span>
-<span class="source-line-no">061</span><span id="line-61">        this.bolusId = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">062</span><span id="line-62">        this.unknownU8At12 = raw[12] &amp; 0xFF;</span>
-<span class="source-line-no">063</span><span id="line-63">        this.unknownU8At13 = raw[13] &amp; 0xFF;</span>
-<span class="source-line-no">064</span><span id="line-64">        this.changeReasonId = raw[14] &amp; 0xFF;</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId, int headerHighNibble) {</span>
-<span class="source-line-no">068</span><span id="line-68">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">069</span><span id="line-69">            HistoryLog.typeIdBytes(295, headerHighNibble),</span>
-<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">072</span><span id="line-72">            Bytes.firstTwoBytesLittleEndian(bolusId),</span>
-<span class="source-line-no">073</span><span id="line-73">            new byte[]{ (byte) unknownU8At12, (byte) unknownU8At13, (byte) changeReasonId }));</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    /**</span>
-<span class="source-line-no">077</span><span id="line-77">     * @return the bolus id the permission belongs to. It matched the BolusActivated, BolusDelivery</span>
-<span class="source-line-no">078</span><span id="line-78">     * and BolusCompleted ids of the same bolus in every record observed.</span>
-<span class="source-line-no">079</span><span id="line-79">     */</span>
-<span class="source-line-no">080</span><span id="line-80">    public int getBolusId() {</span>
-<span class="source-line-no">081</span><span id="line-81">        return bolusId;</span>
-<span class="source-line-no">082</span><span id="line-82">    }</span>
-<span class="source-line-no">083</span><span id="line-83"></span>
-<span class="source-line-no">084</span><span id="line-84">    /**</span>
-<span class="source-line-no">085</span><span id="line-85">     * @return byte 12. Meaning unconfirmed: it is 1, 2 or 3 on the grant record and 0 on the</span>
-<span class="source-line-no">086</span><span id="line-86">     * release record. Across the observed boluses the value tracked who asked for the bolus:</span>
-<span class="source-line-no">087</span><span id="line-87">     * 1 for a BLE app (BolusDelivery bolusSource 8), 2 for Control-IQ (bolusSource 7) and 3 for</span>
-<span class="source-line-no">088</span><span id="line-88">     * the pump's own UI (bolusSource 1 on t:slim X2, 0 for a Mobi button bolus).</span>
-<span class="source-line-no">089</span><span id="line-89">     */</span>
-<span class="source-line-no">090</span><span id="line-90">    public int getUnknownU8At12() {</span>
-<span class="source-line-no">091</span><span id="line-91">        return unknownU8At12;</span>
-<span class="source-line-no">092</span><span id="line-92">    }</span>
-<span class="source-line-no">093</span><span id="line-93"></span>
-<span class="source-line-no">094</span><span id="line-94">    /**</span>
-<span class="source-line-no">095</span><span id="line-95">     * @return byte 13. Meaning unconfirmed: 0 on the grant record; on the release record it equals</span>
-<span class="source-line-no">096</span><span id="line-96">     * byte 12 of the grant record for the same bolus id.</span>
-<span class="source-line-no">097</span><span id="line-97">     */</span>
-<span class="source-line-no">098</span><span id="line-98">    public int getUnknownU8At13() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return unknownU8At13;</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101"></span>
-<span class="source-line-no">102</span><span id="line-102">    /**</span>
-<span class="source-line-no">103</span><span id="line-103">     * @return byte 14: 0 on the grant record, then the reason the permission ended. It equals</span>
-<span class="source-line-no">104</span><span id="line-104">     * {@link BolusPermissionChangeReasonResponse#getLastChangeReasonId()} for the same bolus id</span>
-<span class="source-line-no">105</span><span id="line-105">     * wherever both were captured (1 = released, 2 = revoked because the pump UI took priority).</span>
-<span class="source-line-no">106</span><span id="line-106">     */</span>
-<span class="source-line-no">107</span><span id="line-107">    public int getChangeReasonId() {</span>
-<span class="source-line-no">108</span><span id="line-108">        return changeReasonId;</span>
-<span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">    public BolusPermissionChangeReasonResponse.ChangeReason getChangeReason() {</span>
-<span class="source-line-no">112</span><span id="line-112">        return BolusPermissionChangeReasonResponse.ChangeReason.fromId(changeReasonId);</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">/**</span>
+<span class="source-line-no">020</span><span id="line-20"> * History log record Bolus Permission Change, opCode 295, size 26.</span>
+<span class="source-line-no">021</span><span id="line-21"> *</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;br&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> *</span>
+<span class="source-line-no">024</span><span id="line-24"> * Written when the pump's bolus permission for a bolus id changes hands. Tandem publishes no name</span>
+<span class="source-line-no">025</span><span id="line-25"> * for opcode 295 (it is absent from the Mobi app's HistoryLogType enum and from the Tandem Source</span>
+<span class="source-line-no">026</span><span id="line-26"> * schema), so this class name is provisional.</span>
+<span class="source-line-no">027</span><span id="line-27"> *</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;p&gt;Every bolus writes two of these: one when permission is granted (byte 12 nonzero, byte 13 and</span>
+<span class="source-line-no">029</span><span id="line-29"> * the change reason 0) and one when it is released or revoked (byte 12 zero, byte 13 equal to the</span>
+<span class="source-line-no">030</span><span id="line-30"> * first record's byte 12, the change reason nonzero). This holds for BLE, pump-UI and Control-IQ</span>
+<span class="source-line-no">031</span><span id="line-31"> * boluses alike; see https://github.com/jwoglom/pumpX2/issues/142.</span>
+<span class="source-line-no">032</span><span id="line-32"> *</span>
+<span class="source-line-no">033</span><span id="line-33"> * </span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;295&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Bolus Permission Change"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;/table&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> */@HistoryLogProps(</span>
+<span class="source-line-no">040</span><span id="line-40">    opCode = 295,</span>
+<span class="source-line-no">041</span><span id="line-41">    displayName = "Bolus Permission Change"</span>
+<span class="source-line-no">042</span><span id="line-42">)</span>
+<span class="source-line-no">043</span><span id="line-43">public class BolusPermissionChangeHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    private int bolusId;</span>
+<span class="source-line-no">046</span><span id="line-46">    private int unknownU8At12;</span>
+<span class="source-line-no">047</span><span id="line-47">    private int unknownU8At13;</span>
+<span class="source-line-no">048</span><span id="line-48">    private int changeReasonId;</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">    public BolusPermissionChangeHistoryLog() {}</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">    public BolusPermissionChangeHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId) {</span>
+<span class="source-line-no">053</span><span id="line-53">        this(pumpTimeSec, sequenceNum, bolusId, unknownU8At12, unknownU8At13, changeReasonId, 0);</span>
+<span class="source-line-no">054</span><span id="line-54">    }</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    public BolusPermissionChangeHistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId, int headerHighNibble) {</span>
+<span class="source-line-no">057</span><span id="line-57">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">058</span><span id="line-58">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, unknownU8At12, unknownU8At13, changeReasonId, headerHighNibble);</span>
+<span class="source-line-no">059</span><span id="line-59">        this.bolusId = bolusId;</span>
+<span class="source-line-no">060</span><span id="line-60">        this.unknownU8At12 = unknownU8At12;</span>
+<span class="source-line-no">061</span><span id="line-61">        this.unknownU8At13 = unknownU8At13;</span>
+<span class="source-line-no">062</span><span id="line-62">        this.changeReasonId = changeReasonId;</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    public int typeId() {</span>
+<span class="source-line-no">066</span><span id="line-66">        return 295;</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    /**</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;caption&gt;Parsed fields for BolusPermissionChangeHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At12&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At13&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;changeReasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;/table&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     */</span>
+<span class="source-line-no">078</span><span id="line-78">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">079</span><span id="line-79">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">080</span><span id="line-80">        this.cargo = raw;</span>
+<span class="source-line-no">081</span><span id="line-81">        parseBase(raw);</span>
+<span class="source-line-no">082</span><span id="line-82">        this.bolusId = Bytes.readShort(raw, 10);</span>
+<span class="source-line-no">083</span><span id="line-83">        this.unknownU8At12 = raw[12] &amp; 0xFF;</span>
+<span class="source-line-no">084</span><span id="line-84">        this.unknownU8At13 = raw[13] &amp; 0xFF;</span>
+<span class="source-line-no">085</span><span id="line-85">        this.changeReasonId = raw[14] &amp; 0xFF;</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int unknownU8At12, int unknownU8At13, int changeReasonId, int headerHighNibble) {</span>
+<span class="source-line-no">089</span><span id="line-89">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">090</span><span id="line-90">            HistoryLog.typeIdBytes(295, headerHighNibble),</span>
+<span class="source-line-no">091</span><span id="line-91">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">092</span><span id="line-92">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">093</span><span id="line-93">            Bytes.firstTwoBytesLittleEndian(bolusId),</span>
+<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) unknownU8At12, (byte) unknownU8At13, (byte) changeReasonId }));</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    /**</span>
+<span class="source-line-no">098</span><span id="line-98">     * @return the bolus id the permission belongs to. It matched the BolusActivated, BolusDelivery</span>
+<span class="source-line-no">099</span><span id="line-99">     * and BolusCompleted ids of the same bolus in every record observed.</span>
+<span class="source-line-no">100</span><span id="line-100">     */</span>
+<span class="source-line-no">101</span><span id="line-101">    public int getBolusId() {</span>
+<span class="source-line-no">102</span><span id="line-102">        return bolusId;</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    /**</span>
+<span class="source-line-no">106</span><span id="line-106">     * @return byte 12. Meaning unconfirmed: it is 1, 2 or 3 on the grant record and 0 on the</span>
+<span class="source-line-no">107</span><span id="line-107">     * release record. Across the observed boluses the value tracked who asked for the bolus:</span>
+<span class="source-line-no">108</span><span id="line-108">     * 1 for a BLE app (BolusDelivery bolusSource 8), 2 for Control-IQ (bolusSource 7) and 3 for</span>
+<span class="source-line-no">109</span><span id="line-109">     * the pump's own UI (bolusSource 1 on t:slim X2, 0 for a Mobi button bolus).</span>
+<span class="source-line-no">110</span><span id="line-110">     */</span>
+<span class="source-line-no">111</span><span id="line-111">    public int getUnknownU8At12() {</span>
+<span class="source-line-no">112</span><span id="line-112">        return unknownU8At12;</span>
 <span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114">}</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115">    /**</span>
+<span class="source-line-no">116</span><span id="line-116">     * @return byte 13. Meaning unconfirmed: 0 on the grant record; on the release record it equals</span>
+<span class="source-line-no">117</span><span id="line-117">     * byte 12 of the grant record for the same bolus id.</span>
+<span class="source-line-no">118</span><span id="line-118">     */</span>
+<span class="source-line-no">119</span><span id="line-119">    public int getUnknownU8At13() {</span>
+<span class="source-line-no">120</span><span id="line-120">        return unknownU8At13;</span>
+<span class="source-line-no">121</span><span id="line-121">    }</span>
+<span class="source-line-no">122</span><span id="line-122"></span>
+<span class="source-line-no">123</span><span id="line-123">    /**</span>
+<span class="source-line-no">124</span><span id="line-124">     * @return byte 14: 0 on the grant record, then the reason the permission ended. It equals</span>
+<span class="source-line-no">125</span><span id="line-125">     * {@link BolusPermissionChangeReasonResponse#getLastChangeReasonId()} for the same bolus id</span>
+<span class="source-line-no">126</span><span id="line-126">     * wherever both were captured (1 = released, 2 = revoked because the pump UI took priority).</span>
+<span class="source-line-no">127</span><span id="line-127">     */</span>
+<span class="source-line-no">128</span><span id="line-128">    public int getChangeReasonId() {</span>
+<span class="source-line-no">129</span><span id="line-129">        return changeReasonId;</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">    public BolusPermissionChangeReasonResponse.ChangeReason getChangeReason() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return BolusPermissionChangeReasonResponse.ChangeReason.fromId(changeReasonId);</span>
+<span class="source-line-no">134</span><span id="line-134">    }</span>
+<span class="source-line-no">135</span><span id="line-135">}</span>
 
 
 

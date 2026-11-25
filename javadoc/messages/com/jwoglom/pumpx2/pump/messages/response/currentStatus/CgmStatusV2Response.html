@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-61">CgmStatusV2Response</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-58">CgmStatusV2Response</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Returns CGM (Continuous Glucose Monitor) status for Mobi pumps.
+<div class="block">Response message for <a href="../../request/currentStatus/CgmStatusV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmStatusV2Request</code></a>, opCode -65, size 20.
+
+ <br>
+
+ Returns CGM (Continuous Glucose Monitor) status for Mobi pumps.
 
  Binary layout (20 bytes total):
    offset 0  (1 byte):  sessionState          - CGMStatusBState ordinal
@@ -95,14 +99,6 @@ loadScripts(document, 'script');</script>
    offset 14 (4 bytes): sessionTimeRemaining     - uint32, seconds
    offset 18 (1 byte):  cgmSensorType            - CGMSensorType ordinal
    offset 19 (1 byte):  gracePeriod              - nonzero = true
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/CgmStatusV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmStatusV2Request</code></a>, opCode -65, size 20
-
- <br>
 
  
  <table border='1'>
@@ -303,13 +299,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmStatusV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-84">CgmStatusV2Response</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-81">CgmStatusV2Response</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,long,long,int,long,long,int,boolean)">
 <h3>CgmStatusV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-87">CgmStatusV2Response</a></span><wbr><span class="parameters">(int&nbsp;sessionStateId,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-84">CgmStatusV2Response</a></span><wbr><span class="parameters">(int&nbsp;sessionStateId,
  long&nbsp;lastCalibrationTimestamp,
  long&nbsp;sensorStartedTimestamp,
  int&nbsp;transmitterBatteryStatusId,
@@ -330,7 +326,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-124">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-121">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmStatusV2Response:</caption>
  <tr><td><code>sessionStateId</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -354,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,long,long,int,long,long,int,boolean)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-166">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;sessionStateId,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-163">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;sessionStateId,
  long&nbsp;lastCalibrationTimestamp,
  long&nbsp;sensorStartedTimestamp,
  int&nbsp;transmitterBatteryStatusId,
@@ -391,13 +387,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSessionStateId()">
 <h3>getSessionStateId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-186">getSessionStateId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-183">getSessionStateId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSessionState()">
 <h3>getSessionState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.SessionState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-193">getSessionState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.SessionState.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.SessionState</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-190">getSessionState</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the state of the CGM session</dd>
@@ -407,37 +403,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLastCalibrationTimestamp()">
 <h3>getLastCalibrationTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-223">getLastCalibrationTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-220">getLastCalibrationTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLastCalibrationTimestampInstant()">
 <h3>getLastCalibrationTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-227">getLastCalibrationTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-224">getLastCalibrationTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSensorStartedTimestamp()">
 <h3>getSensorStartedTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-231">getSensorStartedTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-228">getSensorStartedTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSensorStartedTimestampInstant()">
 <h3>getSensorStartedTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-235">getSensorStartedTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-232">getSensorStartedTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransmitterBatteryStatusId()">
 <h3>getTransmitterBatteryStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-239">getTransmitterBatteryStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-236">getTransmitterBatteryStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTransmitterBatteryStatus()">
 <h3>getTransmitterBatteryStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.TransmitterBatteryStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-248">getTransmitterBatteryStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.TransmitterBatteryStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.TransmitterBatteryStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-245">getTransmitterBatteryStatus</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the battery status of the CGM transmitter.
@@ -449,7 +445,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSessionDurationSeconds()">
 <h3>getSessionDurationSeconds</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-283">getSessionDurationSeconds</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-280">getSessionDurationSeconds</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the duration of the current CGM session, in seconds</dd>
@@ -459,7 +455,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSessionTimeRemainingSeconds()">
 <h3>getSessionTimeRemainingSeconds</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-290">getSessionTimeRemainingSeconds</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-287">getSessionTimeRemainingSeconds</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the time remaining in the current CGM session, in seconds</dd>
@@ -469,13 +465,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCgmSensorTypeId()">
 <h3>getCgmSensorTypeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-294">getCgmSensorTypeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-291">getCgmSensorTypeId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCgmSensorType()">
 <h3>getCgmSensorType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-301">getCgmSensorType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStatusV2Response.CgmSensorType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CgmStatusV2Response.CgmSensorType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-298">getCgmSensorType</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the type of CGM sensor in use</dd>
@@ -485,7 +481,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isGracePeriod()">
 <h3>isGracePeriod</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-334">isGracePeriod</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmStatusV2Response.html#line-331">isGracePeriod</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the CGM session is in a grace period</dd>

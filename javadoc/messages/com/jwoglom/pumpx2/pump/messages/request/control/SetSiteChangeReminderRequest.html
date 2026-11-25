@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-52">SetSiteChangeReminderRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-49">SetSiteChangeReminderRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets a site change reminder configuration.
+<div class="block">Request message for <a href="../../response/control/SetSiteChangeReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSiteChangeReminderResponse</code></a>, opCode -36, size 7.
+
+ <br>
+
+ Sets a site change reminder configuration.
 
  Cargo layout (7 bytes, little-endian):
    [0]   enable       uint8   - 0=disabled, 1=enabled
@@ -93,14 +97,6 @@ loadScripts(document, 'script');</script>
    [6]   bitmask      uint8   - change bitmask (bits: 0=enable, 1=dayCount, 2=timeOfDay)
 
  Note: dayCount uses Short_ExtKt.toByteArray(short) which returns a single byte (low-order byte).
-
-
-
- <br>
-
- Request message for <a href="../../response/control/SetSiteChangeReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetSiteChangeReminderResponse</code></a>, opCode -36, size 7
-
- <br>
 
  
  <table border='1'>
@@ -217,13 +213,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetSiteChangeReminderRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-66">SetSiteChangeReminderRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-63">SetSiteChangeReminderRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(boolean,int,long,int)">
 <h3>SetSiteChangeReminderRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-68">SetSiteChangeReminderRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-65">SetSiteChangeReminderRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
  int&nbsp;dayCount,
  long&nbsp;timeOfDayMinutes,
  int&nbsp;bitmask)</span></div>
@@ -240,7 +236,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(boolean,int,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-89">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-86">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
  int&nbsp;dayCount,
  long&nbsp;timeOfDayMinutes,
  int&nbsp;bitmask)</span></div>
@@ -260,7 +256,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-107">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-104">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetSiteChangeReminderRequest:</caption>
  <tr><td><code>enable</code></td><td><code>(raw[0] &amp; 0xFF) != 0</code></td></tr>
@@ -277,25 +273,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isEnable()">
 <h3>isEnable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-117">isEnable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-114">isEnable</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDayCount()">
 <h3>getDayCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-121">getDayCount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-118">getDayCount</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimeOfDayMinutes()">
 <h3>getTimeOfDayMinutes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-125">getTimeOfDayMinutes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-122">getTimeOfDayMinutes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBitmask()">
 <h3>getBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-129">getBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetSiteChangeReminderRequest.html#line-126">getBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-20">BatteryEstimateUpdateHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-43">BatteryEstimateUpdateHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">One step of a multi-record battery procedure, written on both the Mobi and the t:slim X2 at no
+<div class="block">History log record Battery Estimate Update, opCode 330, size 26.
+
+ <br>
+
+ One step of a multi-record battery procedure, written on both the Mobi and the t:slim X2 at no
  fixed time of day. A sequence starts with <a href="#getUnknown10()"><code>getUnknown10()</code></a> = 1 and ends with 0, about 30
  seconds per step. Some sequences end after the first step; others run three 1, 2, 3 cycles
  first. In the 3 sequences with live battery traffic where the value changed, the final record's
@@ -93,7 +97,14 @@ loadScripts(document, 'script');</script>
  like a re-estimate of the battery's state of charge; that reading is an inference.
 
  The class name is provisional: opcode 330 is not in Tandem's cloud event schema or the Mobi
- app's history log list. Fields not named here have not been identified and are exposed raw.</div>
+ app's history log list. Fields not named here have not been identified and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>330</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Battery Estimate Update"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -234,13 +245,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BatteryEstimateUpdateHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-35">BatteryEstimateUpdateHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-58">BatteryEstimateUpdateHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,long)">
 <h3>BatteryEstimateUpdateHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-36">BatteryEstimateUpdateHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-59">BatteryEstimateUpdateHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;unknown10,
  int&nbsp;unknown11,
@@ -263,7 +274,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-49">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-72">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -273,7 +284,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-66">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-89">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BatteryEstimateUpdateHistoryLog:</caption>
  <tr><td><code>unknown10</code></td><td><code>raw[10] &amp; 0xFF</code></td></tr>
@@ -294,7 +305,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-80">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-103">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;unknown10,
  int&nbsp;unknown11,
@@ -309,7 +320,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown10()">
 <h3>getUnknown10</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-101">getUnknown10</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-124">getUnknown10</a></span>()</div>
 <div class="block">Step within the sequence: 1, 2, 3 (occasionally 4) while it runs, 0 in its final record.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -320,7 +331,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-110">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-133">getUnknown11</a></span>()</div>
 <div class="block">1 only in records where <a href="#getUnknown10()"><code>getUnknown10()</code></a> is 3, else 0.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -331,7 +342,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentBatteryAbc()">
 <h3>getCurrentBatteryAbc</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-120">getCurrentBatteryAbc</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-143">getCurrentBatteryAbc</a></span>()</div>
 <div class="block">Equal to <a href="../currentStatus/CurrentBatteryV2Response.html#getCurrentBatteryAbc()"><code>CurrentBatteryV2Response.getCurrentBatteryAbc()</code></a> before the sequence; in the
  final record, the value the pump reports afterwards.</div>
 <dl class="notes">
@@ -343,7 +354,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown13()">
 <h3>getUnknown13</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-130">getUnknown13</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-153">getUnknown13</a></span>()</div>
 <div class="block">Often above 100 in the first record of a sequence (always 136 on the Mobi); in later
  records, the value <a href="#getCurrentBatteryAbc()"><code>getCurrentBatteryAbc()</code></a> takes in the final record.</div>
 <dl class="notes">
@@ -355,7 +366,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown14()">
 <h3>getUnknown14</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-139">getUnknown14</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-162">getUnknown14</a></span>()</div>
 <div class="block">Signed; -38 to 213 observed.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -366,7 +377,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLipoMv()">
 <h3>getLipoMv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-148">getLipoMv</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-171">getLipoMv</a></span>()</div>
 <div class="block">Close to <a href="../currentStatus/CurrentBatteryV2Response.html#getUnknown3()"><code>CurrentBatteryV2Response.getUnknown3()</code></a> read around the same time.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -377,7 +388,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentBatteryIbc()">
 <h3>getCurrentBatteryIbc</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-155">getCurrentBatteryIbc</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-178">getCurrentBatteryIbc</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><a href="../currentStatus/CurrentBatteryV2Response.html#getCurrentBatteryIbc()"><code>CurrentBatteryV2Response.getCurrentBatteryIbc()</code></a> before the sequence</dd>
@@ -387,7 +398,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getElapsedMs()">
 <h3>getElapsedMs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-165">getElapsedMs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryEstimateUpdateHistoryLog.html#line-188">getElapsedMs</a></span>()</div>
 <div class="block">Milliseconds since the first record of the sequence (exactly 30000, 60000, 62000, ... on the
  t:slim X2, about 30300 per 30-second step on the Mobi); 0 in the final record.</div>
 <dl class="notes">

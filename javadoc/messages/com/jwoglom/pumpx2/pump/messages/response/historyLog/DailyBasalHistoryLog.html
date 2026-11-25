@@ -82,11 +82,24 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-12">DailyBasalHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-30">DailyBasalHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">A message which appears in the history log every hour at minimum, more frequently when the basal
+<div class="block">History log record Daily Basal, opCode 81, size 26.
+
+ <br>
+
+ A message which appears in the history log every hour at minimum, more frequently when the basal
  rate changes, and contains a summary of the total basal deliveries up to that point in the current
- day. Resets at 00:00 midnight when there is a <a href="NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>NewDayHistoryLog</code></a>.</div>
+ day. Resets at 00:00 midnight when there is a <a href="NewDayHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>NewDayHistoryLog</code></a>.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>81</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Daily Basal"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>"LID_DAILY_BASAL"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>usedByTidepool</code>&nbsp;</th><td>&nbsp;<code>true</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -214,13 +227,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DailyBasalHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-27">DailyBasalHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-45">DailyBasalHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,float,float,float,boolean,int,int)">
 <h3>DailyBasalHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-28">DailyBasalHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-46">DailyBasalHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;dailyTotalBasal,
  float&nbsp;lastBasalRate,
@@ -233,7 +246,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(float,float,float,boolean,int,int)">
 <h3>DailyBasalHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-40">DailyBasalHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;dailyTotalBasal,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-58">DailyBasalHistoryLog</a></span><wbr><span class="parameters">(float&nbsp;dailyTotalBasal,
  float&nbsp;lastBasalRate,
  float&nbsp;iob,
  boolean&nbsp;finalEventForDay,
@@ -252,7 +265,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-44">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-62">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -262,7 +275,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-59">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-77">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for DailyBasalHistoryLog:</caption>
  <tr><td><code>dailyTotalBasal</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
@@ -281,7 +294,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,float,float,float,boolean,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-72">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-90">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;dailyTotalBasal,
  float&nbsp;lastBasalRate,
@@ -294,7 +307,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getDailyTotalBasal()">
 <h3>getDailyTotalBasal</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-88">getDailyTotalBasal</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-106">getDailyTotalBasal</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the total basal amount delivered in the gap between this message and the previous</dd>
@@ -304,7 +317,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLastBasalRate()">
 <h3>getLastBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-95">getLastBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-113">getLastBasalRate</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the last basal rate used as of this message</dd>
@@ -314,7 +327,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIob()">
 <h3>getIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-102">getIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-120">getIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the current IOB</dd>
@@ -324,7 +337,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getFinalEventForDay()">
 <h3>getFinalEventForDay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-116">getFinalEventForDay</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-134">getFinalEventForDay</a></span>()</div>
 <div class="block">A close-out marker on the last <a href="DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a> of a reporting period. Its usual
  trigger is the daily rollover just before midnight, after which <a href="#getDailyTotalBasal()"><code>getDailyTotalBasal()</code></a>
  resets to 0, but it has also been observed immediately before a
@@ -340,7 +353,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBatteryChargeRaw()">
 <h3>getBatteryChargeRaw</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-124">getBatteryChargeRaw</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-142">getBatteryChargeRaw</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the pump's reported battery state-of-charge, 0-100, unscaled</dd>
@@ -350,7 +363,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBatteryChargePercent()">
 <h3>getBatteryChargePercent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-136">getBatteryChargePercent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-154">getBatteryChargePercent</a></span>()</div>
 <div class="block">The pump reports its state of charge directly as a 0-100 percentage in this byte, so no
  scaling is applied. On Mobi this tracks <code>CurrentBatteryV2Response.currentBatteryAbc</code>,
  not the displayed percent from <code>getBatteryPercent()</code> (<code>currentBatteryIbc</code>). The two
@@ -364,7 +377,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLipoMv()">
 <h3>getLipoMv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-143">getLipoMv</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/DailyBasalHistoryLog.html#line-161">getLipoMv</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the reported LIPO battery amount in millivolts</dd>

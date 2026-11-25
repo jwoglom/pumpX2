@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-49">BleSoftwareInfoResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-46">BleSoftwareInfoResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Returns information about the BLE soft device firmware.
+<div class="block">Response message for <a href="../../request/currentStatus/BleSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BleSoftwareInfoRequest</code></a>, opCode -119, size 14.
+
+ <br>
+
+ Returns information about the BLE soft device firmware.
 
  Binary layout (14 bytes total, all little-endian):
    offset 0,  2 bytes: softDeviceId          (uint16)
@@ -93,14 +97,6 @@ loadScripts(document, 'script');</script>
    offset 6,  2 bytes: softDeviceBugfixVersion(uint16)
    offset 8,  4 bytes: softDeviceVersion      (uint32)
    offset 12, 2 bytes: softDeviceSubVersion   (uint16)
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/BleSoftwareInfoRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>BleSoftwareInfoRequest</code></a>, opCode -119, size 14
-
- <br>
 
  
  <table border='1'>
@@ -237,19 +233,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BleSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-65">BleSoftwareInfoResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-62">BleSoftwareInfoResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>BleSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-67">BleSoftwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-64">BleSoftwareInfoResponse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,long,int)">
 <h3>BleSoftwareInfoResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-72">BleSoftwareInfoResponse</a></span><wbr><span class="parameters">(int&nbsp;softDeviceId,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-69">BleSoftwareInfoResponse</a></span><wbr><span class="parameters">(int&nbsp;softDeviceId,
  int&nbsp;softDeviceMajorVersion,
  int&nbsp;softDeviceMinorVersion,
  int&nbsp;softDeviceBugfixVersion,
@@ -268,7 +264,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-93">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-90">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BleSoftwareInfoResponse:</caption>
  <tr><td><code>softDeviceId</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
@@ -287,7 +283,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,int,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-123">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;softDeviceId,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-120">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;softDeviceId,
  int&nbsp;softDeviceMajorVersion,
  int&nbsp;softDeviceMinorVersion,
  int&nbsp;softDeviceBugfixVersion,
@@ -316,37 +312,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceId()">
 <h3>getSoftDeviceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-133">getSoftDeviceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-130">getSoftDeviceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSoftDeviceMajorVersion()">
 <h3>getSoftDeviceMajorVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-137">getSoftDeviceMajorVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-134">getSoftDeviceMajorVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSoftDeviceMinorVersion()">
 <h3>getSoftDeviceMinorVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-141">getSoftDeviceMinorVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-138">getSoftDeviceMinorVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSoftDeviceBugfixVersion()">
 <h3>getSoftDeviceBugfixVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-145">getSoftDeviceBugfixVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-142">getSoftDeviceBugfixVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSoftDeviceVersion()">
 <h3>getSoftDeviceVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-149">getSoftDeviceVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-146">getSoftDeviceVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSoftDeviceSubVersion()">
 <h3>getSoftDeviceSubVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-153">getSoftDeviceSubVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/BleSoftwareInfoResponse.html#line-150">getSoftDeviceSubVersion</a></span>()</div>
 </section>
 </li>
 </ul>

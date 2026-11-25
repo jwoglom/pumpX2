@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-26">ControlIQCycleHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-56">ControlIQCycleHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Control-IQ's state for one 5-minute algorithm cycle: its glucose estimate and prediction,
+<div class="block">History log record Control-IQ Cycle, opCode 227, size 26.
+
+ <br>
+
+ Control-IQ's state for one 5-minute algorithm cycle: its glucose estimate and prediction,
  net IOB, TDI estimate, correction factor, target, the programmed basal it starts from, and
  what it commands (the hypoglycemia brake, the cycle's insulin and the increase above profile).
  Written every ~300 s on t:slim X2 and Mobi, including with Control-IQ off and with no CGM,
@@ -100,7 +104,14 @@ loadScripts(document, 'script');</script>
  <p>These are pump-internal Control-IQ values. Do not use them for dosing or as the IOB.
 
  <p>The class name is provisional: opcode 227 is not in Tandem's cloud event schema or the Mobi
- app's history log list. <a href="#getSleepRamp()"><code>getSleepRamp()</code></a> is exposed raw because its meaning is unknown.</div>
+ app's history log list. <a href="#getSleepRamp()"><code>getSleepRamp()</code></a> is exposed raw because its meaning is unknown.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>227</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control-IQ Cycle"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -279,13 +290,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlIQCycleHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-44">ControlIQCycleHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-74">ControlIQCycleHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int,int,int,int)">
 <h3>ControlIQCycleHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-45">ControlIQCycleHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-75">ControlIQCycleHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;basalIncreaseMilliunits,
  int&nbsp;cycleInsulinMilliunits,
@@ -311,7 +322,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-61">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-91">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -321,7 +332,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-111">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlIQCycleHistoryLog:</caption>
  <tr><td><code>basalIncreaseMilliunits</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -345,7 +356,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-128">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;basalIncreaseMilliunits,
  int&nbsp;cycleInsulinMilliunits,
@@ -363,7 +374,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBasalIncreaseMilliunits()">
 <h3>getBasalIncreaseMilliunits</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-123">getBasalIncreaseMilliunits</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-153">getBasalIncreaseMilliunits</a></span>()</div>
 <div class="block">floor(max(0, algorithmRate - profileBasalRate) / 12) for the next
  <a href="BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BasalDeliveryHistoryLog</code></a>. Nonzero only when Control-IQ raises basal above the profile
  (never with Control-IQ off).</div>
@@ -376,7 +387,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCycleInsulinMilliunits()">
 <h3>getCycleInsulinMilliunits</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-135">getCycleInsulinMilliunits</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-165">getCycleInsulinMilliunits</a></span>()</div>
 <div class="block">With Control-IQ on: floor(algorithmRate / 12) for the next <a href="BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BasalDeliveryHistoryLog</code></a>,
  plus the requested amount of a Control-IQ automatic correction bolus started in this cycle.
  With Control-IQ off: close to floor(programmedBasalRate / 12 * hypoBrakeFraction) (81-99% of
@@ -390,7 +401,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPredictedGlucoseX100()">
 <h3>getPredictedGlucoseX100</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-145">getPredictedGlucoseX100</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-175">getPredictedGlucoseX100</a></span>()</div>
 <div class="block">Predicted glucose x100, floored at 2000. Roughly the glucose estimate plus 20 minutes of the
  recent CGM trend, minus an insulin effect; the exact prediction horizon is not confirmed.</div>
 <dl class="notes">
@@ -402,7 +413,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPredictedGlucoseMgdl()">
 <h3>getPredictedGlucoseMgdl</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-152">getPredictedGlucoseMgdl</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-182">getPredictedGlucoseMgdl</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><a href="#getPredictedGlucoseX100()"><code>getPredictedGlucoseX100()</code></a> in mg/dL</dd>
@@ -412,7 +423,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getProgrammedBasalRate()">
 <h3>getProgrammedBasalRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-163">getProgrammedBasalRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-193">getProgrammedBasalRate</a></span>()</div>
 <div class="block">The active temp rate if one is running, else the profile rate; the profile rate while
  suspended. Capped at 3000. On Control-IQ v7.6 Mobi firmware this is the profile rate even
  during a temp rate.</div>
@@ -425,7 +436,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getNetIobMilliunits()">
 <h3>getNetIobMilliunits</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-174">getNetIobMilliunits</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-204">getNetIobMilliunits</a></span>()</div>
 <div class="block">Not the IOB the pump displays. Fits boluses plus (delivered - programmed) basal through a
  two-compartment curve (1 + t/tau) * e^(-t/tau) with tau = 34 minutes, floored at 0
  (r 0.97-0.9998 in 8 datasets).</div>
@@ -438,7 +449,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getGlucoseEstimate()">
 <h3>getGlucoseEstimate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-184">getGlucoseEstimate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-214">getGlucoseEstimate</a></span>()</div>
 <div class="block">Tracks the latest CGM reading (r 0.997-0.998, usually 1 mg/dL below it) and saturates at 255.
  With no CGM paired to the pump it stays near a fixed value.</div>
 <dl class="notes">
@@ -450,7 +461,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCorrectionFactor()">
 <h3>getCorrectionFactor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-194">getCorrectionFactor</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-224">getCorrectionFactor</a></span>()</div>
 <div class="block">min(floor(1800 / TDI estimate), profile correction factor) in 2024-2026 data; 1500 instead of
  1800 in the 2022 records and part of 2023.</div>
 <dl class="notes">
@@ -462,7 +473,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTdiEstimate()">
 <h3>getTdiEstimate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-204">getTdiEstimate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-234">getTdiEstimate</a></span>()</div>
 <div class="block">The integer part of the estimate in the AATdiEstChange record (opcode 332) that the Mobi writes
  hourly in the same second, just before this record.</div>
 <dl class="notes">
@@ -474,7 +485,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHypoBrake()">
 <h3>getHypoBrake</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-215">getHypoBrake</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-245">getHypoBrake</a></span>()</div>
 <div class="block">floor(200 / (1 + 2.5 * r)) for predicted glucose G = <a href="#getPredictedGlucoseMgdl()"><code>getPredictedGlucoseMgdl()</code></a> &gt;= 70,
  and 0 below 70, where r = 10 * f^2 when f = 1.509 * (ln(G)^1.084 - 5.381) is negative and 0
  otherwise (Kovatchev's low-BG risk, zero at 112.5 mg/dL). 200 means no attenuation.</div>
@@ -487,7 +498,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHypoBrakeFraction()">
 <h3>getHypoBrakeFraction</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-222">getHypoBrakeFraction</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-252">getHypoBrakeFraction</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><a href="#getHypoBrake()"><code>getHypoBrake()</code></a> as a fraction, 0.0 (full brake) to 1.0 (none)</dd>
@@ -497,7 +508,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSleepRamp()">
 <h3>getSleepRamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-232">getSleepRamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-262">getSleepRamp</a></span>()</div>
 <div class="block">0 outside sleep. In sleep mode it rises by 3 or 4 per cycle (40 per hour) to 200 over five
  hours; after sleep ends it falls by 4-5 per cycle. Meaning unknown.</div>
 <dl class="notes">
@@ -509,7 +520,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUpperTarget()">
 <h3>getUpperTarget</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-242">getUpperTarget</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQCycleHistoryLog.html#line-272">getUpperTarget</a></span>()</div>
 <div class="block">160 in normal and exercise mode and 120 in sleep mode, moving between them over about
  40-90 minutes after a mode change.</div>
 <dl class="notes">

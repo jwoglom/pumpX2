@@ -82,16 +82,27 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-17">BleLinkStatsHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-38">BleLinkStatsHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Hourly Tandem Mobi record of six signed-byte statistics, probably of the BLE link's RSSI in dBm
+<div class="block">History log record BLE Link Stats, opCode 473, size 26.
+
+ <br>
+
+ Hourly Tandem Mobi record of six signed-byte statistics, probably of the BLE link's RSSI in dBm
  (values -95 to -18; not cross-checked against phone-side RSSI). In all 376 records from four
  pumps, <a href="#getMinimum()"><code>getMinimum()</code></a> is the lowest and <a href="#getMaximum()"><code>getMaximum()</code></a> the highest of the six,
  bytes 13-15 are non-decreasing multiples of 5 between them, and byte 12 lies between bytes 13
  and 15. Written at a fixed minute that differs between pumps.
 
  The class name is provisional: opcode 473 is not in Tandem's cloud event schema or the Mobi
- app's history log list. Fields not named here have not been identified and are exposed raw.</div>
+ app's history log list. Fields not named here have not been identified and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>473</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"BLE Link Stats"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -237,13 +248,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BleLinkStatsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-33">BleLinkStatsHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-54">BleLinkStatsHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int,int)">
 <h3>BleLinkStatsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-34">BleLinkStatsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-55">BleLinkStatsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;minimum,
  int&nbsp;maximum,
@@ -267,7 +278,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-48">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-69">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -277,7 +288,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-66">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-87">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BleLinkStatsHistoryLog:</caption>
  <tr><td><code>minimum</code></td><td><code>raw[10]</code></td></tr>
@@ -299,7 +310,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-81">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-102">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;minimum,
  int&nbsp;maximum,
@@ -315,7 +326,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMinimum()">
 <h3>getMinimum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-100">getMinimum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-121">getMinimum</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the lowest of the six signed statistics</dd>
@@ -325,7 +336,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMaximum()">
 <h3>getMaximum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-107">getMaximum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-128">getMaximum</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the highest of the six signed statistics</dd>
@@ -335,7 +346,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown12()">
 <h3>getUnknown12</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-117">getUnknown12</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-138">getUnknown12</a></span>()</div>
 <div class="block">Signed. Between <a href="#getUnknown13()"><code>getUnknown13()</code></a> and <a href="#getUnknown15()"><code>getUnknown15()</code></a>, and not quantized, so
  possibly a mean.</div>
 <dl class="notes">
@@ -347,7 +358,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown13()">
 <h3>getUnknown13</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-126">getUnknown13</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-147">getUnknown13</a></span>()</div>
 <div class="block">Signed multiple of 5, &lt;= <a href="#getUnknown14()"><code>getUnknown14()</code></a>; possibly a percentile.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -358,7 +369,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown14()">
 <h3>getUnknown14</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-135">getUnknown14</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-156">getUnknown14</a></span>()</div>
 <div class="block">Signed multiple of 5, between <a href="#getUnknown13()"><code>getUnknown13()</code></a> and <a href="#getUnknown15()"><code>getUnknown15()</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -369,7 +380,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown15()">
 <h3>getUnknown15</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-144">getUnknown15</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-165">getUnknown15</a></span>()</div>
 <div class="block">Signed multiple of 5, &gt;= <a href="#getUnknown14()"><code>getUnknown14()</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -380,7 +391,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown16()">
 <h3>getUnknown16</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-154">getUnknown16</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-175">getUnknown16</a></span>()</div>
 <div class="block">15-181 observed. Not the number of phone connections in the hour, and not correlated with the
  phone's message traffic.</div>
 <dl class="notes">
@@ -392,7 +403,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown18()">
 <h3>getUnknown18</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-163">getUnknown18</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-184">getUnknown18</a></span>()</div>
 <div class="block">311-5408 observed. Not the phone's connected seconds in the hour.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -403,7 +414,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIntervalSeconds()">
 <h3>getIntervalSeconds</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-173">getIntervalSeconds</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleLinkStatsHistoryLog.html#line-194">getIntervalSeconds</a></span>()</div>
 <div class="block">3599-3601 observed; equal to the pump-time gap to the previous record in 334 of 363
  hourly pairs and 1 second off in the other 29.</div>
 <dl class="notes">

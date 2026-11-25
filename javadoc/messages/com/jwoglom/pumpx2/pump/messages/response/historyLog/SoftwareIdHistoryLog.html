@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-27">SoftwareIdHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-58">SoftwareIdHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">One slot of the pump's 64-bit software ID. The high word is the firmware version word also
+<div class="block">History log record Software ID, opCode 449, size 26.
+
+ <br>
+
+ One slot of the pump's 64-bit software ID. The high word is the firmware version word also
  found in <a href="VersionsAHistoryLog.html#getArmSwVersion()"><code>VersionsAHistoryLog.getArmSwVersion()</code></a>, <a href="ArmInitHistoryLog.html#getVersion()"><code>ArmInitHistoryLog.getVersion()</code></a>
  and <code>PumpVersionResponse.armSwVer</code>. Printed as <code>%08x%08x</code> (high word first), the
  two words are the 16-digit hex string the pump returns in <code>CommonSoftwareInfoResponse</code>.
@@ -101,7 +105,14 @@ loadScripts(document, 'script');</script>
 
  <p>The class name is provisional: opcode 449 is not in Tandem's cloud event schema or the Mobi
  app's history log list. Fields not named here have not been identified and are exposed raw.
- See https://github.com/jwoglom/pumpx2/issues/152.</div>
+ See https://github.com/jwoglom/pumpx2/issues/152.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>449</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Software ID"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -230,13 +241,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SoftwareIdHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-39">SoftwareIdHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-70">SoftwareIdHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,long,long,long)">
 <h3>SoftwareIdHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-40">SoftwareIdHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-71">SoftwareIdHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;slot,
  int&nbsp;unknown11,
@@ -248,7 +259,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,long,long)">
 <h3>SoftwareIdHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-50">SoftwareIdHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-81">SoftwareIdHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;slot,
  long&nbsp;armSwVersion,
@@ -266,7 +277,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-54">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-85">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -276,7 +287,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-68">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-99">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SoftwareIdHistoryLog:</caption>
  <tr><td><code>slot</code></td><td><code>raw[10] &amp; 0xFF</code></td></tr>
@@ -294,7 +305,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,long,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-79">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-110">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;slot,
  int&nbsp;unknown11,
@@ -306,7 +317,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSlot()">
 <h3>getSlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-103">getSlot</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-134">getSlot</a></span>()</div>
 <div class="block">Raw slot index. Seen values are 0-3 on the Tandem Mobi and 0 and 2 on the t:slim X2. The
  daily block writes them in the order 0, 2, 1, 3 (Mobi) or 0, 2 (X2). At a Mobi boot, slots 0
  and 1 are written first and slots 2 and 3 about 2-3 seconds later, together with opcode 450.
@@ -320,7 +331,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-112">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-143">getUnknown11</a></span>()</div>
 <div class="block">Always 0 so far. May be the high bytes of a 32-bit slot index.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -331,7 +342,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getArmSwVersion()">
 <h3>getArmSwVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-122">getArmSwVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-153">getArmSwVersion</a></span>()</div>
 <div class="block">High word of the software ID. Equal to <a href="VersionsAHistoryLog.html#getArmSwVersion()"><code>VersionsAHistoryLog.getArmSwVersion()</code></a> of the
  same pump and firmware. 0 in a slot that has not been filled yet.</div>
 <dl class="notes">
@@ -343,7 +354,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftwareIdLow()">
 <h3>getSoftwareIdLow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-133">getSoftwareIdLow</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-164">getSoftwareIdLow</a></span>()</div>
 <div class="block">Low word of the software ID. One value per firmware version. Not
  <a href="VersionInfoHistoryLog.html#getArmCrc()"><code>VersionInfoHistoryLog.getArmCrc()</code></a> and not a part number. What it is derived from is
  unknown. 0 in a slot that has not been filled yet.</div>
@@ -356,7 +367,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-142">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-173">getUnknown22</a></span>()</div>
 <div class="block">Always 0 so far.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -367,7 +378,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isSoftwareIdKnown()">
 <h3>isSoftwareIdKnown</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-149">isSoftwareIdKnown</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-180">isSoftwareIdKnown</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>false if both ID words are 0, meaning this slot was logged before its value was known</dd>
@@ -377,7 +388,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftwareId()">
 <h3>getSoftwareId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-157">getSoftwareId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/SoftwareIdHistoryLog.html#line-188">getSoftwareId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the software ID as 16 lowercase hex digits, high word first, as in

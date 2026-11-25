@@ -21,311 +21,326 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 65,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "Bolus Requested 2/3",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_BOLUS_REQUESTED_MSG2",</span>
-<span class="source-line-no">011</span><span id="line-11">    usedByAndroid = true,</span>
-<span class="source-line-no">012</span><span id="line-12">    usedByTidepool = true</span>
-<span class="source-line-no">013</span><span id="line-13">)</span>
-<span class="source-line-no">014</span><span id="line-14">public class BolusRequestedMsg2HistoryLog extends HistoryLog {</span>
-<span class="source-line-no">015</span><span id="line-15">    </span>
-<span class="source-line-no">016</span><span id="line-16">    private int bolusId;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int options;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int standardPercent;</span>
-<span class="source-line-no">019</span><span id="line-19">    private int duration;</span>
-<span class="source-line-no">020</span><span id="line-20">    private int spare1;</span>
-<span class="source-line-no">021</span><span id="line-21">    private int isf;</span>
-<span class="source-line-no">022</span><span id="line-22">    private int targetBG;</span>
-<span class="source-line-no">023</span><span id="line-23">    private boolean userOverride;</span>
-<span class="source-line-no">024</span><span id="line-24">    private boolean declinedCorrection;</span>
-<span class="source-line-no">025</span><span id="line-25">    private int selectedIOB;</span>
-<span class="source-line-no">026</span><span id="line-26">    private int spare2;</span>
-<span class="source-line-no">027</span><span id="line-27">    </span>
-<span class="source-line-no">028</span><span id="line-28">    public BolusRequestedMsg2HistoryLog() {}</span>
-<span class="source-line-no">029</span><span id="line-29">    </span>
-<span class="source-line-no">030</span><span id="line-30">    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
-<span class="source-line-no">031</span><span id="line-31">        this(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);</span>
-<span class="source-line-no">032</span><span id="line-32">    }</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {</span>
-<span class="source-line-no">035</span><span id="line-35">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, headerHighNibble);</span>
-<span class="source-line-no">036</span><span id="line-36">        this.pumpTimeSec = pumpTimeSec;</span>
-<span class="source-line-no">037</span><span id="line-37">        this.sequenceNum = sequenceNum;</span>
-<span class="source-line-no">038</span><span id="line-38">        this.bolusId = bolusId;</span>
-<span class="source-line-no">039</span><span id="line-39">        this.options = options;</span>
-<span class="source-line-no">040</span><span id="line-40">        this.standardPercent = standardPercent;</span>
-<span class="source-line-no">041</span><span id="line-41">        this.duration = duration;</span>
-<span class="source-line-no">042</span><span id="line-42">        this.spare1 = spare1;</span>
-<span class="source-line-no">043</span><span id="line-43">        this.isf = isf;</span>
-<span class="source-line-no">044</span><span id="line-44">        this.targetBG = targetBG;</span>
-<span class="source-line-no">045</span><span id="line-45">        this.userOverride = userOverride;</span>
-<span class="source-line-no">046</span><span id="line-46">        this.declinedCorrection = declinedCorrection;</span>
-<span class="source-line-no">047</span><span id="line-47">        this.selectedIOB = selectedIOB;</span>
-<span class="source-line-no">048</span><span id="line-48">        this.spare2 = spare2;</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    public BolusRequestedMsg2HistoryLog(int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
-<span class="source-line-no">052</span><span id="line-52">        this(0, 0, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);</span>
-<span class="source-line-no">053</span><span id="line-53">    }</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    public int typeId() {</span>
-<span class="source-line-no">056</span><span id="line-56">        return 65;</span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    /**</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;caption&gt;Parsed fields for BolusRequestedMsg2HistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;options&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;standardPercent&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;duration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isf&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;targetBG&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;userOverride&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;declinedCorrection&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;selectedIOB&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[25]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;/table&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     */</span>
-<span class="source-line-no">075</span><span id="line-75">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">076</span><span id="line-76">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">077</span><span id="line-77">        this.cargo = raw;</span>
-<span class="source-line-no">078</span><span id="line-78">        parseBase(raw);</span>
-<span class="source-line-no">079</span><span id="line-79">        this.bolusId = Bytes.readShort(raw, 10);</span>
-<span class="source-line-no">080</span><span id="line-80">        this.options = raw[12];</span>
-<span class="source-line-no">081</span><span id="line-81">        this.standardPercent = raw[13];</span>
-<span class="source-line-no">082</span><span id="line-82">        this.duration = Bytes.readShort(raw, 14);</span>
-<span class="source-line-no">083</span><span id="line-83">        this.spare1 = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">084</span><span id="line-84">        this.isf = Bytes.readShort(raw, 18);</span>
-<span class="source-line-no">085</span><span id="line-85">        this.targetBG = Bytes.readShort(raw, 20);</span>
-<span class="source-line-no">086</span><span id="line-86">        this.userOverride = raw[22] != 0;</span>
-<span class="source-line-no">087</span><span id="line-87">        this.declinedCorrection = raw[23] != 0;</span>
-<span class="source-line-no">088</span><span id="line-88">        this.selectedIOB = raw[24];</span>
-<span class="source-line-no">089</span><span id="line-89">        this.spare2 = raw[25];</span>
-<span class="source-line-no">090</span><span id="line-90">        </span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    </span>
-<span class="source-line-no">094</span><span id="line-94">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
-<span class="source-line-no">095</span><span id="line-95">        return buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);</span>
-<span class="source-line-no">096</span><span id="line-96">    }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    /**</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;caption&gt;Byte layout for BolusRequestedMsg2HistoryLog.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) options&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) standardPercent&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(duration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(duration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(spare1) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(spare1) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">118</span><span id="line-118">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">119</span><span id="line-119">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">120</span><span id="line-120">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">121</span><span id="line-121">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (userOverride ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (declinedCorrection ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) selectedIOB&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) spare2&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">126</span><span id="line-126">     * &lt;/table&gt;</span>
-<span class="source-line-no">127</span><span id="line-127">     */</span>
-<span class="source-line-no">128</span><span id="line-128">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {</span>
-<span class="source-line-no">129</span><span id="line-129">        return Bytes.combine(</span>
-<span class="source-line-no">130</span><span id="line-130">            HistoryLog.typeIdBytes(65, headerHighNibble),</span>
-<span class="source-line-no">131</span><span id="line-131">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">132</span><span id="line-132">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">133</span><span id="line-133">            Bytes.firstTwoBytesLittleEndian(bolusId), </span>
-<span class="source-line-no">134</span><span id="line-134">            new byte[]{ (byte) options }, </span>
-<span class="source-line-no">135</span><span id="line-135">            new byte[]{ (byte) standardPercent }, </span>
-<span class="source-line-no">136</span><span id="line-136">            Bytes.firstTwoBytesLittleEndian(duration), </span>
-<span class="source-line-no">137</span><span id="line-137">            Bytes.firstTwoBytesLittleEndian(spare1), </span>
-<span class="source-line-no">138</span><span id="line-138">            Bytes.firstTwoBytesLittleEndian(isf), </span>
-<span class="source-line-no">139</span><span id="line-139">            Bytes.firstTwoBytesLittleEndian(targetBG), </span>
-<span class="source-line-no">140</span><span id="line-140">            new byte[]{ (byte) (userOverride ? 1 : 0) }, </span>
-<span class="source-line-no">141</span><span id="line-141">            new byte[]{ (byte) (declinedCorrection ? 1 : 0) }, </span>
-<span class="source-line-no">142</span><span id="line-142">            new byte[]{ (byte) selectedIOB }, </span>
-<span class="source-line-no">143</span><span id="line-143">            new byte[]{ (byte) spare2 });</span>
-<span class="source-line-no">144</span><span id="line-144">    }</span>
-<span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">    /**</span>
-<span class="source-line-no">147</span><span id="line-147">     * @return bolus ID</span>
-<span class="source-line-no">148</span><span id="line-148">     */</span>
-<span class="source-line-no">149</span><span id="line-149">    public int getBolusId() {</span>
-<span class="source-line-no">150</span><span id="line-150">        return bolusId;</span>
-<span class="source-line-no">151</span><span id="line-151">    }</span>
-<span class="source-line-no">152</span><span id="line-152">    /**</span>
-<span class="source-line-no">153</span><span id="line-153">     * @return the raw value of the options byte, see {@link #getBolusOption()}</span>
-<span class="source-line-no">154</span><span id="line-154">     */</span>
-<span class="source-line-no">155</span><span id="line-155">    public int getOptions() {</span>
-<span class="source-line-no">156</span><span id="line-156">        return options;</span>
-<span class="source-line-no">157</span><span id="line-157">    }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159">    /**</span>
-<span class="source-line-no">160</span><span id="line-160">     * @return how the bolus was requested, or null if the raw value is not recognized</span>
-<span class="source-line-no">161</span><span id="line-161">     */</span>
-<span class="source-line-no">162</span><span id="line-162">    public BolusOption getBolusOption() {</span>
-<span class="source-line-no">163</span><span id="line-163">        return BolusOption.fromId(options);</span>
-<span class="source-line-no">164</span><span id="line-164">    }</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">    /**</span>
-<span class="source-line-no">167</span><span id="line-167">     * How the bolus was requested.</span>
-<span class="source-line-no">168</span><span id="line-168">     *</span>
-<span class="source-line-no">169</span><span id="line-169">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation.&lt;/b&gt; Only</span>
-<span class="source-line-no">170</span><span id="line-170">     * {@link #BLE_STANDARD} (4) has been confirmed on the wire so far (see</span>
-<span class="source-line-no">171</span><span id="line-171">     * &lt;a href="https://github.com/jwoglom/pumpX2/issues/51"&gt;issue 51&lt;/a&gt;): in a capture of</span>
-<span class="source-line-no">172</span><span id="line-172">     * 156 boluses initiated over BLE by a remote app ({@code InitiateBolusRequest}; the paired</span>
-<span class="source-line-no">173</span><span id="line-173">     * {@link BolusDeliveryHistoryLog} reported {@code bolusSource = 8}), 156/156</span>
-<span class="source-line-no">174</span><span id="line-174">     * LID_BOLUS_REQUESTED_MSG2 records carried {@code options = 4} together with</span>
-<span class="source-line-no">175</span><span id="line-175">     * {@code standardPercent = 100}, {@code duration = 0}, {@code userOverride = true} and</span>
-<span class="source-line-no">176</span><span id="line-176">     * {@code isf = targetBG = 0}. The remaining values are still tconnectsync-sourced and</span>
-<span class="source-line-no">177</span><span id="line-177">     * unverified: no record committed to this repository exercises them, so confirm against a</span>
-<span class="source-line-no">178</span><span id="line-178">     * capture before relying on those labels.</span>
-<span class="source-line-no">179</span><span id="line-179">     */</span>
-<span class="source-line-no">180</span><span id="line-180">    public enum BolusOption {</span>
-<span class="source-line-no">181</span><span id="line-181">        STANDARD(0),</span>
-<span class="source-line-no">182</span><span id="line-182">        EXTENDED(1),</span>
-<span class="source-line-no">183</span><span id="line-183">        QUICK(2),</span>
-<span class="source-line-no">184</span><span id="line-184">        AUTOMATIC(3),</span>
-<span class="source-line-no">185</span><span id="line-185">        /** Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture. */</span>
-<span class="source-line-no">186</span><span id="line-186">        BLE_STANDARD(4),</span>
-<span class="source-line-no">187</span><span id="line-187">        BLE_EXTENDED(5),</span>
-<span class="source-line-no">188</span><span id="line-188">        EATING_SOON_AUTOMATIC(6),</span>
-<span class="source-line-no">189</span><span id="line-189">        LATE_BOLUS(7),</span>
-<span class="source-line-no">190</span><span id="line-190">        /** Tandem schema bit 8: BLE with AID Recommendation Bolus */</span>
-<span class="source-line-no">191</span><span id="line-191">        BLE_WITH_AID_RECOMMENDATION(8),</span>
-<span class="source-line-no">192</span><span id="line-192">        ;</span>
-<span class="source-line-no">193</span><span id="line-193"></span>
-<span class="source-line-no">194</span><span id="line-194">        private final int id;</span>
-<span class="source-line-no">195</span><span id="line-195">        BolusOption(int id) {</span>
-<span class="source-line-no">196</span><span id="line-196">            this.id = id;</span>
-<span class="source-line-no">197</span><span id="line-197">        }</span>
-<span class="source-line-no">198</span><span id="line-198"></span>
-<span class="source-line-no">199</span><span id="line-199">        public int id() {</span>
-<span class="source-line-no">200</span><span id="line-200">            return id;</span>
-<span class="source-line-no">201</span><span id="line-201">        }</span>
-<span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">        public static BolusOption fromId(int id) {</span>
-<span class="source-line-no">204</span><span id="line-204">            for (BolusOption o : values()) {</span>
-<span class="source-line-no">205</span><span id="line-205">                if (o.id() == id) {</span>
-<span class="source-line-no">206</span><span id="line-206">                    return o;</span>
-<span class="source-line-no">207</span><span id="line-207">                }</span>
-<span class="source-line-no">208</span><span id="line-208">            }</span>
-<span class="source-line-no">209</span><span id="line-209">            return null;</span>
-<span class="source-line-no">210</span><span id="line-210">        }</span>
-<span class="source-line-no">211</span><span id="line-211">    }</span>
-<span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">    /**</span>
-<span class="source-line-no">214</span><span id="line-214">     * @return 100 if a standard bolus, otherwise the percent of the bolus which is performed up</span>
-<span class="source-line-no">215</span><span id="line-215">     * front in an extended bolus</span>
-<span class="source-line-no">216</span><span id="line-216">     */</span>
-<span class="source-line-no">217</span><span id="line-217">    public int getStandardPercent() {</span>
-<span class="source-line-no">218</span><span id="line-218">        return standardPercent;</span>
-<span class="source-line-no">219</span><span id="line-219">    }</span>
-<span class="source-line-no">220</span><span id="line-220"></span>
-<span class="source-line-no">221</span><span id="line-221">    /**</span>
-<span class="source-line-no">222</span><span id="line-222">     * @return 0 if a standard bolus, otherwise the duration between the standard and extended bolus</span>
-<span class="source-line-no">223</span><span id="line-223">     */</span>
-<span class="source-line-no">224</span><span id="line-224">    public int getDuration() {</span>
-<span class="source-line-no">225</span><span id="line-225">        return duration;</span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * History log record Bolus Requested 2/3, opCode 65, size 26.</span>
+<span class="source-line-no">009</span><span id="line-9"> *</span>
+<span class="source-line-no">010</span><span id="line-10"> * &lt;br&gt;</span>
+<span class="source-line-no">011</span><span id="line-11"> *</span>
+<span class="source-line-no">012</span><span id="line-12"> * </span>
+<span class="source-line-no">013</span><span id="line-13"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;65&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Bolus Requested 2/3"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_BOLUS_REQUESTED_MSG2"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;usedByAndroid&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;usedByTidepool&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;/table&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> */</span>
+<span class="source-line-no">022</span><span id="line-22">@HistoryLogProps(</span>
+<span class="source-line-no">023</span><span id="line-23">    opCode = 65,</span>
+<span class="source-line-no">024</span><span id="line-24">    displayName = "Bolus Requested 2/3",</span>
+<span class="source-line-no">025</span><span id="line-25">    internalName = "LID_BOLUS_REQUESTED_MSG2",</span>
+<span class="source-line-no">026</span><span id="line-26">    usedByAndroid = true,</span>
+<span class="source-line-no">027</span><span id="line-27">    usedByTidepool = true</span>
+<span class="source-line-no">028</span><span id="line-28">)</span>
+<span class="source-line-no">029</span><span id="line-29">public class BolusRequestedMsg2HistoryLog extends HistoryLog {</span>
+<span class="source-line-no">030</span><span id="line-30">    </span>
+<span class="source-line-no">031</span><span id="line-31">    private int bolusId;</span>
+<span class="source-line-no">032</span><span id="line-32">    private int options;</span>
+<span class="source-line-no">033</span><span id="line-33">    private int standardPercent;</span>
+<span class="source-line-no">034</span><span id="line-34">    private int duration;</span>
+<span class="source-line-no">035</span><span id="line-35">    private int spare1;</span>
+<span class="source-line-no">036</span><span id="line-36">    private int isf;</span>
+<span class="source-line-no">037</span><span id="line-37">    private int targetBG;</span>
+<span class="source-line-no">038</span><span id="line-38">    private boolean userOverride;</span>
+<span class="source-line-no">039</span><span id="line-39">    private boolean declinedCorrection;</span>
+<span class="source-line-no">040</span><span id="line-40">    private int selectedIOB;</span>
+<span class="source-line-no">041</span><span id="line-41">    private int spare2;</span>
+<span class="source-line-no">042</span><span id="line-42">    </span>
+<span class="source-line-no">043</span><span id="line-43">    public BolusRequestedMsg2HistoryLog() {}</span>
+<span class="source-line-no">044</span><span id="line-44">    </span>
+<span class="source-line-no">045</span><span id="line-45">    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
+<span class="source-line-no">046</span><span id="line-46">        this(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public BolusRequestedMsg2HistoryLog(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {</span>
+<span class="source-line-no">050</span><span id="line-50">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, headerHighNibble);</span>
+<span class="source-line-no">051</span><span id="line-51">        this.pumpTimeSec = pumpTimeSec;</span>
+<span class="source-line-no">052</span><span id="line-52">        this.sequenceNum = sequenceNum;</span>
+<span class="source-line-no">053</span><span id="line-53">        this.bolusId = bolusId;</span>
+<span class="source-line-no">054</span><span id="line-54">        this.options = options;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.standardPercent = standardPercent;</span>
+<span class="source-line-no">056</span><span id="line-56">        this.duration = duration;</span>
+<span class="source-line-no">057</span><span id="line-57">        this.spare1 = spare1;</span>
+<span class="source-line-no">058</span><span id="line-58">        this.isf = isf;</span>
+<span class="source-line-no">059</span><span id="line-59">        this.targetBG = targetBG;</span>
+<span class="source-line-no">060</span><span id="line-60">        this.userOverride = userOverride;</span>
+<span class="source-line-no">061</span><span id="line-61">        this.declinedCorrection = declinedCorrection;</span>
+<span class="source-line-no">062</span><span id="line-62">        this.selectedIOB = selectedIOB;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.spare2 = spare2;</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public BolusRequestedMsg2HistoryLog(int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
+<span class="source-line-no">067</span><span id="line-67">        this(0, 0, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2);</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    public int typeId() {</span>
+<span class="source-line-no">071</span><span id="line-71">        return 65;</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    /**</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;caption&gt;Parsed fields for BolusRequestedMsg2HistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;options&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;standardPercent&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;duration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;isf&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;targetBG&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;userOverride&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;declinedCorrection&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[23] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;selectedIOB&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;spare2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[25]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;/table&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     */</span>
+<span class="source-line-no">090</span><span id="line-90">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">091</span><span id="line-91">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">092</span><span id="line-92">        this.cargo = raw;</span>
+<span class="source-line-no">093</span><span id="line-93">        parseBase(raw);</span>
+<span class="source-line-no">094</span><span id="line-94">        this.bolusId = Bytes.readShort(raw, 10);</span>
+<span class="source-line-no">095</span><span id="line-95">        this.options = raw[12];</span>
+<span class="source-line-no">096</span><span id="line-96">        this.standardPercent = raw[13];</span>
+<span class="source-line-no">097</span><span id="line-97">        this.duration = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">098</span><span id="line-98">        this.spare1 = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">099</span><span id="line-99">        this.isf = Bytes.readShort(raw, 18);</span>
+<span class="source-line-no">100</span><span id="line-100">        this.targetBG = Bytes.readShort(raw, 20);</span>
+<span class="source-line-no">101</span><span id="line-101">        this.userOverride = raw[22] != 0;</span>
+<span class="source-line-no">102</span><span id="line-102">        this.declinedCorrection = raw[23] != 0;</span>
+<span class="source-line-no">103</span><span id="line-103">        this.selectedIOB = raw[24];</span>
+<span class="source-line-no">104</span><span id="line-104">        this.spare2 = raw[25];</span>
+<span class="source-line-no">105</span><span id="line-105">        </span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">    </span>
+<span class="source-line-no">109</span><span id="line-109">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2) {</span>
+<span class="source-line-no">110</span><span id="line-110">        return buildCargo(pumpTimeSec, sequenceNum, bolusId, options, standardPercent, duration, spare1, isf, targetBG, userOverride, declinedCorrection, selectedIOB, spare2, 0);</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    /**</span>
+<span class="source-line-no">114</span><span id="line-114">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">115</span><span id="line-115">     * &lt;caption&gt;Byte layout for BolusRequestedMsg2HistoryLog.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">117</span><span id="line-117">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">118</span><span id="line-118">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">119</span><span id="line-119">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">120</span><span id="line-120">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(pumpTimeSec) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">121</span><span id="line-121">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">122</span><span id="line-122">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">123</span><span id="line-123">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">124</span><span id="line-124">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;toUint32(sequenceNum) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">125</span><span id="line-125">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">126</span><span id="line-126">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">127</span><span id="line-127">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) options&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">128</span><span id="line-128">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) standardPercent&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">129</span><span id="line-129">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(duration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">130</span><span id="line-130">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(duration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">131</span><span id="line-131">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(spare1) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">132</span><span id="line-132">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(spare1) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">133</span><span id="line-133">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">134</span><span id="line-134">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(isf) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">135</span><span id="line-135">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">136</span><span id="line-136">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(targetBG) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">137</span><span id="line-137">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (userOverride ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">138</span><span id="line-138">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (declinedCorrection ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">139</span><span id="line-139">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) selectedIOB&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">140</span><span id="line-140">     * &lt;tr&gt;&lt;td&gt;23&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) spare2&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">141</span><span id="line-141">     * &lt;/table&gt;</span>
+<span class="source-line-no">142</span><span id="line-142">     */</span>
+<span class="source-line-no">143</span><span id="line-143">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int bolusId, int options, int standardPercent, int duration, int spare1, int isf, int targetBG, boolean userOverride, boolean declinedCorrection, int selectedIOB, int spare2, int headerHighNibble) {</span>
+<span class="source-line-no">144</span><span id="line-144">        return Bytes.combine(</span>
+<span class="source-line-no">145</span><span id="line-145">            HistoryLog.typeIdBytes(65, headerHighNibble),</span>
+<span class="source-line-no">146</span><span id="line-146">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">147</span><span id="line-147">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">148</span><span id="line-148">            Bytes.firstTwoBytesLittleEndian(bolusId), </span>
+<span class="source-line-no">149</span><span id="line-149">            new byte[]{ (byte) options }, </span>
+<span class="source-line-no">150</span><span id="line-150">            new byte[]{ (byte) standardPercent }, </span>
+<span class="source-line-no">151</span><span id="line-151">            Bytes.firstTwoBytesLittleEndian(duration), </span>
+<span class="source-line-no">152</span><span id="line-152">            Bytes.firstTwoBytesLittleEndian(spare1), </span>
+<span class="source-line-no">153</span><span id="line-153">            Bytes.firstTwoBytesLittleEndian(isf), </span>
+<span class="source-line-no">154</span><span id="line-154">            Bytes.firstTwoBytesLittleEndian(targetBG), </span>
+<span class="source-line-no">155</span><span id="line-155">            new byte[]{ (byte) (userOverride ? 1 : 0) }, </span>
+<span class="source-line-no">156</span><span id="line-156">            new byte[]{ (byte) (declinedCorrection ? 1 : 0) }, </span>
+<span class="source-line-no">157</span><span id="line-157">            new byte[]{ (byte) selectedIOB }, </span>
+<span class="source-line-no">158</span><span id="line-158">            new byte[]{ (byte) spare2 });</span>
+<span class="source-line-no">159</span><span id="line-159">    }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">    /**</span>
+<span class="source-line-no">162</span><span id="line-162">     * @return bolus ID</span>
+<span class="source-line-no">163</span><span id="line-163">     */</span>
+<span class="source-line-no">164</span><span id="line-164">    public int getBolusId() {</span>
+<span class="source-line-no">165</span><span id="line-165">        return bolusId;</span>
+<span class="source-line-no">166</span><span id="line-166">    }</span>
+<span class="source-line-no">167</span><span id="line-167">    /**</span>
+<span class="source-line-no">168</span><span id="line-168">     * @return the raw value of the options byte, see {@link #getBolusOption()}</span>
+<span class="source-line-no">169</span><span id="line-169">     */</span>
+<span class="source-line-no">170</span><span id="line-170">    public int getOptions() {</span>
+<span class="source-line-no">171</span><span id="line-171">        return options;</span>
+<span class="source-line-no">172</span><span id="line-172">    }</span>
+<span class="source-line-no">173</span><span id="line-173"></span>
+<span class="source-line-no">174</span><span id="line-174">    /**</span>
+<span class="source-line-no">175</span><span id="line-175">     * @return how the bolus was requested, or null if the raw value is not recognized</span>
+<span class="source-line-no">176</span><span id="line-176">     */</span>
+<span class="source-line-no">177</span><span id="line-177">    public BolusOption getBolusOption() {</span>
+<span class="source-line-no">178</span><span id="line-178">        return BolusOption.fromId(options);</span>
+<span class="source-line-no">179</span><span id="line-179">    }</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">    /**</span>
+<span class="source-line-no">182</span><span id="line-182">     * How the bolus was requested.</span>
+<span class="source-line-no">183</span><span id="line-183">     *</span>
+<span class="source-line-no">184</span><span id="line-184">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation.&lt;/b&gt; Only</span>
+<span class="source-line-no">185</span><span id="line-185">     * {@link #BLE_STANDARD} (4) has been confirmed on the wire so far (see</span>
+<span class="source-line-no">186</span><span id="line-186">     * &lt;a href="https://github.com/jwoglom/pumpX2/issues/51"&gt;issue 51&lt;/a&gt;): in a capture of</span>
+<span class="source-line-no">187</span><span id="line-187">     * 156 boluses initiated over BLE by a remote app ({@code InitiateBolusRequest}; the paired</span>
+<span class="source-line-no">188</span><span id="line-188">     * {@link BolusDeliveryHistoryLog} reported {@code bolusSource = 8}), 156/156</span>
+<span class="source-line-no">189</span><span id="line-189">     * LID_BOLUS_REQUESTED_MSG2 records carried {@code options = 4} together with</span>
+<span class="source-line-no">190</span><span id="line-190">     * {@code standardPercent = 100}, {@code duration = 0}, {@code userOverride = true} and</span>
+<span class="source-line-no">191</span><span id="line-191">     * {@code isf = targetBG = 0}. The remaining values are still tconnectsync-sourced and</span>
+<span class="source-line-no">192</span><span id="line-192">     * unverified: no record committed to this repository exercises them, so confirm against a</span>
+<span class="source-line-no">193</span><span id="line-193">     * capture before relying on those labels.</span>
+<span class="source-line-no">194</span><span id="line-194">     */</span>
+<span class="source-line-no">195</span><span id="line-195">    public enum BolusOption {</span>
+<span class="source-line-no">196</span><span id="line-196">        STANDARD(0),</span>
+<span class="source-line-no">197</span><span id="line-197">        EXTENDED(1),</span>
+<span class="source-line-no">198</span><span id="line-198">        QUICK(2),</span>
+<span class="source-line-no">199</span><span id="line-199">        AUTOMATIC(3),</span>
+<span class="source-line-no">200</span><span id="line-200">        /** Verified on the wire: 156/156 BLE-initiated boluses in the issue 51 capture. */</span>
+<span class="source-line-no">201</span><span id="line-201">        BLE_STANDARD(4),</span>
+<span class="source-line-no">202</span><span id="line-202">        BLE_EXTENDED(5),</span>
+<span class="source-line-no">203</span><span id="line-203">        EATING_SOON_AUTOMATIC(6),</span>
+<span class="source-line-no">204</span><span id="line-204">        LATE_BOLUS(7),</span>
+<span class="source-line-no">205</span><span id="line-205">        /** Tandem schema bit 8: BLE with AID Recommendation Bolus */</span>
+<span class="source-line-no">206</span><span id="line-206">        BLE_WITH_AID_RECOMMENDATION(8),</span>
+<span class="source-line-no">207</span><span id="line-207">        ;</span>
+<span class="source-line-no">208</span><span id="line-208"></span>
+<span class="source-line-no">209</span><span id="line-209">        private final int id;</span>
+<span class="source-line-no">210</span><span id="line-210">        BolusOption(int id) {</span>
+<span class="source-line-no">211</span><span id="line-211">            this.id = id;</span>
+<span class="source-line-no">212</span><span id="line-212">        }</span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">        public int id() {</span>
+<span class="source-line-no">215</span><span id="line-215">            return id;</span>
+<span class="source-line-no">216</span><span id="line-216">        }</span>
+<span class="source-line-no">217</span><span id="line-217"></span>
+<span class="source-line-no">218</span><span id="line-218">        public static BolusOption fromId(int id) {</span>
+<span class="source-line-no">219</span><span id="line-219">            for (BolusOption o : values()) {</span>
+<span class="source-line-no">220</span><span id="line-220">                if (o.id() == id) {</span>
+<span class="source-line-no">221</span><span id="line-221">                    return o;</span>
+<span class="source-line-no">222</span><span id="line-222">                }</span>
+<span class="source-line-no">223</span><span id="line-223">            }</span>
+<span class="source-line-no">224</span><span id="line-224">            return null;</span>
+<span class="source-line-no">225</span><span id="line-225">        }</span>
 <span class="source-line-no">226</span><span id="line-226">    }</span>
 <span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">    public int getSpare1() {</span>
-<span class="source-line-no">229</span><span id="line-229">        return spare1;</span>
-<span class="source-line-no">230</span><span id="line-230">    }</span>
-<span class="source-line-no">231</span><span id="line-231"></span>
-<span class="source-line-no">232</span><span id="line-232">    /**</span>
-<span class="source-line-no">233</span><span id="line-233">     * @return insulin sensitivity factor in the insulin delivery profile</span>
-<span class="source-line-no">234</span><span id="line-234">     */</span>
-<span class="source-line-no">235</span><span id="line-235">    public int getIsf() {</span>
-<span class="source-line-no">236</span><span id="line-236">        return isf;</span>
-<span class="source-line-no">237</span><span id="line-237">    }</span>
-<span class="source-line-no">238</span><span id="line-238"></span>
-<span class="source-line-no">239</span><span id="line-239">    /**</span>
-<span class="source-line-no">240</span><span id="line-240">     * @return target BG in mg/dL in the insulin delivery profile</span>
-<span class="source-line-no">241</span><span id="line-241">     */</span>
-<span class="source-line-no">242</span><span id="line-242">    public int getTargetBG() {</span>
-<span class="source-line-no">243</span><span id="line-243">        return targetBG;</span>
-<span class="source-line-no">244</span><span id="line-244">    }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">    /**</span>
-<span class="source-line-no">247</span><span id="line-247">     * @return true if the user overrode the insulin delivery amount (i.e., not calculated just</span>
-<span class="source-line-no">248</span><span id="line-248">     * from the combination of carbs + BG correction)</span>
+<span class="source-line-no">228</span><span id="line-228">    /**</span>
+<span class="source-line-no">229</span><span id="line-229">     * @return 100 if a standard bolus, otherwise the percent of the bolus which is performed up</span>
+<span class="source-line-no">230</span><span id="line-230">     * front in an extended bolus</span>
+<span class="source-line-no">231</span><span id="line-231">     */</span>
+<span class="source-line-no">232</span><span id="line-232">    public int getStandardPercent() {</span>
+<span class="source-line-no">233</span><span id="line-233">        return standardPercent;</span>
+<span class="source-line-no">234</span><span id="line-234">    }</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">    /**</span>
+<span class="source-line-no">237</span><span id="line-237">     * @return 0 if a standard bolus, otherwise the duration between the standard and extended bolus</span>
+<span class="source-line-no">238</span><span id="line-238">     */</span>
+<span class="source-line-no">239</span><span id="line-239">    public int getDuration() {</span>
+<span class="source-line-no">240</span><span id="line-240">        return duration;</span>
+<span class="source-line-no">241</span><span id="line-241">    }</span>
+<span class="source-line-no">242</span><span id="line-242"></span>
+<span class="source-line-no">243</span><span id="line-243">    public int getSpare1() {</span>
+<span class="source-line-no">244</span><span id="line-244">        return spare1;</span>
+<span class="source-line-no">245</span><span id="line-245">    }</span>
+<span class="source-line-no">246</span><span id="line-246"></span>
+<span class="source-line-no">247</span><span id="line-247">    /**</span>
+<span class="source-line-no">248</span><span id="line-248">     * @return insulin sensitivity factor in the insulin delivery profile</span>
 <span class="source-line-no">249</span><span id="line-249">     */</span>
-<span class="source-line-no">250</span><span id="line-250">    public boolean getUserOverride() {</span>
-<span class="source-line-no">251</span><span id="line-251">        return userOverride;</span>
+<span class="source-line-no">250</span><span id="line-250">    public int getIsf() {</span>
+<span class="source-line-no">251</span><span id="line-251">        return isf;</span>
 <span class="source-line-no">252</span><span id="line-252">    }</span>
 <span class="source-line-no">253</span><span id="line-253"></span>
 <span class="source-line-no">254</span><span id="line-254">    /**</span>
-<span class="source-line-no">255</span><span id="line-255">     * @return true if the correction amount due to the current BG+IOB was declined</span>
+<span class="source-line-no">255</span><span id="line-255">     * @return target BG in mg/dL in the insulin delivery profile</span>
 <span class="source-line-no">256</span><span id="line-256">     */</span>
-<span class="source-line-no">257</span><span id="line-257">    public boolean getDeclinedCorrection() {</span>
-<span class="source-line-no">258</span><span id="line-258">        return declinedCorrection;</span>
+<span class="source-line-no">257</span><span id="line-257">    public int getTargetBG() {</span>
+<span class="source-line-no">258</span><span id="line-258">        return targetBG;</span>
 <span class="source-line-no">259</span><span id="line-259">    }</span>
 <span class="source-line-no">260</span><span id="line-260"></span>
 <span class="source-line-no">261</span><span id="line-261">    /**</span>
-<span class="source-line-no">262</span><span id="line-262">     * @return the raw value identifying which IOB algorithm the bolus calculator used,</span>
-<span class="source-line-no">263</span><span id="line-263">     * see {@link #getSelectedIOBType()}</span>
+<span class="source-line-no">262</span><span id="line-262">     * @return true if the user overrode the insulin delivery amount (i.e., not calculated just</span>
+<span class="source-line-no">263</span><span id="line-263">     * from the combination of carbs + BG correction)</span>
 <span class="source-line-no">264</span><span id="line-264">     */</span>
-<span class="source-line-no">265</span><span id="line-265">    public int getSelectedIOB() {</span>
-<span class="source-line-no">266</span><span id="line-266">        return selectedIOB;</span>
+<span class="source-line-no">265</span><span id="line-265">    public boolean getUserOverride() {</span>
+<span class="source-line-no">266</span><span id="line-266">        return userOverride;</span>
 <span class="source-line-no">267</span><span id="line-267">    }</span>
 <span class="source-line-no">268</span><span id="line-268"></span>
 <span class="source-line-no">269</span><span id="line-269">    /**</span>
-<span class="source-line-no">270</span><span id="line-270">     * @return the IOB algorithm the bolus calculator used, or null if the raw value is not</span>
-<span class="source-line-no">271</span><span id="line-271">     * recognized</span>
-<span class="source-line-no">272</span><span id="line-272">     */</span>
-<span class="source-line-no">273</span><span id="line-273">    public SelectedIOBType getSelectedIOBType() {</span>
-<span class="source-line-no">274</span><span id="line-274">        return SelectedIOBType.fromId(selectedIOB);</span>
-<span class="source-line-no">275</span><span id="line-275">    }</span>
-<span class="source-line-no">276</span><span id="line-276"></span>
-<span class="source-line-no">277</span><span id="line-277">    /**</span>
-<span class="source-line-no">278</span><span id="line-278">     * The IOB algorithm used when calculating the bolus.</span>
-<span class="source-line-no">279</span><span id="line-279">     *</span>
-<span class="source-line-no">280</span><span id="line-280">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation and not verified</span>
-<span class="source-line-no">281</span><span id="line-281">     * here.&lt;/b&gt; The field previously carried a {@code TODO(unknown)} javadoc; these names replace</span>
-<span class="source-line-no">282</span><span id="line-282">     * that with a secondhand attribution, not with a confirmed one.</span>
-<span class="source-line-no">283</span><span id="line-283">     */</span>
-<span class="source-line-no">284</span><span id="line-284">    public enum SelectedIOBType {</span>
-<span class="source-line-no">285</span><span id="line-285">        MUDALIAR_IOB(0),</span>
-<span class="source-line-no">286</span><span id="line-286">        SWAN_IOB_MEAL(1),</span>
-<span class="source-line-no">287</span><span id="line-287">        ;</span>
-<span class="source-line-no">288</span><span id="line-288"></span>
-<span class="source-line-no">289</span><span id="line-289">        private final int id;</span>
-<span class="source-line-no">290</span><span id="line-290">        SelectedIOBType(int id) {</span>
-<span class="source-line-no">291</span><span id="line-291">            this.id = id;</span>
-<span class="source-line-no">292</span><span id="line-292">        }</span>
-<span class="source-line-no">293</span><span id="line-293"></span>
-<span class="source-line-no">294</span><span id="line-294">        public int id() {</span>
-<span class="source-line-no">295</span><span id="line-295">            return id;</span>
-<span class="source-line-no">296</span><span id="line-296">        }</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">        public static SelectedIOBType fromId(int id) {</span>
-<span class="source-line-no">299</span><span id="line-299">            for (SelectedIOBType s : values()) {</span>
-<span class="source-line-no">300</span><span id="line-300">                if (s.id() == id) {</span>
-<span class="source-line-no">301</span><span id="line-301">                    return s;</span>
-<span class="source-line-no">302</span><span id="line-302">                }</span>
-<span class="source-line-no">303</span><span id="line-303">            }</span>
-<span class="source-line-no">304</span><span id="line-304">            return null;</span>
-<span class="source-line-no">305</span><span id="line-305">        }</span>
-<span class="source-line-no">306</span><span id="line-306">    }</span>
-<span class="source-line-no">307</span><span id="line-307">    public int getSpare2() {</span>
-<span class="source-line-no">308</span><span id="line-308">        return spare2;</span>
-<span class="source-line-no">309</span><span id="line-309">    }</span>
-<span class="source-line-no">310</span><span id="line-310">    </span>
-<span class="source-line-no">311</span><span id="line-311">}</span>
+<span class="source-line-no">270</span><span id="line-270">     * @return true if the correction amount due to the current BG+IOB was declined</span>
+<span class="source-line-no">271</span><span id="line-271">     */</span>
+<span class="source-line-no">272</span><span id="line-272">    public boolean getDeclinedCorrection() {</span>
+<span class="source-line-no">273</span><span id="line-273">        return declinedCorrection;</span>
+<span class="source-line-no">274</span><span id="line-274">    }</span>
+<span class="source-line-no">275</span><span id="line-275"></span>
+<span class="source-line-no">276</span><span id="line-276">    /**</span>
+<span class="source-line-no">277</span><span id="line-277">     * @return the raw value identifying which IOB algorithm the bolus calculator used,</span>
+<span class="source-line-no">278</span><span id="line-278">     * see {@link #getSelectedIOBType()}</span>
+<span class="source-line-no">279</span><span id="line-279">     */</span>
+<span class="source-line-no">280</span><span id="line-280">    public int getSelectedIOB() {</span>
+<span class="source-line-no">281</span><span id="line-281">        return selectedIOB;</span>
+<span class="source-line-no">282</span><span id="line-282">    }</span>
+<span class="source-line-no">283</span><span id="line-283"></span>
+<span class="source-line-no">284</span><span id="line-284">    /**</span>
+<span class="source-line-no">285</span><span id="line-285">     * @return the IOB algorithm the bolus calculator used, or null if the raw value is not</span>
+<span class="source-line-no">286</span><span id="line-286">     * recognized</span>
+<span class="source-line-no">287</span><span id="line-287">     */</span>
+<span class="source-line-no">288</span><span id="line-288">    public SelectedIOBType getSelectedIOBType() {</span>
+<span class="source-line-no">289</span><span id="line-289">        return SelectedIOBType.fromId(selectedIOB);</span>
+<span class="source-line-no">290</span><span id="line-290">    }</span>
+<span class="source-line-no">291</span><span id="line-291"></span>
+<span class="source-line-no">292</span><span id="line-292">    /**</span>
+<span class="source-line-no">293</span><span id="line-293">     * The IOB algorithm used when calculating the bolus.</span>
+<span class="source-line-no">294</span><span id="line-294">     *</span>
+<span class="source-line-no">295</span><span id="line-295">     * &lt;p&gt;&lt;b&gt;Value names ported from the tconnectsync Python implementation and not verified</span>
+<span class="source-line-no">296</span><span id="line-296">     * here.&lt;/b&gt; The field previously carried a {@code TODO(unknown)} javadoc; these names replace</span>
+<span class="source-line-no">297</span><span id="line-297">     * that with a secondhand attribution, not with a confirmed one.</span>
+<span class="source-line-no">298</span><span id="line-298">     */</span>
+<span class="source-line-no">299</span><span id="line-299">    public enum SelectedIOBType {</span>
+<span class="source-line-no">300</span><span id="line-300">        MUDALIAR_IOB(0),</span>
+<span class="source-line-no">301</span><span id="line-301">        SWAN_IOB_MEAL(1),</span>
+<span class="source-line-no">302</span><span id="line-302">        ;</span>
+<span class="source-line-no">303</span><span id="line-303"></span>
+<span class="source-line-no">304</span><span id="line-304">        private final int id;</span>
+<span class="source-line-no">305</span><span id="line-305">        SelectedIOBType(int id) {</span>
+<span class="source-line-no">306</span><span id="line-306">            this.id = id;</span>
+<span class="source-line-no">307</span><span id="line-307">        }</span>
+<span class="source-line-no">308</span><span id="line-308"></span>
+<span class="source-line-no">309</span><span id="line-309">        public int id() {</span>
+<span class="source-line-no">310</span><span id="line-310">            return id;</span>
+<span class="source-line-no">311</span><span id="line-311">        }</span>
+<span class="source-line-no">312</span><span id="line-312"></span>
+<span class="source-line-no">313</span><span id="line-313">        public static SelectedIOBType fromId(int id) {</span>
+<span class="source-line-no">314</span><span id="line-314">            for (SelectedIOBType s : values()) {</span>
+<span class="source-line-no">315</span><span id="line-315">                if (s.id() == id) {</span>
+<span class="source-line-no">316</span><span id="line-316">                    return s;</span>
+<span class="source-line-no">317</span><span id="line-317">                }</span>
+<span class="source-line-no">318</span><span id="line-318">            }</span>
+<span class="source-line-no">319</span><span id="line-319">            return null;</span>
+<span class="source-line-no">320</span><span id="line-320">        }</span>
+<span class="source-line-no">321</span><span id="line-321">    }</span>
+<span class="source-line-no">322</span><span id="line-322">    public int getSpare2() {</span>
+<span class="source-line-no">323</span><span id="line-323">        return spare2;</span>
+<span class="source-line-no">324</span><span id="line-324">    }</span>
+<span class="source-line-no">325</span><span id="line-325">    </span>
+<span class="source-line-no">326</span><span id="line-326">}</span>
 
 
 

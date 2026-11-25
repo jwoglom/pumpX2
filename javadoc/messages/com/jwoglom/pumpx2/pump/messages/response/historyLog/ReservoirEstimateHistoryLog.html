@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-20">ReservoirEstimateHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-45">ReservoirEstimateHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">The pump's running estimate of the insulin in the cartridge. Seen on the Tandem Mobi only.
+<div class="block">History log record Reservoir Estimate, opCode 231, size 26.
+
+ <br>
+
+ The pump's running estimate of the insulin in the cartridge. Seen on the Tandem Mobi only.
 
  <p>Tandem's export and its Mobi app do not name this opcode, so the class name is provisional.
  The Mobi writes one of these every ~4 U delivered from the cartridge (consecutive records step
@@ -94,7 +98,15 @@ loadScripts(document, 'script');</script>
  <p>Layout, confirmed on 553 records from 5 Mobi pumps (the maintainer's two and three other
  people's): float <code>insulinDelivered</code> at bytes 10-13, float <code>insulinRemaining</code> at
  14-17, <code>displayedInsulinRemaining</code> at 18, zeros at 19-21, uint32 <code>driveCounter</code> at
- 22-25. See https://github.com/jwoglom/pumpx2/issues/148.</div>
+ 22-25. See https://github.com/jwoglom/pumpx2/issues/148.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>231</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Reservoir Estimate"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>""</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -215,7 +227,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="OBSERVED_START_ESTIMATE">
 <h3>OBSERVED_START_ESTIMATE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-31">OBSERVED_START_ESTIMATE</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-56">OBSERVED_START_ESTIMATE</a></span></div>
 <div class="block"><a href="#getInsulinDelivered()"><code>getInsulinDelivered()</code></a> + <a href="#getInsulinRemaining()"><code>getInsulinRemaining()</code></a> equalled this value (float bits
  0x434beff2, about 203.94 U) to within 0.00002 U in every observed record (553/553).</div>
 </section>
@@ -231,13 +243,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ReservoirEstimateHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-38">ReservoirEstimateHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-63">ReservoirEstimateHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,float,float,int,long)">
 <h3>ReservoirEstimateHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-39">ReservoirEstimateHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-64">ReservoirEstimateHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;insulinDelivered,
  float&nbsp;insulinRemaining,
@@ -256,7 +268,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-48">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-73">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -266,7 +278,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-86">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ReservoirEstimateHistoryLog:</caption>
  <tr><td><code>insulinDelivered</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
@@ -283,7 +295,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,float,float,int,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-71">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-96">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;insulinDelivered,
  float&nbsp;insulinRemaining,
@@ -294,7 +306,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInsulinDelivered()">
 <h3>getInsulinDelivered</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-91">getInsulinDelivered</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-116">getInsulinDelivered</a></span>()</div>
 <div class="block">Units of insulin moved out of the cartridge since it was inserted, priming included.
 
  <p>It reads 0.00 in the record written with every <a href="CartridgeInsertedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>CartridgeInsertedHistoryLog</code></a> (4/4
@@ -307,7 +319,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getInsulinRemaining()">
 <h3>getInsulinRemaining</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-105">getInsulinRemaining</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-130">getInsulinRemaining</a></span>()</div>
 <div class="block">The pump's estimate of the units of insulin left in the cartridge.
 
  <p>This is not measured separately. It was <a href="#OBSERVED_START_ESTIMATE"><code>OBSERVED_START_ESTIMATE</code></a> (about
@@ -321,7 +333,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getDisplayedInsulinRemaining()">
 <h3>getDisplayedInsulinRemaining</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-119">getDisplayedInsulinRemaining</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-144">getDisplayedInsulinRemaining</a></span>()</div>
 <div class="block">The whole-unit amount the pump reports as remaining, or 0 while a fill is in progress.
 
  <p>In every non-zero record (300/300) this was <a href="#getInsulinRemaining()"><code>getInsulinRemaining()</code></a> rounded to the
@@ -335,7 +347,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getDriveCounter()">
 <h3>getDriveCounter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-130">getDriveCounter</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ReservoirEstimateHistoryLog.html#line-155">getDriveCounter</a></span>()</div>
 <div class="block">A drive position counter, about 1073.5 counts per unit (unit unknown beyond that).
 
  <p>It sits near 524,288 (2^19) when a cartridge is inserted and increases with delivery. The

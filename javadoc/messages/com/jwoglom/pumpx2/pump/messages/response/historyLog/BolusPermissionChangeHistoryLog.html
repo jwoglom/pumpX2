@@ -82,16 +82,27 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-18">BolusPermissionChangeHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-39">BolusPermissionChangeHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Written when the pump's bolus permission for a bolus id changes hands. Tandem publishes no name
+<div class="block">History log record Bolus Permission Change, opCode 295, size 26.
+
+ <br>
+
+ Written when the pump's bolus permission for a bolus id changes hands. Tandem publishes no name
  for opcode 295 (it is absent from the Mobi app's HistoryLogType enum and from the Tandem Source
  schema), so this class name is provisional.
 
  <p>Every bolus writes two of these: one when permission is granted (byte 12 nonzero, byte 13 and
  the change reason 0) and one when it is released or revoked (byte 12 zero, byte 13 equal to the
  first record's byte 12, the change reason nonzero). This holds for BLE, pump-UI and Control-IQ
- boluses alike; see https://github.com/jwoglom/pumpX2/issues/142.</div>
+ boluses alike; see https://github.com/jwoglom/pumpX2/issues/142.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>295</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Bolus Permission Change"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -204,13 +215,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BolusPermissionChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-29">BolusPermissionChangeHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-50">BolusPermissionChangeHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int)">
 <h3>BolusPermissionChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-31">BolusPermissionChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-52">BolusPermissionChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -221,7 +232,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int)">
 <h3>BolusPermissionChangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-35">BolusPermissionChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-56">BolusPermissionChangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -241,7 +252,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-44">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-65">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -251,7 +262,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-57">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-78">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BolusPermissionChangeHistoryLog:</caption>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -268,7 +279,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-67">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-88">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -280,7 +291,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-80">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-101">getBolusId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the bolus id the permission belongs to. It matched the BolusActivated, BolusDelivery
@@ -291,7 +302,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownU8At12()">
 <h3>getUnknownU8At12</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-90">getUnknownU8At12</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-111">getUnknownU8At12</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>byte 12. Meaning unconfirmed: it is 1, 2 or 3 on the grant record and 0 on the
@@ -304,7 +315,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownU8At13()">
 <h3>getUnknownU8At13</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-98">getUnknownU8At13</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-119">getUnknownU8At13</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>byte 13. Meaning unconfirmed: 0 on the grant record; on the release record it equals
@@ -315,7 +326,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChangeReasonId()">
 <h3>getChangeReasonId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-107">getChangeReasonId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-128">getChangeReasonId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>byte 14: 0 on the grant record, then the reason the permission ended. It equals
@@ -327,7 +338,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChangeReason()">
 <h3>getChangeReason</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-111">getChangeReason</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../currentStatus/BolusPermissionChangeReasonResponse.ChangeReason.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">BolusPermissionChangeReasonResponse.ChangeReason</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BolusPermissionChangeHistoryLog.html#line-132">getChangeReason</a></span>()</div>
 </section>
 </li>
 </ul>

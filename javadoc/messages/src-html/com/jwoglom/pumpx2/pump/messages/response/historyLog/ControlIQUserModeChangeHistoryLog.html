@@ -23,262 +23,276 @@
 <span class="source-line-no">006</span><span id="line-6"></span>
 <span class="source-line-no">007</span><span id="line-7">import java.math.BigInteger;</span>
 <span class="source-line-no">008</span><span id="line-8"></span>
-<span class="source-line-no">009</span><span id="line-9">@HistoryLogProps(</span>
-<span class="source-line-no">010</span><span id="line-10">    opCode = 229, // -27</span>
-<span class="source-line-no">011</span><span id="line-11">    displayName = "ControlIQ User Mode Change",</span>
-<span class="source-line-no">012</span><span id="line-12">    internalName = "LID_AA_USER_MODE_CHANGE",</span>
-<span class="source-line-no">013</span><span id="line-13">    usedByTidepool = true // LID_AA_USER_MODE_CHANGE</span>
-<span class="source-line-no">014</span><span id="line-14">)</span>
-<span class="source-line-no">015</span><span id="line-15">public class ControlIQUserModeChangeHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">016</span><span id="line-16"></span>
-<span class="source-line-no">017</span><span id="line-17">    private int currentUserMode;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int previousUserMode;</span>
-<span class="source-line-no">019</span><span id="line-19">    private int requestedActionRaw;</span>
-<span class="source-line-no">020</span><span id="line-20">    private int sleepStartedByGuiRaw;</span>
-<span class="source-line-no">021</span><span id="line-21">    private int activeSleepSchedule;</span>
-<span class="source-line-no">022</span><span id="line-22">    private int exerciseStoppedByTimerRaw;</span>
-<span class="source-line-no">023</span><span id="line-23">    private int exerciseChoiceRaw;</span>
-<span class="source-line-no">024</span><span id="line-24">    private int exerciseTime;</span>
-<span class="source-line-no">025</span><span id="line-25">    private int eatingSoonStoppedByTimerRaw;</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">    public ControlIQUserModeChangeHistoryLog() {}</span>
-<span class="source-line-no">028</span><span id="line-28">    public ControlIQUserModeChangeHistoryLog(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
-<span class="source-line-no">029</span><span id="line-29">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">030</span><span id="line-30">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentUserMode, previousUserMode, requestedAction, sleepStartedByGui, activeSleepSchedule, exerciseStoppedByTimer, exerciseChoice, exerciseTime, eatingSoonStoppedByTimer);</span>
-<span class="source-line-no">031</span><span id="line-31">        this.currentUserMode = currentUserMode;</span>
-<span class="source-line-no">032</span><span id="line-32">        this.previousUserMode = previousUserMode;</span>
-<span class="source-line-no">033</span><span id="line-33">        this.requestedActionRaw = requestedAction;</span>
-<span class="source-line-no">034</span><span id="line-34">        this.sleepStartedByGuiRaw = sleepStartedByGui;</span>
-<span class="source-line-no">035</span><span id="line-35">        this.activeSleepSchedule = activeSleepSchedule;</span>
-<span class="source-line-no">036</span><span id="line-36">        this.exerciseStoppedByTimerRaw = exerciseStoppedByTimer;</span>
-<span class="source-line-no">037</span><span id="line-37">        this.exerciseChoiceRaw = exerciseChoice;</span>
-<span class="source-line-no">038</span><span id="line-38">        this.exerciseTime = exerciseTime;</span>
-<span class="source-line-no">039</span><span id="line-39">        this.eatingSoonStoppedByTimerRaw = eatingSoonStoppedByTimer;</span>
+<span class="source-line-no">009</span><span id="line-9">/**</span>
+<span class="source-line-no">010</span><span id="line-10"> * History log record ControlIQ User Mode Change, opCode 229, size 26.</span>
+<span class="source-line-no">011</span><span id="line-11"> *</span>
+<span class="source-line-no">012</span><span id="line-12"> * &lt;br&gt;</span>
+<span class="source-line-no">013</span><span id="line-13"> *</span>
+<span class="source-line-no">014</span><span id="line-14"> * </span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;229&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"ControlIQ User Mode Change"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_AA_USER_MODE_CHANGE"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;usedByTidepool&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true // LID_AA_USER_MODE_CHANGE&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">021</span><span id="line-21"> * &lt;/table&gt;</span>
+<span class="source-line-no">022</span><span id="line-22"> */</span>
+<span class="source-line-no">023</span><span id="line-23">@HistoryLogProps(</span>
+<span class="source-line-no">024</span><span id="line-24">    opCode = 229, // -27</span>
+<span class="source-line-no">025</span><span id="line-25">    displayName = "ControlIQ User Mode Change",</span>
+<span class="source-line-no">026</span><span id="line-26">    internalName = "LID_AA_USER_MODE_CHANGE",</span>
+<span class="source-line-no">027</span><span id="line-27">    usedByTidepool = true // LID_AA_USER_MODE_CHANGE</span>
+<span class="source-line-no">028</span><span id="line-28">)</span>
+<span class="source-line-no">029</span><span id="line-29">public class ControlIQUserModeChangeHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">    private int currentUserMode;</span>
+<span class="source-line-no">032</span><span id="line-32">    private int previousUserMode;</span>
+<span class="source-line-no">033</span><span id="line-33">    private int requestedActionRaw;</span>
+<span class="source-line-no">034</span><span id="line-34">    private int sleepStartedByGuiRaw;</span>
+<span class="source-line-no">035</span><span id="line-35">    private int activeSleepSchedule;</span>
+<span class="source-line-no">036</span><span id="line-36">    private int exerciseStoppedByTimerRaw;</span>
+<span class="source-line-no">037</span><span id="line-37">    private int exerciseChoiceRaw;</span>
+<span class="source-line-no">038</span><span id="line-38">    private int exerciseTime;</span>
+<span class="source-line-no">039</span><span id="line-39">    private int eatingSoonStoppedByTimerRaw;</span>
 <span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public ControlIQUserModeChangeHistoryLog(int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
-<span class="source-line-no">044</span><span id="line-44">        this(0, 0, currentUserMode, previousUserMode, requestedAction, sleepStartedByGui, activeSleepSchedule, exerciseStoppedByTimer, exerciseChoice, exerciseTime, eatingSoonStoppedByTimer);</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    public int typeId() {</span>
-<span class="source-line-no">048</span><span id="line-48">        return 229;</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    /**</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;caption&gt;Parsed fields for ControlIQUserModeChangeHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;requestedActionRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sleepStartedByGuiRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;activeSleepSchedule&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseStoppedByTimerRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseChoiceRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;eatingSoonStoppedByTimerRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;/table&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     */</span>
-<span class="source-line-no">065</span><span id="line-65">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">066</span><span id="line-66">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">067</span><span id="line-67">        this.cargo = raw;</span>
-<span class="source-line-no">068</span><span id="line-68">        parseBase(raw);</span>
-<span class="source-line-no">069</span><span id="line-69">        this.currentUserMode = raw[10];</span>
-<span class="source-line-no">070</span><span id="line-70">        this.previousUserMode = raw[11];</span>
-<span class="source-line-no">071</span><span id="line-71">        this.requestedActionRaw = raw[12];</span>
-<span class="source-line-no">072</span><span id="line-72">        this.sleepStartedByGuiRaw = raw[14];</span>
-<span class="source-line-no">073</span><span id="line-73">        this.activeSleepSchedule = raw[15];</span>
-<span class="source-line-no">074</span><span id="line-74">        this.exerciseStoppedByTimerRaw = raw[18];</span>
-<span class="source-line-no">075</span><span id="line-75">        this.exerciseChoiceRaw = raw[19];</span>
-<span class="source-line-no">076</span><span id="line-76">        this.exerciseTime = Bytes.readShort(raw, 20);</span>
-<span class="source-line-no">077</span><span id="line-77">        this.eatingSoonStoppedByTimerRaw = raw[22];</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
-<span class="source-line-no">082</span><span id="line-82">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">083</span><span id="line-83">            HistoryLog.typeIdBytes(229, 0),</span>
-<span class="source-line-no">084</span><span id="line-84">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">085</span><span id="line-85">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">086</span><span id="line-86">            new byte[]{ (byte) currentUserMode },</span>
-<span class="source-line-no">087</span><span id="line-87">            new byte[]{ (byte) previousUserMode },</span>
-<span class="source-line-no">088</span><span id="line-88">            new byte[]{ (byte) requestedAction },</span>
-<span class="source-line-no">089</span><span id="line-89">            new byte[1],</span>
-<span class="source-line-no">090</span><span id="line-90">            new byte[]{ (byte) sleepStartedByGui },</span>
-<span class="source-line-no">091</span><span id="line-91">            new byte[]{ (byte) activeSleepSchedule },</span>
-<span class="source-line-no">092</span><span id="line-92">            new byte[2],</span>
-<span class="source-line-no">093</span><span id="line-93">            new byte[]{ (byte) exerciseStoppedByTimer },</span>
-<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) exerciseChoice },</span>
-<span class="source-line-no">095</span><span id="line-95">            Bytes.firstTwoBytesLittleEndian(exerciseTime),</span>
-<span class="source-line-no">096</span><span id="line-96">            new byte[]{ (byte) eatingSoonStoppedByTimer }));</span>
-<span class="source-line-no">097</span><span id="line-97">    }</span>
-<span class="source-line-no">098</span><span id="line-98">    public int getCurrentUserMode() {</span>
-<span class="source-line-no">099</span><span id="line-99">        return currentUserMode;</span>
-<span class="source-line-no">100</span><span id="line-100">    }</span>
-<span class="source-line-no">101</span><span id="line-101">    public int getPreviousUserMode() {</span>
-<span class="source-line-no">102</span><span id="line-102">        return previousUserMode;</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">    public enum UserMode {</span>
-<span class="source-line-no">106</span><span id="line-106">        NORMAL(0),</span>
-<span class="source-line-no">107</span><span id="line-107">        SLEEPING(1),</span>
-<span class="source-line-no">108</span><span id="line-108">        EXERCISING(2),</span>
-<span class="source-line-no">109</span><span id="line-109">        EATING_SOON(3),</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">        ;</span>
-<span class="source-line-no">112</span><span id="line-112"></span>
-<span class="source-line-no">113</span><span id="line-113">        private final int id;</span>
-<span class="source-line-no">114</span><span id="line-114">        UserMode(int id) {</span>
-<span class="source-line-no">115</span><span id="line-115">            this.id = id;</span>
-<span class="source-line-no">116</span><span id="line-116">        }</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">        public static UserMode fromId(int id) {</span>
-<span class="source-line-no">119</span><span id="line-119">            for (UserMode s : values()) {</span>
-<span class="source-line-no">120</span><span id="line-120">                if (s.id == id) {</span>
-<span class="source-line-no">121</span><span id="line-121">                    return s;</span>
-<span class="source-line-no">122</span><span id="line-122">                }</span>
-<span class="source-line-no">123</span><span id="line-123">            }</span>
-<span class="source-line-no">124</span><span id="line-124">            return null;</span>
-<span class="source-line-no">125</span><span id="line-125">        }</span>
+<span class="source-line-no">041</span><span id="line-41">    public ControlIQUserModeChangeHistoryLog() {}</span>
+<span class="source-line-no">042</span><span id="line-42">    public ControlIQUserModeChangeHistoryLog(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
+<span class="source-line-no">043</span><span id="line-43">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">044</span><span id="line-44">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, currentUserMode, previousUserMode, requestedAction, sleepStartedByGui, activeSleepSchedule, exerciseStoppedByTimer, exerciseChoice, exerciseTime, eatingSoonStoppedByTimer);</span>
+<span class="source-line-no">045</span><span id="line-45">        this.currentUserMode = currentUserMode;</span>
+<span class="source-line-no">046</span><span id="line-46">        this.previousUserMode = previousUserMode;</span>
+<span class="source-line-no">047</span><span id="line-47">        this.requestedActionRaw = requestedAction;</span>
+<span class="source-line-no">048</span><span id="line-48">        this.sleepStartedByGuiRaw = sleepStartedByGui;</span>
+<span class="source-line-no">049</span><span id="line-49">        this.activeSleepSchedule = activeSleepSchedule;</span>
+<span class="source-line-no">050</span><span id="line-50">        this.exerciseStoppedByTimerRaw = exerciseStoppedByTimer;</span>
+<span class="source-line-no">051</span><span id="line-51">        this.exerciseChoiceRaw = exerciseChoice;</span>
+<span class="source-line-no">052</span><span id="line-52">        this.exerciseTime = exerciseTime;</span>
+<span class="source-line-no">053</span><span id="line-53">        this.eatingSoonStoppedByTimerRaw = eatingSoonStoppedByTimer;</span>
+<span class="source-line-no">054</span><span id="line-54"></span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    public ControlIQUserModeChangeHistoryLog(int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
+<span class="source-line-no">058</span><span id="line-58">        this(0, 0, currentUserMode, previousUserMode, requestedAction, sleepStartedByGui, activeSleepSchedule, exerciseStoppedByTimer, exerciseChoice, exerciseTime, eatingSoonStoppedByTimer);</span>
+<span class="source-line-no">059</span><span id="line-59">    }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">    public int typeId() {</span>
+<span class="source-line-no">062</span><span id="line-62">        return 229;</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    /**</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;caption&gt;Parsed fields for ControlIQUserModeChangeHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;previousUserMode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;requestedActionRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;sleepStartedByGuiRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;activeSleepSchedule&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseStoppedByTimerRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseChoiceRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;exerciseTime&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;eatingSoonStoppedByTimerRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;/table&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     */</span>
+<span class="source-line-no">079</span><span id="line-79">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">080</span><span id="line-80">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">081</span><span id="line-81">        this.cargo = raw;</span>
+<span class="source-line-no">082</span><span id="line-82">        parseBase(raw);</span>
+<span class="source-line-no">083</span><span id="line-83">        this.currentUserMode = raw[10];</span>
+<span class="source-line-no">084</span><span id="line-84">        this.previousUserMode = raw[11];</span>
+<span class="source-line-no">085</span><span id="line-85">        this.requestedActionRaw = raw[12];</span>
+<span class="source-line-no">086</span><span id="line-86">        this.sleepStartedByGuiRaw = raw[14];</span>
+<span class="source-line-no">087</span><span id="line-87">        this.activeSleepSchedule = raw[15];</span>
+<span class="source-line-no">088</span><span id="line-88">        this.exerciseStoppedByTimerRaw = raw[18];</span>
+<span class="source-line-no">089</span><span id="line-89">        this.exerciseChoiceRaw = raw[19];</span>
+<span class="source-line-no">090</span><span id="line-90">        this.exerciseTime = Bytes.readShort(raw, 20);</span>
+<span class="source-line-no">091</span><span id="line-91">        this.eatingSoonStoppedByTimerRaw = raw[22];</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    }</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int currentUserMode, int previousUserMode, int requestedAction, int sleepStartedByGui, int activeSleepSchedule, int exerciseStoppedByTimer, int exerciseChoice, int exerciseTime, int eatingSoonStoppedByTimer) {</span>
+<span class="source-line-no">096</span><span id="line-96">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">097</span><span id="line-97">            HistoryLog.typeIdBytes(229, 0),</span>
+<span class="source-line-no">098</span><span id="line-98">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">099</span><span id="line-99">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">100</span><span id="line-100">            new byte[]{ (byte) currentUserMode },</span>
+<span class="source-line-no">101</span><span id="line-101">            new byte[]{ (byte) previousUserMode },</span>
+<span class="source-line-no">102</span><span id="line-102">            new byte[]{ (byte) requestedAction },</span>
+<span class="source-line-no">103</span><span id="line-103">            new byte[1],</span>
+<span class="source-line-no">104</span><span id="line-104">            new byte[]{ (byte) sleepStartedByGui },</span>
+<span class="source-line-no">105</span><span id="line-105">            new byte[]{ (byte) activeSleepSchedule },</span>
+<span class="source-line-no">106</span><span id="line-106">            new byte[2],</span>
+<span class="source-line-no">107</span><span id="line-107">            new byte[]{ (byte) exerciseStoppedByTimer },</span>
+<span class="source-line-no">108</span><span id="line-108">            new byte[]{ (byte) exerciseChoice },</span>
+<span class="source-line-no">109</span><span id="line-109">            Bytes.firstTwoBytesLittleEndian(exerciseTime),</span>
+<span class="source-line-no">110</span><span id="line-110">            new byte[]{ (byte) eatingSoonStoppedByTimer }));</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112">    public int getCurrentUserMode() {</span>
+<span class="source-line-no">113</span><span id="line-113">        return currentUserMode;</span>
+<span class="source-line-no">114</span><span id="line-114">    }</span>
+<span class="source-line-no">115</span><span id="line-115">    public int getPreviousUserMode() {</span>
+<span class="source-line-no">116</span><span id="line-116">        return previousUserMode;</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">    public enum UserMode {</span>
+<span class="source-line-no">120</span><span id="line-120">        NORMAL(0),</span>
+<span class="source-line-no">121</span><span id="line-121">        SLEEPING(1),</span>
+<span class="source-line-no">122</span><span id="line-122">        EXERCISING(2),</span>
+<span class="source-line-no">123</span><span id="line-123">        EATING_SOON(3),</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">        ;</span>
 <span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">        public int getId() {</span>
-<span class="source-line-no">128</span><span id="line-128">            return id;</span>
-<span class="source-line-no">129</span><span id="line-129">        }</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">127</span><span id="line-127">        private final int id;</span>
+<span class="source-line-no">128</span><span id="line-128">        UserMode(int id) {</span>
+<span class="source-line-no">129</span><span id="line-129">            this.id = id;</span>
+<span class="source-line-no">130</span><span id="line-130">        }</span>
 <span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">    public UserMode getCurrentUserModeEnum() {</span>
-<span class="source-line-no">133</span><span id="line-133">        return UserMode.fromId(currentUserMode);</span>
-<span class="source-line-no">134</span><span id="line-134">    }</span>
-<span class="source-line-no">135</span><span id="line-135"></span>
-<span class="source-line-no">136</span><span id="line-136">    public UserMode getPreviousUserModeEnum() {</span>
-<span class="source-line-no">137</span><span id="line-137">        return UserMode.fromId(previousUserMode);</span>
-<span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139"></span>
-<span class="source-line-no">140</span><span id="line-140">    public enum RequestedAction {</span>
-<span class="source-line-no">141</span><span id="line-141">        NO_USER_REQUEST(0),</span>
-<span class="source-line-no">142</span><span id="line-142">        START_SLEEP(1),</span>
-<span class="source-line-no">143</span><span id="line-143">        STOP_SLEEP(2),</span>
-<span class="source-line-no">144</span><span id="line-144">        START_EXERCISE(3),</span>
-<span class="source-line-no">145</span><span id="line-145">        STOP_EXERCISE(4),</span>
-<span class="source-line-no">146</span><span id="line-146">        STOP_ALL(5),</span>
-<span class="source-line-no">147</span><span id="line-147">        START_EATING_SOON(6),</span>
-<span class="source-line-no">148</span><span id="line-148">        STOP_EATING_SOON(7),</span>
+<span class="source-line-no">132</span><span id="line-132">        public static UserMode fromId(int id) {</span>
+<span class="source-line-no">133</span><span id="line-133">            for (UserMode s : values()) {</span>
+<span class="source-line-no">134</span><span id="line-134">                if (s.id == id) {</span>
+<span class="source-line-no">135</span><span id="line-135">                    return s;</span>
+<span class="source-line-no">136</span><span id="line-136">                }</span>
+<span class="source-line-no">137</span><span id="line-137">            }</span>
+<span class="source-line-no">138</span><span id="line-138">            return null;</span>
+<span class="source-line-no">139</span><span id="line-139">        }</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">        public int getId() {</span>
+<span class="source-line-no">142</span><span id="line-142">            return id;</span>
+<span class="source-line-no">143</span><span id="line-143">        }</span>
+<span class="source-line-no">144</span><span id="line-144">    }</span>
+<span class="source-line-no">145</span><span id="line-145"></span>
+<span class="source-line-no">146</span><span id="line-146">    public UserMode getCurrentUserModeEnum() {</span>
+<span class="source-line-no">147</span><span id="line-147">        return UserMode.fromId(currentUserMode);</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
 <span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">        ;</span>
-<span class="source-line-no">151</span><span id="line-151"></span>
-<span class="source-line-no">152</span><span id="line-152">        private final int id;</span>
-<span class="source-line-no">153</span><span id="line-153">        RequestedAction(int id) {</span>
-<span class="source-line-no">154</span><span id="line-154">            this.id = id;</span>
-<span class="source-line-no">155</span><span id="line-155">        }</span>
-<span class="source-line-no">156</span><span id="line-156"></span>
-<span class="source-line-no">157</span><span id="line-157">        public static RequestedAction fromId(int id) {</span>
-<span class="source-line-no">158</span><span id="line-158">            for (RequestedAction s : values()) {</span>
-<span class="source-line-no">159</span><span id="line-159">                if (s.id == id) {</span>
-<span class="source-line-no">160</span><span id="line-160">                    return s;</span>
-<span class="source-line-no">161</span><span id="line-161">                }</span>
-<span class="source-line-no">162</span><span id="line-162">            }</span>
-<span class="source-line-no">163</span><span id="line-163">            return null;</span>
-<span class="source-line-no">164</span><span id="line-164">        }</span>
+<span class="source-line-no">150</span><span id="line-150">    public UserMode getPreviousUserModeEnum() {</span>
+<span class="source-line-no">151</span><span id="line-151">        return UserMode.fromId(previousUserMode);</span>
+<span class="source-line-no">152</span><span id="line-152">    }</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">    public enum RequestedAction {</span>
+<span class="source-line-no">155</span><span id="line-155">        NO_USER_REQUEST(0),</span>
+<span class="source-line-no">156</span><span id="line-156">        START_SLEEP(1),</span>
+<span class="source-line-no">157</span><span id="line-157">        STOP_SLEEP(2),</span>
+<span class="source-line-no">158</span><span id="line-158">        START_EXERCISE(3),</span>
+<span class="source-line-no">159</span><span id="line-159">        STOP_EXERCISE(4),</span>
+<span class="source-line-no">160</span><span id="line-160">        STOP_ALL(5),</span>
+<span class="source-line-no">161</span><span id="line-161">        START_EATING_SOON(6),</span>
+<span class="source-line-no">162</span><span id="line-162">        STOP_EATING_SOON(7),</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">        ;</span>
 <span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">        public int getId() {</span>
-<span class="source-line-no">167</span><span id="line-167">            return id;</span>
-<span class="source-line-no">168</span><span id="line-168">        }</span>
-<span class="source-line-no">169</span><span id="line-169">    }</span>
+<span class="source-line-no">166</span><span id="line-166">        private final int id;</span>
+<span class="source-line-no">167</span><span id="line-167">        RequestedAction(int id) {</span>
+<span class="source-line-no">168</span><span id="line-168">            this.id = id;</span>
+<span class="source-line-no">169</span><span id="line-169">        }</span>
 <span class="source-line-no">170</span><span id="line-170"></span>
-<span class="source-line-no">171</span><span id="line-171">    public int getRequestedActionRaw() {</span>
-<span class="source-line-no">172</span><span id="line-172">        return requestedActionRaw;</span>
-<span class="source-line-no">173</span><span id="line-173">    }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">    public RequestedAction getRequestedAction() {</span>
-<span class="source-line-no">176</span><span id="line-176">        return RequestedAction.fromId(requestedActionRaw);</span>
-<span class="source-line-no">177</span><span id="line-177">    }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">    public int getSleepStartedByGuiRaw() {</span>
-<span class="source-line-no">180</span><span id="line-180">        return sleepStartedByGuiRaw;</span>
-<span class="source-line-no">181</span><span id="line-181">    }</span>
-<span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">    /**</span>
-<span class="source-line-no">184</span><span id="line-184">     * True if the currently-active sleep activity was started manually via the pump GUI,</span>
-<span class="source-line-no">185</span><span id="line-185">     * rather than by a scheduled sleep-activity time.</span>
-<span class="source-line-no">186</span><span id="line-186">     */</span>
-<span class="source-line-no">187</span><span id="line-187">    public boolean isSleepStartedByGui() {</span>
-<span class="source-line-no">188</span><span id="line-188">        return sleepStartedByGuiRaw != 0;</span>
-<span class="source-line-no">189</span><span id="line-189">    }</span>
-<span class="source-line-no">190</span><span id="line-190"></span>
-<span class="source-line-no">191</span><span id="line-191">    /**</span>
-<span class="source-line-no">192</span><span id="line-192">     * Bitmask where bits 0-3 indicate whether sleep schedules 1-4, respectively, are currently</span>
-<span class="source-line-no">193</span><span id="line-193">     * active. Kept as a raw int since the individual bit semantics are not exercised by the</span>
-<span class="source-line-no">194</span><span id="line-194">     * capture used to validate this field.</span>
-<span class="source-line-no">195</span><span id="line-195">     */</span>
-<span class="source-line-no">196</span><span id="line-196">    public int getActiveSleepSchedule() {</span>
-<span class="source-line-no">197</span><span id="line-197">        return activeSleepSchedule;</span>
-<span class="source-line-no">198</span><span id="line-198">    }</span>
-<span class="source-line-no">199</span><span id="line-199"></span>
-<span class="source-line-no">200</span><span id="line-200">    public int getExerciseStoppedByTimerRaw() {</span>
-<span class="source-line-no">201</span><span id="line-201">        return exerciseStoppedByTimerRaw;</span>
-<span class="source-line-no">202</span><span id="line-202">    }</span>
-<span class="source-line-no">203</span><span id="line-203"></span>
-<span class="source-line-no">204</span><span id="line-204">    /**</span>
-<span class="source-line-no">205</span><span id="line-205">     * True if the currently-active (or just-ended) exercise activity was stopped automatically</span>
-<span class="source-line-no">206</span><span id="line-206">     * by its configured timer, rather than manually via the pump GUI.</span>
-<span class="source-line-no">207</span><span id="line-207">     */</span>
-<span class="source-line-no">208</span><span id="line-208">    public boolean isExerciseStoppedByTimer() {</span>
-<span class="source-line-no">209</span><span id="line-209">        return exerciseStoppedByTimerRaw != 0;</span>
-<span class="source-line-no">210</span><span id="line-210">    }</span>
-<span class="source-line-no">211</span><span id="line-211"></span>
-<span class="source-line-no">212</span><span id="line-212">    public enum ExerciseChoice {</span>
-<span class="source-line-no">213</span><span id="line-213">        CONTINUOUS(0),</span>
-<span class="source-line-no">214</span><span id="line-214">        TIMED(1),</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">        ;</span>
+<span class="source-line-no">171</span><span id="line-171">        public static RequestedAction fromId(int id) {</span>
+<span class="source-line-no">172</span><span id="line-172">            for (RequestedAction s : values()) {</span>
+<span class="source-line-no">173</span><span id="line-173">                if (s.id == id) {</span>
+<span class="source-line-no">174</span><span id="line-174">                    return s;</span>
+<span class="source-line-no">175</span><span id="line-175">                }</span>
+<span class="source-line-no">176</span><span id="line-176">            }</span>
+<span class="source-line-no">177</span><span id="line-177">            return null;</span>
+<span class="source-line-no">178</span><span id="line-178">        }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">        public int getId() {</span>
+<span class="source-line-no">181</span><span id="line-181">            return id;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183">    }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">    public int getRequestedActionRaw() {</span>
+<span class="source-line-no">186</span><span id="line-186">        return requestedActionRaw;</span>
+<span class="source-line-no">187</span><span id="line-187">    }</span>
+<span class="source-line-no">188</span><span id="line-188"></span>
+<span class="source-line-no">189</span><span id="line-189">    public RequestedAction getRequestedAction() {</span>
+<span class="source-line-no">190</span><span id="line-190">        return RequestedAction.fromId(requestedActionRaw);</span>
+<span class="source-line-no">191</span><span id="line-191">    }</span>
+<span class="source-line-no">192</span><span id="line-192"></span>
+<span class="source-line-no">193</span><span id="line-193">    public int getSleepStartedByGuiRaw() {</span>
+<span class="source-line-no">194</span><span id="line-194">        return sleepStartedByGuiRaw;</span>
+<span class="source-line-no">195</span><span id="line-195">    }</span>
+<span class="source-line-no">196</span><span id="line-196"></span>
+<span class="source-line-no">197</span><span id="line-197">    /**</span>
+<span class="source-line-no">198</span><span id="line-198">     * True if the currently-active sleep activity was started manually via the pump GUI,</span>
+<span class="source-line-no">199</span><span id="line-199">     * rather than by a scheduled sleep-activity time.</span>
+<span class="source-line-no">200</span><span id="line-200">     */</span>
+<span class="source-line-no">201</span><span id="line-201">    public boolean isSleepStartedByGui() {</span>
+<span class="source-line-no">202</span><span id="line-202">        return sleepStartedByGuiRaw != 0;</span>
+<span class="source-line-no">203</span><span id="line-203">    }</span>
+<span class="source-line-no">204</span><span id="line-204"></span>
+<span class="source-line-no">205</span><span id="line-205">    /**</span>
+<span class="source-line-no">206</span><span id="line-206">     * Bitmask where bits 0-3 indicate whether sleep schedules 1-4, respectively, are currently</span>
+<span class="source-line-no">207</span><span id="line-207">     * active. Kept as a raw int since the individual bit semantics are not exercised by the</span>
+<span class="source-line-no">208</span><span id="line-208">     * capture used to validate this field.</span>
+<span class="source-line-no">209</span><span id="line-209">     */</span>
+<span class="source-line-no">210</span><span id="line-210">    public int getActiveSleepSchedule() {</span>
+<span class="source-line-no">211</span><span id="line-211">        return activeSleepSchedule;</span>
+<span class="source-line-no">212</span><span id="line-212">    }</span>
+<span class="source-line-no">213</span><span id="line-213"></span>
+<span class="source-line-no">214</span><span id="line-214">    public int getExerciseStoppedByTimerRaw() {</span>
+<span class="source-line-no">215</span><span id="line-215">        return exerciseStoppedByTimerRaw;</span>
+<span class="source-line-no">216</span><span id="line-216">    }</span>
 <span class="source-line-no">217</span><span id="line-217"></span>
-<span class="source-line-no">218</span><span id="line-218">        private final int id;</span>
-<span class="source-line-no">219</span><span id="line-219">        ExerciseChoice(int id) {</span>
-<span class="source-line-no">220</span><span id="line-220">            this.id = id;</span>
-<span class="source-line-no">221</span><span id="line-221">        }</span>
-<span class="source-line-no">222</span><span id="line-222"></span>
-<span class="source-line-no">223</span><span id="line-223">        public static ExerciseChoice fromId(int id) {</span>
-<span class="source-line-no">224</span><span id="line-224">            for (ExerciseChoice s : values()) {</span>
-<span class="source-line-no">225</span><span id="line-225">                if (s.id == id) {</span>
-<span class="source-line-no">226</span><span id="line-226">                    return s;</span>
-<span class="source-line-no">227</span><span id="line-227">                }</span>
-<span class="source-line-no">228</span><span id="line-228">            }</span>
-<span class="source-line-no">229</span><span id="line-229">            return null;</span>
-<span class="source-line-no">230</span><span id="line-230">        }</span>
+<span class="source-line-no">218</span><span id="line-218">    /**</span>
+<span class="source-line-no">219</span><span id="line-219">     * True if the currently-active (or just-ended) exercise activity was stopped automatically</span>
+<span class="source-line-no">220</span><span id="line-220">     * by its configured timer, rather than manually via the pump GUI.</span>
+<span class="source-line-no">221</span><span id="line-221">     */</span>
+<span class="source-line-no">222</span><span id="line-222">    public boolean isExerciseStoppedByTimer() {</span>
+<span class="source-line-no">223</span><span id="line-223">        return exerciseStoppedByTimerRaw != 0;</span>
+<span class="source-line-no">224</span><span id="line-224">    }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">    public enum ExerciseChoice {</span>
+<span class="source-line-no">227</span><span id="line-227">        CONTINUOUS(0),</span>
+<span class="source-line-no">228</span><span id="line-228">        TIMED(1),</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        ;</span>
 <span class="source-line-no">231</span><span id="line-231"></span>
-<span class="source-line-no">232</span><span id="line-232">        public int getId() {</span>
-<span class="source-line-no">233</span><span id="line-233">            return id;</span>
-<span class="source-line-no">234</span><span id="line-234">        }</span>
-<span class="source-line-no">235</span><span id="line-235">    }</span>
+<span class="source-line-no">232</span><span id="line-232">        private final int id;</span>
+<span class="source-line-no">233</span><span id="line-233">        ExerciseChoice(int id) {</span>
+<span class="source-line-no">234</span><span id="line-234">            this.id = id;</span>
+<span class="source-line-no">235</span><span id="line-235">        }</span>
 <span class="source-line-no">236</span><span id="line-236"></span>
-<span class="source-line-no">237</span><span id="line-237">    public int getExerciseChoiceRaw() {</span>
-<span class="source-line-no">238</span><span id="line-238">        return exerciseChoiceRaw;</span>
-<span class="source-line-no">239</span><span id="line-239">    }</span>
-<span class="source-line-no">240</span><span id="line-240"></span>
-<span class="source-line-no">241</span><span id="line-241">    public ExerciseChoice getExerciseChoice() {</span>
-<span class="source-line-no">242</span><span id="line-242">        return ExerciseChoice.fromId(exerciseChoiceRaw);</span>
-<span class="source-line-no">243</span><span id="line-243">    }</span>
-<span class="source-line-no">244</span><span id="line-244"></span>
-<span class="source-line-no">245</span><span id="line-245">    /**</span>
-<span class="source-line-no">246</span><span id="line-246">     * Duration, in minutes, of a timed exercise activity.</span>
-<span class="source-line-no">247</span><span id="line-247">     */</span>
-<span class="source-line-no">248</span><span id="line-248">    public int getExerciseTime() {</span>
-<span class="source-line-no">249</span><span id="line-249">        return exerciseTime;</span>
-<span class="source-line-no">250</span><span id="line-250">    }</span>
-<span class="source-line-no">251</span><span id="line-251"></span>
-<span class="source-line-no">252</span><span id="line-252">    public int getEatingSoonStoppedByTimerRaw() {</span>
-<span class="source-line-no">253</span><span id="line-253">        return eatingSoonStoppedByTimerRaw;</span>
-<span class="source-line-no">254</span><span id="line-254">    }</span>
-<span class="source-line-no">255</span><span id="line-255"></span>
-<span class="source-line-no">256</span><span id="line-256">    /**</span>
-<span class="source-line-no">257</span><span id="line-257">     * True if the currently-active (or just-ended) eating-soon activity was stopped</span>
-<span class="source-line-no">258</span><span id="line-258">     * automatically by its configured timer, rather than manually via the pump GUI.</span>
-<span class="source-line-no">259</span><span id="line-259">     */</span>
-<span class="source-line-no">260</span><span id="line-260">    public boolean isEatingSoonStoppedByTimer() {</span>
-<span class="source-line-no">261</span><span id="line-261">        return eatingSoonStoppedByTimerRaw != 0;</span>
-<span class="source-line-no">262</span><span id="line-262">    }</span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">}</span>
+<span class="source-line-no">237</span><span id="line-237">        public static ExerciseChoice fromId(int id) {</span>
+<span class="source-line-no">238</span><span id="line-238">            for (ExerciseChoice s : values()) {</span>
+<span class="source-line-no">239</span><span id="line-239">                if (s.id == id) {</span>
+<span class="source-line-no">240</span><span id="line-240">                    return s;</span>
+<span class="source-line-no">241</span><span id="line-241">                }</span>
+<span class="source-line-no">242</span><span id="line-242">            }</span>
+<span class="source-line-no">243</span><span id="line-243">            return null;</span>
+<span class="source-line-no">244</span><span id="line-244">        }</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">        public int getId() {</span>
+<span class="source-line-no">247</span><span id="line-247">            return id;</span>
+<span class="source-line-no">248</span><span id="line-248">        }</span>
+<span class="source-line-no">249</span><span id="line-249">    }</span>
+<span class="source-line-no">250</span><span id="line-250"></span>
+<span class="source-line-no">251</span><span id="line-251">    public int getExerciseChoiceRaw() {</span>
+<span class="source-line-no">252</span><span id="line-252">        return exerciseChoiceRaw;</span>
+<span class="source-line-no">253</span><span id="line-253">    }</span>
+<span class="source-line-no">254</span><span id="line-254"></span>
+<span class="source-line-no">255</span><span id="line-255">    public ExerciseChoice getExerciseChoice() {</span>
+<span class="source-line-no">256</span><span id="line-256">        return ExerciseChoice.fromId(exerciseChoiceRaw);</span>
+<span class="source-line-no">257</span><span id="line-257">    }</span>
+<span class="source-line-no">258</span><span id="line-258"></span>
+<span class="source-line-no">259</span><span id="line-259">    /**</span>
+<span class="source-line-no">260</span><span id="line-260">     * Duration, in minutes, of a timed exercise activity.</span>
+<span class="source-line-no">261</span><span id="line-261">     */</span>
+<span class="source-line-no">262</span><span id="line-262">    public int getExerciseTime() {</span>
+<span class="source-line-no">263</span><span id="line-263">        return exerciseTime;</span>
+<span class="source-line-no">264</span><span id="line-264">    }</span>
+<span class="source-line-no">265</span><span id="line-265"></span>
+<span class="source-line-no">266</span><span id="line-266">    public int getEatingSoonStoppedByTimerRaw() {</span>
+<span class="source-line-no">267</span><span id="line-267">        return eatingSoonStoppedByTimerRaw;</span>
+<span class="source-line-no">268</span><span id="line-268">    }</span>
+<span class="source-line-no">269</span><span id="line-269"></span>
+<span class="source-line-no">270</span><span id="line-270">    /**</span>
+<span class="source-line-no">271</span><span id="line-271">     * True if the currently-active (or just-ended) eating-soon activity was stopped</span>
+<span class="source-line-no">272</span><span id="line-272">     * automatically by its configured timer, rather than manually via the pump GUI.</span>
+<span class="source-line-no">273</span><span id="line-273">     */</span>
+<span class="source-line-no">274</span><span id="line-274">    public boolean isEatingSoonStoppedByTimer() {</span>
+<span class="source-line-no">275</span><span id="line-275">        return eatingSoonStoppedByTimerRaw != 0;</span>
+<span class="source-line-no">276</span><span id="line-276">    }</span>
+<span class="source-line-no">277</span><span id="line-277"></span>
+<span class="source-line-no">278</span><span id="line-278">}</span>
 
 
 

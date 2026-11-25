@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-75">CurrentActiveIdpValuesResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-72">CurrentActiveIdpValuesResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Returns the currently active insulin delivery profile (IDP) parameter values
+<div class="block">Response message for <a href="../../request/currentStatus/CurrentActiveIdpValuesRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentActiveIdpValuesRequest</code></a>, opCode -105, size 10.
+
+ <br>
+
+ Returns the currently active insulin delivery profile (IDP) parameter values
  in effect right now, based on the active time segment.
 
  Byte layout of the cargo (10 bytes total):
@@ -107,14 +111,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="see-list-long">
 <li><a href="IDPSegmentResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>IDPSegmentResponse</code></a></li>
-<li><a href="IDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code><br>
-
- Response message for com.jwoglom.pumpx2.pump.messages.request.currentStatus.CurrentActiveIdpValuesRequest, opCode -105, size 10
-
- <br>
-
- 
- <table border='1'>
+<li><a href="IDPSettingsResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code><table border='1'>
  <caption>Message properties:</caption>
  <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>-105</code>&nbsp;</td></tr>
  <tr><th>&nbsp;<code>size</code>&nbsp;</th><td>&nbsp;<code>10</code>&nbsp;</td></tr>
@@ -220,13 +217,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CurrentActiveIdpValuesResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-109">CurrentActiveIdpValuesResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-106">CurrentActiveIdpValuesResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,int,int,int)">
 <h3>CurrentActiveIdpValuesResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-111">CurrentActiveIdpValuesResponse</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-108">CurrentActiveIdpValuesResponse</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
  int&nbsp;currentTargetBg,
  int&nbsp;currentInsulinDuration,
  int&nbsp;currentIsf)</span></div>
@@ -243,7 +240,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-128">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-125">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CurrentActiveIdpValuesResponse:</caption>
  <tr><td><code>currentCarbRatio</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
@@ -260,7 +257,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-166">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-163">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;currentCarbRatio,
  int&nbsp;currentTargetBg,
  int&nbsp;currentInsulinDuration,
  int&nbsp;currentIsf)</span></div>
@@ -289,7 +286,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentCarbRatio()">
 <h3>getCurrentCarbRatio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-187">getCurrentCarbRatio</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-184">getCurrentCarbRatio</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>carb ratio in 1000-increments. A value of 10000 means 10 g/U.
@@ -300,7 +297,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentTargetBg()">
 <h3>getCurrentTargetBg</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-194">getCurrentTargetBg</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-191">getCurrentTargetBg</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>target blood glucose in mg/dL used for Control-IQ corrections</dd>
@@ -310,7 +307,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentInsulinDuration()">
 <h3>getCurrentInsulinDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-201">getCurrentInsulinDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-198">getCurrentInsulinDuration</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>Control-IQ insulin duration in minutes</dd>
@@ -320,7 +317,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentIsf()">
 <h3>getCurrentIsf</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-208">getCurrentIsf</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentActiveIdpValuesResponse.html#line-205">getCurrentIsf</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>insulin sensitivity factor in mg/dL per unit</dd>

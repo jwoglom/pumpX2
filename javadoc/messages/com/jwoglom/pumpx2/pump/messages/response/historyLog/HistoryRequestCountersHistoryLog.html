@@ -82,14 +82,25 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-15">HistoryRequestCountersHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-34">HistoryRequestCountersHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
+<div class="block">History log record History Request Counters, opCode 490, size 26.
+
+ <br>
+
+ Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
  hours since the previous burst; the counts below were compared with the requests TandemKit
  logged in 161 such windows on two pumps (the maintainer's and a tester's).
 
  The class name is provisional: opcode 490 is not in Tandem's cloud event schema or the Mobi
- app's history log list. Fields not named here have not been identified and are exposed raw.</div>
+ app's history log list. Fields not named here have not been identified and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>490</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"History Request Counters"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -197,13 +208,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>HistoryRequestCountersHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-26">HistoryRequestCountersHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-45">HistoryRequestCountersHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,long,long,long)">
 <h3>HistoryRequestCountersHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-27">HistoryRequestCountersHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-46">HistoryRequestCountersHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;historyLogRequestCount,
  long&nbsp;unknown14,
@@ -222,7 +233,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-36">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-55">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -232,7 +243,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-49">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-68">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for HistoryRequestCountersHistoryLog:</caption>
  <tr><td><code>historyLogRequestCount</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -249,7 +260,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,long,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-59">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-78">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;historyLogRequestCount,
  long&nbsp;unknown14,
@@ -260,7 +271,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHistoryLogRequestCount()">
 <h3>getHistoryLogRequestCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-76">getHistoryLogRequestCount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-95">getHistoryLogRequestCount</a></span>()</div>
 <div class="block">Equal to the number of HistoryLogRequests the phone sent in the window in 153 of 161
  windows, 1 off in the others.</div>
 <dl class="notes">
@@ -272,7 +283,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown14()">
 <h3>getUnknown14</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-85">getUnknown14</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-104">getUnknown14</a></span>()</div>
 <div class="block">0 in every record.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -283,7 +294,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown18()">
 <h3>getUnknown18</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-94">getUnknown18</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-113">getUnknown18</a></span>()</div>
 <div class="block">Grows with the amount of history streamed in the window (up to 130933 observed).</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -294,7 +305,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-101">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestCountersHistoryLog.html#line-120">getUnknown22</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>raw uint32 at offset 22</dd>

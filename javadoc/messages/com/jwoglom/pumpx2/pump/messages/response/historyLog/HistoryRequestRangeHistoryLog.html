@@ -82,14 +82,25 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-15">HistoryRequestRangeHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-34">HistoryRequestRangeHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
+<div class="block">History log record History Request Range, opCode 491, size 26.
+
+ <br>
+
+ Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
  hours since the previous burst; the counts below were compared with the requests TandemKit
  logged in 161 such windows on two pumps (the maintainer's and a tester's).
 
  The class name is provisional: opcode 491 is not in Tandem's cloud event schema or the Mobi
- app's history log list. Fields not named here have not been identified and are exposed raw.</div>
+ app's history log list. Fields not named here have not been identified and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>491</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"History Request Range"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -208,13 +219,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>HistoryRequestRangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-27">HistoryRequestRangeHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-46">HistoryRequestRangeHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,long,long,int,int)">
 <h3>HistoryRequestRangeHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-28">HistoryRequestRangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-47">HistoryRequestRangeHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;unknown10,
  long&nbsp;minStartLog,
@@ -234,7 +245,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-38">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-57">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -244,7 +255,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-52">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-71">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for HistoryRequestRangeHistoryLog:</caption>
  <tr><td><code>unknown10</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -262,7 +273,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,long,long,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-63">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-82">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;unknown10,
  long&nbsp;minStartLog,
@@ -274,7 +285,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown10()">
 <h3>getUnknown10</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-81">getUnknown10</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-100">getUnknown10</a></span>()</div>
 <div class="block">Not the number of records the phone received: a median of 2.6 times that count
  (0.97 to 431 times) in 158 windows. It correlates with the amount of history streamed.</div>
 <dl class="notes">
@@ -286,7 +297,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMinStartLog()">
 <h3>getMinStartLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-90">getMinStartLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-109">getMinStartLog</a></span>()</div>
 <div class="block">Equal to the lowest HistoryLogRequest startLog in the window in 161 of 161 windows.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -297,7 +308,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMaxStartLog()">
 <h3>getMaxStartLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-99">getMaxStartLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-118">getMaxStartLog</a></span>()</div>
 <div class="block">Equal to the highest HistoryLogRequest startLog in the window in 161 of 161 windows.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -308,7 +319,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-108">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-127">getUnknown22</a></span>()</div>
 <div class="block">0 in every record.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -319,7 +330,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown24()">
 <h3>getUnknown24</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-118">getUnknown24</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryRequestRangeHistoryLog.html#line-137">getUnknown24</a></span>()</div>
 <div class="block">Usually 1 to 4 below the number of HistoryLogRequests in the window (141 of 161
  windows), equal in 1, and up to 25 below in windows with large backfills.</div>
 <dl class="notes">

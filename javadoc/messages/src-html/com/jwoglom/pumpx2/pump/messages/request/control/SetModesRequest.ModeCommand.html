@@ -32,134 +32,131 @@
 <span class="source-line-no">015</span><span id="line-15"> *</span>
 <span class="source-line-no">016</span><span id="line-16"> * Precondition: ControlIQ must be enabled.</span>
 <span class="source-line-no">017</span><span id="line-17"> */</span>
-<span class="source-line-no">018</span><span id="line-18">/**</span>
-<span class="source-line-no">019</span><span id="line-19"> * Enable or disable sleep mode or exercise mode.</span>
-<span class="source-line-no">020</span><span id="line-20"> *</span>
-<span class="source-line-no">021</span><span id="line-21"> * Precondition: ControlIQ must be enabled.</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24"> *</span>
-<span class="source-line-no">025</span><span id="line-25"> * &lt;br&gt;</span>
-<span class="source-line-no">026</span><span id="line-26"> *</span>
-<span class="source-line-no">027</span><span id="line-27"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse}, opCode -52, size 1</span>
-<span class="source-line-no">028</span><span id="line-28"> *</span>
-<span class="source-line-no">029</span><span id="line-29"> * &lt;br&gt;</span>
-<span class="source-line-no">030</span><span id="line-30"> *</span>
-<span class="source-line-no">031</span><span id="line-31"> * </span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-52&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;1&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;modifiesInsulinDelivery&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#MOBI_API_V3_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;supportedDevices&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.SupportedDevices#MOBI_ONLY}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43"> * &lt;/table&gt;</span>
-<span class="source-line-no">044</span><span id="line-44"> */@MessageProps(</span>
-<span class="source-line-no">045</span><span id="line-45">    opCode=-52,</span>
-<span class="source-line-no">046</span><span id="line-46">    size=1,</span>
-<span class="source-line-no">047</span><span id="line-47">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">048</span><span id="line-48">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">049</span><span id="line-49">    signed=true,</span>
-<span class="source-line-no">050</span><span id="line-50">    modifiesInsulinDelivery=true,</span>
-<span class="source-line-no">051</span><span id="line-51">    minApi=KnownApiVersion.MOBI_API_V3_5,</span>
-<span class="source-line-no">052</span><span id="line-52">    supportedDevices=SupportedDevices.MOBI_ONLY,</span>
-<span class="source-line-no">053</span><span id="line-53">    response=SetModesResponse.class</span>
-<span class="source-line-no">054</span><span id="line-54">)</span>
-<span class="source-line-no">055</span><span id="line-55">public class SetModesRequest extends Message { </span>
-<span class="source-line-no">056</span><span id="line-56">    private int bitmap;</span>
-<span class="source-line-no">057</span><span id="line-57">    private ModeCommand command;</span>
-<span class="source-line-no">058</span><span id="line-58">    </span>
-<span class="source-line-no">059</span><span id="line-59">    public SetModesRequest() {}</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    public SetModesRequest(int bitmap) {</span>
-<span class="source-line-no">062</span><span id="line-62">        parse(buildCargo(bitmap));</span>
-<span class="source-line-no">063</span><span id="line-63">    }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    public SetModesRequest(ModeCommand mode) {</span>
-<span class="source-line-no">066</span><span id="line-66">        this(mode.getBitmap());</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    public SetModesRequest(byte[] raw) {</span>
-<span class="source-line-no">070</span><span id="line-70">        this.cargo = raw;</span>
-<span class="source-line-no">071</span><span id="line-71">        parse(raw);</span>
-<span class="source-line-no">072</span><span id="line-72">    }</span>
-<span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">    /**</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;caption&gt;Parsed fields for SetModesRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bitmap&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;command&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getCommand()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;/table&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     */</span>
-<span class="source-line-no">081</span><span id="line-81">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">082</span><span id="line-82">        raw = this.removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">083</span><span id="line-83">        Validate.isTrue(raw.length == props().size(), "got "+raw.length);</span>
-<span class="source-line-no">084</span><span id="line-84">        this.cargo = raw;</span>
-<span class="source-line-no">085</span><span id="line-85">        this.bitmap = raw[0];</span>
-<span class="source-line-no">086</span><span id="line-86">        this.command = getCommand();</span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    </span>
-<span class="source-line-no">090</span><span id="line-90">    /**</span>
-<span class="source-line-no">091</span><span id="line-91">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;caption&gt;Byte layout for SetModesRequest.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bitmap&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;/table&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     */</span>
-<span class="source-line-no">097</span><span id="line-97">    public static byte[] buildCargo(int bitmap) {</span>
-<span class="source-line-no">098</span><span id="line-98">        return Bytes.combine(</span>
-<span class="source-line-no">099</span><span id="line-99">            // 10 at 0</span>
-<span class="source-line-no">100</span><span id="line-100">            new byte[]{(byte) bitmap}</span>
-<span class="source-line-no">101</span><span id="line-101">        );</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">    public int getBitmap() {</span>
-<span class="source-line-no">105</span><span id="line-105">        return bitmap;</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">    public ModeCommand getCommand() {</span>
-<span class="source-line-no">109</span><span id="line-109">        return ModeCommand.fromBitmap(bitmap);</span>
-<span class="source-line-no">110</span><span id="line-110">    }</span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">    public enum ModeCommand {</span>
-<span class="source-line-no">113</span><span id="line-113">        SLEEP_MODE_ON(1),</span>
-<span class="source-line-no">114</span><span id="line-114">        SLEEP_MODE_OFF(2),</span>
-<span class="source-line-no">115</span><span id="line-115">        EXERCISE_MODE_ON(3),</span>
-<span class="source-line-no">116</span><span id="line-116">        EXERCISE_MODE_OFF(4),</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">        // NOT SUPPORTED IN CURRENT FIRMWARE (referenced in Tandem Source event schema)</span>
-<span class="source-line-no">120</span><span id="line-120">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_ALL(5),</span>
-<span class="source-line-no">121</span><span id="line-121">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__START_EATING_SOON(6),</span>
-<span class="source-line-no">122</span><span id="line-122">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_EATING_SOON(7),</span>
-<span class="source-line-no">123</span><span id="line-123">        ;</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">        private int bitmap;</span>
-<span class="source-line-no">126</span><span id="line-126">        ModeCommand(int bitmap) {</span>
-<span class="source-line-no">127</span><span id="line-127">            this.bitmap = bitmap;</span>
-<span class="source-line-no">128</span><span id="line-128">        }</span>
-<span class="source-line-no">129</span><span id="line-129"></span>
-<span class="source-line-no">130</span><span id="line-130">        public int getBitmap() {</span>
-<span class="source-line-no">131</span><span id="line-131">            return bitmap;</span>
-<span class="source-line-no">132</span><span id="line-132">        }</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">        public static ModeCommand fromBitmap(int bitmap) {</span>
-<span class="source-line-no">135</span><span id="line-135">            for (ModeCommand c : values()) {</span>
-<span class="source-line-no">136</span><span id="line-136">                if (c.getBitmap() == bitmap) {</span>
-<span class="source-line-no">137</span><span id="line-137">                    return c;</span>
-<span class="source-line-no">138</span><span id="line-138">                }</span>
-<span class="source-line-no">139</span><span id="line-139">            }</span>
-<span class="source-line-no">140</span><span id="line-140">            return null;</span>
-<span class="source-line-no">141</span><span id="line-141">        }</span>
-<span class="source-line-no">142</span><span id="line-142">    }</span>
-<span class="source-line-no">143</span><span id="line-143">    </span>
-<span class="source-line-no">144</span><span id="line-144">    </span>
-<span class="source-line-no">145</span><span id="line-145">}</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">/**</span>
+<span class="source-line-no">020</span><span id="line-20"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse}, opCode -52, size 1.</span>
+<span class="source-line-no">021</span><span id="line-21"> *</span>
+<span class="source-line-no">022</span><span id="line-22"> * &lt;br&gt;</span>
+<span class="source-line-no">023</span><span id="line-23"> *</span>
+<span class="source-line-no">024</span><span id="line-24"> * Enable or disable sleep mode or exercise mode.</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"> * Precondition: ControlIQ must be enabled.</span>
+<span class="source-line-no">027</span><span id="line-27"> *</span>
+<span class="source-line-no">028</span><span id="line-28"> * </span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-52&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;1&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;modifiesInsulinDelivery&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#MOBI_API_V3_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;supportedDevices&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.SupportedDevices#MOBI_ONLY}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.control.SetModesResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;/table&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> */@MessageProps(</span>
+<span class="source-line-no">042</span><span id="line-42">    opCode=-52,</span>
+<span class="source-line-no">043</span><span id="line-43">    size=1,</span>
+<span class="source-line-no">044</span><span id="line-44">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">045</span><span id="line-45">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">046</span><span id="line-46">    signed=true,</span>
+<span class="source-line-no">047</span><span id="line-47">    modifiesInsulinDelivery=true,</span>
+<span class="source-line-no">048</span><span id="line-48">    minApi=KnownApiVersion.MOBI_API_V3_5,</span>
+<span class="source-line-no">049</span><span id="line-49">    supportedDevices=SupportedDevices.MOBI_ONLY,</span>
+<span class="source-line-no">050</span><span id="line-50">    response=SetModesResponse.class</span>
+<span class="source-line-no">051</span><span id="line-51">)</span>
+<span class="source-line-no">052</span><span id="line-52">public class SetModesRequest extends Message { </span>
+<span class="source-line-no">053</span><span id="line-53">    private int bitmap;</span>
+<span class="source-line-no">054</span><span id="line-54">    private ModeCommand command;</span>
+<span class="source-line-no">055</span><span id="line-55">    </span>
+<span class="source-line-no">056</span><span id="line-56">    public SetModesRequest() {}</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    public SetModesRequest(int bitmap) {</span>
+<span class="source-line-no">059</span><span id="line-59">        parse(buildCargo(bitmap));</span>
+<span class="source-line-no">060</span><span id="line-60">    }</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    public SetModesRequest(ModeCommand mode) {</span>
+<span class="source-line-no">063</span><span id="line-63">        this(mode.getBitmap());</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public SetModesRequest(byte[] raw) {</span>
+<span class="source-line-no">067</span><span id="line-67">        this.cargo = raw;</span>
+<span class="source-line-no">068</span><span id="line-68">        parse(raw);</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    /**</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;caption&gt;Parsed fields for SetModesRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bitmap&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;command&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;getCommand()&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;/table&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     */</span>
+<span class="source-line-no">078</span><span id="line-78">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">079</span><span id="line-79">        raw = this.removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">080</span><span id="line-80">        Validate.isTrue(raw.length == props().size(), "got "+raw.length);</span>
+<span class="source-line-no">081</span><span id="line-81">        this.cargo = raw;</span>
+<span class="source-line-no">082</span><span id="line-82">        this.bitmap = raw[0];</span>
+<span class="source-line-no">083</span><span id="line-83">        this.command = getCommand();</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    </span>
+<span class="source-line-no">087</span><span id="line-87">    /**</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;caption&gt;Byte layout for SetModesRequest.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) bitmap&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;/table&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     */</span>
+<span class="source-line-no">094</span><span id="line-94">    public static byte[] buildCargo(int bitmap) {</span>
+<span class="source-line-no">095</span><span id="line-95">        return Bytes.combine(</span>
+<span class="source-line-no">096</span><span id="line-96">            // 10 at 0</span>
+<span class="source-line-no">097</span><span id="line-97">            new byte[]{(byte) bitmap}</span>
+<span class="source-line-no">098</span><span id="line-98">        );</span>
+<span class="source-line-no">099</span><span id="line-99">    }</span>
+<span class="source-line-no">100</span><span id="line-100"></span>
+<span class="source-line-no">101</span><span id="line-101">    public int getBitmap() {</span>
+<span class="source-line-no">102</span><span id="line-102">        return bitmap;</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    public ModeCommand getCommand() {</span>
+<span class="source-line-no">106</span><span id="line-106">        return ModeCommand.fromBitmap(bitmap);</span>
+<span class="source-line-no">107</span><span id="line-107">    }</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109">    public enum ModeCommand {</span>
+<span class="source-line-no">110</span><span id="line-110">        SLEEP_MODE_ON(1),</span>
+<span class="source-line-no">111</span><span id="line-111">        SLEEP_MODE_OFF(2),</span>
+<span class="source-line-no">112</span><span id="line-112">        EXERCISE_MODE_ON(3),</span>
+<span class="source-line-no">113</span><span id="line-113">        EXERCISE_MODE_OFF(4),</span>
+<span class="source-line-no">114</span><span id="line-114"></span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">        // NOT SUPPORTED IN CURRENT FIRMWARE (referenced in Tandem Source event schema)</span>
+<span class="source-line-no">117</span><span id="line-117">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_ALL(5),</span>
+<span class="source-line-no">118</span><span id="line-118">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__START_EATING_SOON(6),</span>
+<span class="source-line-no">119</span><span id="line-119">        NOT_SUPPORTED_IN_CURRENT_FIRMWARE__STOP_EATING_SOON(7),</span>
+<span class="source-line-no">120</span><span id="line-120">        ;</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">        private int bitmap;</span>
+<span class="source-line-no">123</span><span id="line-123">        ModeCommand(int bitmap) {</span>
+<span class="source-line-no">124</span><span id="line-124">            this.bitmap = bitmap;</span>
+<span class="source-line-no">125</span><span id="line-125">        }</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">        public int getBitmap() {</span>
+<span class="source-line-no">128</span><span id="line-128">            return bitmap;</span>
+<span class="source-line-no">129</span><span id="line-129">        }</span>
+<span class="source-line-no">130</span><span id="line-130"></span>
+<span class="source-line-no">131</span><span id="line-131">        public static ModeCommand fromBitmap(int bitmap) {</span>
+<span class="source-line-no">132</span><span id="line-132">            for (ModeCommand c : values()) {</span>
+<span class="source-line-no">133</span><span id="line-133">                if (c.getBitmap() == bitmap) {</span>
+<span class="source-line-no">134</span><span id="line-134">                    return c;</span>
+<span class="source-line-no">135</span><span id="line-135">                }</span>
+<span class="source-line-no">136</span><span id="line-136">            }</span>
+<span class="source-line-no">137</span><span id="line-137">            return null;</span>
+<span class="source-line-no">138</span><span id="line-138">        }</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
+<span class="source-line-no">140</span><span id="line-140">    </span>
+<span class="source-line-no">141</span><span id="line-141">    </span>
+<span class="source-line-no">142</span><span id="line-142">}</span>
 
 
 

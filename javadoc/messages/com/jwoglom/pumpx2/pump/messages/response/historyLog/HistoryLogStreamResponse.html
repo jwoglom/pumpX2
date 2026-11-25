@@ -82,21 +82,17 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-48">HistoryLogStreamResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-45">HistoryLogStreamResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Multiple HistoryLogStreamResponse's can be received after initiating a HistoryLogRequest.
+<div class="block">Response message for <a href="../../request/historyLog/NonexistentHistoryLogStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.historyLog"><code>NonexistentHistoryLogStreamRequest</code></a>, opCode -127, size 28.
+
+ <br>
+
+ Multiple HistoryLogStreamResponse's can be received after initiating a HistoryLogRequest.
  The available sequence numbers can be checked on with a HistoryLogStatusRequest.
  This response message is received via the HISTORY_LOG CharacteristicUUID,
  and all other Response objects in the historyLog package are wrapped inside of
  HistoryLogStreamResponse (they contain their own opcodes like standard requests).
-
-
-
- <br>
-
- Response message for <a href="../../request/historyLog/NonexistentHistoryLogStreamRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.historyLog"><code>NonexistentHistoryLogStreamRequest</code></a>, opCode -127, size 28
-
- <br>
 
  
  <table border='1'>
@@ -205,13 +201,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>HistoryLogStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-64">HistoryLogStreamResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-61">HistoryLogStreamResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,java.util.List)">
 <h3>HistoryLogStreamResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-66">HistoryLogStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;numberOfHistoryLogs,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-63">HistoryLogStreamResponse</a></span><wbr><span class="parameters">(int&nbsp;numberOfHistoryLogs,
  int&nbsp;streamId,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</span></div>
 </section>
@@ -227,7 +223,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-83">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-80">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for HistoryLogStreamResponse:</caption>
  <tr><td><code>numberOfHistoryLogs</code></td><td><code>raw[0]</code></td></tr>
@@ -243,7 +239,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,java.util.List)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-104">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;numberOfHistoryLogs,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-101">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;numberOfHistoryLogs,
  int&nbsp;streamId,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;historyLogStreams)</span></div>
 </section>
@@ -251,37 +247,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parseHistoryLogStream(java.util.List)">
 <h3>parseHistoryLogStream</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-117">parseHistoryLogStream</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-114">parseHistoryLogStream</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;historyLogStreamBytes)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStreamId()">
 <h3>getStreamId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-123">getStreamId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-120">getStreamId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNumberOfHistoryLogs()">
 <h3>getNumberOfHistoryLogs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-127">getNumberOfHistoryLogs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-124">getNumberOfHistoryLogs</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHistoryLogStreamBytes()">
 <h3>getHistoryLogStreamBytes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-131">getHistoryLogStreamBytes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-128">getHistoryLogStreamBytes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHistoryLogs()">
 <h3>getHistoryLogs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-135">getHistoryLogs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-132">getHistoryLogs</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHistoryLogsToString()">
 <h3>getHistoryLogsToString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-139">getHistoryLogsToString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/HistoryLogStreamResponse.html#line-136">getHistoryLogsToString</a></span>()</div>
 </section>
 </li>
 </ul>

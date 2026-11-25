@@ -82,20 +82,16 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-47">RemoteBgEntryRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-44">RemoteBgEntryRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Adds the BG entered in the bolus window to the pump as a BG entry.
+<div class="block">Request message for <a href="../../response/control/RemoteBgEntryResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>RemoteBgEntryResponse</code></a>, opCode -74, size 11.
+
+ <br>
+
+ Adds the BG entered in the bolus window to the pump as a BG entry.
 
  pumpTime is the ACTUAL pump time seconds since boot, and can be returned from a TimeSinceResetResponse
  via <a href="../../response/currentStatus/TimeSinceResetResponse.html#getPumpTimeSecondsSinceReset()"><code>TimeSinceResetResponse.getPumpTimeSecondsSinceReset()</code></a>
-
-
-
- <br>
-
- Request message for <a href="../../response/control/RemoteBgEntryResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>RemoteBgEntryResponse</code></a>, opCode -74, size 11
-
- <br>
 
  
  <table border='1'>
@@ -270,13 +266,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>RemoteBgEntryRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-64">RemoteBgEntryRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-61">RemoteBgEntryRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,boolean,com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingType,com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingSource,long,int)">
 <h3>RemoteBgEntryRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-76">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-73">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
  boolean&nbsp;useForCgmCalibration,
  <a href="../../models/BloodGlucoseReadingType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingType</a>&nbsp;entryType,
  <a href="../../models/BloodGlucoseReadingSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingSource</a>&nbsp;source,
@@ -299,7 +295,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(int,boolean,boolean,long,int)">
 <h3>RemoteBgEntryRequest</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-90">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-87">RemoteBgEntryRequest</a></span><wbr><span class="parameters">(int&nbsp;bg,
  boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTimeSecondsSinceBoot,
@@ -321,7 +317,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-109">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-106">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for RemoteBgEntryRequest:</caption>
  <tr><td><code>bg</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
@@ -340,7 +336,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,boolean,com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingType,com.jwoglom.pumpx2.pump.messages.models.BloodGlucoseReadingSource,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-139">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-136">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
  boolean&nbsp;useForCgmCalibration,
  <a href="../../models/BloodGlucoseReadingType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingType</a>&nbsp;entryType,
  <a href="../../models/BloodGlucoseReadingSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingSource</a>&nbsp;source,
@@ -367,7 +363,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="buildCargo(int,boolean,boolean,long,int)">
 <h3>buildCargo</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-153">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-150">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;bg,
  boolean&nbsp;useForCgmCalibration,
  boolean&nbsp;isAutopopBg,
  long&nbsp;pumpTime,
@@ -380,26 +376,26 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBG()">
 <h3>getBG</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-161">getBG</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-158">getBG</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEntryType()">
 <h3>getEntryType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../models/BloodGlucoseReadingType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-165">getEntryType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../models/BloodGlucoseReadingType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-162">getEntryType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSource()">
 <h3>getSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../models/BloodGlucoseReadingSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-169">getSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../models/BloodGlucoseReadingSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.models">BloodGlucoseReadingSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-166">getSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIsAutopopBg()">
 <h3>getIsAutopopBg</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-176">getIsAutopopBg</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-173">getIsAutopopBg</a></span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#getSource()"><code>getSource()</code></a> instead. Returns true if source is REMOTE.</div>
 </div>
@@ -409,7 +405,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isAutopopBg()">
 <h3>isAutopopBg</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-184">isAutopopBg</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-181">isAutopopBg</a></span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#getSource()"><code>getSource()</code></a> instead. Returns true if source is REMOTE.</div>
 </div>
@@ -418,25 +414,25 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isUseForCgmCalibration()">
 <h3>isUseForCgmCalibration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-189">isUseForCgmCalibration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-186">isUseForCgmCalibration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUseForCgmCalibration()">
 <h3>getUseForCgmCalibration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-193">getUseForCgmCalibration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-190">getUseForCgmCalibration</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPumpTime()">
 <h3>getPumpTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-197">getPumpTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-194">getPumpTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-201">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/RemoteBgEntryRequest.html#line-198">getBolusId</a></span>()</div>
 </section>
 </li>
 </ul>

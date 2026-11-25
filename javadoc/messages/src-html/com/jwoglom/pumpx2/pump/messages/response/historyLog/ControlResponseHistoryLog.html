@@ -43,110 +43,142 @@
 <span class="source-line-no">026</span><span id="line-26"> * &lt;p&gt;Byte 11 and bytes 13-25 are zero in every Mobi record examined; they are kept as raw</span>
 <span class="source-line-no">027</span><span id="line-27"> * accessors. See https://github.com/jwoglom/pumpx2/issues/145.</span>
 <span class="source-line-no">028</span><span id="line-28"> */</span>
-<span class="source-line-no">029</span><span id="line-29">@HistoryLogProps(</span>
-<span class="source-line-no">030</span><span id="line-30">    opCode = 300,</span>
-<span class="source-line-no">031</span><span id="line-31">    displayName = "Control Response",</span>
-<span class="source-line-no">032</span><span id="line-32">    internalName = ""</span>
-<span class="source-line-no">033</span><span id="line-33">)</span>
-<span class="source-line-no">034</span><span id="line-34">public class ControlResponseHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    private int responseOpCode;</span>
-<span class="source-line-no">037</span><span id="line-37">    private int unknown11;</span>
-<span class="source-line-no">038</span><span id="line-38">    private int status;</span>
-<span class="source-line-no">039</span><span id="line-39">    private byte[] unknownTail;</span>
-<span class="source-line-no">040</span><span id="line-40"></span>
-<span class="source-line-no">041</span><span id="line-41">    public ControlResponseHistoryLog() {}</span>
-<span class="source-line-no">042</span><span id="line-42">    public ControlResponseHistoryLog(long pumpTimeSec, long sequenceNum, int responseOpCode, int unknown11, int status, byte[] unknownTail) {</span>
-<span class="source-line-no">043</span><span id="line-43">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">044</span><span id="line-44">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, responseOpCode, unknown11, status, unknownTail);</span>
-<span class="source-line-no">045</span><span id="line-45">        this.responseOpCode = responseOpCode;</span>
-<span class="source-line-no">046</span><span id="line-46">        this.unknown11 = unknown11;</span>
-<span class="source-line-no">047</span><span id="line-47">        this.status = status;</span>
-<span class="source-line-no">048</span><span id="line-48">        this.unknownTail = Arrays.copyOfRange(this.cargo, 13, 26);</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    public ControlResponseHistoryLog(long pumpTimeSec, long sequenceNum, int responseOpCode, int status) {</span>
-<span class="source-line-no">052</span><span id="line-52">        this(pumpTimeSec, sequenceNum, responseOpCode, 0, status, new byte[13]);</span>
-<span class="source-line-no">053</span><span id="line-53">    }</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    public ControlResponseHistoryLog(int responseOpCode, int status) {</span>
-<span class="source-line-no">056</span><span id="line-56">        this(0, 0, responseOpCode, status);</span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    public int typeId() {</span>
-<span class="source-line-no">060</span><span id="line-60">        return 300;</span>
-<span class="source-line-no">061</span><span id="line-61">    }</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    /**</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;caption&gt;Parsed fields for ControlResponseHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;responseOpCode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown11&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownTail&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 13, 26)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;/table&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     */</span>
-<span class="source-line-no">072</span><span id="line-72">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">073</span><span id="line-73">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">074</span><span id="line-74">        this.cargo = raw;</span>
-<span class="source-line-no">075</span><span id="line-75">        parseBase(raw);</span>
-<span class="source-line-no">076</span><span id="line-76">        this.responseOpCode = raw[10] &amp; 0xFF;</span>
-<span class="source-line-no">077</span><span id="line-77">        this.unknown11 = raw[11] &amp; 0xFF;</span>
-<span class="source-line-no">078</span><span id="line-78">        this.status = raw[12] &amp; 0xFF;</span>
-<span class="source-line-no">079</span><span id="line-79">        this.unknownTail = Arrays.copyOfRange(raw, 13, 26);</span>
-<span class="source-line-no">080</span><span id="line-80">    }</span>
-<span class="source-line-no">081</span><span id="line-81"></span>
-<span class="source-line-no">082</span><span id="line-82">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int responseOpCode, int unknown11, int status, byte[] unknownTail) {</span>
-<span class="source-line-no">083</span><span id="line-83">        Validate.isTrue(unknownTail.length == 13, "unknownTail must be 13 bytes");</span>
-<span class="source-line-no">084</span><span id="line-84">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">085</span><span id="line-85">            HistoryLog.typeIdBytes(300, 0),</span>
-<span class="source-line-no">086</span><span id="line-86">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">087</span><span id="line-87">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">088</span><span id="line-88">            new byte[]{ (byte) responseOpCode, (byte) unknown11, (byte) status },</span>
-<span class="source-line-no">089</span><span id="line-89">            unknownTail));</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    /**</span>
-<span class="source-line-no">093</span><span id="line-93">     * The opcode of the response the pump sent, as an unsigned byte (the pumpX2 response</span>
-<span class="source-line-no">094</span><span id="line-94">     * {@code opCode} ANDed with 0xFF), which is the request's opcode plus one: for example 167</span>
-<span class="source-line-no">095</span><span id="line-95">     * is StopTempRateResponse and 155 is ResumePumpingResponse.</span>
-<span class="source-line-no">096</span><span id="line-96">     *</span>
-<span class="source-line-no">097</span><span id="line-97">     * @return the unsigned opcode of the response</span>
-<span class="source-line-no">098</span><span id="line-98">     */</span>
-<span class="source-line-no">099</span><span id="line-99">    public int getResponseOpCode() {</span>
-<span class="source-line-no">100</span><span id="line-100">        return responseOpCode;</span>
-<span class="source-line-no">101</span><span id="line-101">    }</span>
-<span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">    /**</span>
-<span class="source-line-no">104</span><span id="line-104">     * The status byte of that response: 0 on success. Every nonzero value checked against the</span>
-<span class="source-line-no">105</span><span id="line-105">     * app log matched a response that reported a failure (for example a ResumePumping request</span>
-<span class="source-line-no">106</span><span id="line-106">     * rejected with status 1 and retried successfully a second later); StopTempRate responses</span>
-<span class="source-line-no">107</span><span id="line-107">     * logged as successful all read 0 here (1734/1734).</span>
-<span class="source-line-no">108</span><span id="line-108">     *</span>
-<span class="source-line-no">109</span><span id="line-109">     * @return the response status, 0 for success</span>
-<span class="source-line-no">110</span><span id="line-110">     */</span>
-<span class="source-line-no">111</span><span id="line-111">    public int getStatus() {</span>
-<span class="source-line-no">112</span><span id="line-112">        return status;</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">    /**</span>
-<span class="source-line-no">116</span><span id="line-116">     * @return byte 11, which was 0 in every record examined</span>
-<span class="source-line-no">117</span><span id="line-117">     */</span>
-<span class="source-line-no">118</span><span id="line-118">    public int getUnknown11() {</span>
-<span class="source-line-no">119</span><span id="line-119">        return unknown11;</span>
-<span class="source-line-no">120</span><span id="line-120">    }</span>
-<span class="source-line-no">121</span><span id="line-121"></span>
-<span class="source-line-no">122</span><span id="line-122">    /**</span>
-<span class="source-line-no">123</span><span id="line-123">     * Bytes 13-25. They are zero on the Mobi. In 17 t:slim X2 records answering</span>
-<span class="source-line-no">124</span><span id="line-124">     * UserInteraction (response opcode 133), bytes 15-17 of the record (index 2-4 here) held the</span>
-<span class="source-line-no">125</span><span id="line-125">     * low 24 bits of the record's own pumpTimeSec; their purpose is unknown.</span>
-<span class="source-line-no">126</span><span id="line-126">     *</span>
-<span class="source-line-no">127</span><span id="line-127">     * @return a copy of bytes 13-25</span>
-<span class="source-line-no">128</span><span id="line-128">     */</span>
-<span class="source-line-no">129</span><span id="line-129">    public byte[] getUnknownTail() {</span>
-<span class="source-line-no">130</span><span id="line-130">        return Arrays.copyOf(unknownTail, unknownTail.length);</span>
-<span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132">}</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">/**</span>
+<span class="source-line-no">031</span><span id="line-31"> * History log record Control Response, opCode 300, size 26.</span>
+<span class="source-line-no">032</span><span id="line-32"> *</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;br&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> *</span>
+<span class="source-line-no">035</span><span id="line-35"> * The response the pump sent to a signed CONTROL request, written immediately after the</span>
+<span class="source-line-no">036</span><span id="line-36"> * {@link ControlRequestHistoryLog} for that request (its {@code requestOpCode} is this record's</span>
+<span class="source-line-no">037</span><span id="line-37"> * {@code responseOpCode} minus one in 3692/3692 records across both capture sets).</span>
+<span class="source-line-no">038</span><span id="line-38"> *</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;p&gt;The class name is provisional: Tandem's cloud export and the Mobi app's HistoryLogType enum</span>
+<span class="source-line-no">040</span><span id="line-40"> * do not name this opcode.</span>
+<span class="source-line-no">041</span><span id="line-41"> *</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;p&gt;Only some commands are answered with this record. Observed response opcodes: 133</span>
+<span class="source-line-no">043</span><span id="line-43"> * UserInteraction, 135 SetMaxBolusLimit, 137 SetMaxBasalLimit, 155 ResumePumping, 157</span>
+<span class="source-line-no">044</span><span id="line-44"> * SuspendPumping, 167 StopTempRate, 195 CgmHighLowAlert, 197 CgmRiseFallAlert, 199</span>
+<span class="source-line-no">045</span><span id="line-45"> * CgmOutOfRangeAlert, 211 SetQuickBolusSettings, 213 SetPumpAlertSnooze, 215 ChangeTimeDate, 217</span>
+<span class="source-line-no">046</span><span id="line-46"> * SetBgReminder, 221 SetSiteChangeReminder, 223 SetLowInsulinAlert, 225 SetAutoOffAlert, 229</span>
+<span class="source-line-no">047</span><span id="line-47"> * SetPumpSounds, 237 SetActiveIDP and 245 PlaySound. SetTempRate is answered with</span>
+<span class="source-line-no">048</span><span id="line-48"> * {@link SetTempRateResponseHistoryLog} instead; the cartridge/fill commands and</span>
+<span class="source-line-no">049</span><span id="line-49"> * DismissNotification use other opcodes as well.</span>
+<span class="source-line-no">050</span><span id="line-50"> *</span>
+<span class="source-line-no">051</span><span id="line-51"> * &lt;p&gt;Byte 11 and bytes 13-25 are zero in every Mobi record examined; they are kept as raw</span>
+<span class="source-line-no">052</span><span id="line-52"> * accessors. See https://github.com/jwoglom/pumpx2/issues/145.</span>
+<span class="source-line-no">053</span><span id="line-53"> *</span>
+<span class="source-line-no">054</span><span id="line-54"> * </span>
+<span class="source-line-no">055</span><span id="line-55"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">056</span><span id="line-56"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">057</span><span id="line-57"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;300&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Control Response"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;""&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">060</span><span id="line-60"> * &lt;/table&gt;</span>
+<span class="source-line-no">061</span><span id="line-61"> */@HistoryLogProps(</span>
+<span class="source-line-no">062</span><span id="line-62">    opCode = 300,</span>
+<span class="source-line-no">063</span><span id="line-63">    displayName = "Control Response",</span>
+<span class="source-line-no">064</span><span id="line-64">    internalName = ""</span>
+<span class="source-line-no">065</span><span id="line-65">)</span>
+<span class="source-line-no">066</span><span id="line-66">public class ControlResponseHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    private int responseOpCode;</span>
+<span class="source-line-no">069</span><span id="line-69">    private int unknown11;</span>
+<span class="source-line-no">070</span><span id="line-70">    private int status;</span>
+<span class="source-line-no">071</span><span id="line-71">    private byte[] unknownTail;</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public ControlResponseHistoryLog() {}</span>
+<span class="source-line-no">074</span><span id="line-74">    public ControlResponseHistoryLog(long pumpTimeSec, long sequenceNum, int responseOpCode, int unknown11, int status, byte[] unknownTail) {</span>
+<span class="source-line-no">075</span><span id="line-75">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">076</span><span id="line-76">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, responseOpCode, unknown11, status, unknownTail);</span>
+<span class="source-line-no">077</span><span id="line-77">        this.responseOpCode = responseOpCode;</span>
+<span class="source-line-no">078</span><span id="line-78">        this.unknown11 = unknown11;</span>
+<span class="source-line-no">079</span><span id="line-79">        this.status = status;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.unknownTail = Arrays.copyOfRange(this.cargo, 13, 26);</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    public ControlResponseHistoryLog(long pumpTimeSec, long sequenceNum, int responseOpCode, int status) {</span>
+<span class="source-line-no">084</span><span id="line-84">        this(pumpTimeSec, sequenceNum, responseOpCode, 0, status, new byte[13]);</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">    public ControlResponseHistoryLog(int responseOpCode, int status) {</span>
+<span class="source-line-no">088</span><span id="line-88">        this(0, 0, responseOpCode, status);</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    public int typeId() {</span>
+<span class="source-line-no">092</span><span id="line-92">        return 300;</span>
+<span class="source-line-no">093</span><span id="line-93">    }</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">    /**</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;caption&gt;Parsed fields for ControlResponseHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;responseOpCode&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknown11&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;status&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownTail&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 13, 26)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;/table&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     */</span>
+<span class="source-line-no">104</span><span id="line-104">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">105</span><span id="line-105">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">106</span><span id="line-106">        this.cargo = raw;</span>
+<span class="source-line-no">107</span><span id="line-107">        parseBase(raw);</span>
+<span class="source-line-no">108</span><span id="line-108">        this.responseOpCode = raw[10] &amp; 0xFF;</span>
+<span class="source-line-no">109</span><span id="line-109">        this.unknown11 = raw[11] &amp; 0xFF;</span>
+<span class="source-line-no">110</span><span id="line-110">        this.status = raw[12] &amp; 0xFF;</span>
+<span class="source-line-no">111</span><span id="line-111">        this.unknownTail = Arrays.copyOfRange(raw, 13, 26);</span>
+<span class="source-line-no">112</span><span id="line-112">    }</span>
+<span class="source-line-no">113</span><span id="line-113"></span>
+<span class="source-line-no">114</span><span id="line-114">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int responseOpCode, int unknown11, int status, byte[] unknownTail) {</span>
+<span class="source-line-no">115</span><span id="line-115">        Validate.isTrue(unknownTail.length == 13, "unknownTail must be 13 bytes");</span>
+<span class="source-line-no">116</span><span id="line-116">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">117</span><span id="line-117">            HistoryLog.typeIdBytes(300, 0),</span>
+<span class="source-line-no">118</span><span id="line-118">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">119</span><span id="line-119">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">120</span><span id="line-120">            new byte[]{ (byte) responseOpCode, (byte) unknown11, (byte) status },</span>
+<span class="source-line-no">121</span><span id="line-121">            unknownTail));</span>
+<span class="source-line-no">122</span><span id="line-122">    }</span>
+<span class="source-line-no">123</span><span id="line-123"></span>
+<span class="source-line-no">124</span><span id="line-124">    /**</span>
+<span class="source-line-no">125</span><span id="line-125">     * The opcode of the response the pump sent, as an unsigned byte (the pumpX2 response</span>
+<span class="source-line-no">126</span><span id="line-126">     * {@code opCode} ANDed with 0xFF), which is the request's opcode plus one: for example 167</span>
+<span class="source-line-no">127</span><span id="line-127">     * is StopTempRateResponse and 155 is ResumePumpingResponse.</span>
+<span class="source-line-no">128</span><span id="line-128">     *</span>
+<span class="source-line-no">129</span><span id="line-129">     * @return the unsigned opcode of the response</span>
+<span class="source-line-no">130</span><span id="line-130">     */</span>
+<span class="source-line-no">131</span><span id="line-131">    public int getResponseOpCode() {</span>
+<span class="source-line-no">132</span><span id="line-132">        return responseOpCode;</span>
+<span class="source-line-no">133</span><span id="line-133">    }</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">    /**</span>
+<span class="source-line-no">136</span><span id="line-136">     * The status byte of that response: 0 on success. Every nonzero value checked against the</span>
+<span class="source-line-no">137</span><span id="line-137">     * app log matched a response that reported a failure (for example a ResumePumping request</span>
+<span class="source-line-no">138</span><span id="line-138">     * rejected with status 1 and retried successfully a second later); StopTempRate responses</span>
+<span class="source-line-no">139</span><span id="line-139">     * logged as successful all read 0 here (1734/1734).</span>
+<span class="source-line-no">140</span><span id="line-140">     *</span>
+<span class="source-line-no">141</span><span id="line-141">     * @return the response status, 0 for success</span>
+<span class="source-line-no">142</span><span id="line-142">     */</span>
+<span class="source-line-no">143</span><span id="line-143">    public int getStatus() {</span>
+<span class="source-line-no">144</span><span id="line-144">        return status;</span>
+<span class="source-line-no">145</span><span id="line-145">    }</span>
+<span class="source-line-no">146</span><span id="line-146"></span>
+<span class="source-line-no">147</span><span id="line-147">    /**</span>
+<span class="source-line-no">148</span><span id="line-148">     * @return byte 11, which was 0 in every record examined</span>
+<span class="source-line-no">149</span><span id="line-149">     */</span>
+<span class="source-line-no">150</span><span id="line-150">    public int getUnknown11() {</span>
+<span class="source-line-no">151</span><span id="line-151">        return unknown11;</span>
+<span class="source-line-no">152</span><span id="line-152">    }</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">    /**</span>
+<span class="source-line-no">155</span><span id="line-155">     * Bytes 13-25. They are zero on the Mobi. In 17 t:slim X2 records answering</span>
+<span class="source-line-no">156</span><span id="line-156">     * UserInteraction (response opcode 133), bytes 15-17 of the record (index 2-4 here) held the</span>
+<span class="source-line-no">157</span><span id="line-157">     * low 24 bits of the record's own pumpTimeSec; their purpose is unknown.</span>
+<span class="source-line-no">158</span><span id="line-158">     *</span>
+<span class="source-line-no">159</span><span id="line-159">     * @return a copy of bytes 13-25</span>
+<span class="source-line-no">160</span><span id="line-160">     */</span>
+<span class="source-line-no">161</span><span id="line-161">    public byte[] getUnknownTail() {</span>
+<span class="source-line-no">162</span><span id="line-162">        return Arrays.copyOf(unknownTail, unknownTail.length);</span>
+<span class="source-line-no">163</span><span id="line-163">    }</span>
+<span class="source-line-no">164</span><span id="line-164">}</span>
 
 
 

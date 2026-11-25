@@ -47,7 +47,7 @@
 <span class="source-line-no">030</span><span id="line-30">    public static Set&lt;MultiDay&gt; fromBitmask(int bitmask) {</span>
 <span class="source-line-no">031</span><span id="line-31">        Set&lt;MultiDay&gt; set = new TreeSet&lt;&gt;();</span>
 <span class="source-line-no">032</span><span id="line-32">        for (MultiDay day : values()) {</span>
-<span class="source-line-no">033</span><span id="line-33">            if (bitmask % day.id() == 0) {</span>
+<span class="source-line-no">033</span><span id="line-33">            if ((bitmask &amp; day.id()) != 0) {</span>
 <span class="source-line-no">034</span><span id="line-34">                set.add(day);</span>
 <span class="source-line-no">035</span><span id="line-35">            }</span>
 <span class="source-line-no">036</span><span id="line-36">        }</span>
@@ -58,7 +58,7 @@
 <span class="source-line-no">041</span><span id="line-41">    public static int toBitmask(MultiDay... days) {</span>
 <span class="source-line-no">042</span><span id="line-42">        int mask = 0;</span>
 <span class="source-line-no">043</span><span id="line-43">        for (MultiDay day : days) {</span>
-<span class="source-line-no">044</span><span id="line-44">            mask += day.id();</span>
+<span class="source-line-no">044</span><span id="line-44">            mask |= day.id();</span>
 <span class="source-line-no">045</span><span id="line-45">        }</span>
 <span class="source-line-no">046</span><span id="line-46"></span>
 <span class="source-line-no">047</span><span id="line-47">        return mask;</span>

@@ -82,19 +82,15 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-39">TimeSinceResetResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-36">TimeSinceResetResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Returns information on the pump's current internal time, which is different from the
+<div class="block">Response message for <a href="../../request/currentStatus/TimeSinceResetRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>TimeSinceResetRequest</code></a>, opCode 55, size 8.
+
+ <br>
+
+ Returns information on the pump's current internal time, which is different from the
  human-visible time and date which is stored in the history log. The currentTime is the
  user-set clock time.
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/TimeSinceResetRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>TimeSinceResetRequest</code></a>, opCode 55, size 8
-
- <br>
 
  
  <table border='1'>
@@ -202,13 +198,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>TimeSinceResetResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-51">TimeSinceResetResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-48">TimeSinceResetResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long)">
 <h3>TimeSinceResetResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-53">TimeSinceResetResponse</a></span><wbr><span class="parameters">(long&nbsp;currentTime,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-50">TimeSinceResetResponse</a></span><wbr><span class="parameters">(long&nbsp;currentTime,
  long&nbsp;pumpTimeSinceReset)</span></div>
 </section>
 </li>
@@ -223,7 +219,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-69">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-66">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for TimeSinceResetResponse:</caption>
  <tr><td><code>currentTime</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
@@ -239,7 +235,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-92">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;timeSinceReset,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-89">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;timeSinceReset,
  long&nbsp;pumpTime)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for TimeSinceResetResponse.buildCargo(...):</caption>
@@ -258,7 +254,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentTime()">
 <h3>getCurrentTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-102">getCurrentTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-99">getCurrentTime</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the pump's internal realtime clock which is an actual date,
@@ -269,7 +265,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentTimeInstant()">
 <h3>getCurrentTimeInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-109">getCurrentTimeInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-106">getCurrentTimeInstant</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the evaluation of timeSinceReset against the epoch</dd>
@@ -279,7 +275,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPumpTimeSecondsSinceReset()">
 <h3>getPumpTimeSecondsSinceReset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-116">getPumpTimeSecondsSinceReset</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/TimeSinceResetResponse.html#line-113">getPumpTimeSecondsSinceReset</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the number of seconds the pump has been on since it was last reset</dd>

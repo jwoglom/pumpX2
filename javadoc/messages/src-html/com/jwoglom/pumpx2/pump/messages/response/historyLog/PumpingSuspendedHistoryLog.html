@@ -21,134 +21,148 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 11,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "Pumping Suspended",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_PUMPING_SUSPENDED",</span>
-<span class="source-line-no">011</span><span id="line-11">    usedByTidepool = true</span>
-<span class="source-line-no">012</span><span id="line-12">)</span>
-<span class="source-line-no">013</span><span id="line-13">public class PumpingSuspendedHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">    private long preSuspendState;</span>
-<span class="source-line-no">016</span><span id="line-16">    private int insulinAmount;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int reasonId;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int rpaTimeout;</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    public PumpingSuspendedHistoryLog() {}</span>
-<span class="source-line-no">021</span><span id="line-21">    public PumpingSuspendedHistoryLog(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reasonId, int rpaTimeout) {</span>
-<span class="source-line-no">022</span><span id="line-22">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">023</span><span id="line-23">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, preSuspendState, insulinAmount, reasonId, rpaTimeout);</span>
-<span class="source-line-no">024</span><span id="line-24">        this.preSuspendState = preSuspendState;</span>
-<span class="source-line-no">025</span><span id="line-25">        this.insulinAmount = insulinAmount;</span>
-<span class="source-line-no">026</span><span id="line-26">        this.reasonId = reasonId;</span>
-<span class="source-line-no">027</span><span id="line-27">        this.rpaTimeout = rpaTimeout;</span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * History log record Pumping Suspended, opCode 11, size 26.</span>
+<span class="source-line-no">009</span><span id="line-9"> *</span>
+<span class="source-line-no">010</span><span id="line-10"> * &lt;br&gt;</span>
+<span class="source-line-no">011</span><span id="line-11"> *</span>
+<span class="source-line-no">012</span><span id="line-12"> * </span>
+<span class="source-line-no">013</span><span id="line-13"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;11&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Pumping Suspended"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_PUMPING_SUSPENDED"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;usedByTidepool&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;/table&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> */</span>
+<span class="source-line-no">021</span><span id="line-21">@HistoryLogProps(</span>
+<span class="source-line-no">022</span><span id="line-22">    opCode = 11,</span>
+<span class="source-line-no">023</span><span id="line-23">    displayName = "Pumping Suspended",</span>
+<span class="source-line-no">024</span><span id="line-24">    internalName = "LID_PUMPING_SUSPENDED",</span>
+<span class="source-line-no">025</span><span id="line-25">    usedByTidepool = true</span>
+<span class="source-line-no">026</span><span id="line-26">)</span>
+<span class="source-line-no">027</span><span id="line-27">public class PumpingSuspendedHistoryLog extends HistoryLog {</span>
 <span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">    }</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    public PumpingSuspendedHistoryLog(long preSuspendState, int insulinAmount, int reasonId, int rpaTimeout) {</span>
-<span class="source-line-no">032</span><span id="line-32">        this(0, 0, preSuspendState, insulinAmount, reasonId, rpaTimeout);</span>
-<span class="source-line-no">033</span><span id="line-33">    }</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35">    public int typeId() {</span>
-<span class="source-line-no">036</span><span id="line-36">        return 11;</span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">    /**</span>
-<span class="source-line-no">040</span><span id="line-40">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">041</span><span id="line-41">     * &lt;caption&gt;Parsed fields for PumpingSuspendedHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">042</span><span id="line-42">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;preSuspendState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinAmount&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">045</span><span id="line-45">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rpaTimeout&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">046</span><span id="line-46">     * &lt;/table&gt;</span>
-<span class="source-line-no">047</span><span id="line-47">     */</span>
-<span class="source-line-no">048</span><span id="line-48">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">049</span><span id="line-49">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">050</span><span id="line-50">        this.cargo = raw;</span>
-<span class="source-line-no">051</span><span id="line-51">        parseBase(raw);</span>
-<span class="source-line-no">052</span><span id="line-52">        this.preSuspendState = Bytes.readUint32(raw, 10);</span>
-<span class="source-line-no">053</span><span id="line-53">        this.insulinAmount = Bytes.readShort(raw, 14);</span>
-<span class="source-line-no">054</span><span id="line-54">        this.reasonId = raw[16];</span>
-<span class="source-line-no">055</span><span id="line-55">        this.rpaTimeout = raw[17];</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    }</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout) {</span>
-<span class="source-line-no">060</span><span id="line-60">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">061</span><span id="line-61">            HistoryLog.typeIdBytes(11, 0),</span>
-<span class="source-line-no">062</span><span id="line-62">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">063</span><span id="line-63">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">064</span><span id="line-64">            Bytes.toUint32(preSuspendState),</span>
-<span class="source-line-no">065</span><span id="line-65">            Bytes.firstTwoBytesLittleEndian(insulinAmount),</span>
-<span class="source-line-no">066</span><span id="line-66">            new byte[]{ (byte) reason, (byte) rpaTimeout }));</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    /**</span>
-<span class="source-line-no">070</span><span id="line-70">     * @return the state of the pump immediately before pumping was suspended</span>
-<span class="source-line-no">071</span><span id="line-71">     * (Tandem's pump-logs JSON calls this property preSuspendState).</span>
-<span class="source-line-no">072</span><span id="line-72">     * 106 in every record observed so far across t:slim X2 and Mobi, for both user-initiated</span>
-<span class="source-line-no">073</span><span id="line-73">     * and alarm-triggered suspends; no other value has been seen.</span>
-<span class="source-line-no">074</span><span id="line-74">     */</span>
-<span class="source-line-no">075</span><span id="line-75">    public long getPreSuspendState() {</span>
-<span class="source-line-no">076</span><span id="line-76">        return preSuspendState;</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    /**</span>
-<span class="source-line-no">080</span><span id="line-80">     * @return the insulin remaining in the reservoir as the pump reports it at the instant</span>
-<span class="source-line-no">081</span><span id="line-81">     * pumping was suspended, in whole units. This is the same number</span>
-<span class="source-line-no">082</span><span id="line-82">     * {@code InsulinStatusResponse.currentInsulinAmount} returns: on a Mobi capture the two were</span>
-<span class="source-line-no">083</span><span id="line-83">     * byte-identical when the status was polled within two seconds of the record, in 4 of 4</span>
-<span class="source-line-no">084</span><span id="line-84">     * suspends and 4 of 4 resumes. It is not the cartridge fill level (it dropped 110 -&gt; 90</span>
-<span class="source-line-no">085</span><span id="line-85">     * across a tubing fill on the same cartridge) and it is not the IOB (the IOB the pump reports</span>
-<span class="source-line-no">086</span><span id="line-86">     * in LID_DAILY_BASAL decays over a suspension while this value does not). The paired</span>
-<span class="source-line-no">087</span><span id="line-87">     * suspended and resumed records which bracket a suspension carry the same value when nothing</span>
-<span class="source-line-no">088</span><span id="line-88">     * was delivered in between.</span>
-<span class="source-line-no">089</span><span id="line-89">     */</span>
-<span class="source-line-no">090</span><span id="line-90">    public int getInsulinAmount() {</span>
-<span class="source-line-no">091</span><span id="line-91">        return insulinAmount;</span>
-<span class="source-line-no">092</span><span id="line-92">    }</span>
-<span class="source-line-no">093</span><span id="line-93">    public int getReasonId() {</span>
-<span class="source-line-no">094</span><span id="line-94">        return reasonId;</span>
-<span class="source-line-no">095</span><span id="line-95">    }</span>
-<span class="source-line-no">096</span><span id="line-96">    public SuspendReason getReason() {</span>
-<span class="source-line-no">097</span><span id="line-97">        return SuspendReason.fromId(reasonId);</span>
-<span class="source-line-no">098</span><span id="line-98">    }</span>
-<span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">    /**</span>
-<span class="source-line-no">101</span><span id="line-101">     * @return the resume pump alert (RPA) timeout in minutes: how long the pump waits while</span>
-<span class="source-line-no">102</span><span id="line-102">     * suspended before alerting that insulin delivery is still stopped. 0 when unset.</span>
-<span class="source-line-no">103</span><span id="line-103">     * The value 15 was observed on every suspend in a Mobi capture, and the suspensions that</span>
-<span class="source-line-no">104</span><span id="line-104">     * lasted longer than 15 minutes each raised RESUME_PUMP_ALARM (18) and RESUME_PUMP_ALARM2 (23)</span>
-<span class="source-line-no">105</span><span id="line-105">     * 15 min 1 s after the suspend, confirming the unit is minutes.</span>
-<span class="source-line-no">106</span><span id="line-106">     * (Tandem's pump-logs JSON calls this property rpaTimeout)</span>
-<span class="source-line-no">107</span><span id="line-107">     */</span>
-<span class="source-line-no">108</span><span id="line-108">    public int getRpaTimeout() {</span>
-<span class="source-line-no">109</span><span id="line-109">        return rpaTimeout;</span>
-<span class="source-line-no">110</span><span id="line-110">    }</span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">    public enum SuspendReason {</span>
-<span class="source-line-no">113</span><span id="line-113">        USER_ABORTED(0),</span>
-<span class="source-line-no">114</span><span id="line-114">        ALARM(1),</span>
-<span class="source-line-no">115</span><span id="line-115">        MALFUNCTION(2),</span>
-<span class="source-line-no">116</span><span id="line-116">        AUTO_SUSPEND_PREDICTIVE_LOW_GLUCOSE(6),</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">        ;</span>
-<span class="source-line-no">119</span><span id="line-119">        private final int id;</span>
-<span class="source-line-no">120</span><span id="line-120">        SuspendReason(int id) {</span>
-<span class="source-line-no">121</span><span id="line-121">            this.id = id;</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">        static SuspendReason fromId(int id) {</span>
-<span class="source-line-no">125</span><span id="line-125">            for (SuspendReason r : values()) {</span>
-<span class="source-line-no">126</span><span id="line-126">                if (r.id == id) {</span>
-<span class="source-line-no">127</span><span id="line-127">                    return r;</span>
-<span class="source-line-no">128</span><span id="line-128">                }</span>
-<span class="source-line-no">129</span><span id="line-129">            }</span>
-<span class="source-line-no">130</span><span id="line-130">            return null;</span>
-<span class="source-line-no">131</span><span id="line-131">        }</span>
-<span class="source-line-no">132</span><span id="line-132">    }</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">}</span>
+<span class="source-line-no">029</span><span id="line-29">    private long preSuspendState;</span>
+<span class="source-line-no">030</span><span id="line-30">    private int insulinAmount;</span>
+<span class="source-line-no">031</span><span id="line-31">    private int reasonId;</span>
+<span class="source-line-no">032</span><span id="line-32">    private int rpaTimeout;</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public PumpingSuspendedHistoryLog() {}</span>
+<span class="source-line-no">035</span><span id="line-35">    public PumpingSuspendedHistoryLog(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reasonId, int rpaTimeout) {</span>
+<span class="source-line-no">036</span><span id="line-36">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">037</span><span id="line-37">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, preSuspendState, insulinAmount, reasonId, rpaTimeout);</span>
+<span class="source-line-no">038</span><span id="line-38">        this.preSuspendState = preSuspendState;</span>
+<span class="source-line-no">039</span><span id="line-39">        this.insulinAmount = insulinAmount;</span>
+<span class="source-line-no">040</span><span id="line-40">        this.reasonId = reasonId;</span>
+<span class="source-line-no">041</span><span id="line-41">        this.rpaTimeout = rpaTimeout;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    public PumpingSuspendedHistoryLog(long preSuspendState, int insulinAmount, int reasonId, int rpaTimeout) {</span>
+<span class="source-line-no">046</span><span id="line-46">        this(0, 0, preSuspendState, insulinAmount, reasonId, rpaTimeout);</span>
+<span class="source-line-no">047</span><span id="line-47">    }</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">    public int typeId() {</span>
+<span class="source-line-no">050</span><span id="line-50">        return 11;</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    /**</span>
+<span class="source-line-no">054</span><span id="line-54">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">055</span><span id="line-55">     * &lt;caption&gt;Parsed fields for PumpingSuspendedHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;preSuspendState&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinAmount&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[16]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rpaTimeout&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;/table&gt;</span>
+<span class="source-line-no">061</span><span id="line-61">     */</span>
+<span class="source-line-no">062</span><span id="line-62">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">063</span><span id="line-63">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">064</span><span id="line-64">        this.cargo = raw;</span>
+<span class="source-line-no">065</span><span id="line-65">        parseBase(raw);</span>
+<span class="source-line-no">066</span><span id="line-66">        this.preSuspendState = Bytes.readUint32(raw, 10);</span>
+<span class="source-line-no">067</span><span id="line-67">        this.insulinAmount = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">068</span><span id="line-68">        this.reasonId = raw[16];</span>
+<span class="source-line-no">069</span><span id="line-69">        this.rpaTimeout = raw[17];</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long preSuspendState, int insulinAmount, int reason, int rpaTimeout) {</span>
+<span class="source-line-no">074</span><span id="line-74">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">075</span><span id="line-75">            HistoryLog.typeIdBytes(11, 0),</span>
+<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">077</span><span id="line-77">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">078</span><span id="line-78">            Bytes.toUint32(preSuspendState),</span>
+<span class="source-line-no">079</span><span id="line-79">            Bytes.firstTwoBytesLittleEndian(insulinAmount),</span>
+<span class="source-line-no">080</span><span id="line-80">            new byte[]{ (byte) reason, (byte) rpaTimeout }));</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    /**</span>
+<span class="source-line-no">084</span><span id="line-84">     * @return the state of the pump immediately before pumping was suspended</span>
+<span class="source-line-no">085</span><span id="line-85">     * (Tandem's pump-logs JSON calls this property preSuspendState).</span>
+<span class="source-line-no">086</span><span id="line-86">     * 106 in every record observed so far across t:slim X2 and Mobi, for both user-initiated</span>
+<span class="source-line-no">087</span><span id="line-87">     * and alarm-triggered suspends; no other value has been seen.</span>
+<span class="source-line-no">088</span><span id="line-88">     */</span>
+<span class="source-line-no">089</span><span id="line-89">    public long getPreSuspendState() {</span>
+<span class="source-line-no">090</span><span id="line-90">        return preSuspendState;</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    /**</span>
+<span class="source-line-no">094</span><span id="line-94">     * @return the insulin remaining in the reservoir as the pump reports it at the instant</span>
+<span class="source-line-no">095</span><span id="line-95">     * pumping was suspended, in whole units. This is the same number</span>
+<span class="source-line-no">096</span><span id="line-96">     * {@code InsulinStatusResponse.currentInsulinAmount} returns: on a Mobi capture the two were</span>
+<span class="source-line-no">097</span><span id="line-97">     * byte-identical when the status was polled within two seconds of the record, in 4 of 4</span>
+<span class="source-line-no">098</span><span id="line-98">     * suspends and 4 of 4 resumes. It is not the cartridge fill level (it dropped 110 -&gt; 90</span>
+<span class="source-line-no">099</span><span id="line-99">     * across a tubing fill on the same cartridge) and it is not the IOB (the IOB the pump reports</span>
+<span class="source-line-no">100</span><span id="line-100">     * in LID_DAILY_BASAL decays over a suspension while this value does not). The paired</span>
+<span class="source-line-no">101</span><span id="line-101">     * suspended and resumed records which bracket a suspension carry the same value when nothing</span>
+<span class="source-line-no">102</span><span id="line-102">     * was delivered in between.</span>
+<span class="source-line-no">103</span><span id="line-103">     */</span>
+<span class="source-line-no">104</span><span id="line-104">    public int getInsulinAmount() {</span>
+<span class="source-line-no">105</span><span id="line-105">        return insulinAmount;</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107">    public int getReasonId() {</span>
+<span class="source-line-no">108</span><span id="line-108">        return reasonId;</span>
+<span class="source-line-no">109</span><span id="line-109">    }</span>
+<span class="source-line-no">110</span><span id="line-110">    public SuspendReason getReason() {</span>
+<span class="source-line-no">111</span><span id="line-111">        return SuspendReason.fromId(reasonId);</span>
+<span class="source-line-no">112</span><span id="line-112">    }</span>
+<span class="source-line-no">113</span><span id="line-113"></span>
+<span class="source-line-no">114</span><span id="line-114">    /**</span>
+<span class="source-line-no">115</span><span id="line-115">     * @return the resume pump alert (RPA) timeout in minutes: how long the pump waits while</span>
+<span class="source-line-no">116</span><span id="line-116">     * suspended before alerting that insulin delivery is still stopped. 0 when unset.</span>
+<span class="source-line-no">117</span><span id="line-117">     * The value 15 was observed on every suspend in a Mobi capture, and the suspensions that</span>
+<span class="source-line-no">118</span><span id="line-118">     * lasted longer than 15 minutes each raised RESUME_PUMP_ALARM (18) and RESUME_PUMP_ALARM2 (23)</span>
+<span class="source-line-no">119</span><span id="line-119">     * 15 min 1 s after the suspend, confirming the unit is minutes.</span>
+<span class="source-line-no">120</span><span id="line-120">     * (Tandem's pump-logs JSON calls this property rpaTimeout)</span>
+<span class="source-line-no">121</span><span id="line-121">     */</span>
+<span class="source-line-no">122</span><span id="line-122">    public int getRpaTimeout() {</span>
+<span class="source-line-no">123</span><span id="line-123">        return rpaTimeout;</span>
+<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">125</span><span id="line-125"></span>
+<span class="source-line-no">126</span><span id="line-126">    public enum SuspendReason {</span>
+<span class="source-line-no">127</span><span id="line-127">        USER_ABORTED(0),</span>
+<span class="source-line-no">128</span><span id="line-128">        ALARM(1),</span>
+<span class="source-line-no">129</span><span id="line-129">        MALFUNCTION(2),</span>
+<span class="source-line-no">130</span><span id="line-130">        AUTO_SUSPEND_PREDICTIVE_LOW_GLUCOSE(6),</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">        ;</span>
+<span class="source-line-no">133</span><span id="line-133">        private final int id;</span>
+<span class="source-line-no">134</span><span id="line-134">        SuspendReason(int id) {</span>
+<span class="source-line-no">135</span><span id="line-135">            this.id = id;</span>
+<span class="source-line-no">136</span><span id="line-136">        }</span>
+<span class="source-line-no">137</span><span id="line-137"></span>
+<span class="source-line-no">138</span><span id="line-138">        static SuspendReason fromId(int id) {</span>
+<span class="source-line-no">139</span><span id="line-139">            for (SuspendReason r : values()) {</span>
+<span class="source-line-no">140</span><span id="line-140">                if (r.id == id) {</span>
+<span class="source-line-no">141</span><span id="line-141">                    return r;</span>
+<span class="source-line-no">142</span><span id="line-142">                }</span>
+<span class="source-line-no">143</span><span id="line-143">            }</span>
+<span class="source-line-no">144</span><span id="line-144">            return null;</span>
+<span class="source-line-no">145</span><span id="line-145">        }</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">}</span>
 
 
 

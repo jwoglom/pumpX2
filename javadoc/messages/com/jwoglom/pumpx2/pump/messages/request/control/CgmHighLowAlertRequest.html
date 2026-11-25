@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-50">CgmHighLowAlertRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-47">CgmHighLowAlertRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets a CGM high or low alert threshold.
+<div class="block">Request message for <a href="../../response/control/CgmHighLowAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CgmHighLowAlertResponse</code></a>, opCode -62, size 7.
+
+ <br>
+
+ Sets a CGM high or low alert threshold.
 
  Cargo layout (7 bytes, little-endian):
    [0-1] threshold         uint16  - alert threshold in mg/dL
@@ -92,14 +96,6 @@ loadScripts(document, 'script');</script>
    [4]   alertType         uint8   - 0=HIGH, 1=LOW
    [5]   enableAlert       uint8   - 0=disabled, 1=enabled
    [6]   bitmask           uint8   - change bitmask (bits: 0=enabled, 1=threshold, 2=repeatDuration)
-
-
-
- <br>
-
- Request message for <a href="../../response/control/CgmHighLowAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CgmHighLowAlertResponse</code></a>, opCode -62, size 7
-
- <br>
 
  
  <table border='1'>
@@ -234,7 +230,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="ALERT_TYPE_HIGH">
 <h3>ALERT_TYPE_HIGH</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-60">ALERT_TYPE_HIGH</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-57">ALERT_TYPE_HIGH</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -248,7 +244,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="ALERT_TYPE_LOW">
 <h3>ALERT_TYPE_LOW</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-61">ALERT_TYPE_LOW</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-58">ALERT_TYPE_LOW</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -270,13 +266,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmHighLowAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-69">CgmHighLowAlertRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-66">CgmHighLowAlertRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,boolean,int)">
 <h3>CgmHighLowAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-71">CgmHighLowAlertRequest</a></span><wbr><span class="parameters">(int&nbsp;alertType,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-68">CgmHighLowAlertRequest</a></span><wbr><span class="parameters">(int&nbsp;alertType,
  int&nbsp;threshold,
  int&nbsp;repeatDurationMinutes,
  boolean&nbsp;enableAlert,
@@ -294,7 +290,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,boolean,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-93">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;alertType,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-90">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;alertType,
  int&nbsp;threshold,
  int&nbsp;repeatDurationMinutes,
  boolean&nbsp;enableAlert,
@@ -315,7 +311,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-113">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-110">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmHighLowAlertRequest:</caption>
  <tr><td><code>threshold</code></td><td><code>Bytes.readShort(raw, 0)</code></td></tr>
@@ -333,31 +329,31 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getThreshold()">
 <h3>getThreshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-124">getThreshold</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-121">getThreshold</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepeatDurationMinutes()">
 <h3>getRepeatDurationMinutes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-128">getRepeatDurationMinutes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-125">getRepeatDurationMinutes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAlertType()">
 <h3>getAlertType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-132">getAlertType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-129">getAlertType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isEnableAlert()">
 <h3>isEnableAlert</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-136">isEnableAlert</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-133">isEnableAlert</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBitmask()">
 <h3>getBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-140">getBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmHighLowAlertRequest.html#line-137">getBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

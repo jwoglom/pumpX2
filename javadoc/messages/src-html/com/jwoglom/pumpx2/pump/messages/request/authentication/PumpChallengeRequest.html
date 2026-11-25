@@ -34,76 +34,73 @@
 <span class="source-line-no">017</span><span id="line-17"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
 <span class="source-line-no">018</span><span id="line-18"> * connection initialization as part of performing the initial pump pairing process.</span>
 <span class="source-line-no">019</span><span id="line-19"> */</span>
-<span class="source-line-no">020</span><span id="line-20">/**</span>
-<span class="source-line-no">021</span><span id="line-21"> * The second authorization message sent to the pump which contains the HMACed pairing code.</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
-<span class="source-line-no">024</span><span id="line-24"> * connection initialization as part of performing the initial pump pairing process.</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">/**</span>
+<span class="source-line-no">022</span><span id="line-22"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse}, opCode 18, size 22.</span>
+<span class="source-line-no">023</span><span id="line-23"> *</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;br&gt;</span>
 <span class="source-line-no">025</span><span id="line-25"> *</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">026</span><span id="line-26"> * The second authorization message sent to the pump which contains the HMACed pairing code.</span>
 <span class="source-line-no">027</span><span id="line-27"> *</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;br&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> *</span>
-<span class="source-line-no">030</span><span id="line-30"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse}, opCode 18, size 22</span>
-<span class="source-line-no">031</span><span id="line-31"> *</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;br&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> *</span>
-<span class="source-line-no">034</span><span id="line-34"> * </span>
-<span class="source-line-no">035</span><span id="line-35"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;18&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;22&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.authentication.PumpChallengeResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">042</span><span id="line-42"> * &lt;/table&gt;</span>
-<span class="source-line-no">043</span><span id="line-43"> */@MessageProps(</span>
-<span class="source-line-no">044</span><span id="line-44">    opCode=18,</span>
-<span class="source-line-no">045</span><span id="line-45">    size=22,</span>
-<span class="source-line-no">046</span><span id="line-46">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">047</span><span id="line-47">    characteristic=Characteristic.AUTHORIZATION,</span>
-<span class="source-line-no">048</span><span id="line-48">    response=PumpChallengeResponse.class</span>
-<span class="source-line-no">049</span><span id="line-49">)</span>
-<span class="source-line-no">050</span><span id="line-50">public class PumpChallengeRequest extends Message {</span>
-<span class="source-line-no">051</span><span id="line-51">    private int appInstanceId;</span>
-<span class="source-line-no">052</span><span id="line-52">    private byte[] pumpChallengeHash;</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    public PumpChallengeRequest() {}</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    public PumpChallengeRequest(int appInstanceId, byte[] pumpChallengeHash) {</span>
-<span class="source-line-no">057</span><span id="line-57">        parse(buildCargo(appInstanceId, pumpChallengeHash));</span>
-<span class="source-line-no">058</span><span id="line-58">        Validate.isTrue(this.appInstanceId == appInstanceId);</span>
-<span class="source-line-no">059</span><span id="line-59">        Validate.isTrue(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    public int getAppInstanceId() {</span>
-<span class="source-line-no">063</span><span id="line-63">        return appInstanceId;</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    public byte[] getPumpChallengeHash() {</span>
-<span class="source-line-no">067</span><span id="line-67">        return pumpChallengeHash;</span>
-<span class="source-line-no">068</span><span id="line-68">    }</span>
-<span class="source-line-no">069</span><span id="line-69"></span>
-<span class="source-line-no">070</span><span id="line-70">    private static byte[] buildCargo(int appInstanceId, byte[] pumpChallengeHash) {</span>
-<span class="source-line-no">071</span><span id="line-71">        byte[] cargo = new byte[22];</span>
-<span class="source-line-no">072</span><span id="line-72">        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), pumpChallengeHash), 0, cargo, 0, 22);</span>
+<span class="source-line-no">028</span><span id="line-28"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
+<span class="source-line-no">029</span><span id="line-29"> * connection initialization as part of performing the initial pump pairing process.</span>
+<span class="source-line-no">030</span><span id="line-30"> *</span>
+<span class="source-line-no">031</span><span id="line-31"> * </span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;18&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;22&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.authentication.AbstractPumpChallengeResponse}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;/table&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> */@MessageProps(</span>
+<span class="source-line-no">041</span><span id="line-41">    opCode=18,</span>
+<span class="source-line-no">042</span><span id="line-42">    size=22,</span>
+<span class="source-line-no">043</span><span id="line-43">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">044</span><span id="line-44">    characteristic=Characteristic.AUTHORIZATION,</span>
+<span class="source-line-no">045</span><span id="line-45">    response=PumpChallengeResponse.class</span>
+<span class="source-line-no">046</span><span id="line-46">)</span>
+<span class="source-line-no">047</span><span id="line-47">public class PumpChallengeRequest extends Message {</span>
+<span class="source-line-no">048</span><span id="line-48">    private int appInstanceId;</span>
+<span class="source-line-no">049</span><span id="line-49">    private byte[] pumpChallengeHash;</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">    public PumpChallengeRequest() {}</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    public PumpChallengeRequest(int appInstanceId, byte[] pumpChallengeHash) {</span>
+<span class="source-line-no">054</span><span id="line-54">        parse(buildCargo(appInstanceId, pumpChallengeHash));</span>
+<span class="source-line-no">055</span><span id="line-55">        Validate.isTrue(this.appInstanceId == appInstanceId);</span>
+<span class="source-line-no">056</span><span id="line-56">        Validate.isTrue(Arrays.equals(this.pumpChallengeHash, pumpChallengeHash));</span>
+<span class="source-line-no">057</span><span id="line-57">    }</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    public int getAppInstanceId() {</span>
+<span class="source-line-no">060</span><span id="line-60">        return appInstanceId;</span>
+<span class="source-line-no">061</span><span id="line-61">    }</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">    public byte[] getPumpChallengeHash() {</span>
+<span class="source-line-no">064</span><span id="line-64">        return pumpChallengeHash;</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    private static byte[] buildCargo(int appInstanceId, byte[] pumpChallengeHash) {</span>
+<span class="source-line-no">068</span><span id="line-68">        byte[] cargo = new byte[22];</span>
+<span class="source-line-no">069</span><span id="line-69">        System.arraycopy(Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), pumpChallengeHash), 0, cargo, 0, 22);</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">        return cargo;</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
 <span class="source-line-no">073</span><span id="line-73"></span>
-<span class="source-line-no">074</span><span id="line-74">        return cargo;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    /**</span>
-<span class="source-line-no">078</span><span id="line-78">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">079</span><span id="line-79">     * &lt;caption&gt;Parsed fields for PumpChallengeRequest:&lt;/caption&gt;</span>
-<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appInstanceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpChallengeHash&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 2, raw.length)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;/table&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     */</span>
-<span class="source-line-no">084</span><span id="line-84">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">085</span><span id="line-85">        this.cargo = raw;</span>
-<span class="source-line-no">086</span><span id="line-86">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</span>
-<span class="source-line-no">087</span><span id="line-87">        this.pumpChallengeHash = Arrays.copyOfRange(raw, 2, raw.length);</span>
-<span class="source-line-no">088</span><span id="line-88">    }</span>
-<span class="source-line-no">089</span><span id="line-89">}</span>
+<span class="source-line-no">074</span><span id="line-74">    /**</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;caption&gt;Parsed fields for PumpChallengeRequest:&lt;/caption&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appInstanceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;pumpChallengeHash&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 2, raw.length)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;/table&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     */</span>
+<span class="source-line-no">081</span><span id="line-81">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">082</span><span id="line-82">        this.cargo = raw;</span>
+<span class="source-line-no">083</span><span id="line-83">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</span>
+<span class="source-line-no">084</span><span id="line-84">        this.pumpChallengeHash = Arrays.copyOfRange(raw, 2, raw.length);</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86">}</span>
 
 
 

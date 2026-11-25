@@ -82,22 +82,18 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-46">CgmOutOfRangeAlertRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-43">CgmOutOfRangeAlertRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets the CGM out-of-range alert configuration.
+<div class="block">Request message for <a href="../../response/control/CgmOutOfRangeAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CgmOutOfRangeAlertResponse</code></a>, opCode -58, size 3.
+
+ <br>
+
+ Sets the CGM out-of-range alert configuration.
 
  Cargo layout (3 bytes, little-endian):
    [0]  enable      uint8  - 0=disabled, 1=enabled
    [1]  alertDelay  uint8  - delay before alert (minutes)
    [2]  bitmask     uint8  - change bitmask (bits: 0=enabled, 1=delayBeforeAlert)
-
-
-
- <br>
-
- Request message for <a href="../../response/control/CgmOutOfRangeAlertResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>CgmOutOfRangeAlertResponse</code></a>, opCode -58, size 3
-
- <br>
 
  
  <table border='1'>
@@ -204,13 +200,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmOutOfRangeAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-59">CgmOutOfRangeAlertRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-56">CgmOutOfRangeAlertRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(boolean,int,int)">
 <h3>CgmOutOfRangeAlertRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-61">CgmOutOfRangeAlertRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-58">CgmOutOfRangeAlertRequest</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
  int&nbsp;alertDelay,
  int&nbsp;bitmask)</span></div>
 </section>
@@ -226,7 +222,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(boolean,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-77">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-74">buildCargo</a></span><wbr><span class="parameters">(boolean&nbsp;enable,
  int&nbsp;alertDelay,
  int&nbsp;bitmask)</span></div>
 <div class="block"><table border="1">
@@ -241,7 +237,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-93">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-90">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmOutOfRangeAlertRequest:</caption>
  <tr><td><code>enable</code></td><td><code>(raw[0] &amp; 0xFF) != 0</code></td></tr>
@@ -257,19 +253,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isEnable()">
 <h3>isEnable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-102">isEnable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-99">isEnable</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAlertDelay()">
 <h3>getAlertDelay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-106">getAlertDelay</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-103">getAlertDelay</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBitmask()">
 <h3>getBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-110">getBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/CgmOutOfRangeAlertRequest.html#line-107">getBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

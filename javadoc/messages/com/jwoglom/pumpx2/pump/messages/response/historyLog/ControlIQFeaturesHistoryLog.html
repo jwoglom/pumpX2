@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-29">ControlIQFeaturesHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-58">ControlIQFeaturesHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">The pump's Control-IQ feature bitmask: the value <a href="../currentStatus/PumpFeaturesV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response</code></a> returns for
+<div class="block">History log record Control-IQ Features, opCode 328, size 26.
+
+ <br>
+
+ The pump's Control-IQ feature bitmask: the value <a href="../currentStatus/PumpFeaturesV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response</code></a> returns for
  <a href="../currentStatus/PumpFeaturesV2Response.SupportedFeatureIndex.html#CONTROL_IQ_FEATURES"><code>PumpFeaturesV2Response.SupportedFeatureIndex.CONTROL_IQ_FEATURES</code></a>, or 0 on firmware that
  does not support that index. It is fixed by the firmware, not by settings: 0 on t:slim X2 API 2.5
  and Mobi 7.6.0.3, 49 on t:slim X2 API 3.2/3.4, 3072 on Mobi 7.7.0.1 and 896 on Mobi 7.9.0.1 and
@@ -99,7 +103,14 @@ loadScripts(document, 'script');</script>
 
  <p>The class name is provisional: opcode 328 is not in Tandem's cloud event schema or the Mobi
  app's history log list. Bytes 14-25 have been zero in every record and are exposed raw.
- See https://github.com/jwoglom/pumpx2/issues/152.</div>
+ See https://github.com/jwoglom/pumpx2/issues/152.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>328</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control-IQ Features"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -202,13 +213,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlIQFeaturesHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-38">ControlIQFeaturesHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-67">ControlIQFeaturesHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,byte[])">
 <h3>ControlIQFeaturesHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-39">ControlIQFeaturesHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-68">ControlIQFeaturesHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;controlIqFeaturesBitmask,
  byte[]&nbsp;unknownTail)</span></div>
@@ -217,7 +228,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long)">
 <h3>ControlIQFeaturesHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-46">ControlIQFeaturesHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-75">ControlIQFeaturesHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;controlIqFeaturesBitmask)</span></div>
 </section>
@@ -233,7 +244,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-50">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-79">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -243,7 +254,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-90">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlIQFeaturesHistoryLog:</caption>
  <tr><td><code>controlIqFeaturesBitmask</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -258,7 +269,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-69">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;controlIqFeaturesBitmask,
  byte[]&nbsp;unknownTail)</span></div>
@@ -267,7 +278,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getControlIqFeaturesBitmask()">
 <h3>getControlIqFeaturesBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-85">getControlIqFeaturesBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-114">getControlIqFeaturesBitmask</a></span>()</div>
 <div class="block">Only the low 16 bits have ever been set: 0, 49 (bits 0, 4, 5), 3072 (bits 10, 11) or 896
  (bits 7, 8, 9) observed.</div>
 <dl class="notes">
@@ -279,7 +290,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getControlIqFeatures()">
 <h3>getControlIqFeatures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV2Response.ControlIqFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV2Response.ControlIqFeatureType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-97">getControlIqFeatures</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../currentStatus/PumpFeaturesV2Response.ControlIqFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">PumpFeaturesV2Response.ControlIqFeatureType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-126">getControlIqFeatures</a></span>()</div>
 <div class="block">The bits of <a href="#getControlIqFeaturesBitmask()"><code>getControlIqFeaturesBitmask()</code></a> that pumpX2 has names for. The names come
  from <a href="../currentStatus/PumpFeaturesV2Response.ControlIqFeatureType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>PumpFeaturesV2Response.ControlIqFeatureType</code></a> and are not confirmed by this record;
  bits 4, 5, 7 and 10, which are set on some firmware, have no name and appear only in the raw
@@ -293,7 +304,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownTail()">
 <h3>getUnknownTail</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-104">getUnknownTail</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQFeaturesHistoryLog.html#line-133">getUnknownTail</a></span>()</div>
 <div class="block">Bytes 14-25, all zero in every observed record (81/81).</div>
 </section>
 </li>

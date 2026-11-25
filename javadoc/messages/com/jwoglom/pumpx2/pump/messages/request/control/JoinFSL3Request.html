@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-66">JoinFSL3Request</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-63">JoinFSL3Request</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Instructs the pump to join (pair with) a FreeStyle Libre 3 CGM sensor.
+<div class="block">Request message for <a href="../../response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>JoinFSL3Response</code></a>, opCode 120, size 36.
+
+ <br>
+
+ Instructs the pump to join (pair with) a FreeStyle Libre 3 CGM sensor.
 
  The phone performs the NFC activation of the sensor and then hands the pump the
  information it needs to establish its own BLE session with the sensor.
@@ -99,14 +103,6 @@ loadScripts(document, 'script');</script>
    offset 28 (8 bytes): nfcUid                 - sensor NFC UID
 
  Derived from the decompiled t:connect Android app (JoinFSL3Request, opcode 120).
-
-
-
- <br>
-
- Request message for <a href="../../response/control/JoinFSL3Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>JoinFSL3Response</code></a>, opCode 120, size 36
-
- <br>
 
  
  <table border='1'>
@@ -235,13 +231,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>JoinFSL3Request</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-83">JoinFSL3Request</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-80">JoinFSL3Request</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[],byte[],byte[],byte[],int,byte[],byte[])">
 <h3>JoinFSL3Request</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-85">JoinFSL3Request</a></span><wbr><span class="parameters">(byte[]&nbsp;bleAddress,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-82">JoinFSL3Request</a></span><wbr><span class="parameters">(byte[]&nbsp;bleAddress,
  byte[]&nbsp;sensorCode,
  byte[]&nbsp;activationTime,
  byte[]&nbsp;firmwareVersion,
@@ -261,7 +257,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-116">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-113">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for JoinFSL3Request:</caption>
  <tr><td><code>bleAddress</code></td><td><code>Arrays.copyOfRange(raw, 0, 6)</code></td></tr>
@@ -281,7 +277,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(byte[],byte[],byte[],byte[],int,byte[],byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-136">buildCargo</a></span><wbr><span class="parameters">(byte[]&nbsp;bleAddress,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-133">buildCargo</a></span><wbr><span class="parameters">(byte[]&nbsp;bleAddress,
  byte[]&nbsp;sensorCode,
  byte[]&nbsp;activationTime,
  byte[]&nbsp;firmwareVersion,
@@ -298,43 +294,43 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBleAddress()">
 <h3>getBleAddress</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-160">getBleAddress</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-157">getBleAddress</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSensorCode()">
 <h3>getSensorCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-164">getSensorCode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-161">getSensorCode</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getActivationTime()">
 <h3>getActivationTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-168">getActivationTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-165">getActivationTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirmwareVersion()">
 <h3>getFirmwareVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-172">getFirmwareVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-169">getFirmwareVersion</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getWarmupTime()">
 <h3>getWarmupTime</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-176">getWarmupTime</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-173">getWarmupTime</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCompressedSerialNumber()">
 <h3>getCompressedSerialNumber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-180">getCompressedSerialNumber</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-177">getCompressedSerialNumber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNfcUid()">
 <h3>getNfcUid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-184">getNfcUid</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/JoinFSL3Request.html#line-181">getNfcUid</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-50">SetBgReminderRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-47">SetBgReminderRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sets a blood glucose reminder configuration.
+<div class="block">Request message for <a href="../../response/control/SetBgReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetBgReminderResponse</code></a>, opCode -40, size 9.
+
+ <br>
+
+ Sets a blood glucose reminder configuration.
 
  Cargo layout (9 bytes, little-endian):
    [0]   reminderType        uint8   - 0=HIGH, 1=LOW, 2=AFTER_BOLUS
@@ -92,14 +96,6 @@ loadScripts(document, 'script');</script>
    [2-3] reminderThreshold   uint16  - BG threshold in mg/dL
    [4-7] reminderMinutes     uint32  - reminder time in minutes
    [8]   bitmask             uint8   - change bitmask (bits: 0=enabled, 1=threshold, 2=minutes)
-
-
-
- <br>
-
- Request message for <a href="../../response/control/SetBgReminderResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>SetBgReminderResponse</code></a>, opCode -40, size 9
-
- <br>
 
  
  <table border='1'>
@@ -239,7 +235,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="REMINDER_TYPE_HIGH">
 <h3>REMINDER_TYPE_HIGH</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-60">REMINDER_TYPE_HIGH</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-57">REMINDER_TYPE_HIGH</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -253,7 +249,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="REMINDER_TYPE_LOW">
 <h3>REMINDER_TYPE_LOW</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-61">REMINDER_TYPE_LOW</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-58">REMINDER_TYPE_LOW</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -267,7 +263,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="REMINDER_TYPE_AFTER_BOLUS">
 <h3>REMINDER_TYPE_AFTER_BOLUS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-62">REMINDER_TYPE_AFTER_BOLUS</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-59">REMINDER_TYPE_AFTER_BOLUS</a></span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -289,13 +285,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>SetBgReminderRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-70">SetBgReminderRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-67">SetBgReminderRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,boolean,int,long,int)">
 <h3>SetBgReminderRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-72">SetBgReminderRequest</a></span><wbr><span class="parameters">(int&nbsp;reminderType,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-69">SetBgReminderRequest</a></span><wbr><span class="parameters">(int&nbsp;reminderType,
  boolean&nbsp;enabledBGReminder,
  int&nbsp;reminderThreshold,
  long&nbsp;reminderMinutes,
@@ -313,7 +309,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,boolean,int,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-96">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;reminderType,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-93">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;reminderType,
  boolean&nbsp;enabledBGReminder,
  int&nbsp;reminderThreshold,
  long&nbsp;reminderMinutes,
@@ -336,7 +332,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-116">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-113">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for SetBgReminderRequest:</caption>
  <tr><td><code>reminderType</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -354,31 +350,31 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getReminderType()">
 <h3>getReminderType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-127">getReminderType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-124">getReminderType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isEnabledBGReminder()">
 <h3>isEnabledBGReminder</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-131">isEnabledBGReminder</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-128">isEnabledBGReminder</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getReminderThreshold()">
 <h3>getReminderThreshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-135">getReminderThreshold</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-132">getReminderThreshold</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getReminderMinutes()">
 <h3>getReminderMinutes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-139">getReminderMinutes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-136">getReminderMinutes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBitmask()">
 <h3>getBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-143">getBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/SetBgReminderRequest.html#line-140">getBitmask</a></span>()</div>
 </section>
 </li>
 </ul>

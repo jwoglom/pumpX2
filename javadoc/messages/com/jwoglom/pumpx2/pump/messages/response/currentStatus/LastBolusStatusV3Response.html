@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-102">LastBolusStatusV3Response</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-99">LastBolusStatusV3Response</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Represents the last bolus status, version C. Contains both standard and extended bolus info.
+<div class="block">Response message for <a href="../../request/currentStatus/LastBolusStatusV3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBolusStatusV3Request</code></a>, opCode -69, size 53.
+
+ <br>
+
+ Represents the last bolus status, version C. Contains both standard and extended bolus info.
 
  Binary layout (53 bytes total):
    byte  0      : lastBolusTypeBitmask (uint8, bit0=standard present, bit1=extended present)
@@ -115,14 +119,6 @@ loadScripts(document, 'script');</script>
 
  Compared to <a href="LastBolusStatusV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>LastBolusStatusV2Response</code></a>, this response contains info for both
  a standard bolus and an extended bolus, plus secondsSincePumpReset fields.
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/LastBolusStatusV3Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBolusStatusV3Request</code></a>, opCode -69, size 53
-
- <br>
 
  
  <table border='1'>
@@ -385,13 +381,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>LastBolusStatusV3Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-141">LastBolusStatusV3Response</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-138">LastBolusStatusV3Response</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,byte[],long,long,int,int,int,long,long,int,int,byte[],long,long,int,int,int,long,long,long)">
 <h3>LastBolusStatusV3Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-143">LastBolusStatusV3Response</a></span><wbr><span class="parameters">(int&nbsp;lastBolusTypeBitmask,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-140">LastBolusStatusV3Response</a></span><wbr><span class="parameters">(int&nbsp;lastBolusTypeBitmask,
  int&nbsp;standardBolusStatusId,
  int&nbsp;standardBolusId,
  byte[]&nbsp;standardUnknown,
@@ -426,7 +422,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-213">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-210">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../Message.html#parse(byte%5B%5D)">parse</a></code>&nbsp;in class&nbsp;<code><a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></code></dd>
@@ -436,7 +432,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int,byte[],long,long,int,int,int,long,long,int,int,byte[],long,long,int,int,int,long,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-345">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;lastBolusTypeBitmask,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-342">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;lastBolusTypeBitmask,
  int&nbsp;standardBolusStatusId,
  int&nbsp;standardBolusId,
  byte[]&nbsp;standardUnknown,
@@ -516,7 +512,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLastBolusTypeBitmask()">
 <h3>getLastBolusTypeBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-398">getLastBolusTypeBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-395">getLastBolusTypeBitmask</a></span>()</div>
 <div class="block">Bitmask indicating which bolus types are present.
  Bit 0 = standard bolus present, bit 1 = extended bolus present.</div>
 </section>
@@ -524,7 +520,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isStandardBolusPresent()">
 <h3>isStandardBolusPresent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-403">isStandardBolusPresent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-400">isStandardBolusPresent</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if a standard bolus record is present</dd>
@@ -534,7 +530,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isExtendedBolusPresent()">
 <h3>isExtendedBolusPresent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-408">isExtendedBolusPresent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-405">isExtendedBolusPresent</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if an extended bolus record is present</dd>
@@ -544,151 +540,151 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStandardBolusStatusId()">
 <h3>getStandardBolusStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-414">getStandardBolusStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-411">getStandardBolusStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusId()">
 <h3>getStandardBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-418">getStandardBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-415">getStandardBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusTimestamp()">
 <h3>getStandardBolusTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-422">getStandardBolusTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-419">getStandardBolusTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusTimestampInstant()">
 <h3>getStandardBolusTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-426">getStandardBolusTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-423">getStandardBolusTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusDeliveredVolume()">
 <h3>getStandardBolusDeliveredVolume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-430">getStandardBolusDeliveredVolume</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-427">getStandardBolusDeliveredVolume</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusEndReasonId()">
 <h3>getStandardBolusEndReasonId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-434">getStandardBolusEndReasonId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-431">getStandardBolusEndReasonId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusSourceId()">
 <h3>getStandardBolusSourceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-438">getStandardBolusSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-435">getStandardBolusSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusSource()">
 <h3>getStandardBolusSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-442">getStandardBolusSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-439">getStandardBolusSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusTypeBitmask()">
 <h3>getStandardBolusTypeBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-446">getStandardBolusTypeBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-443">getStandardBolusTypeBitmask</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusTypes()">
 <h3>getStandardBolusTypes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-450">getStandardBolusTypes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-447">getStandardBolusTypes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusRequestedVolume()">
 <h3>getStandardBolusRequestedVolume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-454">getStandardBolusRequestedVolume</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-451">getStandardBolusRequestedVolume</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStandardBolusSecondsSincePumpReset()">
 <h3>getStandardBolusSecondsSincePumpReset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-458">getStandardBolusSecondsSincePumpReset</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-455">getStandardBolusSecondsSincePumpReset</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusStatusId()">
 <h3>getExtendedBolusStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-464">getExtendedBolusStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-461">getExtendedBolusStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusId()">
 <h3>getExtendedBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-468">getExtendedBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-465">getExtendedBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusTimestamp()">
 <h3>getExtendedBolusTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-472">getExtendedBolusTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-469">getExtendedBolusTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusTimestampInstant()">
 <h3>getExtendedBolusTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-476">getExtendedBolusTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-473">getExtendedBolusTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusDeliveredVolume()">
 <h3>getExtendedBolusDeliveredVolume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-480">getExtendedBolusDeliveredVolume</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-477">getExtendedBolusDeliveredVolume</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusEndReasonId()">
 <h3>getExtendedBolusEndReasonId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-484">getExtendedBolusEndReasonId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-481">getExtendedBolusEndReasonId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusSourceId()">
 <h3>getExtendedBolusSourceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-488">getExtendedBolusSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-485">getExtendedBolusSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusSource()">
 <h3>getExtendedBolusSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-492">getExtendedBolusSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../historyLog/BolusDeliveryHistoryLog.BolusSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-489">getExtendedBolusSource</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusTypeBitmask()">
 <h3>getExtendedBolusTypeBitmask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-496">getExtendedBolusTypeBitmask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-493">getExtendedBolusTypeBitmask</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusTypes()">
 <h3>getExtendedBolusTypes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-500">getExtendedBolusTypes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../historyLog/BolusDeliveryHistoryLog.BolusType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusDeliveryHistoryLog.BolusType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-497">getExtendedBolusTypes</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusRequestedVolume()">
 <h3>getExtendedBolusRequestedVolume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-504">getExtendedBolusRequestedVolume</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-501">getExtendedBolusRequestedVolume</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusSecondsSincePumpReset()">
 <h3>getExtendedBolusSecondsSincePumpReset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-508">getExtendedBolusSecondsSincePumpReset</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-505">getExtendedBolusSecondsSincePumpReset</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getExtendedBolusDuration()">
 <h3>getExtendedBolusDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-515">getExtendedBolusDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBolusStatusV3Response.html#line-512">getExtendedBolusDuration</a></span>()</div>
 <div class="block">Duration of the extended bolus in seconds.</div>
 </section>
 </li>

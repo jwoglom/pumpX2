@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-34">CgmStateChangeGxHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-72">CgmStateChangeGxHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">A step of the pump's Dexcom CGM session state machine: the session state before (byte 10) and
+<div class="block">History log record CGM State Change, opCode 219, size 26.
+
+ <br>
+
+ A step of the pump's Dexcom CGM session state machine: the session state before (byte 10) and
  after (byte 14) the step and the event that caused it (byte 22). Seen on the t:slim X2 and the
  Tandem Mobi, with G6 and G7 sessions.
 
@@ -108,7 +112,14 @@ loadScripts(document, 'script');</script>
  <p>The class name and the state and event names are provisional. Opcode 219 is not in Tandem's
  cloud event schema or the Mobi app's history log list, where it is one of two unnamed ids (211
  and 219) in the block of Gx CGM records (210-220); it is written for G7 sessions too. Bytes
- 11-13, 15-21 and 23-25 were zero in all 20856 records observed and are exposed raw.</div>
+ 11-13, 15-21 and 23-25 were zero in all 20856 records observed and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>219</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"CGM State Change"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -282,13 +293,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmStateChangeGxHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-48">CgmStateChangeGxHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-86">CgmStateChangeGxHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int)">
 <h3>CgmStateChangeGxHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-49">CgmStateChangeGxHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-87">CgmStateChangeGxHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;previousStateId,
  int&nbsp;stateId,
@@ -298,7 +309,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,long,int)">
 <h3>CgmStateChangeGxHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-53">CgmStateChangeGxHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-91">CgmStateChangeGxHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;previousStateId,
  int&nbsp;stateId,
@@ -320,7 +331,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-65">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-103">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -330,7 +341,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-119">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmStateChangeGxHistoryLog:</caption>
  <tr><td><code>previousStateId</code></td><td><code>(int) (word10 &amp; 0xFF)</code></td></tr>
@@ -350,7 +361,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-97">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-135">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;previousStateId,
  int&nbsp;stateId,
@@ -360,7 +371,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-101">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-139">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;previousStateId,
  int&nbsp;stateId,
@@ -374,7 +385,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPreviousStateId()">
 <h3>getPreviousStateId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-117">getPreviousStateId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-155">getPreviousStateId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>raw byte 10: the session state before this step. It equalled the previous record's
@@ -386,13 +397,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPreviousState()">
 <h3>getPreviousState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.State.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.State</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-121">getPreviousState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.State.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.State</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-159">getPreviousState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStateId()">
 <h3>getStateId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-128">getStateId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-166">getStateId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>raw byte 14: the session state after this step</dd>
@@ -402,13 +413,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.State.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.State</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-132">getState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.State.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.State</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-170">getState</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEventId()">
 <h3>getEventId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-139">getEventId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-177">getEventId</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>raw byte 22: what caused this step</dd>
@@ -418,13 +429,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getEvent()">
 <h3>getEvent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.Event.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.Event</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-143">getEvent</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmStateChangeGxHistoryLog.Event.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmStateChangeGxHistoryLog.Event</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-181">getEvent</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isStateChange()">
 <h3>isStateChange</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-150">isStateChange</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-188">isStateChange</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the state changed in this step. Most records repeat the state.</dd>
@@ -434,7 +445,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-159">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-197">getUnknown11</a></span>()</div>
 <div class="block">Zero in every record observed.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -445,7 +456,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown15()">
 <h3>getUnknown15</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-168">getUnknown15</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-206">getUnknown15</a></span>()</div>
 <div class="block">Zero in every record observed.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -456,7 +467,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown18()">
 <h3>getUnknown18</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-177">getUnknown18</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-215">getUnknown18</a></span>()</div>
 <div class="block">Zero in every record observed.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -467,7 +478,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown23()">
 <h3>getUnknown23</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-186">getUnknown23</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmStateChangeGxHistoryLog.html#line-224">getUnknown23</a></span>()</div>
 <div class="block">Zero in every record observed.</div>
 <dl class="notes">
 <dt>Returns:</dt>

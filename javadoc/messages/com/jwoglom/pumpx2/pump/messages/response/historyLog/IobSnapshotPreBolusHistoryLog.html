@@ -82,16 +82,27 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-17">IobSnapshotPreBolusHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-38">IobSnapshotPreBolusHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">IOB snapshot written when a BLE, pump-UI or Control-IQ bolus is initiated, before the bolus
+<div class="block">History log record IOB Snapshot Before Bolus, opCode 206, size 26.
+
+ <br>
+
+ IOB snapshot written when a BLE, pump-UI or Control-IQ bolus is initiated, before the bolus
  is delivered; <a href="IobSnapshotPostBolusHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>IobSnapshotPostBolusHistoryLog</code></a> is its counterpart at completion.
 
  <p>Both IOB models the pump tracks are recorded, whichever one it displays. On pumps that
  answered ControlIQIOBRequest within 90 s of the record, <a href="#getMudaliarIob()"><code>getMudaliarIob()</code></a> equalled
  mudaliarIOB and <a href="#getSwan6hrIob()"><code>getSwan6hrIob()</code></a> equalled swan6hrIOB, to the milliunit. Tandem publishes
  no name for opcode 206, so this class name is provisional.
- See https://github.com/jwoglom/pumpX2/issues/143.</div>
+ See https://github.com/jwoglom/pumpX2/issues/143.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>206</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"IOB Snapshot Before Bolus"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -218,13 +229,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>IobSnapshotPreBolusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-30">IobSnapshotPreBolusHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-51">IobSnapshotPreBolusHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,float,float,float)">
 <h3>IobSnapshotPreBolusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-32">IobSnapshotPreBolusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-53">IobSnapshotPreBolusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -237,7 +248,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,float,float,float,int)">
 <h3>IobSnapshotPreBolusHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-36">IobSnapshotPreBolusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-57">IobSnapshotPreBolusHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -259,7 +270,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-47">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-68">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -269,7 +280,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-62">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-83">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for IobSnapshotPreBolusHistoryLog:</caption>
  <tr><td><code>bolusId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -288,7 +299,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,float,float,float,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-95">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;bolusId,
  int&nbsp;unknownU8At12,
@@ -302,13 +313,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-86">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-107">getBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUnknownU8At12()">
 <h3>getUnknownU8At12</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-94">getUnknownU8At12</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-115">getUnknownU8At12</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>byte 12. Meaning unknown: 1 on every Control-IQ-off pump observed, 3 on most
@@ -319,7 +330,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSelectedIob()">
 <h3>getSelectedIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-103">getSelectedIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-124">getSelectedIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the IOB model the pump displays: equal to
@@ -331,13 +342,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSelectedIobType()">
 <h3>getSelectedIobType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.SelectedIOBType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.SelectedIOBType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-107">getSelectedIobType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BolusRequestedMsg2HistoryLog.SelectedIOBType.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">BolusRequestedMsg2HistoryLog.SelectedIOBType</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-128">getSelectedIobType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMudaliarIob()">
 <h3>getMudaliarIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-116">getMudaliarIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-137">getMudaliarIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>IOB in units under the pump's Mudaliar model, whose decay follows the profile's
@@ -349,7 +360,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSwan6hrIob()">
 <h3>getSwan6hrIob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-125">getSwan6hrIob</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-146">getSwan6hrIob</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>IOB in units under the pump's Swan 6-hour model (ControlIQIOBResponse.swan6hrIOB).
@@ -361,7 +372,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownFloatAt22()">
 <h3>getUnknownFloatAt22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-135">getUnknownFloatAt22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/IobSnapshotPreBolusHistoryLog.html#line-156">getUnknownFloatAt22</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a third IOB-like value in units, of unidentified model. It is usually below

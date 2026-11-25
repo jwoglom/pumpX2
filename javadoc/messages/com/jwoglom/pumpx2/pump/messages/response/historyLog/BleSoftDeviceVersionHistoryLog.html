@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-25">BleSoftDeviceVersionHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-54">BleSoftDeviceVersionHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Version of the BLE SoftDevice (the Bluetooth stack on the pump's BLE processor), stored twice.
+<div class="block">History log record BLE SoftDevice Version, opCode 450, size 26.
+
+ <br>
+
+ Version of the BLE SoftDevice (the Bluetooth stack on the pump's BLE processor), stored twice.
  Bytes 10-17 and 18-25 each hold four uint16 values in the layout of bytes 0-7 of
  <a href="../currentStatus/BleSoftwareInfoResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>BleSoftwareInfoResponse</code></a>:
  softDeviceId, major, minor and bugfix version. In all 77 records from seven pumps (t:slim X2 on
@@ -99,7 +103,14 @@ loadScripts(document, 'script');</script>
  <a href="#isKnown()"><code>isKnown()</code></a>), and a filled-in 450 follows 2-3 seconds later.
 
  The class name is provisional: opcode 450 is not in Tandem's cloud event schema or the Mobi
- app's history log list.</div>
+ app's history log list.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>450</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"BLE SoftDevice Version"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -240,13 +251,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BleSoftDeviceVersionHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-40">BleSoftDeviceVersionHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-69">BleSoftDeviceVersionHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int)">
 <h3>BleSoftDeviceVersionHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-41">BleSoftDeviceVersionHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-70">BleSoftDeviceVersionHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;softDeviceId,
  int&nbsp;softDeviceMajorVersion,
@@ -269,7 +280,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-54">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-83">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -279,7 +290,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-71">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-100">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BleSoftDeviceVersionHistoryLog:</caption>
  <tr><td><code>softDeviceId</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -300,7 +311,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-85">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-114">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;softDeviceId,
  int&nbsp;softDeviceMajorVersion,
@@ -315,7 +326,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceId()">
 <h3>getSoftDeviceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-105">getSoftDeviceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-134">getSoftDeviceId</a></span>()</div>
 <div class="block">132 in every non-zero record; equals BleSoftwareInfoResponse.softDeviceId.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -326,7 +337,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceMajorVersion()">
 <h3>getSoftDeviceMajorVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-112">getSoftDeviceMajorVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-141">getSoftDeviceMajorVersion</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice major version from the first block (uint16 at offset 12)</dd>
@@ -336,7 +347,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceMinorVersion()">
 <h3>getSoftDeviceMinorVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-119">getSoftDeviceMinorVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-148">getSoftDeviceMinorVersion</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice minor version from the first block (uint16 at offset 14)</dd>
@@ -346,7 +357,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceBugfixVersion()">
 <h3>getSoftDeviceBugfixVersion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-126">getSoftDeviceBugfixVersion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-155">getSoftDeviceBugfixVersion</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice bugfix version from the first block (uint16 at offset 16)</dd>
@@ -356,7 +367,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceId2()">
 <h3>getSoftDeviceId2</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-136">getSoftDeviceId2</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-165">getSoftDeviceId2</a></span>()</div>
 <div class="block">Second block, same layout as the first; equal to it in every observed record. Its meaning
  is unknown.</div>
 <dl class="notes">
@@ -368,7 +379,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceMajorVersion2()">
 <h3>getSoftDeviceMajorVersion2</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-143">getSoftDeviceMajorVersion2</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-172">getSoftDeviceMajorVersion2</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice major version from the second block (uint16 at offset 20)</dd>
@@ -378,7 +389,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceMinorVersion2()">
 <h3>getSoftDeviceMinorVersion2</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-150">getSoftDeviceMinorVersion2</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-179">getSoftDeviceMinorVersion2</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice minor version from the second block (uint16 at offset 22)</dd>
@@ -388,7 +399,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSoftDeviceBugfixVersion2()">
 <h3>getSoftDeviceBugfixVersion2</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-157">getSoftDeviceBugfixVersion2</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-186">getSoftDeviceBugfixVersion2</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the SoftDevice bugfix version from the second block (uint16 at offset 24)</dd>
@@ -398,7 +409,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isKnown()">
 <h3>isKnown</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-168">isKnown</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-197">isKnown</a></span>()</div>
 <div class="block">False for an all-zero record: a Mobi writes one when it records the NewDay block during a
  restart, before the BLE processor has reported its versions. The filled-in record follows a
  few seconds later. Treat an all-zero record as "not yet known", not as version 0.0.0.</div>
@@ -411,7 +422,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getVersionString()">
 <h3>getVersionString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-177">getVersionString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-206">getVersionString</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the first block's version as "major.minor.bugfix" (e.g. "7.2.0"), or null if the
@@ -422,7 +433,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getVersionString2()">
 <h3>getVersionString2</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-185">getVersionString2</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BleSoftDeviceVersionHistoryLog.html#line-214">getVersionString2</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the second block's version as "major.minor.bugfix" (e.g. "7.2.0"), or null if the

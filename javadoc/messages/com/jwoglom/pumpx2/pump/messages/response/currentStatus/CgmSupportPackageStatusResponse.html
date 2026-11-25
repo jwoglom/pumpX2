@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-50">CgmSupportPackageStatusResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-47">CgmSupportPackageStatusResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Response to CgmSupportPackageStatusRequest.
+<div class="block">Response message for <a href="../../request/currentStatus/CgmSupportPackageStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmSupportPackageStatusRequest</code></a>, opCode -55, size 2.
+
+ <br>
+
+ Response to CgmSupportPackageStatusRequest.
 
  Binary layout (2 bytes total):
    offset 0 (1 byte): status        - 0 = ACK/success, 1 = NACK/failure
@@ -92,14 +96,6 @@ loadScripts(document, 'script');</script>
 
  The Tandem app reads byte[0] as ResponseStatus (ACK=0, NACK=1) and
  byte[1] as a boolean validity flag via Byte_ExtKt.readBoolean (nonzero = true).
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/CgmSupportPackageStatusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CgmSupportPackageStatusRequest</code></a>, opCode -55, size 2
-
- <br>
 
  
  <table border='1'>
@@ -202,13 +198,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmSupportPackageStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-62">CgmSupportPackageStatusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-59">CgmSupportPackageStatusResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,boolean)">
 <h3>CgmSupportPackageStatusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-64">CgmSupportPackageStatusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-61">CgmSupportPackageStatusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
  boolean&nbsp;validity)</span></div>
 </section>
 </li>
@@ -223,7 +219,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-77">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-74">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmSupportPackageStatusResponse:</caption>
  <tr><td><code>status</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -238,7 +234,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,boolean)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-92">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-89">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
  boolean&nbsp;validity)</span></div>
 <div class="block"><table border="1">
  <caption>Byte layout for CgmSupportPackageStatusResponse.buildCargo(...):</caption>
@@ -251,7 +247,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-101">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-98">getStatus</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the raw status byte: 0 = ACK (success), 1 = NACK (failure)</dd>
@@ -261,7 +257,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isSuccess()">
 <h3>isSuccess</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-108">isSuccess</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-105">isSuccess</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the status is ACK (success), false if NACK</dd>
@@ -271,7 +267,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getValidity()">
 <h3>getValidity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-116">getValidity</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CgmSupportPackageStatusResponse.html#line-113">getValidity</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the CGM support package is valid (byte[1] nonzero),

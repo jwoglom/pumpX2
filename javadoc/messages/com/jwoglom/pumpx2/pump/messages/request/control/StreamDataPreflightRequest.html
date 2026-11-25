@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-55">StreamDataPreflightRequest</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-52">StreamDataPreflightRequest</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Sends a preflight request before streaming CGM data.
+<div class="block">Request message for <a href="../../response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StreamDataPreflightResponse</code></a>, opCode -126, size 3.
+
+ <br>
+
+ Sends a preflight request before streaming CGM data.
 
  Cargo layout (3 + N bytes):
    raw[0]:   streamType (uint8, PreflightStreamType ordinal)
@@ -93,14 +97,6 @@ loadScripts(document, 'script');</script>
 
  Derived from the decompiled Tandem Mobi Android app:
    StreamDataPreflightRequest$StreamDataPreflightRequestCargo
-
-
-
- <br>
-
- Request message for <a href="../../response/control/StreamDataPreflightResponse.html" title="class in com.jwoglom.pumpx2.pump.messages.response.control"><code>StreamDataPreflightResponse</code></a>, opCode -126, size 3
-
- <br>
 
  
  <table border='1'>
@@ -209,13 +205,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>StreamDataPreflightRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-71">StreamDataPreflightRequest</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-68">StreamDataPreflightRequest</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,byte[])">
 <h3>StreamDataPreflightRequest</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-73">StreamDataPreflightRequest</a></span><wbr><span class="parameters">(int&nbsp;streamType,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-70">StreamDataPreflightRequest</a></span><wbr><span class="parameters">(int&nbsp;streamType,
  int&nbsp;length,
  byte[]&nbsp;hmac)</span></div>
 </section>
@@ -231,7 +227,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-88">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-85">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for StreamDataPreflightRequest:</caption>
  <tr><td><code>streamType</code></td><td><code>raw[0] &amp; 0xFF</code></td></tr>
@@ -247,7 +243,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-105">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;streamType,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-102">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;streamType,
  int&nbsp;length,
  byte[]&nbsp;hmac)</span></div>
 <div class="block"><table border="1">
@@ -262,19 +258,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStreamType()">
 <h3>getStreamType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-113">getStreamType</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-110">getStreamType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLength()">
 <h3>getLength</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-117">getLength</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-114">getLength</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHmac()">
 <h3>getHmac</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-121">getHmac</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/request/control/StreamDataPreflightRequest.html#line-118">getHmac</a></span>()</div>
 </section>
 </li>
 </ul>

@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-17">BatteryHourlyHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-37">BatteryHourlyHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Battery snapshot the Tandem Mobi writes once an hour, at a fixed minute that drifts slowly and
+<div class="block">History log record Battery Hourly, opCode 271, size 26.
+
+ <br>
+
+ Battery snapshot the Tandem Mobi writes once an hour, at a fixed minute that drifts slowly and
  differs between pumps (it is not aligned to the clock hour). Not seen on the t:slim X2.
 
  The class name is provisional: opcode 271 is not in Tandem's cloud event schema or the Mobi
@@ -92,8 +96,12 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code>CurrentBatteryV2Response</code></a></li>
+<ul class="see-list-long">
+<li><a href="../currentStatus/CurrentBatteryV2Response.html" title="class in com.jwoglom.pumpx2.pump.messages.response.currentStatus"><code><table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>271</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Battery Hourly"</code>&nbsp;</td></tr>
+ </table></code></a></li>
 </ul>
 </dd>
 </dl>
@@ -241,13 +249,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>BatteryHourlyHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-32">BatteryHourlyHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-52">BatteryHourlyHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,int,int,int,int,int)">
 <h3>BatteryHourlyHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-33">BatteryHourlyHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-53">BatteryHourlyHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentBatteryIbc,
  int&nbsp;unknown12,
@@ -270,7 +278,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-46">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-66">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -280,7 +288,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-63">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-83">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for BatteryHourlyHistoryLog:</caption>
  <tr><td><code>currentBatteryIbc</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -301,7 +309,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,int,int,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-77">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-97">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;currentBatteryIbc,
  int&nbsp;unknown12,
@@ -316,7 +324,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getCurrentBatteryIbc()">
 <h3>getCurrentBatteryIbc</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-98">getCurrentBatteryIbc</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-118">getCurrentBatteryIbc</a></span>()</div>
 <div class="block">Equal to <a href="../currentStatus/CurrentBatteryV2Response.html#getCurrentBatteryIbc()"><code>CurrentBatteryV2Response.getCurrentBatteryIbc()</code></a> read within 15 minutes in
  319 of 320 checked records (two pumps): the pump-displayed battery percentage.</div>
 <dl class="notes">
@@ -328,7 +336,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown12()">
 <h3>getUnknown12</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-108">getUnknown12</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-128">getUnknown12</a></span>()</div>
 <div class="block">Not a constant. Usually 0x0128. Bit 0x0004 was set in 76 of 77 records at 30% or lower and
  in 1 record above that; the high byte was 0 or 2 only at 100%.</div>
 <dl class="notes">
@@ -340,7 +348,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getLipoMv()">
 <h3>getLipoMv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-118">getLipoMv</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-138">getLipoMv</a></span>()</div>
 <div class="block">Within 10 mV of <a href="../currentStatus/CurrentBatteryV2Response.html#getUnknown3()"><code>CurrentBatteryV2Response.getUnknown3()</code></a> read in the same minutes in
  289 of 320 checked records, and close to <a href="DailyBasalHistoryLog.html#getLipoMv()"><code>DailyBasalHistoryLog.getLipoMv()</code></a>.</div>
 <dl class="notes">
@@ -352,7 +360,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown16()">
 <h3>getUnknown16</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-129">getUnknown16</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-149">getUnknown16</a></span>()</div>
 <div class="block">Signed. 0 in most records and -5 to -10 in some. Positive in 4 of 750 records; the one of
  those with live battery traffic was written while charging (+209, when
  <a href="../currentStatus/CurrentBatteryV2Response.html#getUnknown4()"><code>CurrentBatteryV2Response.getUnknown4()</code></a> read 207).</div>
@@ -365,7 +373,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown18()">
 <h3>getUnknown18</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-140">getUnknown18</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-160">getUnknown18</a></span>()</div>
 <div class="block">Tracks <a href="../currentStatus/CurrentBatteryV2Response.html#getUnknown2()"><code>CurrentBatteryV2Response.getUnknown2()</code></a>; 100 * unknown18 / unknown20 is within
  1 of <a href="../currentStatus/CurrentBatteryV2Response.html#getCurrentBatteryAbc()"><code>CurrentBatteryV2Response.getCurrentBatteryAbc()</code></a> in 319 of 320 checked records
  (2 in the other).</div>
@@ -378,7 +386,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown20()">
 <h3>getUnknown20</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-149">getUnknown20</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-169">getUnknown20</a></span>()</div>
 <div class="block">Tracks <a href="../currentStatus/CurrentBatteryV2Response.html#getUnknown1()"><code>CurrentBatteryV2Response.getUnknown1()</code></a> (about 143-159).</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -389,7 +397,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-158">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-178">getUnknown22</a></span>()</div>
 <div class="block">Same kind of value as <a href="#getUnknown18()"><code>getUnknown18()</code></a>, within 3 of it.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -400,7 +408,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown24()">
 <h3>getUnknown24</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-167">getUnknown24</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/BatteryHourlyHistoryLog.html#line-187">getUnknown24</a></span>()</div>
 <div class="block">Same kind of value as <a href="#getUnknown20()"><code>getUnknown20()</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>

@@ -28,110 +28,128 @@
 <span class="source-line-no">011</span><span id="line-11"> * them for is not known. Bytes 12-13 were zero in every record observed.</span>
 <span class="source-line-no">012</span><span id="line-12"> * See https://github.com/jwoglom/pumpX2/issues/144.</span>
 <span class="source-line-no">013</span><span id="line-13"> */</span>
-<span class="source-line-no">014</span><span id="line-14">@HistoryLogProps(</span>
-<span class="source-line-no">015</span><span id="line-15">    opCode = 194,</span>
-<span class="source-line-no">016</span><span id="line-16">    displayName = "Bolus Delivery Summary"</span>
-<span class="source-line-no">017</span><span id="line-17">)</span>
-<span class="source-line-no">018</span><span id="line-18">public class BolusDeliverySummaryHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    private int unknownU8At10;</span>
-<span class="source-line-no">021</span><span id="line-21">    private int unknownU8At11;</span>
-<span class="source-line-no">022</span><span id="line-22">    private float unknownFloatAt14;</span>
-<span class="source-line-no">023</span><span id="line-23">    private float unknownFloatAt18;</span>
-<span class="source-line-no">024</span><span id="line-24">    private float unknownFloatAt22;</span>
-<span class="source-line-no">025</span><span id="line-25"></span>
-<span class="source-line-no">026</span><span id="line-26">    public BolusDeliverySummaryHistoryLog() {}</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    public BolusDeliverySummaryHistoryLog(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22) {</span>
-<span class="source-line-no">029</span><span id="line-29">        this(pumpTimeSec, sequenceNum, unknownU8At10, unknownU8At11, unknownFloatAt14, unknownFloatAt18, unknownFloatAt22, 0);</span>
-<span class="source-line-no">030</span><span id="line-30">    }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">    public BolusDeliverySummaryHistoryLog(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22, int headerHighNibble) {</span>
-<span class="source-line-no">033</span><span id="line-33">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">034</span><span id="line-34">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, unknownU8At10, unknownU8At11, unknownFloatAt14, unknownFloatAt18, unknownFloatAt22, headerHighNibble);</span>
-<span class="source-line-no">035</span><span id="line-35">        this.unknownU8At10 = unknownU8At10;</span>
-<span class="source-line-no">036</span><span id="line-36">        this.unknownU8At11 = unknownU8At11;</span>
-<span class="source-line-no">037</span><span id="line-37">        this.unknownFloatAt14 = unknownFloatAt14;</span>
-<span class="source-line-no">038</span><span id="line-38">        this.unknownFloatAt18 = unknownFloatAt18;</span>
-<span class="source-line-no">039</span><span id="line-39">        this.unknownFloatAt22 = unknownFloatAt22;</span>
-<span class="source-line-no">040</span><span id="line-40">    }</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">    public int typeId() {</span>
-<span class="source-line-no">043</span><span id="line-43">        return 194;</span>
-<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">/**</span>
+<span class="source-line-no">016</span><span id="line-16"> * History log record Bolus Delivery Summary, opCode 194, size 26.</span>
+<span class="source-line-no">017</span><span id="line-17"> *</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;br&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> *</span>
+<span class="source-line-no">020</span><span id="line-20"> * Written as each bolus completes, just before {@link BolusIobEntryHistoryLog} (opcode 195), on</span>
+<span class="source-line-no">021</span><span id="line-21"> * t:slim X2 and Mobi. Tandem publishes no name for opcode 194, so this class name is provisional,</span>
+<span class="source-line-no">022</span><span id="line-22"> * and every payload field is exposed raw: the relations below are exact, but what the pump uses</span>
+<span class="source-line-no">023</span><span id="line-23"> * them for is not known. Bytes 12-13 were zero in every record observed.</span>
+<span class="source-line-no">024</span><span id="line-24"> * See https://github.com/jwoglom/pumpX2/issues/144.</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"> * </span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;194&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Bolus Delivery Summary"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;/table&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> */@HistoryLogProps(</span>
+<span class="source-line-no">033</span><span id="line-33">    opCode = 194,</span>
+<span class="source-line-no">034</span><span id="line-34">    displayName = "Bolus Delivery Summary"</span>
+<span class="source-line-no">035</span><span id="line-35">)</span>
+<span class="source-line-no">036</span><span id="line-36">public class BolusDeliverySummaryHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">    private int unknownU8At10;</span>
+<span class="source-line-no">039</span><span id="line-39">    private int unknownU8At11;</span>
+<span class="source-line-no">040</span><span id="line-40">    private float unknownFloatAt14;</span>
+<span class="source-line-no">041</span><span id="line-41">    private float unknownFloatAt18;</span>
+<span class="source-line-no">042</span><span id="line-42">    private float unknownFloatAt22;</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public BolusDeliverySummaryHistoryLog() {}</span>
 <span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    /**</span>
-<span class="source-line-no">047</span><span id="line-47">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">048</span><span id="line-48">     * &lt;caption&gt;Parsed fields for BolusDeliverySummaryHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">049</span><span id="line-49">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At10&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">050</span><span id="line-50">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At11&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">051</span><span id="line-51">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt14&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt18&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt22&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;/table&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     */</span>
-<span class="source-line-no">056</span><span id="line-56">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">057</span><span id="line-57">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">058</span><span id="line-58">        this.cargo = raw;</span>
-<span class="source-line-no">059</span><span id="line-59">        parseBase(raw);</span>
-<span class="source-line-no">060</span><span id="line-60">        this.unknownU8At10 = raw[10] &amp; 0xFF;</span>
-<span class="source-line-no">061</span><span id="line-61">        this.unknownU8At11 = raw[11] &amp; 0xFF;</span>
-<span class="source-line-no">062</span><span id="line-62">        this.unknownFloatAt14 = Bytes.readFloat(raw, 14);</span>
-<span class="source-line-no">063</span><span id="line-63">        this.unknownFloatAt18 = Bytes.readFloat(raw, 18);</span>
-<span class="source-line-no">064</span><span id="line-64">        this.unknownFloatAt22 = Bytes.readFloat(raw, 22);</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22, int headerHighNibble) {</span>
-<span class="source-line-no">068</span><span id="line-68">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">069</span><span id="line-69">            HistoryLog.typeIdBytes(194, headerHighNibble),</span>
-<span class="source-line-no">070</span><span id="line-70">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">071</span><span id="line-71">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">072</span><span id="line-72">            new byte[]{ (byte) unknownU8At10, (byte) unknownU8At11, 0, 0 },</span>
-<span class="source-line-no">073</span><span id="line-73">            Bytes.toFloat(unknownFloatAt14),</span>
-<span class="source-line-no">074</span><span id="line-74">            Bytes.toFloat(unknownFloatAt18),</span>
-<span class="source-line-no">075</span><span id="line-75">            Bytes.toFloat(unknownFloatAt22)));</span>
-<span class="source-line-no">076</span><span id="line-76">    }</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">    /**</span>
-<span class="source-line-no">079</span><span id="line-79">     * @return byte 10: the number of boluses, this one included, whose 194 records fall within</span>
-<span class="source-line-no">080</span><span id="line-80">     * roughly the last 60 minutes (the records they were summed from for</span>
-<span class="source-line-no">081</span><span id="line-81">     * {@link #getUnknownFloatAt22()}). The exact window edge could not be reproduced; records</span>
-<span class="source-line-no">082</span><span id="line-82">     * 60-61 minutes apart are sometimes in, sometimes out.</span>
-<span class="source-line-no">083</span><span id="line-83">     */</span>
-<span class="source-line-no">084</span><span id="line-84">    public int getUnknownU8At10() {</span>
-<span class="source-line-no">085</span><span id="line-85">        return unknownU8At10;</span>
-<span class="source-line-no">086</span><span id="line-86">    }</span>
-<span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">    /**</span>
-<span class="source-line-no">089</span><span id="line-89">     * @return byte 11: increments by one per bolus and wraps from 29 to 0</span>
-<span class="source-line-no">090</span><span id="line-90">     */</span>
-<span class="source-line-no">091</span><span id="line-91">    public int getUnknownU8At11() {</span>
-<span class="source-line-no">092</span><span id="line-92">        return unknownU8At11;</span>
-<span class="source-line-no">093</span><span id="line-93">    }</span>
-<span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">    /**</span>
-<span class="source-line-no">096</span><span id="line-96">     * @return ten times {@link BolusCompletedHistoryLog#getInsulinDelivered()} for this bolus</span>
-<span class="source-line-no">097</span><span id="line-97">     * (1.5 for a 0.15 U bolus), including partial and zero deliveries</span>
-<span class="source-line-no">098</span><span id="line-98">     */</span>
-<span class="source-line-no">099</span><span id="line-99">    public float getUnknownFloatAt14() {</span>
-<span class="source-line-no">100</span><span id="line-100">        return unknownFloatAt14;</span>
-<span class="source-line-no">101</span><span id="line-101">    }</span>
-<span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">    /**</span>
-<span class="source-line-no">104</span><span id="line-104">     * @return equal to {@link #getUnknownFloatAt14()} in every record observed</span>
-<span class="source-line-no">105</span><span id="line-105">     */</span>
-<span class="source-line-no">106</span><span id="line-106">    public float getUnknownFloatAt18() {</span>
-<span class="source-line-no">107</span><span id="line-107">        return unknownFloatAt18;</span>
-<span class="source-line-no">108</span><span id="line-108">    }</span>
-<span class="source-line-no">109</span><span id="line-109"></span>
-<span class="source-line-no">110</span><span id="line-110">    /**</span>
-<span class="source-line-no">111</span><span id="line-111">     * @return the sum of {@link #getUnknownFloatAt14()} over the boluses counted in</span>
-<span class="source-line-no">112</span><span id="line-112">     * {@link #getUnknownU8At10()}</span>
-<span class="source-line-no">113</span><span id="line-113">     */</span>
-<span class="source-line-no">114</span><span id="line-114">    public float getUnknownFloatAt22() {</span>
-<span class="source-line-no">115</span><span id="line-115">        return unknownFloatAt22;</span>
-<span class="source-line-no">116</span><span id="line-116">    }</span>
-<span class="source-line-no">117</span><span id="line-117">}</span>
+<span class="source-line-no">046</span><span id="line-46">    public BolusDeliverySummaryHistoryLog(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22) {</span>
+<span class="source-line-no">047</span><span id="line-47">        this(pumpTimeSec, sequenceNum, unknownU8At10, unknownU8At11, unknownFloatAt14, unknownFloatAt18, unknownFloatAt22, 0);</span>
+<span class="source-line-no">048</span><span id="line-48">    }</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">    public BolusDeliverySummaryHistoryLog(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22, int headerHighNibble) {</span>
+<span class="source-line-no">051</span><span id="line-51">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">052</span><span id="line-52">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, unknownU8At10, unknownU8At11, unknownFloatAt14, unknownFloatAt18, unknownFloatAt22, headerHighNibble);</span>
+<span class="source-line-no">053</span><span id="line-53">        this.unknownU8At10 = unknownU8At10;</span>
+<span class="source-line-no">054</span><span id="line-54">        this.unknownU8At11 = unknownU8At11;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.unknownFloatAt14 = unknownFloatAt14;</span>
+<span class="source-line-no">056</span><span id="line-56">        this.unknownFloatAt18 = unknownFloatAt18;</span>
+<span class="source-line-no">057</span><span id="line-57">        this.unknownFloatAt22 = unknownFloatAt22;</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    public int typeId() {</span>
+<span class="source-line-no">061</span><span id="line-61">        return 194;</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    /**</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;caption&gt;Parsed fields for BolusDeliverySummaryHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At10&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownU8At11&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt14&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt18&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;unknownFloatAt22&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;/table&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     */</span>
+<span class="source-line-no">074</span><span id="line-74">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">075</span><span id="line-75">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">076</span><span id="line-76">        this.cargo = raw;</span>
+<span class="source-line-no">077</span><span id="line-77">        parseBase(raw);</span>
+<span class="source-line-no">078</span><span id="line-78">        this.unknownU8At10 = raw[10] &amp; 0xFF;</span>
+<span class="source-line-no">079</span><span id="line-79">        this.unknownU8At11 = raw[11] &amp; 0xFF;</span>
+<span class="source-line-no">080</span><span id="line-80">        this.unknownFloatAt14 = Bytes.readFloat(raw, 14);</span>
+<span class="source-line-no">081</span><span id="line-81">        this.unknownFloatAt18 = Bytes.readFloat(raw, 18);</span>
+<span class="source-line-no">082</span><span id="line-82">        this.unknownFloatAt22 = Bytes.readFloat(raw, 22);</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int unknownU8At10, int unknownU8At11, float unknownFloatAt14, float unknownFloatAt18, float unknownFloatAt22, int headerHighNibble) {</span>
+<span class="source-line-no">086</span><span id="line-86">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">087</span><span id="line-87">            HistoryLog.typeIdBytes(194, headerHighNibble),</span>
+<span class="source-line-no">088</span><span id="line-88">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">089</span><span id="line-89">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">090</span><span id="line-90">            new byte[]{ (byte) unknownU8At10, (byte) unknownU8At11, 0, 0 },</span>
+<span class="source-line-no">091</span><span id="line-91">            Bytes.toFloat(unknownFloatAt14),</span>
+<span class="source-line-no">092</span><span id="line-92">            Bytes.toFloat(unknownFloatAt18),</span>
+<span class="source-line-no">093</span><span id="line-93">            Bytes.toFloat(unknownFloatAt22)));</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    /**</span>
+<span class="source-line-no">097</span><span id="line-97">     * @return byte 10: the number of boluses, this one included, whose 194 records fall within</span>
+<span class="source-line-no">098</span><span id="line-98">     * roughly the last 60 minutes (the records they were summed from for</span>
+<span class="source-line-no">099</span><span id="line-99">     * {@link #getUnknownFloatAt22()}). The exact window edge could not be reproduced; records</span>
+<span class="source-line-no">100</span><span id="line-100">     * 60-61 minutes apart are sometimes in, sometimes out.</span>
+<span class="source-line-no">101</span><span id="line-101">     */</span>
+<span class="source-line-no">102</span><span id="line-102">    public int getUnknownU8At10() {</span>
+<span class="source-line-no">103</span><span id="line-103">        return unknownU8At10;</span>
+<span class="source-line-no">104</span><span id="line-104">    }</span>
+<span class="source-line-no">105</span><span id="line-105"></span>
+<span class="source-line-no">106</span><span id="line-106">    /**</span>
+<span class="source-line-no">107</span><span id="line-107">     * @return byte 11: increments by one per bolus and wraps from 29 to 0</span>
+<span class="source-line-no">108</span><span id="line-108">     */</span>
+<span class="source-line-no">109</span><span id="line-109">    public int getUnknownU8At11() {</span>
+<span class="source-line-no">110</span><span id="line-110">        return unknownU8At11;</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    /**</span>
+<span class="source-line-no">114</span><span id="line-114">     * @return ten times {@link BolusCompletedHistoryLog#getInsulinDelivered()} for this bolus</span>
+<span class="source-line-no">115</span><span id="line-115">     * (1.5 for a 0.15 U bolus), including partial and zero deliveries</span>
+<span class="source-line-no">116</span><span id="line-116">     */</span>
+<span class="source-line-no">117</span><span id="line-117">    public float getUnknownFloatAt14() {</span>
+<span class="source-line-no">118</span><span id="line-118">        return unknownFloatAt14;</span>
+<span class="source-line-no">119</span><span id="line-119">    }</span>
+<span class="source-line-no">120</span><span id="line-120"></span>
+<span class="source-line-no">121</span><span id="line-121">    /**</span>
+<span class="source-line-no">122</span><span id="line-122">     * @return equal to {@link #getUnknownFloatAt14()} in every record observed</span>
+<span class="source-line-no">123</span><span id="line-123">     */</span>
+<span class="source-line-no">124</span><span id="line-124">    public float getUnknownFloatAt18() {</span>
+<span class="source-line-no">125</span><span id="line-125">        return unknownFloatAt18;</span>
+<span class="source-line-no">126</span><span id="line-126">    }</span>
+<span class="source-line-no">127</span><span id="line-127"></span>
+<span class="source-line-no">128</span><span id="line-128">    /**</span>
+<span class="source-line-no">129</span><span id="line-129">     * @return the sum of {@link #getUnknownFloatAt14()} over the boluses counted in</span>
+<span class="source-line-no">130</span><span id="line-130">     * {@link #getUnknownU8At10()}</span>
+<span class="source-line-no">131</span><span id="line-131">     */</span>
+<span class="source-line-no">132</span><span id="line-132">    public float getUnknownFloatAt22() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return unknownFloatAt22;</span>
+<span class="source-line-no">134</span><span id="line-134">    }</span>
+<span class="source-line-no">135</span><span id="line-135">}</span>
 
 
 

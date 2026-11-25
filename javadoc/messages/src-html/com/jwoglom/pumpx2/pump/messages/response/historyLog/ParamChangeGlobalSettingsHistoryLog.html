@@ -21,138 +21,152 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 74,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "Param Global Settings",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_PARAM_GLOBAL_SETTINGS",</span>
-<span class="source-line-no">011</span><span id="line-11">    usedByTidepool = true</span>
-<span class="source-line-no">012</span><span id="line-12">)</span>
-<span class="source-line-no">013</span><span id="line-13">public class ParamChangeGlobalSettingsHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">014</span><span id="line-14">    </span>
-<span class="source-line-no">015</span><span id="line-15">    private int modifiedData;</span>
-<span class="source-line-no">016</span><span id="line-16">    private int qbDataStatus;</span>
-<span class="source-line-no">017</span><span id="line-17">    private int qbActive;</span>
-<span class="source-line-no">018</span><span id="line-18">    private int qbDataEntryType;</span>
-<span class="source-line-no">019</span><span id="line-19">    private int qbIncrementUnits;</span>
-<span class="source-line-no">020</span><span id="line-20">    private int qbIncrementCarbs;</span>
-<span class="source-line-no">021</span><span id="line-21">    private int buttonVolume;</span>
-<span class="source-line-no">022</span><span id="line-22">    private int qbVolume;</span>
-<span class="source-line-no">023</span><span id="line-23">    private int bolusVolume;</span>
-<span class="source-line-no">024</span><span id="line-24">    private int reminderVolume;</span>
-<span class="source-line-no">025</span><span id="line-25">    private int alertVolume;</span>
-<span class="source-line-no">026</span><span id="line-26">    </span>
-<span class="source-line-no">027</span><span id="line-27">    public ParamChangeGlobalSettingsHistoryLog() {}</span>
-<span class="source-line-no">028</span><span id="line-28">    public ParamChangeGlobalSettingsHistoryLog(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
-<span class="source-line-no">029</span><span id="line-29">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">030</span><span id="line-30">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, modifiedData, qbDataStatus, qbActive, qbDataEntryType, qbIncrementUnits, qbIncrementCarbs, buttonVolume, qbVolume, bolusVolume, reminderVolume, alertVolume);</span>
-<span class="source-line-no">031</span><span id="line-31">        this.modifiedData = modifiedData;</span>
-<span class="source-line-no">032</span><span id="line-32">        this.qbDataStatus = qbDataStatus;</span>
-<span class="source-line-no">033</span><span id="line-33">        this.qbActive = qbActive;</span>
-<span class="source-line-no">034</span><span id="line-34">        this.qbDataEntryType = qbDataEntryType;</span>
-<span class="source-line-no">035</span><span id="line-35">        this.qbIncrementUnits = qbIncrementUnits;</span>
-<span class="source-line-no">036</span><span id="line-36">        this.qbIncrementCarbs = qbIncrementCarbs;</span>
-<span class="source-line-no">037</span><span id="line-37">        this.buttonVolume = buttonVolume;</span>
-<span class="source-line-no">038</span><span id="line-38">        this.qbVolume = qbVolume;</span>
-<span class="source-line-no">039</span><span id="line-39">        this.bolusVolume = bolusVolume;</span>
-<span class="source-line-no">040</span><span id="line-40">        this.reminderVolume = reminderVolume;</span>
-<span class="source-line-no">041</span><span id="line-41">        this.alertVolume = alertVolume;</span>
-<span class="source-line-no">042</span><span id="line-42">        </span>
-<span class="source-line-no">043</span><span id="line-43">    }</span>
-<span class="source-line-no">044</span><span id="line-44"></span>
-<span class="source-line-no">045</span><span id="line-45">    public ParamChangeGlobalSettingsHistoryLog(int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
-<span class="source-line-no">046</span><span id="line-46">        this(0, 0, modifiedData, qbDataStatus, qbActive, qbDataEntryType, qbIncrementUnits, qbIncrementCarbs, buttonVolume, qbVolume, bolusVolume, reminderVolume, alertVolume);</span>
-<span class="source-line-no">047</span><span id="line-47">    }</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">    public int typeId() {</span>
-<span class="source-line-no">050</span><span id="line-50">        return 74;</span>
-<span class="source-line-no">051</span><span id="line-51">    }</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">    /**</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;caption&gt;Parsed fields for ParamChangeGlobalSettingsHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modifiedData&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbDataStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbActive&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbDataEntryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbIncrementUnits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">061</span><span id="line-61">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbIncrementCarbs&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;buttonVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[20]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reminderVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[21]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alertVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;/table&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     */</span>
-<span class="source-line-no">069</span><span id="line-69">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">070</span><span id="line-70">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">071</span><span id="line-71">        this.cargo = raw;</span>
-<span class="source-line-no">072</span><span id="line-72">        parseBase(raw);</span>
-<span class="source-line-no">073</span><span id="line-73">        this.modifiedData = raw[10];</span>
-<span class="source-line-no">074</span><span id="line-74">        this.qbDataStatus = raw[11];</span>
-<span class="source-line-no">075</span><span id="line-75">        this.qbActive = raw[12];</span>
-<span class="source-line-no">076</span><span id="line-76">        this.qbDataEntryType = raw[13];</span>
-<span class="source-line-no">077</span><span id="line-77">        this.qbIncrementUnits = Bytes.readShort(raw, 14);</span>
-<span class="source-line-no">078</span><span id="line-78">        this.qbIncrementCarbs = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">079</span><span id="line-79">        this.buttonVolume = raw[18];</span>
-<span class="source-line-no">080</span><span id="line-80">        this.qbVolume = raw[19];</span>
-<span class="source-line-no">081</span><span id="line-81">        this.bolusVolume = raw[20];</span>
-<span class="source-line-no">082</span><span id="line-82">        this.reminderVolume = raw[21];</span>
-<span class="source-line-no">083</span><span id="line-83">        this.alertVolume = raw[22];</span>
-<span class="source-line-no">084</span><span id="line-84">        </span>
-<span class="source-line-no">085</span><span id="line-85">    }</span>
-<span class="source-line-no">086</span><span id="line-86"></span>
-<span class="source-line-no">087</span><span id="line-87">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
-<span class="source-line-no">088</span><span id="line-88">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">089</span><span id="line-89">            HistoryLog.typeIdBytes(74, 0),</span>
-<span class="source-line-no">090</span><span id="line-90">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">091</span><span id="line-91">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">092</span><span id="line-92">            new byte[]{ (byte) modifiedData }, </span>
-<span class="source-line-no">093</span><span id="line-93">            new byte[]{ (byte) qbDataStatus }, </span>
-<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) qbActive }, </span>
-<span class="source-line-no">095</span><span id="line-95">            new byte[]{ (byte) qbDataEntryType }, </span>
-<span class="source-line-no">096</span><span id="line-96">            Bytes.firstTwoBytesLittleEndian(qbIncrementUnits), </span>
-<span class="source-line-no">097</span><span id="line-97">            Bytes.firstTwoBytesLittleEndian(qbIncrementCarbs), </span>
-<span class="source-line-no">098</span><span id="line-98">            new byte[]{ (byte) buttonVolume }, </span>
-<span class="source-line-no">099</span><span id="line-99">            new byte[]{ (byte) qbVolume }, </span>
-<span class="source-line-no">100</span><span id="line-100">            new byte[]{ (byte) bolusVolume }, </span>
-<span class="source-line-no">101</span><span id="line-101">            new byte[]{ (byte) reminderVolume }, </span>
-<span class="source-line-no">102</span><span id="line-102">            new byte[]{ (byte) alertVolume }));</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104">    public int getModifiedData() {</span>
-<span class="source-line-no">105</span><span id="line-105">        return modifiedData;</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107">    public int getQbDataStatus() {</span>
-<span class="source-line-no">108</span><span id="line-108">        return qbDataStatus;</span>
-<span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110">    public int getQbActive() {</span>
-<span class="source-line-no">111</span><span id="line-111">        return qbActive;</span>
-<span class="source-line-no">112</span><span id="line-112">    }</span>
-<span class="source-line-no">113</span><span id="line-113">    public int getQbDataEntryType() {</span>
-<span class="source-line-no">114</span><span id="line-114">        return qbDataEntryType;</span>
-<span class="source-line-no">115</span><span id="line-115">    }</span>
-<span class="source-line-no">116</span><span id="line-116">    public int getQbIncrementUnits() {</span>
-<span class="source-line-no">117</span><span id="line-117">        return qbIncrementUnits;</span>
-<span class="source-line-no">118</span><span id="line-118">    }</span>
-<span class="source-line-no">119</span><span id="line-119">    public int getQbIncrementCarbs() {</span>
-<span class="source-line-no">120</span><span id="line-120">        return qbIncrementCarbs;</span>
-<span class="source-line-no">121</span><span id="line-121">    }</span>
-<span class="source-line-no">122</span><span id="line-122">    public int getButtonVolume() {</span>
-<span class="source-line-no">123</span><span id="line-123">        return buttonVolume;</span>
-<span class="source-line-no">124</span><span id="line-124">    }</span>
-<span class="source-line-no">125</span><span id="line-125">    public int getQbVolume() {</span>
-<span class="source-line-no">126</span><span id="line-126">        return qbVolume;</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128">    public int getBolusVolume() {</span>
-<span class="source-line-no">129</span><span id="line-129">        return bolusVolume;</span>
-<span class="source-line-no">130</span><span id="line-130">    }</span>
-<span class="source-line-no">131</span><span id="line-131">    public int getReminderVolume() {</span>
-<span class="source-line-no">132</span><span id="line-132">        return reminderVolume;</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134">    public int getAlertVolume() {</span>
-<span class="source-line-no">135</span><span id="line-135">        return alertVolume;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137">    </span>
-<span class="source-line-no">138</span><span id="line-138">}</span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * History log record Param Global Settings, opCode 74, size 26.</span>
+<span class="source-line-no">009</span><span id="line-9"> *</span>
+<span class="source-line-no">010</span><span id="line-10"> * &lt;br&gt;</span>
+<span class="source-line-no">011</span><span id="line-11"> *</span>
+<span class="source-line-no">012</span><span id="line-12"> * </span>
+<span class="source-line-no">013</span><span id="line-13"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;74&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Param Global Settings"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_PARAM_GLOBAL_SETTINGS"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;usedByTidepool&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;/table&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> */</span>
+<span class="source-line-no">021</span><span id="line-21">@HistoryLogProps(</span>
+<span class="source-line-no">022</span><span id="line-22">    opCode = 74,</span>
+<span class="source-line-no">023</span><span id="line-23">    displayName = "Param Global Settings",</span>
+<span class="source-line-no">024</span><span id="line-24">    internalName = "LID_PARAM_GLOBAL_SETTINGS",</span>
+<span class="source-line-no">025</span><span id="line-25">    usedByTidepool = true</span>
+<span class="source-line-no">026</span><span id="line-26">)</span>
+<span class="source-line-no">027</span><span id="line-27">public class ParamChangeGlobalSettingsHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">028</span><span id="line-28">    </span>
+<span class="source-line-no">029</span><span id="line-29">    private int modifiedData;</span>
+<span class="source-line-no">030</span><span id="line-30">    private int qbDataStatus;</span>
+<span class="source-line-no">031</span><span id="line-31">    private int qbActive;</span>
+<span class="source-line-no">032</span><span id="line-32">    private int qbDataEntryType;</span>
+<span class="source-line-no">033</span><span id="line-33">    private int qbIncrementUnits;</span>
+<span class="source-line-no">034</span><span id="line-34">    private int qbIncrementCarbs;</span>
+<span class="source-line-no">035</span><span id="line-35">    private int buttonVolume;</span>
+<span class="source-line-no">036</span><span id="line-36">    private int qbVolume;</span>
+<span class="source-line-no">037</span><span id="line-37">    private int bolusVolume;</span>
+<span class="source-line-no">038</span><span id="line-38">    private int reminderVolume;</span>
+<span class="source-line-no">039</span><span id="line-39">    private int alertVolume;</span>
+<span class="source-line-no">040</span><span id="line-40">    </span>
+<span class="source-line-no">041</span><span id="line-41">    public ParamChangeGlobalSettingsHistoryLog() {}</span>
+<span class="source-line-no">042</span><span id="line-42">    public ParamChangeGlobalSettingsHistoryLog(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
+<span class="source-line-no">043</span><span id="line-43">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">044</span><span id="line-44">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, modifiedData, qbDataStatus, qbActive, qbDataEntryType, qbIncrementUnits, qbIncrementCarbs, buttonVolume, qbVolume, bolusVolume, reminderVolume, alertVolume);</span>
+<span class="source-line-no">045</span><span id="line-45">        this.modifiedData = modifiedData;</span>
+<span class="source-line-no">046</span><span id="line-46">        this.qbDataStatus = qbDataStatus;</span>
+<span class="source-line-no">047</span><span id="line-47">        this.qbActive = qbActive;</span>
+<span class="source-line-no">048</span><span id="line-48">        this.qbDataEntryType = qbDataEntryType;</span>
+<span class="source-line-no">049</span><span id="line-49">        this.qbIncrementUnits = qbIncrementUnits;</span>
+<span class="source-line-no">050</span><span id="line-50">        this.qbIncrementCarbs = qbIncrementCarbs;</span>
+<span class="source-line-no">051</span><span id="line-51">        this.buttonVolume = buttonVolume;</span>
+<span class="source-line-no">052</span><span id="line-52">        this.qbVolume = qbVolume;</span>
+<span class="source-line-no">053</span><span id="line-53">        this.bolusVolume = bolusVolume;</span>
+<span class="source-line-no">054</span><span id="line-54">        this.reminderVolume = reminderVolume;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.alertVolume = alertVolume;</span>
+<span class="source-line-no">056</span><span id="line-56">        </span>
+<span class="source-line-no">057</span><span id="line-57">    }</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    public ParamChangeGlobalSettingsHistoryLog(int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
+<span class="source-line-no">060</span><span id="line-60">        this(0, 0, modifiedData, qbDataStatus, qbActive, qbDataEntryType, qbIncrementUnits, qbIncrementCarbs, buttonVolume, qbVolume, bolusVolume, reminderVolume, alertVolume);</span>
+<span class="source-line-no">061</span><span id="line-61">    }</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">    public int typeId() {</span>
+<span class="source-line-no">064</span><span id="line-64">        return 74;</span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    /**</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;caption&gt;Parsed fields for ParamChangeGlobalSettingsHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;modifiedData&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbDataStatus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbActive&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbDataEntryType&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbIncrementUnits&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbIncrementCarbs&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;buttonVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[18]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">077</span><span id="line-77">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;qbVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[19]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">078</span><span id="line-78">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[20]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reminderVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[21]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alertVolume&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;/table&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     */</span>
+<span class="source-line-no">083</span><span id="line-83">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">084</span><span id="line-84">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">085</span><span id="line-85">        this.cargo = raw;</span>
+<span class="source-line-no">086</span><span id="line-86">        parseBase(raw);</span>
+<span class="source-line-no">087</span><span id="line-87">        this.modifiedData = raw[10];</span>
+<span class="source-line-no">088</span><span id="line-88">        this.qbDataStatus = raw[11];</span>
+<span class="source-line-no">089</span><span id="line-89">        this.qbActive = raw[12];</span>
+<span class="source-line-no">090</span><span id="line-90">        this.qbDataEntryType = raw[13];</span>
+<span class="source-line-no">091</span><span id="line-91">        this.qbIncrementUnits = Bytes.readShort(raw, 14);</span>
+<span class="source-line-no">092</span><span id="line-92">        this.qbIncrementCarbs = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">093</span><span id="line-93">        this.buttonVolume = raw[18];</span>
+<span class="source-line-no">094</span><span id="line-94">        this.qbVolume = raw[19];</span>
+<span class="source-line-no">095</span><span id="line-95">        this.bolusVolume = raw[20];</span>
+<span class="source-line-no">096</span><span id="line-96">        this.reminderVolume = raw[21];</span>
+<span class="source-line-no">097</span><span id="line-97">        this.alertVolume = raw[22];</span>
+<span class="source-line-no">098</span><span id="line-98">        </span>
+<span class="source-line-no">099</span><span id="line-99">    }</span>
+<span class="source-line-no">100</span><span id="line-100"></span>
+<span class="source-line-no">101</span><span id="line-101">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int modifiedData, int qbDataStatus, int qbActive, int qbDataEntryType, int qbIncrementUnits, int qbIncrementCarbs, int buttonVolume, int qbVolume, int bolusVolume, int reminderVolume, int alertVolume) {</span>
+<span class="source-line-no">102</span><span id="line-102">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">103</span><span id="line-103">            HistoryLog.typeIdBytes(74, 0),</span>
+<span class="source-line-no">104</span><span id="line-104">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">105</span><span id="line-105">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">106</span><span id="line-106">            new byte[]{ (byte) modifiedData }, </span>
+<span class="source-line-no">107</span><span id="line-107">            new byte[]{ (byte) qbDataStatus }, </span>
+<span class="source-line-no">108</span><span id="line-108">            new byte[]{ (byte) qbActive }, </span>
+<span class="source-line-no">109</span><span id="line-109">            new byte[]{ (byte) qbDataEntryType }, </span>
+<span class="source-line-no">110</span><span id="line-110">            Bytes.firstTwoBytesLittleEndian(qbIncrementUnits), </span>
+<span class="source-line-no">111</span><span id="line-111">            Bytes.firstTwoBytesLittleEndian(qbIncrementCarbs), </span>
+<span class="source-line-no">112</span><span id="line-112">            new byte[]{ (byte) buttonVolume }, </span>
+<span class="source-line-no">113</span><span id="line-113">            new byte[]{ (byte) qbVolume }, </span>
+<span class="source-line-no">114</span><span id="line-114">            new byte[]{ (byte) bolusVolume }, </span>
+<span class="source-line-no">115</span><span id="line-115">            new byte[]{ (byte) reminderVolume }, </span>
+<span class="source-line-no">116</span><span id="line-116">            new byte[]{ (byte) alertVolume }));</span>
+<span class="source-line-no">117</span><span id="line-117">    }</span>
+<span class="source-line-no">118</span><span id="line-118">    public int getModifiedData() {</span>
+<span class="source-line-no">119</span><span id="line-119">        return modifiedData;</span>
+<span class="source-line-no">120</span><span id="line-120">    }</span>
+<span class="source-line-no">121</span><span id="line-121">    public int getQbDataStatus() {</span>
+<span class="source-line-no">122</span><span id="line-122">        return qbDataStatus;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124">    public int getQbActive() {</span>
+<span class="source-line-no">125</span><span id="line-125">        return qbActive;</span>
+<span class="source-line-no">126</span><span id="line-126">    }</span>
+<span class="source-line-no">127</span><span id="line-127">    public int getQbDataEntryType() {</span>
+<span class="source-line-no">128</span><span id="line-128">        return qbDataEntryType;</span>
+<span class="source-line-no">129</span><span id="line-129">    }</span>
+<span class="source-line-no">130</span><span id="line-130">    public int getQbIncrementUnits() {</span>
+<span class="source-line-no">131</span><span id="line-131">        return qbIncrementUnits;</span>
+<span class="source-line-no">132</span><span id="line-132">    }</span>
+<span class="source-line-no">133</span><span id="line-133">    public int getQbIncrementCarbs() {</span>
+<span class="source-line-no">134</span><span id="line-134">        return qbIncrementCarbs;</span>
+<span class="source-line-no">135</span><span id="line-135">    }</span>
+<span class="source-line-no">136</span><span id="line-136">    public int getButtonVolume() {</span>
+<span class="source-line-no">137</span><span id="line-137">        return buttonVolume;</span>
+<span class="source-line-no">138</span><span id="line-138">    }</span>
+<span class="source-line-no">139</span><span id="line-139">    public int getQbVolume() {</span>
+<span class="source-line-no">140</span><span id="line-140">        return qbVolume;</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142">    public int getBolusVolume() {</span>
+<span class="source-line-no">143</span><span id="line-143">        return bolusVolume;</span>
+<span class="source-line-no">144</span><span id="line-144">    }</span>
+<span class="source-line-no">145</span><span id="line-145">    public int getReminderVolume() {</span>
+<span class="source-line-no">146</span><span id="line-146">        return reminderVolume;</span>
+<span class="source-line-no">147</span><span id="line-147">    }</span>
+<span class="source-line-no">148</span><span id="line-148">    public int getAlertVolume() {</span>
+<span class="source-line-no">149</span><span id="line-149">        return alertVolume;</span>
+<span class="source-line-no">150</span><span id="line-150">    }</span>
+<span class="source-line-no">151</span><span id="line-151">    </span>
+<span class="source-line-no">152</span><span id="line-152">}</span>
 
 
 

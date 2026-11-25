@@ -82,14 +82,25 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-15">ControlRequestCountersHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-34">ControlRequestCountersHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
+<div class="block">History log record Control Request Counters, opCode 492, size 26.
+
+ <br>
+
+ Part of the burst of records 488-497 the Tandem Mobi writes every two hours. Each covers the two
  hours since the previous burst; the counts below were compared with the requests TandemKit
  logged in 161 such windows on two pumps (the maintainer's and a tester's).
 
  The class name is provisional: opcode 492 is not in Tandem's cloud event schema or the Mobi
- app's history log list. Fields not named here have not been identified and are exposed raw.</div>
+ app's history log list. Fields not named here have not been identified and are exposed raw.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>492</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control Request Counters"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -201,13 +212,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlRequestCountersHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-26">ControlRequestCountersHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-45">ControlRequestCountersHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,long,long,long)">
 <h3>ControlRequestCountersHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-27">ControlRequestCountersHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-46">ControlRequestCountersHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;controlRequestCount,
  long&nbsp;unknown14,
@@ -226,7 +237,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-36">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-55">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -236,7 +247,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-49">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-68">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlRequestCountersHistoryLog:</caption>
  <tr><td><code>controlRequestCount</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -253,7 +264,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,long,long,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-59">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-78">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;controlRequestCount,
  long&nbsp;unknown14,
@@ -264,7 +275,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getControlRequestCount()">
 <h3>getControlRequestCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-76">getControlRequestCount</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-95">getControlRequestCount</a></span>()</div>
 <div class="block">Equal to the number of CONTROL-characteristic requests the phone sent in the window in
  161 of 161 windows, and to unknown18 + unknown22 in every record.</div>
 <dl class="notes">
@@ -276,7 +287,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown14()">
 <h3>getUnknown14</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-85">getUnknown14</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-104">getUnknown14</a></span>()</div>
 <div class="block">0 in every record.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -287,7 +298,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown18()">
 <h3>getUnknown18</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-95">getUnknown18</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-114">getUnknown18</a></span>()</div>
 <div class="block">The CONTROL requests not counted in <a href="#getUnknown22()"><code>getUnknown22()</code></a> (temp rate, bolus, suspend,
  resume and fill requests in the checked windows).</div>
 <dl class="notes">
@@ -299,7 +310,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-105">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestCountersHistoryLog.html#line-124">getUnknown22</a></span>()</div>
 <div class="block">Equal to the number of DismissNotification, SetMaxBasalLimit and SetMaxBolusLimit
  requests in the window in 161 of 161 windows. What sets these apart is unknown.</div>
 <dl class="notes">

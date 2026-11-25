@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-28">ControlRequestHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-61">ControlRequestHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Written once for each signed request the pump receives on the CONTROL characteristic.
+<div class="block">History log record Control Request, opCode 290, size 26.
+
+ <br>
+
+ Written once for each signed request the pump receives on the CONTROL characteristic.
 
  <p>The class name is provisional: Tandem's cloud export and the Mobi app's HistoryLogType enum
  do not name this opcode.
@@ -102,7 +106,15 @@ loadScripts(document, 'script');</script>
  other, bolus-specific records instead.
 
  <p>Bytes 15-25 were zero in all 7447 records examined. See
- https://github.com/jwoglom/pumpx2/issues/145.</div>
+ https://github.com/jwoglom/pumpx2/issues/145.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>290</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control Request"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>""</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -199,13 +211,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlRequestHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-38">ControlRequestHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-71">ControlRequestHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,int)">
 <h3>ControlRequestHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-39">ControlRequestHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-72">ControlRequestHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;requestTimestamp,
  int&nbsp;requestOpCode)</span></div>
@@ -214,7 +226,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,int)">
 <h3>ControlRequestHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-46">ControlRequestHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;requestTimestamp,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-79">ControlRequestHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;requestTimestamp,
  int&nbsp;requestOpCode)</span></div>
 </section>
 </li>
@@ -229,7 +241,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-50">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-83">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -239,7 +251,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-61">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-94">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlRequestHistoryLog:</caption>
  <tr><td><code>requestTimestamp</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -254,7 +266,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-69">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-102">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;requestTimestamp,
  int&nbsp;requestOpCode)</span></div>
@@ -263,7 +275,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRequestTimestamp()">
 <h3>getRequestTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-95">getRequestTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-128">getRequestTimestamp</a></span>()</div>
 <div class="block">The 4-byte time value carried in the signed request's 24-byte trailer (the 4 bytes before
  the HMAC), copied as the app sent it. This is not a pump clock reading.
 
@@ -286,7 +298,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRequestOpCode()">
 <h3>getRequestOpCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-107">getRequestOpCode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlRequestHistoryLog.html#line-140">getRequestOpCode</a></span>()</div>
 <div class="block">The request's opcode as an unsigned byte, i.e. the pumpX2 <code>opCode</code> of the request
  message ANDed with 0xFF: for example 164 is SetTempRateRequest (opCode -92), 166 is
  StopTempRateRequest (-90), 184 is DismissNotificationRequest (-72), 148 is

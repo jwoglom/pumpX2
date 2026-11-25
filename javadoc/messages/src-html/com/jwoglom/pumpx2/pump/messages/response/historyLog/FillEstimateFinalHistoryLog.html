@@ -21,36 +21,49 @@
 <span class="source-line-no">004</span><span id="line-4">import com.jwoglom.pumpx2.pump.messages.annotations.HistoryLogProps;</span>
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6"></span>
-<span class="source-line-no">007</span><span id="line-7">@HistoryLogProps(</span>
-<span class="source-line-no">008</span><span id="line-8">    opCode = 98,</span>
-<span class="source-line-no">009</span><span id="line-9">    displayName = "Fill Estimate Final",</span>
-<span class="source-line-no">010</span><span id="line-10">    internalName = "LID_FILL_ESTIMATE_FINAL"</span>
-<span class="source-line-no">011</span><span id="line-11">)</span>
-<span class="source-line-no">012</span><span id="line-12">public class FillEstimateFinalHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">    public FillEstimateFinalHistoryLog() {}</span>
-<span class="source-line-no">015</span><span id="line-15">    public FillEstimateFinalHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">016</span><span id="line-16">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">017</span><span id="line-17">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">018</span><span id="line-18">    }</span>
-<span class="source-line-no">019</span><span id="line-19"></span>
-<span class="source-line-no">020</span><span id="line-20">    public int typeId() {</span>
-<span class="source-line-no">021</span><span id="line-21">        return 98;</span>
-<span class="source-line-no">022</span><span id="line-22">    }</span>
-<span class="source-line-no">023</span><span id="line-23"></span>
-<span class="source-line-no">024</span><span id="line-24">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">025</span><span id="line-25">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">026</span><span id="line-26">        this.cargo = raw;</span>
-<span class="source-line-no">027</span><span id="line-27">        parseBase(raw);</span>
-<span class="source-line-no">028</span><span id="line-28">    }</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">031</span><span id="line-31">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">032</span><span id="line-32">            HistoryLog.typeIdBytes(98, 0),</span>
-<span class="source-line-no">033</span><span id="line-33">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">034</span><span id="line-34">            Bytes.toUint32(sequenceNum)));</span>
+<span class="source-line-no">007</span><span id="line-7">/**</span>
+<span class="source-line-no">008</span><span id="line-8"> * History log record Fill Estimate Final, opCode 98, size 26.</span>
+<span class="source-line-no">009</span><span id="line-9"> *</span>
+<span class="source-line-no">010</span><span id="line-10"> * &lt;br&gt;</span>
+<span class="source-line-no">011</span><span id="line-11"> *</span>
+<span class="source-line-no">012</span><span id="line-12"> * </span>
+<span class="source-line-no">013</span><span id="line-13"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;98&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"Fill Estimate Final"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_FILL_ESTIMATE_FINAL"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;/table&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> */</span>
+<span class="source-line-no">020</span><span id="line-20">@HistoryLogProps(</span>
+<span class="source-line-no">021</span><span id="line-21">    opCode = 98,</span>
+<span class="source-line-no">022</span><span id="line-22">    displayName = "Fill Estimate Final",</span>
+<span class="source-line-no">023</span><span id="line-23">    internalName = "LID_FILL_ESTIMATE_FINAL"</span>
+<span class="source-line-no">024</span><span id="line-24">)</span>
+<span class="source-line-no">025</span><span id="line-25">public class FillEstimateFinalHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">026</span><span id="line-26"></span>
+<span class="source-line-no">027</span><span id="line-27">    public FillEstimateFinalHistoryLog() {}</span>
+<span class="source-line-no">028</span><span id="line-28">    public FillEstimateFinalHistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">029</span><span id="line-29">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">030</span><span id="line-30">        this.cargo = buildCargo(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">031</span><span id="line-31">    }</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    public int typeId() {</span>
+<span class="source-line-no">034</span><span id="line-34">        return 98;</span>
 <span class="source-line-no">035</span><span id="line-35">    }</span>
-<span class="source-line-no">036</span><span id="line-36">}</span>
+<span class="source-line-no">036</span><span id="line-36"></span>
+<span class="source-line-no">037</span><span id="line-37">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">038</span><span id="line-38">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">039</span><span id="line-39">        this.cargo = raw;</span>
+<span class="source-line-no">040</span><span id="line-40">        parseBase(raw);</span>
+<span class="source-line-no">041</span><span id="line-41">    }</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">044</span><span id="line-44">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">045</span><span id="line-45">            HistoryLog.typeIdBytes(98, 0),</span>
+<span class="source-line-no">046</span><span id="line-46">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">047</span><span id="line-47">            Bytes.toUint32(sequenceNum)));</span>
+<span class="source-line-no">048</span><span id="line-48">    }</span>
+<span class="source-line-no">049</span><span id="line-49">}</span>
 
 
 

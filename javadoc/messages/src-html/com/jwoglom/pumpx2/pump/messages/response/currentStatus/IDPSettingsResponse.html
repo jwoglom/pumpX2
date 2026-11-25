@@ -30,139 +30,136 @@
 <span class="source-line-no">013</span><span id="line-13"> *</span>
 <span class="source-line-no">014</span><span id="line-14"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse</span>
 <span class="source-line-no">015</span><span id="line-15"> */</span>
-<span class="source-line-no">016</span><span id="line-16">/**</span>
-<span class="source-line-no">017</span><span id="line-17"> * Contains information about a given insulin delivery profile.</span>
-<span class="source-line-no">018</span><span id="line-18"> * Some information is specific to a time segment on the profile.</span>
+<span class="source-line-no">016</span><span id="line-16"></span>
+<span class="source-line-no">017</span><span id="line-17">/**</span>
+<span class="source-line-no">018</span><span id="line-18"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest}, opCode 65, size 23.</span>
 <span class="source-line-no">019</span><span id="line-19"> *</span>
-<span class="source-line-no">020</span><span id="line-20"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse</span>
+<span class="source-line-no">020</span><span id="line-20"> * &lt;br&gt;</span>
 <span class="source-line-no">021</span><span id="line-21"> *</span>
-<span class="source-line-no">022</span><span id="line-22"></span>
-<span class="source-line-no">023</span><span id="line-23"> *</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;br&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> *</span>
-<span class="source-line-no">026</span><span id="line-26"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest}, opCode 65, size 23</span>
-<span class="source-line-no">027</span><span id="line-27"> *</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;br&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> *</span>
-<span class="source-line-no">030</span><span id="line-30"> * </span>
-<span class="source-line-no">031</span><span id="line-31"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;65&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;23&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;/table&gt;</span>
-<span class="source-line-no">038</span><span id="line-38"> */@MessageProps(</span>
-<span class="source-line-no">039</span><span id="line-39">    opCode=65,</span>
-<span class="source-line-no">040</span><span id="line-40">    size=23,</span>
-<span class="source-line-no">041</span><span id="line-41">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">042</span><span id="line-42">    request=IDPSettingsRequest.class</span>
-<span class="source-line-no">043</span><span id="line-43">)</span>
-<span class="source-line-no">044</span><span id="line-44">public class IDPSettingsResponse extends Message {</span>
-<span class="source-line-no">045</span><span id="line-45">    </span>
-<span class="source-line-no">046</span><span id="line-46">    private int idpId;</span>
-<span class="source-line-no">047</span><span id="line-47">    private String name;</span>
-<span class="source-line-no">048</span><span id="line-48">    private int numberOfProfileSegments;</span>
-<span class="source-line-no">049</span><span id="line-49">    private int insulinDuration;</span>
-<span class="source-line-no">050</span><span id="line-50">    private int maxBolus;</span>
-<span class="source-line-no">051</span><span id="line-51">    private boolean carbEntry;</span>
-<span class="source-line-no">052</span><span id="line-52">    </span>
-<span class="source-line-no">053</span><span id="line-53">    public IDPSettingsResponse() {}</span>
-<span class="source-line-no">054</span><span id="line-54">    </span>
-<span class="source-line-no">055</span><span id="line-55">    public IDPSettingsResponse(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {</span>
-<span class="source-line-no">056</span><span id="line-56">        this.cargo = buildCargo(idpId, name, numberOfProfileSegments, insulinDuration, maxBolus, carbEntry);</span>
-<span class="source-line-no">057</span><span id="line-57">        this.idpId = idpId;</span>
-<span class="source-line-no">058</span><span id="line-58">        this.name = name;</span>
-<span class="source-line-no">059</span><span id="line-59">        this.numberOfProfileSegments = numberOfProfileSegments;</span>
-<span class="source-line-no">060</span><span id="line-60">        this.insulinDuration = insulinDuration;</span>
-<span class="source-line-no">061</span><span id="line-61">        this.maxBolus = maxBolus;</span>
-<span class="source-line-no">062</span><span id="line-62">        this.carbEntry = carbEntry;</span>
-<span class="source-line-no">063</span><span id="line-63">        </span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    /**</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;caption&gt;Parsed fields for IDPSettingsResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;name&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 1, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numberOfProfileSegments&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;maxBolus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;carbEntry&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;/table&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     */</span>
-<span class="source-line-no">077</span><span id="line-77">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">078</span><span id="line-78">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">079</span><span id="line-79">        this.cargo = raw;</span>
-<span class="source-line-no">080</span><span id="line-80">        this.idpId = raw[0];</span>
-<span class="source-line-no">081</span><span id="line-81">        this.name = Bytes.readString(raw, 1, 16);</span>
-<span class="source-line-no">082</span><span id="line-82">        this.numberOfProfileSegments = raw[17];</span>
-<span class="source-line-no">083</span><span id="line-83">        this.insulinDuration = Bytes.readShort(raw, 18);</span>
-<span class="source-line-no">084</span><span id="line-84">        this.maxBolus = Bytes.readShort(raw, 20);</span>
-<span class="source-line-no">085</span><span id="line-85">        this.carbEntry = raw[22] != 0;</span>
-<span class="source-line-no">086</span><span id="line-86">        </span>
-<span class="source-line-no">087</span><span id="line-87">    }</span>
-<span class="source-line-no">088</span><span id="line-88"></span>
-<span class="source-line-no">089</span><span id="line-89">    </span>
-<span class="source-line-no">090</span><span id="line-90">    /**</span>
-<span class="source-line-no">091</span><span id="line-91">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;caption&gt;Byte layout for IDPSettingsResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) idpId&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) numberOfProfileSegments&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">114</span><span id="line-114">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">115</span><span id="line-115">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">116</span><span id="line-116">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (carbEntry ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">117</span><span id="line-117">     * &lt;/table&gt;</span>
-<span class="source-line-no">118</span><span id="line-118">     */</span>
-<span class="source-line-no">119</span><span id="line-119">    public static byte[] buildCargo(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {</span>
-<span class="source-line-no">120</span><span id="line-120">        return Bytes.combine(</span>
-<span class="source-line-no">121</span><span id="line-121">            new byte[]{ (byte) idpId },</span>
-<span class="source-line-no">122</span><span id="line-122">            Bytes.writeString(name, 16),</span>
-<span class="source-line-no">123</span><span id="line-123">            new byte[]{ (byte) numberOfProfileSegments },</span>
-<span class="source-line-no">124</span><span id="line-124">            Bytes.firstTwoBytesLittleEndian(insulinDuration), </span>
-<span class="source-line-no">125</span><span id="line-125">            Bytes.firstTwoBytesLittleEndian(maxBolus), </span>
-<span class="source-line-no">126</span><span id="line-126">            new byte[]{ (byte) (carbEntry ? 1 : 0) });</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128">    </span>
-<span class="source-line-no">129</span><span id="line-129">    public int getIdpId() {</span>
-<span class="source-line-no">130</span><span id="line-130">        return idpId;</span>
+<span class="source-line-no">022</span><span id="line-22"> * Contains information about a given insulin delivery profile.</span>
+<span class="source-line-no">023</span><span id="line-23"> * Some information is specific to a time segment on the profile.</span>
+<span class="source-line-no">024</span><span id="line-24"> *</span>
+<span class="source-line-no">025</span><span id="line-25"> * @see com.jwoglom.pumpx2.pump.messages.response.currentStatus.IDPSegmentResponse</span>
+<span class="source-line-no">026</span><span id="line-26"> *</span>
+<span class="source-line-no">027</span><span id="line-27"> * </span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;65&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;23&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.SetIDPSettingsRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> * &lt;/table&gt;</span>
+<span class="source-line-no">035</span><span id="line-35"> */@MessageProps(</span>
+<span class="source-line-no">036</span><span id="line-36">    opCode=65,</span>
+<span class="source-line-no">037</span><span id="line-37">    size=23,</span>
+<span class="source-line-no">038</span><span id="line-38">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">039</span><span id="line-39">    request=IDPSettingsRequest.class</span>
+<span class="source-line-no">040</span><span id="line-40">)</span>
+<span class="source-line-no">041</span><span id="line-41">public class IDPSettingsResponse extends Message {</span>
+<span class="source-line-no">042</span><span id="line-42">    </span>
+<span class="source-line-no">043</span><span id="line-43">    private int idpId;</span>
+<span class="source-line-no">044</span><span id="line-44">    private String name;</span>
+<span class="source-line-no">045</span><span id="line-45">    private int numberOfProfileSegments;</span>
+<span class="source-line-no">046</span><span id="line-46">    private int insulinDuration;</span>
+<span class="source-line-no">047</span><span id="line-47">    private int maxBolus;</span>
+<span class="source-line-no">048</span><span id="line-48">    private boolean carbEntry;</span>
+<span class="source-line-no">049</span><span id="line-49">    </span>
+<span class="source-line-no">050</span><span id="line-50">    public IDPSettingsResponse() {}</span>
+<span class="source-line-no">051</span><span id="line-51">    </span>
+<span class="source-line-no">052</span><span id="line-52">    public IDPSettingsResponse(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {</span>
+<span class="source-line-no">053</span><span id="line-53">        this.cargo = buildCargo(idpId, name, numberOfProfileSegments, insulinDuration, maxBolus, carbEntry);</span>
+<span class="source-line-no">054</span><span id="line-54">        this.idpId = idpId;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.name = name;</span>
+<span class="source-line-no">056</span><span id="line-56">        this.numberOfProfileSegments = numberOfProfileSegments;</span>
+<span class="source-line-no">057</span><span id="line-57">        this.insulinDuration = insulinDuration;</span>
+<span class="source-line-no">058</span><span id="line-58">        this.maxBolus = maxBolus;</span>
+<span class="source-line-no">059</span><span id="line-59">        this.carbEntry = carbEntry;</span>
+<span class="source-line-no">060</span><span id="line-60">        </span>
+<span class="source-line-no">061</span><span id="line-61">    }</span>
+<span class="source-line-no">062</span><span id="line-62"></span>
+<span class="source-line-no">063</span><span id="line-63">    /**</span>
+<span class="source-line-no">064</span><span id="line-64">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;caption&gt;Parsed fields for IDPSettingsResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;idpId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;name&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readString(raw, 1, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;numberOfProfileSegments&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[17]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;insulinDuration&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;maxBolus&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 20)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;carbEntry&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[22] != 0&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;/table&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     */</span>
+<span class="source-line-no">074</span><span id="line-74">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">075</span><span id="line-75">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">076</span><span id="line-76">        this.cargo = raw;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.idpId = raw[0];</span>
+<span class="source-line-no">078</span><span id="line-78">        this.name = Bytes.readString(raw, 1, 16);</span>
+<span class="source-line-no">079</span><span id="line-79">        this.numberOfProfileSegments = raw[17];</span>
+<span class="source-line-no">080</span><span id="line-80">        this.insulinDuration = Bytes.readShort(raw, 18);</span>
+<span class="source-line-no">081</span><span id="line-81">        this.maxBolus = Bytes.readShort(raw, 20);</span>
+<span class="source-line-no">082</span><span id="line-82">        this.carbEntry = raw[22] != 0;</span>
+<span class="source-line-no">083</span><span id="line-83">        </span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    </span>
+<span class="source-line-no">087</span><span id="line-87">    /**</span>
+<span class="source-line-no">088</span><span id="line-88">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;caption&gt;Byte layout for IDPSettingsResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) idpId&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 2]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">096</span><span id="line-96">     * &lt;tr&gt;&lt;td&gt;5&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 4]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;tr&gt;&lt;td&gt;6&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 5]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;tr&gt;&lt;td&gt;7&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 6]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 7]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;9&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 8]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 9]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;11&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 10]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 11]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;13&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 12]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;14&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 13]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;15&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 14]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;16&lt;/td&gt;&lt;td&gt;&lt;code&gt;writeString(name, 16) [byte 15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;tr&gt;&lt;td&gt;17&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) numberOfProfileSegments&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     * &lt;tr&gt;&lt;td&gt;18&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">110</span><span id="line-110">     * &lt;tr&gt;&lt;td&gt;19&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(insulinDuration) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">111</span><span id="line-111">     * &lt;tr&gt;&lt;td&gt;20&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">112</span><span id="line-112">     * &lt;tr&gt;&lt;td&gt;21&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(maxBolus) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">113</span><span id="line-113">     * &lt;tr&gt;&lt;td&gt;22&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) (carbEntry ? 1 : 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">114</span><span id="line-114">     * &lt;/table&gt;</span>
+<span class="source-line-no">115</span><span id="line-115">     */</span>
+<span class="source-line-no">116</span><span id="line-116">    public static byte[] buildCargo(int idpId, String name, int numberOfProfileSegments, int insulinDuration, int maxBolus, boolean carbEntry) {</span>
+<span class="source-line-no">117</span><span id="line-117">        return Bytes.combine(</span>
+<span class="source-line-no">118</span><span id="line-118">            new byte[]{ (byte) idpId },</span>
+<span class="source-line-no">119</span><span id="line-119">            Bytes.writeString(name, 16),</span>
+<span class="source-line-no">120</span><span id="line-120">            new byte[]{ (byte) numberOfProfileSegments },</span>
+<span class="source-line-no">121</span><span id="line-121">            Bytes.firstTwoBytesLittleEndian(insulinDuration), </span>
+<span class="source-line-no">122</span><span id="line-122">            Bytes.firstTwoBytesLittleEndian(maxBolus), </span>
+<span class="source-line-no">123</span><span id="line-123">            new byte[]{ (byte) (carbEntry ? 1 : 0) });</span>
+<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">125</span><span id="line-125">    </span>
+<span class="source-line-no">126</span><span id="line-126">    public int getIdpId() {</span>
+<span class="source-line-no">127</span><span id="line-127">        return idpId;</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129">    public String getName() {</span>
+<span class="source-line-no">130</span><span id="line-130">        return name;</span>
 <span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132">    public String getName() {</span>
-<span class="source-line-no">133</span><span id="line-133">        return name;</span>
+<span class="source-line-no">132</span><span id="line-132">    public int getNumberOfProfileSegments() {</span>
+<span class="source-line-no">133</span><span id="line-133">        return numberOfProfileSegments;</span>
 <span class="source-line-no">134</span><span id="line-134">    }</span>
-<span class="source-line-no">135</span><span id="line-135">    public int getNumberOfProfileSegments() {</span>
-<span class="source-line-no">136</span><span id="line-136">        return numberOfProfileSegments;</span>
+<span class="source-line-no">135</span><span id="line-135">    public int getInsulinDuration() {</span>
+<span class="source-line-no">136</span><span id="line-136">        return insulinDuration;</span>
 <span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138">    public int getInsulinDuration() {</span>
-<span class="source-line-no">139</span><span id="line-139">        return insulinDuration;</span>
+<span class="source-line-no">138</span><span id="line-138">    public int getMaxBolus() {</span>
+<span class="source-line-no">139</span><span id="line-139">        return maxBolus;</span>
 <span class="source-line-no">140</span><span id="line-140">    }</span>
-<span class="source-line-no">141</span><span id="line-141">    public int getMaxBolus() {</span>
-<span class="source-line-no">142</span><span id="line-142">        return maxBolus;</span>
+<span class="source-line-no">141</span><span id="line-141">    public boolean getCarbEntry() {</span>
+<span class="source-line-no">142</span><span id="line-142">        return carbEntry;</span>
 <span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144">    public boolean getCarbEntry() {</span>
-<span class="source-line-no">145</span><span id="line-145">        return carbEntry;</span>
-<span class="source-line-no">146</span><span id="line-146">    }</span>
-<span class="source-line-no">147</span><span id="line-147">    </span>
-<span class="source-line-no">148</span><span id="line-148">}</span>
+<span class="source-line-no">144</span><span id="line-144">    </span>
+<span class="source-line-no">145</span><span id="line-145">}</span>
 
 
 

@@ -82,18 +82,14 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-37">LastBGResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-34">LastBGResponse</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">This message ONLY returns BGs entered via the Bolus Calculator, and NOT the most recent CGM
+<div class="block">Response message for <a href="../../request/currentStatus/LastBGRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBGRequest</code></a>, opCode 51, size 7.
+
+ <br>
+
+ This message ONLY returns BGs entered via the Bolus Calculator, and NOT the most recent CGM
  reading.
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/LastBGRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>LastBGRequest</code></a>, opCode 51, size 7
-
- <br>
 
  
  <table border='1'>
@@ -228,13 +224,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>LastBGResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-50">LastBGResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-47">LastBGResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,int,int)">
 <h3>LastBGResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-52">LastBGResponse</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-49">LastBGResponse</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
  int&nbsp;bgValue,
  int&nbsp;bgSourceId)</span></div>
 </section>
@@ -242,7 +238,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,int,com.jwoglom.pumpx2.pump.messages.response.currentStatus.LastBGResponse.BgSource)">
 <h3>LastBGResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-60">LastBGResponse</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-57">LastBGResponse</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
  int&nbsp;bgValue,
  <a href="LastBGResponse.BgSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a>&nbsp;bgSource)</span></div>
 </section>
@@ -258,7 +254,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-77">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-74">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for LastBGResponse:</caption>
  <tr><td><code>bgTimestamp</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
@@ -275,7 +271,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-101">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-98">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;bgTimestamp,
  int&nbsp;bgValue,
  int&nbsp;bgSource)</span></div>
 <div class="block"><table border="1">
@@ -294,31 +290,31 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBgTimestamp()">
 <h3>getBgTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-108">getBgTimestamp</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-105">getBgTimestamp</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgTimestampInstant()">
 <h3>getBgTimestampInstant</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-112">getBgTimestampInstant</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-109">getBgTimestampInstant</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgValue()">
 <h3>getBgValue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-116">getBgValue</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-113">getBgValue</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgSourceId()">
 <h3>getBgSourceId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-119">getBgSourceId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-116">getBgSourceId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBgSource()">
 <h3>getBgSource</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LastBGResponse.BgSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-122">getBgSource</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="LastBGResponse.BgSource.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">LastBGResponse.BgSource</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/LastBGResponse.html#line-119">getBgSource</a></span>()</div>
 </section>
 </li>
 </ul>

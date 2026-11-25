@@ -84,23 +84,19 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-49">AdditionalBolusResponse</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-46">AdditionalBolusResponse</a></span>
 <span class="extends-implements">extends <a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></span></div>
-<div class="block">Response to AdditionalBolusRequest.
+<div class="block">Response message for <a href="../../request/control/AdditionalBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>AdditionalBolusRequest</code></a>, opCode -5, size 5.
+
+ <br>
+
+ Response to AdditionalBolusRequest.
  OpCode 0xFB (251).
 
  Cargo layout:
    byte[0]   : status (0 = ACK/success)
    bytes[1-2]: bolusId (uint16 little-endian)
    bytes[3-4]: reserve (uint16 little-endian)
-
-
-
- <br>
-
- Response message for <a href="../../request/control/AdditionalBolusRequest.html" title="class in com.jwoglom.pumpx2.pump.messages.request.control"><code>AdditionalBolusRequest</code></a>, opCode -5, size 5
-
- <br>
 
  
  <table border='1'>
@@ -216,13 +212,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>AdditionalBolusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-64">AdditionalBolusResponse</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-61">AdditionalBolusResponse</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int)">
 <h3>AdditionalBolusResponse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-66">AdditionalBolusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-63">AdditionalBolusResponse</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;bolusId,
  int&nbsp;reserve)</span></div>
 </section>
@@ -238,7 +234,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-78">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for AdditionalBolusResponse:</caption>
  <tr><td><code>status</code></td><td><code>raw[0]</code></td></tr>
@@ -254,7 +250,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-101">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-98">buildCargo</a></span><wbr><span class="parameters">(int&nbsp;status,
  int&nbsp;bolusId,
  int&nbsp;reserve)</span></div>
 <div class="block"><table border="1">
@@ -271,7 +267,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-112">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-109">getStatus</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../models/StatusMessage.html#getStatus()">getStatus</a></code>&nbsp;in class&nbsp;<code><a href="../../models/StatusMessage.html" title="class in com.jwoglom.pumpx2.pump.messages.models">StatusMessage</a></code></dd>
@@ -283,19 +279,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBolusId()">
 <h3>getBolusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-116">getBolusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-113">getBolusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getReserve()">
 <h3>getReserve</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-120">getReserve</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-117">getReserve</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="wasAccepted()">
 <h3>wasAccepted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-127">wasAccepted</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/control/AdditionalBolusResponse.html#line-124">wasAccepted</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true when the additional bolus was accepted</dd>

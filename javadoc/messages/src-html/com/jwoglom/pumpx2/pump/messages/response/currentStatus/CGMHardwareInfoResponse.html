@@ -28,67 +28,64 @@
 <span class="source-line-no">011</span><span id="line-11">/**</span>
 <span class="source-line-no">012</span><span id="line-12"> * Returns the G6 CGM transmitter ID.</span>
 <span class="source-line-no">013</span><span id="line-13"> */</span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * Returns the G6 CGM transmitter ID.</span>
-<span class="source-line-no">016</span><span id="line-16"> *</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18"> *</span>
-<span class="source-line-no">019</span><span id="line-19"> * &lt;br&gt;</span>
-<span class="source-line-no">020</span><span id="line-20"> *</span>
-<span class="source-line-no">021</span><span id="line-21"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest}, opCode 97, size 17</span>
-<span class="source-line-no">022</span><span id="line-22"> *</span>
-<span class="source-line-no">023</span><span id="line-23"> * &lt;br&gt;</span>
-<span class="source-line-no">024</span><span id="line-24"> *</span>
-<span class="source-line-no">025</span><span id="line-25"> * </span>
-<span class="source-line-no">026</span><span id="line-26"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;97&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;17&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;/table&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> */@MessageProps(</span>
-<span class="source-line-no">034</span><span id="line-34">        opCode=97,</span>
-<span class="source-line-no">035</span><span id="line-35">        size=17,</span>
-<span class="source-line-no">036</span><span id="line-36">        type=MessageType.RESPONSE,</span>
-<span class="source-line-no">037</span><span id="line-37">        request=CGMHardwareInfoRequest.class</span>
-<span class="source-line-no">038</span><span id="line-38">)</span>
-<span class="source-line-no">039</span><span id="line-39">public class CGMHardwareInfoResponse extends Message {</span>
-<span class="source-line-no">040</span><span id="line-40">    /**</span>
-<span class="source-line-no">041</span><span id="line-41">     * G6 transmitter ID</span>
-<span class="source-line-no">042</span><span id="line-42">     */</span>
-<span class="source-line-no">043</span><span id="line-43">    private String hardwareInfoString;</span>
-<span class="source-line-no">044</span><span id="line-44">    private int lastByte;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public CGMHardwareInfoResponse() {}</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">    public CGMHardwareInfoResponse(String hardwareInfoString, int lastByte) {</span>
-<span class="source-line-no">049</span><span id="line-49">        this.cargo = buildCargo(hardwareInfoString, lastByte);</span>
-<span class="source-line-no">050</span><span id="line-50">        this.hardwareInfoString = hardwareInfoString;</span>
-<span class="source-line-no">051</span><span id="line-51">        this.lastByte = lastByte;</span>
-<span class="source-line-no">052</span><span id="line-52">    }</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    private static byte[] buildCargo(String hardwareInfoString, int lastByte) {</span>
-<span class="source-line-no">055</span><span id="line-55">        return Bytes.combine(</span>
-<span class="source-line-no">056</span><span id="line-56">                Bytes.writeString(hardwareInfoString, 16),</span>
-<span class="source-line-no">057</span><span id="line-57">                new byte[]{(byte) lastByte});</span>
-<span class="source-line-no">058</span><span id="line-58">    }</span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">061</span><span id="line-61">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">062</span><span id="line-62">        hardwareInfoString = Bytes.readString(raw, 0, 16);</span>
-<span class="source-line-no">063</span><span id="line-63">        lastByte = raw[16];</span>
-<span class="source-line-no">064</span><span id="line-64">        cargo = raw;</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    public String getHardwareInfoString() {</span>
-<span class="source-line-no">068</span><span id="line-68">        return hardwareInfoString;</span>
-<span class="source-line-no">069</span><span id="line-69">    }</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    public int getLastByte() {</span>
-<span class="source-line-no">072</span><span id="line-72">        return lastByte;</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74">}</span>
+<span class="source-line-no">014</span><span id="line-14"></span>
+<span class="source-line-no">015</span><span id="line-15">/**</span>
+<span class="source-line-no">016</span><span id="line-16"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest}, opCode 97, size 17.</span>
+<span class="source-line-no">017</span><span id="line-17"> *</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;br&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> *</span>
+<span class="source-line-no">020</span><span id="line-20"> * Returns the G6 CGM transmitter ID.</span>
+<span class="source-line-no">021</span><span id="line-21"> *</span>
+<span class="source-line-no">022</span><span id="line-22"> * </span>
+<span class="source-line-no">023</span><span id="line-23"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;97&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;17&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.currentStatus.CGMHardwareInfoRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;/table&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> */@MessageProps(</span>
+<span class="source-line-no">031</span><span id="line-31">        opCode=97,</span>
+<span class="source-line-no">032</span><span id="line-32">        size=17,</span>
+<span class="source-line-no">033</span><span id="line-33">        type=MessageType.RESPONSE,</span>
+<span class="source-line-no">034</span><span id="line-34">        request=CGMHardwareInfoRequest.class</span>
+<span class="source-line-no">035</span><span id="line-35">)</span>
+<span class="source-line-no">036</span><span id="line-36">public class CGMHardwareInfoResponse extends Message {</span>
+<span class="source-line-no">037</span><span id="line-37">    /**</span>
+<span class="source-line-no">038</span><span id="line-38">     * G6 transmitter ID</span>
+<span class="source-line-no">039</span><span id="line-39">     */</span>
+<span class="source-line-no">040</span><span id="line-40">    private String hardwareInfoString;</span>
+<span class="source-line-no">041</span><span id="line-41">    private int lastByte;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    public CGMHardwareInfoResponse() {}</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    public CGMHardwareInfoResponse(String hardwareInfoString, int lastByte) {</span>
+<span class="source-line-no">046</span><span id="line-46">        this.cargo = buildCargo(hardwareInfoString, lastByte);</span>
+<span class="source-line-no">047</span><span id="line-47">        this.hardwareInfoString = hardwareInfoString;</span>
+<span class="source-line-no">048</span><span id="line-48">        this.lastByte = lastByte;</span>
+<span class="source-line-no">049</span><span id="line-49">    }</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">    private static byte[] buildCargo(String hardwareInfoString, int lastByte) {</span>
+<span class="source-line-no">052</span><span id="line-52">        return Bytes.combine(</span>
+<span class="source-line-no">053</span><span id="line-53">                Bytes.writeString(hardwareInfoString, 16),</span>
+<span class="source-line-no">054</span><span id="line-54">                new byte[]{(byte) lastByte});</span>
+<span class="source-line-no">055</span><span id="line-55">    }</span>
+<span class="source-line-no">056</span><span id="line-56"></span>
+<span class="source-line-no">057</span><span id="line-57">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">058</span><span id="line-58">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">059</span><span id="line-59">        hardwareInfoString = Bytes.readString(raw, 0, 16);</span>
+<span class="source-line-no">060</span><span id="line-60">        lastByte = raw[16];</span>
+<span class="source-line-no">061</span><span id="line-61">        cargo = raw;</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    public String getHardwareInfoString() {</span>
+<span class="source-line-no">065</span><span id="line-65">        return hardwareInfoString;</span>
+<span class="source-line-no">066</span><span id="line-66">    }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    public int getLastByte() {</span>
+<span class="source-line-no">069</span><span id="line-69">        return lastByte;</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71">}</span>
 
 
 

@@ -82,16 +82,28 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-17">CgmFraSettingsHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-39">CgmFraSettingsHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">CGM Fall Rate Alert (FRA) settings change history log entry.
+<div class="block">History log record CGM FRA Settings, opCode 168, size 26.
+
+ <br>
+
+ CGM Fall Rate Alert (FRA) settings change history log entry.
 
  Fields parsed from the decompiled CgmGlucoseAlertSettingsModel:
    alertLevel   (raw[10-11]): uint16 - the fall rate threshold value (mg/dL/min)
    repeatDuration (raw[12-13]): uint16 - repeat alert duration in minutes
    isEnabled    (raw[14]):    boolean - whether the alert is enabled
    modifiedField (raw[16-17]): uint16 - which field was changed:
-                               0=ENABLE, 1=THRESHOLD, 2=DURATION, 3=INVALID</div>
+                               0=ENABLE, 1=THRESHOLD, 2=DURATION, 3=INVALID
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>168</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"CGM FRA Settings"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>"LID_CGM_FRA_SETTINGS"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -215,13 +227,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CgmFraSettingsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-29">CgmFraSettingsHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-51">CgmFraSettingsHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,boolean,int)">
 <h3>CgmFraSettingsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-30">CgmFraSettingsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-52">CgmFraSettingsHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;alertLevel,
  int&nbsp;repeatDuration,
@@ -232,7 +244,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,boolean,int)">
 <h3>CgmFraSettingsHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-39">CgmFraSettingsHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;alertLevel,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-61">CgmFraSettingsHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;alertLevel,
  int&nbsp;repeatDuration,
  boolean&nbsp;isEnabled,
  int&nbsp;modifiedField)</span></div>
@@ -249,7 +261,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-43">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-65">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -259,7 +271,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-56">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-78">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CgmFraSettingsHistoryLog:</caption>
  <tr><td><code>alertLevel</code></td><td><code>Bytes.readShort(raw, 10)</code></td></tr>
@@ -276,7 +288,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,boolean,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-66">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-88">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;alertLevel,
  int&nbsp;repeatDuration,
@@ -287,7 +299,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAlertLevel()">
 <h3>getAlertLevel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-80">getAlertLevel</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-102">getAlertLevel</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the fall rate alert threshold value (mg/dL/min)</dd>
@@ -297,7 +309,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRepeatDuration()">
 <h3>getRepeatDuration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-87">getRepeatDuration</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-109">getRepeatDuration</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the repeat alert duration in minutes</dd>
@@ -307,7 +319,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getIsEnabled()">
 <h3>getIsEnabled</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-94">getIsEnabled</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-116">getIsEnabled</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>whether the fall rate alert is enabled</dd>
@@ -317,7 +329,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getModifiedField()">
 <h3>getModifiedField</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-101">getModifiedField</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-123">getModifiedField</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>which field was modified: 0=ENABLE, 1=THRESHOLD, 2=DURATION, 3=INVALID</dd>
@@ -327,7 +339,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getModifiedFieldEnum()">
 <h3>getModifiedFieldEnum</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmFraSettingsHistoryLog.ModifiedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmFraSettingsHistoryLog.ModifiedField</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-127">getModifiedFieldEnum</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CgmFraSettingsHistoryLog.ModifiedField.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.historyLog">CgmFraSettingsHistoryLog.ModifiedField</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CgmFraSettingsHistoryLog.html#line-149">getModifiedFieldEnum</a></span>()</div>
 </section>
 </li>
 </ul>

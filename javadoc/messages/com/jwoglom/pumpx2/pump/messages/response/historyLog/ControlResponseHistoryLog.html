@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-29">ControlResponseHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-61">ControlResponseHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">The response the pump sent to a signed CONTROL request, written immediately after the
+<div class="block">History log record Control Response, opCode 300, size 26.
+
+ <br>
+
+ The response the pump sent to a signed CONTROL request, written immediately after the
  <a href="ControlRequestHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>ControlRequestHistoryLog</code></a> for that request (its <code>requestOpCode</code> is this record's
  <code>responseOpCode</code> minus one in 3692/3692 records across both capture sets).
 
@@ -101,7 +105,15 @@ loadScripts(document, 'script');</script>
  DismissNotification use other opcodes as well.
 
  <p>Byte 11 and bytes 13-25 are zero in every Mobi record examined; they are kept as raw
- accessors. See https://github.com/jwoglom/pumpx2/issues/145.</div>
+ accessors. See https://github.com/jwoglom/pumpx2/issues/145.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>300</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control Response"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>""</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -218,13 +230,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-41">ControlResponseHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-73">ControlResponseHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,byte[])">
 <h3>ControlResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-42">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-74">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;unknown11,
@@ -235,7 +247,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int)">
 <h3>ControlResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-51">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-83">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;status)</span></div>
@@ -244,7 +256,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>ControlResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-55">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;responseOpCode,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-87">ControlResponseHistoryLog</a></span><wbr><span class="parameters">(int&nbsp;responseOpCode,
  int&nbsp;status)</span></div>
 </section>
 </li>
@@ -259,7 +271,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-59">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-91">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -269,7 +281,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-72">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-104">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlResponseHistoryLog:</caption>
  <tr><td><code>responseOpCode</code></td><td><code>raw[10] &amp; 0xFF</code></td></tr>
@@ -286,7 +298,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-82">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-114">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;unknown11,
@@ -297,7 +309,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getResponseOpCode()">
 <h3>getResponseOpCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-99">getResponseOpCode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-131">getResponseOpCode</a></span>()</div>
 <div class="block">The opcode of the response the pump sent, as an unsigned byte (the pumpX2 response
  <code>opCode</code> ANDed with 0xFF), which is the request's opcode plus one: for example 167
  is StopTempRateResponse and 155 is ResumePumpingResponse.</div>
@@ -310,7 +322,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-111">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-143">getStatus</a></span>()</div>
 <div class="block">The status byte of that response: 0 on success. Every nonzero value checked against the
  app log matched a response that reported a failure (for example a ResumePumping request
  rejected with status 1 and retried successfully a second later); StopTempRate responses
@@ -324,7 +336,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-118">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-150">getUnknown11</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>byte 11, which was 0 in every record examined</dd>
@@ -334,7 +346,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknownTail()">
 <h3>getUnknownTail</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-129">getUnknownTail</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlResponseHistoryLog.html#line-161">getUnknownTail</a></span>()</div>
 <div class="block">Bytes 13-25. They are zero on the Mobi. In 17 t:slim X2 records answering
  UserInteraction (response opcode 133), bytes 15-17 of the record (index 2-4 here) held the
  low 24 bits of the record's own pumpTimeSec; their purpose is unknown.</div>

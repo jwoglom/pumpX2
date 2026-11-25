@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-28">ControlIQAutomatedInsulinHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-60">ControlIQAutomatedInsulinHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Control-IQ's rolling two-hour total of the insulin it commanded itself, written every 15 minutes
+<div class="block">History log record Control-IQ Automated Insulin, opCode 237, size 26.
+
+ <br>
+
+ Control-IQ's rolling two-hour total of the insulin it commanded itself, written every 15 minutes
  (a 900-second timer from pump start-up, in the same second of the minute as
  <a href="DailyBasalHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>DailyBasalHistoryLog</code></a>). The three floats are sums in units over the last 24 five-minute
  Control-IQ cycles: for every cycle in which the algorithm was in control (<a href="BasalDeliveryHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>BasalDeliveryHistoryLog</code></a> source ALGORITHM or TEMP_RATE_AND_ALGORITHM), the commanded basal rate
@@ -101,7 +105,14 @@ loadScripts(document, 'script');</script>
 
  <p>The class name is provisional: opcode 237 is not in Tandem's cloud event schema or the Mobi
  app's history log list. <a href="#getUnknown22()"><code>getUnknown22()</code></a> is exposed raw. See
- https://github.com/jwoglom/pumpX2/issues/146.</div>
+ https://github.com/jwoglom/pumpX2/issues/146.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>237</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Control-IQ Automated Insulin"</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -229,7 +240,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="RESIDUE_THRESHOLD_UNITS">
 <h3>RESIDUE_THRESHOLD_UNITS</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-34">RESIDUE_THRESHOLD_UNITS</a></span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-66">RESIDUE_THRESHOLD_UNITS</a></span></div>
 <div class="block">Larger than the float residue the sums settle at, smaller than one 5-minute basal slot.</div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -252,13 +263,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ControlIQAutomatedInsulinHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-41">ControlIQAutomatedInsulinHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-73">ControlIQAutomatedInsulinHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,float,float,float,long)">
 <h3>ControlIQAutomatedInsulinHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-42">ControlIQAutomatedInsulinHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-74">ControlIQAutomatedInsulinHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;totalInsulin,
  float&nbsp;basalAboveProfileInsulin,
@@ -277,7 +288,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-51">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-83">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -287,7 +298,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-64">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-96">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for ControlIQAutomatedInsulinHistoryLog:</caption>
  <tr><td><code>totalInsulin</code></td><td><code>Bytes.readFloat(raw, 10)</code></td></tr>
@@ -304,7 +315,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,float,float,float,long)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-106">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  float&nbsp;totalInsulin,
  float&nbsp;basalAboveProfileInsulin,
@@ -315,7 +326,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTotalInsulin()">
 <h3>getTotalInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-91">getTotalInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-123">getTotalInsulin</a></span>()</div>
 <div class="block">Basal Control-IQ commanded over the last two hours plus its automatic correction boluses.
  Always at least <a href="#getBasalAboveProfileInsulin()"><code>getBasalAboveProfileInsulin()</code></a> + <a href="#getAutoBolusInsulin()"><code>getAutoBolusInsulin()</code></a>.</div>
 <dl class="notes">
@@ -327,7 +338,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBasalAboveProfileInsulin()">
 <h3>getBasalAboveProfileInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-101">getBasalAboveProfileInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-133">getBasalAboveProfileInsulin</a></span>()</div>
 <div class="block">For each cycle in the window, max(0, commanded rate - profile rate) times 5 minutes: the
  insulin Control-IQ added by raising basal above the profile.</div>
 <dl class="notes">
@@ -339,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAutoBolusInsulin()">
 <h3>getAutoBolusInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-114">getAutoBolusInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-146">getAutoBolusInsulin</a></span>()</div>
 <div class="block">Automatic correction boluses in the window, counted at the Control-IQ cycle that decided them
  (47-141 s before the BolusDelivery STARTED record) and dropped two hours later. Matched
  the requested amount of all 20 automatic boluses seen, to 0.001 U. Three times it also held
@@ -354,7 +365,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBasalInsulin()">
 <h3>getBasalInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-122">getBasalInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-154">getBasalInsulin</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><a href="#getTotalInsulin()"><code>getTotalInsulin()</code></a> minus <a href="#getAutoBolusInsulin()"><code>getAutoBolusInsulin()</code></a>: the basal Control-IQ
@@ -365,7 +376,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="hasAutomatedInsulin()">
 <h3>hasAutomatedInsulin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-130">hasAutomatedInsulin</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-162">hasAutomatedInsulin</a></span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>false when every sum is 0 or float residue, i.e. Control-IQ commanded no insulin in
@@ -376,7 +387,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown22()">
 <h3>getUnknown22</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-141">getUnknown22</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/ControlIQAutomatedInsulinHistoryLog.html#line-173">getUnknown22</a></span>()</div>
 <div class="block">0 in all 4,668 records seen.</div>
 <dl class="notes">
 <dt>Returns:</dt>

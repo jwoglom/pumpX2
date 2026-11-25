@@ -82,22 +82,18 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-47">CurrentEgvGuiDataV2Response</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-44">CurrentEgvGuiDataV2Response</a></span>
 <span class="extends-implements">extends <a href="../../Message.html" title="class in com.jwoglom.pumpx2.pump.messages">Message</a></span></div>
-<div class="block">Gets the current CGM reading (B variant).
+<div class="block">Response message for <a href="../../request/currentStatus/CurrentEgvGuiDataV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentEgvGuiDataV2Request</code></a>, opCode -63, size 8.
+
+ <br>
+
+ Gets the current CGM reading (B variant).
  This response has the same 8-byte payload structure as CurrentEGVGuiDataResponse:
  - bytes 0-3: uint32 timestamp (seconds since pump epoch)
  - bytes 4-5: uint16 CGM reading
  - byte 6: uint8 EGV status
  - byte 7: uint8 trend rate
-
-
-
- <br>
-
- Response message for <a href="../../request/currentStatus/CurrentEgvGuiDataV2Request.html" title="class in com.jwoglom.pumpx2.pump.messages.request.currentStatus"><code>CurrentEgvGuiDataV2Request</code></a>, opCode -63, size 8
-
- <br>
 
  
  <table border='1'>
@@ -219,13 +215,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CurrentEgvGuiDataV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-63">CurrentEgvGuiDataV2Response</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-60">CurrentEgvGuiDataV2Response</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,int,int,int)">
 <h3>CurrentEgvGuiDataV2Response</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-65">CurrentEgvGuiDataV2Response</a></span><wbr><span class="parameters">(long&nbsp;bgReadingTimestampSeconds,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-62">CurrentEgvGuiDataV2Response</a></span><wbr><span class="parameters">(long&nbsp;bgReadingTimestampSeconds,
  int&nbsp;cgmReading,
  int&nbsp;egvStatusId,
  int&nbsp;trendRate)</span></div>
@@ -242,7 +238,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-84">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-81">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CurrentEgvGuiDataV2Response:</caption>
  <tr><td><code>bgReadingTimestampSeconds</code></td><td><code>Bytes.readUint32(raw, 0)</code></td></tr>
@@ -260,7 +256,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,int,int,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-108">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;bgReadingTimestampSeconds,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-105">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;bgReadingTimestampSeconds,
  int&nbsp;cgmReading,
  int&nbsp;egvStatus,
  int&nbsp;trendRate)</span></div>
@@ -281,31 +277,31 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBgReadingTimestampSeconds()">
 <h3>getBgReadingTimestampSeconds</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-116">getBgReadingTimestampSeconds</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-113">getBgReadingTimestampSeconds</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCgmReading()">
 <h3>getCgmReading</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-120">getCgmReading</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-117">getCgmReading</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvStatus()">
 <h3>getEgvStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CurrentEGVGuiDataResponse.EGVStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentEGVGuiDataResponse.EGVStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-124">getEgvStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CurrentEGVGuiDataResponse.EGVStatus.html" title="enum class in com.jwoglom.pumpx2.pump.messages.response.currentStatus">CurrentEGVGuiDataResponse.EGVStatus</a></span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-121">getEgvStatus</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getEgvStatusId()">
 <h3>getEgvStatusId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-128">getEgvStatusId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-125">getEgvStatusId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTrendRate()">
 <h3>getTrendRate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-132">getTrendRate</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/currentStatus/CurrentEgvGuiDataV2Response.html#line-129">getTrendRate</a></span>()</div>
 </section>
 </li>
 </ul>

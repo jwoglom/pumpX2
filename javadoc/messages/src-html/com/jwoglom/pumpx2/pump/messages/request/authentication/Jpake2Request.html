@@ -36,88 +36,85 @@
 <span class="source-line-no">019</span><span id="line-19"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
 <span class="source-line-no">020</span><span id="line-20"> * connection initialization as part of performing the initial pump pairing process.</span>
 <span class="source-line-no">021</span><span id="line-21"> */</span>
-<span class="source-line-no">022</span><span id="line-22">/**</span>
-<span class="source-line-no">023</span><span id="line-23"> * The third authorization message sent to the pump with V2 authorization style which contains the</span>
-<span class="source-line-no">024</span><span id="line-24"> * second round of EcJpake. The message structure is identical to {@link Jpake1aRequest} and</span>
-<span class="source-line-no">025</span><span id="line-25"> * {@link Jpake1bRequest}, the second EcJpake round has half the length though so does not need to</span>
-<span class="source-line-no">026</span><span id="line-26"> * be split into two sub-messages.</span>
+<span class="source-line-no">022</span><span id="line-22"></span>
+<span class="source-line-no">023</span><span id="line-23">/**</span>
+<span class="source-line-no">024</span><span id="line-24"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response}, opCode 36, size 167.</span>
+<span class="source-line-no">025</span><span id="line-25"> *</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;br&gt;</span>
 <span class="source-line-no">027</span><span id="line-27"> *</span>
-<span class="source-line-no">028</span><span id="line-28"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
-<span class="source-line-no">029</span><span id="line-29"> * connection initialization as part of performing the initial pump pairing process.</span>
-<span class="source-line-no">030</span><span id="line-30"> *</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
+<span class="source-line-no">028</span><span id="line-28"> * The third authorization message sent to the pump with V2 authorization style which contains the</span>
+<span class="source-line-no">029</span><span id="line-29"> * second round of EcJpake. The message structure is identical to {@link Jpake1aRequest} and</span>
+<span class="source-line-no">030</span><span id="line-30"> * {@link Jpake1bRequest}, the second EcJpake round has half the length though so does not need to</span>
+<span class="source-line-no">031</span><span id="line-31"> * be split into two sub-messages.</span>
 <span class="source-line-no">032</span><span id="line-32"> *</span>
-<span class="source-line-no">033</span><span id="line-33"> * &lt;br&gt;</span>
-<span class="source-line-no">034</span><span id="line-34"> *</span>
-<span class="source-line-no">035</span><span id="line-35"> * Request message for {@link com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response}, opCode 36, size 167</span>
-<span class="source-line-no">036</span><span id="line-36"> *</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;br&gt;</span>
-<span class="source-line-no">038</span><span id="line-38"> *</span>
-<span class="source-line-no">039</span><span id="line-39"> * </span>
-<span class="source-line-no">040</span><span id="line-40"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">041</span><span id="line-41"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;36&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;167&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">044</span><span id="line-44"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">045</span><span id="line-45"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V3_2}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">046</span><span id="line-46"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">047</span><span id="line-47"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">048</span><span id="line-48"> * &lt;/table&gt;</span>
-<span class="source-line-no">049</span><span id="line-49"> */@MessageProps(</span>
-<span class="source-line-no">050</span><span id="line-50">    opCode=36,</span>
-<span class="source-line-no">051</span><span id="line-51">    size=167,</span>
-<span class="source-line-no">052</span><span id="line-52">    type=MessageType.REQUEST,</span>
-<span class="source-line-no">053</span><span id="line-53">    minApi=KnownApiVersion.API_V3_2,</span>
-<span class="source-line-no">054</span><span id="line-54">    characteristic=Characteristic.AUTHORIZATION,</span>
-<span class="source-line-no">055</span><span id="line-55">    response= Jpake2Response.class</span>
-<span class="source-line-no">056</span><span id="line-56">)</span>
-<span class="source-line-no">057</span><span id="line-57">public class Jpake2Request extends Message {</span>
-<span class="source-line-no">058</span><span id="line-58">    private int appInstanceId;</span>
-<span class="source-line-no">059</span><span id="line-59">    private byte[] centralChallenge;</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    public Jpake2Request() {}</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    public Jpake2Request(int appInstanceId, byte[] centralChallenge) {</span>
-<span class="source-line-no">064</span><span id="line-64">        this.cargo = buildCargo(appInstanceId, centralChallenge);</span>
-<span class="source-line-no">065</span><span id="line-65">        this.appInstanceId = appInstanceId;</span>
-<span class="source-line-no">066</span><span id="line-66">        this.centralChallenge = centralChallenge; // 165</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    public Jpake2Request(byte[] rawCargo) {</span>
-<span class="source-line-no">070</span><span id="line-70">        parse(rawCargo);</span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    public int getAppInstanceId() {</span>
-<span class="source-line-no">074</span><span id="line-74">        return appInstanceId;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    public byte[] getCentralChallenge() {</span>
-<span class="source-line-no">078</span><span id="line-78">        return centralChallenge;</span>
-<span class="source-line-no">079</span><span id="line-79">    }</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    private static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {</span>
-<span class="source-line-no">082</span><span id="line-82">        byte[] cargo = new byte[167];</span>
-<span class="source-line-no">083</span><span id="line-83">        byte[] combined = Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge);</span>
-<span class="source-line-no">084</span><span id="line-84">        // A minimal-length ZKP scalar can make the JPAKE round a byte or two short; the remainder</span>
-<span class="source-line-no">085</span><span id="line-85">        // of the fixed-size cargo is left as zeroes, which the peer's length-prefixed parser skips.</span>
-<span class="source-line-no">086</span><span id="line-86">        System.arraycopy(combined, 0, cargo, 0, Math.min(combined.length, 167));</span>
+<span class="source-line-no">033</span><span id="line-33"> * When the Android libary is used, this message is invoked automatically by PumpX2 on Bluetooth</span>
+<span class="source-line-no">034</span><span id="line-34"> * connection initialization as part of performing the initial pump pairing process.</span>
+<span class="source-line-no">035</span><span id="line-35"> *</span>
+<span class="source-line-no">036</span><span id="line-36"> * </span>
+<span class="source-line-no">037</span><span id="line-37"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">038</span><span id="line-38"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;36&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;167&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#REQUEST}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">042</span><span id="line-42"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V3_2}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">043</span><span id="line-43"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#AUTHORIZATION}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">044</span><span id="line-44"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;response&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.response.authentication.Jpake2Response}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">045</span><span id="line-45"> * &lt;/table&gt;</span>
+<span class="source-line-no">046</span><span id="line-46"> */@MessageProps(</span>
+<span class="source-line-no">047</span><span id="line-47">    opCode=36,</span>
+<span class="source-line-no">048</span><span id="line-48">    size=167,</span>
+<span class="source-line-no">049</span><span id="line-49">    type=MessageType.REQUEST,</span>
+<span class="source-line-no">050</span><span id="line-50">    minApi=KnownApiVersion.API_V3_2,</span>
+<span class="source-line-no">051</span><span id="line-51">    characteristic=Characteristic.AUTHORIZATION,</span>
+<span class="source-line-no">052</span><span id="line-52">    response= Jpake2Response.class</span>
+<span class="source-line-no">053</span><span id="line-53">)</span>
+<span class="source-line-no">054</span><span id="line-54">public class Jpake2Request extends Message {</span>
+<span class="source-line-no">055</span><span id="line-55">    private int appInstanceId;</span>
+<span class="source-line-no">056</span><span id="line-56">    private byte[] centralChallenge;</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    public Jpake2Request() {}</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    public Jpake2Request(int appInstanceId, byte[] centralChallenge) {</span>
+<span class="source-line-no">061</span><span id="line-61">        this.cargo = buildCargo(appInstanceId, centralChallenge);</span>
+<span class="source-line-no">062</span><span id="line-62">        this.appInstanceId = appInstanceId;</span>
+<span class="source-line-no">063</span><span id="line-63">        this.centralChallenge = centralChallenge; // 165</span>
+<span class="source-line-no">064</span><span id="line-64">    }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">    public Jpake2Request(byte[] rawCargo) {</span>
+<span class="source-line-no">067</span><span id="line-67">        parse(rawCargo);</span>
+<span class="source-line-no">068</span><span id="line-68">    }</span>
+<span class="source-line-no">069</span><span id="line-69"></span>
+<span class="source-line-no">070</span><span id="line-70">    public int getAppInstanceId() {</span>
+<span class="source-line-no">071</span><span id="line-71">        return appInstanceId;</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    public byte[] getCentralChallenge() {</span>
+<span class="source-line-no">075</span><span id="line-75">        return centralChallenge;</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    private static byte[] buildCargo(int appInstanceId, byte[] centralChallenge) {</span>
+<span class="source-line-no">079</span><span id="line-79">        byte[] cargo = new byte[167];</span>
+<span class="source-line-no">080</span><span id="line-80">        byte[] combined = Bytes.combine(Bytes.firstTwoBytesLittleEndian(appInstanceId), centralChallenge);</span>
+<span class="source-line-no">081</span><span id="line-81">        // A minimal-length ZKP scalar can make the JPAKE round a byte or two short; the remainder</span>
+<span class="source-line-no">082</span><span id="line-82">        // of the fixed-size cargo is left as zeroes, which the peer's length-prefixed parser skips.</span>
+<span class="source-line-no">083</span><span id="line-83">        System.arraycopy(combined, 0, cargo, 0, Math.min(combined.length, 167));</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">        return cargo;</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
 <span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">        return cargo;</span>
-<span class="source-line-no">089</span><span id="line-89">    }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">    /**</span>
-<span class="source-line-no">092</span><span id="line-92">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">093</span><span id="line-93">     * &lt;caption&gt;Parsed fields for Jpake2Request:&lt;/caption&gt;</span>
-<span class="source-line-no">094</span><span id="line-94">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appInstanceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">095</span><span id="line-95">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;centralChallenge&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 2, raw.length)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">096</span><span id="line-96">     * &lt;/table&gt;</span>
-<span class="source-line-no">097</span><span id="line-97">     */</span>
-<span class="source-line-no">098</span><span id="line-98">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">099</span><span id="line-99">        this.cargo = raw;</span>
-<span class="source-line-no">100</span><span id="line-100">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</span>
-<span class="source-line-no">101</span><span id="line-101">        this.centralChallenge = Arrays.copyOfRange(raw, 2, raw.length);</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103">}</span>
+<span class="source-line-no">088</span><span id="line-88">    /**</span>
+<span class="source-line-no">089</span><span id="line-89">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">090</span><span id="line-90">     * &lt;caption&gt;Parsed fields for Jpake2Request:&lt;/caption&gt;</span>
+<span class="source-line-no">091</span><span id="line-91">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;appInstanceId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">092</span><span id="line-92">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;centralChallenge&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Arrays.copyOfRange(raw, 2, raw.length)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">093</span><span id="line-93">     * &lt;/table&gt;</span>
+<span class="source-line-no">094</span><span id="line-94">     */</span>
+<span class="source-line-no">095</span><span id="line-95">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">096</span><span id="line-96">        this.cargo = raw;</span>
+<span class="source-line-no">097</span><span id="line-97">        this.appInstanceId = Bytes.readShort(Arrays.copyOfRange(raw, 0, 2), 0);</span>
+<span class="source-line-no">098</span><span id="line-98">        this.centralChallenge = Arrays.copyOfRange(raw, 2, raw.length);</span>
+<span class="source-line-no">099</span><span id="line-99">    }</span>
+<span class="source-line-no">100</span><span id="line-100">}</span>
 
 
 

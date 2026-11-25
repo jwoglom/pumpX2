@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-25">CartridgeFillResponseHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-53">CartridgeFillResponseHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">Written when the pump answers a remote cartridge-change or fill command. Seen on the Tandem Mobi.
+<div class="block">History log record Cartridge/Fill Response, opCode 359, size 26.
+
+ <br>
+
+ Written when the pump answers a remote cartridge-change or fill command. Seen on the Tandem Mobi.
 
  <p>Tandem's export and its Mobi app do not name this opcode, so the class name is provisional.
  Byte 10 is the opcode of the response the pump sent and byte 12 its status. The five values seen
@@ -97,7 +101,15 @@ loadScripts(document, 'script');</script>
  290), whose request opcode is this response opcode minus 1: 192/194 records across TandemKit logs
  and BLE captures, the 2 exceptions sitting at a capture gap. In the maintainer's TandemKit logs
  the count equals the number of these requests sent (31 = 4 + 4 + 9 + 9 + 5).
- See https://github.com/jwoglom/pumpx2/issues/148.</div>
+ See https://github.com/jwoglom/pumpx2/issues/148.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>359</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Cartridge/Fill Response"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>""</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -212,13 +224,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CartridgeFillResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-37">CartridgeFillResponseHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-65">CartridgeFillResponseHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int,int,byte[])">
 <h3>CartridgeFillResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-38">CartridgeFillResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-66">CartridgeFillResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;unknown11,
@@ -229,7 +241,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,int,int)">
 <h3>CartridgeFillResponseHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-47">CartridgeFillResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-75">CartridgeFillResponseHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;status)</span></div>
@@ -246,7 +258,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-51">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-79">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -256,7 +268,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-64">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-92">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for CartridgeFillResponseHistoryLog:</caption>
  <tr><td><code>responseOpCode</code></td><td><code>raw[10] &amp; 0xFF</code></td></tr>
@@ -273,7 +285,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,int,int,int,byte[])">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-74">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-102">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  int&nbsp;responseOpCode,
  int&nbsp;unknown11,
@@ -284,7 +296,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getResponseOpCode()">
 <h3>getResponseOpCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-88">getResponseOpCode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-116">getResponseOpCode</a></span>()</div>
 <div class="block">The unsigned opcode of the CONTROL-characteristic response the pump sent (pumpX2's signed
  <code>opCode &amp; 0xFF</code>): 145, 147, 149, 151 or 153 in every observed record.</div>
 </section>
@@ -292,7 +304,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStatus()">
 <h3>getStatus</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-100">getStatus</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-128">getStatus</a></span>()</div>
 <div class="block">The response's status byte: 0 for success.
 
  <p>In one maintainer capture the app sent ExitChangeCartridgeMode twice; the pump answered
@@ -304,14 +316,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getUnknown11()">
 <h3>getUnknown11</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-107">getUnknown11</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-135">getUnknown11</a></span>()</div>
 <div class="block">Byte 11, zero in every observed record (194/194).</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUnknownTail()">
 <h3>getUnknownTail</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-114">getUnknownTail</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/CartridgeFillResponseHistoryLog.html#line-142">getUnknownTail</a></span>()</div>
 <div class="block">Bytes 13-25, all zero in every observed record (194/194).</div>
 </section>
 </li>

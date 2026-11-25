@@ -29,153 +29,150 @@
 <span class="source-line-no">012</span><span id="line-12">/**</span>
 <span class="source-line-no">013</span><span id="line-13"> * also known as BolusTerminationResponse</span>
 <span class="source-line-no">014</span><span id="line-14"> */</span>
-<span class="source-line-no">015</span><span id="line-15">/**</span>
-<span class="source-line-no">016</span><span id="line-16"> * also known as BolusTerminationResponse</span>
-<span class="source-line-no">017</span><span id="line-17"> *</span>
-<span class="source-line-no">018</span><span id="line-18"></span>
-<span class="source-line-no">019</span><span id="line-19"> *</span>
-<span class="source-line-no">020</span><span id="line-20"> * &lt;br&gt;</span>
-<span class="source-line-no">021</span><span id="line-21"> *</span>
-<span class="source-line-no">022</span><span id="line-22"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest}, opCode -95, size 5</span>
-<span class="source-line-no">023</span><span id="line-23"> *</span>
-<span class="source-line-no">024</span><span id="line-24"> * &lt;br&gt;</span>
-<span class="source-line-no">025</span><span id="line-25"> *</span>
-<span class="source-line-no">026</span><span id="line-26"> * </span>
-<span class="source-line-no">027</span><span id="line-27"> * &lt;table border='1'&gt;</span>
-<span class="source-line-no">028</span><span id="line-28"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
-<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-95&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;5&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">033</span><span id="line-33"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">034</span><span id="line-34"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">035</span><span id="line-35"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">036</span><span id="line-36"> * &lt;/table&gt;</span>
-<span class="source-line-no">037</span><span id="line-37"> */@MessageProps(</span>
-<span class="source-line-no">038</span><span id="line-38">    opCode=-95,</span>
-<span class="source-line-no">039</span><span id="line-39">    size=5, // 29 with 24 byte padding</span>
-<span class="source-line-no">040</span><span id="line-40">    type=MessageType.RESPONSE,</span>
-<span class="source-line-no">041</span><span id="line-41">    characteristic=Characteristic.CONTROL,</span>
-<span class="source-line-no">042</span><span id="line-42">    request=CancelBolusRequest.class,</span>
-<span class="source-line-no">043</span><span id="line-43">    signed=true,</span>
-<span class="source-line-no">044</span><span id="line-44">    minApi=KnownApiVersion.API_V2_5</span>
-<span class="source-line-no">045</span><span id="line-45">)</span>
-<span class="source-line-no">046</span><span id="line-46">public class CancelBolusResponse extends Message {</span>
-<span class="source-line-no">047</span><span id="line-47">    </span>
-<span class="source-line-no">048</span><span id="line-48">    private int statusId;</span>
-<span class="source-line-no">049</span><span id="line-49">    private int bolusId;</span>
-<span class="source-line-no">050</span><span id="line-50">    private int reasonId;</span>
-<span class="source-line-no">051</span><span id="line-51">    </span>
-<span class="source-line-no">052</span><span id="line-52">    public CancelBolusResponse() {}</span>
-<span class="source-line-no">053</span><span id="line-53">    </span>
-<span class="source-line-no">054</span><span id="line-54">    public CancelBolusResponse(int statusId, int bolusId, int reasonId) {</span>
-<span class="source-line-no">055</span><span id="line-55">        this.cargo = buildCargo(statusId, bolusId, reasonId);</span>
-<span class="source-line-no">056</span><span id="line-56">        this.statusId = statusId;</span>
-<span class="source-line-no">057</span><span id="line-57">        this.bolusId = bolusId;</span>
-<span class="source-line-no">058</span><span id="line-58">        this.reasonId = reasonId;</span>
-<span class="source-line-no">059</span><span id="line-59">        </span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    /**</span>
-<span class="source-line-no">063</span><span id="line-63">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">064</span><span id="line-64">     * &lt;caption&gt;Parsed fields for CancelBolusResponse:&lt;/caption&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;statusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;/table&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     */</span>
-<span class="source-line-no">070</span><span id="line-70">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">071</span><span id="line-71">        raw = removeSignedRequestHmacBytes(raw);</span>
-<span class="source-line-no">072</span><span id="line-72">        Validate.isTrue(raw.length == props().size());</span>
-<span class="source-line-no">073</span><span id="line-73">        this.cargo = raw;</span>
-<span class="source-line-no">074</span><span id="line-74">        this.statusId = raw[0];</span>
-<span class="source-line-no">075</span><span id="line-75">        this.bolusId = Bytes.readShort(raw, 1);</span>
-<span class="source-line-no">076</span><span id="line-76">        this.reasonId = raw[3];</span>
-<span class="source-line-no">077</span><span id="line-77">        </span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">    </span>
-<span class="source-line-no">081</span><span id="line-81">    /**</span>
-<span class="source-line-no">082</span><span id="line-82">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">083</span><span id="line-83">     * &lt;caption&gt;Byte layout for CancelBolusResponse.buildCargo(...):&lt;/caption&gt;</span>
-<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">087</span><span id="line-87">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">088</span><span id="line-88">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) reason} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">089</span><span id="line-89">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">090</span><span id="line-90">     * &lt;/table&gt;</span>
-<span class="source-line-no">091</span><span id="line-91">     */</span>
-<span class="source-line-no">092</span><span id="line-92">    public static byte[] buildCargo(int status, int bolusId, int reason) {</span>
-<span class="source-line-no">093</span><span id="line-93">        return Bytes.combine(</span>
-<span class="source-line-no">094</span><span id="line-94">            new byte[]{ (byte) status },</span>
-<span class="source-line-no">095</span><span id="line-95">            Bytes.firstTwoBytesLittleEndian(bolusId),</span>
-<span class="source-line-no">096</span><span id="line-96">            new byte[]{ (byte) reason, 0 });</span>
-<span class="source-line-no">097</span><span id="line-97">    }</span>
-<span class="source-line-no">098</span><span id="line-98">    </span>
-<span class="source-line-no">099</span><span id="line-99">    public int getStatusId() {</span>
-<span class="source-line-no">100</span><span id="line-100">        return statusId;</span>
+<span class="source-line-no">015</span><span id="line-15"></span>
+<span class="source-line-no">016</span><span id="line-16">/**</span>
+<span class="source-line-no">017</span><span id="line-17"> * Response message for {@link com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest}, opCode -95, size 5.</span>
+<span class="source-line-no">018</span><span id="line-18"> *</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;br&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> *</span>
+<span class="source-line-no">021</span><span id="line-21"> * also known as BolusTerminationResponse</span>
+<span class="source-line-no">022</span><span id="line-22"> *</span>
+<span class="source-line-no">023</span><span id="line-23"> * </span>
+<span class="source-line-no">024</span><span id="line-24"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">025</span><span id="line-25"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">026</span><span id="line-26"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;-95&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">027</span><span id="line-27"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;size&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;5&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">028</span><span id="line-28"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;type&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.MessageType#RESPONSE}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">029</span><span id="line-29"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;characteristic&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.bluetooth.Characteristic#CONTROL}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">030</span><span id="line-30"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;request&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.request.control.CancelBolusRequest}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">031</span><span id="line-31"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;signed&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;true&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">032</span><span id="line-32"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;minApi&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;{@link com.jwoglom.pumpx2.pump.messages.models.KnownApiVersion#API_V2_5}&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;/table&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> */@MessageProps(</span>
+<span class="source-line-no">035</span><span id="line-35">    opCode=-95,</span>
+<span class="source-line-no">036</span><span id="line-36">    size=5, // 29 with 24 byte padding</span>
+<span class="source-line-no">037</span><span id="line-37">    type=MessageType.RESPONSE,</span>
+<span class="source-line-no">038</span><span id="line-38">    characteristic=Characteristic.CONTROL,</span>
+<span class="source-line-no">039</span><span id="line-39">    request=CancelBolusRequest.class,</span>
+<span class="source-line-no">040</span><span id="line-40">    signed=true,</span>
+<span class="source-line-no">041</span><span id="line-41">    minApi=KnownApiVersion.API_V2_5</span>
+<span class="source-line-no">042</span><span id="line-42">)</span>
+<span class="source-line-no">043</span><span id="line-43">public class CancelBolusResponse extends Message {</span>
+<span class="source-line-no">044</span><span id="line-44">    </span>
+<span class="source-line-no">045</span><span id="line-45">    private int statusId;</span>
+<span class="source-line-no">046</span><span id="line-46">    private int bolusId;</span>
+<span class="source-line-no">047</span><span id="line-47">    private int reasonId;</span>
+<span class="source-line-no">048</span><span id="line-48">    </span>
+<span class="source-line-no">049</span><span id="line-49">    public CancelBolusResponse() {}</span>
+<span class="source-line-no">050</span><span id="line-50">    </span>
+<span class="source-line-no">051</span><span id="line-51">    public CancelBolusResponse(int statusId, int bolusId, int reasonId) {</span>
+<span class="source-line-no">052</span><span id="line-52">        this.cargo = buildCargo(statusId, bolusId, reasonId);</span>
+<span class="source-line-no">053</span><span id="line-53">        this.statusId = statusId;</span>
+<span class="source-line-no">054</span><span id="line-54">        this.bolusId = bolusId;</span>
+<span class="source-line-no">055</span><span id="line-55">        this.reasonId = reasonId;</span>
+<span class="source-line-no">056</span><span id="line-56">        </span>
+<span class="source-line-no">057</span><span id="line-57">    }</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    /**</span>
+<span class="source-line-no">060</span><span id="line-60">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">061</span><span id="line-61">     * &lt;caption&gt;Parsed fields for CancelBolusResponse:&lt;/caption&gt;</span>
+<span class="source-line-no">062</span><span id="line-62">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;statusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">063</span><span id="line-63">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;bolusId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 1)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">064</span><span id="line-64">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;reasonId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[3]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;/table&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     */</span>
+<span class="source-line-no">067</span><span id="line-67">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">068</span><span id="line-68">        raw = removeSignedRequestHmacBytes(raw);</span>
+<span class="source-line-no">069</span><span id="line-69">        Validate.isTrue(raw.length == props().size());</span>
+<span class="source-line-no">070</span><span id="line-70">        this.cargo = raw;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.statusId = raw[0];</span>
+<span class="source-line-no">072</span><span id="line-72">        this.bolusId = Bytes.readShort(raw, 1);</span>
+<span class="source-line-no">073</span><span id="line-73">        this.reasonId = raw[3];</span>
+<span class="source-line-no">074</span><span id="line-74">        </span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    </span>
+<span class="source-line-no">078</span><span id="line-78">    /**</span>
+<span class="source-line-no">079</span><span id="line-79">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">080</span><span id="line-80">     * &lt;caption&gt;Byte layout for CancelBolusResponse.buildCargo(...):&lt;/caption&gt;</span>
+<span class="source-line-no">081</span><span id="line-81">     * &lt;tr&gt;&lt;th&gt;Offset&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">082</span><span id="line-82">     * &lt;tr&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;&lt;code&gt;(byte) status&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">083</span><span id="line-83">     * &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">084</span><span id="line-84">     * &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;&lt;code&gt;firstTwoBytesLittleEndian(bolusId) [byte 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">085</span><span id="line-85">     * &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{(byte) reason} [element 0]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;tr&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;&lt;code&gt;new byte[]{0} [element 1]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">087</span><span id="line-87">     * &lt;/table&gt;</span>
+<span class="source-line-no">088</span><span id="line-88">     */</span>
+<span class="source-line-no">089</span><span id="line-89">    public static byte[] buildCargo(int status, int bolusId, int reason) {</span>
+<span class="source-line-no">090</span><span id="line-90">        return Bytes.combine(</span>
+<span class="source-line-no">091</span><span id="line-91">            new byte[]{ (byte) status },</span>
+<span class="source-line-no">092</span><span id="line-92">            Bytes.firstTwoBytesLittleEndian(bolusId),</span>
+<span class="source-line-no">093</span><span id="line-93">            new byte[]{ (byte) reason, 0 });</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95">    </span>
+<span class="source-line-no">096</span><span id="line-96">    public int getStatusId() {</span>
+<span class="source-line-no">097</span><span id="line-97">        return statusId;</span>
+<span class="source-line-no">098</span><span id="line-98">    }</span>
+<span class="source-line-no">099</span><span id="line-99">    public CancelStatus getStatus() {</span>
+<span class="source-line-no">100</span><span id="line-100">        return CancelStatus.fromId(statusId);</span>
 <span class="source-line-no">101</span><span id="line-101">    }</span>
-<span class="source-line-no">102</span><span id="line-102">    public CancelStatus getStatus() {</span>
-<span class="source-line-no">103</span><span id="line-103">        return CancelStatus.fromId(statusId);</span>
+<span class="source-line-no">102</span><span id="line-102">    public int getBolusId() {</span>
+<span class="source-line-no">103</span><span id="line-103">        return bolusId;</span>
 <span class="source-line-no">104</span><span id="line-104">    }</span>
-<span class="source-line-no">105</span><span id="line-105">    public int getBolusId() {</span>
-<span class="source-line-no">106</span><span id="line-106">        return bolusId;</span>
+<span class="source-line-no">105</span><span id="line-105">    public int getReasonId() {</span>
+<span class="source-line-no">106</span><span id="line-106">        return reasonId;</span>
 <span class="source-line-no">107</span><span id="line-107">    }</span>
-<span class="source-line-no">108</span><span id="line-108">    public int getReasonId() {</span>
-<span class="source-line-no">109</span><span id="line-109">        return reasonId;</span>
+<span class="source-line-no">108</span><span id="line-108">    public CancelReason getReason() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return CancelReason.fromId(reasonId);</span>
 <span class="source-line-no">110</span><span id="line-110">    }</span>
-<span class="source-line-no">111</span><span id="line-111">    public CancelReason getReason() {</span>
-<span class="source-line-no">112</span><span id="line-112">        return CancelReason.fromId(reasonId);</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">    public enum CancelStatus {</span>
-<span class="source-line-no">116</span><span id="line-116">        SUCCESS(0),</span>
-<span class="source-line-no">117</span><span id="line-117">        FAILED(1),</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">        ;</span>
-<span class="source-line-no">120</span><span id="line-120">        private final int id;</span>
-<span class="source-line-no">121</span><span id="line-121">        CancelStatus(int id) {</span>
-<span class="source-line-no">122</span><span id="line-122">            this.id = id;</span>
-<span class="source-line-no">123</span><span id="line-123">        }</span>
-<span class="source-line-no">124</span><span id="line-124"></span>
-<span class="source-line-no">125</span><span id="line-125">        public static CancelStatus fromId(int id) {</span>
-<span class="source-line-no">126</span><span id="line-126">            for (CancelStatus s : values()) {</span>
-<span class="source-line-no">127</span><span id="line-127">                if (s.id == id) {</span>
-<span class="source-line-no">128</span><span id="line-128">                    return s;</span>
-<span class="source-line-no">129</span><span id="line-129">                }</span>
-<span class="source-line-no">130</span><span id="line-130">            }</span>
-<span class="source-line-no">131</span><span id="line-131">            return null;</span>
-<span class="source-line-no">132</span><span id="line-132">        }</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    public enum CancelReason {</span>
-<span class="source-line-no">136</span><span id="line-136">        NO_ERROR(0),</span>
-<span class="source-line-no">137</span><span id="line-137">        INVALID_OR_ALREADY_DELIVERED(2)</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">        ;</span>
-<span class="source-line-no">140</span><span id="line-140">        private final int id;</span>
-<span class="source-line-no">141</span><span id="line-141">        CancelReason(int id) {</span>
-<span class="source-line-no">142</span><span id="line-142">            this.id = id;</span>
-<span class="source-line-no">143</span><span id="line-143">        }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">        public static CancelReason fromId(int id) {</span>
-<span class="source-line-no">146</span><span id="line-146">            for (CancelReason s : values()) {</span>
-<span class="source-line-no">147</span><span id="line-147">                if (s.id == id) {</span>
-<span class="source-line-no">148</span><span id="line-148">                    return s;</span>
-<span class="source-line-no">149</span><span id="line-149">                }</span>
-<span class="source-line-no">150</span><span id="line-150">            }</span>
-<span class="source-line-no">151</span><span id="line-151">            return null;</span>
-<span class="source-line-no">152</span><span id="line-152">        }</span>
-<span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">    /**</span>
-<span class="source-line-no">156</span><span id="line-156">     * @return true when the bolus was successfully cancelled</span>
-<span class="source-line-no">157</span><span id="line-157">     */</span>
-<span class="source-line-no">158</span><span id="line-158">    public boolean wasCancelled() {</span>
-<span class="source-line-no">159</span><span id="line-159">        return getStatus() == CancelStatus.SUCCESS &amp;&amp; getReason() == CancelReason.NO_ERROR;</span>
-<span class="source-line-no">160</span><span id="line-160">    }</span>
-<span class="source-line-no">161</span><span id="line-161">}</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    public enum CancelStatus {</span>
+<span class="source-line-no">113</span><span id="line-113">        SUCCESS(0),</span>
+<span class="source-line-no">114</span><span id="line-114">        FAILED(1),</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">        ;</span>
+<span class="source-line-no">117</span><span id="line-117">        private final int id;</span>
+<span class="source-line-no">118</span><span id="line-118">        CancelStatus(int id) {</span>
+<span class="source-line-no">119</span><span id="line-119">            this.id = id;</span>
+<span class="source-line-no">120</span><span id="line-120">        }</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">        public static CancelStatus fromId(int id) {</span>
+<span class="source-line-no">123</span><span id="line-123">            for (CancelStatus s : values()) {</span>
+<span class="source-line-no">124</span><span id="line-124">                if (s.id == id) {</span>
+<span class="source-line-no">125</span><span id="line-125">                    return s;</span>
+<span class="source-line-no">126</span><span id="line-126">                }</span>
+<span class="source-line-no">127</span><span id="line-127">            }</span>
+<span class="source-line-no">128</span><span id="line-128">            return null;</span>
+<span class="source-line-no">129</span><span id="line-129">        }</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">    public enum CancelReason {</span>
+<span class="source-line-no">133</span><span id="line-133">        NO_ERROR(0),</span>
+<span class="source-line-no">134</span><span id="line-134">        INVALID_OR_ALREADY_DELIVERED(2)</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">        ;</span>
+<span class="source-line-no">137</span><span id="line-137">        private final int id;</span>
+<span class="source-line-no">138</span><span id="line-138">        CancelReason(int id) {</span>
+<span class="source-line-no">139</span><span id="line-139">            this.id = id;</span>
+<span class="source-line-no">140</span><span id="line-140">        }</span>
+<span class="source-line-no">141</span><span id="line-141"></span>
+<span class="source-line-no">142</span><span id="line-142">        public static CancelReason fromId(int id) {</span>
+<span class="source-line-no">143</span><span id="line-143">            for (CancelReason s : values()) {</span>
+<span class="source-line-no">144</span><span id="line-144">                if (s.id == id) {</span>
+<span class="source-line-no">145</span><span id="line-145">                    return s;</span>
+<span class="source-line-no">146</span><span id="line-146">                }</span>
+<span class="source-line-no">147</span><span id="line-147">            }</span>
+<span class="source-line-no">148</span><span id="line-148">            return null;</span>
+<span class="source-line-no">149</span><span id="line-149">        }</span>
+<span class="source-line-no">150</span><span id="line-150">    }</span>
+<span class="source-line-no">151</span><span id="line-151"></span>
+<span class="source-line-no">152</span><span id="line-152">    /**</span>
+<span class="source-line-no">153</span><span id="line-153">     * @return true when the bolus was successfully cancelled</span>
+<span class="source-line-no">154</span><span id="line-154">     */</span>
+<span class="source-line-no">155</span><span id="line-155">    public boolean wasCancelled() {</span>
+<span class="source-line-no">156</span><span id="line-156">        return getStatus() == CancelStatus.SUCCESS &amp;&amp; getReason() == CancelReason.NO_ERROR;</span>
+<span class="source-line-no">157</span><span id="line-157">    }</span>
+<span class="source-line-no">158</span><span id="line-158">}</span>
 
 
 

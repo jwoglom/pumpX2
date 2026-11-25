@@ -43,141 +43,141 @@
 <span class="source-line-no">026</span><span id="line-26"> * 15  uint8   reserved</span>
 <span class="source-line-no">027</span><span id="line-27"> * &lt;/pre&gt;</span>
 <span class="source-line-no">028</span><span id="line-28"> */</span>
-<span class="source-line-no">029</span><span id="line-29">@HistoryLogProps(</span>
-<span class="source-line-no">030</span><span id="line-30">    opCode = 372,</span>
-<span class="source-line-no">031</span><span id="line-31">    displayName = "CGM Data (FSL2)",</span>
-<span class="source-line-no">032</span><span id="line-32">    internalName = "LID_CGM_DATA_FSL2"</span>
-<span class="source-line-no">033</span><span id="line-33">)</span>
-<span class="source-line-no">034</span><span id="line-34">public class CgmDataFsl2HistoryLog extends HistoryLog {</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">    private int glucoseValueStatusRaw;</span>
-<span class="source-line-no">037</span><span id="line-37">    private int cgmDataTypeRaw;</span>
-<span class="source-line-no">038</span><span id="line-38">    private int rate;</span>
-<span class="source-line-no">039</span><span id="line-39">    private int algorithmStateRaw;</span>
-<span class="source-line-no">040</span><span id="line-40">    private int rssi;</span>
-<span class="source-line-no">041</span><span id="line-41">    private int currentGlucoseDisplayValue;</span>
-<span class="source-line-no">042</span><span id="line-42">    private long egvTimestamp;</span>
-<span class="source-line-no">043</span><span id="line-43">    private int egvInfoBitmaskRaw;</span>
-<span class="source-line-no">044</span><span id="line-44">    private int interval;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    public CgmDataFsl2HistoryLog() {}</span>
-<span class="source-line-no">047</span><span id="line-47">    public CgmDataFsl2HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">048</span><span id="line-48">        this(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    public CgmDataFsl2HistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
-<span class="source-line-no">052</span><span id="line-52">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">053</span><span id="line-53">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
-<span class="source-line-no">054</span><span id="line-54">        parse(cargo);</span>
-<span class="source-line-no">055</span><span id="line-55">    }</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    public CgmDataFsl2HistoryLog(int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
-<span class="source-line-no">058</span><span id="line-58">        this(0, 0, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    public int typeId() {</span>
-<span class="source-line-no">062</span><span id="line-62">        return 372;</span>
-<span class="source-line-no">063</span><span id="line-63">    }</span>
-<span class="source-line-no">064</span><span id="line-64"></span>
-<span class="source-line-no">065</span><span id="line-65">    /**</span>
-<span class="source-line-no">066</span><span id="line-66">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">067</span><span id="line-67">     * &lt;caption&gt;Parsed fields for CgmDataFsl2HistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseValueStatusRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmDataTypeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(short) Bytes.readShort(raw, 12)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;algorithmStateRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">072</span><span id="line-72">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentGlucoseDisplayValue&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">074</span><span id="line-74">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">075</span><span id="line-75">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvInfoBitmaskRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;interval&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * &lt;/table&gt;</span>
-<span class="source-line-no">078</span><span id="line-78">     */</span>
-<span class="source-line-no">079</span><span id="line-79">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">080</span><span id="line-80">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">081</span><span id="line-81">        this.cargo = raw;</span>
-<span class="source-line-no">082</span><span id="line-82">        parseBase(raw);</span>
-<span class="source-line-no">083</span><span id="line-83">        this.glucoseValueStatusRaw = raw[10] &amp; 0xFF;</span>
-<span class="source-line-no">084</span><span id="line-84">        this.cgmDataTypeRaw = raw[11] &amp; 0xFF;</span>
-<span class="source-line-no">085</span><span id="line-85">        this.rate = (short) Bytes.readShort(raw, 12);</span>
-<span class="source-line-no">086</span><span id="line-86">        this.algorithmStateRaw = raw[14] &amp; 0xFF;</span>
-<span class="source-line-no">087</span><span id="line-87">        this.rssi = raw[15];</span>
-<span class="source-line-no">088</span><span id="line-88">        this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);</span>
-<span class="source-line-no">089</span><span id="line-89">        this.egvTimestamp = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">090</span><span id="line-90">        this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);</span>
-<span class="source-line-no">091</span><span id="line-91">        this.interval = raw[24] &amp; 0xFF;</span>
-<span class="source-line-no">092</span><span id="line-92">    }</span>
-<span class="source-line-no">093</span><span id="line-93"></span>
-<span class="source-line-no">094</span><span id="line-94">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
-<span class="source-line-no">095</span><span id="line-95">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
-<span class="source-line-no">096</span><span id="line-96">    }</span>
-<span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
-<span class="source-line-no">099</span><span id="line-99">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">100</span><span id="line-100">            HistoryLog.typeIdBytes(372, 0), // 372 = 0x0174</span>
-<span class="source-line-no">101</span><span id="line-101">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">102</span><span id="line-102">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">103</span><span id="line-103">            new byte[]{(byte) glucoseValueStatusRaw},</span>
-<span class="source-line-no">104</span><span id="line-104">            new byte[]{(byte) cgmDataTypeRaw},</span>
-<span class="source-line-no">105</span><span id="line-105">            Bytes.firstTwoBytesLittleEndian(rate &amp; 0xFFFF),</span>
-<span class="source-line-no">106</span><span id="line-106">            new byte[]{(byte) algorithmStateRaw},</span>
-<span class="source-line-no">107</span><span id="line-107">            new byte[]{(byte) rssi},</span>
-<span class="source-line-no">108</span><span id="line-108">            Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue),</span>
-<span class="source-line-no">109</span><span id="line-109">            Bytes.toUint32(egvTimestamp),</span>
-<span class="source-line-no">110</span><span id="line-110">            Bytes.firstTwoBytesLittleEndian(egvInfoBitmaskRaw),</span>
-<span class="source-line-no">111</span><span id="line-111">            new byte[]{(byte) interval},</span>
-<span class="source-line-no">112</span><span id="line-112">            new byte[]{0}));</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">    public enum GlucoseValueStatus {</span>
-<span class="source-line-no">116</span><span id="line-116">        PRECISE_VALUE(0),</span>
-<span class="source-line-no">117</span><span id="line-117">        SPECIAL_HIGH(1),</span>
-<span class="source-line-no">118</span><span id="line-118">        SPECIAL_LOW(2)</span>
-<span class="source-line-no">119</span><span id="line-119"></span>
-<span class="source-line-no">120</span><span id="line-120">        ;</span>
-<span class="source-line-no">121</span><span id="line-121">        private int id;</span>
-<span class="source-line-no">122</span><span id="line-122">        GlucoseValueStatus(int id) {</span>
-<span class="source-line-no">123</span><span id="line-123">            this.id = id;</span>
-<span class="source-line-no">124</span><span id="line-124">        }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">        public static GlucoseValueStatus fromId(int id) {</span>
-<span class="source-line-no">127</span><span id="line-127">            for (GlucoseValueStatus r : values()) {</span>
-<span class="source-line-no">128</span><span id="line-128">                if (r.id == id) {</span>
-<span class="source-line-no">129</span><span id="line-129">                    return r;</span>
-<span class="source-line-no">130</span><span id="line-130">                }</span>
-<span class="source-line-no">131</span><span id="line-131">            }</span>
-<span class="source-line-no">132</span><span id="line-132">            return null;</span>
-<span class="source-line-no">133</span><span id="line-133">        }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">        public int getId() {</span>
-<span class="source-line-no">136</span><span id="line-136">            return id;</span>
-<span class="source-line-no">137</span><span id="line-137">        }</span>
-<span class="source-line-no">138</span><span id="line-138">    }</span>
-<span class="source-line-no">139</span><span id="line-139"></span>
-<span class="source-line-no">140</span><span id="line-140">    /**</span>
-<span class="source-line-no">141</span><span id="line-141">     * Bitmask describing the type of reading. Unlike the Dexcom records, Libre readings</span>
-<span class="source-line-no">142</span><span id="line-142">     * can also be one-minute readings (OMR).</span>
-<span class="source-line-no">143</span><span id="line-143">     */</span>
-<span class="source-line-no">144</span><span id="line-144">    public enum CgmDataType {</span>
-<span class="source-line-no">145</span><span id="line-145">        FIVE_MINUTE_READING(1),</span>
-<span class="source-line-no">146</span><span id="line-146">        BACKFILL(2),</span>
-<span class="source-line-no">147</span><span id="line-147">        NONE(16),</span>
-<span class="source-line-no">148</span><span id="line-148">        ONE_MINUTE_READING(32)</span>
-<span class="source-line-no">149</span><span id="line-149"></span>
-<span class="source-line-no">150</span><span id="line-150">        ;</span>
-<span class="source-line-no">151</span><span id="line-151">        private int id;</span>
-<span class="source-line-no">152</span><span id="line-152">        CgmDataType(int id) {</span>
-<span class="source-line-no">153</span><span id="line-153">            this.id = id;</span>
-<span class="source-line-no">154</span><span id="line-154">        }</span>
-<span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">        public static Set&lt;CgmDataType&gt; fromId(int mask) {</span>
-<span class="source-line-no">157</span><span id="line-157">            Set&lt;CgmDataType&gt; items = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">158</span><span id="line-158">            for (CgmDataType i : values()) {</span>
-<span class="source-line-no">159</span><span id="line-159">                if ((mask &amp; i.getId()) != 0) {</span>
-<span class="source-line-no">160</span><span id="line-160">                    items.add(i);</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">/**</span>
+<span class="source-line-no">031</span><span id="line-31"> * History log record CGM Data (FSL2), opCode 372, size 26.</span>
+<span class="source-line-no">032</span><span id="line-32"> *</span>
+<span class="source-line-no">033</span><span id="line-33"> * &lt;br&gt;</span>
+<span class="source-line-no">034</span><span id="line-34"> *</span>
+<span class="source-line-no">035</span><span id="line-35"> * FreeStyle Libre 2 CGM data sample.</span>
+<span class="source-line-no">036</span><span id="line-36"> *</span>
+<span class="source-line-no">037</span><span id="line-37"> * The layout differs from the Dexcom records ({@link DexcomG6CGMHistoryLog}, {@link DexcomG7CGMHistoryLog}):</span>
+<span class="source-line-no">038</span><span id="line-38"> * the glucose value status and CGM data type are single bytes, the rate of change is a signed 16-bit</span>
+<span class="source-line-no">039</span><span id="line-39"> * value, and there is no transmitter timestamp. Field layout per the Tandem Source event schema:</span>
+<span class="source-line-no">040</span><span id="line-40"> * &lt;pre&gt;</span>
+<span class="source-line-no">041</span><span id="line-41"> *  0  uint8   glucoseValueStatus</span>
+<span class="source-line-no">042</span><span id="line-42"> *  1  uint8   cgmDataType (bitmask)</span>
+<span class="source-line-no">043</span><span id="line-43"> *  2  int16   rate (mg/dL/min)</span>
+<span class="source-line-no">044</span><span id="line-44"> *  4  uint8   algorithmState</span>
+<span class="source-line-no">045</span><span id="line-45"> *  5  int8    rssi (dBm)</span>
+<span class="source-line-no">046</span><span id="line-46"> *  6  uint16  currentGlucoseDisplayValue (mg/dL)</span>
+<span class="source-line-no">047</span><span id="line-47"> *  8  uint32  egvTimestamp (seconds)</span>
+<span class="source-line-no">048</span><span id="line-48"> * 12  uint16  egvInfoBitmask</span>
+<span class="source-line-no">049</span><span id="line-49"> * 14  uint8   interval</span>
+<span class="source-line-no">050</span><span id="line-50"> * 15  uint8   reserved</span>
+<span class="source-line-no">051</span><span id="line-51"> * &lt;/pre&gt;</span>
+<span class="source-line-no">052</span><span id="line-52"> *</span>
+<span class="source-line-no">053</span><span id="line-53"> * </span>
+<span class="source-line-no">054</span><span id="line-54"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">055</span><span id="line-55"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">056</span><span id="line-56"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;372&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">057</span><span id="line-57"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"CGM Data (FSL2)"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">058</span><span id="line-58"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_CGM_DATA_FSL2"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">059</span><span id="line-59"> * &lt;/table&gt;</span>
+<span class="source-line-no">060</span><span id="line-60"> */@HistoryLogProps(</span>
+<span class="source-line-no">061</span><span id="line-61">    opCode = 372,</span>
+<span class="source-line-no">062</span><span id="line-62">    displayName = "CGM Data (FSL2)",</span>
+<span class="source-line-no">063</span><span id="line-63">    internalName = "LID_CGM_DATA_FSL2"</span>
+<span class="source-line-no">064</span><span id="line-64">)</span>
+<span class="source-line-no">065</span><span id="line-65">public class CgmDataFsl2HistoryLog extends HistoryLog {</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    private int glucoseValueStatusRaw;</span>
+<span class="source-line-no">068</span><span id="line-68">    private int cgmDataTypeRaw;</span>
+<span class="source-line-no">069</span><span id="line-69">    private int rate;</span>
+<span class="source-line-no">070</span><span id="line-70">    private int algorithmStateRaw;</span>
+<span class="source-line-no">071</span><span id="line-71">    private int rssi;</span>
+<span class="source-line-no">072</span><span id="line-72">    private int currentGlucoseDisplayValue;</span>
+<span class="source-line-no">073</span><span id="line-73">    private long egvTimestamp;</span>
+<span class="source-line-no">074</span><span id="line-74">    private int egvInfoBitmaskRaw;</span>
+<span class="source-line-no">075</span><span id="line-75">    private int interval;</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public CgmDataFsl2HistoryLog() {}</span>
+<span class="source-line-no">078</span><span id="line-78">    public CgmDataFsl2HistoryLog(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">079</span><span id="line-79">        this(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">080</span><span id="line-80">    }</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">    public CgmDataFsl2HistoryLog(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">083</span><span id="line-83">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">084</span><span id="line-84">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
+<span class="source-line-no">085</span><span id="line-85">        parse(cargo);</span>
+<span class="source-line-no">086</span><span id="line-86">    }</span>
+<span class="source-line-no">087</span><span id="line-87"></span>
+<span class="source-line-no">088</span><span id="line-88">    public CgmDataFsl2HistoryLog(int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">089</span><span id="line-89">        this(0, 0, glucoseValueStatusRaw, cgmDataTypeRaw, rate, algorithmStateRaw, rssi, currentGlucoseDisplayValue, egvTimestamp, egvInfoBitmaskRaw, interval);</span>
+<span class="source-line-no">090</span><span id="line-90">    }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92">    public int typeId() {</span>
+<span class="source-line-no">093</span><span id="line-93">        return 372;</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">    /**</span>
+<span class="source-line-no">097</span><span id="line-97">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">098</span><span id="line-98">     * &lt;caption&gt;Parsed fields for CgmDataFsl2HistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">099</span><span id="line-99">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;glucoseValueStatusRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[10] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">100</span><span id="line-100">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;cgmDataTypeRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[11] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">101</span><span id="line-101">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rate&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;(short) Bytes.readShort(raw, 12)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">102</span><span id="line-102">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;algorithmStateRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[14] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">103</span><span id="line-103">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;rssi&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[15]&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">104</span><span id="line-104">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;currentGlucoseDisplayValue&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 16)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">105</span><span id="line-105">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvTimestamp&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">106</span><span id="line-106">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;egvInfoBitmaskRaw&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readShort(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;interval&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;raw[24] &amp;amp; 0xFF&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">108</span><span id="line-108">     * &lt;/table&gt;</span>
+<span class="source-line-no">109</span><span id="line-109">     */</span>
+<span class="source-line-no">110</span><span id="line-110">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">111</span><span id="line-111">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">112</span><span id="line-112">        this.cargo = raw;</span>
+<span class="source-line-no">113</span><span id="line-113">        parseBase(raw);</span>
+<span class="source-line-no">114</span><span id="line-114">        this.glucoseValueStatusRaw = raw[10] &amp; 0xFF;</span>
+<span class="source-line-no">115</span><span id="line-115">        this.cgmDataTypeRaw = raw[11] &amp; 0xFF;</span>
+<span class="source-line-no">116</span><span id="line-116">        this.rate = (short) Bytes.readShort(raw, 12);</span>
+<span class="source-line-no">117</span><span id="line-117">        this.algorithmStateRaw = raw[14] &amp; 0xFF;</span>
+<span class="source-line-no">118</span><span id="line-118">        this.rssi = raw[15];</span>
+<span class="source-line-no">119</span><span id="line-119">        this.currentGlucoseDisplayValue = Bytes.readShort(raw, 16);</span>
+<span class="source-line-no">120</span><span id="line-120">        this.egvTimestamp = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">121</span><span id="line-121">        this.egvInfoBitmaskRaw = Bytes.readShort(raw, 22);</span>
+<span class="source-line-no">122</span><span id="line-122">        this.interval = raw[24] &amp; 0xFF;</span>
+<span class="source-line-no">123</span><span id="line-123">    }</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum) {</span>
+<span class="source-line-no">126</span><span id="line-126">        return buildCargo(pumpTimeSec, sequenceNum, 0, 0, 0, 0, 0, 0, 0, 0, 0);</span>
+<span class="source-line-no">127</span><span id="line-127">    }</span>
+<span class="source-line-no">128</span><span id="line-128"></span>
+<span class="source-line-no">129</span><span id="line-129">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, int glucoseValueStatusRaw, int cgmDataTypeRaw, int rate, int algorithmStateRaw, int rssi, int currentGlucoseDisplayValue, long egvTimestamp, int egvInfoBitmaskRaw, int interval) {</span>
+<span class="source-line-no">130</span><span id="line-130">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">131</span><span id="line-131">            HistoryLog.typeIdBytes(372, 0), // 372 = 0x0174</span>
+<span class="source-line-no">132</span><span id="line-132">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">133</span><span id="line-133">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">134</span><span id="line-134">            new byte[]{(byte) glucoseValueStatusRaw},</span>
+<span class="source-line-no">135</span><span id="line-135">            new byte[]{(byte) cgmDataTypeRaw},</span>
+<span class="source-line-no">136</span><span id="line-136">            Bytes.firstTwoBytesLittleEndian(rate &amp; 0xFFFF),</span>
+<span class="source-line-no">137</span><span id="line-137">            new byte[]{(byte) algorithmStateRaw},</span>
+<span class="source-line-no">138</span><span id="line-138">            new byte[]{(byte) rssi},</span>
+<span class="source-line-no">139</span><span id="line-139">            Bytes.firstTwoBytesLittleEndian(currentGlucoseDisplayValue),</span>
+<span class="source-line-no">140</span><span id="line-140">            Bytes.toUint32(egvTimestamp),</span>
+<span class="source-line-no">141</span><span id="line-141">            Bytes.firstTwoBytesLittleEndian(egvInfoBitmaskRaw),</span>
+<span class="source-line-no">142</span><span id="line-142">            new byte[]{(byte) interval},</span>
+<span class="source-line-no">143</span><span id="line-143">            new byte[]{0}));</span>
+<span class="source-line-no">144</span><span id="line-144">    }</span>
+<span class="source-line-no">145</span><span id="line-145"></span>
+<span class="source-line-no">146</span><span id="line-146">    public enum GlucoseValueStatus {</span>
+<span class="source-line-no">147</span><span id="line-147">        PRECISE_VALUE(0),</span>
+<span class="source-line-no">148</span><span id="line-148">        SPECIAL_HIGH(1),</span>
+<span class="source-line-no">149</span><span id="line-149">        SPECIAL_LOW(2)</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">        ;</span>
+<span class="source-line-no">152</span><span id="line-152">        private int id;</span>
+<span class="source-line-no">153</span><span id="line-153">        GlucoseValueStatus(int id) {</span>
+<span class="source-line-no">154</span><span id="line-154">            this.id = id;</span>
+<span class="source-line-no">155</span><span id="line-155">        }</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">        public static GlucoseValueStatus fromId(int id) {</span>
+<span class="source-line-no">158</span><span id="line-158">            for (GlucoseValueStatus r : values()) {</span>
+<span class="source-line-no">159</span><span id="line-159">                if (r.id == id) {</span>
+<span class="source-line-no">160</span><span id="line-160">                    return r;</span>
 <span class="source-line-no">161</span><span id="line-161">                }</span>
 <span class="source-line-no">162</span><span id="line-162">            }</span>
-<span class="source-line-no">163</span><span id="line-163">            return items;</span>
+<span class="source-line-no">163</span><span id="line-163">            return null;</span>
 <span class="source-line-no">164</span><span id="line-164">        }</span>
 <span class="source-line-no">165</span><span id="line-165"></span>
 <span class="source-line-no">166</span><span id="line-166">        public int getId() {</span>
@@ -185,30 +185,30 @@
 <span class="source-line-no">168</span><span id="line-168">        }</span>
 <span class="source-line-no">169</span><span id="line-169">    }</span>
 <span class="source-line-no">170</span><span id="line-170"></span>
-<span class="source-line-no">171</span><span id="line-171">    public enum AlgorithmState {</span>
-<span class="source-line-no">172</span><span id="line-172">        WARMUP(2),</span>
-<span class="source-line-no">173</span><span id="line-173">        OK(100),</span>
-<span class="source-line-no">174</span><span id="line-174">        RF_ERROR(101),</span>
-<span class="source-line-no">175</span><span id="line-175">        SENSOR_SIGNAL_LOW(102),</span>
-<span class="source-line-no">176</span><span id="line-176">        TEMP_HIGH(103),</span>
-<span class="source-line-no">177</span><span id="line-177">        TEMP_LOW(104),</span>
-<span class="source-line-no">178</span><span id="line-178">        INVALID_DATA(105),</span>
-<span class="source-line-no">179</span><span id="line-179">        OTHER_DQ(106),</span>
-<span class="source-line-no">180</span><span id="line-180">        EGV_UNUSABLE(107)</span>
-<span class="source-line-no">181</span><span id="line-181"></span>
-<span class="source-line-no">182</span><span id="line-182">        ;</span>
-<span class="source-line-no">183</span><span id="line-183">        private int id;</span>
-<span class="source-line-no">184</span><span id="line-184">        AlgorithmState(int id) {</span>
-<span class="source-line-no">185</span><span id="line-185">            this.id = id;</span>
-<span class="source-line-no">186</span><span id="line-186">        }</span>
-<span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">        public static AlgorithmState fromId(int id) {</span>
-<span class="source-line-no">189</span><span id="line-189">            for (AlgorithmState r : values()) {</span>
-<span class="source-line-no">190</span><span id="line-190">                if (r.id == id) {</span>
-<span class="source-line-no">191</span><span id="line-191">                    return r;</span>
+<span class="source-line-no">171</span><span id="line-171">    /**</span>
+<span class="source-line-no">172</span><span id="line-172">     * Bitmask describing the type of reading. Unlike the Dexcom records, Libre readings</span>
+<span class="source-line-no">173</span><span id="line-173">     * can also be one-minute readings (OMR).</span>
+<span class="source-line-no">174</span><span id="line-174">     */</span>
+<span class="source-line-no">175</span><span id="line-175">    public enum CgmDataType {</span>
+<span class="source-line-no">176</span><span id="line-176">        FIVE_MINUTE_READING(1),</span>
+<span class="source-line-no">177</span><span id="line-177">        BACKFILL(2),</span>
+<span class="source-line-no">178</span><span id="line-178">        NONE(16),</span>
+<span class="source-line-no">179</span><span id="line-179">        ONE_MINUTE_READING(32)</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">        ;</span>
+<span class="source-line-no">182</span><span id="line-182">        private int id;</span>
+<span class="source-line-no">183</span><span id="line-183">        CgmDataType(int id) {</span>
+<span class="source-line-no">184</span><span id="line-184">            this.id = id;</span>
+<span class="source-line-no">185</span><span id="line-185">        }</span>
+<span class="source-line-no">186</span><span id="line-186"></span>
+<span class="source-line-no">187</span><span id="line-187">        public static Set&lt;CgmDataType&gt; fromId(int mask) {</span>
+<span class="source-line-no">188</span><span id="line-188">            Set&lt;CgmDataType&gt; items = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">189</span><span id="line-189">            for (CgmDataType i : values()) {</span>
+<span class="source-line-no">190</span><span id="line-190">                if ((mask &amp; i.getId()) != 0) {</span>
+<span class="source-line-no">191</span><span id="line-191">                    items.add(i);</span>
 <span class="source-line-no">192</span><span id="line-192">                }</span>
 <span class="source-line-no">193</span><span id="line-193">            }</span>
-<span class="source-line-no">194</span><span id="line-194">            return null;</span>
+<span class="source-line-no">194</span><span id="line-194">            return items;</span>
 <span class="source-line-no">195</span><span id="line-195">        }</span>
 <span class="source-line-no">196</span><span id="line-196"></span>
 <span class="source-line-no">197</span><span id="line-197">        public int getId() {</span>
@@ -216,116 +216,147 @@
 <span class="source-line-no">199</span><span id="line-199">        }</span>
 <span class="source-line-no">200</span><span id="line-200">    }</span>
 <span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">    /**</span>
-<span class="source-line-no">203</span><span id="line-203">     * EGV info bitmask. Bits 11-13 encode the sensor type (2 = Libre 2, 4 = Libre 3), see {@link #getSensorType()}.</span>
-<span class="source-line-no">204</span><span id="line-204">     */</span>
-<span class="source-line-no">205</span><span id="line-205">    public enum EgvInfo {</span>
-<span class="source-line-no">206</span><span id="line-206">        FIVE_MINUTE_READING(1),</span>
-<span class="source-line-no">207</span><span id="line-207">        BACKFILL(2),</span>
-<span class="source-line-no">208</span><span id="line-208">        NO_EGV(16),</span>
-<span class="source-line-no">209</span><span id="line-209">        VALID_TIMESTAMP(32),</span>
-<span class="source-line-no">210</span><span id="line-210">        VALID_EGV_RANGE(64),</span>
-<span class="source-line-no">211</span><span id="line-211">        VALID_ALG_STATE(128),</span>
-<span class="source-line-no">212</span><span id="line-212">        EGV_PROCESSED(256),</span>
-<span class="source-line-no">213</span><span id="line-213">        ONE_MINUTE_READING(512)</span>
-<span class="source-line-no">214</span><span id="line-214"></span>
-<span class="source-line-no">215</span><span id="line-215">        ;</span>
-<span class="source-line-no">216</span><span id="line-216">        private int id;</span>
-<span class="source-line-no">217</span><span id="line-217">        EgvInfo(int id) {</span>
-<span class="source-line-no">218</span><span id="line-218">            this.id = id;</span>
-<span class="source-line-no">219</span><span id="line-219">        }</span>
-<span class="source-line-no">220</span><span id="line-220"></span>
-<span class="source-line-no">221</span><span id="line-221">        public static Set&lt;EgvInfo&gt; fromId(int mask) {</span>
-<span class="source-line-no">222</span><span id="line-222">            Set&lt;EgvInfo&gt; items = new TreeSet&lt;&gt;();</span>
-<span class="source-line-no">223</span><span id="line-223">            for (EgvInfo i : values()) {</span>
-<span class="source-line-no">224</span><span id="line-224">                if ((mask &amp; i.getId()) != 0) {</span>
-<span class="source-line-no">225</span><span id="line-225">                    items.add(i);</span>
-<span class="source-line-no">226</span><span id="line-226">                }</span>
-<span class="source-line-no">227</span><span id="line-227">            }</span>
-<span class="source-line-no">228</span><span id="line-228">            return items;</span>
-<span class="source-line-no">229</span><span id="line-229">        }</span>
-<span class="source-line-no">230</span><span id="line-230"></span>
-<span class="source-line-no">231</span><span id="line-231">        public int getId() {</span>
-<span class="source-line-no">232</span><span id="line-232">            return id;</span>
-<span class="source-line-no">233</span><span id="line-233">        }</span>
-<span class="source-line-no">234</span><span id="line-234">    }</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">    public int getGlucoseValueStatusRaw() {</span>
-<span class="source-line-no">237</span><span id="line-237">        return glucoseValueStatusRaw;</span>
-<span class="source-line-no">238</span><span id="line-238">    }</span>
-<span class="source-line-no">239</span><span id="line-239">    public GlucoseValueStatus getGlucoseValueStatus() {</span>
-<span class="source-line-no">240</span><span id="line-240">        return GlucoseValueStatus.fromId(glucoseValueStatusRaw);</span>
-<span class="source-line-no">241</span><span id="line-241">    }</span>
-<span class="source-line-no">242</span><span id="line-242">    public int getCgmDataTypeRaw() {</span>
-<span class="source-line-no">243</span><span id="line-243">        return cgmDataTypeRaw;</span>
-<span class="source-line-no">244</span><span id="line-244">    }</span>
-<span class="source-line-no">245</span><span id="line-245">    public Set&lt;CgmDataType&gt; getCgmDataType() {</span>
-<span class="source-line-no">246</span><span id="line-246">        return CgmDataType.fromId(cgmDataTypeRaw);</span>
-<span class="source-line-no">247</span><span id="line-247">    }</span>
-<span class="source-line-no">248</span><span id="line-248">    /**</span>
-<span class="source-line-no">249</span><span id="line-249">     * Signed rate of change, in mg/dL per minute.</span>
-<span class="source-line-no">250</span><span id="line-250">     */</span>
-<span class="source-line-no">251</span><span id="line-251">    public int getRate() {</span>
-<span class="source-line-no">252</span><span id="line-252">        return rate;</span>
-<span class="source-line-no">253</span><span id="line-253">    }</span>
-<span class="source-line-no">254</span><span id="line-254">    public int getAlgorithmStateRaw() {</span>
-<span class="source-line-no">255</span><span id="line-255">        return algorithmStateRaw;</span>
-<span class="source-line-no">256</span><span id="line-256">    }</span>
-<span class="source-line-no">257</span><span id="line-257">    public AlgorithmState getAlgorithmState() {</span>
-<span class="source-line-no">258</span><span id="line-258">        return AlgorithmState.fromId(algorithmStateRaw);</span>
-<span class="source-line-no">259</span><span id="line-259">    }</span>
-<span class="source-line-no">260</span><span id="line-260">    /**</span>
-<span class="source-line-no">261</span><span id="line-261">     * Signed RSSI, in dBm.</span>
-<span class="source-line-no">262</span><span id="line-262">     */</span>
-<span class="source-line-no">263</span><span id="line-263">    public int getRssi() {</span>
-<span class="source-line-no">264</span><span id="line-264">        return rssi;</span>
+<span class="source-line-no">202</span><span id="line-202">    public enum AlgorithmState {</span>
+<span class="source-line-no">203</span><span id="line-203">        WARMUP(2),</span>
+<span class="source-line-no">204</span><span id="line-204">        OK(100),</span>
+<span class="source-line-no">205</span><span id="line-205">        RF_ERROR(101),</span>
+<span class="source-line-no">206</span><span id="line-206">        SENSOR_SIGNAL_LOW(102),</span>
+<span class="source-line-no">207</span><span id="line-207">        TEMP_HIGH(103),</span>
+<span class="source-line-no">208</span><span id="line-208">        TEMP_LOW(104),</span>
+<span class="source-line-no">209</span><span id="line-209">        INVALID_DATA(105),</span>
+<span class="source-line-no">210</span><span id="line-210">        OTHER_DQ(106),</span>
+<span class="source-line-no">211</span><span id="line-211">        EGV_UNUSABLE(107)</span>
+<span class="source-line-no">212</span><span id="line-212"></span>
+<span class="source-line-no">213</span><span id="line-213">        ;</span>
+<span class="source-line-no">214</span><span id="line-214">        private int id;</span>
+<span class="source-line-no">215</span><span id="line-215">        AlgorithmState(int id) {</span>
+<span class="source-line-no">216</span><span id="line-216">            this.id = id;</span>
+<span class="source-line-no">217</span><span id="line-217">        }</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">        public static AlgorithmState fromId(int id) {</span>
+<span class="source-line-no">220</span><span id="line-220">            for (AlgorithmState r : values()) {</span>
+<span class="source-line-no">221</span><span id="line-221">                if (r.id == id) {</span>
+<span class="source-line-no">222</span><span id="line-222">                    return r;</span>
+<span class="source-line-no">223</span><span id="line-223">                }</span>
+<span class="source-line-no">224</span><span id="line-224">            }</span>
+<span class="source-line-no">225</span><span id="line-225">            return null;</span>
+<span class="source-line-no">226</span><span id="line-226">        }</span>
+<span class="source-line-no">227</span><span id="line-227"></span>
+<span class="source-line-no">228</span><span id="line-228">        public int getId() {</span>
+<span class="source-line-no">229</span><span id="line-229">            return id;</span>
+<span class="source-line-no">230</span><span id="line-230">        }</span>
+<span class="source-line-no">231</span><span id="line-231">    }</span>
+<span class="source-line-no">232</span><span id="line-232"></span>
+<span class="source-line-no">233</span><span id="line-233">    /**</span>
+<span class="source-line-no">234</span><span id="line-234">     * EGV info bitmask. Bits 11-13 encode the sensor type (2 = Libre 2, 4 = Libre 3), see {@link #getSensorType()}.</span>
+<span class="source-line-no">235</span><span id="line-235">     */</span>
+<span class="source-line-no">236</span><span id="line-236">    public enum EgvInfo {</span>
+<span class="source-line-no">237</span><span id="line-237">        FIVE_MINUTE_READING(1),</span>
+<span class="source-line-no">238</span><span id="line-238">        BACKFILL(2),</span>
+<span class="source-line-no">239</span><span id="line-239">        NO_EGV(16),</span>
+<span class="source-line-no">240</span><span id="line-240">        VALID_TIMESTAMP(32),</span>
+<span class="source-line-no">241</span><span id="line-241">        VALID_EGV_RANGE(64),</span>
+<span class="source-line-no">242</span><span id="line-242">        VALID_ALG_STATE(128),</span>
+<span class="source-line-no">243</span><span id="line-243">        EGV_PROCESSED(256),</span>
+<span class="source-line-no">244</span><span id="line-244">        ONE_MINUTE_READING(512)</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">        ;</span>
+<span class="source-line-no">247</span><span id="line-247">        private int id;</span>
+<span class="source-line-no">248</span><span id="line-248">        EgvInfo(int id) {</span>
+<span class="source-line-no">249</span><span id="line-249">            this.id = id;</span>
+<span class="source-line-no">250</span><span id="line-250">        }</span>
+<span class="source-line-no">251</span><span id="line-251"></span>
+<span class="source-line-no">252</span><span id="line-252">        public static Set&lt;EgvInfo&gt; fromId(int mask) {</span>
+<span class="source-line-no">253</span><span id="line-253">            Set&lt;EgvInfo&gt; items = new TreeSet&lt;&gt;();</span>
+<span class="source-line-no">254</span><span id="line-254">            for (EgvInfo i : values()) {</span>
+<span class="source-line-no">255</span><span id="line-255">                if ((mask &amp; i.getId()) != 0) {</span>
+<span class="source-line-no">256</span><span id="line-256">                    items.add(i);</span>
+<span class="source-line-no">257</span><span id="line-257">                }</span>
+<span class="source-line-no">258</span><span id="line-258">            }</span>
+<span class="source-line-no">259</span><span id="line-259">            return items;</span>
+<span class="source-line-no">260</span><span id="line-260">        }</span>
+<span class="source-line-no">261</span><span id="line-261"></span>
+<span class="source-line-no">262</span><span id="line-262">        public int getId() {</span>
+<span class="source-line-no">263</span><span id="line-263">            return id;</span>
+<span class="source-line-no">264</span><span id="line-264">        }</span>
 <span class="source-line-no">265</span><span id="line-265">    }</span>
-<span class="source-line-no">266</span><span id="line-266">    /**</span>
-<span class="source-line-no">267</span><span id="line-267">     * @return the glucose value in mg/dL</span>
-<span class="source-line-no">268</span><span id="line-268">     */</span>
-<span class="source-line-no">269</span><span id="line-269">    public int getCurrentGlucoseDisplayValue() {</span>
-<span class="source-line-no">270</span><span id="line-270">        return currentGlucoseDisplayValue;</span>
-<span class="source-line-no">271</span><span id="line-271">    }</span>
-<span class="source-line-no">272</span><span id="line-272">    public long getEgvTimestamp() {</span>
-<span class="source-line-no">273</span><span id="line-273">        return egvTimestamp;</span>
-<span class="source-line-no">274</span><span id="line-274">    }</span>
-<span class="source-line-no">275</span><span id="line-275">    public int getEgvInfoBitmaskRaw() {</span>
-<span class="source-line-no">276</span><span id="line-276">        return egvInfoBitmaskRaw;</span>
-<span class="source-line-no">277</span><span id="line-277">    }</span>
-<span class="source-line-no">278</span><span id="line-278">    public Set&lt;EgvInfo&gt; getEgvInfo() {</span>
-<span class="source-line-no">279</span><span id="line-279">        return EgvInfo.fromId(egvInfoBitmaskRaw);</span>
-<span class="source-line-no">280</span><span id="line-280">    }</span>
-<span class="source-line-no">281</span><span id="line-281">    /**</span>
-<span class="source-line-no">282</span><span id="line-282">     * @return the sensor type encoded in bits 11-13 of the EGV info bitmask (2 = Libre 2, 4 = Libre 3)</span>
-<span class="source-line-no">283</span><span id="line-283">     */</span>
-<span class="source-line-no">284</span><span id="line-284">    public int getSensorType() {</span>
-<span class="source-line-no">285</span><span id="line-285">        return (egvInfoBitmaskRaw &gt;&gt; 11) &amp; 0x7;</span>
-<span class="source-line-no">286</span><span id="line-286">    }</span>
-<span class="source-line-no">287</span><span id="line-287">    public int getInterval() {</span>
-<span class="source-line-no">288</span><span id="line-288">        return interval;</span>
-<span class="source-line-no">289</span><span id="line-289">    }</span>
-<span class="source-line-no">290</span><span id="line-290"></span>
-<span class="source-line-no">291</span><span id="line-291">    /** @deprecated use {@link #getGlucoseValueStatusRaw()} */</span>
-<span class="source-line-no">292</span><span id="line-292">    @Deprecated</span>
-<span class="source-line-no">293</span><span id="line-293">    public int getStatus() {</span>
-<span class="source-line-no">294</span><span id="line-294">        return glucoseValueStatusRaw;</span>
-<span class="source-line-no">295</span><span id="line-295">    }</span>
-<span class="source-line-no">296</span><span id="line-296">    /** @deprecated use {@link #getCgmDataTypeRaw()} */</span>
-<span class="source-line-no">297</span><span id="line-297">    @Deprecated</span>
-<span class="source-line-no">298</span><span id="line-298">    public int getType() {</span>
-<span class="source-line-no">299</span><span id="line-299">        return cgmDataTypeRaw;</span>
-<span class="source-line-no">300</span><span id="line-300">    }</span>
-<span class="source-line-no">301</span><span id="line-301">    /** @deprecated use {@link #getCurrentGlucoseDisplayValue()} */</span>
-<span class="source-line-no">302</span><span id="line-302">    @Deprecated</span>
-<span class="source-line-no">303</span><span id="line-303">    public int getValue() {</span>
-<span class="source-line-no">304</span><span id="line-304">        return currentGlucoseDisplayValue;</span>
+<span class="source-line-no">266</span><span id="line-266"></span>
+<span class="source-line-no">267</span><span id="line-267">    public int getGlucoseValueStatusRaw() {</span>
+<span class="source-line-no">268</span><span id="line-268">        return glucoseValueStatusRaw;</span>
+<span class="source-line-no">269</span><span id="line-269">    }</span>
+<span class="source-line-no">270</span><span id="line-270">    public GlucoseValueStatus getGlucoseValueStatus() {</span>
+<span class="source-line-no">271</span><span id="line-271">        return GlucoseValueStatus.fromId(glucoseValueStatusRaw);</span>
+<span class="source-line-no">272</span><span id="line-272">    }</span>
+<span class="source-line-no">273</span><span id="line-273">    public int getCgmDataTypeRaw() {</span>
+<span class="source-line-no">274</span><span id="line-274">        return cgmDataTypeRaw;</span>
+<span class="source-line-no">275</span><span id="line-275">    }</span>
+<span class="source-line-no">276</span><span id="line-276">    public Set&lt;CgmDataType&gt; getCgmDataType() {</span>
+<span class="source-line-no">277</span><span id="line-277">        return CgmDataType.fromId(cgmDataTypeRaw);</span>
+<span class="source-line-no">278</span><span id="line-278">    }</span>
+<span class="source-line-no">279</span><span id="line-279">    /**</span>
+<span class="source-line-no">280</span><span id="line-280">     * Signed rate of change, in mg/dL per minute.</span>
+<span class="source-line-no">281</span><span id="line-281">     */</span>
+<span class="source-line-no">282</span><span id="line-282">    public int getRate() {</span>
+<span class="source-line-no">283</span><span id="line-283">        return rate;</span>
+<span class="source-line-no">284</span><span id="line-284">    }</span>
+<span class="source-line-no">285</span><span id="line-285">    public int getAlgorithmStateRaw() {</span>
+<span class="source-line-no">286</span><span id="line-286">        return algorithmStateRaw;</span>
+<span class="source-line-no">287</span><span id="line-287">    }</span>
+<span class="source-line-no">288</span><span id="line-288">    public AlgorithmState getAlgorithmState() {</span>
+<span class="source-line-no">289</span><span id="line-289">        return AlgorithmState.fromId(algorithmStateRaw);</span>
+<span class="source-line-no">290</span><span id="line-290">    }</span>
+<span class="source-line-no">291</span><span id="line-291">    /**</span>
+<span class="source-line-no">292</span><span id="line-292">     * Signed RSSI, in dBm.</span>
+<span class="source-line-no">293</span><span id="line-293">     */</span>
+<span class="source-line-no">294</span><span id="line-294">    public int getRssi() {</span>
+<span class="source-line-no">295</span><span id="line-295">        return rssi;</span>
+<span class="source-line-no">296</span><span id="line-296">    }</span>
+<span class="source-line-no">297</span><span id="line-297">    /**</span>
+<span class="source-line-no">298</span><span id="line-298">     * @return the glucose value in mg/dL</span>
+<span class="source-line-no">299</span><span id="line-299">     */</span>
+<span class="source-line-no">300</span><span id="line-300">    public int getCurrentGlucoseDisplayValue() {</span>
+<span class="source-line-no">301</span><span id="line-301">        return currentGlucoseDisplayValue;</span>
+<span class="source-line-no">302</span><span id="line-302">    }</span>
+<span class="source-line-no">303</span><span id="line-303">    public long getEgvTimestamp() {</span>
+<span class="source-line-no">304</span><span id="line-304">        return egvTimestamp;</span>
 <span class="source-line-no">305</span><span id="line-305">    }</span>
-<span class="source-line-no">306</span><span id="line-306">    /** @deprecated use {@link #getEgvTimestamp()} */</span>
-<span class="source-line-no">307</span><span id="line-307">    @Deprecated</span>
-<span class="source-line-no">308</span><span id="line-308">    public long getTimestamp() {</span>
-<span class="source-line-no">309</span><span id="line-309">        return egvTimestamp;</span>
-<span class="source-line-no">310</span><span id="line-310">    }</span>
-<span class="source-line-no">311</span><span id="line-311">}</span>
+<span class="source-line-no">306</span><span id="line-306">    public int getEgvInfoBitmaskRaw() {</span>
+<span class="source-line-no">307</span><span id="line-307">        return egvInfoBitmaskRaw;</span>
+<span class="source-line-no">308</span><span id="line-308">    }</span>
+<span class="source-line-no">309</span><span id="line-309">    public Set&lt;EgvInfo&gt; getEgvInfo() {</span>
+<span class="source-line-no">310</span><span id="line-310">        return EgvInfo.fromId(egvInfoBitmaskRaw);</span>
+<span class="source-line-no">311</span><span id="line-311">    }</span>
+<span class="source-line-no">312</span><span id="line-312">    /**</span>
+<span class="source-line-no">313</span><span id="line-313">     * @return the sensor type encoded in bits 11-13 of the EGV info bitmask (2 = Libre 2, 4 = Libre 3)</span>
+<span class="source-line-no">314</span><span id="line-314">     */</span>
+<span class="source-line-no">315</span><span id="line-315">    public int getSensorType() {</span>
+<span class="source-line-no">316</span><span id="line-316">        return (egvInfoBitmaskRaw &gt;&gt; 11) &amp; 0x7;</span>
+<span class="source-line-no">317</span><span id="line-317">    }</span>
+<span class="source-line-no">318</span><span id="line-318">    public int getInterval() {</span>
+<span class="source-line-no">319</span><span id="line-319">        return interval;</span>
+<span class="source-line-no">320</span><span id="line-320">    }</span>
+<span class="source-line-no">321</span><span id="line-321"></span>
+<span class="source-line-no">322</span><span id="line-322">    /** @deprecated use {@link #getGlucoseValueStatusRaw()} */</span>
+<span class="source-line-no">323</span><span id="line-323">    @Deprecated</span>
+<span class="source-line-no">324</span><span id="line-324">    public int getStatus() {</span>
+<span class="source-line-no">325</span><span id="line-325">        return glucoseValueStatusRaw;</span>
+<span class="source-line-no">326</span><span id="line-326">    }</span>
+<span class="source-line-no">327</span><span id="line-327">    /** @deprecated use {@link #getCgmDataTypeRaw()} */</span>
+<span class="source-line-no">328</span><span id="line-328">    @Deprecated</span>
+<span class="source-line-no">329</span><span id="line-329">    public int getType() {</span>
+<span class="source-line-no">330</span><span id="line-330">        return cgmDataTypeRaw;</span>
+<span class="source-line-no">331</span><span id="line-331">    }</span>
+<span class="source-line-no">332</span><span id="line-332">    /** @deprecated use {@link #getCurrentGlucoseDisplayValue()} */</span>
+<span class="source-line-no">333</span><span id="line-333">    @Deprecated</span>
+<span class="source-line-no">334</span><span id="line-334">    public int getValue() {</span>
+<span class="source-line-no">335</span><span id="line-335">        return currentGlucoseDisplayValue;</span>
+<span class="source-line-no">336</span><span id="line-336">    }</span>
+<span class="source-line-no">337</span><span id="line-337">    /** @deprecated use {@link #getEgvTimestamp()} */</span>
+<span class="source-line-no">338</span><span id="line-338">    @Deprecated</span>
+<span class="source-line-no">339</span><span id="line-339">    public long getTimestamp() {</span>
+<span class="source-line-no">340</span><span id="line-340">        return egvTimestamp;</span>
+<span class="source-line-no">341</span><span id="line-341">    }</span>
+<span class="source-line-no">342</span><span id="line-342">}</span>
 
 
 

@@ -82,9 +82,13 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-23">PumpButtonHistoryLog</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-51">PumpButtonHistoryLog</a></span>
 <span class="extends-implements">extends <a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></span></div>
-<div class="block">A press or release of the pump's button, with a millisecond timestamp. Seen on the t:slim X2 and
+<div class="block">History log record Pump Button, opCode 17, size 26.
+
+ <br>
+
+ A press or release of the pump's button, with a millisecond timestamp. Seen on the t:slim X2 and
  the Tandem Mobi.
 
  <p>Tandem's export and its Mobi app do not name this opcode, so the class name and the button
@@ -97,7 +101,15 @@ loadScripts(document, 'script');</script>
  preceded by one of these with state 1 (113/113 on 4 pumps). A triple press (1, 0, 1, 0, 1 within
  0.6 s) was immediately followed by a <a href="SnoozeActivatedHistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog"><code>SnoozeActivatedHistoryLog</code></a> in the same second. On the
  X2, whose button wakes the screen, press/release pairs typically last about 0.2 s.
- See https://github.com/jwoglom/pumpx2/issues/148.</div>
+ See https://github.com/jwoglom/pumpx2/issues/148.
+
+ 
+ <table border='1'>
+ <caption>Message properties:</caption>
+ <tr><th>&nbsp;<code>opCode</code>&nbsp;</th><td>&nbsp;<code>17</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>displayName</code>&nbsp;</th><td>&nbsp;<code>"Pump Button"</code>&nbsp;</td></tr>
+ <tr><th>&nbsp;<code>internalName</code>&nbsp;</th><td>&nbsp;<code>""</code>&nbsp;</td></tr>
+ </table></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -195,13 +207,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PumpButtonHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-33">PumpButtonHistoryLog</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-61">PumpButtonHistoryLog</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(long,long,long,int)">
 <h3>PumpButtonHistoryLog</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-34">PumpButtonHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-62">PumpButtonHistoryLog</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;timeOfDayMs,
  int&nbsp;state)</span></div>
@@ -218,7 +230,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="typeId()">
 <h3>typeId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-41">typeId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-69">typeId</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="HistoryLog.html#typeId()">typeId</a></code>&nbsp;in class&nbsp;<code><a href="HistoryLog.html" title="class in com.jwoglom.pumpx2.pump.messages.response.historyLog">HistoryLog</a></code></dd>
@@ -228,7 +240,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="parse(byte[])">
 <h3>parse</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-52">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-80">parse</a></span><wbr><span class="parameters">(byte[]&nbsp;raw)</span></div>
 <div class="block"><table border="1">
  <caption>Parsed fields for PumpButtonHistoryLog:</caption>
  <tr><td><code>timeOfDayMs</code></td><td><code>Bytes.readUint32(raw, 10)</code></td></tr>
@@ -243,7 +255,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="buildCargo(long,long,long,int)">
 <h3>buildCargo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-60">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-88">buildCargo</a></span><wbr><span class="parameters">(long&nbsp;pumpTimeSec,
  long&nbsp;sequenceNum,
  long&nbsp;timeOfDayMs,
  int&nbsp;state)</span></div>
@@ -252,7 +264,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTimeOfDayMs()">
 <h3>getTimeOfDayMs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-75">getTimeOfDayMs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-103">getTimeOfDayMs</a></span>()</div>
 <div class="block">Milliseconds since midnight on the pump's local clock, the same clock as
  <a href="HistoryLog.html#getPumpTimeSec()"><code>HistoryLog.getPumpTimeSec()</code></a>: <code>timeOfDayMs / 1000 == pumpTimeSec % 86400</code> in 1772/1772
  records. It gives sub-second ordering within the record's second; it is not a motor or
@@ -262,7 +274,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-83">getState</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-111">getState</a></span>()</div>
 <div class="block">Byte 14: 1 or 0, alternating (880 records with 1, 892 with 0). Read as 1 = pressed,
  0 = released; see the class comment for why that reading is provisional.</div>
 </section>
@@ -270,7 +282,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isPressed()">
 <h3>isPressed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-87">isPressed</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../../../../src-html/com/jwoglom/pumpx2/pump/messages/response/historyLog/PumpButtonHistoryLog.html#line-115">isPressed</a></span>()</div>
 </section>
 </li>
 </ul>

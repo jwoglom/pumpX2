@@ -22,102 +22,115 @@
 <span class="source-line-no">005</span><span id="line-5">import com.jwoglom.pumpx2.pump.messages.helpers.Bytes;</span>
 <span class="source-line-no">006</span><span id="line-6">import com.jwoglom.pumpx2.pump.messages.response.currentStatus.CGMAlertStatusResponse;</span>
 <span class="source-line-no">007</span><span id="line-7"></span>
-<span class="source-line-no">008</span><span id="line-8">@HistoryLogProps(</span>
-<span class="source-line-no">009</span><span id="line-9">    opCode = 171,</span>
-<span class="source-line-no">010</span><span id="line-10">    displayName = "CGM Alert Activated",</span>
-<span class="source-line-no">011</span><span id="line-11">    internalName = "LID_CGM_ALERT_ACTIVATED"</span>
-<span class="source-line-no">012</span><span id="line-12">)</span>
-<span class="source-line-no">013</span><span id="line-13">public class CgmAlertActivatedHistoryLog extends HistoryLog {</span>
-<span class="source-line-no">014</span><span id="line-14"></span>
-<span class="source-line-no">015</span><span id="line-15">    private long alertId;</span>
-<span class="source-line-no">016</span><span id="line-16">    private CGMAlertStatusResponse.CGMAlert alert;</span>
-<span class="source-line-no">017</span><span id="line-17">    private long faultLocatorData;</span>
-<span class="source-line-no">018</span><span id="line-18">    private long param1;</span>
-<span class="source-line-no">019</span><span id="line-19">    private float param2;</span>
-<span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">    public CgmAlertActivatedHistoryLog() {}</span>
-<span class="source-line-no">022</span><span id="line-22">    public CgmAlertActivatedHistoryLog(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData, long param1, float param2) {</span>
-<span class="source-line-no">023</span><span id="line-23">        super(pumpTimeSec, sequenceNum);</span>
-<span class="source-line-no">024</span><span id="line-24">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, alertId, faultLocatorData, param1, param2);</span>
-<span class="source-line-no">025</span><span id="line-25">        this.alertId = alertId;</span>
-<span class="source-line-no">026</span><span id="line-26">        this.alert = CGMAlertStatusResponse.CGMAlert.fromId((int) alertId);</span>
-<span class="source-line-no">027</span><span id="line-27">        this.faultLocatorData = faultLocatorData;</span>
-<span class="source-line-no">028</span><span id="line-28">        this.param1 = param1;</span>
-<span class="source-line-no">029</span><span id="line-29">        this.param2 = param2;</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    }</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">    public CgmAlertActivatedHistoryLog(long pumpTimeSec, long sequenceNum, CGMAlertStatusResponse.CGMAlert alert, long faultLocatorData, long param1, float param2) {</span>
-<span class="source-line-no">034</span><span id="line-34">        this(pumpTimeSec, sequenceNum, alert != null ? alert.id() : 0, faultLocatorData, param1, param2);</span>
-<span class="source-line-no">035</span><span id="line-35">        this.alert = alert;</span>
-<span class="source-line-no">036</span><span id="line-36"></span>
-<span class="source-line-no">037</span><span id="line-37">    }</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">    public CgmAlertActivatedHistoryLog(long alertId, long faultLocatorData, long param1, float param2) {</span>
-<span class="source-line-no">040</span><span id="line-40">        this(0, 0, alertId, faultLocatorData, param1, param2);</span>
-<span class="source-line-no">041</span><span id="line-41">    }</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public CgmAlertActivatedHistoryLog(CGMAlertStatusResponse.CGMAlert alert, long faultLocatorData, long param1, float param2) {</span>
-<span class="source-line-no">044</span><span id="line-44">        this(0, 0, alert, faultLocatorData, param1, param2);</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    public int typeId() {</span>
-<span class="source-line-no">048</span><span id="line-48">        return 171;</span>
-<span class="source-line-no">049</span><span id="line-49">    }</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    /**</span>
-<span class="source-line-no">052</span><span id="line-52">     * &lt;table border="1"&gt;</span>
-<span class="source-line-no">053</span><span id="line-53">     * &lt;caption&gt;Parsed fields for CgmAlertActivatedHistoryLog:&lt;/caption&gt;</span>
-<span class="source-line-no">054</span><span id="line-54">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alertId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">055</span><span id="line-55">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alert&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;CGMAlertStatusResponse.CGMAlert.fromId((int) alertId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">056</span><span id="line-56">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;faultLocatorData&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">057</span><span id="line-57">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;param1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">058</span><span id="line-58">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;param2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
-<span class="source-line-no">059</span><span id="line-59">     * &lt;/table&gt;</span>
-<span class="source-line-no">060</span><span id="line-60">     */</span>
-<span class="source-line-no">061</span><span id="line-61">    public void parse(byte[] raw) {</span>
-<span class="source-line-no">062</span><span id="line-62">        Validate.isTrue(raw.length == 26);</span>
-<span class="source-line-no">063</span><span id="line-63">        this.cargo = raw;</span>
-<span class="source-line-no">064</span><span id="line-64">        parseBase(raw);</span>
-<span class="source-line-no">065</span><span id="line-65">        this.alertId = Bytes.readUint32(raw, 10);</span>
-<span class="source-line-no">066</span><span id="line-66">        this.alert = CGMAlertStatusResponse.CGMAlert.fromId((int) alertId);</span>
-<span class="source-line-no">067</span><span id="line-67">        this.faultLocatorData = Bytes.readUint32(raw, 14);</span>
-<span class="source-line-no">068</span><span id="line-68">        this.param1 = Bytes.readUint32(raw, 18);</span>
-<span class="source-line-no">069</span><span id="line-69">        this.param2 = Bytes.readFloat(raw, 22);</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData, long param1, float param2) {</span>
-<span class="source-line-no">074</span><span id="line-74">        return HistoryLog.fillCargo(Bytes.combine(</span>
-<span class="source-line-no">075</span><span id="line-75">            HistoryLog.typeIdBytes(171, 0),</span>
-<span class="source-line-no">076</span><span id="line-76">            Bytes.toUint32(pumpTimeSec),</span>
-<span class="source-line-no">077</span><span id="line-77">            Bytes.toUint32(sequenceNum),</span>
-<span class="source-line-no">078</span><span id="line-78">            Bytes.toUint32(alertId),</span>
-<span class="source-line-no">079</span><span id="line-79">            Bytes.toUint32(faultLocatorData),</span>
-<span class="source-line-no">080</span><span id="line-80">            Bytes.toUint32(param1),</span>
-<span class="source-line-no">081</span><span id="line-81">            Bytes.toFloat(param2)));</span>
-<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">008</span><span id="line-8">/**</span>
+<span class="source-line-no">009</span><span id="line-9"> * History log record CGM Alert Activated, opCode 171, size 26.</span>
+<span class="source-line-no">010</span><span id="line-10"> *</span>
+<span class="source-line-no">011</span><span id="line-11"> * &lt;br&gt;</span>
+<span class="source-line-no">012</span><span id="line-12"> *</span>
+<span class="source-line-no">013</span><span id="line-13"> * </span>
+<span class="source-line-no">014</span><span id="line-14"> * &lt;table border='1'&gt;</span>
+<span class="source-line-no">015</span><span id="line-15"> * &lt;caption&gt;Message properties:&lt;/caption&gt;</span>
+<span class="source-line-no">016</span><span id="line-16"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;opCode&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;171&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">017</span><span id="line-17"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;displayName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"CGM Alert Activated"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">018</span><span id="line-18"> * &lt;tr&gt;&lt;th&gt;&amp;nbsp;&lt;code&gt;internalName&lt;/code&gt;&amp;nbsp;&lt;/th&gt;&lt;td&gt;&amp;nbsp;&lt;code&gt;"LID_CGM_ALERT_ACTIVATED"&lt;/code&gt;&amp;nbsp;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">019</span><span id="line-19"> * &lt;/table&gt;</span>
+<span class="source-line-no">020</span><span id="line-20"> */</span>
+<span class="source-line-no">021</span><span id="line-21">@HistoryLogProps(</span>
+<span class="source-line-no">022</span><span id="line-22">    opCode = 171,</span>
+<span class="source-line-no">023</span><span id="line-23">    displayName = "CGM Alert Activated",</span>
+<span class="source-line-no">024</span><span id="line-24">    internalName = "LID_CGM_ALERT_ACTIVATED"</span>
+<span class="source-line-no">025</span><span id="line-25">)</span>
+<span class="source-line-no">026</span><span id="line-26">public class CgmAlertActivatedHistoryLog extends HistoryLog {</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">    private long alertId;</span>
+<span class="source-line-no">029</span><span id="line-29">    private CGMAlertStatusResponse.CGMAlert alert;</span>
+<span class="source-line-no">030</span><span id="line-30">    private long faultLocatorData;</span>
+<span class="source-line-no">031</span><span id="line-31">    private long param1;</span>
+<span class="source-line-no">032</span><span id="line-32">    private float param2;</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">    public CgmAlertActivatedHistoryLog() {}</span>
+<span class="source-line-no">035</span><span id="line-35">    public CgmAlertActivatedHistoryLog(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData, long param1, float param2) {</span>
+<span class="source-line-no">036</span><span id="line-36">        super(pumpTimeSec, sequenceNum);</span>
+<span class="source-line-no">037</span><span id="line-37">        this.cargo = buildCargo(pumpTimeSec, sequenceNum, alertId, faultLocatorData, param1, param2);</span>
+<span class="source-line-no">038</span><span id="line-38">        this.alertId = alertId;</span>
+<span class="source-line-no">039</span><span id="line-39">        this.alert = CGMAlertStatusResponse.CGMAlert.fromId((int) alertId);</span>
+<span class="source-line-no">040</span><span id="line-40">        this.faultLocatorData = faultLocatorData;</span>
+<span class="source-line-no">041</span><span id="line-41">        this.param1 = param1;</span>
+<span class="source-line-no">042</span><span id="line-42">        this.param2 = param2;</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    }</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">    public CgmAlertActivatedHistoryLog(long pumpTimeSec, long sequenceNum, CGMAlertStatusResponse.CGMAlert alert, long faultLocatorData, long param1, float param2) {</span>
+<span class="source-line-no">047</span><span id="line-47">        this(pumpTimeSec, sequenceNum, alert != null ? alert.id() : 0, faultLocatorData, param1, param2);</span>
+<span class="source-line-no">048</span><span id="line-48">        this.alert = alert;</span>
+<span class="source-line-no">049</span><span id="line-49"></span>
+<span class="source-line-no">050</span><span id="line-50">    }</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">    public CgmAlertActivatedHistoryLog(long alertId, long faultLocatorData, long param1, float param2) {</span>
+<span class="source-line-no">053</span><span id="line-53">        this(0, 0, alertId, faultLocatorData, param1, param2);</span>
+<span class="source-line-no">054</span><span id="line-54">    }</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    public CgmAlertActivatedHistoryLog(CGMAlertStatusResponse.CGMAlert alert, long faultLocatorData, long param1, float param2) {</span>
+<span class="source-line-no">057</span><span id="line-57">        this(0, 0, alert, faultLocatorData, param1, param2);</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    public int typeId() {</span>
+<span class="source-line-no">061</span><span id="line-61">        return 171;</span>
+<span class="source-line-no">062</span><span id="line-62">    }</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    /**</span>
+<span class="source-line-no">065</span><span id="line-65">     * &lt;table border="1"&gt;</span>
+<span class="source-line-no">066</span><span id="line-66">     * &lt;caption&gt;Parsed fields for CgmAlertActivatedHistoryLog:&lt;/caption&gt;</span>
+<span class="source-line-no">067</span><span id="line-67">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alertId&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 10)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">068</span><span id="line-68">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;alert&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;CGMAlertStatusResponse.CGMAlert.fromId((int) alertId)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">069</span><span id="line-69">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;faultLocatorData&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 14)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">070</span><span id="line-70">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;param1&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readUint32(raw, 18)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">071</span><span id="line-71">     * &lt;tr&gt;&lt;td&gt;&lt;code&gt;param2&lt;/code&gt;&lt;/td&gt;&lt;td&gt;&lt;code&gt;Bytes.readFloat(raw, 22)&lt;/code&gt;&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;/table&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     */</span>
+<span class="source-line-no">074</span><span id="line-74">    public void parse(byte[] raw) {</span>
+<span class="source-line-no">075</span><span id="line-75">        Validate.isTrue(raw.length == 26);</span>
+<span class="source-line-no">076</span><span id="line-76">        this.cargo = raw;</span>
+<span class="source-line-no">077</span><span id="line-77">        parseBase(raw);</span>
+<span class="source-line-no">078</span><span id="line-78">        this.alertId = Bytes.readUint32(raw, 10);</span>
+<span class="source-line-no">079</span><span id="line-79">        this.alert = CGMAlertStatusResponse.CGMAlert.fromId((int) alertId);</span>
+<span class="source-line-no">080</span><span id="line-80">        this.faultLocatorData = Bytes.readUint32(raw, 14);</span>
+<span class="source-line-no">081</span><span id="line-81">        this.param1 = Bytes.readUint32(raw, 18);</span>
+<span class="source-line-no">082</span><span id="line-82">        this.param2 = Bytes.readFloat(raw, 22);</span>
 <span class="source-line-no">083</span><span id="line-83"></span>
-<span class="source-line-no">084</span><span id="line-84">    public long getAlertId() {</span>
-<span class="source-line-no">085</span><span id="line-85">        return alertId;</span>
-<span class="source-line-no">086</span><span id="line-86">    }</span>
-<span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">    public CGMAlertStatusResponse.CGMAlert getAlert() {</span>
-<span class="source-line-no">089</span><span id="line-89">        return alert;</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    public long getFaultLocatorData() {</span>
-<span class="source-line-no">093</span><span id="line-93">        return faultLocatorData;</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">    public long getParam1() {</span>
-<span class="source-line-no">097</span><span id="line-97">        return param1;</span>
-<span class="source-line-no">098</span><span id="line-98">    }</span>
-<span class="source-line-no">099</span><span id="line-99"></span>
-<span class="source-line-no">100</span><span id="line-100">    public float getParam2() {</span>
-<span class="source-line-no">101</span><span id="line-101">        return param2;</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103">}</span>
+<span class="source-line-no">084</span><span id="line-84">    }</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    public static byte[] buildCargo(long pumpTimeSec, long sequenceNum, long alertId, long faultLocatorData, long param1, float param2) {</span>
+<span class="source-line-no">087</span><span id="line-87">        return HistoryLog.fillCargo(Bytes.combine(</span>
+<span class="source-line-no">088</span><span id="line-88">            HistoryLog.typeIdBytes(171, 0),</span>
+<span class="source-line-no">089</span><span id="line-89">            Bytes.toUint32(pumpTimeSec),</span>
+<span class="source-line-no">090</span><span id="line-90">            Bytes.toUint32(sequenceNum),</span>
+<span class="source-line-no">091</span><span id="line-91">            Bytes.toUint32(alertId),</span>
+<span class="source-line-no">092</span><span id="line-92">            Bytes.toUint32(faultLocatorData),</span>
+<span class="source-line-no">093</span><span id="line-93">            Bytes.toUint32(param1),</span>
+<span class="source-line-no">094</span><span id="line-94">            Bytes.toFloat(param2)));</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    public long getAlertId() {</span>
+<span class="source-line-no">098</span><span id="line-98">        return alertId;</span>
+<span class="source-line-no">099</span><span id="line-99">    }</span>
+<span class="source-line-no">100</span><span id="line-100"></span>
+<span class="source-line-no">101</span><span id="line-101">    public CGMAlertStatusResponse.CGMAlert getAlert() {</span>
+<span class="source-line-no">102</span><span id="line-102">        return alert;</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    public long getFaultLocatorData() {</span>
+<span class="source-line-no">106</span><span id="line-106">        return faultLocatorData;</span>
+<span class="source-line-no">107</span><span id="line-107">    }</span>
+<span class="source-line-no">108</span><span id="line-108"></span>
+<span class="source-line-no">109</span><span id="line-109">    public long getParam1() {</span>
+<span class="source-line-no">110</span><span id="line-110">        return param1;</span>
+<span class="source-line-no">111</span><span id="line-111">    }</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">    public float getParam2() {</span>
+<span class="source-line-no">114</span><span id="line-114">        return param2;</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116">}</span>
 
 
 
