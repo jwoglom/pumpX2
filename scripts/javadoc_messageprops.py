@@ -44,19 +44,24 @@ def convert_message_props(java_file):
             javadoc_match = re.search(javadoc_pattern, content, re.MULTILINE)
             if javadoc_match and javadoc_match.span(0) < match.span(0):
                 javadoc = javadoc_match.group(0).replace('*/', '*')
+                javadoc = terminate_sentence(javadoc)
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
             else:
                 javadoc = f"{indentation}/**"
 
+            # Javadoc takes the first sentence (up to a period followed by whitespace) as the
+            # summary shown in package/class index tables. The summary lines below therefore
+            # end with a period; otherwise the whole properties table is pulled into the
+            # index cell with its HTML tags stripped.
             if 'MessageType#REQUEST' in props.get('type'):
-                javadoc += f"{indentation} * Request message for {props.get('response')}, opCode {props.get('opCode')}, size {props.get('size')}"
+                javadoc += f"{indentation} * Request message for {props.get('response')}, opCode {props.get('opCode')}, size {props.get('size')}."
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
             elif 'MessageType#RESPONSE' in props.get('type'):
-                javadoc += f"{indentation} * Response message for {props.get('request')}, opCode {props.get('opCode')}, size {props.get('size')}"
+                javadoc += f"{indentation} * Response message for {props.get('request')}, opCode {props.get('opCode')}, size {props.get('size')}."
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
@@ -75,6 +80,21 @@ def convert_message_props(java_file):
             tmp_file.write(new_content)
             shutil.move(tmp_file.name, java_file)
         return new_content != content
+
+def terminate_sentence(javadoc):
+    """Ensures the text of an existing Javadoc comment ends with sentence punctuation.
+
+    Javadoc ends the summary sentence at the first period followed by whitespace. A
+    hand-written comment such as "See {@link Foo}" with no period would otherwise run
+    straight into the generated table, and the table would appear in the index cells.
+    Comments that contain block tags (@see, @param, ...) are left alone.
+    """
+    if re.search(r"^\s*\*\s*@\w+", javadoc, re.MULTILINE):
+        return javadoc
+    m = re.search(r"([^\s*/])[\s*/]*$", javadoc)
+    if m and m.group(1) not in ".!?:;>":
+        return javadoc[:m.end(1)] + "." + javadoc[m.end(1):]
+    return javadoc
 
 def process_directory(directory):
     """Recursively processes Java files in a directory."""
