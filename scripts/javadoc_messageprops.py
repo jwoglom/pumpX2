@@ -3,16 +3,19 @@ import os
 import sys
 import tempfile
 import shutil
+import html
 
 DIR = sys.argv[1]
 
 def convert_message_props(java_file):
-    """Converts @MessageProps annotations to Javadoc comments."""
+    """Converts @MessageProps and @HistoryLogProps annotations to Javadoc comments."""
 
     with open(java_file, 'r+') as f:
         content = f.read()
 
-        pattern = r"^(\s*)@MessageProps\(\s*([^\)]+)\s*\)\s*$"
+        # Matches @MessageProps(...) and @HistoryLogProps(...). Quoted strings (e.g. a
+        # displayName like "CGM Data (FSL3)") may contain parentheses and commas.
+        pattern = r'^(\s*)@(?:MessageProps|HistoryLogProps)\(\s*((?:"(?:[^"\\]|\\.)*"|[^)"])+)\)\s*$'
         javadoc_pattern = r"/\*\*[\s\S]*?\*/\n"
 
         def convert_value(value):
@@ -35,27 +38,33 @@ def convert_message_props(java_file):
             if "\n" not in indentation:
                 indentation = "\n" + indentation
 
-            param_pattern = r"(\w+)\s*=\s*([^,]+)(?:,|$)"
+            param_pattern = r'(\w+)\s*=\s*("(?:[^"\\]|\\.)*"|[^,]+)(?:,|$)'
             param_matches = re.findall(param_pattern, props_string)
 
             for param_name, param_value in param_matches:
-                props[param_name] = convert_value(param_value.strip())
+                param_value = param_value.strip()
+                if param_value.startswith('"'):
+                    # String literal: show as-is (HTML-escaped), never treat as a class link.
+                    props[param_name] = html.escape(param_value, quote=False)
+                else:
+                    props[param_name] = convert_value(param_value)
 
-            javadoc_match = re.search(javadoc_pattern, content, re.MULTILINE)
-            if javadoc_match and javadoc_match.span(0) < match.span(0):
-                javadoc = javadoc_match.group(0).replace('*/', '*')
-                javadoc = terminate_sentence(javadoc)
+            # The package index tables show only the first sentence of a class comment. Lead
+            # with the generated line so the opCode is visible there, even on classes that
+            # have a hand-written comment (which follows it). The line must end with a period:
+            # javadoc ends the summary at the first period followed by whitespace, and
+            # without one the whole properties table is pulled into the index cell with its
+            # HTML tags stripped.
+            javadoc = f"{indentation}/**"
+            if 'type' not in props:
+                # @HistoryLogProps: no request/response pair; size defaults to 26.
+                name = props.get('displayName', '').strip('"')
+                label = f"History log record {name}" if name else "History log record"
+                javadoc += f"{indentation} * {label}, opCode {props.get('opCode')}, size {props.get('size', '26')}."
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
                 javadoc += f"{indentation} *"
-            else:
-                javadoc = f"{indentation}/**"
-
-            # Javadoc takes the first sentence (up to a period followed by whitespace) as the
-            # summary shown in package/class index tables. The summary lines below therefore
-            # end with a period; otherwise the whole properties table is pulled into the
-            # index cell with its HTML tags stripped.
-            if 'MessageType#REQUEST' in props.get('type'):
+            elif 'MessageType#REQUEST' in props.get('type'):
                 javadoc += f"{indentation} * Request message for {props.get('response')}, opCode {props.get('opCode')}, size {props.get('size')}."
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
@@ -64,6 +73,14 @@ def convert_message_props(java_file):
                 javadoc += f"{indentation} * Response message for {props.get('request')}, opCode {props.get('opCode')}, size {props.get('size')}."
                 javadoc += f"{indentation} *"
                 javadoc += f"{indentation} * <br>"
+                javadoc += f"{indentation} *"
+
+            javadoc_match = re.search(javadoc_pattern, content, re.MULTILINE)
+            if javadoc_match and javadoc_match.span(0) < match.span(0):
+                existing = javadoc_match.group(0).strip()[3:-2].rstrip()
+                if not existing.startswith("\n"):
+                    existing = f"{indentation} * {existing.strip()}"
+                javadoc += existing
                 javadoc += f"{indentation} *"
             javadoc += f"{indentation} * "
             javadoc += f"{indentation} * <table border='1'>"
@@ -80,21 +97,6 @@ def convert_message_props(java_file):
             tmp_file.write(new_content)
             shutil.move(tmp_file.name, java_file)
         return new_content != content
-
-def terminate_sentence(javadoc):
-    """Ensures the text of an existing Javadoc comment ends with sentence punctuation.
-
-    Javadoc ends the summary sentence at the first period followed by whitespace. A
-    hand-written comment such as "See {@link Foo}" with no period would otherwise run
-    straight into the generated table, and the table would appear in the index cells.
-    Comments that contain block tags (@see, @param, ...) are left alone.
-    """
-    if re.search(r"^\s*\*\s*@\w+", javadoc, re.MULTILINE):
-        return javadoc
-    m = re.search(r"([^\s*/])[\s*/]*$", javadoc)
-    if m and m.group(1) not in ".!?:;>":
-        return javadoc[:m.end(1)] + "." + javadoc[m.end(1):]
-    return javadoc
 
 def process_directory(directory):
     """Recursively processes Java files in a directory."""
